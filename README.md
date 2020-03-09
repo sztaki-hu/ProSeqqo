@@ -1,8 +1,8 @@
 SequencePlanner
 ======
 
-:earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/pathplanner/-/wikis/home)<br>
-:clipboard: [Snippets](https://git.sztaki.hu/zahoranl/pathplanner/snippets)<br>
+:earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
+:clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets)<br>
 
 
 
