@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SequencePlanner.Options.SequencerOptions">
+    <Position X="1" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAEABAKAA=</HashCode>
+      <FileName>SequencerOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Options.Values.ValueEnum">
+    <Position X="12.5" Y="1" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="SequencePlanner.Options.Values.ValueEnum.TaskType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="SequencePlanner.Options.Values.ValueEnum.EdgeWeightSource" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="SequencePlanner.Options.Values.ValueEnum.DistanceFunction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="SequencePlanner.Options.Values.ValueEnum.WeightMultiplyer" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="SequencePlanner.Options.Values.ValueEnum.Missing" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Options\Values\ValueEnum.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Options.DistanceFunction">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Options\DistanceFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Options.Option">
+    <Position X="4" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAGAAAAAAAAEAAQAAAAAAAAAAAAgAAAIBAA=</HashCode>
+      <FileName>Options\Option.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SequencePlanner.Options.EdgeWeightSource">
+    <Position X="6" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Options\EdgeWeightSource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Options.TaskType">
+    <Position X="8" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Options\TaskType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
