@@ -1,4 +1,4 @@
-SequencePlanner
+﻿SequencePlanner
 ======
 
 :earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
@@ -17,6 +17,7 @@ graph TD;
 
 Documentation:
 ------
+
 
 
 Contributing:
