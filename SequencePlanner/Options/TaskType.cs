@@ -5,8 +5,10 @@ using System.Text;
 
 namespace SequencePlanner.Options
 {
-    public class TaskType: Option
+
+    public class TaskType : Option
     {
+
 
         public TaskType()
         {
