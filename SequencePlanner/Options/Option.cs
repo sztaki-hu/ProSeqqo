@@ -5,20 +5,17 @@ using System.Text;
 
 namespace SequencePlanner.Options
 {
-    public class Option : IOption
+    public class Option<T> : IOption
     {
         public string Name { get; protected set; }
-        public IList<Enum> PosibbleValues { get; protected set; }
-        public Enum Value { get; set; }
+        public T Value { get; set; }
         public bool Required { get; protected set; }
-        public bool Incluided { get; set; }
         public bool Validated { get; set; }
+        public bool Incluided { get; set; }
 
         public Option()
         {
             Name = "";
-            PosibbleValues = new List<Enum>();
-            Value = ValueEnum.Missing.Missing;
             Required = false;
             Validated = false;
             Incluided = false;
@@ -28,15 +25,14 @@ namespace SequencePlanner.Options
             return (Name == name);
         }
 
-        public bool IsValueFits(IValue value)
+        public bool IsValueFits(string value)
         {
-            foreach (var item in PosibbleValues)
-            {
-                if (item == value)
-                    return true;
-            }
-            return false;
+            throw new NotImplementedException();
         }
 
+        public bool Validate(string value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

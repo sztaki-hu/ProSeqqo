@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace SequencePlanner.Options
 {
     public class SequencerOptions
     {
-        public List<Option> Options { get; private set; }
+        public List<IOption> Options { get; private set; }
         public TaskType TaskType { get; private set; }
         public EdgeWeightSource EdgeWeightSource { get; private set; }
         public DistanceFunction DistanceFunction { get; private set; }
@@ -17,10 +18,23 @@ namespace SequencePlanner.Options
             EdgeWeightSource = new EdgeWeightSource();
             DistanceFunction = new DistanceFunction();
 
-            Options.Add(TaskType);
-            Options.Add(EdgeWeightSource);
-            Options.Add(DistanceFunction);
+            Options = new List<IOption>();
+            Options.Add((IOption)TaskType);
+            Options.Add((IOption)EdgeWeightSource);
+            Options.Add((IOption)DistanceFunction);
 
+        }
+
+        public void ReadFile(string file)
+        {
+
+            string[] lines = File.ReadAllLines(@file);
+            foreach (string line in lines)
+            {
+                Console.WriteLine("\t" + line);
+            }
+            Console.WriteLine("Press any key to exit.");
+            System.Console.ReadKey();
         }
 
         public bool isAllOptionSatied()
@@ -28,7 +42,7 @@ namespace SequencePlanner.Options
             return false;
         }
 
-        public List<Option> MissingOptions()
+        public List<IOption> MissingOptions()
         {
             return Options;
         }

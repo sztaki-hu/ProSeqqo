@@ -5,19 +5,29 @@ using System.Text;
 
 namespace SequencePlanner.Options
 {
-
-    public class TaskType : Option
+    public class TaskType : Option<ValueEnum.TaskType>
     {
-
-
-        public TaskType()
+        public TaskType(): base()
         {
             Name = nameof(TaskType);
             Required = true;
-            Incluided = true;
-            PosibbleValues = new List<Enum>();
-            PosibbleValues.Add(ValueEnum.TaskType.LineLike);
-            PosibbleValues.Add(ValueEnum.TaskType.PointLike);
+        }
+
+        public new bool Validate(string value)
+        {
+            if (value.Contains("Line"))
+            {
+                Value = ValueEnum.TaskType.LineLike;
+                return true;
+            }
+            if (value.Contains("Point"))
+            {
+                Value = ValueEnum.TaskType.PointLike;
+                return true;
+            }
+            return false;
         }
     }
+
+ 
 }

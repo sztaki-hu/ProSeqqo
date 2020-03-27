@@ -7,14 +7,14 @@ namespace SequencePlanner.Options
 {
     public interface IOption
     {
+
+        bool Validated { get; set; }
         string Name { get; }
-        Enum Value { get; }
-        IList<Enum> PosibbleValues { get; }
         bool Required { get; }
         bool Incluided { get; set; }
 
-
         bool IsNameFits(string name);
-        bool IsValueFits(IValue value);
+        bool IsValueFits(String value);
+        bool Validate(String value);
     }
 }

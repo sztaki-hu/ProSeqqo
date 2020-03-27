@@ -4,8 +4,10 @@ using System.Text;
 
 namespace SequencePlanner.Options.Values
 {
-    public static class ValueEnum
+    public class ValueEnum
     {
+        
+
         public enum TaskType
         {
             PointLike,

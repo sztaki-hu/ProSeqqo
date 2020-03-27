@@ -1,8 +1,8 @@
 ﻿namespace SequencePlanner.Options
 {
-    public static enum TaskTypeOption
-        {
-        LineLike,
-        PointLike
-    }
+    //public static enum TaskTypeOption
+    //{
+    //    LineLike,
+    //    PointLike
+    //}
 }
