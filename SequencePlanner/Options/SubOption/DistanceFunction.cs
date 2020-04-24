@@ -11,8 +11,6 @@ namespace SequencePlanner.Options
         public DistanceFunction()
         {
             Name = nameof(DistanceFunction);
-            Required = false;
-            Incluided = false;
 
         }
     }

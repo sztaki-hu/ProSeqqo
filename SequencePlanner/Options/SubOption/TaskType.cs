@@ -10,7 +10,6 @@ namespace SequencePlanner.Options
         public TaskType(): base()
         {
             Name = nameof(TaskType);
-            Required = true;
         }
 
         public new bool Validate(string value)

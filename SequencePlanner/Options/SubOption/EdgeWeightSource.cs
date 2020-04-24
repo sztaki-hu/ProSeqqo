@@ -11,8 +11,6 @@ namespace SequencePlanner.Options
         public EdgeWeightSource()
         {
             Name = nameof(EdgeWeightSource);
-            Required = true;
-            Incluided = true;
         }
     }
 }

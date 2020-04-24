@@ -8,7 +8,7 @@ namespace Seqencer
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            SequencerOptions sequencerOptions = new SequencerOptions();
+            SequencerOptionPhraser sequencerOptions = new SequencerOptionPhraser();
             sequencerOptions.ReadFile("test.txt");
         }
     }
