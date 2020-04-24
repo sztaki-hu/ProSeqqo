@@ -1,17 +1,17 @@
-﻿SequencePlanner
-======
+## Sequence Planner
 
+:earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
+:clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets)<br>
+:computer: [Use from code](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-code) <br>
+:file_folder: [Use from file](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)  <br>
 ## About
-
-
 Generic task sequencer that captures typical sequencing problems encountered in robot applications.
 * Easily integrated into complex solution workflows
 * Standalone exe with file interface or DLL function calls
 * Provides close-to-optimal (but not necessarily optimal) solutions quickly, e.g., in <1 sec for typical cases
 * Compact solver based on an open source VRP solver engine - Google-OR-Tools
 
-:earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
-:clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets)<br>
+
 
 #### Semantics: 
 - **Each** of the n **Processes** has to be executed
@@ -47,16 +47,9 @@ Installation:
 ¯\＿(ツ)＿/¯
 
 
-
-Dependency graph:
-```mermaid
-graph TD;
-  SequencePlanner-->GoogleORTools.dll;
-```
-
 Documentation:
 ------
-
+:earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home) :clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets) :computer: [Use from code](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-code) :file_folder: [Use from file](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)
 
 
 Contributing:
