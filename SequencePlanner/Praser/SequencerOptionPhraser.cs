@@ -25,7 +25,9 @@ namespace SequencePlanner.Options
             {
                 Console.WriteLine("<"+line+">");
             }
-            
+
+            OptionSet.Validate(lines);
+
             Console.WriteLine("Press any key to exit.");
             System.Console.ReadKey();
         }

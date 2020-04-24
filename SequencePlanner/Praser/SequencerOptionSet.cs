@@ -7,7 +7,7 @@ namespace SequencePlanner
 {
     public class SequencerOptionSet
     {
-        List<OptionProcess> processList = new List<OptionProcess>();
+        public List<OptionProcess> processList = new List<OptionProcess>();
         public SequencerOptionSet()
         {
             LoadOptions();
@@ -65,8 +65,15 @@ namespace SequencePlanner
         {
             for (int i = 0; i < processList.Count; i++)
             {
-                if (processList[i].option.Name.Equals(name) && processList[i].option.Validate(parameters));
+                if (processList[i].option.Name.Equals(name) && processList[i].option.Validate(parameters))
                     processList[i].Validate();
+            }
+        }
+        public void Validate(List<string> file)
+        {
+            foreach (var process in processList)
+            {
+
             }
         }
     }
