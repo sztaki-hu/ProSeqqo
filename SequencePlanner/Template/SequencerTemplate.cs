@@ -66,7 +66,7 @@ namespace SequencePlanner
             //content += ": " +.ToString() + "\n";
             //content += ": " +.ToString() + "\n";
 
-            System.IO.File.WriteAllLines("export.txt", content);
+            //System.IO.File.WriteAllLines("export.txt", content);
 
         }
     }

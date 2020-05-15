@@ -1,204 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SequencePlanner.Praser.SequencerOptionExporter">
+    <Position X="6" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Praser\SequencerOptionExporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="SequencePlanner.Options.SequencerOptionPhraser">
-    <Position X="9.25" Y="0.75" Width="2" />
+    <Position X="8" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAQAAQAAAQAAAAAAAAAAAAAAAAAAAAAAAEABAKAA=</HashCode>
-      <FileName>SequencerOptionPhraser.cs</FileName>
+      <HashCode>AAAAAAQAIAAAQAAAAAAAIAIAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Praser\SequencerOptionPhraser.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Options.Values.ValueEnum">
-    <Position X="11.5" Y="0.75" Width="2.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Enum Name="SequencePlanner.Options.Values.ValueEnum.TaskType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Enum Name="SequencePlanner.Options.Values.ValueEnum.EdgeWeightSource" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Enum Name="SequencePlanner.Options.Values.ValueEnum.DistanceFunction" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Enum Name="SequencePlanner.Options.Values.ValueEnum.WeightMultiplyer" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Enum Name="SequencePlanner.Options.Values.ValueEnum.Missing" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Options\Values\ValueEnum.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="SequencePlanner.SequencerOptionSet">
+    <Position X="12" Y="4" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\Values\ValueEnum.cs</FileName>
+      <HashCode>ABAEAQAAAACAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Praser\SequencerOptionSet.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Options.DistanceFunction">
-    <Position X="0.5" Y="7.25" Width="1.5" />
+  <Class Name="SequencePlanner.Template.Line">
+    <Position X="13.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\DistanceFunction.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAAQAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Template\Line.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Options.Option&lt;T&gt;">
-    <Position X="2.5" Y="0.75" Width="1.5" />
+  <Class Name="SequencePlanner.Template.Position">
+    <Position X="10.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAGAAAAAAAAAAAQAAAAAAAAAAAAgAAAIBAA=</HashCode>
-      <FileName>Options\Option.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="SequencePlanner.Options.EdgeWeightSource">
-    <Position X="8" Y="5.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\EdgeWeightSource.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAQAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Template\Position.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Options.TaskType">
-    <Position X="6" Y="5.75" Width="1.5" />
+  <Class Name="SequencePlanner.Template.Precedence&lt;T&gt;">
+    <Position X="12" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\TaskType.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAQAQAA=</HashCode>
+      <FileName>Template\Precedence.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Dimension">
-    <Position X="2.25" Y="5.75" Width="1.5" />
+  <Class Name="SequencePlanner.Template.ProcessHierarchy">
+    <Position X="3.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\Dimension.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAwAAAAAAAAAAgAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Template\ProcessHierarchy.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.TimeLimit">
-    <Position X="0.5" Y="5.75" Width="1.5" />
+  <Class Name="SequencePlanner.SequencerTemplate">
+    <Position X="1.25" Y="1.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\TimeLimit.cs</FileName>
+      <HashCode>AAAAGQAAgIIEAAAgAAABBAAAEAAAYAACAAAAMBIACAY=</HashCode>
+      <FileName>Template\SequencerTemplate.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.CyclicSequence">
-    <Position X="5.25" Y="12" Width="2.5" />
+  <Struct Name="SequencePlanner.OptionProcess">
+    <Position X="10.25" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\CyclicSequence.cs</FileName>
+      <HashCode>AAAAAIAAAACAAAAJAAAACAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Praser\SequencerOptionSet.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.WeightMultiplier">
-    <Position X="4.25" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\WeightMultiplier.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.TrapezoidParamsAcceleration">
-    <Position X="0.5" Y="8.75" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\TrapezoidParamsAcceleration.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.TrapezoidParamsSpeed">
-    <Position X="0.5" Y="10" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\TrapezoidParamsSpeed.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.CyclicSequenceStartDepot">
-    <Position X="5.25" Y="14.5" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\CyclicSequenceStartDepot.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.CyclicSequenceFinishDepot">
-    <Position X="5.25" Y="13.25" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\CyclicSequenceFinishDepot.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.Line">
-    <Position X="2.5" Y="12" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\Line.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.LinePrecedence">
-    <Position X="2.5" Y="13.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\LinePrecedence.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.ContourPenalty">
-    <Position X="2.5" Y="14.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\ContourPenalty.cs</FileName>
-      <NewMemberFileName>Options\SubOption\ContourPrecedence.cs</NewMemberFileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.ProcessHierarchy">
-    <Position X="8.75" Y="12" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\ProcessHierarchy.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.ProcessPrecedence">
-    <Position X="8.75" Y="14.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\ProcessPrecedence.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.PositionPrecedence">
-    <Position X="8.75" Y="13.25" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\PositionPrecedence.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.PositionList">
-    <Position X="0.5" Y="13.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\PositionList.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.PositionNumber">
-    <Position X="0.5" Y="12" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\PositionNumber.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.PositionMatrix">
-    <Position X="0.5" Y="14.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Options\SubOption\PositionMatrix.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Interface Name="SequencePlanner.Options.IOption">
-    <Position X="0.5" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAIAAAAGAAAAAAAAAAAQAAAAAAAAAAAAAAAAIBAA=</HashCode>
-      <FileName>Options\IOption.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
+  </Struct>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

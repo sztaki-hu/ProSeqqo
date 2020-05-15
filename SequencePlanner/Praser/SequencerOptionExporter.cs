@@ -6,12 +6,6 @@ namespace SequencePlanner.Praser
 {
     public static class SequencerOptionExporter
     {
-        public static Export(string file, SequencerOptionSet optionSet)
-        {
-            foreach (var option in optionSet)
-            {
-
-            }
-        }
+       
     }
 }
