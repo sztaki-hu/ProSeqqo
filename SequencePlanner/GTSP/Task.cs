@@ -11,7 +11,7 @@ namespace SequencePlanner.GTSP
         
         public Task(): base()
         {
-                Name = "Process_" + ID;
+                Name = "Task_" + ID;
                 Positions = new List<Position>();
             
         }

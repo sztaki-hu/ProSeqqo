@@ -93,6 +93,7 @@ namespace SequencePlanner.GTSP
             Edges = new List<Edge>();
             createEdgesProcessLevel();
             createEdgesAlternativeLevel();
+            createEdgesTask();
         }
 
         public void createEdgesProcessLevel()
@@ -135,6 +136,64 @@ namespace SequencePlanner.GTSP
             }
         }
 
+        public void createEdgesTask()
+        {
+            foreach (var alternative in Alternatives)
+            {
+                if (alternative.Tasks.Count == 0)
+                {
+                    Edges.Add(new Edge()
+                    {
+                        NodeA = alternative.Start,
+                        NodeB = alternative.Finish,
+                        Directed = true
+                    });
+                }
+                else
+                {
+                    foreach (var position in alternative.Tasks[0].Positions)
+                    {
+                        Edges.Add(new Edge()
+                        {
+                            NodeA = alternative.Start,
+                            NodeB = position,
+                            Directed = true
+                        });
+                    }
+                    foreach (var position in alternative.Tasks[alternative.Tasks.Count - 1].Positions)
+                    {
+                        Edges.Add(new Edge()
+                        {
+                            NodeA = position,
+                            NodeB = alternative.Finish,
+                            Directed = true
+                        });
+                    }
+                }
+
+                for (int i = 0; i < alternative.Tasks.Count - 1; i++)
+                {
+                    connectTasks(alternative.Tasks[i], alternative.Tasks[i + 1]);
+                }
+            }
+        }
+
+        public void connectTasks(Task a, Task b)
+        {
+            foreach (var posA in a.Positions)
+            {
+                foreach (var posB in b.Positions)
+                {
+                    Edges.Add(new Edge()
+                    {
+                        NodeA = posA,
+                        NodeB = posB,
+                        Directed = true
+                    });
+                }
+            }
+        }
+
         public void WriteGraph()
         {
             Console.WriteLine("Processes:");
@@ -157,7 +216,7 @@ namespace SequencePlanner.GTSP
             {
                 Console.WriteLine(item.ToString());
             }
-
+            Console.WriteLine("Edges:");
             foreach (var edge in Edges)
             {
                 Console.WriteLine(edge.ToString()); ;

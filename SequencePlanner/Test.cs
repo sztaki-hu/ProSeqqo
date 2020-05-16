@@ -25,6 +25,7 @@ namespace SequencePlanner
 
             Position pos = new Position();
             Position pos2 = new Position();
+            Position pos3 = new Position();
             GraphRepresentation graph = new GraphRepresentation();
 
             graph.addProcess(p);
@@ -35,6 +36,7 @@ namespace SequencePlanner
             graph.addTask(a2, t2);
             graph.addPosition(t, pos);
             graph.addPosition(t2, pos2);
+            graph.addPosition(t2, pos3);
             graph.createEdgesVirtual();
 
             graph.WriteGraph();
