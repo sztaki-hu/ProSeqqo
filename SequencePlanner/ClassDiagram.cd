@@ -3,14 +3,32 @@
   <Class Name="SequencePlanner.GTSP.Alternative">
     <Position X="3.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAgAgAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <HashCode>AAAAAAAAACAAAAAEAgAAAAIAAAAAAAAAAAAIAAAAAAg=</HashCode>
       <FileName>GTSP\Alternative.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.Edge">
-    <Position X="5.5" Y="0.5" Width="1.5" />
+    <Position X="10" Y="6.25" Width="1.5" />
+    <AssociationLine Name="NodeA" Type="SequencePlanner.GTSP.Position" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10" Y="6.75" />
+        <Point X="9.146" Y="6.75" Type="JumpStart" />
+        <Point X="8.979" Y="6.75" Type="JumpEnd" />
+        <Point X="8.875" Y="6.75" />
+        <Point X="8.875" Y="6.75" />
+        <Point X="7.25" Y="6.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="NodeB" Type="SequencePlanner.GTSP.Position" FixedFromPoint="true">
+      <Path>
+        <Point X="10" Y="6.438" />
+        <Point X="9.146" Y="6.437" Type="JumpStart" />
+        <Point X="8.979" Y="6.438" Type="JumpEnd" />
+        <Point X="7.25" Y="6.438" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAQCAAAAABIAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAAAEAAAAAAAAQCAAAAABIAAAAAAAAAA=</HashCode>
       <FileName>GTSP\Edge.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -19,24 +37,86 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="SequencePlanner.GTSP.NodeBase">
-    <Position X="1.5" Y="0.5" Width="1.5" />
+    <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAgAAAAAAAgAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GTSP\NodeBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.Position">
-    <Position X="1.5" Y="3.75" Width="1.5" />
+    <Position X="5.75" Y="3.75" Width="1.5" />
+    <AssociationLine Name="Process" Type="SequencePlanner.GTSP.Process" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.812" Y="6.848" />
+        <Point X="6.812" Y="7.407" />
+        <Point X="6.083" Y="7.407" Type="JumpStart" />
+        <Point X="5.917" Y="7.407" Type="JumpEnd" />
+        <Point X="4.583" Y="7.407" Type="JumpStart" />
+        <Point X="4.417" Y="7.407" Type="JumpEnd" />
+        <Point X="2.279" Y="7.407" />
+        <Point X="2.279" Y="6.011" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.785" Y="0.115" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAABAAAAAAAAAgAAAAAAAAAAQAAAgAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAABAAAAAAAEAgAAAAAAAAAAQAAAgEAAAICAAAA=</HashCode>
       <FileName>GTSP\Position.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Process" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="SequencePlanner.GTSP.Process">
-    <Position X="5.5" Y="3.75" Width="1.5" />
+    <Position X="1.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAABACAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>GTSP\Process.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GTSP.GraphRepresentation">
+    <Position X="4" Y="8" Width="2.25" />
+    <AssociationLine Name="Tasks" Type="SequencePlanner.GTSP.Task" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="8.522" />
+        <Point X="9.062" Y="8.522" />
+        <Point X="9.062" Y="6.011" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>aAAAgIBhogACAIAkAAFAAAQAAEAAAAADAQBIgBAAICo=</HashCode>
+      <FileName>GTSP\GraphRepresentation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Edges" />
+      <Property Name="Alternatives" />
+      <Property Name="Processes" />
+      <Property Name="Tasks" />
+      <Property Name="Positions" />
+      <Property Name="ConstraintsDisjoints" />
+      <Property Name="ConstraintsOrder" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SequencePlanner.GTSP.Task">
+    <Position X="8.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAkAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GTSP\Task.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GTSP.ConstraintOrder">
+    <Position X="8" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAA=</HashCode>
+      <FileName>GTSP\ConstraintOrder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GTSP.ConstraintDisjoint">
+    <Position X="8" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>GTSP\ConstraintDisjoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

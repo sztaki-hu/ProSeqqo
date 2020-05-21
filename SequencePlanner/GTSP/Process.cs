@@ -17,8 +17,10 @@ namespace SequencePlanner.GTSP
             Start = new Position();
             Start.Name = Name + "_Start";
             Start.Virtual = true;
+            Start.Process = this;
             Finish = new Position();
             Finish.Name = Name + "_Finish";
+            Finish.Process = this;
             Finish.Virtual = true;
             Alternatives = new List<Alternative>();
         }

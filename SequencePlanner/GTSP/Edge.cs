@@ -7,8 +7,8 @@ namespace SequencePlanner.GTSP
     public class Edge
     {
         public string Tag { get; set; }
-        public NodeBase NodeA { get; set; }
-        public NodeBase NodeB { get; set; }
+        public Position NodeA { get; set; }
+        public Position NodeB { get; set; }
         public bool Directed { get; set; }
         public double Weight { get; set; }
 

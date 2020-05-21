@@ -22,9 +22,7 @@ namespace SequencePlanner.GTSP
             {
                 tmp += item.Name + ", ";
             }
-            return "[" + ID + "]" + Name + ": Positions: " + tmp;
+            return "[" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + "  Positions: " + tmp;
         }
     }
-
-
 }

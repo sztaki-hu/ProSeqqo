@@ -6,14 +6,17 @@ namespace SequencePlanner.GTSP
 {
     public class Position: NodeBase
     {
+        private static int PIDmax = 0;
+        public int PID { get; set; }
         public static int Dimension { get; set; }
         public Task Task { get; set; }
-        public Alternative Alternative { get; set; }
         public Process Process { get; set; }
+        public Alternative Alternative { get; set; }
         public List<double> Configuration { get; set; }
         
         public Position() : base()
         {
+            PID = PIDmax++;
             Name = "Position_" + ID;
             Configuration = new List<double>();
             Configuration.Add(0);
@@ -23,7 +26,7 @@ namespace SequencePlanner.GTSP
 
         public Position(String name, int id, List<double> config = null):base(name, id)
         {
-
+            PID = PIDmax++;
             if (config == null)
             {
                 Configuration = new List<double>();
@@ -41,6 +44,7 @@ namespace SequencePlanner.GTSP
 
         public Position(String name, int id, List<double> config = null, Alternative alternative = null, Process process=null) : this(name, id, config)
         {
+            PID = PIDmax++;
             Alternative = alternative;
             Process = process;
         }
@@ -53,7 +57,7 @@ namespace SequencePlanner.GTSP
                 tmp += item + ", ";
             }
             if (!Virtual)
-                return "[" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Config: "+tmp;
+                return "[" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Task: "+Task.Name+" Config: ["+tmp+"]";
             else
                 return "[" + ID + "]" + Name + " Virtual!";
         }

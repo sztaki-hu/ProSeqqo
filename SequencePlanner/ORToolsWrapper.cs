@@ -1,15 +1,13 @@
-﻿using Google.OrTools.ConstraintSolver;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SequencePlanner
 {
-    public class Solver
+    public class ORToolsWrapper
     {
-        public Solver()
+        public ORToolsWrapper()
         {
-
             //RoutingIndexManager manager = new RoutingIndexManager(
             //    data.DistanceMatrix.GetLength(0),
             //    data.VehicleNumber,
