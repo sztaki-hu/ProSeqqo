@@ -1,4 +1,6 @@
 ﻿using SequencePlanner.GTSP;
+using SequencePlanner.Phraser.Options.Values;
+using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +9,17 @@ namespace SequencePlanner
 {
     public class Test
     {
-
+        public void ReadFileTest()
+        {
+            Template template = new Template();
+            template.Read("test.txt");
+            SequencerTask task = TemplateCompiler.Compile(template);
+            task.Build();
+            task.Run();
+            
+            //Console.WriteLine(template.OptionSet.ToString());
+            
+        }
         public void RepresentationTest()
         {
 
@@ -94,15 +106,56 @@ namespace SequencePlanner
 
             graph.createEdgesVirtual();
             graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\GTSP.dot");
-            //graph.createEdges();
-            //graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\GTSP.dot", false);
-            graph.WriteGraph();
+            Console.WriteLine("\nProcess Num: " + graph.Processes.Count);
+            Console.WriteLine("Alternative Num: " + graph.Alternatives.Count);
+            Console.WriteLine("Task Num: " + graph.Tasks.Count);
+            Console.WriteLine("Position/Node Num:" + graph.Positions.Count);
+            int virtualNode = 0;
+            foreach (var item in graph.Positions)
+            {
+                if (item.Virtual)
+                    virtualNode++;
+            }
+            Console.WriteLine("Virtual Position/Node: " + virtualNode);
+            Console.WriteLine("Edge Num: " + graph.Edges.Count);
+
+
+            graph.createEdges();
+            graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\GTSPsimple.dot", false);
+            Console.WriteLine("\nPosition/Node Num: "+ (graph.Positions.Count-virtualNode+(graph.Processes.Count*2)));
+            Console.WriteLine("Edge Num only process virtual: " + graph.Edges.Count);
+
+            //graph.WriteGraph();
             //System.Diagnostics.Process.Start(@"C:\Users\Zahorán László\Desktop\GTSP.dot");
             //graph.deleteVirtualNodes();
 
             graph.createEdgesVirtualFull();
-            graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\GTSPfull.dot");
-            graph.WriteGraph();
+            Console.WriteLine("\nEdge Full Virtual: " + graph.Edges.Count);
+            //graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\GTSPfull.dot");
+            //graph.WriteGraph();
+        }
+        public void SequencerTaskTest()
+        {
+            GraphRepresentation graph = new GraphRepresentation();
+            SequencerTask sTask = new SequencerTask();
+            sTask.Graph = graph;
+            sTask.TaskType = TaskTypeEnum.Point_Like;
+            sTask.TaskType = TaskTypeEnum.Line_Like;
+            sTask.EdgeWeightSource = EdgeWeightSourceEnum.FullMatrix;
+            sTask.EdgeWeightSource = EdgeWeightSourceEnum.CalculateFromPositions;
+            sTask.DistanceFunction = DistanceFunctionEnum.Euclidian_Distance;
+            sTask.DistanceFunction = DistanceFunctionEnum.Max_Distance;
+            sTask.DistanceFunction = DistanceFunctionEnum.Trapezoid_Time;
+            sTask.DistanceFunction = DistanceFunctionEnum.Manhattan_Distance;
+            sTask.Dimension = 3;
+            sTask.TimeLimit = 300;
+            sTask.CyclicSequence = true;
+            sTask.StartDepotID = 99;
+            sTask.FinishDepotID = 100;
+            sTask.WeightMultiplierAuto = true;
+            sTask.WeightMultiplier = 100;
+            sTask.Build();
+            sTask.Run();
         }
     }
 }

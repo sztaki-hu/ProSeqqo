@@ -30,6 +30,11 @@ namespace SequencePlanner.GTSP
             PositionMatrix = new double[1,1];
         }
 
+        internal void Build()
+        {
+            //throw new NotImplementedException();
+        }
+
         public void addProcess(Process process)
         {
             Processes.Add(process);
@@ -285,7 +290,6 @@ namespace SequencePlanner.GTSP
                     {
                         PositionMatrix[i, j] = PlusInfity;
                     }
-
                 }
             }
 
@@ -427,9 +431,6 @@ namespace SequencePlanner.GTSP
                         }
                     }
                 }
-
-
-
                 viz += addSubgraph(subgraph, proc.Name, "", "thistle3");
 
                 if (virtualNodes)
@@ -448,15 +449,10 @@ namespace SequencePlanner.GTSP
                         viz += "\n\t\t}\n";
                     }
                 }
-                
                 viz += "\n\t}\n";
-
             }
-
-
             viz += "}";
             //Console.WriteLine(viz);
-
             //if (file!=null)
                 System.IO.File.WriteAllText(file, viz);
             return viz;
@@ -465,7 +461,6 @@ namespace SequencePlanner.GTSP
         {
             string viz = "";
             viz += "\n" + prefix + "subgraph cluster_" + label + "{";
-
             viz += "\n\t" + prefix + "style = filled;";
             viz += "\n\t" + prefix + "color = "+color+";";
             viz += "\n\t" + prefix + "label = " + label + ";\n\t\t";

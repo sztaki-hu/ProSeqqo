@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequencePlanner", "Sequence
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Seqencer", "Seqencer\Seqencer.csproj", "{76AB713C-ECCB-44B7-A778-C682D7060438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequenceUnitTests", "SequenceUnitTests\SequenceUnitTests.csproj", "{9AA38B26-29F5-4045-BF97-26700C9F59DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequenceUnitTests", "SequenceUnitTests\SequenceUnitTests.csproj", "{9AA38B26-29F5-4045-BF97-26700C9F59DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84E1BFCF-384D-454C-AEAA-4B7EB629F4E8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,8 +6,11 @@ namespace SequencePlanner
 {
     public class ORToolsWrapper
     {
-        public ORToolsWrapper()
+        private SequencerTask task;
+
+        public ORToolsWrapper(SequencerTask seqTask)
         {
+            task = seqTask;
             //RoutingIndexManager manager = new RoutingIndexManager(
             //    data.DistanceMatrix.GetLength(0),
             //    data.VehicleNumber,
@@ -49,5 +52,18 @@ namespace SequencePlanner
             //PrintSolution(routing, manager, solution, data);
             //data.printRefSol();
         }
+
+        //Create OR-Tools Representation from SequencerTask
+        public void Build()
+        {
+            
+        }
+
+        //Run VRP Solver
+        public void Solve()
+        {
+
+        }
+
     }
 }

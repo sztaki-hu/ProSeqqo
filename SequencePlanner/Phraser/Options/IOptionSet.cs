@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SequencePlanner
+namespace SequencePlanner.Phraser.Options
 {
-    public class GTSPCompiler
+    public interface IOptionSet
     {
     }
 }

@@ -12,7 +12,7 @@
     <AssociationLine Name="NodeA" Type="SequencePlanner.GTSP.Position" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="10" Y="6.75" />
-        <Point X="9.146" Y="6.75" Type="JumpStart" />
+        <Point X="9.145" Y="6.75" Type="JumpStart" />
         <Point X="8.979" Y="6.75" Type="JumpEnd" />
         <Point X="8.875" Y="6.75" />
         <Point X="8.875" Y="6.75" />
@@ -22,7 +22,7 @@
     <AssociationLine Name="NodeB" Type="SequencePlanner.GTSP.Position" FixedFromPoint="true">
       <Path>
         <Point X="10" Y="6.438" />
-        <Point X="9.146" Y="6.437" Type="JumpStart" />
+        <Point X="9.145" Y="6.438" Type="JumpStart" />
         <Point X="8.979" Y="6.438" Type="JumpEnd" />
         <Point X="7.25" Y="6.438" />
       </Path>
@@ -79,21 +79,21 @@
     <Position X="4" Y="8" Width="2.25" />
     <AssociationLine Name="Tasks" Type="SequencePlanner.GTSP.Task" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6.25" Y="8.522" />
-        <Point X="9.062" Y="8.522" />
+        <Point X="6.25" Y="8.539" />
+        <Point X="9.062" Y="8.539" />
         <Point X="9.062" Y="6.011" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>aAAAgIBhogACAIAkAAFAAAQAAEAAAAADAQBIgBAAICo=</HashCode>
+      <HashCode>aAAAgIBhogACAIAkAAFAAAQAAEAAgAADAQBIgBAAICo=</HashCode>
       <FileName>GTSP\GraphRepresentation.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="Edges" />
-      <Property Name="Alternatives" />
       <Property Name="Processes" />
+      <Property Name="Alternatives" />
       <Property Name="Tasks" />
       <Property Name="Positions" />
+      <Property Name="Edges" />
       <Property Name="ConstraintsDisjoints" />
       <Property Name="ConstraintsOrder" />
     </ShowAsCollectionAssociation>
