@@ -131,6 +131,7 @@ namespace SequencePlanner.Phraser.Options
 
         public void Validate()
         {
+            Console.WriteLine("Need:");
             foreach (var option in Need)
             {
                 var result = option.Validate();
@@ -147,6 +148,7 @@ namespace SequencePlanner.Phraser.Options
                 }
             }
 
+            Console.WriteLine("Included:");
             int included = -1;
             while (included != 0)
             {
@@ -176,6 +178,7 @@ namespace SequencePlanner.Phraser.Options
                     included = 0;
             }
 
+            Console.WriteLine("Others:");
             foreach (var item in Options)
             {
                 if (!item.Validated)
@@ -190,9 +193,21 @@ namespace SequencePlanner.Phraser.Options
                     }
                 }
             }
+
+            foreach (var option in Options)
+            {
+                if(option.Included || option.Need)
+                {
+                    if (!option.Validated)
+                    {
+                        Console.WriteLine(option.Name+" is missing or in wrong format!");
+                    }
+                }
+            }
+
         }
 
-        private Option findOption(string Name)
+        public Option findOption(string Name)
         {
             foreach (var item in Options)
             {
@@ -201,6 +216,7 @@ namespace SequencePlanner.Phraser.Options
             }
             return null;
         }
+
         private List<Option> getOptionsByNames(List<string> options)
         {
             List<Option> ret = new List<Option>();
@@ -235,7 +251,6 @@ namespace SequencePlanner.Phraser.Options
             }
             return included;
         }
-
 
         public override string ToString()
         {

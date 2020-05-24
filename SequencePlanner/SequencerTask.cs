@@ -46,6 +46,4 @@ namespace SequencePlanner
             return CleanSolution;
         }
     }
-
-    
 }

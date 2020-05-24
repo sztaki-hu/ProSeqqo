@@ -13,16 +13,20 @@ namespace SequencePlanner
         {
             Template template = new Template();
             template.Read("test.txt");
-            SequencerTask task = TemplateCompiler.Compile(template);
+            SequencerTask task = template.Compile();
             task.Build();
             task.Run();
+            task.Graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\FromFile.dot");
+            task.Graph.createEdgesVirtual();
+            task.Graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\FromFileVirtual.dot");
+            task.Graph.WriteGraph();
             
             //Console.WriteLine(template.OptionSet.ToString());
             
         }
         public void RepresentationTest()
         {
-
+            Position.initMaxID();
             GraphRepresentation graph = new GraphRepresentation();
             Process p = new Process();
             Alternative pa = new Alternative();

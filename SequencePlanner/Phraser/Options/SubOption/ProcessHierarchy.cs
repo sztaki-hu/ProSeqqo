@@ -28,5 +28,13 @@ namespace SequencePlanner.Phraser.Options
                 return null;
             }
         }
+        public bool ValidateByValues(List<PositionOptionValue> values)
+        {
+            foreach (var item in values)
+            {
+
+            }
+            return true;
+        }
     }
 }

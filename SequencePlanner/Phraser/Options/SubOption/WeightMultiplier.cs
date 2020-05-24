@@ -12,8 +12,15 @@ namespace SequencePlanner.Phraser.Options
         {
             try
             {
-                Value = int.Parse(ValueString[1]);
-                Validated = true;
+                if (ValueString[1].Equals("Auto"))
+                {
+                    Value = -1;
+                }
+                else
+                {
+                    Value = int.Parse(ValueString[1]);
+                    Validated = true;
+                }
                 return new ValidationResult() { Validated = true};
             }
             catch (Exception e)

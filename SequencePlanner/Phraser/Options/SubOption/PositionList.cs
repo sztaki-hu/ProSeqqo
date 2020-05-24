@@ -29,5 +29,17 @@ namespace SequencePlanner.Phraser.Options
                 return null;
             }
         }
+
+        public bool ValidateByValues(int Dimension)
+        {
+            foreach (var item in Value)
+            {
+                if (item.Dim != Dimension)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

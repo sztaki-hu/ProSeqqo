@@ -29,5 +29,11 @@ namespace SequencePlanner.Phraser.Options
                 return null;
             }
         }
+
+        public void ValidateByValue()
+        {
+
+        }
+
     }
 }

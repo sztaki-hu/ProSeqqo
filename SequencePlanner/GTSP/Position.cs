@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SequencePlanner.GTSP
 {
-    public class Position: NodeBase
+    public class Position : NodeBase
     {
         private static int PIDmax = 0;
         public int PID { get; set; }
@@ -13,7 +13,7 @@ namespace SequencePlanner.GTSP
         public Process Process { get; set; }
         public Alternative Alternative { get; set; }
         public List<double> Configuration { get; set; }
-        
+
         public Position() : base()
         {
             PID = PIDmax++;
@@ -24,7 +24,7 @@ namespace SequencePlanner.GTSP
             Configuration.Add(0);
         }
 
-        public Position(String name, int id, List<double> config = null):base(name, id)
+        public Position( int id, String name = null, List<double> config = null) : base(name, id)
         {
             PID = PIDmax++;
             if (config == null)
@@ -42,7 +42,7 @@ namespace SequencePlanner.GTSP
 
         }
 
-        public Position(String name, int id, List<double> config = null, Alternative alternative = null, Process process=null) : this(name, id, config)
+        public Position(int id, String name = null, List<double> config = null, Alternative alternative = null, Process process = null) : this( id,name, config)
         {
             PID = PIDmax++;
             Alternative = alternative;
@@ -57,9 +57,14 @@ namespace SequencePlanner.GTSP
                 tmp += item + ", ";
             }
             if (!Virtual)
-                return "[" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Task: "+Task.Name+" Config: ["+tmp+"]";
+                return "[" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Task: " + Task.Name + " Config: [" + tmp + "]";
             else
                 return "[" + ID + "]" + Name + " Virtual!";
+        }
+
+        public static void initMaxID()
+        {
+            PIDmax = 0;
         }
     }
 }

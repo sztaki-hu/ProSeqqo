@@ -1,4 +1,5 @@
 ﻿
+using SequencePlanner.Phraser.Options.Values;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,6 +23,17 @@ namespace SequencePlanner.Phraser.Options
                 Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
                 return null;
             }
+        }
+        public bool ValidateByValue(List<PositionOptionValue> values)
+        {
+            foreach (var item in values)
+            {
+                if (item.ID == Value)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

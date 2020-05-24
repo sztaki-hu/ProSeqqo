@@ -6,6 +6,7 @@ namespace SequencePlanner.GTSP
 {
     public class Alternative: NodeBase
     {
+        private static int AID = 1000;
         public List<Task> Tasks { get; set; }
         private Process process;
         public Process Process { get { return process; } set { process = value; Start.Process = process; Finish.Process = process; } }
@@ -13,25 +14,41 @@ namespace SequencePlanner.GTSP
         public Position Finish { get; private set; } 
 
 
-        public Alternative() : base()
+        public Alternative()
         {
-            Name = "Alternative_" + ID;
-            Start = new Position();
-            Start.Name = Name + "_Start";
-            Start.Process = Process;
-            Start.Alternative = this;
-            Start.Virtual = true;
-            Finish = new Position();
-            Finish.Name = Name + "_Finish";
-            Finish.Virtual = true;
-            Finish.Process = Process;
-            Finish.Alternative = this;
+            Name = "Alternative_" + AID++;
+            Start = new Position()
+            {
+                ID = AID++,
+                Name = Name + "_Start",
+                Process = Process,
+                Alternative = this,
+                Virtual = true
+            };
+            Finish = new Position()
+            {
+                ID = AID++,
+                Name = Name + "_Finish",
+                Virtual = true,
+                Process = Process,
+                Alternative = this
+            };
             Tasks = new List<Task>();
         }
 
-        public Alternative(String name):this()
+        public Alternative(int id, String name = null) : this()
         {
-            Name = name;
+            ID = id;
+            if (name == null)
+            {
+                Name = "Alternative_" + ID;
+            }
+            else
+            {
+                Name = name;
+            }
+            Start.Name = Name + "_Start";
+            Finish.Name = Name + "_Finish";
         }
 
         public override string ToString()

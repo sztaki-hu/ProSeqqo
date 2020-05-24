@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace SequencePlanner.GTSP
@@ -18,6 +19,7 @@ namespace SequencePlanner.GTSP
         private double[,] PositionMatrix {get;set;}
         public List<ConstraintDisjoint> ConstraintsDisjoints { get; set; }
         public List<ConstraintOrder> ConstraintsOrder { get; set; }
+        public EdgeWeightFunctions.EdgeWeightFunction EdgeWeightCalculator { get; set; }
 
         public GraphRepresentation()
         {
@@ -28,6 +30,7 @@ namespace SequencePlanner.GTSP
             PlusInfity = int.MaxValue;
             MinusInfity = int.MinValue;
             PositionMatrix = new double[1,1];
+            EdgeWeightCalculator = EdgeWeightFunctions.Euclidian_Distance;
         }
 
         internal void Build()
@@ -91,11 +94,25 @@ namespace SequencePlanner.GTSP
             }
         }
 
+
+        public void CalculateEdgeWeight(Edge edge)
+        {
+            if(edge.NodeA.Virtual || edge.NodeB.Virtual)
+            {
+                edge.Weight = 0;
+            }
+            else
+            {
+                edge.Weight = EdgeWeightCalculator(edge.NodeA.Configuration,edge.NodeB.Configuration);
+            }
+            
+        }
         public void createEdges()
         {
             Edges = new List<Edge>();
             createEdgesProcessLevel();
             createEdgesTask();
+
         }
         public void createEdgesFull()
         {
@@ -104,7 +121,7 @@ namespace SequencePlanner.GTSP
         public void createEdgesVirtual()
         {
             Edges = new List<Edge>();
-            createEdgesProcessLevel();
+            createEdgesProcessLevelVirtual();
             createEdgesAlternativeLevel();
             createEdgesTaskVirtual();
         }
@@ -113,7 +130,7 @@ namespace SequencePlanner.GTSP
             createEdgesVirtual();
             makeFull();
         }
-        public void createEdgesProcessLevel()
+        public void createEdgesProcessLevelVirtual()
         {
             foreach (var proc in Processes)
             {
@@ -126,6 +143,33 @@ namespace SequencePlanner.GTSP
                             NodeB = proc2.Start, 
                             Directed = true
                         });
+                    }
+                }
+            }
+        }
+
+        public void createEdgesProcessLevel()
+        {
+            foreach (var proc in Processes)
+            {
+                foreach (var proc2 in Processes)
+                {
+                    if (proc.ID != proc2.ID)
+                    {
+                        foreach (var alternative in proc.Alternatives)
+                        {
+                            if (alternative.Tasks.Count > 0)
+                            {
+                                foreach (var alternative2 in proc2.Alternatives)
+                                {
+                                    if (alternative.ID!=alternative2.ID && alternative2.Tasks.Count > 0)
+                                    {
+                                        connectTasks(alternative.Tasks[alternative.Tasks.Count-1], alternative2.Tasks[0]);
+                                        //connectTasks(alternative.Tasks[0], alternative2.Tasks[alternative2.Tasks.Count-1]);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -222,36 +266,36 @@ namespace SequencePlanner.GTSP
         {
             foreach (var alternative in Alternatives)
             {
-                if (alternative.Tasks.Count == 0)
-                {
-                    Edges.Add(new Edge()
-                    {
-                        NodeA = alternative.Process.Start,
-                        NodeB = alternative.Process.Finish,
-                        Directed = true
-                    });
-                }
-                else
-                {
-                    foreach (var position in alternative.Tasks[0].Positions)
-                    {
-                        Edges.Add(new Edge()
-                        {
-                            NodeA = alternative.Process.Start,
-                            NodeB = position,
-                            Directed = true
-                        });
-                    }
-                    foreach (var position in alternative.Tasks[alternative.Tasks.Count - 1].Positions)
-                    {
-                        Edges.Add(new Edge()
-                        {
-                            NodeA = position,
-                            NodeB = alternative.Process.Finish,
-                            Directed = true
-                        });
-                    }
-                }
+                //if (alternative.Tasks.Count == 0)
+                //{
+                //    //Edges.Add(new Edge()
+                //    //{
+                //    //    NodeA = alternative.Process.Start,
+                //    //    NodeB = alternative.Process.Finish,
+                //    //    Directed = true
+                //    //});
+                //}
+                //else
+                //{
+                //    foreach (var position in alternative.Tasks[0].Positions)
+                //    {
+                //        Edges.Add(new Edge()
+                //        {
+                //            NodeA = alternative.Process.Start,
+                //            NodeB = position,
+                //            Directed = true
+                //        });
+                //    }
+                //    foreach (var position in alternative.Tasks[alternative.Tasks.Count - 1].Positions)
+                //    {
+                //        Edges.Add(new Edge()
+                //        {
+                //            NodeA = position,
+                //            NodeB = alternative.Process.Finish,
+                //            Directed = true
+                //        });
+                //    }
+                //}
 
                 for (int i = 0; i < alternative.Tasks.Count - 1; i++)
                 {
@@ -270,6 +314,7 @@ namespace SequencePlanner.GTSP
                     {
                         NodeA = posA,
                         NodeB = posB,
+                        Weight = EdgeWeightCalculator(posA.Configuration, posB.Configuration),
                         Directed = true
                     });
                 }
@@ -360,6 +405,54 @@ namespace SequencePlanner.GTSP
             }
         }
 
+        public Process findProcess(int ID)
+        {
+            foreach (var item in Processes)
+            {
+                if (item.ID == ID)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public Alternative findAlternative(int ID)
+        {
+            foreach (var item in Alternatives)
+            {
+                if (item.ID == ID)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public Task findTask(int ID)
+        {
+            foreach (var item in Tasks)
+            {
+                if (item.ID == ID)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public Position findPosition(int ID)
+        {
+            foreach (var item in Positions)
+            {
+                if (item.ID == ID)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
         public void WriteGraph()
         {
             Console.WriteLine("Processes:");
@@ -396,7 +489,7 @@ namespace SequencePlanner.GTSP
             viz += "\n\t" + "color = lightred;";
             foreach (var item in Edges)
             {
-                viz += "\t" + item.NodeA.Name + " -> " + item.NodeB.Name + "[label = " + item.Weight + "];\n";
+                viz += "\t" + item.NodeA.Name + " -> " + item.NodeB.Name + "[label = " + item.Weight.ToString("0,0.00", new CultureInfo("en-US", false)) + "];\n";
             }
 
             foreach (var proc in Processes)
@@ -406,7 +499,7 @@ namespace SequencePlanner.GTSP
                 {
                     foreach (var pos in Positions)
                     {
-                        if (proc.ID == pos.Process.ID)
+                        if (proc.ID == pos.Process.ID && inEdges(pos.ID))
                         {
                             subgraph += pos.Name + "; ";
                         }
@@ -426,7 +519,7 @@ namespace SequencePlanner.GTSP
                                     find = true;
                                 }
                             }
-                            if(!find)
+                            if(!find && inEdges(pos.ID))
                                 subgraph += pos.Name + "; ";
                         }
                     }
@@ -442,7 +535,8 @@ namespace SequencePlanner.GTSP
                         {
                             if (proc.ID == pos.Process.ID && pos.Alternative?.ID == alt.ID)
                             {
-                                subgraphAlt += pos.Name + "; ";
+                                if(inEdges(pos.ID))
+                                    subgraphAlt += pos.Name + "; ";
                             }
                         }
                         viz += addSubgraph(subgraphAlt, alt.Name, "\t\t", "lightblue");
@@ -467,5 +561,17 @@ namespace SequencePlanner.GTSP
             viz += content;
             return viz;
         }
+    
+        private bool inEdges(int ID)
+        {
+            foreach (var edge in Edges)
+            {
+                if(edge.NodeA.ID == ID || edge.NodeB.ID == ID)
+                    return true;
+                         
+            }
+            return false;
+        }
+    
     }
 }

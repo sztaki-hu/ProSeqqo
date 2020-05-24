@@ -12,9 +12,23 @@ namespace SequencePlanner.GTSP
         public Task(): base()
         {
                 Name = "Task_" + ID;
-                Positions = new List<Position>();
-            
+                Positions = new List<Position>(); 
         }
+
+        public Task(int id, string name = null) : this()
+        {
+            ID = id;
+            if (name == null)
+            {
+                Name = "Task_" + ID;
+            }
+            else
+            {
+                Name = name;
+            }
+
+        }
+
         public override string ToString()
         {
             string tmp = "";
