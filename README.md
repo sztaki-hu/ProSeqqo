@@ -34,10 +34,10 @@ Generic task sequencer that captures typical sequencing problems encountered in 
 **Edge weights** → Implemented common distance functions (e.g., max, Euclidean, trapezoid speed, etc.). Distance matrix (in case of complex paths between positions).
 
  
-![image|small](/uploads/9491268a0248acaa7edb08b53f07715a/image.png)
+<!---![image|small](/uploads/9491268a0248acaa7edb08b53f07715a/image.png)--->
 
 
-
+![image](/uploads/d33232537d7f94ad8844d060fa301865/image.png)
 
 
 Installation:
