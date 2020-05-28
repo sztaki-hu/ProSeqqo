@@ -486,7 +486,7 @@ namespace SequencePlanner.GTSP
             string viz = "digraph G {\n";
             viz += "node[style = filled];\n";
             viz += "\n\t" + "style = filled;";
-            viz += "\n\t" + "color = lightred;";
+            viz += "\n\t" + "color = salmon2;";
             foreach (var item in Edges)
             {
                 viz += "\t" + item.NodeA.Name + " -> " + item.NodeB.Name + "[label = " + item.Weight.ToString("0,0.00", new CultureInfo("en-US", false)) + "];\n";
@@ -540,6 +540,7 @@ namespace SequencePlanner.GTSP
                             }
                         }
                         viz += addSubgraph(subgraphAlt, alt.Name, "\t\t", "lightblue");
+                        viz += addTasksSubgraph(alt);
                         viz += "\n\t\t}\n";
                     }
                 }
@@ -561,7 +562,24 @@ namespace SequencePlanner.GTSP
             viz += content;
             return viz;
         }
-    
+        private string addTasksSubgraph(Alternative a)
+        {
+            string tmp = "";
+            foreach (var task in a.Tasks)
+            {
+                tmp += "subgraph cluster_" + task.Name + "{";
+                tmp+="\nstyle = filled;";
+                tmp += "\ncolor = peachpuff1 ;";
+                tmp += "\nlabel = " + task.Name+";";
+                foreach (var pos in task.Positions)
+                {
+                    tmp += pos.Name+ ";";
+                }
+                tmp += "}\n";
+            }
+            return tmp;
+        }
+
         private bool inEdges(int ID)
         {
             foreach (var edge in Edges)

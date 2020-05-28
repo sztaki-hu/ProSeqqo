@@ -17,8 +17,8 @@ namespace SequencePlanner
             task.Build();
             task.Run();
             task.Graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\FromFile.dot");
-            task.Graph.createEdgesVirtual();
-            task.Graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\FromFileVirtual.dot");
+            //task.Graph.createEdgesVirtual();
+            //task.Graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\FromFileVirtual.dot");
             task.Graph.WriteGraph();
             
             //Console.WriteLine(template.OptionSet.ToString());

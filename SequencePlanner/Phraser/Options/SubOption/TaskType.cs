@@ -7,7 +7,7 @@ namespace SequencePlanner.Phraser.Options
 {
     public class TaskType : Option
     {
-        public new TaskTypeEnum Value;
+        public new TaskTypeEnum Value { get; set; }
 
         public override ValidationResult Validate()
         {
