@@ -37,7 +37,8 @@ Generic task sequencer that captures typical sequencing problems encountered in 
 <!---![image|small](/uploads/9491268a0248acaa7edb08b53f07715a/image.png)--->
 
 
-![image](/uploads/d33232537d7f94ad8844d060fa301865/image.png)
+ 
+![rawgraph2](uploads/4989da73fea970b68c038c986790a70d/rawgraph2.png)
 
 
 Installation:
