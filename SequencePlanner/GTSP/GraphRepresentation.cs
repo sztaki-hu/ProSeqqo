@@ -16,7 +16,8 @@ namespace SequencePlanner.GTSP
         public List<Position> Positions { get; set; }
         public List<Edge> Edges { get; set; }
         public List<Edge> ManualEdges { get; set; }
-        private double[,] PositionMatrix {get;set;}
+        public double[,] PositionMatrix {get;set;}
+        public int[,] PositionMatrixRound { get; set; }
         public List<ConstraintDisjoint> ConstraintsDisjoints { get; set; }
         public List<ConstraintOrder> ConstraintsOrder { get; set; }
         public EdgeWeightFunctions.EdgeWeightFunction EdgeWeightCalculator { get; set; }
@@ -30,12 +31,14 @@ namespace SequencePlanner.GTSP
             PlusInfity = int.MaxValue;
             MinusInfity = int.MinValue;
             PositionMatrix = new double[1,1];
+            ConstraintsDisjoints = new List<ConstraintDisjoint>();
+            ConstraintsOrder = new List<ConstraintOrder>();
             EdgeWeightCalculator = EdgeWeightFunctions.Euclidian_Distance;
         }
 
         internal void Build()
         {
-            //throw new NotImplementedException();
+            createEdges();
         }
 
         public void addProcess(Process process)

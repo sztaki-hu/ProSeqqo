@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.OrTools.ConstraintSolver;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,6 +8,9 @@ namespace SequencePlanner
     public class ORToolsWrapper
     {
         private SequencerTask task;
+        private RoutingIndexManager manager;
+        private RoutingModel routing;
+        private RoutingSearchParameters searchParameters;
 
         public ORToolsWrapper(SequencerTask seqTask)
         {
@@ -56,13 +60,84 @@ namespace SequencePlanner
         //Create OR-Tools Representation from SequencerTask
         public void Build()
         {
-            
+            // Instantiate the data problem.
+            manager = new RoutingIndexManager(
+                task.Graph.PositionMatrix.GetLength(0),
+                1,
+                0);
+
+            // Create Routing Model.
+            routing = new RoutingModel(manager);
+
+            int transitCallbackIndex = routing.RegisterTransitCallback(
+              (long fromIndex, long toIndex) => {
+                  // Convert from routing variable Index to distance matrix NodeIndex.
+                  var fromNode = Convert.ToInt32(manager.IndexToNode(fromIndex));
+                  var toNode = Convert.ToInt32(manager.IndexToNode(toIndex));
+                  return task.Graph.PositionMatrixRound[fromNode,toNode];
+              }
+            );
+
+            foreach (var set in task.Graph.ConstraintsDisjoints)
+            {
+                routing.AddDisjunction(set.getIndices());
+            }
+
+            // Define cost of each arc.
+            routing.SetArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
+
+            // Setting first solution heuristic.
+            searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
+            searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
+
+            // Solve the problem.
+
         }
 
         //Run VRP Solver
         public void Solve()
         {
+            Assignment solution = routing.SolveWithParameters(searchParameters);
 
+            // Print solution on console.
+            PrintSolution(routing, manager, solution);
+        }
+
+        private void PrintSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution)
+        {
+            Console.WriteLine("Objective: {0} ", solution.ObjectiveValue());
+            // Inspect solution.
+            Console.WriteLine("Route:");
+            long routeDistance = 0;
+            var index = routing.Start(0);
+            while (routing.IsEnd(index) == false)
+            {
+                string trajStr = "";
+                if (manager.IndexToNode((int)index) == 0)
+                {
+                    trajStr = "START";
+                }
+                else
+                {
+                    int traj = (manager.IndexToNode((int)index) - 1) / 2;
+                    trajStr = task.Graph.findPosition(traj).Name;
+                    int isReversed = (manager.IndexToNode((int)index) - 1) % 2;
+                    if (isReversed == 1)
+                    {
+                        trajStr += "R";
+                    }
+                }
+
+                var previousIndex = index;
+                index = solution.Value(routing.NextVar(index));
+                long dist = routing.GetArcCostForVehicle(previousIndex, index, 0);
+                routeDistance += dist;
+
+                //            Console.Write("{0} -[{1}]-> ", trajStr, dist);
+                Console.Write("{0} -> ", trajStr);
+            }
+            Console.WriteLine("STOP");
+            //Console.WriteLine("Route distance: {0}", routeDistance);
         }
 
     }

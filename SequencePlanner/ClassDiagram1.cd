@@ -2,54 +2,18 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="SequencePlanner.GTSP.GraphRepresentation" Collapsed="true">
     <Position X="6" Y="13" Width="1.75" />
-    <AssociationLine Name="Alternatives" Type="SequencePlanner.GTSP.Alternative" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6" Y="13.188" />
-        <Point X="5.62" Y="13.188" />
-        <Point X="5.62" Y="13.062" />
-        <Point X="4.5" Y="13.062" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="Processes" Type="SequencePlanner.GTSP.Process" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6" Y="13.188" />
-        <Point X="5.62" Y="13.188" />
-        <Point X="5.62" Y="14.188" />
-        <Point X="4.5" Y="14.188" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="Positions" Type="SequencePlanner.GTSP.Position" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6" Y="13.188" />
-        <Point X="5.62" Y="13.188" />
-        <Point X="5.62" Y="11.062" />
-        <Point X="4.5" Y="11.062" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="Tasks" Type="SequencePlanner.GTSP.Task" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6" Y="13.188" />
-        <Point X="5.62" Y="13.188" />
-        <Point X="5.62" Y="12.03" />
-        <Point X="4.5" Y="12.03" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>agCAgIBhpgACAICkAIFAAAYAAEAAgggDAQBIgBAAICo=</HashCode>
+      <HashCode>agCAgIBhpiACAICkAIFAAAYAAEAAgggDAQBIgBAAICo=</HashCode>
       <FileName>GTSP\GraphRepresentation.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Alternatives" />
-      <Property Name="Processes" />
-      <Property Name="Positions" />
-      <Property Name="Tasks" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.GTSP.Position" Collapsed="true">
     <Position X="3.25" Y="10.75" Width="1.25" />
     <InheritanceLine Type="SequencePlanner.GTSP.NodeBase" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.5" Y="11.062" />
+        <Point X="2.5" Y="11.043" />
+        <Point X="2.875" Y="11.043" />
+        <Point X="2.875" Y="11.062" />
         <Point X="3.25" Y="11.062" />
       </Path>
     </InheritanceLine>
@@ -62,8 +26,8 @@
     <Position X="3.25" Y="13.75" Width="1.25" />
     <InheritanceLine Type="SequencePlanner.GTSP.NodeBase" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.5" Y="11.062" />
-        <Point X="2.875" Y="11.062" />
+        <Point X="2.5" Y="11.043" />
+        <Point X="2.875" Y="11.043" />
         <Point X="2.875" Y="14.062" />
         <Point X="3.25" Y="14.062" />
       </Path>
@@ -77,8 +41,8 @@
     <Position X="3.25" Y="11.75" Width="1.25" />
     <InheritanceLine Type="SequencePlanner.GTSP.NodeBase" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.5" Y="11.062" />
-        <Point X="2.875" Y="11.062" />
+        <Point X="2.5" Y="11.043" />
+        <Point X="2.875" Y="11.043" />
         <Point X="2.875" Y="12.062" />
         <Point X="3.25" Y="12.062" />
       </Path>
@@ -92,8 +56,8 @@
     <Position X="3.25" Y="12.75" Width="1.25" />
     <InheritanceLine Type="SequencePlanner.GTSP.NodeBase" ManuallyRouted="true" FixedFromPoint="true">
       <Path>
-        <Point X="2.5" Y="11.062" />
-        <Point X="2.875" Y="11.062" />
+        <Point X="2.5" Y="11.043" />
+        <Point X="2.875" Y="11.043" />
         <Point X="2.875" Y="13.096" />
         <Point X="3.25" Y="13.096" />
       </Path>
@@ -126,19 +90,10 @@
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
-    <AssociationLine Name="Options" Type="SequencePlanner.Phraser.Options.Option" FixedFromPoint="true">
-      <Path>
-        <Point X="6" Y="4.549" />
-        <Point X="5" Y="4.549" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>QAACAAAAAACAAAAEAAAAAgAAAAAAAAACIIACAABAAAA=</HashCode>
       <FileName>Phraser\Options\OptionSet.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Field Name="Options" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.Phraser.Template.Template">
     <Position X="8.5" Y="6" Width="1.5" />
@@ -153,12 +108,6 @@
   </Class>
   <Class Name="SequencePlanner.Phraser.Options.TaskType">
     <Position X="3.25" Y="8" Width="1.5" />
-    <InheritanceLine Type="SequencePlanner.Phraser.Options.Option" FixedFromPoint="true">
-      <Path>
-        <Point X="4" Y="7.344" />
-        <Point X="4" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Phraser\Options\SubOption\TaskType.cs</FileName>
@@ -166,14 +115,6 @@
   </Class>
   <Class Name="SequencePlanner.Phraser.Options.CyclicSequence">
     <Position X="5" Y="8" Width="1.5" />
-    <InheritanceLine Type="SequencePlanner.Phraser.Options.Option" FixedFromPoint="true">
-      <Path>
-        <Point X="4" Y="7.344" />
-        <Point X="4" Y="7.625" />
-        <Point X="5.75" Y="7.625" />
-        <Point X="5.75" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Phraser\Options\SubOption\CyclicSequence.cs</FileName>
@@ -211,7 +152,7 @@
   <Class Name="SequencePlanner.ORToolsWrapper" Collapsed="true">
     <Position X="8.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAgAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAgBAAAAAAAABAAAA=</HashCode>
       <FileName>ORToolsWrapper.cs</FileName>
     </TypeIdentifier>
   </Class>
