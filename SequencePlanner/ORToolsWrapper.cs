@@ -120,7 +120,7 @@ namespace SequencePlanner
                 else
                 {
                     int traj = (manager.IndexToNode((int)index) - 1) / 2;
-                    trajStr = task.Graph.findPosition(traj).Name;
+                    trajStr = task.GTSP.FindPosition(traj).Name;
                     int isReversed = (manager.IndexToNode((int)index) - 1) % 2;
                     if (isReversed == 1)
                     {

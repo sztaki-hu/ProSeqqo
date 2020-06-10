@@ -12,21 +12,16 @@ namespace SequencePlanner
         public void ReadFileTest()
         {
             Template template = new Template();
-            template.Read("test.txt");
-            SequencerTask task = template.Compile();
+            SequencerTask task = template.Read("test.txt");
             task.Build();
             task.Run();
-            task.Graph.CreateGraphViz("FromFile.dot");
-            //task.Graph.createEdgesVirtual();
-            //task.Graph.CreateGraphViz("FromFileVirtual.dot");
+            GraphViz.CreateGraphViz(task.GTSP, "FromFile.dot");
             task.Graph.WriteGraph();
-            
-            //Console.WriteLine(template.OptionSet.ToString());
-            
         }
         public void RepresentationTest()
         {
             Position.initMaxID();
+            GTSPRepresentation gtsp = new GTSPRepresentation();
             GraphRepresentation graph = new GraphRepresentation();
             Process p = new Process();
             Alternative pa = new Alternative();
@@ -59,63 +54,63 @@ namespace SequencePlanner
                 pos.Add(new Position());
             }
 
-            graph.addProcess(p);
-            graph.addAlternative(p, new Alternative[] { pa, pb, pc });
-            graph.addTask(pa, new Task[] { t[0], t[1] });
-            graph.addTask(pb, new Task[] { t[2], t[3] });
-            graph.addTask(pc, new Task[] { t[4], t[5] });
-            graph.addPosition(t[0], new Position[] { pos[0], pos[1] });
-            graph.addPosition(t[1], new Position[] { pos[2], pos[3] });
-            graph.addPosition(t[2], new Position[] { pos[4], pos[5] });
-            graph.addPosition(t[3], new Position[] { pos[6], pos[7] });
-            graph.addPosition(t[4], new Position[] { pos[8], pos[9] });
-            graph.addPosition(t[5], new Position[] { pos[10], pos[11], pos[12] });
-
-            graph.addProcess(p2);
-            graph.addAlternative(p2, new Alternative[] { p2a, p2b, p2c });
-            graph.addTask(p2a, new Task[] { t[6], t[7] , t[8], t[9] });
-            graph.addTask(p2b, new Task[] { });
-            graph.addTask(p2c, new Task[] { t[10], t[11] });
-            graph.addPosition(t[6], new Position[] { pos[13], pos[14] });
-            graph.addPosition(t[7], new Position[] { pos[15], pos[16], pos[17], pos[18] });
-            graph.addPosition(t[8], new Position[] { pos[19], pos[20] });
-            graph.addPosition(t[9], new Position[] { pos[21], pos[22] });
-            graph.addPosition(t[10], new Position[]{ pos[23], pos[24] });
-            graph.addPosition(t[11], new Position[]{ pos[25], pos[26], pos[27] });
-
-
-            graph.addProcess(p3);
-            graph.addAlternative(p3, new Alternative[] { p3a, p3b, p3c });
-            graph.addTask(p3a, new Task[] { t[12], t[13] });
-            graph.addTask(p3b, new Task[] { t[14], t[15], t[16] });
-            graph.addTask(p3c, new Task[] { t[17] });
-            graph.addPosition(t[12], new Position[] { pos[28], pos[29] });
-            graph.addPosition(t[13], new Position[] { pos[30], pos[31] });
-            graph.addPosition(t[14], new Position[] { pos[32], pos[33] });
-            graph.addPosition(t[15], new Position[] { pos[34], pos[35], pos[36], pos[37] });
-            graph.addPosition(t[16], new Position[] { pos[38] });
-            graph.addPosition(t[17], new Position[] { pos[39], pos[40], pos[41] });
-
-            graph.addProcess(p4);
-            graph.addAlternative(p4, new Alternative[] { p4a, p4b, p4c });
-            graph.addTask(p4a, new Task[] { t[18], t[19] });
-            graph.addTask(p4b, new Task[] { t[20], t[21], t[22] });
-            graph.addTask(p4c, new Task[] { t[23] });
-            graph.addPosition(t[18], new Position[] { pos[42], pos[43] });
-            graph.addPosition(t[19], new Position[] { pos[44], pos[45], pos[46] });
-            graph.addPosition(t[20], new Position[] { pos[47] });
-            graph.addPosition(t[21], new Position[] { pos[48], pos[49], pos[50], pos[51] });
-            graph.addPosition(t[22], new Position[] { pos[52] });
-            graph.addPosition(t[23], new Position[] { pos[53], pos[54], pos[55] });
-
-            graph.createEdgesVirtual();
-            graph.CreateGraphViz("GTSP.dot");
-            Console.WriteLine("\nProcess Num: " + graph.Processes.Count);
-            Console.WriteLine("Alternative Num: " + graph.Alternatives.Count);
-            Console.WriteLine("Task Num: " + graph.Tasks.Count);
-            Console.WriteLine("Position/Node Num:" + graph.Positions.Count);
+            gtsp.AddProcess(p);
+            gtsp.AddAlternative(p, new Alternative[] { pa, pb, pc });
+            gtsp.AddTask(pa, new Task[] { t[0], t[1] });
+            gtsp.AddTask(pb, new Task[] { t[2], t[3] });
+            gtsp.AddTask(pc, new Task[] { t[4], t[5] });
+            gtsp.AddPosition(t[0], new Position[] { pos[0], pos[1] });
+            gtsp.AddPosition(t[1], new Position[] { pos[2], pos[3] });
+            gtsp.AddPosition(t[2], new Position[] { pos[4], pos[5] });
+            gtsp.AddPosition(t[3], new Position[] { pos[6], pos[7] });
+            gtsp.AddPosition(t[4], new Position[] { pos[8], pos[9] });
+            gtsp.AddPosition(t[5], new Position[] { pos[10], pos[11], pos[12] });
+                 
+            gtsp.AddProcess(p2);
+            gtsp.AddAlternative(p2, new Alternative[] { p2a, p2b, p2c });
+            gtsp.AddTask(p2a, new Task[] { t[6], t[7] , t[8], t[9] });
+            gtsp.AddTask(p2b, new Task[] { });
+            gtsp.AddTask(p2c, new Task[] { t[10], t[11] });
+            gtsp.AddPosition(t[6], new Position[] { pos[13], pos[14] });
+            gtsp.AddPosition(t[7], new Position[] { pos[15], pos[16], pos[17], pos[18] });
+            gtsp.AddPosition(t[8], new Position[] { pos[19], pos[20] });
+            gtsp.AddPosition(t[9], new Position[] { pos[21], pos[22] });
+            gtsp.AddPosition(t[10], new Position[]{ pos[23], pos[24] });
+            gtsp.AddPosition(t[11], new Position[]{ pos[25], pos[26], pos[27] });
+                 
+                 
+            gtsp.AddProcess(p3);
+            gtsp.AddAlternative(p3, new Alternative[] { p3a, p3b, p3c });
+            gtsp.AddTask(p3a, new Task[] { t[12], t[13] });
+            gtsp.AddTask(p3b, new Task[] { t[14], t[15], t[16] });
+            gtsp.AddTask(p3c, new Task[] { t[17] });
+            gtsp.AddPosition(t[12], new Position[] { pos[28], pos[29] });
+            gtsp.AddPosition(t[13], new Position[] { pos[30], pos[31] });
+            gtsp.AddPosition(t[14], new Position[] { pos[32], pos[33] });
+            gtsp.AddPosition(t[15], new Position[] { pos[34], pos[35], pos[36], pos[37] });
+            gtsp.AddPosition(t[16], new Position[] { pos[38] });
+            gtsp.AddPosition(t[17], new Position[] { pos[39], pos[40], pos[41] });
+                 
+            gtsp.AddProcess(p4);
+            gtsp.AddAlternative(p4, new Alternative[] { p4a, p4b, p4c });
+            gtsp.AddTask(p4a, new Task[] { t[18], t[19] });
+            gtsp.AddTask(p4b, new Task[] { t[20], t[21], t[22] });
+            gtsp.AddTask(p4c, new Task[] { t[23] });
+            gtsp.AddPosition(t[18], new Position[] { pos[42], pos[43] });
+            gtsp.AddPosition(t[19], new Position[] { pos[44], pos[45], pos[46] });
+            gtsp.AddPosition(t[20], new Position[] { pos[47] });
+            gtsp.AddPosition(t[21], new Position[] { pos[48], pos[49], pos[50], pos[51] });
+            gtsp.AddPosition(t[22], new Position[] { pos[52] });
+            gtsp.AddPosition(t[23], new Position[] { pos[53], pos[54], pos[55] });
+            
+            gtsp.Build();
+            GraphViz.CreateGraphViz(gtsp, "GTSP.dot");
+            Console.WriteLine("\nProcess Num: " + gtsp.Processes.Count);
+            Console.WriteLine("Alternative Num: " + gtsp.Alternatives.Count);
+            Console.WriteLine("Task Num: " + gtsp.Tasks.Count);
+            Console.WriteLine("Position/Node Num:" + gtsp.Positions.Count);
             int virtualNode = 0;
-            foreach (var item in graph.Positions)
+            foreach (var item in gtsp.Positions)
             {
                 if (item.Virtual)
                     virtualNode++;
@@ -123,20 +118,6 @@ namespace SequencePlanner
             Console.WriteLine("Virtual Position/Node: " + virtualNode);
             Console.WriteLine("Edge Num: " + graph.Edges.Count);
 
-
-            graph.createEdges();
-            graph.CreateGraphViz("GTSPsimple.dot", false);
-            Console.WriteLine("\nPosition/Node Num: "+ (graph.Positions.Count-virtualNode+(graph.Processes.Count*2)));
-            Console.WriteLine("Edge Num only process virtual: " + graph.Edges.Count);
-
-            //graph.WriteGraph();
-            //System.Diagnostics.Process.Start(@"C:\Users\Zahorán László\Desktop\GTSP.dot");
-            //graph.deleteVirtualNodes();
-
-            graph.createEdgesVirtualFull();
-            Console.WriteLine("\nEdge Full Virtual: " + graph.Edges.Count);
-            //graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\GTSPfull.dot");
-            //graph.WriteGraph();
         }
         public void SequencerTaskTest()
         {

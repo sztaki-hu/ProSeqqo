@@ -20,6 +20,7 @@ namespace SequencePlanner
         public int FinishDepotID { get; set; }
         public bool WeightMultiplierAuto { get; set; }
         public int WeightMultiplier { get; set; }
+        public GTSPRepresentation GTSP { get; set; }
         public GraphRepresentation Graph { get; set; }
         public List<Position> Solution { get; private set; }
         public List<Position> CleanSolution { get; private set; }
@@ -34,7 +35,7 @@ namespace SequencePlanner
 
         public void Build()
         {
-            Graph.Build();
+            GTSP.Build();
             ORtool = new ORToolsWrapper(this);
             ORtool.Build();
             Built = true;

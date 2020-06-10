@@ -15,7 +15,7 @@ namespace SequencePlanner.Phraser.Template
         {
             Positions = new List<Position>();
             SequencerTask sequencerTask = new SequencerTask();
-            positionList(sequencerTask, template);
+            positionList(template);
             ProcessHierarchy(sequencerTask, template);
             sequencerTask.Graph = template.Graph;
             return sequencerTask;
@@ -26,42 +26,42 @@ namespace SequencePlanner.Phraser.Template
             var graph = template.Graph;
             foreach (var item in template.ProcessHierarchy)
             {
-                Process proc = graph.findProcess(item.ProcessID);
+                Process proc = sequencerTask.GTSP.FindProcess(item.ProcessID);
                 if (proc == null)
                 {
                     proc = new Process(item.ProcessID);
-                    graph.addProcess(proc);
+                    sequencerTask.GTSP.AddProcess(proc);
                 }
 
-                Alternative alter = graph.findAlternative(item.AlternativeID);
+                Alternative alter = sequencerTask.GTSP.FindAlternative(item.AlternativeID);
                 if (alter == null)
                 {
                     alter = new Alternative(item.AlternativeID);
-                    graph.addAlternative(proc, alter);
+                    sequencerTask.GTSP.AddAlternative(proc, alter);
                 }
 
-                Task task = graph.findTask(item.TaskID);
+                Task task = sequencerTask.GTSP.FindTask(item.TaskID);
                 if (task == null)
                 {
                     task = new Task(item.TaskID);
-                    graph.addTask(alter, task);
+                    sequencerTask.GTSP.AddTask(alter, task);
                 }
 
-                Position position = graph.findPosition(item.PositionID);
+                Position position = sequencerTask.GTSP.FindPosition(item.PositionID);
                 if (position == null)
                 {
                     foreach (var pos in Positions)
                     {
                         if (pos.ID == item.PositionID)
-                            graph.addPosition(task, pos);
+                            sequencerTask.GTSP.AddPosition(task, pos);
                     }
                 }
             }
 
-            graph.createEdges();
+            sequencerTask.GTSP.Build();
         }
 
-        public static void positionList(SequencerTask sequencerTask, Template template)
+        public static void positionList(Template template)
         {
             foreach (var item in template.PositionList)
             {

@@ -48,7 +48,7 @@ namespace SequencePlanner.Phraser.Template
             Graph = new GraphRepresentation();
         }
 
-        public void Read(string file)
+        public SequencerTask Read(string file)
         {
             string[] lines = File.ReadAllLines(@file);
             SequencerOptionPhraser phraser = new SequencerOptionPhraser();
@@ -56,6 +56,7 @@ namespace SequencePlanner.Phraser.Template
             OptionSet.FillValues(linesList);
             OptionSet.Validate();
             Validate();
+            return Compile();
         }
 
         public void Write(string file)

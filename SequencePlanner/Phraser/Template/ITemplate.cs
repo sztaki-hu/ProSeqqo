@@ -9,7 +9,7 @@ namespace SequencePlanner.Phraser.Template
     {
         OptionSet OptionSet { get; set; }
 
-        void Read(string file);
+        SequencerTask Read(string file);
         void Write(string file);   
     }
 }

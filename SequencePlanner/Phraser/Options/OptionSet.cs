@@ -109,7 +109,6 @@ namespace SequencePlanner.Phraser.Options
                 tmp.Add(lines[i]);
             }
 
-            bool find = false;
             for (int i = 0; i < tmp.Count; i++)
             {
                 if (tmp[i].Contains("**NewParam**"))
