@@ -8,6 +8,8 @@ namespace SequencePlanner
 {
     public class SequencerTask
     {
+        public static bool DEBUG = false;
+
         public TaskTypeEnum TaskType { get; set; }
         public EdgeWeightSourceEnum EdgeWeightSource { get; set; }
         public DistanceFunctionEnum DistanceFunction { get; set; }

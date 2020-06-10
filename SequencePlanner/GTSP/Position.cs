@@ -57,9 +57,9 @@ namespace SequencePlanner.GTSP
                 tmp += item + ", ";
             }
             if (!Virtual)
-                return "[" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Task: " + Task.Name + " Config: [" + tmp + "]";
+                return "[" + ID + "]" + "[PID:" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Task: " + Task.Name + " Config: [" + tmp + "]";
             else
-                return "[" + ID + "]" + Name + " Virtual!";
+                return "[" + ID + "]" + "[PID:" + ID + "]" + Name + " Virtual!";
         }
 
         public static void initMaxID()

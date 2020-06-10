@@ -43,7 +43,8 @@ namespace SequencePlanner.Phraser.Options
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
+                if (SequencerTask.DEBUG)
+                    Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
                 return null;
             }
         }

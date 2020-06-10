@@ -35,7 +35,6 @@ namespace SequencePlanner.GTSP
             ConstraintsOrder = new List<ConstraintOrder>();
             EdgeWeightCalculator = EdgeWeightFunctions.Euclidian_Distance;
         }
-
         internal void Build()
         {
             createEdges();
@@ -115,7 +114,6 @@ namespace SequencePlanner.GTSP
             Edges = new List<Edge>();
             createEdgesProcessLevel();
             createEdgesTask();
-
         }
         public void createEdgesFull()
         {

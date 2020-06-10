@@ -16,9 +16,9 @@ namespace SequencePlanner
             SequencerTask task = template.Compile();
             task.Build();
             task.Run();
-            task.Graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\FromFile.dot");
+            task.Graph.CreateGraphViz("FromFile.dot");
             //task.Graph.createEdgesVirtual();
-            //task.Graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\FromFileVirtual.dot");
+            //task.Graph.CreateGraphViz("FromFileVirtual.dot");
             task.Graph.WriteGraph();
             
             //Console.WriteLine(template.OptionSet.ToString());
@@ -109,7 +109,7 @@ namespace SequencePlanner
             graph.addPosition(t[23], new Position[] { pos[53], pos[54], pos[55] });
 
             graph.createEdgesVirtual();
-            graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\GTSP.dot");
+            graph.CreateGraphViz("GTSP.dot");
             Console.WriteLine("\nProcess Num: " + graph.Processes.Count);
             Console.WriteLine("Alternative Num: " + graph.Alternatives.Count);
             Console.WriteLine("Task Num: " + graph.Tasks.Count);
@@ -125,7 +125,7 @@ namespace SequencePlanner
 
 
             graph.createEdges();
-            graph.CreateGraphViz(@"C:\Users\Zahorán László\Desktop\GTSPsimple.dot", false);
+            graph.CreateGraphViz("GTSPsimple.dot", false);
             Console.WriteLine("\nPosition/Node Num: "+ (graph.Positions.Count-virtualNode+(graph.Processes.Count*2)));
             Console.WriteLine("Edge Num only process virtual: " + graph.Edges.Count);
 
