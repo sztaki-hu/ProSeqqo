@@ -254,6 +254,7 @@ namespace SequencePlanner.Phraser.Options
                 if (!find)
                 {
                     Included.Add(item);
+                    item.Included = true;
                     included++;
                 }
             }

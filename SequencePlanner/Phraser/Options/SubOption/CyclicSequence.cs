@@ -19,6 +19,7 @@ namespace SequencePlanner.Phraser.Options
             }
             catch (Exception e)
             {
+                Validated = false;
                 if (SequencerTask.DEBUG)
                     Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
                 return null;
