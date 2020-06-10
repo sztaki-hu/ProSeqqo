@@ -8,6 +8,12 @@ namespace SequencePlanner.Phraser.Options
     {
         public int Value { get; set; }
 
+        public Dimension()
+        {
+            Name = "Dimensions";
+            IncludeableNames = new List<string> { };
+             Need = true;
+        }
     public override ValidationResult Validate()
     {
         try

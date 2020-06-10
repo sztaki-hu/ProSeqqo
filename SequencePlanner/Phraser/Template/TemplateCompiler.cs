@@ -15,39 +15,39 @@ namespace SequencePlanner.Phraser.Template
         {
             Positions = new List<Position>();
             SequencerTask sequencerTask = new SequencerTask();
-            positionList(template);
+            PositionList(template);
             ProcessHierarchy(sequencerTask, template);
-            sequencerTask.Graph = template.Graph;
+            sequencerTask.GTSP = template.GTSP;
             return sequencerTask;
         }
 
         public static void ProcessHierarchy(SequencerTask sequencerTask, Template template)
         {
-            var graph = template.Graph;
+            var gtst = template.GTSP;
             foreach (var item in template.ProcessHierarchy)
             {
-                Process proc = sequencerTask.GTSP.FindProcess(item.ProcessID);
+                Process proc = gtst.FindProcess(item.ProcessID);
                 if (proc == null)
                 {
                     proc = new Process(item.ProcessID);
                     sequencerTask.GTSP.AddProcess(proc);
                 }
 
-                Alternative alter = sequencerTask.GTSP.FindAlternative(item.AlternativeID);
+                Alternative alter = gtst.FindAlternative(item.AlternativeID);
                 if (alter == null)
                 {
                     alter = new Alternative(item.AlternativeID);
                     sequencerTask.GTSP.AddAlternative(proc, alter);
                 }
 
-                Task task = sequencerTask.GTSP.FindTask(item.TaskID);
+                Task task = gtst.FindTask(item.TaskID);
                 if (task == null)
                 {
                     task = new Task(item.TaskID);
                     sequencerTask.GTSP.AddTask(alter, task);
                 }
 
-                Position position = sequencerTask.GTSP.FindPosition(item.PositionID);
+                Position position = gtst.FindPosition(item.PositionID);
                 if (position == null)
                 {
                     foreach (var pos in Positions)
@@ -58,10 +58,9 @@ namespace SequencePlanner.Phraser.Template
                 }
             }
 
-            sequencerTask.GTSP.Build();
         }
 
-        public static void positionList(Template template)
+        public static void PositionList(Template template)
         {
             foreach (var item in template.PositionList)
             {

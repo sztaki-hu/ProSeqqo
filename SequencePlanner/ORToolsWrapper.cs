@@ -7,7 +7,7 @@ namespace SequencePlanner
 {
     public class ORToolsWrapper
     {
-        private SequencerTask task;
+        private readonly SequencerTask task;
         private RoutingIndexManager manager;
         private RoutingModel routing;
         private RoutingSearchParameters searchParameters;
@@ -62,7 +62,7 @@ namespace SequencePlanner
         {
             // Instantiate the data problem.
             manager = new RoutingIndexManager(
-                task.Graph.PositionMatrix.GetLength(0),
+                task.GTSP.Graph.PositionMatrix.GetLength(0),
                 1,
                 0);
 
@@ -74,11 +74,11 @@ namespace SequencePlanner
                   // Convert from routing variable Index to distance matrix NodeIndex.
                   var fromNode = Convert.ToInt32(manager.IndexToNode(fromIndex));
                   var toNode = Convert.ToInt32(manager.IndexToNode(toIndex));
-                  return task.Graph.PositionMatrixRound[fromNode,toNode];
+                  return task.GTSP.Graph.PositionMatrixRound[fromNode,toNode];
               }
             );
 
-            foreach (var set in task.Graph.ConstraintsDisjoints)
+            foreach (var set in task.GTSP.Graph.ConstraintsDisjoints)
             {
                 routing.AddDisjunction(set.getIndices());
             }
@@ -112,7 +112,7 @@ namespace SequencePlanner
             var index = routing.Start(0);
             while (routing.IsEnd(index) == false)
             {
-                string trajStr = "";
+                string trajStr;
                 if (manager.IndexToNode((int)index) == 0)
                 {
                     trajStr = "START";

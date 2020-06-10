@@ -8,6 +8,13 @@ namespace SequencePlanner.Phraser.Options
     {
         public int Value { get; set; }
 
+        public WeightMultiplier()
+        {
+            Name = "WeightMultiplier";
+            IncludeableNames = new List<string> { };
+            Need = true;
+        }
+
         public override ValidationResult Validate()
         {
             try

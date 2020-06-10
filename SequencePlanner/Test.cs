@@ -16,7 +16,7 @@ namespace SequencePlanner
             task.Build();
             task.Run();
             GraphViz.CreateGraphViz(task.GTSP, "FromFile.dot");
-            task.Graph.WriteGraph();
+            task.GTSP.Graph.WriteGraph();
         }
         public void RepresentationTest()
         {
@@ -115,37 +115,24 @@ namespace SequencePlanner
                 if (item.Virtual)
                     virtualNode++;
             }
-            Console.WriteLine("Virtual Position/Node: " + virtualNode);
-            Console.WriteLine("Edge Num: " + graph.Edges.Count);
-
         }
         public void SequencerTaskTest()
         {
             GraphRepresentation graph = new GraphRepresentation();
-            SequencerTask sTask = new SequencerTask();
-            sTask.Graph = graph;
-            sTask.TaskType = TaskTypeEnum.Point_Like;
-            sTask.TaskType = TaskTypeEnum.Line_Like;
-            sTask.EdgeWeightSource = EdgeWeightSourceEnum.FullMatrix;
-            sTask.EdgeWeightSource = EdgeWeightSourceEnum.CalculateFromPositions;
-            sTask.DistanceFunction = DistanceFunctionEnum.Euclidian_Distance;
-            sTask.DistanceFunction = DistanceFunctionEnum.Max_Distance;
-            sTask.DistanceFunction = DistanceFunctionEnum.Trapezoid_Time;
-            sTask.DistanceFunction = DistanceFunctionEnum.Manhattan_Distance;
-            sTask.Dimension = 3;
-            sTask.TimeLimit = 300;
-            sTask.CyclicSequence = true;
-            sTask.StartDepotID = 99;
-            sTask.FinishDepotID = 100;
-            sTask.WeightMultiplierAuto = true;
-            sTask.WeightMultiplier = 100;
+            SequencerTask sTask = new SequencerTask
+            {
+                TaskType = TaskTypeEnum.Point_Like,
+                EdgeWeightSource = EdgeWeightSourceEnum.FullMatrix,
+                Dimension = 3,
+                TimeLimit = 300,
+                CyclicSequence = true,
+                StartDepotID = 99,
+                FinishDepotID = 100,
+                WeightMultiplierAuto = true,
+                WeightMultiplier = 100
+            };
             sTask.Build();
             sTask.Run();
         }
     }
 }
-
-//Bemeneti fájl feldolgozása templatebe
-//Template ellenőrzése
-//SequencerTask, GraphRepresentation feltöltése
-//Futtatása Googl-OR-Tools-al

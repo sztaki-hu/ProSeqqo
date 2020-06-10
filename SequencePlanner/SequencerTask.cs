@@ -21,7 +21,6 @@ namespace SequencePlanner
         public bool WeightMultiplierAuto { get; set; }
         public int WeightMultiplier { get; set; }
         public GTSPRepresentation GTSP { get; set; }
-        public GraphRepresentation Graph { get; set; }
         public List<Position> Solution { get; private set; }
         public List<Position> CleanSolution { get; private set; }
         private bool Built { get; set; }
@@ -30,7 +29,7 @@ namespace SequencePlanner
         public SequencerTask()
         {
             ORtool = new ORToolsWrapper(this);
-            Graph = new GraphRepresentation();
+            GTSP = new GTSPRepresentation();
         }
 
         public void Build()

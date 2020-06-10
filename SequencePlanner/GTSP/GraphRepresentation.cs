@@ -29,7 +29,7 @@ namespace SequencePlanner.GTSP
         }
         public void Build(GTSPRepresentation gtsp)
         {
-            createEdges(gtsp);
+            CreateEdges(gtsp);
         }
 
         public void CalculateEdgeWeight(Edge edge)
@@ -44,13 +44,13 @@ namespace SequencePlanner.GTSP
             }
             
         }
-        public void createEdges(GTSPRepresentation gtsp)
+        public void CreateEdges(GTSPRepresentation gtsp)
         {
             Edges = new List<Edge>();
-            createEdgesProcess(gtsp);
-            createEdgesTask(gtsp);
+            CreateEdgesProcess(gtsp);
+            CreateEdgesTask(gtsp);
         }
-        public void createEdgesProcess(GTSPRepresentation gtsp)
+        public void CreateEdgesProcess(GTSPRepresentation gtsp)
         {
             foreach (var proc in gtsp.Processes)
             {
@@ -66,7 +66,7 @@ namespace SequencePlanner.GTSP
                                 {
                                     if (alternative.ID!=alternative2.ID && alternative2.Tasks.Count > 0)
                                     {
-                                        connectTasks(alternative.Tasks[alternative.Tasks.Count-1], alternative2.Tasks[0]);
+                                        ConnectTasks(alternative.Tasks[alternative.Tasks.Count-1], alternative2.Tasks[0]);
                                         //connectTasks(alternative.Tasks[0], alternative2.Tasks[alternative2.Tasks.Count-1]);
                                     }
                                 }
@@ -76,17 +76,17 @@ namespace SequencePlanner.GTSP
                 }
             }
         }
-        public void createEdgesTask(GTSPRepresentation gtsp)
+        public void CreateEdgesTask(GTSPRepresentation gtsp)
         {
             foreach (var alternative in gtsp.Alternatives)
             {
                 for (int i = 0; i < alternative.Tasks.Count - 1; i++)
                 {
-                    connectTasks(alternative.Tasks[i], alternative.Tasks[i + 1]);
+                    ConnectTasks(alternative.Tasks[i], alternative.Tasks[i + 1]);
                 }
             }
         }
-        private void connectTasks(Task a, Task b)
+        private void ConnectTasks(Task a, Task b)
         {
             foreach (var posA in a.Positions)
             {
@@ -102,7 +102,7 @@ namespace SequencePlanner.GTSP
                 }
             }
         }
-        private void makeFull(GTSPRepresentation gtsp)
+        private void MakeFull(GTSPRepresentation gtsp)
         {
             PositionMatrix = new double[gtsp.Positions.Count, gtsp.Positions.Count];
             for (int i = 0; i < gtsp.Positions.Count; i++)

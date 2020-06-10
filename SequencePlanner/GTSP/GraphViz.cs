@@ -25,7 +25,7 @@ namespace SequencePlanner.GTSP
                 {
                     foreach (var pos in g.Positions)
                     {
-                        if (proc.ID == pos.Process.ID && inEdges(g.Graph, pos.ID))
+                        if (proc.ID == pos.Process.ID && InEdges(g.Graph, pos.ID))
                         {
                             subgraph += pos.Name + "; ";
                         }
@@ -45,12 +45,12 @@ namespace SequencePlanner.GTSP
                                     find = true;
                                 }
                             }
-                            if (!find && inEdges(g.Graph, pos.ID))
+                            if (!find && InEdges(g.Graph, pos.ID))
                                 subgraph += pos.Name + "; ";
                         }
                     }
                 }
-                viz += addSubgraph(subgraph, proc.Name, "", "thistle3");
+                viz += AddSubgraph(subgraph, proc.Name, "", "thistle3");
 
                 if (virtualNodes)
                 {
@@ -61,12 +61,12 @@ namespace SequencePlanner.GTSP
                         {
                             if (proc.ID == pos.Process.ID && pos.Alternative?.ID == alt.ID)
                             {
-                                if (inEdges(g.Graph, pos.ID))
+                                if (InEdges(g.Graph, pos.ID))
                                     subgraphAlt += pos.Name + "; ";
                             }
                         }
-                        viz += addSubgraph(subgraphAlt, alt.Name, "\t\t", "lightblue");
-                        viz += addTasksSubgraph(alt);
+                        viz += AddSubgraph(subgraphAlt, alt.Name, "\t\t", "lightblue");
+                        viz += AddTasksSubgraph(alt);
                         viz += "\n\t\t}\n";
                     }
                 }
@@ -79,7 +79,7 @@ namespace SequencePlanner.GTSP
             return viz;
         }
 
-        private static string addSubgraph(string content, string label, string prefix = "\t", string color = "white")
+        private static string AddSubgraph(string content, string label, string prefix = "\t", string color = "white")
         {
             string viz = "";
             viz += "\n" + prefix + "subgraph cluster_" + label + "{";
@@ -89,7 +89,7 @@ namespace SequencePlanner.GTSP
             viz += content;
             return viz;
         }
-        private static string addTasksSubgraph(Alternative a)
+        private static string AddTasksSubgraph(Alternative a)
         {
             string tmp = "";
             foreach (var task in a.Tasks)
@@ -107,7 +107,7 @@ namespace SequencePlanner.GTSP
             return tmp;
         }
 
-        private static bool inEdges(GraphRepresentation g, int ID)
+        private static bool InEdges(GraphRepresentation g, int ID)
         {
             foreach (var edge in g.Edges)
             {

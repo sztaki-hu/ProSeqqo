@@ -22,55 +22,13 @@ namespace SequencePlanner.Phraser.Options
 
         public void Init()
         {
-            Options.Add(new TaskType()
-            {
-                Name = "TaskType",
-                IncludeableNames = new List<string> { "ProcessHierarchy", "ProcessPrecedence", "PositionPrecedence", "Line", "Line Precedence", "Contour Precedence", "ContourPenalty" },
-                Need = true
-            });
-
-            Options.Add(new EdgeWeightSource()
-            {
-                Name = "EdgeWeightSource",
-                IncludeableNames = new List<string> { "PositionList", "DistanceFunction", "PositionNumber" },
-                Need = true
-            });
-
-            Options.Add(new Dimension()
-            {
-                Name = "Dimensions",
-                IncludeableNames = new List<string> { },
-                Need = true
-            });
-
-            Options.Add(new TimeLimit()
-            {
-                Name = "TimeLimit",
-                IncludeableNames = new List<string> { },
-                Need = true
-            });
-
-            Options.Add(new CyclicSequence()
-            {
-                Name = "CyclicSequence",
-                IncludeableNames = new List<string> { },
-                Need = true
-            });
-
-            Options.Add(new WeightMultiplier()
-            {
-                Name = "WeightMultiplier",
-                IncludeableNames = new List<string> { },
-                Need = true
-            });
-
-            Options.Add(new DistanceFunction()
-            {
-                Name = "DistanceFunction",
-                IncludeableNames = new List<string> { "TrapezoidParams/Acceleration", "TrapezoidParams/Speed" },
-                Need = false
-            });
-
+            Options.Add(new TaskType());
+            Options.Add(new EdgeWeightSource());
+            Options.Add(new Dimension());
+            Options.Add(new TimeLimit());
+            Options.Add(new CyclicSequence());
+            Options.Add(new WeightMultiplier());
+            Options.Add(new DistanceFunction());
             Options.Add(new TrapezoidParamsAcceleration() { Name = "TrapezoidParams/Acceleration" });
             Options.Add(new TrapezoidParamsSpeed() { Name = "TrapezoidParams/Speed" });
             Options.Add(new StartDepot() { Name = "StartDepot" });
@@ -114,7 +72,7 @@ namespace SequencePlanner.Phraser.Options
                 if (tmp[i].Contains("**NewParam**"))
                 {
                     i++;
-                    var opt = findOption(tmp[i]);
+                    var opt = FindOption(tmp[i]);
                     if (opt != null && i < tmp.Count)
                     {
                         while ((tmp.Count > i) && !tmp[i].Contains("**NewParam**"))
@@ -145,7 +103,7 @@ namespace SequencePlanner.Phraser.Options
                     {
                         if (SequencerTask.DEBUG)
                             Console.WriteLine("Validated: " + option.Name + "!");
-                        addIncluded(result.NewInclude);
+                        AddIncluded(result.NewInclude);
                     }
                 }
             }
@@ -170,7 +128,7 @@ namespace SequencePlanner.Phraser.Options
                                 if (SequencerTask.DEBUG)
                                         Console.WriteLine("Validated: " + Included[i].Name + "!");
                                 Included[i].Included = true;
-                                included += addIncluded(result.NewInclude);
+                                included += AddIncluded(result.NewInclude);
                             }
                         }
                     }
@@ -214,7 +172,7 @@ namespace SequencePlanner.Phraser.Options
 
         }
 
-        public Option findOption(string Name)
+        public Option FindOption(string Name)
         {
             foreach (var item in Options)
             {
@@ -224,7 +182,7 @@ namespace SequencePlanner.Phraser.Options
             return null;
         }
 
-        private List<Option> getOptionsByNames(List<string> options)
+        private List<Option> GetOptionsByNames(List<string> options)
         {
             List<Option> ret = new List<Option>();
             foreach (var option in options)
@@ -238,9 +196,9 @@ namespace SequencePlanner.Phraser.Options
             return ret;
         }
 
-        private int addIncluded(List<string> optionNames)
+        private int AddIncluded(List<string> optionNames)
         {
-            List<Option> tmp = getOptionsByNames(optionNames);
+            List<Option> tmp = GetOptionsByNames(optionNames);
             int included = 0;
             foreach (var item in tmp)
             {

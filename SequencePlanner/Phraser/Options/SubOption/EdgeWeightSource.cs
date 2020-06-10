@@ -9,6 +9,13 @@ namespace SequencePlanner.Phraser.Options
     {
         public EdgeWeightSourceEnum Value { get; set; }
 
+        public EdgeWeightSource()
+        {
+            Name = "EdgeWeightSource";
+            IncludeableNames = new List<string> { "PositionList", "DistanceFunction", "PositionNumber" };
+            Need = true;
+        }
+
         public override ValidationResult Validate()
         {
             try

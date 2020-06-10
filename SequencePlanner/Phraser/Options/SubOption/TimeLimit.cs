@@ -8,6 +8,12 @@ namespace SequencePlanner.Phraser.Options
     {
         public int Value { get; set; }
 
+        public TimeLimit()
+        {
+            Name = "TimeLimit";
+            IncludeableNames = new List<string> { };
+            Need = true;
+        }
         public override ValidationResult Validate()
         {
             try

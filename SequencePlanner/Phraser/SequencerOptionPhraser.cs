@@ -10,22 +10,18 @@ namespace SequencePlanner.Phraser
     {
         public List<string> Lines { get; set; }
 
-        public SequencerOptionPhraser()
-        {
-        }
-
         public List<string> ReadFile(string[] rawLines)
         {
-            List<string> lines = findLines(rawLines);
-            lines = deleteComments(lines);
-            lines = deleteWhiteSpace(lines);
-            lines = changeDotToComma(lines);
-            lines = seperateByDoubleDot(lines);
+            List<string> lines = FindLines(rawLines);
+            lines = DeleteComments(lines);
+            lines = DeleteWhiteSpace(lines);
+            lines = ChangeDotToComma(lines);
+            lines = SeperateByDoubleDot(lines);
             Lines = lines;
             return Lines;
         }
 
-        private List<string> findLines(string[] lines)
+        private List<string> FindLines(string[] lines)
         {
             List<string> lineList = new List<string>();
             foreach (string line in lines)
@@ -34,7 +30,7 @@ namespace SequencePlanner.Phraser
             }
             return lineList;
         }
-        private List<string> deleteWhiteSpace(List<string> lines)
+        private List<string> DeleteWhiteSpace(List<string> lines)
         {
             List<string> cleanLines = new List<string>();
 
@@ -49,7 +45,7 @@ namespace SequencePlanner.Phraser
                 }
             return cleanLines;
         }
-        private List<string> deleteComments(List<string> lines)
+        private List<string> DeleteComments(List<string> lines)
         {
             List<string> noComments = new List<string>();
             string[] words;
@@ -60,7 +56,7 @@ namespace SequencePlanner.Phraser
             }
             return noComments;
         }
-        private List<string> seperateByDoubleDot(List<string> lines)
+        private List<string> SeperateByDoubleDot(List<string> lines)
         {
             List<string> sepByComma = new List<string>();
             string[] words;
@@ -76,7 +72,7 @@ namespace SequencePlanner.Phraser
             }
             return sepByComma;
         }
-        private List<string> changeDotToComma(List<string> lines)
+        private List<string> ChangeDotToComma(List<string> lines)
         {
             for (int i = 0; i < lines.Count; i++)
             {

@@ -6,7 +6,6 @@ namespace SequencePlanner.GTSP
 {
     public class GTSPRepresentation
     {
-
         private static double PlusInfity { get; set; }
         private static double MinusInfity { get; set; }
 
@@ -31,10 +30,11 @@ namespace SequencePlanner.GTSP
             ConstraintsDisjoints = new List<ConstraintDisjoint>();
             ConstraintsOrder = new List<ConstraintOrder>();
             EdgeWeightCalculator = EdgeWeightFunctions.Euclidian_Distance;
+            Graph = new GraphRepresentation();
         }
         internal void Build()
         {
-            Graph.createEdges(this);
+            Graph.CreateEdges(this);
             Graph.Build(this);
             //createEdges();
         }
@@ -96,7 +96,6 @@ namespace SequencePlanner.GTSP
                 AddPosition(task, item);
             }
         }
-
 
         public void ApplyConstraints() { }
         public void GenerateDisjunctSets()
@@ -189,6 +188,5 @@ namespace SequencePlanner.GTSP
             //    Console.WriteLine(edge.ToString()); ;
             //}
         }
-
     }
 }

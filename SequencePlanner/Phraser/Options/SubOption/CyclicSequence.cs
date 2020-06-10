@@ -9,6 +9,13 @@ namespace SequencePlanner.Phraser.Options
     {
         public bool Value { get; set; }
 
+        public CyclicSequence()
+        {
+            Name = "CyclicSequence";
+            IncludeableNames = new List<string> { };
+            Need = true;
+        }
+
         public override ValidationResult Validate()
         {
             try

@@ -9,6 +9,13 @@ namespace SequencePlanner.Phraser.Options
     {
         public new TaskTypeEnum Value { get; set; }
 
+        public TaskType()
+        {
+            Name = "TaskType";
+            IncludeableNames = new List<string> { "ProcessHierarchy", "ProcessPrecedence", "PositionPrecedence", "Line", "Line Precedence", "Contour Precedence", "ContourPenalty" };
+            Need = true;
+        }
+
         public override ValidationResult Validate()
         {
             try

@@ -34,7 +34,7 @@ namespace SequencePlanner.Phraser.Template
         public PositionMatrixOptionValue PositionMatrix      {get;set;}
         public int ContourPenalty      {get;set;}
 
-        public GraphRepresentation Graph { get; set; }
+        public GTSPRepresentation GTSP { get; set; }
         public List<Position> Solution { get; private set; }
         public List<Position> CleanSolution { get; private set; }
 
@@ -45,7 +45,7 @@ namespace SequencePlanner.Phraser.Template
         public Template()
         {
             OptionSet = new OptionSet();
-            Graph = new GraphRepresentation();
+            GTSP = new GTSPRepresentation();
         }
 
         public SequencerTask Read(string file)
@@ -71,35 +71,35 @@ namespace SequencePlanner.Phraser.Template
             {
                 if (OptionSet != null)
                 {
-                    TaskType = ((TaskType)OptionSet.findOption("TaskType")).Value;
-                    EdgeWeightSource = ((EdgeWeightSource)OptionSet.findOption("EdgeWeightSource")).Value;
-                    DistanceFunction = ((DistanceFunction)OptionSet.findOption("DistanceFunction")).Value;
+                    TaskType = ((TaskType)OptionSet.FindOption("TaskType")).Value;
+                    EdgeWeightSource = ((EdgeWeightSource)OptionSet.FindOption("EdgeWeightSource")).Value;
+                    DistanceFunction = ((DistanceFunction)OptionSet.FindOption("DistanceFunction")).Value;
                     
-                    Dimension = ((Dimension)OptionSet.findOption("Dimension")).Value;
-                    TimeLimit = ((TimeLimit)OptionSet.findOption("TimeLimit")).Value;
-                    CyclicSequence = ((CyclicSequence)OptionSet.findOption("CyclicSequence")).Value;
-                    StartDepotID = ((StartDepot)OptionSet.findOption("StartDepot")).Value;
-                    FinishDepotID = ((FinishDepot)OptionSet.findOption("FinishDepot")).Value;
+                    Dimension = ((Dimension)OptionSet.FindOption("Dimension")).Value;
+                    TimeLimit = ((TimeLimit)OptionSet.FindOption("TimeLimit")).Value;
+                    CyclicSequence = ((CyclicSequence)OptionSet.FindOption("CyclicSequence")).Value;
+                    StartDepotID = ((StartDepot)OptionSet.FindOption("StartDepot")).Value;
+                    FinishDepotID = ((FinishDepot)OptionSet.FindOption("FinishDepot")).Value;
 
-                    WeightMultiplier = ((WeightMultiplier)OptionSet.findOption("WeightMultiplier")).Value;
+                    WeightMultiplier = ((WeightMultiplier)OptionSet.FindOption("WeightMultiplier")).Value;
                     if (WeightMultiplier == -1)
                         WeightMultiplierAuto = true;
 
-                    TrapezoidParamsAcceleration = ((TrapezoidParamsAcceleration)OptionSet.findOption("TrapezoidParams/Acceleration")).Value;
-                    TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)OptionSet.findOption("TrapezoidParams/Speed")).Value;
-                    Graph.EdgeWeightCalculator = EdgeWeightFunctions.toFunction(DistanceFunction);
+                    TrapezoidParamsAcceleration = ((TrapezoidParamsAcceleration)OptionSet.FindOption("TrapezoidParams/Acceleration")).Value;
+                    TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)OptionSet.FindOption("TrapezoidParams/Speed")).Value;
+                    GTSP.EdgeWeightCalculator = EdgeWeightFunctions.toFunction(DistanceFunction);
 
-                    ProcessHierarchy = ((ProcessHierarchy)OptionSet.findOption("ProcessHierarchy")).Value;
-                    ProcessPrecedence = ((ProcessPrecedence)OptionSet.findOption("ProcessPrecedence")).Value;
-                    PositionPrecedence = ((PositionPrecedence)OptionSet.findOption("PositionPrecedence")).Value;
-                    LineList = ((LineList)OptionSet.findOption("LineList")).Value;
-                    LinePrecedence = ((LinePrecedence)OptionSet.findOption("LinePrecedence")).Value;
-                    ContourPrecedence = ((ContourPrecedence)OptionSet.findOption("ContourPrecedence")).Value;
-                    ContourPenalty = ((ContourPenalty)OptionSet.findOption("ContourPenalty")).Value;
+                    ProcessHierarchy = ((ProcessHierarchy)OptionSet.FindOption("ProcessHierarchy")).Value;
+                    ProcessPrecedence = ((ProcessPrecedence)OptionSet.FindOption("ProcessPrecedence")).Value;
+                    PositionPrecedence = ((PositionPrecedence)OptionSet.FindOption("PositionPrecedence")).Value;
+                    LineList = ((LineList)OptionSet.FindOption("LineList")).Value;
+                    LinePrecedence = ((LinePrecedence)OptionSet.FindOption("LinePrecedence")).Value;
+                    ContourPrecedence = ((ContourPrecedence)OptionSet.FindOption("ContourPrecedence")).Value;
+                    ContourPenalty = ((ContourPenalty)OptionSet.FindOption("ContourPenalty")).Value;
 
-                    PositionList = ((PositionList)OptionSet.findOption("PositionList")).Value;
-                    PositionNumber = ((PositionNumber)OptionSet.findOption("PositionNumber")).Value;
-                    PositionMatrix = ((PositionMatrix)OptionSet.findOption("PositionMatrix")).Value;
+                    PositionList = ((PositionList)OptionSet.FindOption("PositionList")).Value;
+                    PositionNumber = ((PositionNumber)OptionSet.FindOption("PositionNumber")).Value;
+                    PositionMatrix = ((PositionMatrix)OptionSet.FindOption("PositionMatrix")).Value;
 
                 }
                 else

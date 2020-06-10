@@ -10,6 +10,13 @@ namespace SequencePlanner.Phraser.Options
 
         public DistanceFunctionEnum Value { get; set; }
 
+        public DistanceFunction()
+        {
+            Name = "DistanceFunction";
+            IncludeableNames = new List<string> { "TrapezoidParams/Acceleration", "TrapezoidParams/Speed" };
+            Need = false;
+        }
+
         public override ValidationResult Validate()
         {
             try
