@@ -16,8 +16,8 @@ namespace SequencePlanner.Phraser.Template
             Positions = new List<Position>();
             SequencerTask sequencerTask = new SequencerTask();
             PositionList(template);
-            ProcessHierarchy(sequencerTask, template);
             sequencerTask.GTSP = template.GTSP;
+            ProcessHierarchy(sequencerTask, template);
             return sequencerTask;
         }
 

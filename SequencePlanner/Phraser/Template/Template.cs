@@ -55,6 +55,7 @@ namespace SequencePlanner.Phraser.Template
             List<string> linesList = phraser.ReadFile(lines);
             OptionSet.FillValues(linesList);
             OptionSet.Validate();
+            SetOptionSet();
             Validate();
             return Compile();
         }
@@ -64,9 +65,8 @@ namespace SequencePlanner.Phraser.Template
             throw new NotImplementedException();
         }
         
-        public SequencerTask Compile()
+        private void SetOptionSet()
         {
-            //return TemplateCompiler.Compile(this);
             try
             {
                 if (OptionSet != null)
@@ -74,13 +74,11 @@ namespace SequencePlanner.Phraser.Template
                     TaskType = ((TaskType)OptionSet.FindOption("TaskType")).Value;
                     EdgeWeightSource = ((EdgeWeightSource)OptionSet.FindOption("EdgeWeightSource")).Value;
                     DistanceFunction = ((DistanceFunction)OptionSet.FindOption("DistanceFunction")).Value;
-                    
                     Dimension = ((Dimension)OptionSet.FindOption("Dimension")).Value;
                     TimeLimit = ((TimeLimit)OptionSet.FindOption("TimeLimit")).Value;
                     CyclicSequence = ((CyclicSequence)OptionSet.FindOption("CyclicSequence")).Value;
                     StartDepotID = ((StartDepot)OptionSet.FindOption("StartDepot")).Value;
                     FinishDepotID = ((FinishDepot)OptionSet.FindOption("FinishDepot")).Value;
-
                     WeightMultiplier = ((WeightMultiplier)OptionSet.FindOption("WeightMultiplier")).Value;
                     if (WeightMultiplier == -1)
                         WeightMultiplierAuto = true;
@@ -88,7 +86,6 @@ namespace SequencePlanner.Phraser.Template
                     TrapezoidParamsAcceleration = ((TrapezoidParamsAcceleration)OptionSet.FindOption("TrapezoidParams/Acceleration")).Value;
                     TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)OptionSet.FindOption("TrapezoidParams/Speed")).Value;
                     GTSP.EdgeWeightCalculator = EdgeWeightFunctions.toFunction(DistanceFunction);
-
                     ProcessHierarchy = ((ProcessHierarchy)OptionSet.FindOption("ProcessHierarchy")).Value;
                     ProcessPrecedence = ((ProcessPrecedence)OptionSet.FindOption("ProcessPrecedence")).Value;
                     PositionPrecedence = ((PositionPrecedence)OptionSet.FindOption("PositionPrecedence")).Value;
@@ -96,11 +93,9 @@ namespace SequencePlanner.Phraser.Template
                     LinePrecedence = ((LinePrecedence)OptionSet.FindOption("LinePrecedence")).Value;
                     ContourPrecedence = ((ContourPrecedence)OptionSet.FindOption("ContourPrecedence")).Value;
                     ContourPenalty = ((ContourPenalty)OptionSet.FindOption("ContourPenalty")).Value;
-
                     PositionList = ((PositionList)OptionSet.FindOption("PositionList")).Value;
                     PositionNumber = ((PositionNumber)OptionSet.FindOption("PositionNumber")).Value;
                     PositionMatrix = ((PositionMatrix)OptionSet.FindOption("PositionMatrix")).Value;
-
                 }
                 else
                 {
@@ -111,12 +106,18 @@ namespace SequencePlanner.Phraser.Template
             {
                 Console.WriteLine("Template:Validate failed " + e.Message);
             }
+        }
+
+        public SequencerTask Compile()
+        {
             return TemplateCompiler.Compile(this);
+
         }
 
         private void Validate()
         {
-           
+            if(!TemplateValidator.Validate(this))
+                Console.WriteLine("Template validation error!");
         }
     }
 }

@@ -16,7 +16,7 @@ namespace SequencePlanner.Phraser.Options
                 for (int i = 1; i < ValueString.Count; i++)
                 {
                     ProcessHierarchyOptionValue tmp = new ProcessHierarchyOptionValue();
-                    tmp.fromString(ValueString[i]);
+                    tmp.FromString(ValueString[i]);
                     Value.Add(tmp);
                 }
                 Validated = true;
@@ -34,7 +34,7 @@ namespace SequencePlanner.Phraser.Options
         {
             foreach (var item in values)
             {
-
+                
             }
             return true;
         }

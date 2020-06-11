@@ -12,7 +12,7 @@ namespace SequencePlanner
         public void ReadFileTest()
         {
             Template template = new Template();
-            SequencerTask task = template.Read("test.txt");
+            SequencerTask task = template.Read("test10.txt");
             task.Build();
             task.Run();
             GraphViz.CreateGraphViz(task.GTSP, "FromFile.dot");

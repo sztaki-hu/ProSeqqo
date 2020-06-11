@@ -28,8 +28,6 @@ namespace SequencePlanner
 
         public SequencerTask()
         {
-            ORtool = new ORToolsWrapper(this);
-            GTSP = new GTSPRepresentation();
         }
 
         public void Build()

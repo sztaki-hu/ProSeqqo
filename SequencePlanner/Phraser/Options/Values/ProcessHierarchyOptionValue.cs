@@ -19,7 +19,7 @@ namespace SequencePlanner.Phraser.Options.Values
             ProcessID = -1;
         }
 
-        public void fromString(string input)
+        public void FromString(string input)
         {
             string[] tmp = input.Split(';');     //1;2;3--->[1][2][3]
             PositionID = int.Parse(tmp[0]);

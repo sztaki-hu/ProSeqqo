@@ -12,6 +12,7 @@ namespace SequencePlanner.Phraser.Options
 
         public override ValidationResult Validate()
         {
+            Value = -1;
             try
             {
                 Value = int.Parse(ValueString[1]);
