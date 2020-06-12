@@ -24,19 +24,16 @@ namespace SequenceUnitTests
 
             Position pos = new Position();
             Position pos2 = new Position();
-            GraphRepresentation graph = new GraphRepresentation();
+            GTSPRepresentation gtsp = new GTSPRepresentation();
 
-            graph.addProcess(p);
-            graph.addProcess(p2);
-            graph.addAlternative(p, new Alternative[] { a, b, c });
-            graph.addAlternative(p2, new Alternative[] { a2, b2, c2 });
-            graph.addTask(a, t);
-            graph.addTask(a2, t2);
-            graph.addPosition(t, pos);
-            graph.addPosition(t2, pos2);
-            graph.createEdgesVirtual();
-
-            graph.WriteGraph();
+            gtsp.AddProcess(p);
+            gtsp.AddProcess(p2);
+            gtsp.AddAlternative(p, new Alternative[] { a, b, c });
+            gtsp.AddAlternative(p2, new Alternative[] { a2, b2, c2 });
+            gtsp.AddTask(a, t);
+            gtsp.AddTask(a2, t2);
+            gtsp.AddPosition(t, pos);
+            gtsp.AddPosition(t2, pos2);
 
         }
     }
