@@ -1,5 +1,3 @@
-
-
 :earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
 :clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets)<br>
 :computer: [Use from code](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-code) <br>
@@ -41,8 +39,7 @@ Generic task sequencer that captures typical sequencing problems encountered in 
 **Edge weights** → Implemented common distance functions (e.g., max, Euclidean, trapezoid speed, etc.). Distance matrix (in case of complex paths between positions).
 
  
-![rawgraph2](uploads/4989da73fea970b68c038c986790a70d/rawgraph2.png)
-
+![rawgraph2](/uploads/636d217563250509f8eff13a35f6c8d5/rawgraph2.png)
 
 
 Installation:
