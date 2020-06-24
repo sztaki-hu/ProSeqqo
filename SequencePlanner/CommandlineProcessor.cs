@@ -32,14 +32,18 @@ namespace SequencePlanner
         }
 
         private static void Run()
-        {      
-            Template template = new Template();
-            SequencerTask task = template.Read("test10.txt");
-            SequencerTask.DEBUG = debug;
-            task.Build();
-            task.Run();
-            GraphViz.CreateGraphViz(task.GTSP, "FromFile.dot");
-            task.GTSP.Graph.WriteGraph();
+        {
+            if (input != null)
+            {
+                Template template = new Template();
+                SequencerTask task = template.Read(input);
+                SequencerTask.DEBUG = debug;
+                task.Build();
+                task.Run();
+                if (graphviz != null)
+                    GraphViz.CreateGraphViz(task.GTSP, graphviz);
+                //task.GTSP.Graph.WriteGraph();
+            }
         }
 
         private static void DefaultRun()
@@ -59,19 +63,25 @@ namespace SequencePlanner
                 if(item.Equals("-help") || item.Equals("-h"))
                 {
                     Console.WriteLine("Commands:");
-                    Console.WriteLine("+-------------+----------+---------------------------------------+---------+\n" +
-                                      "|   Command   | Shortcut |             Parameter                 | Comment |\n" +
-                                      "+-------------+----------+---------------------------------------+---------+\n" +
-                                      "| -help       |    -h    | -                                     |         |\n" +
-                                      "+-------------+----------+---------------------------------------+---------+\n" +
-                                      "| -in         |    -i    | < Input path >                        |         |\n" +
-                                      "+-------------+----------+---------------------------------------+---------+\n" +
-                                      "| -out        |    -o    | < Output path >                       |         |\n" +
-                                      "+-------------+----------+---------------------------------------+---------+\n" +
-                                      "| -graphViz   |    -g    | < GraphViz diagram output file(.dot) >|         |\n" +
-                                      "+-------------+----------+---------------------------------------+---------+\n" +
-                                      "| -debug      |    -d    | -                                     |         |\n" +
-                                      "+-------------+----------+---------------------------------------+---------+");
+                    Console.WriteLine("+-------------+----------+--------------------------------+------------------------------------+\n" +
+                                      "|   Command   | Shortcut |           Parameter            |               Comment              |\n" +
+                                      "+-------------+----------+--------------------------------+------------------------------------+\n" +
+                                      "| -help       |    -h    | -                              |                                    |\n" +
+                                      "+-------------+----------+--------------------------------+------------------------------------+\n" +
+                                      "| -in         |    -i    | < Input path >                 |                                    |\n" +
+                                      "+-------------+----------+--------------------------------+------------------------------------+\n" +
+                                      "| -out        |    -o    | < Output path >                |                                    |\n" +
+                                      "+-------------+----------+--------------------------------+------------------------------------+\n" +
+                                      "| -graphViz   |    -g    | < Graphviz output file paht>   |  GraphViz diagram output file(.dot)|\n" +
+                                      "+-------------+----------+--------------------------------+------------------------------------+\n" +
+                                      "| -debug      |    -d    | -                              |  Write details of execution.       |\n" +
+                                      "+-------------+----------+--------------------------------+------------------------------------+");
+                    Console.WriteLine("Example: Sequencer.exe -i test.txt -o outputFile.txt -g visualgraph.dot");
+                    var url = "https://git.sztaki.hu/zahoranl/sequenceplanner/";
+                    Console.WriteLine("Input file details: "+url);
+                    Console.WriteLine("Press [w] to open SZTAKI GitLab!");
+                    if(Console.ReadKey().Key == ConsoleKey.W)
+                        System.Diagnostics.Process.Start("explorer", url);
                 }
             }
         }
@@ -89,26 +99,36 @@ namespace SequencePlanner
         }
         private static string Output(string[] args)
         {
+            var findCommand = false;
             for (int i = 0; i < args.Length; i++)
             {
                 if (args[i].Equals("-output") || args[i].Equals("-o"))
                 {
+                    findCommand = true;
                     return args[i + 1];
                 }
             }
-            Console.WriteLine("Output file needed!");
+            if (findCommand)
+            {
+                Console.WriteLine("Output file needed!");
+            }
             return null;
         }
         private static string GraphVizOutput(string[] args)
         {
+            var findCommand = false;
             for (int i = 0; i < args.Length; i++)
             {
                 if (args[i].Equals("-graphViz") || args[i].Equals("-g"))
                 {
+                    findCommand = true;
                     return args[i + 1];
                 }
             }
-            Console.WriteLine("GraphViz output file path needed!");
+            if (findCommand)
+            {
+                Console.WriteLine("GraphViz output file path needed!");
+            }
             return null;
         }
         private static bool Debug(string[] args)
