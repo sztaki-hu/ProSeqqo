@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SequencePlanner.Phraser
+namespace SequencePlanner.Phraser.Helper
 {
     public class ValidationResult
     {

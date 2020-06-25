@@ -44,17 +44,18 @@ namespace SequencePlanner.Phraser.Template
 
         public Template()
         {
-            OptionSet = new OptionSet();
+            OptionSet = new SeqOptionSet();
             GTSP = new GTSPRepresentation();
         }
 
         public SequencerTask Read(string file)
         {
-            string[] lines = File.ReadAllLines(@file);
-            SequencerOptionPhraser phraser = new SequencerOptionPhraser();
-            List<string> linesList = phraser.ReadFile(lines);
-            OptionSet.FillValues(linesList);
-            OptionSet.Validate();
+            OptionSet.ReadFile(file);
+            //string[] lines = File.ReadAllLines(@file);
+            //OptionSetPhraser phraser = new OptionSetPhraser();
+            //List<string> linesList = phraser.ReadFile(lines);
+            //OptionSet.FillValues(linesList);
+            //OptionSet.Validate();
             SetOptionSet();
             Validate();
             return Compile();

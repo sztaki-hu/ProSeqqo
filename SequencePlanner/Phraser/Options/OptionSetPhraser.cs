@@ -1,12 +1,8 @@
-﻿using SequencePlanner.Phraser.Options;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace SequencePlanner.Phraser
+namespace SequencePlanner.Phraser.Options
 {
-    public class SequencerOptionPhraser
+    public class OptionSetPhraser
     {
         public List<string> Lines { get; set; }
 

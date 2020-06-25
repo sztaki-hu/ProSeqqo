@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Phraser.Options.Values;
+﻿using SequencePlanner.Phraser.Helper;
+using SequencePlanner.Phraser.Options.Values;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,7 @@ namespace SequencePlanner.Phraser.Options
     public class PositionPrecedence : Option
     {
         public List<PrecedenceOptionValue> Value { get; set; }
+
         public PositionPrecedence()
         {
             Name = "PositionPrecedence";

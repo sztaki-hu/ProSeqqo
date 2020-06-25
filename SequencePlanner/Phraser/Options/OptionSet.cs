@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace SequencePlanner.Phraser.Options
 {
-    public class OptionSet
+    public abstract class OptionSet
     {
         public List<Option> Options;
         public List<Option> Need;
@@ -20,37 +21,17 @@ namespace SequencePlanner.Phraser.Options
             Init();
         }
 
-        public void Init()
+        public abstract void Init();
+
+        public void ReadFile(string file)
         {
-            Options.Add(new TaskType());
-            Options.Add(new EdgeWeightSource());
-            Options.Add(new Dimension());
-            Options.Add(new TimeLimit());
-            Options.Add(new CyclicSequence());
-            Options.Add(new WeightMultiplier());
-            Options.Add(new DistanceFunction());
-            Options.Add(new TrapezoidParamsAcceleration());
-            Options.Add(new TrapezoidParamsSpeed());
-            Options.Add(new StartDepot());
-            Options.Add(new FinishDepot());
-            Options.Add(new ProcessHierarchy());
-            Options.Add(new ProcessPrecedence());
-            Options.Add(new PositionPrecedence());
-            Options.Add(new LineList());
-            Options.Add(new LinePrecedence());
-            Options.Add(new ContourPrecedence());
-            Options.Add(new PositionList());
-            Options.Add(new PositionNumber());
-            Options.Add(new PositionMatrix());
-            Options.Add(new ContourPenalty());
-
-            foreach (var item in Options)
-            {
-                if (item.Need)
-                    Need.Add(item);
-            }
+            string[] lines = File.ReadAllLines(@file);
+            OptionSetPhraser phraser = new OptionSetPhraser();
+            List<string> linesList = phraser.ReadFile(lines);
+            FillValues(linesList);
+            Validate();      
         }
-
+       
         public void FillValues(List<string> lines)
         {
             List<string> tmp = new List<string>();
