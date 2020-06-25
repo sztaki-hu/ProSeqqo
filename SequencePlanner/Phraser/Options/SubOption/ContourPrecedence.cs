@@ -9,6 +9,10 @@ namespace SequencePlanner.Phraser.Options
     public class ContourPrecedence : Option
     {
         public List<PrecedenceOptionValue> Value { get; set; }
+        public ContourPrecedence()
+        {
+            Name = "ContourPrecedence";
+        }
         public override ValidationResult Validate()
         {
             try

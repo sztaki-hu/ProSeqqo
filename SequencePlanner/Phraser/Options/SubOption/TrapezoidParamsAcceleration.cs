@@ -8,6 +8,11 @@ namespace SequencePlanner.Phraser.Options
     {
         public List<double> Value { get; set; }
 
+        public TrapezoidParamsAcceleration()
+        {
+            Name = "TrapezoidParams/Acceleration";
+        }
+
         public override ValidationResult Validate()
         {
             try

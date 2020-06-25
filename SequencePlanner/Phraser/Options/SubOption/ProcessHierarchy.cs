@@ -8,6 +8,11 @@ namespace SequencePlanner.Phraser.Options
     public class ProcessHierarchy : Option
     {
         public List<ProcessHierarchyOptionValue> Value { get;set; }
+
+        public ProcessHierarchy()
+        {
+            Name = "ProcessHierarchy";
+        }
         public override ValidationResult Validate()
         {
             try

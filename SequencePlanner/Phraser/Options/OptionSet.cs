@@ -29,20 +29,20 @@ namespace SequencePlanner.Phraser.Options
             Options.Add(new CyclicSequence());
             Options.Add(new WeightMultiplier());
             Options.Add(new DistanceFunction());
-            Options.Add(new TrapezoidParamsAcceleration() { Name = "TrapezoidParams/Acceleration" });
-            Options.Add(new TrapezoidParamsSpeed() { Name = "TrapezoidParams/Speed" });
-            Options.Add(new StartDepot() { Name = "StartDepot" });
-            Options.Add(new FinishDepot() { Name = "FinishDepot" });
-            Options.Add(new ProcessHierarchy() { Name = "ProcessHierarchy" });
-            Options.Add(new ProcessPrecedence() { Name = "ProcessPrecedence" });
-            Options.Add(new PositionPrecedence() { Name = "PositionPrecedence" });
-            Options.Add(new LineList() { Name = "LineList" });
-            Options.Add(new LinePrecedence() { Name = "LinePrecedence" });
-            Options.Add(new ContourPrecedence() { Name = "ContourPrecedence" });
-            Options.Add(new PositionList() { Name = "PositionList" });
-            Options.Add(new PositionNumber() { Name = "PositionNumber" });
-            Options.Add(new PositionMatrix() { Name = "PositionMatrix" });
-            Options.Add(new ContourPenalty() { Name = "ContourPenalty" });
+            Options.Add(new TrapezoidParamsAcceleration());
+            Options.Add(new TrapezoidParamsSpeed());
+            Options.Add(new StartDepot());
+            Options.Add(new FinishDepot());
+            Options.Add(new ProcessHierarchy());
+            Options.Add(new ProcessPrecedence());
+            Options.Add(new PositionPrecedence());
+            Options.Add(new LineList());
+            Options.Add(new LinePrecedence());
+            Options.Add(new ContourPrecedence());
+            Options.Add(new PositionList());
+            Options.Add(new PositionNumber());
+            Options.Add(new PositionMatrix());
+            Options.Add(new ContourPenalty());
 
             foreach (var item in Options)
             {

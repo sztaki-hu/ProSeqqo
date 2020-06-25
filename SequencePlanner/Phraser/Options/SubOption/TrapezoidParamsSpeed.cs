@@ -7,7 +7,10 @@ namespace SequencePlanner.Phraser.Options
     public class TrapezoidParamsSpeed: Option
     {
         public List<double> Value { get; set; }
-
+        public TrapezoidParamsSpeed()
+        {
+            Name = "TrapezoidParams/Speed";
+        }
         public override ValidationResult Validate()
         {
             try

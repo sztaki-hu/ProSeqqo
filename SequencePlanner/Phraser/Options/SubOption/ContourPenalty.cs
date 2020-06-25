@@ -8,7 +8,10 @@ namespace SequencePlanner.Phraser.Options
     public class ContourPenalty: Option
     {
         public int Value { get; set; }
+        public ContourPenalty() {
 
+            Name = "ContourPenalty";
+        }
         public override ValidationResult Validate()
         {
             try

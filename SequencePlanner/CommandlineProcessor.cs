@@ -49,10 +49,10 @@ namespace SequencePlanner
         private static void DefaultRun()
         {
             Template template = new Template();
-            SequencerTask task = template.Read("test10.txt");
+            SequencerTask task = template.Read("test/test10.txt");
             task.Build();
             task.Run();
-            GraphViz.CreateGraphViz(task.GTSP, "FromFile.dot");
+            GraphViz.CreateGraphViz(task.GTSP, "test/FromFile.dot");
             task.GTSP.Graph.WriteGraph();
         }
 
@@ -94,7 +94,7 @@ namespace SequencePlanner
                     return args[i + 1];
                 }
             }
-            Console.WriteLine("Input file needed!");
+            Console.WriteLine("Input file needed! Use -h/-help command for details!");
             return null; 
         }
         private static string Output(string[] args)
@@ -127,7 +127,7 @@ namespace SequencePlanner
             }
             if (findCommand)
             {
-                Console.WriteLine("GraphViz output file path needed!");
+                Console.WriteLine("GraphViz output file path needed! Use -h/-help command for details!");
             }
             return null;
         }

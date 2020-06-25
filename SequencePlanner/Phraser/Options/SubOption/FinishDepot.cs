@@ -10,6 +10,11 @@ namespace SequencePlanner.Phraser.Options
     {
         public int Value { get; set; }
 
+        public FinishDepot()
+        {
+            Name = "FinishDepot";
+        }
+
         public override ValidationResult Validate()
         {
             Value = -1;

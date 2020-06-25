@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Phraser.Options.Values;
+﻿using SequencePlanner.GTSP;
+using SequencePlanner.Phraser.Options.Values;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,10 @@ namespace SequencePlanner.Phraser.Options
     {
         public PositionMatrixOptionValue Value { get; set; }
 
+        public PositionMatrix()
+        {
+            Name = "PositionMatrix";
+        }
         public override ValidationResult Validate()
         {
             try

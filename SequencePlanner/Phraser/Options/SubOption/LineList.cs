@@ -9,6 +9,11 @@ namespace SequencePlanner.Phraser.Options
     public class LineList : Option
     {
         public List<LineListOptionValue> Value { get; set; }
+
+        public LineList()
+        {
+            Name = "LineList";
+        }
         public override ValidationResult Validate()
         {
             try

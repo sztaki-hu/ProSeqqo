@@ -9,6 +9,10 @@ namespace SequencePlanner.Phraser.Options
     {
         public new List<PositionOptionValue> Value { get; set; }
 
+        public PositionList()
+        {
+            Name = "PositionList";
+        }
         public override ValidationResult Validate()
         {
             try

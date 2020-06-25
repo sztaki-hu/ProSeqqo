@@ -9,6 +9,11 @@ namespace SequencePlanner.Phraser.Options
     public class LinePrecedence : Option
     {
         public List<PrecedenceOptionValue> Value { get; set; }
+
+        public LinePrecedence()
+        {
+            Name = "LinePrecedence";
+        }
         public override ValidationResult Validate()
         {
             try

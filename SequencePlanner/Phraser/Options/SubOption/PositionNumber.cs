@@ -8,6 +8,10 @@ namespace SequencePlanner.Phraser.Options
     {
         public int Value { get; set; }
 
+        public PositionNumber()
+        {
+            Name = "PositionNumber";
+        }
         public override ValidationResult Validate()
         {
             try

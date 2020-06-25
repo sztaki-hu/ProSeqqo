@@ -111,7 +111,6 @@ namespace SequencePlanner.Phraser.Template
         public SequencerTask Compile()
         {
             return TemplateCompiler.Compile(this);
-
         }
 
         private void Validate()

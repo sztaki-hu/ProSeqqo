@@ -8,6 +8,10 @@ namespace SequencePlanner.Phraser.Options
     public class PositionPrecedence : Option
     {
         public List<PrecedenceOptionValue> Value { get; set; }
+        public PositionPrecedence()
+        {
+            Name = "PositionPrecedence";
+        }
         public override ValidationResult Validate()
         {
             try
