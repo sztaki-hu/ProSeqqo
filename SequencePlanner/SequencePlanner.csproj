@@ -8,4 +8,8 @@
     <PackageReference Include="Google.OrTools" Version="7.6.7691" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Task\" />
+  </ItemGroup>
+
 </Project>

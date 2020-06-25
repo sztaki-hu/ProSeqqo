@@ -1,4 +1,6 @@
 ﻿using SequencePlanner.GTSP;
+using SequencePlanner.Phraser.Mapper;
+using SequencePlanner.Phraser.Options;
 using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
@@ -35,8 +37,13 @@ namespace SequencePlanner
         {
             if (input != null)
             {
-                Template template = new Template();
-                SequencerTask task = template.Read(input);
+                SeqOptionSet optionSet = new SeqOptionSet();
+
+                optionSet.ReadFile("test/test10.txt");
+                optionSet.Validate();
+                Template template = SeqOptionsToTemplate.Map(optionSet);
+                template.Validate();
+                SequencerTask task = template.Compile();
                 SequencerTask.DEBUG = debug;
                 task.Build();
                 task.Run();
@@ -48,8 +55,12 @@ namespace SequencePlanner
 
         private static void DefaultRun()
         {
-            Template template = new Template();
-            SequencerTask task = template.Read("test/test10.txt");
+            SeqOptionSet optionSet = new SeqOptionSet();
+            optionSet.ReadFile("test/test10.txt");
+            optionSet.Validate();
+            Template template = SeqOptionsToTemplate.Map(optionSet);
+            template.Validate();
+            SequencerTask task = template.Compile();
             task.Build();
             task.Run();
             GraphViz.CreateGraphViz(task.GTSP, "test/FromFile.dot");

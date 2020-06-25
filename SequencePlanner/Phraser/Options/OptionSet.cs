@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SequencePlanner.Task;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -29,7 +30,6 @@ namespace SequencePlanner.Phraser.Options
             OptionSetPhraser phraser = new OptionSetPhraser();
             List<string> linesList = phraser.ReadFile(lines);
             FillValues(linesList);
-            Validate();      
         }
        
         public void FillValues(List<string> lines)

@@ -1,4 +1,5 @@
 ﻿using Google.OrTools.ConstraintSolver;
+using SequencePlanner.Task;
 using System;
 using System.Collections.Generic;
 using System.Text;

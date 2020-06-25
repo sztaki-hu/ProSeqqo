@@ -1,6 +1,8 @@
 ﻿using SequencePlanner.GTSP;
+using SequencePlanner.Phraser.Options;
 using SequencePlanner.Phraser.Options.Values;
 using SequencePlanner.Phraser.Template;
+using SequencePlanner.Task;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +13,16 @@ namespace SequencePlanner
     {
         public void ReadFileTest()
         {
+            SeqOptionSet optionSet = new SeqOptionSet();
             Template template = new Template();
-            SequencerTask task = template.Read("test10.txt");
+            optionSet.ReadFile("test/test10.txt");
+            optionSet.Validate();
+            template.OptionSet = optionSet;
+            template.Validate();
+            SequencerTask task = template.Compile();
             task.Build();
             task.Run();
-            GraphViz.CreateGraphViz(task.GTSP, "FromFile.dot");
+            GraphViz.CreateGraphViz(task.GTSP, "test/FromFile.dot");
             task.GTSP.Graph.WriteGraph();
         }
         public void RepresentationTest()
@@ -43,10 +50,10 @@ namespace SequencePlanner
             Alternative p4b = new Alternative();
             Alternative p4c = new Alternative();
 
-            List<Task> t = new List<Task>();
+            List<GTSP.Task> t = new List<GTSP.Task>();
             for (int i = 0; i < 80; i++)
             {
-                t.Add(new Task());
+                t.Add(new GTSP.Task());
             }
             List<Position> pos = new List<Position>();
             for (int i = 0; i < 80; i++)
@@ -56,9 +63,9 @@ namespace SequencePlanner
 
             gtsp.AddProcess(p);
             gtsp.AddAlternative(p, new Alternative[] { pa, pb, pc });
-            gtsp.AddTask(pa, new Task[] { t[0], t[1] });
-            gtsp.AddTask(pb, new Task[] { t[2], t[3] });
-            gtsp.AddTask(pc, new Task[] { t[4], t[5] });
+            gtsp.AddTask(pa, new GTSP.Task[] { t[0], t[1] });
+            gtsp.AddTask(pb, new GTSP.Task[] { t[2], t[3] });
+            gtsp.AddTask(pc, new GTSP.Task[] { t[4], t[5] });
             gtsp.AddPosition(t[0], new Position[] { pos[0], pos[1] });
             gtsp.AddPosition(t[1], new Position[] { pos[2], pos[3] });
             gtsp.AddPosition(t[2], new Position[] { pos[4], pos[5] });
@@ -68,9 +75,9 @@ namespace SequencePlanner
                  
             gtsp.AddProcess(p2);
             gtsp.AddAlternative(p2, new Alternative[] { p2a, p2b, p2c });
-            gtsp.AddTask(p2a, new Task[] { t[6], t[7] , t[8], t[9] });
-            gtsp.AddTask(p2b, new Task[] { });
-            gtsp.AddTask(p2c, new Task[] { t[10], t[11] });
+            gtsp.AddTask(p2a, new GTSP.Task[] { t[6], t[7] , t[8], t[9] });
+            gtsp.AddTask(p2b, new GTSP.Task[] { });
+            gtsp.AddTask(p2c, new GTSP.Task[] { t[10], t[11] });
             gtsp.AddPosition(t[6], new Position[] { pos[13], pos[14] });
             gtsp.AddPosition(t[7], new Position[] { pos[15], pos[16], pos[17], pos[18] });
             gtsp.AddPosition(t[8], new Position[] { pos[19], pos[20] });
@@ -81,9 +88,9 @@ namespace SequencePlanner
                  
             gtsp.AddProcess(p3);
             gtsp.AddAlternative(p3, new Alternative[] { p3a, p3b, p3c });
-            gtsp.AddTask(p3a, new Task[] { t[12], t[13] });
-            gtsp.AddTask(p3b, new Task[] { t[14], t[15], t[16] });
-            gtsp.AddTask(p3c, new Task[] { t[17] });
+            gtsp.AddTask(p3a, new GTSP.Task[] { t[12], t[13] });
+            gtsp.AddTask(p3b, new GTSP.Task[] { t[14], t[15], t[16] });
+            gtsp.AddTask(p3c, new GTSP.Task[] { t[17] });
             gtsp.AddPosition(t[12], new Position[] { pos[28], pos[29] });
             gtsp.AddPosition(t[13], new Position[] { pos[30], pos[31] });
             gtsp.AddPosition(t[14], new Position[] { pos[32], pos[33] });
@@ -93,9 +100,9 @@ namespace SequencePlanner
                  
             gtsp.AddProcess(p4);
             gtsp.AddAlternative(p4, new Alternative[] { p4a, p4b, p4c });
-            gtsp.AddTask(p4a, new Task[] { t[18], t[19] });
-            gtsp.AddTask(p4b, new Task[] { t[20], t[21], t[22] });
-            gtsp.AddTask(p4c, new Task[] { t[23] });
+            gtsp.AddTask(p4a, new GTSP.Task[] { t[18], t[19] });
+            gtsp.AddTask(p4b, new GTSP.Task[] { t[20], t[21], t[22] });
+            gtsp.AddTask(p4c, new GTSP.Task[] { t[23] });
             gtsp.AddPosition(t[18], new Position[] { pos[42], pos[43] });
             gtsp.AddPosition(t[19], new Position[] { pos[44], pos[45], pos[46] });
             gtsp.AddPosition(t[20], new Position[] { pos[47] });
