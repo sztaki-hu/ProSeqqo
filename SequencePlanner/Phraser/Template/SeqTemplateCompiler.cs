@@ -7,11 +7,11 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public static class TemplateCompiler
+    public static class SeqTemplateCompiler
     {
         private static List<Position> Positions;
 
-        public static SequencerTask Compile(Template template)
+        public static SequencerTask Compile(SeqTemplate template)
         {
             Positions = new List<Position>();
             SequencerTask sequencerTask = new SequencerTask();
@@ -21,7 +21,7 @@ namespace SequencePlanner.Phraser.Template
             return sequencerTask;
         }
 
-        public static void ProcessHierarchy(SequencerTask sequencerTask, Template template)
+        private static void ProcessHierarchy(SequencerTask sequencerTask, SeqTemplate template)
         {
             var gtst = template.GTSP;
             foreach (var item in template.ProcessHierarchy)
@@ -60,7 +60,7 @@ namespace SequencePlanner.Phraser.Template
 
         }
 
-        public static void PositionList(Template template)
+        private static void PositionList(SeqTemplate template)
         {
             foreach (var item in template.PositionList)
             {

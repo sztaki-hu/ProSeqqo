@@ -3,7 +3,7 @@
   <Class Name="SequencePlanner.GTSP.GraphRepresentation" Collapsed="true">
     <Position X="6" Y="13" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>agCAgIBhpiACAICkAIFAAAYAAEAAgggDAQBIgBAAICo=</HashCode>
+      <HashCode>QAAAgIAgBCAAAIAAAgEAAAIAIAIAgAAAAQCAAAAAAAo=</HashCode>
       <FileName>GTSP\GraphRepresentation.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -91,7 +91,7 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>QAACAAAAAACAAAAEAAAAAgAAAAAAAAACIIACAABAAAA=</HashCode>
+      <HashCode>AAACAIAAAACAQAAEAAAAAgAAAAAAgAAAIAACAEBAAAA=</HashCode>
       <FileName>Phraser\Options\OptionSet.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -101,10 +101,9 @@
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAERAIoICAAAAAAkABAAAgECAEQAgJAAAAMAECCE4=</HashCode>
+      <HashCode>AAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Phraser\Template\Template.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="SequencePlanner.Phraser.Options.TaskType">
     <Position X="3.25" Y="8" Width="1.5" />
@@ -126,7 +125,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAIAAAgAAAAAAAAAAAEAAAAAAAAAAAAAEA=</HashCode>
+      <HashCode>AAAAAAAAAAAIAAAgAAAAAAAAAAAEAAAAAAAAAAACAEA=</HashCode>
       <FileName>Phraser\Template\TemplateCompiler.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -141,39 +140,19 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAERgIAIAAAAAAAgAAAAAAAAACwAgAAAAAMAAACA4=</HashCode>
+      <HashCode>AAAAERgIgIAAAAAAAgAAAgAAAAACwAAAAAAAMAAACA4=</HashCode>
       <FileName>SequencerTask.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Graph" />
       <Property Name="ORtool" />
     </ShowAsAssociation>
   </Class>
   <Class Name="SequencePlanner.ORToolsWrapper" Collapsed="true">
     <Position X="8.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAgBAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAMAAAAoBAAAAAAAABAABA=</HashCode>
       <FileName>ORToolsWrapper.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="SequencePlanner.Phraser.Template.ITemplate">
-    <Position X="8.5" Y="4.25" Width="1.5" />
-    <AssociationLine Name="OptionSet" Type="SequencePlanner.Phraser.Options.OptionSet" FixedFromPoint="true">
-      <Path>
-        <Point X="8.5" Y="4.5" />
-        <Point X="7.5" Y="4.5" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.123" Y="0.047" />
-      </MemberNameLabel>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAA=</HashCode>
-      <FileName>Phraser\Template\ITemplate.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="OptionSet" />
-    </ShowAsAssociation>
-  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

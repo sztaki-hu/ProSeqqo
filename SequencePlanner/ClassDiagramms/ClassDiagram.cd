@@ -126,5 +126,54 @@
       <Field Name="task" />
     </ShowAsAssociation>
   </Class>
+  <Class Name="SequencePlanner.Phraser.Options.OptionSet">
+    <Position X="13.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAIAAAACAQAAEAAAAAgAAAAAAgAAAIAACAEBAAAA=</HashCode>
+      <FileName>Phraser\Options\OptionSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Phraser.Options.OptionSetPhraser">
+    <Position X="15" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAIAAACEQAAgAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Phraser\Options\OptionSetPhraser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Phraser.Options.SeqOptionSet">
+    <Position X="13.25" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Phraser\Options\SeqOptionSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Phraser.Template.Template">
+    <Position X="9.25" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Phraser\Template\Template.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Phraser.Template.TemplateValidator">
+    <Position X="11.25" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAIAIAAAAACAAAAAAAAAAARAAAAAAAAAAAAAAgAACAI=</HashCode>
+      <FileName>Phraser\Template\TemplateValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Phraser.Template.TemplateCompiler">
+    <Position X="13.25" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAgAAAAAAAAAAAEAAAAAAAAAAACAEA=</HashCode>
+      <FileName>Phraser\Template\TemplateCompiler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Phraser.Template.SeqTemplate" Collapsed="true">
+    <Position X="9.25" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEQAIgICAAAAAAkABAgAAECAEQAAJAAAAMAACCE4=</HashCode>
+      <FileName>Phraser\Template\SeqTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

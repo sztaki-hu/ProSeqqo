@@ -1,17 +1,14 @@
-﻿using SequencePlanner.GTSP;
-using SequencePlanner.Phraser.Options;
-using SequencePlanner.Phraser.Options.Values;
+﻿using SequencePlanner.Phraser.Options.Values;
 using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
-using System.Text;
+
 
 namespace SequencePlanner.Phraser.Template
 {
-    public static class TemplateValidator
+    public static class SeqTemplateValidator
     {
 
-        public static bool Validate(Template template)
+        public static bool Validate(SeqTemplate template)
         {
             if (CheckDimensions(template)==false)
                 return false;
@@ -43,7 +40,7 @@ namespace SequencePlanner.Phraser.Template
             return true;
         }
 
-        public static bool CheckDimensions(Template template)
+        private static bool CheckDimensions(SeqTemplate template)
         {
             int dim = template.Dimension;
             string error = "Template validation error: ";
@@ -85,7 +82,7 @@ namespace SequencePlanner.Phraser.Template
             return true;
         }
 
-        public static bool FindCircleInPrecedences(List<PrecedenceOptionValue> precedence)
+        private static bool FindCircleInPrecedences(List<PrecedenceOptionValue> precedence)
         {
             foreach (var item in precedence)
             {
@@ -95,7 +92,7 @@ namespace SequencePlanner.Phraser.Template
             return true;
         }
 
-        public static bool CheckCyclic(Template template)
+        private static bool CheckCyclic(SeqTemplate template)
         {
             string error = "Template validation error: ";
 
@@ -149,7 +146,7 @@ namespace SequencePlanner.Phraser.Template
             return true;
         }
 
-        public static bool CheckPointHierarchy(Template template)
+        private static bool CheckPointHierarchy(SeqTemplate template)
         {
             string error = "Template validation error: ";
             foreach (var item in template.PositionList)
@@ -183,25 +180,25 @@ namespace SequencePlanner.Phraser.Template
             return true;
         }
 
-        public static bool CheckLineHierarchy(Template template)
+        private static bool CheckLineHierarchy(SeqTemplate template)
         {
             //TODO: Check line hierarchy
             return true;
         }
 
-        public static bool CheckLineList()
+        private static bool CheckLineList()
         {
             //TODO: CheckLineList()
             return true;
         }
 
-        public static bool CheckPositionList()
+        private static bool CheckPositionList()
         {
             //TODO: CheckLineList()
             return true;
         }
 
-        public static bool PositionMatrix()
+        private static bool PositionMatrix()
         {
             //TODO: CheckLineList()
             return true;
