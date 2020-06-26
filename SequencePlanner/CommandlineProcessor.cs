@@ -43,8 +43,8 @@ namespace SequencePlanner
                 optionSet.Validate();
                 Template template = SeqOptionsToTemplate.Map(optionSet);
                 template.Validate();
-                SequencerTask task = template.Compile();
-                SequencerTask.DEBUG = debug;
+                SeqGTSPTask task = template.Compile();
+                SeqGTSPTask.DEBUG = debug;
                 task.Build();
                 task.Run();
                 if (graphviz != null)
@@ -60,11 +60,11 @@ namespace SequencePlanner
             optionSet.Validate();
             Template template = SeqOptionsToTemplate.Map(optionSet);
             template.Validate();
-            SequencerTask task = template.Compile();
+            SeqGTSPTask task = template.Compile();
             task.Build();
             task.Run();
-            GraphViz.CreateGraphViz(task.GTSP, "test/FromFile.dot");
-            task.GTSP.Graph.WriteGraph();
+            GraphViz.CreateGraphViz(task.GTSP, "test/test10.dot");
+            //task.GTSP.Graph.WriteGraph();
         }
 
         private static void Help(string[] args)

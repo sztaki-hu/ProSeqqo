@@ -119,16 +119,6 @@
       <FileName>Phraser\Options\SubOption\CyclicSequence.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Phraser.Template.TemplateCompiler" Collapsed="true">
-    <Position X="8.5" Y="8.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAAgAAAAAAAAAAAEAAAAAAAAAAACAEA=</HashCode>
-      <FileName>Phraser\Template\TemplateCompiler.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="SequencePlanner.SequencerTask">
     <Position X="6" Y="10.75" Width="1.75" />
     <Compartments>

@@ -7,12 +7,12 @@ namespace SequencePlanner
 {
     public class ORToolsWrapper
     {
-        private readonly SequencerTask task;
+        private readonly SeqGTSPTask task;
         private RoutingIndexManager manager;
         private RoutingModel routing;
         private RoutingSearchParameters searchParameters;
 
-        public ORToolsWrapper(SequencerTask seqTask)
+        public ORToolsWrapper(SeqGTSPTask seqTask)
         {
             task = seqTask;
             //RoutingIndexManager manager = new RoutingIndexManager(

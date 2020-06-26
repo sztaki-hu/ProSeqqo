@@ -11,17 +11,17 @@ namespace SequencePlanner.Phraser.Template
     {
         private static List<Position> Positions;
 
-        public static SequencerTask Compile(SeqTemplate template)
+        public static SeqGTSPTask Compile(SeqTemplate template)
         {
             Positions = new List<Position>();
-            SequencerTask sequencerTask = new SequencerTask();
+            SeqGTSPTask sequencerTask = new SeqGTSPTask();
             PositionList(template);
             sequencerTask.GTSP = template.GTSP;
             ProcessHierarchy(sequencerTask, template);
             return sequencerTask;
         }
 
-        private static void ProcessHierarchy(SequencerTask sequencerTask, SeqTemplate template)
+        private static void ProcessHierarchy(SeqGTSPTask sequencerTask, SeqTemplate template)
         {
             var gtst = template.GTSP;
             foreach (var item in template.ProcessHierarchy)

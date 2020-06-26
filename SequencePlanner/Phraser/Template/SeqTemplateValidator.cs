@@ -84,6 +84,8 @@ namespace SequencePlanner.Phraser.Template
 
         private static bool FindCircleInPrecedences(List<PrecedenceOptionValue> precedence)
         {
+            if (precedence == null)
+                return true;
             foreach (var item in precedence)
             {
 

@@ -17,6 +17,10 @@ namespace SequencePlanner.Phraser.Options
         {
             try
             {
+                if (ValueString.Count == 0)
+                {
+                    return new ValidationResult() { Validated = false };
+                }
                 Value = new List<PrecedenceOptionValue>();
                 for (int i = 1; i < ValueString.Count; i++)
                 {
@@ -30,7 +34,7 @@ namespace SequencePlanner.Phraser.Options
             catch (Exception e)
             {
                 Validated = false;
-                if (SequencerTask.DEBUG)
+                if (SeqGTSPTask.DEBUG)
                     Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
                 return null;
             }

@@ -154,18 +154,11 @@
       <FileName>Phraser\Template\Template.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Phraser.Template.TemplateValidator">
-    <Position X="11.25" Y="19.75" Width="1.5" />
+  <Class Name="SequencePlanner.Phraser.Template.SeqTemplateValidator">
+    <Position X="11" Y="19.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>IAIAIAAAAACAAAAAAAAAAARAAAAAAAAAAAAAAgAACAI=</HashCode>
-      <FileName>Phraser\Template\TemplateValidator.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.Phraser.Template.TemplateCompiler">
-    <Position X="13.25" Y="19.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAAgAAAAAAAAAAAEAAAAAAAAAAACAEA=</HashCode>
-      <FileName>Phraser\Template\TemplateCompiler.cs</FileName>
+      <FileName>Phraser\Template\SeqTemplateValidator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Template.SeqTemplate" Collapsed="true">
@@ -173,6 +166,16 @@
     <TypeIdentifier>
       <HashCode>AAAAEQAIgICAAAAAAkABAgAAECAEQAAJAAAAMAACCE4=</HashCode>
       <FileName>Phraser\Template\SeqTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Phraser.Template.SeqTemplateCompiler">
+    <Position X="13" Y="19.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAgAAAAAAAAAAAEAAAAAAAAAAACAEA=</HashCode>
+      <FileName>Phraser\Template\SeqTemplateCompiler.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

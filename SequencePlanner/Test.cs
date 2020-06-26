@@ -13,12 +13,12 @@ namespace SequencePlanner
         public void ReadFileTest()
         {
             SeqOptionSet optionSet = new SeqOptionSet();
-            Template template = new Template();
+            Template template = new SeqTemplate();
             optionSet.ReadFile("test/test10.txt");
             optionSet.Validate();
             template.OptionSet = optionSet;
             template.Validate();
-            SequencerTask task = template.Compile();
+            SeqGTSPTask task = template.Compile();
             task.Build();
             task.Run();
             GraphViz.CreateGraphViz(task.GTSP, "test/FromFile.dot");
@@ -125,7 +125,7 @@ namespace SequencePlanner
         public void SequencerTaskTest()
         {
             GraphRepresentation graph = new GraphRepresentation();
-            SequencerTask sTask = new SequencerTask
+            SeqGTSPTask sTask = new SeqGTSPTask
             {
                 TaskType = TaskTypeEnum.Point_Like,
                 EdgeWeightSource = EdgeWeightSourceEnum.FullMatrix,

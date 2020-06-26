@@ -34,8 +34,12 @@ namespace SequencePlanner.Phraser.Template
 
         public GTSPRepresentation GTSP { get; set; }
 
+        public SeqTemplate()
+        {
+            GTSP = new GTSPRepresentation();
+        }
 
-        public override SequencerTask Compile()
+        public override SeqGTSPTask Compile()
         {
             return SeqTemplateCompiler.Compile(this);
         }

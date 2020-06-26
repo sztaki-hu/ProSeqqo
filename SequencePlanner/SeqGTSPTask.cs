@@ -1,13 +1,12 @@
 ﻿using SequencePlanner.GTSP;
 using SequencePlanner.Phraser.Options.Values;
+using SequencePlanner.Phraser.Template;
 using System.Collections.Generic;
 
 namespace SequencePlanner
 {
-    public class SequencerTask
+    public class SeqGTSPTask: GTSPTask
     {
-        public static bool DEBUG = false;
-
         public TaskTypeEnum TaskType { get; set; }
         public EdgeWeightSourceEnum EdgeWeightSource { get; set; }
         public DistanceFunctionEnum DistanceFunction { get; set; }
@@ -18,17 +17,9 @@ namespace SequencePlanner
         public int FinishDepotID { get; set; }
         public bool WeightMultiplierAuto { get; set; }
         public int WeightMultiplier { get; set; }
-        public GTSPRepresentation GTSP { get; set; }
-        public List<Position> Solution { get; private set; }
-        public List<Position> CleanSolution { get; private set; }
-        private bool Built { get; set; }
-        private ORToolsWrapper ORtool { get; set; }
 
-        public SequencerTask()
-        {
-        }
 
-        public void Build()
+        public override void Build()
         {
             GTSP.Build();
             ORtool = new ORToolsWrapper(this);
@@ -36,12 +27,21 @@ namespace SequencePlanner
             Built = true;
         }
 
-        public List<Position> Run()
+        public override void Run()
         {
             if (!Built)
                 Build();
             ORtool.Solve();
-            return CleanSolution;
+        }
+
+        public override void Templateing(Template template)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Validate()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

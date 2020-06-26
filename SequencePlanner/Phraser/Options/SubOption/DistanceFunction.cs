@@ -22,6 +22,10 @@ namespace SequencePlanner.Phraser.Options
         {
             try
             {
+                if (ValueString.Count == 0)
+                {
+                    return new ValidationResult() { Validated = false };
+                }
                 string tmp = ValueString[1].ToUpper();
                 List<string> newInclude = new List<string>();
                 switch (tmp)
@@ -58,7 +62,7 @@ namespace SequencePlanner.Phraser.Options
             catch (Exception e)
             {
                 Validated = false;
-                if (SequencerTask.DEBUG)
+                if (SeqGTSPTask.DEBUG)
                     Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
                 return null;
             }

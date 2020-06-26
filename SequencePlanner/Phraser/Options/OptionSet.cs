@@ -68,7 +68,7 @@ namespace SequencePlanner.Phraser.Options
 
         public void Validate()
         {
-            if (SequencerTask.DEBUG)
+            if (SeqGTSPTask.DEBUG)
                 Console.WriteLine("Need:");
             foreach (var option in Need)
             {
@@ -76,18 +76,18 @@ namespace SequencePlanner.Phraser.Options
                 if (result != null)
                 {
                     if (!result.Validated) {
-                        if (SequencerTask.DEBUG)
+                        if (SeqGTSPTask.DEBUG)
                             Console.WriteLine("Error in validation: " + option.Name);
                         return;
                     }else
                     {
-                        if (SequencerTask.DEBUG)
+                        if (SeqGTSPTask.DEBUG)
                             Console.WriteLine("Validated: " + option.Name + "!");
                         AddIncluded(result.NewInclude);
                     }
                 }
             }
-            if (SequencerTask.DEBUG)
+            if (SeqGTSPTask.DEBUG)
                 Console.WriteLine("Included:");
             int included = -1;
             while (included != 0)
@@ -101,11 +101,13 @@ namespace SequencePlanner.Phraser.Options
                         if (result != null)
                         {
                             if (!result.Validated)
-                                if (SequencerTask.DEBUG)
+                            {
+                                if (SeqGTSPTask.DEBUG)
                                     Console.WriteLine("Error in validation: " + Included[i].Name);
+                            }
                             else
                             {
-                                if (SequencerTask.DEBUG)
+                                if (SeqGTSPTask.DEBUG)
                                         Console.WriteLine("Validated: " + Included[i].Name + "!");
                                 Included[i].Included = true;
                                 included += AddIncluded(result.NewInclude);
@@ -119,7 +121,7 @@ namespace SequencePlanner.Phraser.Options
                 if (included == -1)
                     included = 0;
             }
-            if (SequencerTask.DEBUG)
+            if (SeqGTSPTask.DEBUG)
                 Console.WriteLine("Others:");
             foreach (var item in Options)
             {
@@ -128,7 +130,7 @@ namespace SequencePlanner.Phraser.Options
                     var ret = item.Validate();
                     if (ret != null)
                     {
-                        if (SequencerTask.DEBUG)
+                        if (SeqGTSPTask.DEBUG)
                         {
                             if (ret.Validated)
                                 Console.WriteLine("Validated but not needed: " + item.Name + "!");
