@@ -10,7 +10,7 @@ namespace SequencePlanner
     {
         public GTSPRepresentation GTSP { get; set; }
         public Position StartDepot { get; set; }
-        public int Timelimit { get; set; }
+        public int TimeLimit { get; set; }
         public int WeightMultiplier { get; set; }
     }
 }

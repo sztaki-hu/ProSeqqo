@@ -22,7 +22,15 @@ namespace SequencePlanner
         public override void Build()
         {
             GTSP.Build();
-            ORtool = new ORToolsWrapper(this);
+            ORToolsParameters parameters = new ORToolsParameters()
+            {
+                GTSP = GTSP,
+                TimeLimit = TimeLimit,
+                StartDepot = GTSP.FindPositionByID(StartDepotID),
+                WeightMultiplier = WeightMultiplier
+            };
+
+            ORtool = new ORToolsWrapper(parameters);
             ORtool.Build();
             Built = true;
         }

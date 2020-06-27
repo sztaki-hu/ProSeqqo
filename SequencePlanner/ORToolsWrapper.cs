@@ -10,15 +10,15 @@ namespace SequencePlanner
     public class ORToolsWrapper
     {
         private readonly int DefaultTimeLimit = 10;
-        private readonly SeqGTSPTask task;
+        private readonly ORToolsParameters param;
         private RoutingIndexManager manager;
         private RoutingModel routing;
         private RoutingSearchParameters searchParameters;
         private Stopwatch Timer;
 
-        public ORToolsWrapper(SeqGTSPTask seqTask)
+        public ORToolsWrapper(ORToolsParameters parameters)
         {
-            task = seqTask;
+            param = parameters;
         }
 
         //Create OR-Tools Representation from SequencerTask
@@ -26,7 +26,7 @@ namespace SequencePlanner
         {
             Timer = new Stopwatch();
             // Instantiate the data problem.
-            manager = new RoutingIndexManager(task.GTSP.Graph.PositionMatrix.GetLength(0), 1, 0);
+            manager = new RoutingIndexManager(param.GTSP.Graph.PositionMatrix.GetLength(0), 1, param.StartDepot.PID);
 
             // Create Routing Model.
             routing = new RoutingModel(manager);
@@ -37,12 +37,12 @@ namespace SequencePlanner
                   // Convert from routing variable Index to distance matrix NodeIndex.
                   var fromNode = Convert.ToInt32(manager.IndexToNode(fromIndex));
                   var toNode = Convert.ToInt32(manager.IndexToNode(toIndex));
-                  return task.GTSP.Graph.PositionMatrixRound[fromNode,toNode];
+                  return param.GTSP.Graph.PositionMatrixRound[fromNode,toNode];
               }
             );
 
             //Add disjuction constraints
-            foreach (var set in task.GTSP.ConstraintsDisjoints)
+            foreach (var set in param.GTSP.ConstraintsDisjoints)
             {
                 routing.AddDisjunction(set.getIndices());
             }
@@ -78,10 +78,10 @@ namespace SequencePlanner
             searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
 
             //Set time limit
-            if(task.TimeLimit == 0)
+            if(param.TimeLimit == 0)
                 searchParameters.TimeLimit = new Duration { Seconds = DefaultTimeLimit };
             else
-                searchParameters.TimeLimit = new Duration { Seconds = task.TimeLimit };
+                searchParameters.TimeLimit = new Duration { Seconds = param.TimeLimit };
         }
 
         //Run VRP Solver
@@ -110,7 +110,7 @@ namespace SequencePlanner
                 rawSolution.Add(index);
             }
             rawSolution.Add(routing.Start(0));
-            result.ResolveSolution(rawSolution, task.GTSP);
+            result.ResolveSolution(rawSolution, param.GTSP);
             //result.WriteSimple();
             result.WriteFull();
             //result.Write();
