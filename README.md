@@ -42,12 +42,25 @@ Generic task sequencer that captures typical sequencing problems encountered in 
 ![rawgraph2](/uploads/636d217563250509f8eff13a35f6c8d5/rawgraph2.png)
 
 
+
 Installation:
 ------
 
 >  Under heavy development
 ¯\＿(ツ)＿/¯
 
+- **Standalone executable:**
+Download the latest [release](https://git.sztaki.hu/zahoranl/sequenceplanner/-/releases) of the project, unzip and run in PowerShell/cmd on created tasks. Find details of task descriptor file [here](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file).
+
+- **Reuse as .dll (Dynamic Link Library):**
+Download the latest [release](https://git.sztaki.hu/zahoranl/sequenceplanner/-/releases) and add Sequencer.dll to your project as a dependency.
+
+- **Use source:**
+Clone the `master` branch of the project, it always contains the source code of the latest stable version as Visual Studio Solution.
+
+- Other platforms: The project and the given artefacts are supported on Windows x64/x86. In specific case .NET Standard part able to build on Linux and OSX.
+
+[More detailed instructions about installation.](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Install)
 
 Documentation:
 ------
