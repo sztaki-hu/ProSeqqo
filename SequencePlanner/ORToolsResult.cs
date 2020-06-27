@@ -10,12 +10,12 @@ namespace SequencePlanner
         public List<Position> Solution { get; set; }
         public List<double> Costs { get; set; }
         public double CostSum { get; set; }
+        public TimeSpan Time { get; set; }
 
         public ORToolsResult()
         {
             Solution = new List<Position>();
             Costs = new List<double>();
-
         }
 
         public void ResolveSolution(List<long> solution, GTSPRepresentation gtsp)
@@ -33,40 +33,51 @@ namespace SequencePlanner
             for (int i = 1; i < Solution.Count; i++)
             {
                 Costs.Add(gtsp.Graph.PositionMatrix[Solution[i-1].PID,Solution[i].PID]);
+                CostSum += Costs[i-1];
             }
         }
 
         public void WriteSimple()
         {
-            Console.WriteLine();
+            WriteSolutionHeader();
             for (int i = 0; i < Solution.Count-1; i++)
             {
-                Console.Write("["+ Solution[i].ID+ "]"+ "[" + Solution[i].PID+ "]"+Solution[i].Name+"--"+Costs[i].ToString("#.##") + "-->");
+                Console.Write("["+ Solution[i].ID+ "] "+ Solution[i].Name+"  --"+Costs[i].ToString("#.##") + "-->  ");
             }
-            Console.Write("[" + Solution[Solution.Count-1].ID + "]" + "[" + Solution[Solution.Count-1].PID + "]" + Solution[Solution.Count-1].Name+"\n");
-
+            Console.Write("[" + Solution[Solution.Count-1].ID + "]" + Solution[Solution.Count-1].Name+"\n");
+            Console.WriteLine();
         }
         public void Write()
         {
-            Console.WriteLine();
+            WriteSolutionHeader();
             for (int i = 0; i < Solution.Count; i++)
             {
-                Console.WriteLine("[" + Solution[i].ID + "]" + "[" + Solution[i].PID + "]" + Solution[i].Name + Solution[i].ConfigString());
+                Console.WriteLine("\t[" + Solution[i].ID + "]" + Solution[i].Name + " "+ Solution[i].ConfigString());
             }
             Console.WriteLine();
         }
         public void WriteFull()
         {
-            Console.WriteLine();
+            WriteSolutionHeader();
             for (int i = 0; i < Solution.Count-1; i++)
             {
-                Console.WriteLine("| [" + Solution[i].ID + "]" + "[" + Solution[i].PID + "]" + Solution[i].Name + Solution[i].ConfigString());
-                Console.WriteLine("| ");
-                Console.WriteLine("|- "+ Costs[i].ToString("#.##"));
-                Console.WriteLine("| ");
+                Console.WriteLine("\t| [" + Solution[i].ID + "]"  + Solution[i].Name+" " + Solution[i].ConfigString());
+                Console.WriteLine("\t| ");
+                Console.WriteLine("\t|--" + Costs[i].ToString("#.##"));
+                Console.WriteLine("\t| ");
             }
-            Console.WriteLine("| [" + Solution[Solution.Count - 1].ID + "]" + "[" + Solution[Solution.Count - 1].PID + "]" + Solution[Solution.Count - 1].Name + Solution[Solution.Count - 1].ConfigString());
+            Console.WriteLine("\t| [" + Solution[Solution.Count - 1].ID + "]"  + Solution[Solution.Count - 1].Name+ " " + Solution[Solution.Count - 1].ConfigString());
             Console.WriteLine();
+        }
+
+        private void WriteSolutionHeader()
+        {
+            Console.WriteLine("Completed! ");
+            Console.WriteLine("Length: " + CostSum.ToString("#.##"));
+            Console.WriteLine("Number of items: " + Solution.Count);
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
+            Console.WriteLine("RunTime: " + elapsedTime);
+            Console.WriteLine("Solution: ");
         }
     }
 }

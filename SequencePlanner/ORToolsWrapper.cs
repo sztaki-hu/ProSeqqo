@@ -2,6 +2,7 @@
 using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SequencePlanner
@@ -12,6 +13,7 @@ namespace SequencePlanner
         private RoutingIndexManager manager;
         private RoutingModel routing;
         private RoutingSearchParameters searchParameters;
+        private Stopwatch Timer;
 
         public ORToolsWrapper(SeqGTSPTask seqTask)
         {
@@ -61,6 +63,7 @@ namespace SequencePlanner
         //Create OR-Tools Representation from SequencerTask
         public void Build()
         {
+            Timer = new Stopwatch();
             // Instantiate the data problem.
             manager = new RoutingIndexManager(
                 task.GTSP.Graph.PositionMatrix.GetLength(0),
@@ -120,15 +123,20 @@ namespace SequencePlanner
         //Run VRP Solver
         public void Solve()
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
             Assignment solution = routing.SolveWithParameters(searchParameters);
-
-            // Print solution on console.
-            PrintSolution(routing, manager, solution);
+            stopWatch.Stop();
+            var time = stopWatch.Elapsed;
+            PrintSolution(routing, manager, solution,time);
         }
 
-        private void PrintSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution)
+        private void PrintSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
         {
+            Console.WriteLine("Solver status: {0}", routing.GetStatus());
+
             ORToolsResult result = new ORToolsResult();
+            result.Time = time;
             List<long> rawSolution = new List<long>();
             var index = routing.Start(0);
             rawSolution.Add(index);
@@ -139,38 +147,9 @@ namespace SequencePlanner
                 rawSolution.Add(index);
             }
             result.ResolveSolution(rawSolution, task.GTSP);
-            result.WriteSimple();
+            //result.WriteSimple();
             result.WriteFull();
-            result.Write();
-
-
-
-            Console.WriteLine("Solver status: {0}", routing.GetStatus());
-            Console.WriteLine("Objective: {0} ", solution.ObjectiveValue());
-            // Inspect solution.
-            Console.WriteLine("Route:");
-            long routeDistance = 0;
-            index = routing.Start(0);
-            while (routing.IsEnd(index) == false)
-            {
-                string trajStr;
-                int traj = (manager.IndexToNode((int)index));
-                if (task.GTSP.FindPositionByPID(traj)!=null)
-                    trajStr = task.GTSP.FindPositionByPID(traj).Name+"["+ traj + "]";
-                else
-                    trajStr = "null[" + traj + "]";
-
-                var previousIndex = index;
-                index = solution.Value(routing.NextVar(index));
-                long dist = routing.GetArcCostForVehicle(previousIndex, index, 0);
-                //long dist = task.GTSP.Graph.PositionMatrixRound[previousIndex-1, index-1];
-                routeDistance += dist;
-
-                //            Console.Write("{0} -[{1}]-> ", trajStr, dist);
-                Console.Write("{0} --{1}--> ", trajStr, dist);
-            }
-            Console.WriteLine("STOP");
-            //Console.WriteLine("Route distance: {0}", routeDistance);
+            //result.Write();
         }
     }
 }
