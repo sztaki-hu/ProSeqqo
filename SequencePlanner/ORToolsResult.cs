@@ -7,9 +7,9 @@ namespace SequencePlanner
 {
     public class ORToolsResult
     {
-        public List<Position> Solution { get; set; }
-        public List<double> Costs { get; set; }
-        public double CostSum { get; set; }
+        public List<Position> Solution { get; }
+        public List<double> Costs { get;}
+        public double CostSum { get; private set; }
         public TimeSpan Time { get; set; }
 
         public ORToolsResult()

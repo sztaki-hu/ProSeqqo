@@ -6,7 +6,7 @@ namespace SequencePlanner
 {
     public abstract class GTSPTask
     {
-        public static bool DEBUG = true;
+        public static bool DEBUG = false;
 
         protected bool Built { get; set; }
         protected ORToolsWrapper ORtool { get; set; }

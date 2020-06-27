@@ -9,6 +9,7 @@ namespace SequencePlanner
 {
     public class ORToolsWrapper
     {
+        private readonly int DefaultTimeLimit = 10;
         private readonly SeqGTSPTask task;
         private RoutingIndexManager manager;
         private RoutingModel routing;
@@ -18,46 +19,6 @@ namespace SequencePlanner
         public ORToolsWrapper(SeqGTSPTask seqTask)
         {
             task = seqTask;
-            //RoutingIndexManager manager = new RoutingIndexManager(
-            //    data.DistanceMatrix.GetLength(0),
-            //    data.VehicleNumber,
-            //    data.Depot);
-
-            //// Create Routing Model.
-            //RoutingModel routing = new RoutingModel(manager);
-
-            //int transitCallbackIndex = routing.RegisterTransitCallback(
-            //  (long fromIndex, long toIndex) => {
-            //  // Convert from routing variable Index to distance matrix NodeIndex.
-            //  var fromNode = manager.IndexToNode(fromIndex);
-            //      var toNode = manager.IndexToNode(toIndex);
-            //      return data.DistanceMatrix[fromNode, toNode];
-            //  }
-            //);
-
-            //for (int i = 1; i < data.DistanceMatrix.GetLength(0); ++i)
-            //{
-            //    routing.rout
-            //    routing.AddDisjunction(
-            //        new long[] { manager.NodeToIndex(i), manager.NodeToIndex(i + 1) }, -1, 1);
-            //    i++;
-            //}
-
-            //// Define cost of each arc.
-            //routing.SetArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
-
-            //// Setting first solution heuristic.
-            //RoutingSearchParameters searchParameters =
-            //  operations_research_constraint_solver.DefaultRoutingSearchParameters();
-            //searchParameters.FirstSolutionStrategy =
-            //  FirstSolutionStrategy.Types.Value.PathCheapestArc;
-
-            //// Solve the problem.
-            //Assignment solution = routing.SolveWithParameters(searchParameters);
-
-            //// Print solution on console.
-            //PrintSolution(routing, manager, solution, data);
-            //data.printRefSol();
         }
 
         //Create OR-Tools Representation from SequencerTask
@@ -65,14 +26,12 @@ namespace SequencePlanner
         {
             Timer = new Stopwatch();
             // Instantiate the data problem.
-            manager = new RoutingIndexManager(
-                task.GTSP.Graph.PositionMatrix.GetLength(0),
-                1,
-                0);
+            manager = new RoutingIndexManager(task.GTSP.Graph.PositionMatrix.GetLength(0), 1, 0);
 
             // Create Routing Model.
             routing = new RoutingModel(manager);
 
+            //Edge weight callback
             int transitCallbackIndex = routing.RegisterTransitCallback(
               (long fromIndex, long toIndex) => {
                   // Convert from routing variable Index to distance matrix NodeIndex.
@@ -82,14 +41,16 @@ namespace SequencePlanner
               }
             );
 
+            //Add disjuction constraints
             foreach (var set in task.GTSP.ConstraintsDisjoints)
             {
                 routing.AddDisjunction(set.getIndices());
             }
 
-            // Define cost of each arc.
+            //Define cost of each arc.
             routing.SetArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
 
+            //Add order constraints
             //routing.AddDimension(transitCallbackIndex, 0, int.MaxValue,
             //        true,  // start cumul to zero
             //        "Distance");
@@ -116,25 +77,27 @@ namespace SequencePlanner
             searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
             searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
 
-            // Solve the problem.
-            searchParameters.TimeLimit = new Duration { Seconds = 10 };
+            //Set time limit
+            if(task.TimeLimit == 0)
+                searchParameters.TimeLimit = new Duration { Seconds = DefaultTimeLimit };
+            else
+                searchParameters.TimeLimit = new Duration { Seconds = task.TimeLimit };
         }
 
         //Run VRP Solver
-        public void Solve()
+        public ORToolsResult Solve()
         {
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             Assignment solution = routing.SolveWithParameters(searchParameters);
             stopWatch.Stop();
             var time = stopWatch.Elapsed;
-            PrintSolution(routing, manager, solution,time);
+            return PrintSolution(routing, manager, solution,time);
         }
 
-        private void PrintSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
+        private ORToolsResult PrintSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
         {
-            Console.WriteLine("Solver status: {0}", routing.GetStatus());
-
+            Console.WriteLine("Solver status: {0}", DecodeStatusCode(routing.GetStatus()));
             ORToolsResult result = new ORToolsResult();
             result.Time = time;
             List<long> rawSolution = new List<long>();
@@ -146,10 +109,25 @@ namespace SequencePlanner
                 index = solution.Value(routing.NextVar(index));
                 rawSolution.Add(index);
             }
+            rawSolution.Add(routing.Start(0));
             result.ResolveSolution(rawSolution, task.GTSP);
             //result.WriteSimple();
             result.WriteFull();
             //result.Write();
+            return result;
+        }
+
+        private string DecodeStatusCode(int status)
+        {
+            switch (status)
+            {
+               case 0: return "0 - ROUTING_NOT_SOLVED: Problem not solved yet."; break;
+               case 1: return "1 - ROUTING_SUCCESS: Problem solved successfully."; break;
+               case 2: return "2 - ROUTING_FAIL: No solution found to the problem."; break;
+               case 3: return "3 - ROUTING_FAIL_TIMEOUT: Time limit reached before finding a solution."; break;
+               case 4: return "4 - ROUTING_INVALID: Model, model parameters, or flags are not valid."; break;
+               default: return "NO_STATUS: Something went wrong. :("; break;
+            }
         }
     }
 }
