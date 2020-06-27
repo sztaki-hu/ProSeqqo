@@ -15,7 +15,7 @@ namespace SequencePlanner.GTSP
         public override string ToString()
         {
             if (Directed)
-                return NodeA.Name + "---" + Weight + "--->" + NodeB.Name;
+                return NodeA.Name+"["+NodeA.PID+"]" + "---" + Weight + "--->" + NodeB.Name+ "[" + NodeB.PID + "]";
             else
                 return NodeA.Name + "<---" + Weight + "--->" + NodeB.Name;
         }

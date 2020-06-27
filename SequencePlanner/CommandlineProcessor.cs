@@ -39,12 +39,12 @@ namespace SequencePlanner
             {
                 SeqOptionSet optionSet = new SeqOptionSet();
 
+                SeqGTSPTask.DEBUG = debug;
                 optionSet.ReadFile("test/test10.txt");
                 optionSet.Validate();
                 Template template = SeqOptionsToTemplate.Map(optionSet);
                 template.Validate();
                 SeqGTSPTask task = template.Compile();
-                SeqGTSPTask.DEBUG = debug;
                 task.Build();
                 task.Run();
                 if (graphviz != null)

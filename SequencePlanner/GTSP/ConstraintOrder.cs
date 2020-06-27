@@ -2,10 +2,10 @@
 {
     public class ConstraintOrder
     {
-        public NodeBase Before { get; set; }
-        public NodeBase After { get; set; }
+        public Position Before { get; set; }
+        public Position After { get; set; }
 
-        public ConstraintOrder(NodeBase before, NodeBase after)
+        public ConstraintOrder(Position before, Position after)
         {
             Before = before;
             After = after;

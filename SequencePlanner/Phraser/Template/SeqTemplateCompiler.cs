@@ -18,6 +18,7 @@ namespace SequencePlanner.Phraser.Template
             PositionList(template);
             sequencerTask.GTSP = template.GTSP;
             ProcessHierarchy(sequencerTask, template);
+            AddOrderConstraints(sequencerTask, template);
             return sequencerTask;
         }
 
@@ -47,7 +48,7 @@ namespace SequencePlanner.Phraser.Template
                     sequencerTask.GTSP.AddTask(alter, task);
                 }
 
-                Position position = gtst.FindPosition(item.PositionID);
+                Position position = gtst.FindPositionByID(item.PositionID);
                 if (position == null)
                 {
                     foreach (var pos in Positions)
@@ -58,6 +59,67 @@ namespace SequencePlanner.Phraser.Template
                 }
             }
 
+        }
+
+        private static void AddOrderConstraints(SeqGTSPTask sequencerTask, SeqTemplate template)
+        {
+            if (template.PositionPrecedence != null)
+            {
+                foreach (var item in template.PositionPrecedence)
+                {
+                    var before = sequencerTask.GTSP.FindPositionByID(item.BeforeID);
+                    var after = sequencerTask.GTSP.FindPositionByID(item.AfterID);
+                    if (before != null && after != null)
+                        template.GTSP.ConstraintsOrder.Add(new ConstraintOrder(before, after));
+                    else
+                        if (before == null)
+                        Console.WriteLine("Compile error: PositionPrecedence BeforeID [" + item.BeforeID + "] not found!");
+                    else
+                        Console.WriteLine("Compile error: PositionPrecedence AfterID [" + item.AfterID + "] not found!");
+                }
+            }
+
+            if (template.ProcessPrecedence != null)
+            {
+                foreach (var precedence in template.ProcessPrecedence)
+                {
+                    Process before =null;
+                    Process after = null;
+                    foreach (var process in sequencerTask.GTSP.Processes)
+                    {
+                        if (process.ID == precedence.BeforeID)
+                            before = process;
+                        if (process.ID == precedence.AfterID)
+                            after = process;
+                    }
+                    if (before != null && after != null)
+                        template.GTSP.ConstraintsOrder.AddRange(CreateOrderConstraintsBetweenProc(sequencerTask, before, after));
+                    else
+                        if (before == null)
+                        Console.WriteLine("Compile error: ProcessPrecedence BeforeID [" + precedence.BeforeID + "] not found!");
+                    else
+                        Console.WriteLine("Compile error: ProcessPrecedence AfterID [" + precedence.AfterID + "] not found!");
+                    //item.AfterID();
+                    //template.GTSP.ConstraintsOrder.Add(new ConstraintOrder(item.BeforeID, item.AfterID));
+                }
+
+            }
+        }
+
+        private static List<ConstraintOrder> CreateOrderConstraintsBetweenProc(SeqGTSPTask sequencerTask, Process before, Process after)
+        {
+            var tmp = new List<ConstraintOrder>();
+            foreach (var posBefore in sequencerTask.GTSP.Positions)
+            {
+                foreach (var posAfter in sequencerTask.GTSP.Positions)
+                {
+                    if(posBefore.Process.ID == before.ID && posAfter.Process.ID == after.ID)
+                    {
+                        tmp.Add(new ConstraintOrder(posBefore, posAfter));
+                    }
+                }
+            }
+            return tmp;
         }
 
         private static void PositionList(SeqTemplate template)

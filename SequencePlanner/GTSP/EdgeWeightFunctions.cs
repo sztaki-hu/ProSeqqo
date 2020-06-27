@@ -7,7 +7,6 @@ namespace SequencePlanner.GTSP
 {
     public class EdgeWeightFunctions
     {
-
         public delegate double EdgeWeightFunction(List<double> a, List<double> b, params object[] param);
 
         public static double Euclidian_Distance(List<double> a, List<double> b, params object[] param)
@@ -26,7 +25,6 @@ namespace SequencePlanner.GTSP
                 Console.WriteLine("EdgeWeightFunctions:Euclidian_Distance find dimension mismatch!");
                 return 0;
             }
-           
         }
 
         public static double Max_Distance(List<double> a, List<double> b, params object[] param)
@@ -93,8 +91,6 @@ namespace SequencePlanner.GTSP
             if (functionEnum == DistanceFunctionEnum.Manhattan_Distance)
                 return Manhattan_Distance;
             return null;
-
         }
-
     }
 }

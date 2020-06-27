@@ -14,8 +14,6 @@ namespace SequencePlanner.GTSP
         public List<Edge> ManualEdges { get; set; }
         public double[,] PositionMatrix {get;set;}
         public int[,] PositionMatrixRound { get; set; }
-        public List<ConstraintDisjoint> ConstraintsDisjoints { get; set; }
-        public List<ConstraintOrder> ConstraintsOrder { get; set; }
         public EdgeWeightFunctions.EdgeWeightFunction EdgeWeightCalculator { get; set; }
 
         public GraphRepresentation()
@@ -23,13 +21,19 @@ namespace SequencePlanner.GTSP
             PlusInfity = int.MaxValue;
             MinusInfity = int.MinValue;
             PositionMatrix = new double[1,1];
-            ConstraintsDisjoints = new List<ConstraintDisjoint>();
-            ConstraintsOrder = new List<ConstraintOrder>();
             EdgeWeightCalculator = EdgeWeightFunctions.Euclidian_Distance;
         }
         public void Build(GTSPRepresentation gtsp)
         {
-            CreateEdges(gtsp);
+            initMatrices();
+            foreach (var edge in Edges)
+            {
+                CalculateEdgeWeight(edge);
+                PositionMatrix[edge.NodeA.PID, edge.NodeB.PID] = edge.Weight;
+                PositionMatrixRound[edge.NodeA.PID, edge.NodeB.PID] = Convert.ToInt32(edge.Weight);
+            }
+            //WriteGraph();
+            //WriteMatrces();
         }
 
         public void CalculateEdgeWeight(Edge edge)
@@ -42,66 +46,8 @@ namespace SequencePlanner.GTSP
             {
                 edge.Weight = EdgeWeightCalculator(edge.NodeA.Configuration,edge.NodeB.Configuration);
             }
-            
         }
-        public void CreateEdges(GTSPRepresentation gtsp)
-        {
-            Edges = new List<Edge>();
-            CreateEdgesProcess(gtsp);
-            CreateEdgesTask(gtsp);
-        }
-        public void CreateEdgesProcess(GTSPRepresentation gtsp)
-        {
-            foreach (var proc in gtsp.Processes)
-            {
-                foreach (var proc2 in gtsp.Processes)
-                {
-                    if (proc.ID != proc2.ID)
-                    {
-                        foreach (var alternative in proc.Alternatives)
-                        {
-                            if (alternative.Tasks.Count > 0)
-                            {
-                                foreach (var alternative2 in proc2.Alternatives)
-                                {
-                                    if (alternative.ID!=alternative2.ID && alternative2.Tasks.Count > 0)
-                                    {
-                                        ConnectTasks(alternative.Tasks[alternative.Tasks.Count-1], alternative2.Tasks[0]);
-                                        //connectTasks(alternative.Tasks[0], alternative2.Tasks[alternative2.Tasks.Count-1]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        public void CreateEdgesTask(GTSPRepresentation gtsp)
-        {
-            foreach (var alternative in gtsp.Alternatives)
-            {
-                for (int i = 0; i < alternative.Tasks.Count - 1; i++)
-                {
-                    ConnectTasks(alternative.Tasks[i], alternative.Tasks[i + 1]);
-                }
-            }
-        }
-        private void ConnectTasks(Task a, Task b)
-        {
-            foreach (var posA in a.Positions)
-            {
-                foreach (var posB in b.Positions)
-                {
-                    Edges.Add(new Edge()
-                    {
-                        NodeA = posA,
-                        NodeB = posB,
-                        Weight = EdgeWeightCalculator(posA.Configuration, posB.Configuration),
-                        Directed = true
-                    });
-                }
-            }
-        }
+
         private void MakeFull(GTSPRepresentation gtsp)
         {
             PositionMatrix = new double[gtsp.Positions.Count, gtsp.Positions.Count];
@@ -143,6 +89,39 @@ namespace SequencePlanner.GTSP
             }
         }
 
+        private void initMatrices()
+        {
+            var maxPID = FindMaxPID() + 1;
+            PositionMatrix = new double[maxPID, maxPID];
+            PositionMatrixRound = new int[maxPID, maxPID];
+            for (int i = 0; i < maxPID; i++)
+            {
+                for (int j = 0; j < maxPID; j++)
+                {
+                    PositionMatrix[i, j] = PlusInfity;
+                    PositionMatrixRound[i, j] = (int)PlusInfity;
+                }
+            }
+        }
+
+        private int FindMaxPID()
+        {
+            int maxPID=0;
+            foreach (var edge in Edges)
+            {
+                if (edge.NodeA.PID > maxPID)
+                {
+                    maxPID = edge.NodeA.PID;
+                }
+
+                if (edge.NodeB.PID > maxPID)
+                {
+                    maxPID = edge.NodeB.PID;
+                }
+            }
+            return maxPID;
+        }
+
         public void WriteGraph()
         {
             Console.WriteLine("Edges:");
@@ -150,7 +129,18 @@ namespace SequencePlanner.GTSP
             {
                 Console.WriteLine( item.ToString());
             }
-           
+        }
+
+        public void WriteMatrces()
+        {
+            for (int i = 0; i < PositionMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < PositionMatrix.GetLength(0);j++)
+                {
+                    Console.Write(PositionMatrix[i,j]+";");
+                }
+                Console.Write("\n");
+            }
         }
     }
 }

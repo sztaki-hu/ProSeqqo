@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SequencePlanner.GTSP
@@ -34,16 +35,18 @@ namespace SequencePlanner.GTSP
         }
         internal void Build()
         {
-            Graph.CreateEdges(this);
+            EqualizeTaskNumber();
+            GenerateDisjunctSets();
+            CreateEdges(this);
             Graph.Build(this);
-            //createEdges();
+            //WriteGTSP();
         }
 
         public void AddProcess(Process process)
         {
             Processes.Add(process);
-            Positions.Add(process.Start);
-            Positions.Add(process.Finish);
+//            Positions.Add(process.Start);
+//            Positions.Add(process.Finish);
         }
         public void AddProcess(Process[] processes)
         {
@@ -57,8 +60,8 @@ namespace SequencePlanner.GTSP
             process.Alternatives.Add(alternative);
             Alternatives.Add(alternative);
             alternative.Process = process;
-            Positions.Add(alternative.Start);
-            Positions.Add(alternative.Finish);
+            //Positions.Add(alternative.Start);
+            //Positions.Add(alternative.Finish);
         }
         public void AddAlternative(Process process, Alternative[] alternatives)
         {
@@ -112,6 +115,108 @@ namespace SequencePlanner.GTSP
                         maxTaskNumber = taskNumberOfAlternatives[i];
                 }
 
+                if (process.Alternatives.Count < 0)
+                {
+                    maxTaskNumber = process.Alternatives[0].Tasks.Count;
+                }
+                for (int i = 0; i < maxTaskNumber; i++)
+                {
+                    var constraint = new ConstraintDisjoint();
+                    //constraint.addConstraint();
+                    foreach (var alternative in process.Alternatives)
+                    {
+                        constraint.addConstraint(alternative.Tasks[i].Positions);
+                    }
+                    ConstraintsDisjoints.Add(constraint);
+                }
+            }
+        }
+        
+        private void EqualizeTaskNumber()
+        {
+            foreach (var process in Processes)
+            {
+                if (process.Alternatives.Count > 0)
+                {
+                    var alterTaskNum = process.Alternatives[0].Tasks.Count;
+                    Alternative maxAlter = process.Alternatives[0];
+                    foreach (var alternative in process.Alternatives)
+                    {
+                        if (alternative.Tasks.Count < alterTaskNum)
+                            addPlaceholderPosition(alterTaskNum - alternative.Tasks.Count, alternative);
+                        if (alternative.Tasks.Count > alterTaskNum)
+                            addPlaceholderPosition(alternative.Tasks.Count - alterTaskNum, maxAlter);
+                    }
+                }
+            }
+        }
+        private void addPlaceholderPosition(int numberOfPlaceholderTasks, Alternative alternative)
+        {
+            for (int i = 0; i < numberOfPlaceholderTasks; i++)
+            {
+                var task = new Task() { Name = "Placeholer_Alt_" + i };
+                AddTask(alternative, task);
+                AddPosition(task, new Position() { Name = "Placeholder_Pos_" + i, Virtual = true });
+            }
+        }
+
+
+        public void CreateEdges(GTSPRepresentation gtsp)
+        {
+            Graph = new GraphRepresentation();
+            Graph.Edges = new List<Edge>();
+            CreateEdgesProcess(gtsp);
+            CreateEdgesTask(gtsp);
+        }
+        public void CreateEdgesProcess(GTSPRepresentation gtsp)
+        {
+            foreach (var proc in gtsp.Processes)
+            {
+                foreach (var proc2 in gtsp.Processes)
+                {
+                    if (proc.ID != proc2.ID)
+                    {
+                        foreach (var alternative in proc.Alternatives)
+                        {
+                            if (alternative.Tasks.Count > 0)
+                            {
+                                foreach (var alternative2 in proc2.Alternatives)
+                                {
+                                    if (alternative.ID != alternative2.ID && alternative2.Tasks.Count > 0)
+                                    {
+                                        ConnectTasks(alternative.Tasks[alternative.Tasks.Count - 1], alternative2.Tasks[0]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public void CreateEdgesTask(GTSPRepresentation gtsp)
+        {
+            foreach (var alternative in gtsp.Alternatives)
+            {
+                for (int i = 0; i < alternative.Tasks.Count - 1; i++)
+                {
+                    ConnectTasks(alternative.Tasks[i], alternative.Tasks[i + 1]);
+                }
+            }
+        }
+        private void ConnectTasks(Task a, Task b)
+        {
+            foreach (var posA in a.Positions)
+            {
+                foreach (var posB in b.Positions)
+                {
+                    Graph.Edges.Add(new Edge()
+                    {
+                        NodeA = posA,
+                        NodeB = posB,
+                        Weight = EdgeWeightCalculator(posA.Configuration, posB.Configuration),
+                        Directed = true
+                    });
+                }
             }
         }
 
@@ -148,7 +253,18 @@ namespace SequencePlanner.GTSP
             }
             return null;
         }
-        public Position FindPosition(int ID)
+        public Position FindPositionByPID(int PID)
+        {
+            foreach (var item in Positions)
+            {
+                if (item.PID == PID)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+        public Position FindPositionByID(int ID)
         {
             foreach (var item in Positions)
             {
@@ -187,6 +303,12 @@ namespace SequencePlanner.GTSP
             //{
             //    Console.WriteLine(edge.ToString()); ;
             //}
+
+            Console.WriteLine("ConstraintsDisjoints: ");
+            foreach (var item in ConstraintsDisjoints)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Google.OrTools.ConstraintSolver;
+using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -78,7 +79,7 @@ namespace SequencePlanner
               }
             );
 
-            foreach (var set in task.GTSP.Graph.ConstraintsDisjoints)
+            foreach (var set in task.GTSP.ConstraintsDisjoints)
             {
                 routing.AddDisjunction(set.getIndices());
             }
@@ -86,12 +87,34 @@ namespace SequencePlanner
             // Define cost of each arc.
             routing.SetArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
 
+            //routing.AddDimension(transitCallbackIndex, 0, int.MaxValue,
+            //        true,  // start cumul to zero
+            //        "Distance");
+            //RoutingDimension distanceDimension = routing.GetMutableDimension("Distance");
+            //distanceDimension.SetGlobalSpanCostCoefficient(int.MaxValue);
+
+            //Solver solver = routing.solver();
+            //for (int i = 0; i < task.GTSP.ConstraintsOrder.Count; i++)
+            //{
+            //    long pickupIndex = manager.NodeToIndex(task.GTSP.ConstraintsOrder[i].Before.PID);
+            //    long deliveryIndex = manager.NodeToIndex(task.GTSP.ConstraintsOrder[i].After.PID);
+            //    long pickupIndex = 11;
+            //    long deliveryIndex = 0;
+            //    routing.AddPickupAndDelivery(pickupIndex, deliveryIndex);
+            //    solver.Add(solver.MakeEquality(
+            //          routing.VehicleVar(pickupIndex),
+            //          routing.VehicleVar(deliveryIndex)));
+            //    solver.Add(solver.MakeLessOrEqual(
+            //          distanceDimension.CumulVar(pickupIndex),
+            //          distanceDimension.CumulVar(deliveryIndex)));
+            //}
+
             // Setting first solution heuristic.
             searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
             searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
 
             // Solve the problem.
-
+            searchParameters.TimeLimit = new Duration { Seconds = 10 };
         }
 
         //Run VRP Solver
@@ -105,6 +128,7 @@ namespace SequencePlanner
 
         private void PrintSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution)
         {
+            Console.WriteLine("Solver status: {0}", routing.GetStatus());
             Console.WriteLine("Objective: {0} ", solution.ObjectiveValue());
             // Inspect solution.
             Console.WriteLine("Route:");
@@ -113,32 +137,23 @@ namespace SequencePlanner
             while (routing.IsEnd(index) == false)
             {
                 string trajStr;
-                if (manager.IndexToNode((int)index) == 0)
-                {
-                    trajStr = "START";
-                }
+                int traj = (manager.IndexToNode((int)index));
+                if (task.GTSP.FindPositionByPID(traj)!=null)
+                    trajStr = task.GTSP.FindPositionByPID(traj).Name+"["+ traj + "]";
                 else
-                {
-                    int traj = (manager.IndexToNode((int)index) - 1) / 2;
-                    trajStr = task.GTSP.FindPosition(traj).Name;
-                    int isReversed = (manager.IndexToNode((int)index) - 1) % 2;
-                    if (isReversed == 1)
-                    {
-                        trajStr += "R";
-                    }
-                }
+                    trajStr = "null[" + traj + "]";
 
                 var previousIndex = index;
                 index = solution.Value(routing.NextVar(index));
                 long dist = routing.GetArcCostForVehicle(previousIndex, index, 0);
+                //long dist = task.GTSP.Graph.PositionMatrixRound[previousIndex-1, index-1];
                 routeDistance += dist;
 
                 //            Console.Write("{0} -[{1}]-> ", trajStr, dist);
-                Console.Write("{0} -> ", trajStr);
+                Console.Write("{0} --{1}--> ", trajStr, dist);
             }
             Console.WriteLine("STOP");
             //Console.WriteLine("Route distance: {0}", routeDistance);
         }
-
     }
 }
