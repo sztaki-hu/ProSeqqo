@@ -62,6 +62,18 @@ namespace SequencePlanner.GTSP
                 return "[" + ID + "]" + "[PID:" + ID + "]" + Name + " Virtual!";
         }
 
+        public string ConfigString()
+        {
+            String tmp = "[";
+            for (int i = 0; i < Configuration.Count-1; i++)
+            {
+                tmp += Configuration[i].ToString("#.###") + ", ";
+            }
+            tmp += Configuration[Configuration.Count - 1].ToString("#.###");
+            tmp += "]";
+            return tmp;
+        }
+
         public static void initMaxID()
         {
             PIDmax = 0;

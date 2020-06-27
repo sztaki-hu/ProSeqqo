@@ -128,12 +128,29 @@ namespace SequencePlanner
 
         private void PrintSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution)
         {
+            ORToolsResult result = new ORToolsResult();
+            List<long> rawSolution = new List<long>();
+            var index = routing.Start(0);
+            rawSolution.Add(index);
+            while (routing.IsEnd(index) == false)
+            {
+                var previousIndex = index;
+                index = solution.Value(routing.NextVar(index));
+                rawSolution.Add(index);
+            }
+            result.ResolveSolution(rawSolution, task.GTSP);
+            result.WriteSimple();
+            result.WriteFull();
+            result.Write();
+
+
+
             Console.WriteLine("Solver status: {0}", routing.GetStatus());
             Console.WriteLine("Objective: {0} ", solution.ObjectiveValue());
             // Inspect solution.
             Console.WriteLine("Route:");
             long routeDistance = 0;
-            var index = routing.Start(0);
+            index = routing.Start(0);
             while (routing.IsEnd(index) == false)
             {
                 string trajStr;
