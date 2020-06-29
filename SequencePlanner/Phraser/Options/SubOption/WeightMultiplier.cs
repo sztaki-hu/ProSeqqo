@@ -27,6 +27,7 @@ namespace SequencePlanner.Phraser.Options
                 if (ValueString[1].Equals("Auto"))
                 {
                     Value = -1;
+                    Validated = true;
                 }
                 else
                 {
