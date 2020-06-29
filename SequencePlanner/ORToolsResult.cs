@@ -42,11 +42,12 @@ namespace SequencePlanner
             WriteSolutionHeader();
             for (int i = 0; i < Solution.Count-1; i++)
             {
-                Console.Write("["+ Solution[i].ID+ "] "+ Solution[i].Name+"  --"+Costs[i].ToString("#.##") + "-->  ");
+                Console.Write("["+ Solution[i].ID+ "] "+ Solution[i].Name+"  --"+Costs[i].ToString("F4") + "-->  ");
             }
             Console.Write("[" + Solution[Solution.Count-1].ID + "]" + Solution[Solution.Count-1].Name+"\n");
             Console.WriteLine();
         }
+
         public void Write()
         {
             WriteSolutionHeader();
@@ -56,15 +57,16 @@ namespace SequencePlanner
             }
             Console.WriteLine();
         }
+
         public void WriteFull()
         {
             WriteSolutionHeader();
             for (int i = 0; i < Solution.Count-1; i++)
             {
                 Console.WriteLine("\t| [" + Solution[i].ID + "]"  + Solution[i].Name+" " + Solution[i].ConfigString());
-                Console.WriteLine("\t| ");
-                Console.WriteLine("\t|--" + Costs[i].ToString("#.##"));
-                Console.WriteLine("\t| ");
+                //Console.WriteLine("\t| ");
+                Console.WriteLine("\t|--" + Costs[i].ToString("F4"));
+                //Console.WriteLine("\t| ");
             }
             Console.WriteLine("\t| [" + Solution[Solution.Count - 1].ID + "]"  + Solution[Solution.Count - 1].Name+ " " + Solution[Solution.Count - 1].ConfigString());
             Console.WriteLine();
@@ -73,7 +75,7 @@ namespace SequencePlanner
         private void WriteSolutionHeader()
         {
             Console.WriteLine("Completed! ");
-            Console.WriteLine("Length: " + CostSum.ToString("#.##"));
+            Console.WriteLine("Length: " + CostSum.ToString("F4"));
             Console.WriteLine("Number of items: " + Solution.Count);
             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
             Console.WriteLine("RunTime: " + elapsedTime);

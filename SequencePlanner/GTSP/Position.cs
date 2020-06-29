@@ -67,9 +67,9 @@ namespace SequencePlanner.GTSP
             String tmp = "[";
             for (int i = 0; i < Configuration.Count-1; i++)
             {
-                tmp += Configuration[i].ToString("#.###") + ", ";
+                tmp += Configuration[i].ToString("F4") + ", ";
             }
-            tmp += Configuration[Configuration.Count - 1].ToString("#.###");
+            tmp += Configuration[Configuration.Count - 1].ToString("F4");
             tmp += "]";
             return tmp;
         }
