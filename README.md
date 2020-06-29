@@ -62,10 +62,6 @@ Clone the `master` branch of the project, it always contains the source code of 
 
 [More detailed instructions about installation.](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Install)
 
-Documentation:
-------
-:earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home) :clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets) :computer: [Use from code](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-code) :file_folder: [Use from file](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)
-
 
 Contributing:
 ------
