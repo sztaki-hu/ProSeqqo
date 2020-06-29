@@ -72,9 +72,33 @@ namespace SequencePlanner
             Console.WriteLine();
         }
 
+        public void WriteOutputFile(String file)
+        {
+            using (System.IO.StreamWriter f = new System.IO.StreamWriter(@file, false))
+            {
+                f.WriteLine("Length: " + CostSum.ToString("F4"));
+                f.WriteLine("Number of items: " + Solution.Count);
+                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
+                f.WriteLine("RunTime: " + elapsedTime);
+                f.WriteLine("Solution: ");
+
+
+                for (int i = 0; i < Solution.Count; i++)
+                {
+                    f.WriteLine("\t[" + Solution[i].ID + "]" + Solution[i].Name + " " + Solution[i].ConfigString());
+                }
+
+                f.WriteLine("Timing: ");
+                for (int i = 0; i < Solution.Count - 1; i++)
+                {
+                    f.Write("[" + Solution[i].ID + "] " + Solution[i].Name + "  --" + Costs[i].ToString("F4") + "-->  ");
+                }
+                f.Write("[" + Solution[Solution.Count - 1].ID + "]" + Solution[Solution.Count - 1].Name + "\n");
+            }
+        }
+
         private void WriteSolutionHeader()
         {
-            Console.WriteLine("Completed! ");
             Console.WriteLine("Length: " + CostSum.ToString("F4"));
             Console.WriteLine("Number of items: " + Solution.Count);
             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);

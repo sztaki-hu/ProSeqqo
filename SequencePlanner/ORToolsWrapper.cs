@@ -26,7 +26,8 @@ namespace SequencePlanner
         {
             Timer = new Stopwatch();
             // Instantiate the data problem.
-            manager = new RoutingIndexManager(param.GTSP.Graph.PositionMatrix.GetLength(0), 1, param.StartDepot.PID);
+            //manager = new RoutingIndexManager(param.GTSP.Graph.PositionMatrix.GetLength(0), 1, param.StartDepot.PID);
+            manager = new RoutingIndexManager(param.GTSP.Graph.PositionMatrix.GetLength(0), 1, 0);
 
             // Create Routing Model.
             routing = new RoutingModel(manager);
@@ -88,6 +89,7 @@ namespace SequencePlanner
         public ORToolsResult Solve()
         {
             Stopwatch stopWatch = new Stopwatch();
+            Console.WriteLine("\nSolver running!");
             stopWatch.Start();
             Assignment solution = routing.SolveWithParameters(searchParameters);
             stopWatch.Stop();
@@ -112,7 +114,7 @@ namespace SequencePlanner
             rawSolution.Add(routing.Start(0));
             result.ResolveSolution(rawSolution, param.GTSP);
             //result.WriteSimple();
-            result.WriteFull();
+            //result.WriteFull();
             //result.Write();
             return result;
         }

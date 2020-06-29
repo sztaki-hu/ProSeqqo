@@ -22,6 +22,6 @@ namespace SequencePlanner
 
         public abstract void Build();
 
-        public abstract void Run();
+        public abstract ORToolsResult Run();
     }
 }

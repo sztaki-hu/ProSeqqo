@@ -46,24 +46,36 @@ namespace SequencePlanner
                 template.Validate();
                 SeqGTSPTask task = template.Compile();
                 task.Build();
-                task.Run();
+                var solution = task.Run();
+                solution.WriteFull();
+                if (output != null)
+                {
+                    solution.WriteOutputFile(output);
+                    Console.WriteLine("Output file created at "+output+"!");
+                }
+
                 if (graphviz != null)
+                {
                     GraphViz.CreateGraphViz(task.GTSP, graphviz);
+                    Console.WriteLine("GraphViz file created at " + graphviz + "!");
+                }
+
                 //task.GTSP.Graph.WriteGraph();
             }
         }
 
         private static void DefaultRun()
         {
-            SeqOptionSet optionSet = new SeqOptionSet();
-            optionSet.ReadFile("test/test10.txt");
-            optionSet.Validate();
-            Template template = SeqOptionsToTemplate.Map(optionSet);
-            template.Validate();
-            SeqGTSPTask task = template.Compile();
-            task.Build();
-            task.Run();
-            GraphViz.CreateGraphViz(task.GTSP, "test/test10.dot");
+            Help(new string[] { "-h" });
+            //SeqOptionSet optionSet = new SeqOptionSet();
+            //optionSet.ReadFile("test/test10.txt");
+            //optionSet.Validate();
+            //Template template = SeqOptionsToTemplate.Map(optionSet);
+            //template.Validate();
+            //SeqGTSPTask task = template.Compile();
+            //task.Build();
+            //task.Run();
+            //GraphViz.CreateGraphViz(task.GTSP, "test/test10.dot");
             //task.GTSP.Graph.WriteGraph();
         }
 
@@ -73,7 +85,7 @@ namespace SequencePlanner
             {
                 if(item.Equals("-help") || item.Equals("-h"))
                 {
-                    Console.WriteLine("Commands:");
+                    Console.WriteLine("\nCommands:");
                     Console.WriteLine("+-------------+----------+--------------------------------+------------------------------------+\n" +
                                       "|   Command   | Shortcut |           Parameter            |               Comment              |\n" +
                                       "+-------------+----------+--------------------------------+------------------------------------+\n" +
@@ -91,7 +103,8 @@ namespace SequencePlanner
                     var url = "https://git.sztaki.hu/zahoranl/sequenceplanner/";
                     Console.WriteLine("Input file details: "+url);
                     Console.WriteLine("Press [w] to open SZTAKI GitLab!");
-                    if(Console.ReadKey().Key == ConsoleKey.W)
+                    Console.WriteLine("Press any other key to exit!");
+                    if (Console.ReadKey().Key == ConsoleKey.W)
                         System.Diagnostics.Process.Start("explorer", url);
                 }
             }

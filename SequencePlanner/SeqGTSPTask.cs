@@ -35,11 +35,11 @@ namespace SequencePlanner
             Built = true;
         }
 
-        public override void Run()
+        public override ORToolsResult Run()
         {
             if (!Built)
                 Build();
-            ORtool.Solve();
+            return ORtool.Solve();
         }
 
         public override void Templateing(Template template)
