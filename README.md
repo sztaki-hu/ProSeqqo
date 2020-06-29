@@ -7,6 +7,9 @@
 
 
 ## About
+>  Under heavy development
+¯\＿(ツ)＿/¯
+
 Generic task sequencer that captures typical sequencing problems encountered in robot applications.
 * Easily integrated into complex solution workflows
 * Standalone exe with file interface or DLL function calls
@@ -46,8 +49,6 @@ Generic task sequencer that captures typical sequencing problems encountered in 
 Installation:
 ------
 
->  Under heavy development
-¯\＿(ツ)＿/¯
 
 - **Standalone executable:**
 Download the latest [release](https://git.sztaki.hu/zahoranl/sequenceplanner/-/releases) of the project, unzip and run in PowerShell/cmd on created tasks. Find details of task descriptor file [here](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file).
