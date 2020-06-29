@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using static SequencePlanner.GTSP.EdgeWeightFunctions;
 
 namespace SequencePlanner.GTSP
 {
@@ -19,6 +20,7 @@ namespace SequencePlanner.GTSP
         public List<ConstraintDisjoint> ConstraintsDisjoints { get; set; }
         public List<ConstraintOrder> ConstraintsOrder { get; set; }
         public EdgeWeightFunctions.EdgeWeightFunction EdgeWeightCalculator { get; set; }
+        public int WeightMultiplier { get; set; }
 
         public GTSPRepresentation()
         {
@@ -30,8 +32,10 @@ namespace SequencePlanner.GTSP
             MinusInfity = int.MinValue;
             ConstraintsDisjoints = new List<ConstraintDisjoint>();
             ConstraintsOrder = new List<ConstraintOrder>();
-            EdgeWeightCalculator = EdgeWeightFunctions.Euclidian_Distance;
-            Graph = new GraphRepresentation();
+            Graph = new GraphRepresentation() {
+                EdgeWeightCalculator = this.EdgeWeightCalculator,
+                WeightMultiplier = this.WeightMultiplier
+            };
         }
         internal void Build()
         {
@@ -163,7 +167,7 @@ namespace SequencePlanner.GTSP
 
         public void CreateEdges(GTSPRepresentation gtsp)
         {
-            Graph = new GraphRepresentation();
+            Graph = new GraphRepresentation() { EdgeWeightCalculator = this.EdgeWeightCalculator };
             Graph.Edges = new List<Edge>();
             CreateEdgesProcess(gtsp);
             CreateEdgesTask(gtsp);

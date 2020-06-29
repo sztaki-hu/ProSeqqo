@@ -30,7 +30,12 @@ namespace SequencePlanner.Phraser.Mapper
 
                     template.TrapezoidParamsAcceleration = ((TrapezoidParamsAcceleration)optionSet.FindOption("TrapezoidParams/Acceleration")).Value;
                     template.TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)optionSet.FindOption("TrapezoidParams/Speed")).Value;
+                    if(template.DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time)
+                    {
+                        EdgeWeightFunctions.setTrapezoidParam(template.TrapezoidParamsAcceleration.ToArray(),template.TrapezoidParamsSpeed.ToArray());
+                    }
                     template.GTSP.EdgeWeightCalculator = EdgeWeightFunctions.toFunction(template.DistanceFunction);
+                    template.GTSP.WeightMultiplier = ((WeightMultiplier)optionSet.FindOption("WeightMultiplier")).Value;
                     template.ProcessHierarchy = ((ProcessHierarchy)optionSet.FindOption("ProcessHierarchy")).Value;
                     template.ProcessPrecedence = ((ProcessPrecedence)optionSet.FindOption("ProcessPrecedence")).Value;
                     template.PositionPrecedence = ((PositionPrecedence)optionSet.FindOption("PositionPrecedence")).Value;
