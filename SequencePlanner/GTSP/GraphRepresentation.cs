@@ -15,22 +15,27 @@ namespace SequencePlanner.GTSP
         public double[,] PositionMatrix {get;set;}
         public int[,] PositionMatrixRound { get; set; }
         public EdgeWeightFunctions.EdgeWeightFunction EdgeWeightCalculator { get; set; }
+        public int WeightMultiplier { get; set; }
+        private int PositionNumber { get; set; }
 
         public GraphRepresentation()
         {
             PlusInfity = int.MaxValue;
             MinusInfity = int.MinValue;
+            PositionNumber = -1;
             PositionMatrix = new double[1,1];
             EdgeWeightCalculator = EdgeWeightFunctions.Euclidian_Distance;
+            WeightMultiplier = -1;
         }
         public void Build(GTSPRepresentation gtsp)
         {
             initMatrices();
+            initEdgeWeightMultiplier();
             foreach (var edge in Edges)
             {
                 CalculateEdgeWeight(edge);
                 PositionMatrix[edge.NodeA.PID, edge.NodeB.PID] = edge.Weight;
-                PositionMatrixRound[edge.NodeA.PID, edge.NodeB.PID] = Convert.ToInt32(edge.Weight);
+                PositionMatrixRound[edge.NodeA.PID, edge.NodeB.PID] = Convert.ToInt32(WeightMultiplier*edge.Weight);
             }
             //WriteGraph();
             //WriteMatrces();
@@ -101,6 +106,41 @@ namespace SequencePlanner.GTSP
                     PositionMatrix[i, j] = PlusInfity;
                     PositionMatrixRound[i, j] = (int)PlusInfity;
                 }
+            }
+            PositionNumber = maxPID;
+        }
+
+        private void initEdgeWeightMultiplier()
+        {
+            //This function set Weight Mulitplier automatically.
+            //The values of edges need to be scaled up, becauese Google-OR-Tools uses round numbers (int, long)
+            //
+            //---|--------|-*--*-*-**-*--*|---------------------------> PlusInfinity
+            //   0    minWeight       maxWeight
+            //
+            //
+            //---|------------|-*--**-*-**-*--*-*-**-*-**-*|----------> PlusInfinity
+            //   0        minWeight                     maxWeight
+            if (WeightMultiplier == -1)
+            {
+                var minWeight = PlusInfity;
+                var maxWeight = 0.0;
+                var edgeNumber = Edges.Count;
+                foreach (var item in Edges)
+                {
+                    if (item.Weight < minWeight)
+                        minWeight = item.Weight;
+                    if (item.Weight > maxWeight)
+                        maxWeight = item.Weight;
+                }
+
+                var maxAvgWeight = PlusInfity / PositionNumber;
+                maxAvgWeight = maxAvgWeight / 10;
+                if (maxAvgWeight > maxWeight)
+                    WeightMultiplier = Convert.ToInt32(maxAvgWeight / maxWeight);
+                else
+                    WeightMultiplier = 1;
+
             }
         }
 
