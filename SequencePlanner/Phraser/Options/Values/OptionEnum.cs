@@ -19,6 +19,7 @@ namespace SequencePlanner.Phraser.Options.Values
         Euclidian_Distance,
         Max_Distance,
         Trapezoid_Time,
-        Manhattan_Distance
+        Manhattan_Distance,
+        Trapezoid_Time_WithTieBreaker
     }
 }

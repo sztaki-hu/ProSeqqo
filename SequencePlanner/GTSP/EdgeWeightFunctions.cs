@@ -50,6 +50,34 @@ namespace SequencePlanner.GTSP
                 Console.WriteLine("EdgeWeightFunctions:Euclidian_Distance find dimension mismatch!");
                 return 0;
             }
+        }   
+
+        public static double Trapezoid_Time(List<double> a, List<double> b, params object[] param)
+        {
+            return TrapezoidTimeCalculation(a, b, false);
+        }
+
+        public static double Trapezoid_Time_WithTieBreaker(List<double> a, List<double> b, params object[] param)
+        {
+            return TrapezoidTimeCalculation(a, b, true);
+        }
+
+        public static double Manhattan_Distance(List<double> a, List<double> b, params object[] param)
+        {
+            if (a.Count == b.Count)
+            {
+                double tmp = 0;
+                for (int i = 0; i < a.Count; i++)
+                {
+                    tmp += Math.Abs(a[i] - b[i]);
+                }
+                return tmp;
+            }
+            else
+            {
+                Console.WriteLine("EdgeWeightFunctions:Manhattan_Distance find dimension mismatch!");
+                return 0;
+            }
         }
 
         public static void setTrapezoidParam(double[] maxAcc, double[] maxSpeed)
@@ -77,13 +105,17 @@ namespace SequencePlanner.GTSP
             }
         }
 
-
-        public static double Trapezoid_Time(List<double> a, List<double> b, params object[] param)
+        private static double TrapezoidTimeCalculation(List<double> a, List<double> b, bool withTieBreaker)
         {
-            int Dimension = a.Count;
+            if (JointAcceleration == null || JointSpeed == null || JointThresholdTime == null || JointThresholdDist == null)
+            {
+                Console.WriteLine("Implementation error: EdgeWeightFunction.setTrapezoidTime(acc, speed) not called before calculation.");
+                return 0.0;
+            }
 
+            int Dimension = a.Count;
             if (b.Count == Dimension && JointAcceleration.Length == Dimension && JointSpeed.Length == Dimension)
-            { 
+            {
                 double maxTime = 0;
                 double sumTime = 0;
                 // Max of joint travel times
@@ -103,29 +135,14 @@ namespace SequencePlanner.GTSP
                         maxTime = time;
                     sumTime += time;
                 }
-                return maxTime;// + 0.01 * (sumTime / Dimension);
+                if(withTieBreaker)
+                    return maxTime + 0.01 * (sumTime / Dimension);
+                else
+                    return maxTime;
             }
             else
             {
                 Console.WriteLine("EdgeWeightFunctions:Trapezoid_Time find dimension mismatch!");
-                return 0;
-            }
-        }
-
-        public static double Manhattan_Distance(List<double> a, List<double> b, params object[] param)
-        {
-            if (a.Count == b.Count)
-            {
-                double tmp = 0;
-                for (int i = 0; i < a.Count; i++)
-                {
-                    tmp += Math.Abs(a[i] - b[i]);
-                }
-                return tmp;
-            }
-            else
-            {
-                Console.WriteLine("EdgeWeightFunctions:Manhattan_Distance find dimension mismatch!");
                 return 0;
             }
         }
@@ -138,6 +155,8 @@ namespace SequencePlanner.GTSP
                 return Max_Distance;
             if (functionEnum == DistanceFunctionEnum.Trapezoid_Time)
                 return Trapezoid_Time;
+            if (functionEnum == DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
+                return Trapezoid_Time_WithTieBreaker;
             if (functionEnum == DistanceFunctionEnum.Manhattan_Distance)
                 return Manhattan_Distance;
             return null;

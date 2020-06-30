@@ -30,7 +30,7 @@ namespace SequencePlanner.Phraser.Mapper
 
                     template.TrapezoidParamsAcceleration = ((TrapezoidParamsAcceleration)optionSet.FindOption("TrapezoidParams/Acceleration")).Value;
                     template.TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)optionSet.FindOption("TrapezoidParams/Speed")).Value;
-                    if(template.DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time)
+                    if(template.DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time || template.DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
                     {
                         EdgeWeightFunctions.setTrapezoidParam(template.TrapezoidParamsAcceleration.ToArray(),template.TrapezoidParamsSpeed.ToArray());
                     }

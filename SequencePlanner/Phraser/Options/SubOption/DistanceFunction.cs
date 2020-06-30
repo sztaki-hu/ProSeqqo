@@ -44,6 +44,12 @@ namespace SequencePlanner.Phraser.Options
                         newInclude.Add("TrapezoidParams/Speed");
                         Validated = true;
                         break;
+                    case "TRAPEZOID_TIME_WITHTIEBREAKER":
+                        Value = DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker;
+                        newInclude.Add("TrapezoidParams/Acceleration");
+                        newInclude.Add("TrapezoidParams/Speed");
+                        Validated = true;
+                        break;
                     case "MANHATTAN_DISTANCE":
                         Value = DistanceFunctionEnum.Manhattan_Distance;
                         Validated = true;
