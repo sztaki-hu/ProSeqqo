@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 
 namespace SequencePlanner.Phraser.Options
 {
@@ -70,9 +71,29 @@ namespace SequencePlanner.Phraser.Options
         }
         private List<string> ChangeDotToComma(List<string> lines)
         {
-            for (int i = 0; i < lines.Count; i++)
+            if (Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",")
             {
-                lines[i] = lines[i].Replace(".", ",");
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    lines[i] = lines[i].Replace(".", ",");
+                }
+            }
+            else
+            {
+                if (Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator == ".")
+                {
+                    for (int i = 0; i < lines.Count; i++)
+                    {
+                        lines[i] = lines[i].Replace(",", ".");
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < lines.Count; i++)
+                    {
+                        lines[i] = lines[i].Replace(",", ".");
+                    }
+                }
             }
             return lines;
         }
