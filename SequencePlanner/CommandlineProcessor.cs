@@ -21,7 +21,20 @@ namespace SequencePlanner
         public static void CLI(string[] args)
         {
             if (args.Length == 0)
-                DefaultRun();
+            {
+                //Release
+                //Help(new string[] { "-h" });
+
+                //Debug
+                //DefaultRun();
+                args = new string[] {"-i", "test/test10.txt", "-o", "test/test10_out.txt", "-g", "test/test10_graph.dot"};
+                Help(args);
+                input = Input(args);
+                output = Output(args);
+                graphviz = GraphVizOutput(args);
+                debug = Debug(args);
+                Run();
+            }
             else
             {
                 Help(args);
@@ -38,9 +51,8 @@ namespace SequencePlanner
             if (input != null)
             {
                 SeqOptionSet optionSet = new SeqOptionSet();
-
                 SeqGTSPTask.DEBUG = debug;
-                optionSet.ReadFile("test/test10.txt");
+                optionSet.ReadFile(input);
                 optionSet.Validate();
                 Template template = SeqOptionsToTemplate.Map(optionSet);
                 template.Validate();
@@ -59,24 +71,23 @@ namespace SequencePlanner
                     GraphViz.CreateGraphViz(task.GTSP, graphviz);
                     Console.WriteLine("GraphViz file created at " + graphviz + "!");
                 }
-
                 //task.GTSP.Graph.WriteGraph();
             }
         }
 
         private static void DefaultRun()
         {
-            Help(new string[] { "-h" });
-            //SeqOptionSet optionSet = new SeqOptionSet();
-            //optionSet.ReadFile("test/test10.txt");
-            //optionSet.Validate();
-            //Template template = SeqOptionsToTemplate.Map(optionSet);
-            //template.Validate();
-            //SeqGTSPTask task = template.Compile();
-            //task.Build();
-            //task.Run();
-            //GraphViz.CreateGraphViz(task.GTSP, "test/test10.dot");
-            //task.GTSP.Graph.WriteGraph();
+            //Help(new string[] { "-h" });
+            SeqOptionSet optionSet = new SeqOptionSet();
+            optionSet.ReadFile("test/test10.txt");
+            optionSet.Validate();
+            Template template = SeqOptionsToTemplate.Map(optionSet);
+            template.Validate();
+            SeqGTSPTask task = template.Compile();
+            task.Build();
+            task.Run();
+            GraphViz.CreateGraphViz(task.GTSP, "test/test10.dot");
+            task.GTSP.Graph.WriteGraph();
         }
 
         private static void Help(string[] args)
