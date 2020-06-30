@@ -61,7 +61,7 @@ Clone the `master` branch of the project, it always contains the source code of 
 
 - Other platforms: The project and the given artefacts are supported on Windows x64/x86. In specific case .NET Standard part able to build on Linux and OSX.
 
-[More detailed instructions about installation.](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Install)
+[More detailed instructions about installation.](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Installation)
 
 
 Contributing:
