@@ -4,6 +4,7 @@ using SequencePlanner.Phraser.Options.Values;
 using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SequencePlanner
@@ -140,5 +141,23 @@ namespace SequencePlanner
             sTask.Build();
             sTask.Run();
         }
+
+        public void TestSet()
+        {
+            for (int i = 15; i <= 90; i++)
+            {
+                //var args = new string[] { "-i", "pickGTSPinstances/test"+i+".txt", "-o", "pickGTSPinstances/test" + i + "_out.txt", "-g", "pickGTSPinstances/test" + i + "_graph.dot" };
+                //var args = new string[] { "-i", "pickGTSPinstances/test"+i+".txt", "-o", "pickGTSPinstances/test" + i + "_out.txt" };
+                var args = new string[] { "-i", "pickGTSPinstances/test"+i+".txt" };
+                var solution = CommandlineProcessor.CLI(args);
+                solution.WriteFull();
+                if (solution != null) { 
+                    string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", solution.Time.Hours, solution.Time.Minutes, solution.Time.Seconds, solution.Time.Milliseconds / 10);
+                    Console.WriteLine("test" + i + " ; "+" t:;"+ elapsedTime + " ; cost:;"+solution.CostSum.ToString("F4"));      
+                }
+                
+            }
+        }
+
     }
 }

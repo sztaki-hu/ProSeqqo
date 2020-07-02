@@ -105,5 +105,11 @@ namespace SequencePlanner
             Console.WriteLine("RunTime: " + elapsedTime);
             Console.WriteLine("Solution: ");
         }
+
+        public void WriteMinimal()
+        {
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
+            Console.Write("RunTime; " + elapsedTime+"; "+"CostSum; "+ CostSum+"\n");
+        }
     }
 }

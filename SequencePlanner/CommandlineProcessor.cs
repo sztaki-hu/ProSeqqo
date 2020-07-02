@@ -18,7 +18,7 @@ namespace SequencePlanner
         private static bool debug;
 
 
-        public static void CLI(string[] args)
+        public static ORToolsResult CLI(string[] args)
         {
             if (args.Length == 0)
             {
@@ -33,7 +33,7 @@ namespace SequencePlanner
                 output = Output(args);
                 graphviz = GraphVizOutput(args);
                 debug = Debug(args);
-                Run();
+                return Run();
             }
             else
             {
@@ -42,11 +42,11 @@ namespace SequencePlanner
                 output = Output(args);
                 graphviz = GraphVizOutput(args);
                 debug = Debug(args);
-                Run();
+                return Run();
             }
         }
 
-        private static void Run()
+        private static ORToolsResult Run()
         {
             if (input != null)
             {
@@ -71,8 +71,9 @@ namespace SequencePlanner
                     GraphViz.CreateGraphViz(task.GTSP, graphviz);
                     Console.WriteLine("GraphViz file created at " + graphviz + "!");
                 }
-                //task.GTSP.Graph.WriteGraph();
+                return solution;
             }
+            return null;
         }
 
         private static void DefaultRun()

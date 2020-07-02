@@ -22,6 +22,16 @@ namespace SequencePlanner.Phraser.Template
             return sequencerTask;
         }
 
+        private static void FindStartAndFinishDepot(SeqGTSPTask sequencerTask, SeqTemplate template)
+        {
+            //Call after GTSP filled
+            if (template.StartDepotID != -1)
+                template.StartDepot = template.GTSP.FindPositionByID(template.StartDepotID);
+
+            if (template.FinishDepotID != -1)
+                template.FinishDepot = template.GTSP.FindPositionByID(template.FinishDepotID);
+        }
+
         private static void ProcessHierarchy(SeqGTSPTask sequencerTask, SeqTemplate template)
         {
             var gtst = template.GTSP;

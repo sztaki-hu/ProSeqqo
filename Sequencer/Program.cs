@@ -9,6 +9,7 @@ namespace Seqencer
         {
             CommandlineProcessor.CLI(args);
             //Test test = new Test();
+            //test.TestSet();
             //test.ReadFileTest();
             //test.RepresentationTest();
             //test.SequencerTaskTest();
