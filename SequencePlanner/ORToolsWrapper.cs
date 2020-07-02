@@ -38,9 +38,11 @@ namespace SequencePlanner
                   // Convert from routing variable Index to distance matrix NodeIndex.
                   var fromNode = Convert.ToInt32(manager.IndexToNode(fromIndex));
                   var toNode = Convert.ToInt32(manager.IndexToNode(toIndex));
-                  return param.GTSP.Graph.PositionMatrixRound[fromNode,toNode];
+                  return param.GTSP.Graph.PositionMatrixRound[fromNode, toNode];
               }
             );
+
+            routing.SetArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
 
             //Add disjuction constraints
             foreach (var set in param.GTSP.ConstraintsDisjoints)
@@ -48,15 +50,14 @@ namespace SequencePlanner
                 routing.AddDisjunction(set.getIndices());
             }
 
-            //Define cost of each arc.
-            routing.SetArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
-
             //Add order constraints
-            //routing.AddDimension(transitCallbackIndex, 0, int.MaxValue,
-            //        true,  // start cumul to zero
-            //        "Distance");
+            //routing.AddDimension(transitCallbackIndex, 0, 30000,
+            //    true,  // start cumul to zero
+            //    "Distance");
             //RoutingDimension distanceDimension = routing.GetMutableDimension("Distance");
-            //distanceDimension.SetGlobalSpanCostCoefficient(int.MaxValue);
+            //distanceDimension.SetGlobalSpanCostCoefficient(100);
+            //distanceDimension.SetSpanUpperBoundForVehicle(1000000000,0);
+            //distanceDimension.SetSpanUpperBoundForVehicle(1000, 0);
 
             //Solver solver = routing.solver();
             //for (int i = 0; i < task.GTSP.ConstraintsOrder.Count; i++)
@@ -74,48 +75,73 @@ namespace SequencePlanner
             //          distanceDimension.CumulVar(deliveryIndex)));
             //}
 
+
+
             // Setting first solution heuristic.
             searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
+            //searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
+            //searchParameters.LocalSearchMetaheuristic = LocalSearchMetaheuristic.Types.Value.TabuSearch;
+            //searchParameters.TimeLimit = new Duration { Nanos = 200000 };
             searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
-
+            //searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.LocalCheapestArc;
+            
             //Set time limit
-            if(param.TimeLimit == 0)
-                searchParameters.TimeLimit = new Duration { Seconds = DefaultTimeLimit };
-            else
-                searchParameters.TimeLimit = new Duration { Seconds = param.TimeLimit };
+            //if(param.TimeLimit == 0)
+            //    searchParameters.TimeLimit = new Duration { Seconds = DefaultTimeLimit };
+            //else
+            //    searchParameters.TimeLimit = new Duration { Seconds = param.TimeLimit };
         }
 
         //Run VRP Solver
         public ORToolsResult Solve()
         {
             Stopwatch stopWatch = new Stopwatch();
-            Console.WriteLine("\nSolver running!");
+            //Console.WriteLine("\nSolver running!");
             stopWatch.Start();
             Assignment solution = routing.SolveWithParameters(searchParameters);
             stopWatch.Stop();
             var time = stopWatch.Elapsed;
-            return PrintSolution(routing, manager, solution,time);
+            //Console.WriteLine("Solver status: {0}", DecodeStatusCode(routing.GetStatus()));
+            if(routing.GetStatus()==1)
+                return PrintSolution(routing, manager, solution,time);
+            return null;
         }
 
         private ORToolsResult PrintSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
         {
-            Console.WriteLine("Solver status: {0}", DecodeStatusCode(routing.GetStatus()));
+
             ORToolsResult result = new ORToolsResult();
             result.Time = time;
             List<long> rawSolution = new List<long>();
             var index = routing.Start(0);
-            rawSolution.Add(index);
             while (routing.IsEnd(index) == false)
             {
-                var previousIndex = index;
+                rawSolution.Add(manager.IndexToNode(index));
                 index = solution.Value(routing.NextVar(index));
-                rawSolution.Add(index);
             }
-            rawSolution.Add(routing.Start(0));
+            rawSolution.Add(manager.IndexToNode(index));
             result.ResolveSolution(rawSolution, param.GTSP);
             //result.WriteSimple();
             //result.WriteFull();
             //result.Write();
+            //long maxRouteDistance = 0;
+            //    Console.WriteLine("Route for Vehicle {0}:",0);
+            //    long routeDistance = 0;
+            //    index = routing.Start(0);
+            //    while (routing.IsEnd(index) == false)
+            //    {
+            //        Console.Write("{0} -> ", manager.IndexToNode((int)index));
+            //        var previousIndex = index;
+            //        index = solution.Value(routing.NextVar(index));
+            //        routeDistance += routing.GetArcCostForVehicle(previousIndex, index, 0);
+            //    }
+            //    Console.WriteLine("{0}", manager.IndexToNode((int)index));
+            //    Console.WriteLine("Distance of the route: {0}", routeDistance);
+            //    maxRouteDistance = Math.Max(routeDistance, maxRouteDistance);
+
+            //Console.WriteLine("Maximum distance of the routes: {0}", maxRouteDistance);
+
+            
             return result;
         }
 
