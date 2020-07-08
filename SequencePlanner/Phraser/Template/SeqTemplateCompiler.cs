@@ -16,6 +16,7 @@ namespace SequencePlanner.Phraser.Template
             Positions = new List<Position>();
             SeqGTSPTask sequencerTask = new SeqGTSPTask();
             PositionList(template);
+            PositionMatrix(template);
             sequencerTask.GTSP = template.GTSP;
             ProcessHierarchy(sequencerTask, template);
             AddOrderConstraints(sequencerTask, template);
@@ -26,10 +27,10 @@ namespace SequencePlanner.Phraser.Template
         {
             //Call after GTSP filled
             if (template.StartDepotID != -1)
-                template.StartDepot = template.GTSP.FindPositionByID(template.StartDepotID);
+                sequencerTask.StartDepot = template.GTSP.FindPositionByID(template.StartDepotID);
 
             if (template.FinishDepotID != -1)
-                template.FinishDepot = template.GTSP.FindPositionByID(template.FinishDepotID);
+                sequencerTask.FinishDepot = template.GTSP.FindPositionByID(template.FinishDepotID);
         }
 
         private static void ProcessHierarchy(SeqGTSPTask sequencerTask, SeqTemplate template)
@@ -138,6 +139,23 @@ namespace SequencePlanner.Phraser.Template
             {
                 Positions.Add(new Position( item.ID, item.Name, item.Position));
             }
+        }
+
+        private static void PositionMatrix(SeqTemplate template)
+        {
+            //string name = "";
+            //for (int i = 0; i < template.PositionMatrix.ID.Count; i++)
+            //{
+            //    if (template.PositionMatrix.Name.Count > 0)
+            //    {
+            //        name = template.PositionMatrix.Name[i];
+            //    }
+            //    else
+            //    { 
+            //         name = "Position_" +i;
+            //    }
+            //    Positions.Add(new Position(template.PositionMatrix.ID[i],name, new List<double>()));
+            //}
         }
 
         private static bool InList(List<int> list, int ID)

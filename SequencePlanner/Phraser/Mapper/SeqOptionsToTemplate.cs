@@ -30,9 +30,9 @@ namespace SequencePlanner.Phraser.Mapper
 
                     template.TrapezoidParamsAcceleration = ((TrapezoidParamsAcceleration)optionSet.FindOption("TrapezoidParams/Acceleration")).Value;
                     template.TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)optionSet.FindOption("TrapezoidParams/Speed")).Value;
-                    if(template.DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time || template.DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
+                    if (template.DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time || template.DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
                     {
-                        EdgeWeightFunctions.setTrapezoidParam(template.TrapezoidParamsAcceleration.ToArray(),template.TrapezoidParamsSpeed.ToArray());
+                        EdgeWeightFunctions.setTrapezoidParam(template.TrapezoidParamsAcceleration.ToArray(), template.TrapezoidParamsSpeed.ToArray());
                     }
                     template.GTSP.EdgeWeightCalculator = EdgeWeightFunctions.toFunction(template.DistanceFunction);
                     template.GTSP.WeightMultiplier = ((WeightMultiplier)optionSet.FindOption("WeightMultiplier")).Value;
@@ -46,6 +46,24 @@ namespace SequencePlanner.Phraser.Mapper
                     template.PositionList = ((PositionList)optionSet.FindOption("PositionList")).Value;
                     template.PositionNumber = ((PositionNumber)optionSet.FindOption("PositionNumber")).Value;
                     template.PositionMatrix = ((PositionMatrix)optionSet.FindOption("PositionMatrix")).Value;
+                    template.GTSP.PositionMatrix = template.PositionMatrix;
+                    if (template.PositionList == null || template.PositionMatrix!=null)
+                    {
+                        template.PositionList = new List<Options.Values.PositionOptionValue>();
+                        string name = "";
+                        for (int i = 0; i < template.PositionMatrix.ID.Count; i++)
+                        {
+                            if (template.PositionMatrix.Name.Count > 0)
+                            {
+                                name = template.PositionMatrix.Name[i];
+                            }
+                            else
+                            {
+                                name = "Position_" + i;
+                            }
+                            template.PositionList.Add(new Options.Values.PositionOptionValue() { ID = template.PositionMatrix.ID[i], Name = name, Dim = 0, Position = new List<double>() });
+                        }
+                    }
                 }
                 else
                 {

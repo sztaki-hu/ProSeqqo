@@ -1,7 +1,8 @@
-﻿using SequencePlanner.Phraser.Options.Values;
+﻿using SequencePlanner.GTSP;
+using SequencePlanner.Phraser.Options.Values;
 using System;
 using System.Collections.Generic;
-
+using System.Runtime.CompilerServices;
 
 namespace SequencePlanner.Phraser.Template
 {
@@ -12,6 +13,11 @@ namespace SequencePlanner.Phraser.Template
         {
             if (CheckDimensions(template)==false)
                 return false;
+
+            if (template.PositionList != null)
+            {
+
+            }
 
             if(template.TaskType == TaskTypeEnum.Point_Like)
             {
@@ -25,7 +31,6 @@ namespace SequencePlanner.Phraser.Template
 
             if (template.TaskType == TaskTypeEnum.Line_Like)
             {
-
                 if (FindCircleInPrecedences(template.LinePrecedence) == false)
                     return false;
                 if (FindCircleInPrecedences(template.ContourPrecedence) == false)
@@ -35,6 +40,10 @@ namespace SequencePlanner.Phraser.Template
             }
 
             if (CheckCyclic(template) == false)
+                return false;
+            if (CheckNotCyclic(template) == false)
+                return false;
+            if (CheckStartAndFinish(template) == false)
                 return false;
 
             return true;
@@ -51,7 +60,7 @@ namespace SequencePlanner.Phraser.Template
             }
 
             //Check trapezoid dimension
-            if (template.DistanceFunction == DistanceFunctionEnum.Trapezoid_Time)
+            if (template.DistanceFunction == DistanceFunctionEnum.Trapezoid_Time || template.DistanceFunction == DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
             {
                 if (template.TrapezoidParamsAcceleration.Count != dim)
                 {
@@ -97,7 +106,6 @@ namespace SequencePlanner.Phraser.Template
         private static bool CheckCyclic(SeqTemplate template)
         {
             string error = "Template validation error: ";
-
             if (template.CyclicSequence)
             {
                 if(template.FinishDepotID!=-1)
@@ -105,16 +113,33 @@ namespace SequencePlanner.Phraser.Template
                     Console.WriteLine(error + "In case of cyclic sequence finish depo not needed!");
                     return false;
                 }
-            }
-            else
-            {
-                if (template.FinishDepotID == -1 || template.StartDepotID == -1)
+                if (template.StartDepotID == -1)
                 {
-                    Console.WriteLine(error + "In case of not cyclic sequence start and finish depo needed!");
+                    Console.WriteLine(error + "In case of cyclic sequence start depo needed!");
                     return false;
                 }
             }
+            return true;
+        }
 
+        private static bool CheckNotCyclic(SeqTemplate template)
+        {
+            //string error = "Template validation error: ";
+
+            //if (!template.CyclicSequence)
+            //{
+            //    if (template.FinishDepotID == -1 && template.StartDepotID == -1)
+            //    {
+            //        Console.WriteLine(error + "In case of not cyclic sequence start  finish depo needed!");
+            //        return false;
+            //    }
+            //}
+            return true;
+        }
+
+        private static bool CheckStartAndFinish(SeqTemplate template)
+        {
+            string error = "Template validation error: ";
             bool findPositionID = false;
             if (template.FinishDepotID != -1)
             {
@@ -122,6 +147,7 @@ namespace SequencePlanner.Phraser.Template
                 {
                     if (hierarchyItem.PositionID == template.FinishDepotID)
                         findPositionID = true;
+
                 }
                 if (!findPositionID)
                 {
@@ -144,7 +170,12 @@ namespace SequencePlanner.Phraser.Template
                     return false;
                 }
             }
+            return true;
+        }
 
+        private static bool CheckStartOrFinishSingleInProcess(Position pos)
+        {
+            //TODO: Start and Finish check no neighbour WARNING
             return true;
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SequencePlanner.Phraser.Options.Values;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -21,6 +22,7 @@ namespace SequencePlanner.GTSP
         public List<ConstraintOrder> ConstraintsOrder { get; set; }
         public EdgeWeightFunctions.EdgeWeightFunction EdgeWeightCalculator { get; set; }
         public int WeightMultiplier { get; set; }
+        public PositionMatrixOptionValue PositionMatrix { get; set; }
 
         public GTSPRepresentation()
         {
@@ -213,15 +215,58 @@ namespace SequencePlanner.GTSP
             {
                 foreach (var posB in b.Positions)
                 {
-                    Graph.Edges.Add(new Edge()
-                    {
-                        NodeA = posA,
-                        NodeB = posB,
-                        Weight = EdgeWeightCalculator(posA.Configuration, posB.Configuration),
-                        Directed = true
-                    });
+                    Graph.Edges.Add(createEdge(posA, posB));
                 }
             }
+        }
+       private Edge createEdge(Position a, Position b)
+        {
+            if (PositionMatrix == null)
+            {
+                return new Edge()
+                {
+                    NodeA = a,
+                    NodeB = b,
+                    Weight = EdgeWeightCalculator(a.Configuration, a.Configuration),
+                    Directed = true
+                };
+            }
+            else
+            {
+                return new Edge()
+                {
+                    NodeA = a,
+                    NodeB = b,
+                    Weight = findEdgeWeight(a,b),
+                    Directed = true
+                };
+            }
+
+        }
+
+        private double findEdgeWeight(Position a, Position b)
+        {
+            int aIDindex = -1, bIDindex = -1;
+            for (int i = 0; i < PositionMatrix.ID.Count; i++)
+            {
+                if (PositionMatrix.ID[i] == a.ID)
+                {
+                    aIDindex = i;
+                }
+                if (PositionMatrix.ID[i] == b.ID)
+                {
+                    bIDindex = i;
+                }
+            }
+            if(aIDindex!=-1 && bIDindex != -1)
+            {
+                return PositionMatrix.Matrix[aIDindex, bIDindex];
+            }
+            else
+            {
+                return 0;
+            }
+
         }
 
         public Process FindProcess(int ID)
