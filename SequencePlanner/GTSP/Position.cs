@@ -69,7 +69,8 @@ namespace SequencePlanner.GTSP
             {
                 tmp += Configuration[i].ToString("F4") + "; ";
             }
-            tmp += Configuration[Configuration.Count - 1].ToString("F4");
+            if (Configuration.Count>0)
+                tmp += Configuration[Configuration.Count - 1].ToString("F4");
             tmp += "]";
             return tmp;
         }

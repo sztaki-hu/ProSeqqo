@@ -49,7 +49,8 @@ namespace SequencePlanner.GTSP
             }
             else
             {
-                edge.Weight = EdgeWeightCalculator(edge.NodeA.Configuration,edge.NodeB.Configuration);
+                //edge.Weight = EdgeWeightCalculator(edge.NodeA.Configuration,edge.NodeB.Configuration);
+                edge.Weight = edge.Weight;
             }
         }
 
@@ -136,7 +137,7 @@ namespace SequencePlanner.GTSP
 
                 var maxAvgWeight = PlusInfity / PositionNumber;
                 maxAvgWeight = maxAvgWeight / 10;
-                if (maxAvgWeight > maxWeight)
+                if (maxAvgWeight > maxWeight && maxWeight != 0)
                     WeightMultiplier = Convert.ToInt32(maxAvgWeight / maxWeight);
                 else
                     WeightMultiplier = 1;

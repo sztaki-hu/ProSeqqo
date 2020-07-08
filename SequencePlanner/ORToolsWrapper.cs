@@ -79,8 +79,7 @@ namespace SequencePlanner
 
             // Setting first solution heuristic.
             searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
-            //searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
-            //searchParameters.LocalSearchMetaheuristic = LocalSearchMetaheuristic.Types.Value.TabuSearch;
+            //searchParameters.LocalSearchMetaheuristic = LocalSearchMetaheuristic.Types.Value.GreedyDescent;
             //searchParameters.TimeLimit = new Duration { Nanos = 200000 };
             searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
             //searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.LocalCheapestArc;
