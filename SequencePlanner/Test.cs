@@ -133,8 +133,6 @@ namespace SequencePlanner
                 Dimension = 3,
                 TimeLimit = 300,
                 CyclicSequence = true,
-                StartDepotID = 99,
-                FinishDepotID = 100,
                 WeightMultiplierAuto = true,
                 WeightMultiplier = 100
             };

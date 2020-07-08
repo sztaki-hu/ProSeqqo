@@ -14,6 +14,7 @@ namespace SequencePlanner.Phraser.Options
         public StartDepot()
         {
             Name = "StartDepot";
+            Value = -1;
         }
 
         public override ValidationResult Validate()

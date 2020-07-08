@@ -13,8 +13,8 @@ namespace SequencePlanner
         public int Dimension { get; set; }
         public int TimeLimit { get; set; }
         public bool CyclicSequence { get; set; }
-        public int StartDepotID { get; set; }
-        public int FinishDepotID { get; set; }
+        public Position StartDepot { get; set; }
+        public Position FinishDepot { get; set; }
         public bool WeightMultiplierAuto { get; set; }
         public int WeightMultiplier { get; set; }
 
@@ -26,10 +26,9 @@ namespace SequencePlanner
             {
                 GTSP = GTSP,
                 TimeLimit = TimeLimit,
-                StartDepot = GTSP.FindPositionByID(StartDepotID),
+                StartDepot = StartDepot,
                 WeightMultiplier = WeightMultiplier
             };
-
             ORtool = new ORToolsWrapper(parameters);
             ORtool.Build();
             Built = true;
