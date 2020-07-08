@@ -27,7 +27,8 @@ namespace SequencePlanner
 
                 //Debug
                 //DefaultRun();
-                args = new string[] {"-i", "test/test10.txt", "-o", "test/test10_out.txt", "-g", "test/test10_graph.dot"};
+                args = new string[] {"-i", "example/test10.txt", "-o", "example/test10_out.txt", "-g", "example/test10_graph.dot" };
+                args = new string[] {"-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot" };
                 Help(args);
                 input = Input(args);
                 output = Output(args);
