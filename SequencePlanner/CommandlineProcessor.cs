@@ -60,13 +60,16 @@ namespace SequencePlanner
                 SeqGTSPTask task = template.Compile();
                 task.Build();
                 var solution = task.Run();
-                solution.WriteFull();
-                if (output != null)
+                if (solution != null)
                 {
-                    solution.WriteOutputFile(output);
-                    Console.WriteLine("Output file created at "+output+"!");
+                    solution.WriteFull();
+                    if (output != null)
+                    {
+                        solution.WriteOutputFile(output);
+                        Console.WriteLine("Output file created at " + output + "!");
+                    }
                 }
-
+                
                 if (graphviz != null)
                 {
                     GraphViz.CreateGraphViz(task.GTSP, graphviz);

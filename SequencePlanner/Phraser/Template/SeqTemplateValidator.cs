@@ -14,12 +14,10 @@ namespace SequencePlanner.Phraser.Template
             if (CheckDimensions(template)==false)
                 return false;
 
-            if (template.PositionList != null)
-            {
+            if (PositionMatrix(template) == false)
+                return false;
 
-            }
-
-            if(template.TaskType == TaskTypeEnum.Point_Like)
+            if (template.TaskType == TaskTypeEnum.Point_Like)
             {
                 if (FindCircleInPrecedences(template.ProcessPrecedence) == false)
                     return false;
@@ -231,9 +229,19 @@ namespace SequencePlanner.Phraser.Template
             return true;
         }
 
-        private static bool PositionMatrix()
+        private static bool PositionMatrix(SeqTemplate template)
         {
-            //TODO: CheckLineList()
+            string error = "Template validation error: ";
+            if (template.PositionMatrix != null)
+            {
+                if(template.PositionMatrix.ID.Count!=template.PositionMatrix.Matrix.GetLength(0) || template.PositionMatrix.ID.Count != template.PositionMatrix.Matrix.GetLength(1))
+                {
+                    Console.WriteLine(error + " Position Matrix ID header and matrix should contain the same number of elements n+1 row and n column! ");
+                    return false;
+                }
+                    
+            }
+
             return true;
         }
     }

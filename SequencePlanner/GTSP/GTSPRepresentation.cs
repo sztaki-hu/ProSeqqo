@@ -169,7 +169,10 @@ namespace SequencePlanner.GTSP
 
         public void CreateEdges(GTSPRepresentation gtsp)
         {
-            Graph = new GraphRepresentation() { EdgeWeightCalculator = this.EdgeWeightCalculator };
+            Graph = new GraphRepresentation() {
+                EdgeWeightCalculator = this.EdgeWeightCalculator,
+                WeightMultiplier = this.WeightMultiplier
+            };
             Graph.Edges = new List<Edge>();
             CreateEdgesProcess(gtsp);
             CreateEdgesTask(gtsp);
