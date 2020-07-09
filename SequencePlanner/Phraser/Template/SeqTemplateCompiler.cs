@@ -9,33 +9,42 @@ namespace SequencePlanner.Phraser.Template
 {
     public static class SeqTemplateCompiler
     {
-        private static List<Position> Positions;
-
         public static SeqGTSPTask Compile(SeqTemplate template)
         {
-            Positions = new List<Position>();
             SeqGTSPTask sequencerTask = new SeqGTSPTask();
-            PositionList(template);
-            PositionMatrix(template);
-            sequencerTask.GTSP = template.GTSP;
-            ProcessHierarchy(sequencerTask, template);
+            PositionMatrix(sequencerTask, template);
+            BuildGTSP(sequencerTask, template);
             AddOrderConstraints(sequencerTask, template);
             return sequencerTask;
+        }
+
+        private static void BuildGTSP(SeqGTSPTask sequencerTask, SeqTemplate template)
+        {
+            sequencerTask.GTSP.WeightMultiplier = template.WeightMultiplier;
+            sequencerTask.GTSP.EdgeWeightCalculator = EdgeWeightFunctions.toFunction(template.DistanceFunction);
+            sequencerTask.GTSP.PositionMatrix = template.PositionMatrix;
+            ProcessHierarchy(sequencerTask, template);
         }
 
         private static void FindStartAndFinishDepot(SeqGTSPTask sequencerTask, SeqTemplate template)
         {
             //Call after GTSP filled
             if (template.StartDepotID != -1)
-                sequencerTask.StartDepot = template.GTSP.FindPositionByID(template.StartDepotID);
+                sequencerTask.StartDepot = sequencerTask.GTSP.FindPositionByID(template.StartDepotID);
 
             if (template.FinishDepotID != -1)
-                sequencerTask.FinishDepot = template.GTSP.FindPositionByID(template.FinishDepotID);
+                sequencerTask.FinishDepot = sequencerTask.GTSP.FindPositionByID(template.FinishDepotID);
         }
 
         private static void ProcessHierarchy(SeqGTSPTask sequencerTask, SeqTemplate template)
         {
-            var gtst = template.GTSP;
+            var gtst = sequencerTask.GTSP;
+            List<Position> Positions = new List<Position>();
+            foreach (var item in template.PositionList)
+            {
+                Positions.Add(new Position(item.ID, item.Name, item.Position));
+            }
+
             foreach (var item in template.ProcessHierarchy)
             {
                 Process proc = gtst.FindProcess(item.ProcessID);
@@ -69,7 +78,6 @@ namespace SequencePlanner.Phraser.Template
                     }
                 }
             }
-
         }
 
         private static void AddOrderConstraints(SeqGTSPTask sequencerTask, SeqTemplate template)
@@ -81,7 +89,7 @@ namespace SequencePlanner.Phraser.Template
                     var before = sequencerTask.GTSP.FindPositionByID(item.BeforeID);
                     var after = sequencerTask.GTSP.FindPositionByID(item.AfterID);
                     if (before != null && after != null)
-                        template.GTSP.ConstraintsOrder.Add(new ConstraintOrder(before, after));
+                        sequencerTask.GTSP.ConstraintsOrder.Add(new ConstraintOrder(before, after));
                     else
                         if (before == null)
                         Console.WriteLine("Compile error: PositionPrecedence BeforeID [" + item.BeforeID + "] not found!");
@@ -104,7 +112,7 @@ namespace SequencePlanner.Phraser.Template
                             after = process;
                     }
                     if (before != null && after != null)
-                        template.GTSP.ConstraintsOrder.AddRange(CreateOrderConstraintsBetweenProc(sequencerTask, before, after));
+                        sequencerTask.GTSP.ConstraintsOrder.AddRange(CreateOrderConstraintsBetweenProc(sequencerTask, before, after));
                     else
                         if (before == null)
                         Console.WriteLine("Compile error: ProcessPrecedence BeforeID [" + precedence.BeforeID + "] not found!");
@@ -133,39 +141,25 @@ namespace SequencePlanner.Phraser.Template
             return tmp;
         }
 
-        private static void PositionList(SeqTemplate template)
+        private static void PositionMatrix(SeqGTSPTask sequencerTask, SeqTemplate template)
         {
-            foreach (var item in template.PositionList)
+            if (template.PositionList == null && template.PositionMatrix != null)
             {
-                Positions.Add(new Position( item.ID, item.Name, item.Position));
+                template.PositionList = new List<Options.Values.PositionOptionValue>();
+                string name = "";
+                for (int i = 0; i < template.PositionMatrix.ID.Count; i++)
+                {
+                    if (template.PositionMatrix.Name.Count > 0)
+                    {
+                        name = template.PositionMatrix.Name[i];
+                    }
+                    else
+                    {
+                        name = "Position_" + i;
+                    }
+                    template.PositionList.Add(new Options.Values.PositionOptionValue() { ID = template.PositionMatrix.ID[i], Name = name, Dim = 0, Position = new List<double>() });
+                }
             }
-        }
-
-        private static void PositionMatrix(SeqTemplate template)
-        {
-            //string name = "";
-            //for (int i = 0; i < template.PositionMatrix.ID.Count; i++)
-            //{
-            //    if (template.PositionMatrix.Name.Count > 0)
-            //    {
-            //        name = template.PositionMatrix.Name[i];
-            //    }
-            //    else
-            //    { 
-            //         name = "Position_" +i;
-            //    }
-            //    Positions.Add(new Position(template.PositionMatrix.ID[i],name, new List<double>()));
-            //}
-        }
-
-        private static bool InList(List<int> list, int ID)
-        {
-            foreach (var item in list)
-            {
-                if (item == ID)
-                    return true;
-            }
-            return false;
         }
     }
 }

@@ -8,7 +8,6 @@ namespace SequencePlanner.Phraser.Template
 {
     public static class SeqTemplateValidator
     {
-
         public static bool Validate(SeqTemplate template)
         {
             if (CheckDimensions(template)==false)
@@ -180,34 +179,36 @@ namespace SequencePlanner.Phraser.Template
         private static bool CheckPointHierarchy(SeqTemplate template)
         {
             string error = "Template validation error: ";
-            foreach (var item in template.PositionList)
+            if (template.PositionList != null)
             {
-                bool findOnce = false;
-                foreach (var hierarchy in template.ProcessHierarchy)
+                foreach (var item in template.PositionList)
                 {
-                    if (item.ID == hierarchy.PositionID)
-                        if (findOnce == false)
-                            findOnce = true;
-                        else
-                        {
-                            Console.WriteLine(error + "Process hierarchy contains position more then once, ID: "+item.ID+"! ");
-                            return false;
-                        }
+                    bool findOnce = false;
+                    foreach (var hierarchy in template.ProcessHierarchy)
+                    {
+                        if (item.ID == hierarchy.PositionID)
+                            if (findOnce == false)
+                                findOnce = true;
+                            else
+                            {
+                                Console.WriteLine(error + "Process hierarchy contains position more then once, ID: " + item.ID + "! ");
+                                return false;
+                            }
+                    }
+                    if (findOnce == false)
+                    {
+                        Console.WriteLine(error + "Process hierarchy not contains position, ID: " + item.ID + "! ");
+                        return false;
+                    }
+                    findOnce = false;
                 }
-                if (findOnce == false)
-                { 
-                    Console.WriteLine(error + "Process hierarchy not contains position, ID: " + item.ID + "! ");
+
+                if (template.PositionList.Count != template.ProcessHierarchy.Count)
+                {
+                    Console.WriteLine(error + "Process hierarchy and position list should contain the same number of elements! ");
                     return false;
                 }
-                findOnce = false;
             }
-
-            if (template.PositionList.Count != template.ProcessHierarchy.Count)
-            {
-                Console.WriteLine(error + "Process hierarchy and position list should contain the same number of elements! ");
-                return false;
-            }
-
             return true;
         }
 

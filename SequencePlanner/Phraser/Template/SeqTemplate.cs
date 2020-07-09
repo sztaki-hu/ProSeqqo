@@ -1,4 +1,5 @@
 ﻿using SequencePlanner.GTSP;
+using SequencePlanner.Phraser.Options;
 using SequencePlanner.Phraser.Options.Values;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace SequencePlanner.Phraser.Template
         public int Dimension { get; set; }
         public int TimeLimit { get; set; }
         public bool CyclicSequence { get; set; }
-
         public int StartDepotID { get; set; }
         public int FinishDepotID { get; set; }
         public Position StartDepot { get; set; }
@@ -34,11 +34,57 @@ namespace SequencePlanner.Phraser.Template
         public PositionMatrixOptionValue PositionMatrix { get; set; }
         public int ContourPenalty { get; set; }
 
-        public GTSPRepresentation GTSP { get; set; }
 
-        public SeqTemplate()
+        public override void Fill(OptionSet optionSet)
         {
-            GTSP = new GTSPRepresentation();
+            try
+            {
+                if (optionSet != null)
+                {
+                    TaskType = ((TaskType)optionSet.FindOption("TaskType")).Value;
+                    EdgeWeightSource = ((EdgeWeightSource)optionSet.FindOption("EdgeWeightSource")).Value;
+                    DistanceFunction = ((DistanceFunction)optionSet.FindOption("DistanceFunction")).Value;
+                    Dimension = ((Dimension)optionSet.FindOption("Dimension")).Value;
+                    TimeLimit = ((TimeLimit)optionSet.FindOption("TimeLimit")).Value;
+                    CyclicSequence = ((CyclicSequence)optionSet.FindOption("CyclicSequence")).Value;
+                    StartDepotID = ((StartDepot)optionSet.FindOption("StartDepot")).Value;
+                    FinishDepotID = ((FinishDepot)optionSet.FindOption("FinishDepot")).Value;
+                    WeightMultiplier = ((WeightMultiplier)optionSet.FindOption("WeightMultiplier")).Value;
+                    TrapezoidParamsAcceleration = ((TrapezoidParamsAcceleration)optionSet.FindOption("TrapezoidParams/Acceleration")).Value;
+                    TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)optionSet.FindOption("TrapezoidParams/Speed")).Value;
+                    ProcessHierarchy = ((ProcessHierarchy)optionSet.FindOption("ProcessHierarchy")).Value;
+                    ProcessPrecedence = ((ProcessPrecedence)optionSet.FindOption("ProcessPrecedence")).Value;
+                    PositionPrecedence = ((PositionPrecedence)optionSet.FindOption("PositionPrecedence")).Value;
+                    LineList = ((LineList)optionSet.FindOption("LineList")).Value;
+                    LinePrecedence = ((LinePrecedence)optionSet.FindOption("LinePrecedence")).Value;
+                    ContourPrecedence = ((ContourPrecedence)optionSet.FindOption("ContourPrecedence")).Value;
+                    ContourPenalty = ((ContourPenalty)optionSet.FindOption("ContourPenalty")).Value;
+                    PositionList = ((PositionList)optionSet.FindOption("PositionList")).Value;
+                    PositionNumber = ((PositionNumber)optionSet.FindOption("PositionNumber")).Value;
+                    PositionMatrix = ((PositionMatrix)optionSet.FindOption("PositionMatrix")).Value;
+                    Afterwork();
+                }
+                else
+                {
+                    Console.WriteLine("Template:Validate failed, no optionSet");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Template:Validate failed " + e.Message);
+            }
+        }
+
+        public override void Afterwork()
+        {
+            if (WeightMultiplier == -1)
+                WeightMultiplierAuto = true;
+            if (DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time || DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
+            {
+                EdgeWeightFunctions.setTrapezoidParam(TrapezoidParamsAcceleration.ToArray(), TrapezoidParamsSpeed.ToArray());
+            }
+            
+            
         }
 
         public override SeqGTSPTask Compile()
@@ -82,7 +128,6 @@ namespace SequencePlanner.Phraser.Template
             tmp += "\n\tPositionNumber: " + PositionNumber.ToString();
             tmp += "\n\tPositionMatrix: " + PositionMatrix?.ToString();
             tmp += "\n\tContourPenalty: " + ContourPenalty.ToString();
-            tmp += "\n\tGTSP: " + GTSP?.ToString();
             tmp += "\n\n: ";
             return tmp;
         }
