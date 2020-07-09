@@ -56,9 +56,7 @@ namespace SequencePlanner
                 optionSet.ReadFile(input);
                 optionSet.Validate();
                 Template template = new SeqTemplate();
-                template.Fill(optionSet);
-                template.Validate();
-                SeqGTSPTask task = template.Compile();
+                SeqGTSPTask task = template.Parse(optionSet);
                 task.Build();
                 var solution = task.Run();
                 if (solution != null)

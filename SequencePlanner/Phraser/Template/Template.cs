@@ -13,8 +13,7 @@ namespace SequencePlanner.Phraser.Template
         public bool Validated { get; set; }
         public OptionSet OptionSet { get; set;  }
 
-        public abstract void Afterwork();
-        public abstract void Fill(OptionSet optionSet);
+        public abstract SeqGTSPTask Parse(OptionSet optionSet, bool Validate=true);
         public abstract SeqGTSPTask Compile();
         public abstract void Validate();
     }

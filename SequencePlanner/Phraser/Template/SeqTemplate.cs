@@ -30,68 +30,23 @@ namespace SequencePlanner.Phraser.Template
         public List<PrecedenceOptionValue> LinePrecedence { get; set; }
         public List<PrecedenceOptionValue> ContourPrecedence { get; set; }
         public List<PositionOptionValue> PositionList { get; set; }
-        public int PositionNumber { get; set; }
         public PositionMatrixOptionValue PositionMatrix { get; set; }
         public int ContourPenalty { get; set; }
 
-
-        public override void Fill(OptionSet optionSet)
+        public override SeqGTSPTask Parse(OptionSet optionSet, bool validate)
         {
-            try
-            {
-                if (optionSet != null)
-                {
-                    TaskType = ((TaskType)optionSet.FindOption("TaskType")).Value;
-                    EdgeWeightSource = ((EdgeWeightSource)optionSet.FindOption("EdgeWeightSource")).Value;
-                    DistanceFunction = ((DistanceFunction)optionSet.FindOption("DistanceFunction")).Value;
-                    Dimension = ((Dimension)optionSet.FindOption("Dimension")).Value;
-                    TimeLimit = ((TimeLimit)optionSet.FindOption("TimeLimit")).Value;
-                    CyclicSequence = ((CyclicSequence)optionSet.FindOption("CyclicSequence")).Value;
-                    StartDepotID = ((StartDepot)optionSet.FindOption("StartDepot")).Value;
-                    FinishDepotID = ((FinishDepot)optionSet.FindOption("FinishDepot")).Value;
-                    WeightMultiplier = ((WeightMultiplier)optionSet.FindOption("WeightMultiplier")).Value;
-                    TrapezoidParamsAcceleration = ((TrapezoidParamsAcceleration)optionSet.FindOption("TrapezoidParams/Acceleration")).Value;
-                    TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)optionSet.FindOption("TrapezoidParams/Speed")).Value;
-                    ProcessHierarchy = ((ProcessHierarchy)optionSet.FindOption("ProcessHierarchy")).Value;
-                    ProcessPrecedence = ((ProcessPrecedence)optionSet.FindOption("ProcessPrecedence")).Value;
-                    PositionPrecedence = ((PositionPrecedence)optionSet.FindOption("PositionPrecedence")).Value;
-                    LineList = ((LineList)optionSet.FindOption("LineList")).Value;
-                    LinePrecedence = ((LinePrecedence)optionSet.FindOption("LinePrecedence")).Value;
-                    ContourPrecedence = ((ContourPrecedence)optionSet.FindOption("ContourPrecedence")).Value;
-                    ContourPenalty = ((ContourPenalty)optionSet.FindOption("ContourPenalty")).Value;
-                    PositionList = ((PositionList)optionSet.FindOption("PositionList")).Value;
-                    PositionNumber = ((PositionNumber)optionSet.FindOption("PositionNumber")).Value;
-                    PositionMatrix = ((PositionMatrix)optionSet.FindOption("PositionMatrix")).Value;
-                    Afterwork();
-                }
-                else
-                {
-                    Console.WriteLine("Template:Validate failed, no optionSet");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Template:Validate failed " + e.Message);
-            }
-        }
+            Fill(optionSet);
+            if (validate)
+                Validate();
+            else
+                Console.WriteLine("Warning: Template not validated!");
 
-        public override void Afterwork()
-        {
-            if (WeightMultiplier == -1)
-                WeightMultiplierAuto = true;
-            if (DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time || DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
-            {
-                EdgeWeightFunctions.setTrapezoidParam(TrapezoidParamsAcceleration.ToArray(), TrapezoidParamsSpeed.ToArray());
-            }
-            
-            
+            return Compile();
         }
 
         public override SeqGTSPTask Compile()
         {
-            var task = SeqTemplateCompiler.Compile(this);
-            Console.WriteLine(ToString());
-            return task;
+            return SeqTemplateCompiler.Compile(this); ;
 
         }
 
@@ -125,11 +80,60 @@ namespace SequencePlanner.Phraser.Template
             tmp += "\n\tLinePrecedence: " + LinePrecedence?.ToString();
             tmp += "\n\tContourPrecedence: " + ContourPrecedence?.ToString();
             tmp += "\n\tPositionList: " + PositionList?.ToString();
-            tmp += "\n\tPositionNumber: " + PositionNumber.ToString();
             tmp += "\n\tPositionMatrix: " + PositionMatrix?.ToString();
             tmp += "\n\tContourPenalty: " + ContourPenalty.ToString();
             tmp += "\n\n: ";
             return tmp;
+        }
+        private void Fill(OptionSet optionSet)
+        {
+            try
+            {
+                if (optionSet != null)
+                {
+                    TaskType = ((TaskType)optionSet.FindOption("TaskType")).Value;
+                    EdgeWeightSource = ((EdgeWeightSource)optionSet.FindOption("EdgeWeightSource")).Value;
+                    DistanceFunction = ((DistanceFunction)optionSet.FindOption("DistanceFunction")).Value;
+                    Dimension = ((Dimension)optionSet.FindOption("Dimension")).Value;
+                    TimeLimit = ((TimeLimit)optionSet.FindOption("TimeLimit")).Value;
+                    CyclicSequence = ((CyclicSequence)optionSet.FindOption("CyclicSequence")).Value;
+                    StartDepotID = ((StartDepot)optionSet.FindOption("StartDepot")).Value;
+                    FinishDepotID = ((FinishDepot)optionSet.FindOption("FinishDepot")).Value;
+                    WeightMultiplier = ((WeightMultiplier)optionSet.FindOption("WeightMultiplier")).Value;
+                    TrapezoidParamsAcceleration = ((TrapezoidParamsAcceleration)optionSet.FindOption("TrapezoidParams/Acceleration")).Value;
+                    TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)optionSet.FindOption("TrapezoidParams/Speed")).Value;
+                    ProcessHierarchy = ((ProcessHierarchy)optionSet.FindOption("ProcessHierarchy")).Value;
+                    ProcessPrecedence = ((ProcessPrecedence)optionSet.FindOption("ProcessPrecedence")).Value;
+                    PositionPrecedence = ((PositionPrecedence)optionSet.FindOption("PositionPrecedence")).Value;
+                    LineList = ((LineList)optionSet.FindOption("LineList")).Value;
+                    LinePrecedence = ((LinePrecedence)optionSet.FindOption("LinePrecedence")).Value;
+                    ContourPrecedence = ((ContourPrecedence)optionSet.FindOption("ContourPrecedence")).Value;
+                    ContourPenalty = ((ContourPenalty)optionSet.FindOption("ContourPenalty")).Value;
+                    PositionList = ((PositionList)optionSet.FindOption("PositionList")).Value;
+                    PositionMatrix = ((PositionMatrix)optionSet.FindOption("PositionMatrix")).Value;
+                    Afterwork();
+                }
+                else
+                {
+                    Console.WriteLine("Template:Validate failed, no optionSet");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Template:Validate failed " + e.Message);
+            }
+        }
+
+        private void Afterwork()
+        {
+            if (WeightMultiplier == -1)
+                WeightMultiplierAuto = true;
+            if (DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time || DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
+            {
+                EdgeWeightFunctions.setTrapezoidParam(TrapezoidParamsAcceleration.ToArray(), TrapezoidParamsSpeed.ToArray());
+            }
+
+
         }
     }
 }
