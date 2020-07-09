@@ -49,7 +49,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAgAAAABAAAAAAAEAgAAAAAAAAAAQAAAgEAAAICAAAA=</HashCode>
+      <HashCode>AAgAAAADAAAAAAAEAgAAAAAAAAAAQAAAgEAAAICAAAA=</HashCode>
       <FileName>GTSP\Position.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -64,15 +64,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.GraphRepresentation">
-    <Position X="4.5" Y="8" Width="2.25" />
+    <Position X="4.5" Y="7.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>QAAAgIAgBCAAAIAAAgEAAAIAIAIAgAAAAQCAAAAAAAo=</HashCode>
+      <HashCode>QAAAgIAABCAAAIEAACAAEAIABAIAwAAAAAAAIAAAAAo=</HashCode>
       <FileName>GTSP\GraphRepresentation.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Edges" />
-      <Property Name="ConstraintsDisjoints" />
-      <Property Name="ConstraintsOrder" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.GTSP.Task">
@@ -83,65 +81,52 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.ConstraintOrder">
-    <Position X="8" Y="9.5" Width="1.5" />
+    <Position X="8.25" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAA=</HashCode>
       <FileName>GTSP\ConstraintOrder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.ConstraintDisjoint">
-    <Position X="8" Y="11.5" Width="1.5" />
+    <Position X="10" Y="9" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAABAAAAAAAAAAAAAEAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAIAAAAABAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>GTSP\ConstraintDisjoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.GTSPRepresentation">
-    <Position X="1.25" Y="8" Width="2.25" />
+    <Position X="1.25" Y="7.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>QEIAAKghAIAAAAAgAAAAAAKAAAAAgAiBAQAIAAAAwAA=</HashCode>
+      <HashCode>QEIAAKghAAIAAEAwAhEAAAKEIAAAgAiBAQCIIAAAwEI=</HashCode>
       <FileName>GTSP\GTSPRepresentation.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Graph" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="SequencePlanner.SequencerTask">
-    <Position X="1.25" Y="14" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAERgIgIAAAAAAAgAAAgAAAAACwAAAAAAAMAAACA4=</HashCode>
-      <FileName>SequencerTask.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="GTSP" />
-    </ShowAsAssociation>
-  </Class>
   <Class Name="SequencePlanner.ORToolsWrapper">
-    <Position X="4.25" Y="14" Width="2.25" />
+    <Position X="1.25" Y="16" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAMAAAAoBAAAAAAAABAABA=</HashCode>
+      <HashCode>AAAAAAAAAAACgAAAAAAAgAAMAAAAoBAAAAAAAAAEABA=</HashCode>
       <FileName>ORToolsWrapper.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="task" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="SequencePlanner.Phraser.Options.OptionSet">
-    <Position X="13.25" Y="11.25" Width="1.5" />
+    <Position X="8.25" Y="12" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAIAAAACAQAAEAAAAAgAAAAAAgAAAIAACAEBAAAA=</HashCode>
       <FileName>Phraser\Options\OptionSet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Options.OptionSetPhraser">
-    <Position X="15" Y="11.25" Width="1.5" />
+    <Position X="10" Y="12" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAIAAACEQAAgAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Phraser\Options\OptionSetPhraser.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Options.SeqOptionSet">
-    <Position X="13.25" Y="15.5" Width="1.5" />
+    <Position X="8.25" Y="16.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>Phraser\Options\SeqOptionSet.cs</FileName>
@@ -157,14 +142,14 @@
   <Class Name="SequencePlanner.Phraser.Template.SeqTemplateValidator">
     <Position X="11" Y="19.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>IAIAIAAAAACAAAAAAAAAAARAAAAAAAAAAAAAAgAACAI=</HashCode>
+      <HashCode>IAIAIAAAAACAAAAAAAAAAgRQAAAAAAAAAAAQAgAACAI=</HashCode>
       <FileName>Phraser\Template\SeqTemplateValidator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Template.SeqTemplate" Collapsed="true">
     <Position X="9.25" Y="18.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEQAIgICAAAAAAkABAgAAECAEQAAJAAAAMAACCE4=</HashCode>
+      <HashCode>AAAAEQAIgIKEAAAEAkABAgAAECAEQAAJAAAAMAACCE4=</HashCode>
       <FileName>Phraser\Template\SeqTemplate.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -174,7 +159,7 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAAgAAAAAAAAAAAEAAAAAAAAAAACAEA=</HashCode>
+      <HashCode>AAgAAAAAAAAIAAAhAAAAAAAAAAAEAAAAAAAEAAACAEI=</HashCode>
       <FileName>Phraser\Template\SeqTemplateCompiler.cs</FileName>
     </TypeIdentifier>
   </Class>

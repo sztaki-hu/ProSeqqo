@@ -14,7 +14,9 @@ namespace SequencePlanner
         public List<Position> CleanSolution { get; private set; }
         public GTSPRepresentation GTSP { get; set; }
 
-        public GTSPTask(){}
+        public GTSPTask(){
+            GTSP = new GTSPRepresentation();
+        }
 
         public abstract void Templateing(Template template);
 
