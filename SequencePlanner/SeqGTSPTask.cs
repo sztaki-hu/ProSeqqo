@@ -15,7 +15,6 @@ namespace SequencePlanner
         public bool CyclicSequence { get; set; }
         public Position StartDepot { get; set; }
         public Position FinishDepot { get; set; }
-        public bool WeightMultiplierAuto { get; set; }
         public int WeightMultiplier { get; set; }
 
 

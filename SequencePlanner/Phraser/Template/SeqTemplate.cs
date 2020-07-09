@@ -26,11 +26,12 @@ namespace SequencePlanner.Phraser.Template
         public List<ProcessHierarchyOptionValue> ProcessHierarchy { get; set; }
         public List<PrecedenceOptionValue> ProcessPrecedence { get; set; }
         public List<PrecedenceOptionValue> PositionPrecedence { get; set; }
+        public List<PositionOptionValue> PositionList { get; set; }
+        public PositionMatrixOptionValue PositionMatrix { get; set; }
+
         public List<LineListOptionValue> LineList { get; set; }
         public List<PrecedenceOptionValue> LinePrecedence { get; set; }
         public List<PrecedenceOptionValue> ContourPrecedence { get; set; }
-        public List<PositionOptionValue> PositionList { get; set; }
-        public PositionMatrixOptionValue PositionMatrix { get; set; }
         public int ContourPenalty { get; set; }
 
         public override SeqGTSPTask Parse(OptionSet optionSet, bool validate)
@@ -47,7 +48,6 @@ namespace SequencePlanner.Phraser.Template
         public override SeqGTSPTask Compile()
         {
             return SeqTemplateCompiler.Compile(this); ;
-
         }
 
         public override void Validate()
@@ -126,14 +126,10 @@ namespace SequencePlanner.Phraser.Template
 
         private void Afterwork()
         {
-            if (WeightMultiplier == -1)
-                WeightMultiplierAuto = true;
             if (DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time || DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
             {
                 EdgeWeightFunctions.setTrapezoidParam(TrapezoidParamsAcceleration.ToArray(), TrapezoidParamsSpeed.ToArray());
             }
-
-
         }
     }
 }

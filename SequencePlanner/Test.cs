@@ -133,7 +133,6 @@ namespace SequencePlanner
                 Dimension = 3,
                 TimeLimit = 300,
                 CyclicSequence = true,
-                WeightMultiplierAuto = true,
                 WeightMultiplier = 100
             };
             sTask.Build();
