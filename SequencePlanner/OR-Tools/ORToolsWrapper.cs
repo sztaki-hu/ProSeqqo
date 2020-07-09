@@ -84,11 +84,11 @@ namespace SequencePlanner
             var time = stopWatch.Elapsed;
             Console.WriteLine("Solver status: {0}", DecodeStatusCode(routing.GetStatus()));
             if(routing.GetStatus()==1)
-                return PrintSolution(routing, manager, solution,time);
+                return ProcessSolution(routing, manager, solution,time);
             return null;
         }
 
-        private ORToolsResult PrintSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
+        private ORToolsResult ProcessSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
         {
             ORToolsResult result = new ORToolsResult();
             result.Time = time;
@@ -103,7 +103,6 @@ namespace SequencePlanner
             result.ResolveSolution(rawSolution, param.GTSP);
             return result;
         }
-
         private string DecodeStatusCode(int status)
         {
             switch (status)
