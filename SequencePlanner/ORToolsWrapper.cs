@@ -108,12 +108,12 @@ namespace SequencePlanner
         {
             switch (status)
             {
-               case 0: return "0 - ROUTING_NOT_SOLVED: Problem not solved yet."; break;
-               case 1: return "1 - ROUTING_SUCCESS: Problem solved successfully."; break;
-               case 2: return "2 - ROUTING_FAIL: No solution found to the problem."; break;
-               case 3: return "3 - ROUTING_FAIL_TIMEOUT: Time limit reached before finding a solution."; break;
-               case 4: return "4 - ROUTING_INVALID: Model, model parameters, or flags are not valid."; break;
-               default: return "NO_STATUS: Something went wrong. :("; break;
+               case 0: return "0 - ROUTING_NOT_SOLVED: Problem not solved yet.";
+               case 1: return "1 - ROUTING_SUCCESS: Problem solved successfully.";
+                case 2: return "2 - ROUTING_FAIL: No solution found to the problem.";
+               case 3: return "3 - ROUTING_FAIL_TIMEOUT: Time limit reached before finding a solution.";
+               case 4: return "4 - ROUTING_INVALID: Model, model parameters, or flags are not valid.";
+               default: return "NO_STATUS: Something went wrong. :(";
             }
         }
     }
