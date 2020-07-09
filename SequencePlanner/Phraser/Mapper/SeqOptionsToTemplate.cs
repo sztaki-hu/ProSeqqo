@@ -47,7 +47,7 @@ namespace SequencePlanner.Phraser.Mapper
                     template.PositionNumber = ((PositionNumber)optionSet.FindOption("PositionNumber")).Value;
                     template.PositionMatrix = ((PositionMatrix)optionSet.FindOption("PositionMatrix")).Value;
                     template.GTSP.PositionMatrix = template.PositionMatrix;
-                    if (template.PositionList == null || template.PositionMatrix!=null)
+                    if (template.PositionList == null && template.PositionMatrix!=null)
                     {
                         template.PositionList = new List<Options.Values.PositionOptionValue>();
                         string name = "";

@@ -230,7 +230,7 @@ namespace SequencePlanner.GTSP
                 {
                     NodeA = a,
                     NodeB = b,
-                    Weight = EdgeWeightCalculator(a.Configuration, a.Configuration),
+                    Weight = EdgeWeightCalculator(a.Configuration, b.Configuration),
                     Directed = true
                 };
             }
