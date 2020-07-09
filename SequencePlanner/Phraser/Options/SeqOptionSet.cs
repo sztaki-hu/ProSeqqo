@@ -26,7 +26,6 @@ namespace SequencePlanner.Phraser.Options
             Options.Add(new LinePrecedence());
             Options.Add(new ContourPrecedence());
             Options.Add(new PositionList());
-            Options.Add(new PositionNumber());
             Options.Add(new PositionMatrix());
             Options.Add(new ContourPenalty());
 
