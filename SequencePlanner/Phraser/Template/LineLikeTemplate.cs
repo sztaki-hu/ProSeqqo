@@ -6,14 +6,32 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class LineLikeTemplate : Template
+    public class LineLikeTemplate : CommonTemplate
     {
+        private SeqOptionSet optionSet;
+        private CommonTask commonTask;
+
+        public LineLikeTemplate(SeqOptionSet optionSet, CommonTask commonTask)
+        {
+            this.optionSet = optionSet;
+            this.commonTask = commonTask;
+        }
+
+        public LineLikeTemplate()
+        {
+        }
+
         public List<LineListOptionValue> LineList { get; set; }
         public List<PrecedenceOptionValue> LinePrecedence { get; set; }
         public List<PrecedenceOptionValue> ContourPrecedence { get; set; }
         public int ContourPenalty { get; set; }
 
-        public LineLikeTask Parse(OptionSet optionSet, bool validate = true)
+        internal LineLikeTask Parse(SeqOptionSet optionSet, CommonTask commonTask)
+        {
+            throw new NotImplementedException();
+        }
+
+        public new LineLikeTask Parse(OptionSet optionSet, bool validate = true)
         {
             Fill(optionSet);
             if (validate)
@@ -24,13 +42,13 @@ namespace SequencePlanner.Phraser.Template
             return Compile();
         }
 
-        public LineLikeTask Compile()
+        public new LineLikeTask Compile()
         {
             LineLikeTemplateCompiler compiler = new LineLikeTemplateCompiler();
             return compiler.Compile(this);
         }
 
-        public void Validate()
+        public new void Validate()
         {
             LineLikeTemplateValidator validator = new LineLikeTemplateValidator();
             if (!validator.Validate(this))
