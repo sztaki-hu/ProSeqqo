@@ -25,7 +25,7 @@ namespace SequencePlanner.Phraser.Template
         public PositionMatrixOptionValue PositionMatrix { get; set; }
 
 
-        public GTSPTask Parse(OptionSet optionSet, bool validate = true)
+        public CommonTask Parse(OptionSet optionSet, bool validate = true)
         {
             Fill(optionSet);
             if (validate)
@@ -35,7 +35,7 @@ namespace SequencePlanner.Phraser.Template
             return Compile();
         }
 
-        public GTSPTask Compile()
+        public CommonTask Compile()
         {
             CommonTemplateCompiler compiler = new CommonTemplateCompiler();
             return compiler.Compile(this);
@@ -87,7 +87,6 @@ namespace SequencePlanner.Phraser.Template
                     TrapezoidParamsSpeed = ((TrapezoidParamsSpeed)optionSet.FindOption("TrapezoidParams/Speed")).Value;
                     PositionList = ((PositionList)optionSet.FindOption("PositionList")).Value;
                     PositionMatrix = ((PositionMatrix)optionSet.FindOption("PositionMatrix")).Value;
-                    Afterwork();
                 }
                 else
                 {
@@ -97,14 +96,6 @@ namespace SequencePlanner.Phraser.Template
             catch (Exception e)
             {
                 Console.WriteLine("Template:Validate failed " + e.Message);
-            }
-        }
-
-        private void Afterwork()
-        {
-            if (DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time || DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
-            {
-                EdgeWeightFunctions.setTrapezoidParam(TrapezoidParamsAcceleration.ToArray(), TrapezoidParamsSpeed.ToArray());
             }
         }
     }
