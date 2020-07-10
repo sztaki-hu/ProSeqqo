@@ -6,12 +6,17 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class PointLikeTemplate : Template
+    public class PointLikeTemplate : CommonTask
     {
         public List<ProcessHierarchyOptionValue> ProcessHierarchy { get; set; }
         public List<PrecedenceOptionValue> ProcessPrecedence { get; set; }
         public List<PrecedenceOptionValue> PositionPrecedence { get; set; }
+        public CommonTask Task { get; set; }
 
+        public PointLikeTemplate(CommonTask task)
+        {
+            Task = task;
+        }
 
         public PointLikeTask Parse(OptionSet optionSet, bool validate = true)
         {
@@ -27,7 +32,7 @@ namespace SequencePlanner.Phraser.Template
         public PointLikeTask Compile()
         {
             PointLikeTemplateCompiler compiler = new PointLikeTemplateCompiler();
-            return compiler.Compile(this);
+            return compiler.Compile(this, Task);
         }
 
         public void Validate()
@@ -35,6 +40,17 @@ namespace SequencePlanner.Phraser.Template
             PointLikeTemplateValidator validator = new PointLikeTemplateValidator();
             if (!validator.Validate(this))
                 Console.WriteLine("LikeLike Template validation Error!");
+        }
+
+        internal PointLikeTask Parse(SeqOptionSet optionSet, bool validate = true)
+        {
+            Fill(optionSet);
+            if (validate)
+                Validate();
+            else
+                Console.WriteLine("Warning: Template not validated!");
+
+            return Compile();
         }
 
         public override string ToString()
