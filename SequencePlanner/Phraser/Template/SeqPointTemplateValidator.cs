@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public static class SeqTemplateValidator
+    public static class SeqPointTemplateValidator
     {
         public static bool Validate(SeqTemplate template)
         {

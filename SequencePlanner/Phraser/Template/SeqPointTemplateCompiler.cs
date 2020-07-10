@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public static class SeqTemplateCompiler
+    public static class SeqPointTemplateCompiler
     {
         public static SeqGTSPTask Compile(SeqTemplate template)
         {

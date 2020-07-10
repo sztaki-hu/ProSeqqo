@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class SeqTemplate: Template
+    public class SeqTemplate
     {
         public TaskTypeEnum TaskType { get; set; }
         public EdgeWeightSourceEnum EdgeWeightSource { get; set; }
@@ -34,7 +34,7 @@ namespace SequencePlanner.Phraser.Template
         public List<PrecedenceOptionValue> ContourPrecedence { get; set; }
         public int ContourPenalty { get; set; }
 
-        public override SeqGTSPTask Parse(OptionSet optionSet, bool validate)
+        public SeqGTSPTask Parse(OptionSet optionSet, bool validate = true)
         {
             Fill(optionSet);
             if (validate)
@@ -45,15 +45,23 @@ namespace SequencePlanner.Phraser.Template
             return Compile();
         }
 
-        public override SeqGTSPTask Compile()
+        public SeqGTSPTask Compile()
         {
-            return SeqTemplateCompiler.Compile(this); ;
+            if (TaskType == TaskTypeEnum.Line_Like)
+                return SeqLineTemplateCompiler.Compile(this);
+            if (TaskType == TaskTypeEnum.Point_Like)
+                return SeqPointTemplateCompiler.Compile(this);
+            return null;
         }
 
-        public override void Validate()
+        public void Validate()
         {
-            if (!SeqTemplateValidator.Validate(this))
-                Console.WriteLine("Template validation error!");
+            if(TaskType==TaskTypeEnum.Line_Like)
+                if (!SeqLineTemplateValidator.Validate(this))
+                    Console.WriteLine("LikeLike Template validation Error!");
+            if(TaskType==TaskTypeEnum.Point_Like)
+                if(!SeqPointTemplateValidator.Validate(this))
+                    Console.WriteLine("PointLike Template Validation Error!");
         }
 
         public override string ToString()
