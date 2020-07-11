@@ -8,32 +8,21 @@ namespace SequencePlanner.Phraser.Template
 {
     public class LineLikeTemplate : CommonTemplate
     {
-        private SeqOptionSet optionSet;
-        private CommonTask commonTask;
-
-        public LineLikeTemplate(SeqOptionSet optionSet, CommonTask commonTask)
-        {
-            this.optionSet = optionSet;
-            this.commonTask = commonTask;
-        }
-
-        public LineLikeTemplate()
-        {
-        }
-
         public List<LineListOptionValue> LineList { get; set; }
         public List<PrecedenceOptionValue> LinePrecedence { get; set; }
         public List<PrecedenceOptionValue> ContourPrecedence { get; set; }
         public int ContourPenalty { get; set; }
+        private OptionSet OptionSet { get; set; }
+        private CommonTask CommonTask { get; set; }
 
-        internal LineLikeTask Parse(SeqOptionSet optionSet, CommonTask commonTask)
+        public LineLikeTemplate(CommonTask commonTask)
         {
-            throw new NotImplementedException();
+            CommonTask = commonTask;
         }
-
         public new LineLikeTask Parse(OptionSet optionSet, bool validate = true)
         {
-            Fill(optionSet);
+            OptionSet = optionSet;
+            Fill(OptionSet);
             if (validate)
                 Validate();
             else
@@ -41,20 +30,17 @@ namespace SequencePlanner.Phraser.Template
 
             return Compile();
         }
-
         public new LineLikeTask Compile()
         {
             LineLikeTemplateCompiler compiler = new LineLikeTemplateCompiler();
-            return compiler.Compile(this);
+            return compiler.Compile(this, CommonTask);
         }
-
         public new void Validate()
         {
             LineLikeTemplateValidator validator = new LineLikeTemplateValidator();
             if (!validator.Validate(this))
                     Console.WriteLine("LikeLike Template validation Error!");
         }
-
         public override string ToString()
         {
             string tmp = "\nLineLike Template details:";

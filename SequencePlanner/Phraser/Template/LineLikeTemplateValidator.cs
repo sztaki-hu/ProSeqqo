@@ -8,7 +8,7 @@ namespace SequencePlanner.Phraser.Template
     {
         public override bool Validate(Template t)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
