@@ -75,7 +75,7 @@ namespace SequencePlanner.Phraser.Template
                     var before = Task.GTSP.FindPositionByID(item.BeforeID);
                     var after = Task.GTSP.FindPositionByID(item.AfterID);
                     if (before != null && after != null)
-                        Task.GTSP.ConstraintsOrder.Add(new ConstraintOrder(before, after));
+                        Task.GTSP.ConstraintsOrder.Add(new ConstraintOrderPoints(before, after));
                     else
                         if (before == null)
                         Console.WriteLine("Compile error: PositionPrecedence BeforeID [" + item.BeforeID + "] not found!");
@@ -119,7 +119,7 @@ namespace SequencePlanner.Phraser.Template
                 {
                     if (posBefore.Process.ID == before.ID && posAfter.Process.ID == after.ID)
                     {
-                        tmp.Add(new ConstraintOrder(posBefore, posAfter));
+                        tmp.Add(new ConstraintOrderPoints(posBefore, posAfter));
                     }
                 }
             }

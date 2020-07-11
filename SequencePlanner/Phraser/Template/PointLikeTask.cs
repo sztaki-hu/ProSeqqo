@@ -36,10 +36,12 @@ namespace SequencePlanner.Phraser.Template
             GTSP.Build();
             ORToolsParameters parameters = new ORToolsParameters()
             {
-                GTSP = GTSP,
+                StartDepot = StartDepot.PID,
                 TimeLimit = TimeLimit,
-                StartDepot = StartDepot,
-                WeightMultiplier = WeightMultiplier
+                RoundedMatrix = GTSP.Graph.PositionMatrixRound,
+                OrderConstraints = GTSP.ConstraintsOrder,
+                DisjointConstraints = GTSP.ConstraintsDisjoints,
+                GTSP = GTSP
             };
             ORTool = new ORToolsWrapper(parameters);
             ORTool.Build();
