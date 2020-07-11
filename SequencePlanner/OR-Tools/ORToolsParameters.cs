@@ -8,9 +8,11 @@ namespace SequencePlanner
 {
     public class ORToolsParameters
     {
-        public GTSPRepresentation GTSP { get; set; }
-        public Position StartDepot { get; set; }
+        public int StartDepot { get; set; }
+        public int[,] RoundedMatrix { get; set; }
+        public List<ConstraintOrder> OrderConstraints {get;set;}
         public int TimeLimit { get; set; }
-        public int WeightMultiplier { get; set; }
+        public List<ConstraintDisjoint> DisjointConstraints { get; set; }
+        public GTSPRepresentation GTSP { get; set; }
     }
 }
