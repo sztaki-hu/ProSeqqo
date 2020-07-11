@@ -28,7 +28,8 @@ namespace SequencePlanner
                 //DefaultRun();
                 args = new string[] {"-i", "example/test10.txt", "-o", "example/test10_out.txt", "-g", "example/test10_graph.dot" };
                 args = new string[] {"-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot" };
-               // args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
+                //args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
+                args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike.txt", "-g", "example/LineLike.dot" };
                 Help(args);
                 input = Input(args);
                 output = Output(args);
@@ -51,14 +52,16 @@ namespace SequencePlanner
         {
             if (input != null)
             {
-                SeqOptionSet optionSet = new SeqOptionSet();
-                SeqGTSPTask.DEBUG = debug;
-                optionSet.ReadFile(input);
-                optionSet.Validate();
-                Template template = new SeqTemplate();
-                SeqGTSPTask task = template.Parse(optionSet);
-                task.Build();
-                var solution = task.Run();
+                //SeqOptionSet optionSet = new SeqOptionSet();
+                //SeqGTSPTask.DEBUG = debug;
+                //optionSet.ReadFile(input);
+                //optionSet.Validate();
+                //Template template = new SeqTemplate();
+                //SeqGTSPTask task = template.Parse(optionSet,false);
+                //task.Build();
+                TemplateManager manager = new TemplateManager();
+                
+                var solution = manager.Solve(input);
                 if (solution != null)
                 {
                     solution.WriteFull();
@@ -71,7 +74,7 @@ namespace SequencePlanner
                 
                 if (graphviz != null)
                 {
-                    GraphViz.CreateGraphViz(task.GTSP, graphviz);
+                    //GraphViz.CreateGraphViz(task.GTSP, graphviz);
                     Console.WriteLine("GraphViz file created at " + graphviz + "!");
                 }
                 return solution;
