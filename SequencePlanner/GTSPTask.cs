@@ -12,10 +12,10 @@ namespace SequencePlanner
         protected ORToolsWrapper ORtool { get; set; }
         public List<Position> Solution { get; private set; }
         public List<Position> CleanSolution { get; private set; }
-        public GTSPRepresentation GTSP { get; set; }
+        public GTSPPointRepresentation GTSP { get; set; }
 
         public GTSPTask(){
-            GTSP = new GTSPRepresentation();
+            GTSP = new GTSPPointRepresentation();
         }
 
         public abstract void Templateing(Template template);

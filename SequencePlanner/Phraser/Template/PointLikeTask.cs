@@ -5,14 +5,14 @@ namespace SequencePlanner.Phraser.Template
 {
     public class PointLikeTask: CommonTask
     {
-        public GTSPRepresentation GTSP { get; set; }
+        public GTSPPointRepresentation GTSP { get; set; }
         public ORToolsParameters ORToolsParams { get; set; }
         private ORToolsWrapper ORTool { get; set; }
         private bool Built { get; set; }
 
         public PointLikeTask()
         {
-            GTSP = new GTSPRepresentation();
+            GTSP = new GTSPPointRepresentation();
             ORToolsParams = new ORToolsParameters();
         }
 

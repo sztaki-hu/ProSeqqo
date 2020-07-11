@@ -21,8 +21,8 @@ namespace SequencePlanner.Phraser.Template
         private static void BuildGTSP(SeqGTSPTask sequencerTask, SeqTemplate template)
         {
             sequencerTask.GTSP.WeightMultiplier = template.WeightMultiplier;
-            sequencerTask.GTSP.EdgeWeightCalculator = EdgeWeightFunctions.toFunction(template.DistanceFunction);
-            sequencerTask.GTSP.PositionMatrix = template.PositionMatrix;
+            //sequencerTask.GTSP.EdgeWeightCalculator = EdgeWeightFunctions.toFunction(template.DistanceFunction);
+            //sequencerTask.GTSP.PositionMatrix = template.PositionMatrix;
             ProcessHierarchy(sequencerTask, template);
         }
 

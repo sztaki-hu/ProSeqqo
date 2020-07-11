@@ -7,7 +7,6 @@ namespace SequencePlanner.Phraser.Template
 {
     public class PointLikeTemplateCompiler: TemplateCompiler
     {
-        private CommonTask CommonTask { get; set; }
         private PointLikeTask Task { get; set; }
         private PointLikeTemplate Template { get; set; }
 
@@ -111,7 +110,6 @@ namespace SequencePlanner.Phraser.Template
 
             }
         }
-
         private List<ConstraintOrder> CreateOrderConstraintsBetweenProc(PointLikeTask Task, Process before, Process after)
         {
             var tmp = new List<ConstraintOrder>();
@@ -127,26 +125,5 @@ namespace SequencePlanner.Phraser.Template
             }
             return tmp;
         }
-
-        //private void PositionMatrix()
-        //{
-        //    if (Template.PositionList == null && Template.PositionMatrix != null)
-        //    {
-        //        Template.PositionList = new List<Options.Values.PositionOptionValue>();
-        //        string name = "";
-        //        for (int i = 0; i < Template.PositionMatrix.ID.Count; i++)
-        //        {
-        //            if (Template.PositionMatrix.Name.Count > 0)
-        //            {
-        //                name = Template.PositionMatrix.Name[i];
-        //            }
-        //            else
-        //            {
-        //                name = "Position_" + i;
-        //            }
-        //            Template.PositionList.Add(new Options.Values.PositionOptionValue() { ID = Template.PositionMatrix.ID[i], Name = name, Dim = 0, Position = new List<double>() });
-        //        }
-        //    }
-        //}
     }
 }

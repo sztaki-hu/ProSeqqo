@@ -47,8 +47,6 @@ namespace SequencePlanner.Phraser.Template
 
         public SeqGTSPTask Compile()
         {
-            if (TaskType == TaskTypeEnum.Line_Like)
-                return SeqLineTemplateCompiler.Compile(this);
             if (TaskType == TaskTypeEnum.Point_Like)
                 return SeqPointTemplateCompiler.Compile(this);
             return null;
@@ -56,9 +54,6 @@ namespace SequencePlanner.Phraser.Template
 
         public void Validate()
         {
-            if(TaskType==TaskTypeEnum.Line_Like)
-                if (!SeqLineTemplateValidator.Validate(this))
-                    Console.WriteLine("LikeLike Template validation Error!");
             if(TaskType==TaskTypeEnum.Point_Like)
                 if(!SeqPointTemplateValidator.Validate(this))
                     Console.WriteLine("PointLike Template Validation Error!");
@@ -136,7 +131,7 @@ namespace SequencePlanner.Phraser.Template
         {
             if (DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time || DistanceFunction == Options.Values.DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker)
             {
-                EdgeWeightFunctions.setTrapezoidParam(TrapezoidParamsAcceleration.ToArray(), TrapezoidParamsSpeed.ToArray());
+                //EdgeWeightFunctions.setTrapezoidParam(TrapezoidParamsAcceleration.ToArray(), TrapezoidParamsSpeed.ToArray());
             }
         }
     }
