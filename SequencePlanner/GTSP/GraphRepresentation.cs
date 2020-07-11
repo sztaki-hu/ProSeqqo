@@ -14,7 +14,7 @@ namespace SequencePlanner.GTSP
         public List<Edge> ManualEdges { get; set; }
         public double[,] PositionMatrix {get;set;}
         public int[,] PositionMatrixRound { get; set; }
-        public EdgeWeightFunctions.EdgeWeightFunction EdgeWeightCalculator { get; set; }
+        public EdgeWeightCalculator EdgeWeightCalculator { get; set; }
         public int WeightMultiplier { get; set; }
         private int PositionNumber { get; set; }
 
@@ -24,10 +24,11 @@ namespace SequencePlanner.GTSP
             MinusInfity = int.MinValue;
             PositionNumber = -1;
             PositionMatrix = new double[1,1];
-            EdgeWeightCalculator = EdgeWeightFunctions.Euclidian_Distance;
+            EdgeWeightCalculator = new EdgeWeightCalculator(Phraser.Options.Values.DistanceFunctionEnum.Euclidian_Distance);
             WeightMultiplier = -1;
+            Edges = new List<Edge>();
         }
-        public void Build(GTSPRepresentation gtsp)
+        public void Build()
         {
             initMatrices();
             initEdgeWeightMultiplier();
@@ -54,7 +55,7 @@ namespace SequencePlanner.GTSP
             }
         }
 
-        private void MakeFull(GTSPRepresentation gtsp)
+        private void MakeFull(GTSPPointRepresentation gtsp)
         {
             PositionMatrix = new double[gtsp.Positions.Count, gtsp.Positions.Count];
             for (int i = 0; i < gtsp.Positions.Count; i++)
