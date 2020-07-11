@@ -1,14 +1,14 @@
 ﻿namespace SequencePlanner.GTSP
 {
     public class ConstraintOrder
-    {
-        public Position Before { get; set; }
-        public Position After { get; set; }
+    {        
+        public int BeforeID { get; set; }
+        public int AfterID { get; set; }
 
-        public ConstraintOrder(Position before, Position after)
+        public ConstraintOrder(int before, int after)
         {
-            Before = before;
-            After = after;
+            BeforeID = before;
+            AfterID = after;
         }
     }
 }

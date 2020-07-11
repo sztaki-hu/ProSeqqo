@@ -5,41 +5,45 @@ namespace SequencePlanner.GTSP
 {
     public class ConstraintDisjoint
     {
-        public List<Position> NodeList;
+        public long[] DisjointSet { get { return NodeListID.ToArray(); } private set { } }
+        private List<long> NodeListID;
+        private List<Position> PositionList;
+        private List<Line> LineList;
 
 
         public ConstraintDisjoint()
         {
-            NodeList = new List<Position>();
+            NodeListID = new List<long>();
+            PositionList = new List<Position>();
+            LineList = new List<Line>();
         }
 
-        public void addConstraint(Position node)
+        public void AddLine(Line line)
         {
-            NodeList.Add(node);
-        }
-        public void addConstraint(List<Position> nodes)
-        {
-            NodeList.AddRange(nodes);
+            LineList.Add(line);
+            NodeListID.Add(line.LID);
         }
 
-        public long[] getIndices()
+        public void AddPosition(Position position)
         {
-            var tmp = new long[NodeList.Count];
-            for (int i = 0; i < NodeList.Count; i++)
-            { 
-                tmp[i] = Convert.ToInt32(NodeList[i].PID);
-            }
-            return tmp;
+            PositionList.Add(position);
+            NodeListID.Add(position.PID);
         }
 
-        public override string ToString()
+        public void AddLine(List<Line> lines)
         {
-            var tmp = "";
-            foreach (var item in NodeList)
+            foreach (var line in lines)
             {
-                tmp += "[" + item.ID + "]"+ "[PID:" + item.PID +"]"+ item.Name+"; ";
+                AddLine(line);
             }
-            return "DisjointSet("+NodeList.Count+" constraints): " + tmp;
+        }
+
+        public void AddPosition(List<Position> positions)
+        {
+            foreach (var position in positions)
+            {
+                AddPosition(position);
+            }
         }
     }
 }
