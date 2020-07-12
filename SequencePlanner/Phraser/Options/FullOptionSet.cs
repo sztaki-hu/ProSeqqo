@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Options
 {
-    public class SeqOptionSet: OptionSet
+    public class FullOptionSet: OptionSet
     {
         public override void Init()
         {
