@@ -16,7 +16,6 @@ namespace SequencePlanner
         private static string graphviz;
         private static bool debug;
 
-
         public static ORToolsResult CLI(string[] args)
         {
             if (args.Length == 0)
@@ -29,7 +28,7 @@ namespace SequencePlanner
                 args = new string[] {"-i", "example/test10.txt", "-o", "example/test10_out.txt", "-g", "example/test10_graph.dot" };
                 args = new string[] {"-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot" };
                 //args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
-                args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike.txt", "-g", "example/LineLike.dot" };
+                args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot" };
                 Help(args);
                 input = Input(args);
                 output = Output(args);
@@ -53,7 +52,7 @@ namespace SequencePlanner
             if (input != null)
             {
                 //SeqOptionSet optionSet = new SeqOptionSet();
-                //SeqGTSPTask.DEBUG = debug;
+                //TemplateManager.DEBUG = debug;
                 //optionSet.ReadFile(input);
                 //optionSet.Validate();
                 //Template template = new SeqTemplate();

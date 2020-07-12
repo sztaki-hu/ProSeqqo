@@ -3,7 +3,7 @@
   <Class Name="SequencePlanner.GTSP.GraphRepresentation" Collapsed="true">
     <Position X="6" Y="13" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>QAAAgIAgBCAAAIAAAgEAAAIAIAIAgAAAAQCAAAAAAAo=</HashCode>
+      <HashCode>QAAAgIAABCAAAIEAACAAEAIABAIAwAAAAAAAIAAAAAo=</HashCode>
       <FileName>GTSP\GraphRepresentation.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -18,7 +18,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAgAAAABAAAAAAAEAgAAAAAAAAAAQAAAgEAAAICAAAA=</HashCode>
+      <HashCode>AAgAAAADAAAAAAAEAgAAAAAAAAAAQAAAgEAAAICAAAA=</HashCode>
       <FileName>GTSP\Position.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -101,7 +101,7 @@
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Phraser\Template\Template.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -119,29 +119,11 @@
       <FileName>Phraser\Options\SubOption\CyclicSequence.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.SequencerTask">
-    <Position X="6" Y="10.75" Width="1.75" />
-    <Compartments>
-      <Compartment Name="Properties" Collapsed="true" />
-    </Compartments>
-    <AssociationLine Name="ORtool" Type="SequencePlanner.ORToolsWrapper">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.186" Y="0.099" />
-      </MemberNameLabel>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAAAERgIgIAAAAAAAgAAAgAAAAACwAAAAAAAMAAACA4=</HashCode>
-      <FileName>SequencerTask.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="ORtool" />
-    </ShowAsAssociation>
-  </Class>
   <Class Name="SequencePlanner.ORToolsWrapper" Collapsed="true">
     <Position X="8.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAMAAAAoBAAAAAAAABAABA=</HashCode>
-      <FileName>ORToolsWrapper.cs</FileName>
+      <HashCode>AAAAAAAAAAACgAAAAAAAgAAMAAAAoAACAAAAAAAEABA=</HashCode>
+      <FileName>OR-Tools\ORToolsWrapper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
