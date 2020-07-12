@@ -47,16 +47,17 @@ namespace SequencePlanner
                 routing.AddDisjunction(set.DisjointSet);
             }
 
+
             //Add distance dimension
-            routing.AddDimension(transitCallbackIndex, 0, int.MaxValue-100, true, "Distance");
+            routing.AddDimension(transitCallbackIndex, 0, int.MaxValue - 100, true, "Distance");
             RoutingDimension distanceDimension = routing.GetMutableDimension("Distance");
 
             //Add order constraints
             Solver solver = routing.solver();
             for (int i = 0; i < param.OrderConstraints.Count; i++)
             {
-                long beforeIndex = manager.NodeToIndex(param.OrderConstraints[i].BeforeID);
-                long afterIndex = manager.NodeToIndex(param.OrderConstraints[i].AfterID);
+                long beforeIndex = manager.NodeToIndex(param.OrderConstraints[i].Before.ID);
+                long afterIndex = manager.NodeToIndex(param.OrderConstraints[i].After.ID);
                 solver.Add(solver.MakeLessOrEqual(
                       distanceDimension.CumulVar(beforeIndex),
                       distanceDimension.CumulVar(afterIndex)));
@@ -90,8 +91,7 @@ namespace SequencePlanner
 
         private ORToolsResult ProcessSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
         {
-            ORToolsResult result = new ORToolsResult();
-            result.Time = time;
+
             List<long> rawSolution = new List<long>();
             var index = routing.Start(0);
             while (routing.IsEnd(index) == false)
@@ -100,7 +100,12 @@ namespace SequencePlanner
                 index = solution.Value(routing.NextVar(index));
             }
             rawSolution.Add(manager.IndexToNode(index));
-            result.ResolveSolution(rawSolution, param.GTSP);
+
+            ORToolsResult result = new ORToolsResult()
+            {
+                Time = time,
+                SolutionRaw = rawSolution
+            };
             return result;
         }
         private string DecodeStatusCode(int status)

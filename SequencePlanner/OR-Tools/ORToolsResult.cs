@@ -7,109 +7,32 @@ namespace SequencePlanner
 {
     public class ORToolsResult
     {
-        public List<Position> Solution { get; }
+        public List<long> SolutionRaw { get; set; }
         public List<double> Costs { get;}
-        public double CostSum { get; private set; }
+        public double CostSum { get; protected set; }
         public TimeSpan Time { get; set; }
 
         public ORToolsResult()
         {
-            Solution = new List<Position>();
+            SolutionRaw = new List<long>();
             Costs = new List<double>();
         }
-
-        public void ResolveSolution(List<long> solution, GTSPRepresentation gtsp)
+        public ORToolsResult(ORToolsResult result)
         {
-            foreach (var item in solution)
-            {
-                foreach (var position in gtsp.Positions)
-                {
-                    if(position.PID == Convert.ToInt32(item))
-                    {
-                        Solution.Add(position);
-                    }
-                }
-            }
-            for (int i = 1; i < Solution.Count; i++)
-            {
-                Costs.Add(gtsp.Graph.PositionMatrix[Solution[i-1].PID,Solution[i].PID]);
-                CostSum += Costs[i-1];
-            }
+            SolutionRaw = result.SolutionRaw;
+            Costs = result.Costs;
+            CostSum = result.CostSum;
+            Time = result.Time;
         }
 
-        public void WriteSimple()
-        {
-            WriteSolutionHeader();
-            for (int i = 0; i < Solution.Count-1; i++)
-            {
-                Console.Write("["+ Solution[i].ID+ "] "+ Solution[i].Name+"  --"+Costs[i].ToString("F4") + "-->  ");
-            }
-            Console.Write("[" + Solution[Solution.Count-1].ID + "]" + Solution[Solution.Count-1].Name+"\n");
-            Console.WriteLine();
-        }
+        public virtual void WriteFull() { }
 
-        public void Write()
-        {
-            WriteSolutionHeader();
-            for (int i = 0; i < Solution.Count; i++)
-            {
-                Console.WriteLine("\t[" + Solution[i].ID + "]" + Solution[i].Name + " "+ Solution[i].ConfigString());
-            }
-            Console.WriteLine();
-        }
+        public virtual void WriteSimple() { }
 
-        public void WriteFull()
-        {
-            WriteSolutionHeader();
-            for (int i = 0; i < Solution.Count-1; i++)
-            {
-                Console.WriteLine("\t| [" + Solution[i].ID + "]"  + Solution[i].Name+" " + Solution[i].ConfigString());
-                //Console.WriteLine("\t| ");
-                Console.WriteLine("\t|--" + Costs[i].ToString("F4"));
-                //Console.WriteLine("\t| ");
-            }
-            Console.WriteLine("\t| [" + Solution[Solution.Count - 1].ID + "]"  + Solution[Solution.Count - 1].Name+ " " + Solution[Solution.Count - 1].ConfigString());
-            Console.WriteLine();
-        }
+        public virtual void Write() { }
 
-        public void WriteOutputFile(String file)
-        {
-            using (System.IO.StreamWriter f = new System.IO.StreamWriter(@file, false))
-            {
-                f.WriteLine("Length: " + CostSum.ToString("F4"));
-                f.WriteLine("Number of items: " + Solution.Count);
-                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
-                f.WriteLine("RunTime: " + elapsedTime);
-                f.WriteLine("Solution: ");
+        public virtual void WriteOutputFile(string File) { }
 
-
-                for (int i = 0; i < Solution.Count; i++)
-                {
-                    f.WriteLine("\t[" + Solution[i].ID + "]" + Solution[i].Name + " " + Solution[i].ConfigString());
-                }
-
-                f.WriteLine("Timing: ");
-                for (int i = 0; i < Solution.Count - 1; i++)
-                {
-                    f.Write("[" + Solution[i].ID + "] " + Solution[i].Name + "  --" + Costs[i].ToString("F4") + "-->  ");
-                }
-                f.Write("[" + Solution[Solution.Count - 1].ID + "]" + Solution[Solution.Count - 1].Name + "\n");
-            }
-        }
-
-        private void WriteSolutionHeader()
-        {
-            Console.WriteLine("Length: " + CostSum.ToString("F4"));
-            Console.WriteLine("Number of items: " + Solution.Count);
-            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
-            Console.WriteLine("RunTime: " + elapsedTime);
-            Console.WriteLine("Solution: ");
-        }
-
-        public void WriteMinimal()
-        {
-            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
-            Console.Write("RunTime; " + elapsedTime+"; "+"CostSum; "+ CostSum+"\n");
-        }
+        public virtual void WriteMinimal() { }
     }
 }
