@@ -4,17 +4,16 @@ using System.Text;
 
 namespace SequencePlanner.GTSP
 {
-    public class Contour
+    public class Contour : NodeBase
     {
-        private static int maxCID = 0;
-        public int CID;
-        public int ID;
+        private static int maxID = 0;
+
         public List<Line> Lines { get; set; }
 
         public Contour()
         {
-            CID = maxCID;
-            CID++;
+            ID = maxID;
+            ID++;
             Lines = new List<Line>();
         }
 

@@ -6,8 +6,7 @@ namespace SequencePlanner.GTSP
 {
     public class Position : NodeBase
     {
-        private static int PIDmax = 0;
-        public int PID { get; set; }
+        private static int IDmax = 0;
         public static int Dimension { get; set; }
         public Task Task { get; set; }
         public Process Process { get; set; }
@@ -16,8 +15,8 @@ namespace SequencePlanner.GTSP
 
         public Position() : base()
         {
-            PID = PIDmax++;
-            Name = "Position_" + ID;
+            ID = IDmax++;
+            Name = "Position_" + GID;
             Configuration = new List<double>();
             Configuration.Add(0);
             Configuration.Add(0);
@@ -26,7 +25,7 @@ namespace SequencePlanner.GTSP
 
         public Position( int id, String name = null, List<double> config = null) : base(name, id)
         {
-            PID = PIDmax++;
+            ID = IDmax++;
             if (config == null)
             {
                 Configuration = new List<double>();
@@ -44,7 +43,7 @@ namespace SequencePlanner.GTSP
 
         public Position(int id, String name = null, List<double> config = null, Alternative alternative = null, Process process = null) : this( id,name, config)
         {
-            PID = PIDmax++;
+            ID = IDmax++;
             Alternative = alternative;
             Process = process;
         }
@@ -57,9 +56,9 @@ namespace SequencePlanner.GTSP
                 tmp += item + ", ";
             }
             if (!Virtual)
-                return "[" + ID + "]" + "[PID:" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Task: " + Task.Name + " Config: [" + tmp + "]";
+                return "[" + GID + "]" + "[PID:" + GID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Task: " + Task.Name + " Config: [" + tmp + "]";
             else
-                return "[" + ID + "]" + "[PID:" + ID + "]" + Name + " Virtual!";
+                return "[" + GID + "]" + "[PID:" + GID + "]" + Name + " Virtual!";
         }
 
         public string ConfigString()
@@ -77,7 +76,7 @@ namespace SequencePlanner.GTSP
 
         public static void initMaxID()
         {
-            PIDmax = 0;
+            IDmax = 0;
         }
     }
 }

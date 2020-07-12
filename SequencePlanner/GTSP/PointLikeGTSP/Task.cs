@@ -11,16 +11,16 @@ namespace SequencePlanner.GTSP
         
         public Task(): base()
         {
-                Name = "Task_" + ID;
+                Name = "Task_" + GID;
                 Positions = new List<Position>(); 
         }
 
         public Task(int id, string name = null) : this()
         {
-            ID = id;
+            GID = id;
             if (name == null)
             {
-                Name = "Task_" + ID;
+                Name = "Task_" + GID;
             }
             else
             {
@@ -36,7 +36,7 @@ namespace SequencePlanner.GTSP
             {
                 tmp += item.Name + ", ";
             }
-            return "[" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + "  Positions: " + tmp;
+            return "[" + GID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + "  Positions: " + tmp;
         }
     }
 }

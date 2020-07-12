@@ -29,19 +29,18 @@ namespace SequencePlanner.GTSP
             ConstraintsDisjoints = new List<ConstraintDisjoint>();
             ConstraintsOrder = new List<ConstraintOrder>();
             Graph = new GraphRepresentation() {
-                EdgeWeightCalculator = this.EdgeWeightCalculator,
                 WeightMultiplier = this.WeightMultiplier
             };
         }
-        public virtual void Build() { }
 
+        public virtual void Build() { }
         public virtual void GenerateDisjunctSets() { }
         
         public Position FindPositionByPID(int PID)
         {
             foreach (var item in Positions)
             {
-                if (item.PID == PID)
+                if (item.ID == PID)
                 {
                     return item;
                 }
@@ -52,14 +51,12 @@ namespace SequencePlanner.GTSP
         {
             foreach (var item in Positions)
             {
-                if (item.ID == ID)
+                if (item.GID == ID)
                 {
                     return item;
                 }
             }
             return null;
         }
-
-       
     }
 }

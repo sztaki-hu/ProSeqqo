@@ -19,7 +19,7 @@ namespace SequencePlanner.GTSP
             Name = "Alternative_" + AID++;
             Start = new Position()
             {
-                ID = AID++,
+                GID = AID++,
                 Name = Name + "_Start",
                 Process = Process,
                 Alternative = this,
@@ -27,7 +27,7 @@ namespace SequencePlanner.GTSP
             };
             Finish = new Position()
             {
-                ID = AID++,
+                GID = AID++,
                 Name = Name + "_Finish",
                 Virtual = true,
                 Process = Process,
@@ -38,10 +38,10 @@ namespace SequencePlanner.GTSP
 
         public Alternative(int id, String name = null) : this()
         {
-            ID = id;
+            GID = id;
             if (name == null)
             {
-                Name = "Alternative_" + ID;
+                Name = "Alternative_" + GID;
             }
             else
             {
@@ -58,7 +58,7 @@ namespace SequencePlanner.GTSP
             {
                 tmp += item.Name + ", ";
             }
-            return "[" + ID + "]" + Name + " Proc: "+Process.Name +" Tasks: " + tmp;
+            return "[" + GID + "]" + Name + " Proc: "+Process.Name +" Tasks: " + tmp;
         }
     }
 }

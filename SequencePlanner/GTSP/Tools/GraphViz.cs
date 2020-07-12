@@ -25,7 +25,7 @@ namespace SequencePlanner.GTSP
                 {
                     foreach (var pos in g.Positions)
                     {
-                        if (proc.ID == pos.Process.ID && InEdges(g.Graph, pos.ID))
+                        if (proc.GID == pos.Process.GID && InEdges(g.Graph, pos.GID))
                         {
                             subgraph += pos.Name + "; ";
                         }
@@ -35,17 +35,17 @@ namespace SequencePlanner.GTSP
                 {
                     foreach (var pos in g.Positions)
                     {
-                        if (proc.ID == pos.Process.ID)
+                        if (proc.GID == pos.Process.GID)
                         {
                             var find = false;
                             foreach (var alt in g.Alternatives)
                             {
-                                if (pos.ID == alt.Start.ID || pos.ID == alt.Finish.ID)
+                                if (pos.GID == alt.Start.GID || pos.GID == alt.Finish.GID)
                                 {
                                     find = true;
                                 }
                             }
-                            if (!find && InEdges(g.Graph, pos.ID))
+                            if (!find && InEdges(g.Graph, pos.GID))
                                 subgraph += pos.Name + "; ";
                         }
                     }
@@ -59,9 +59,9 @@ namespace SequencePlanner.GTSP
                         string subgraphAlt = "\t";
                         foreach (var pos in g.Positions)
                         {
-                            if (proc.ID == pos.Process.ID && pos.Alternative?.ID == alt.ID)
+                            if (proc.GID == pos.Process.GID && pos.Alternative?.GID == alt.GID)
                             {
-                                if (InEdges(g.Graph, pos.ID))
+                                if (InEdges(g.Graph, pos.GID))
                                     subgraphAlt += pos.Name + "; ";
                             }
                         }
@@ -111,7 +111,7 @@ namespace SequencePlanner.GTSP
         {
             foreach (var edge in g.Edges)
             {
-                if (edge.NodeA.ID == ID || edge.NodeB.ID == ID)
+                if (edge.NodeA.GID == ID || edge.NodeB.GID == ID)
                     return true;
 
             }

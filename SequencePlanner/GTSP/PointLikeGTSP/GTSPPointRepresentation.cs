@@ -24,7 +24,6 @@ namespace SequencePlanner.GTSP
             ConstraintsDisjoints = new List<ConstraintDisjoint>();
             ConstraintsOrder = new List<ConstraintOrder>();
             Graph = new GraphRepresentation() {
-                EdgeWeightCalculator = this.EdgeWeightCalculator,
                 WeightMultiplier = this.WeightMultiplier
             };
         }
@@ -95,7 +94,6 @@ namespace SequencePlanner.GTSP
             }
         }
 
-        public void ApplyConstraints() { }
         public void GenerateDisjunctSets()
         {
             ConstraintsDisjoints = new List<ConstraintDisjoint>();
@@ -120,7 +118,10 @@ namespace SequencePlanner.GTSP
                     //constraint.addConstraint();
                     foreach (var alternative in process.Alternatives)
                     {
-                        constraint.addConstraint(alternative.Tasks[i].Positions);
+                        foreach (var position in alternative.Tasks[i].Positions)
+                        {
+                            constraint.Add(position);
+                        }
                     }
                     ConstraintsDisjoints.Add(constraint);
                 }
@@ -159,7 +160,6 @@ namespace SequencePlanner.GTSP
         public void CreateEdges(GTSPPointRepresentation gtsp)
         {
             Graph = new GraphRepresentation() {
-                EdgeWeightCalculator = this.EdgeWeightCalculator,
                 WeightMultiplier = this.WeightMultiplier
             };
             Graph.Edges = new List<Edge>();
@@ -172,7 +172,7 @@ namespace SequencePlanner.GTSP
             {
                 foreach (var proc2 in gtsp.Processes)
                 {
-                    if (proc.ID != proc2.ID)
+                    if (proc.GID != proc2.GID)
                     {
                         foreach (var alternative in proc.Alternatives)
                         {
@@ -180,7 +180,7 @@ namespace SequencePlanner.GTSP
                             {
                                 foreach (var alternative2 in proc2.Alternatives)
                                 {
-                                    if (alternative.ID != alternative2.ID && alternative2.Tasks.Count > 0)
+                                    if (alternative.GID != alternative2.GID && alternative2.Tasks.Count > 0)
                                     {
                                         ConnectTasks(alternative.Tasks[alternative.Tasks.Count - 1], alternative2.Tasks[0]);
                                     }
@@ -241,11 +241,11 @@ namespace SequencePlanner.GTSP
             int aIDindex = -1, bIDindex = -1;
             for (int i = 0; i < PositionMatrixOriginal.ID.Count; i++)
             {
-                if (PositionMatrixOriginal.ID[i] == a.ID)
+                if (PositionMatrixOriginal.ID[i] == a.GID)
                 {
                     aIDindex = i;
                 }
-                if (PositionMatrixOriginal.ID[i] == b.ID)
+                if (PositionMatrixOriginal.ID[i] == b.GID)
                 {
                     bIDindex = i;
                 }
@@ -265,7 +265,7 @@ namespace SequencePlanner.GTSP
         {
             foreach (var item in Processes)
             {
-                if (item.ID == ID)
+                if (item.GID == ID)
                 {
                     return item;
                 }
@@ -276,7 +276,7 @@ namespace SequencePlanner.GTSP
         {
             foreach (var item in Alternatives)
             {
-                if (item.ID == ID)
+                if (item.GID == ID)
                 {
                     return item;
                 }
@@ -287,7 +287,7 @@ namespace SequencePlanner.GTSP
         {
             foreach (var item in Tasks)
             {
-                if (item.ID == ID)
+                if (item.GID == ID)
                 {
                     return item;
                 }
@@ -298,7 +298,7 @@ namespace SequencePlanner.GTSP
         {
             foreach (var item in Positions)
             {
-                if (item.PID == PID)
+                if (item.ID == PID)
                 {
                     return item;
                 }
@@ -309,7 +309,7 @@ namespace SequencePlanner.GTSP
         {
             foreach (var item in Positions)
             {
-                if (item.ID == ID)
+                if (item.GID == ID)
                 {
                     return item;
                 }

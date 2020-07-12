@@ -6,20 +6,22 @@ namespace SequencePlanner.GTSP
 {
     public class NodeBase
     {
-        private static int maxID = 0;
+        private static int maxGID = 0;
         public String Name { get; set; }
-        public int ID { get; set; }
+        public int GID { get; set; }   //ID globaly unique
+        public int UID { get; set; }   //ID given by User
+        public int ID { get; set; }   //ID unique by type
         public bool Virtual { get; set; }
 
         public NodeBase()
         {
-            ID = maxID++;
-            Name = "NodeBase_" + ID;
+            GID = maxGID++;
+            Name = "NodeBase_" + GID;
         } 
         public NodeBase(string name, int id)
         {
             Name = name;
-            ID = id;
+            GID = id;
         }
     }
 }

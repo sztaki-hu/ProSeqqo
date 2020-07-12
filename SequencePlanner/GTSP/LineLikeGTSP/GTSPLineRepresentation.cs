@@ -10,6 +10,7 @@ namespace SequencePlanner.GTSP
     {
         public List<Contour> Contours { get; set; }
         public List<Line> Lines { get; set; }
+        public int ContourPenalty { get; set; }
 
         public GTSPLineRepresentation()
         {
@@ -19,13 +20,15 @@ namespace SequencePlanner.GTSP
             ConstraintsDisjoints = new List<ConstraintDisjoint>();
             ConstraintsOrder = new List<ConstraintOrder>();
             Graph = new GraphRepresentation() {
-                EdgeWeightCalculator = this.EdgeWeightCalculator,
                 WeightMultiplier = this.WeightMultiplier
             };
         }
         public void Build()
         {
-
+            Graph = new GraphRepresentation()
+            {
+                WeightMultiplier = this.WeightMultiplier
+            };
             CreateEdges();
             Graph.Build();
         }
@@ -33,40 +36,31 @@ namespace SequencePlanner.GTSP
         private void CreateEdges()
         {
             var weight = 0.0;
-            var weightReverse = 0.0;
             foreach (var lineFrom in Lines)
             {
                 foreach (var lineTo in Lines)
                 {
-
-                    if(lineFrom.LID != lineTo.LID)
+                    if(lineFrom.ID != lineTo.ID)
                     {
                         weight = EdgeWeightCalculator.Calculate(lineFrom.End.Configuration, lineTo.Start.Configuration);
-                        weightReverse = EdgeWeightCalculator.Calculate(lineTo.End.Configuration, lineFrom.Start.Configuration);
+                        if (lineFrom.Contour.ID != lineTo.Contour.ID)
+                            weight += ContourPenalty;
                     }
                     else
                     {
                         weight = 0.0;
-                        weightReverse = 0.0;
                     }
                     Graph.Edges.Add(new Edge()
                     {
-                        NodeA = lineFrom.End,
-                        NodeB = lineTo.Start,
+                        NodeA = lineFrom,
+                        NodeB = lineTo,
                         Weight = weight,
-                        Directed = false,
-                        Tag = "[" + lineFrom.ID + "]" + lineFrom.Name + "-> [" + lineTo.ID + "]" + lineTo.Name
-                    });
-                    Graph.Edges.Add(new Edge()
-                    {
-                        NodeA = lineTo.End,
-                        NodeB = lineFrom.Start,
-                        Weight = weightReverse,
-                        Directed = false,
-                        Tag = "[" + lineTo.ID + "]" + lineTo.Name + " -> [" + lineFrom.ID + "]" + lineFrom.Name
+                        Directed = true,
+                        Tag = "[" + lineFrom.ID + "][C:"+lineFrom.Contour.UID+"]" + lineFrom.Name + "--"+weight+"--> [" + lineTo.ID + "][C:" + lineFrom.Contour.UID + "]" + lineTo.Name
                     });
                 }
             }
         }
+
     }
 }

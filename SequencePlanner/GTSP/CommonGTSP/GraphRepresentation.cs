@@ -11,10 +11,8 @@ namespace SequencePlanner.GTSP
         private static double MinusInfity { get; set; }
  
         public List<Edge> Edges { get; set; }
-        public List<Edge> ManualEdges { get; set; }
         public double[,] PositionMatrix {get;set;}
         public int[,] PositionMatrixRound { get; set; }
-        public EdgeWeightCalculator EdgeWeightCalculator { get; set; }
         public int WeightMultiplier { get; set; }
         private int PositionNumber { get; set; }
 
@@ -24,7 +22,6 @@ namespace SequencePlanner.GTSP
             MinusInfity = int.MinValue;
             PositionNumber = -1;
             PositionMatrix = new double[1,1];
-            EdgeWeightCalculator = new EdgeWeightCalculator(Phraser.Options.Values.DistanceFunctionEnum.Euclidian_Distance);
             WeightMultiplier = -1;
             Edges = new List<Edge>();
         }
@@ -35,8 +32,8 @@ namespace SequencePlanner.GTSP
             foreach (var edge in Edges)
             {
                 CalculateEdgeWeight(edge);
-                PositionMatrix[edge.NodeA.PID, edge.NodeB.PID] = edge.Weight;
-                PositionMatrixRound[edge.NodeA.PID, edge.NodeB.PID] = Convert.ToInt32(WeightMultiplier*edge.Weight);
+                PositionMatrix[edge.NodeA.ID, edge.NodeB.ID] = edge.Weight;
+                PositionMatrixRound[edge.NodeA.ID, edge.NodeB.ID] = Convert.ToInt32(WeightMultiplier*edge.Weight);
             }
             //WriteGraph();
             //WriteMatrces();
@@ -75,7 +72,7 @@ namespace SequencePlanner.GTSP
 
             foreach (var edge in Edges)
             {
-                PositionMatrix[edge.NodeA.PID, edge.NodeB.PID] = edge.Weight;
+                PositionMatrix[edge.NodeA.ID, edge.NodeB.ID] = edge.Weight;
             }
 
             for (int i = 0; i < gtsp.Positions.Count; i++)
@@ -151,14 +148,14 @@ namespace SequencePlanner.GTSP
             int maxPID=0;
             foreach (var edge in Edges)
             {
-                if (edge.NodeA.PID > maxPID)
+                if (edge.NodeA.ID > maxPID)
                 {
-                    maxPID = edge.NodeA.PID;
+                    maxPID = edge.NodeA.ID;
                 }
 
-                if (edge.NodeB.PID > maxPID)
+                if (edge.NodeB.ID > maxPID)
                 {
-                    maxPID = edge.NodeB.PID;
+                    maxPID = edge.NodeB.ID;
                 }
             }
             return maxPID;
