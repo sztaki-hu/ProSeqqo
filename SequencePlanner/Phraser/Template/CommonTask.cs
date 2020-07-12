@@ -15,8 +15,8 @@ namespace SequencePlanner
         public int Dimension { get; set; }
         public int TimeLimit { get; set; }
         public bool CyclicSequence { get; set; }
-        public Position StartDepot { get; set; }
-        public Position FinishDepot { get; set; }
+        public NodeBase StartDepot { get; set; }
+        public NodeBase FinishDepot { get; set; }
         public int WeightMultiplier { get; set; }
         public List<Position> PositionList { get; set; }
         public PositionMatrixOptionValue PositionMatrix { get; set; }
