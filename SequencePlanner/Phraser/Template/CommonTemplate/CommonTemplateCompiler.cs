@@ -62,7 +62,7 @@ namespace SequencePlanner.Phraser.Template
                         name = "Position_" + i;
                     }
                     Template.PositionList.Add(new Options.Values.PositionOptionValue() { ID = Template.PositionMatrix.ID[i], Name = name, Dim = 0, Position = new List<double>() });
-                    Task.PositionList.Add(new Position() { ID = Template.PositionMatrix.ID[i], Name = name, Configuration = new List<double>() });
+                    Task.PositionList.Add(new Position() { GID = Template.PositionMatrix.ID[i], Name = name, Configuration = new List<double>() });
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace SequencePlanner.Phraser.Template
                 bool find = false;
                 foreach (var pos in Task.PositionList)
                 {
-                    if (pos.ID == Template.StartDepotID)
+                    if (pos.GID == Template.StartDepotID)
                     {
                         Task.StartDepot = pos;
                         find = true;
@@ -89,7 +89,7 @@ namespace SequencePlanner.Phraser.Template
                 bool find = false;
                 foreach (var pos in Task.PositionList)
                 {
-                    if (pos.ID == Template.FinishDepotID)
+                    if (pos.GID == Template.FinishDepotID)
                     {
                         Task.FinishDepot = pos;
                         find = true;
