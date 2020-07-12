@@ -59,7 +59,7 @@ namespace SequencePlanner.Phraser.Template
                 {
                     foreach (var pos in Task.PositionList)
                     {
-                        if (pos.ID == item.PositionID)
+                        if (pos.GID == item.PositionID)
                             Task.GTSP.AddPosition(task, pos);
                     }
                 }
@@ -75,7 +75,7 @@ namespace SequencePlanner.Phraser.Template
                     var before = Task.GTSP.FindPositionByID(item.BeforeID);
                     var after = Task.GTSP.FindPositionByID(item.AfterID);
                     if (before != null && after != null)
-                        Task.GTSP.ConstraintsOrder.Add(new ConstraintOrderPoints(before, after));
+                        Task.GTSP.ConstraintsOrder.Add(new ConstraintOrder(before, after));
                     else
                         if (before == null)
                         Console.WriteLine("Compile error: PositionPrecedence BeforeID [" + item.BeforeID + "] not found!");
@@ -92,9 +92,9 @@ namespace SequencePlanner.Phraser.Template
                     Process after = null;
                     foreach (var process in Task.GTSP.Processes)
                     {
-                        if (process.ID == precedence.BeforeID)
+                        if (process.GID == precedence.BeforeID)
                             before = process;
-                        if (process.ID == precedence.AfterID)
+                        if (process.GID == precedence.AfterID)
                             after = process;
                     }
                     if (before != null && after != null)
@@ -117,9 +117,9 @@ namespace SequencePlanner.Phraser.Template
             {
                 foreach (var posAfter in Task.GTSP.Positions)
                 {
-                    if (posBefore.Process.ID == before.ID && posAfter.Process.ID == after.ID)
+                    if (posBefore.Process.GID == before.GID && posAfter.Process.GID == after.GID)
                     {
-                        tmp.Add(new ConstraintOrderPoints(posBefore, posAfter));
+                        tmp.Add(new ConstraintOrder(posBefore, posAfter));
                     }
                 }
             }

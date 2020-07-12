@@ -36,7 +36,7 @@ namespace SequencePlanner.Phraser.Template
             GTSP.Build();
             ORToolsParameters parameters = new ORToolsParameters()
             {
-                StartDepot = StartDepot.PID,
+                StartDepot = StartDepot.ID,
                 TimeLimit = TimeLimit,
                 RoundedMatrix = GTSP.Graph.PositionMatrixRound,
                 OrderConstraints = GTSP.ConstraintsOrder,
@@ -52,7 +52,7 @@ namespace SequencePlanner.Phraser.Template
         {
             if (!Built)
                 Build();
-            return ORTool.Solve();
+            return new ORToolsPointResult(ORTool.Solve(), this);
         }
     }
 }

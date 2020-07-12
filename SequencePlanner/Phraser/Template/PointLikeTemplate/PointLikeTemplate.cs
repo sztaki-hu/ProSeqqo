@@ -42,7 +42,7 @@ namespace SequencePlanner.Phraser.Template
                 Console.WriteLine("LikeLike Template validation Error!");
         }
 
-        internal PointLikeTask Parse(SeqOptionSet optionSet, bool validate = true)
+        internal PointLikeTask Parse(FullOptionSet optionSet, bool validate = true)
         {
             Fill(optionSet);
             if (validate)

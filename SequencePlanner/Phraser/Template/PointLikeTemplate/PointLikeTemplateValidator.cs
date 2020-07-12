@@ -48,18 +48,18 @@ namespace SequencePlanner.Phraser.Template
                     bool findOnce = false;
                     foreach (var hierarchy in template.ProcessHierarchy)
                     {
-                        if (item.ID == hierarchy.PositionID)
+                        if (item.GID == hierarchy.PositionID)
                             if (findOnce == false)
                                 findOnce = true;
                             else
                             {
-                                Console.WriteLine(error + "Process hierarchy contains position more then once, ID: " + item.ID + "! ");
+                                Console.WriteLine(error + "Process hierarchy contains position more then once, ID: " + item.GID + "! ");
                                 return false;
                             }
                     }
                     if (findOnce == false)
                     {
-                        Console.WriteLine(error + "Process hierarchy not contains position, ID: " + item.ID + "! ");
+                        Console.WriteLine(error + "Process hierarchy not contains position, ID: " + item.GID + "! ");
                         return false;
                     }
                     findOnce = false;
