@@ -1,5 +1,6 @@
 ﻿
 using SequencePlanner.Phraser.Helper;
+using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,7 +29,7 @@ namespace SequencePlanner.Phraser.Options
             catch(Exception e)
             {
                 Validated = false;
-                if (SeqGTSPTask.DEBUG)
+                if (TemplateManager.DEBUG)
                     Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
                 return null;
             }
