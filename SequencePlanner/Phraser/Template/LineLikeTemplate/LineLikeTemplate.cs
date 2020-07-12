@@ -18,6 +18,8 @@ namespace SequencePlanner.Phraser.Template
         public LineLikeTemplate(CommonTask commonTask)
         {
             CommonTask = commonTask;
+            StartDepotID = commonTask.StartDepot.UID;
+
         }
         public new LineLikeTask Parse(OptionSet optionSet, bool validate = true)
         {

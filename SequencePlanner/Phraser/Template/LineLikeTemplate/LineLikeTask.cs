@@ -6,14 +6,14 @@ namespace SequencePlanner.Phraser.Template
     public class LineLikeTask: CommonTask
     {
         public GTSPLineRepresentation GTSP { get; set; }
-        public ORToolsParametersRaw ORToolsParams { get; set; }
+        public ORToolsParameters ORToolsParams { get; set; }
         private ORToolsWrapper ORTool { get; set; }
         private bool Built { get; set; }
 
         public LineLikeTask()
         {
             GTSP = new GTSPLineRepresentation();
-            ORToolsParams = new ORToolsParametersRaw();
+            ORToolsParams = new ORToolsParameters();
         }
 
         public LineLikeTask(CommonTask common) : this()
@@ -30,14 +30,16 @@ namespace SequencePlanner.Phraser.Template
             PositionList = common.PositionList;
             PositionMatrix = common.PositionMatrix;
             GTSP.EdgeWeightCalculator = DistanceFunction;
+            GTSP.WeightMultiplier = WeightMultiplier;
+
         }
 
         public void Build()
         {
             GTSP.Build();
-            ORToolsParametersRaw parameters = new ORToolsParametersRaw()
+            ORToolsParameters parameters = new ORToolsParameters()
             {
-                StartDepot = StartDepot.PID,
+                StartDepot = StartDepot.ID,
                 TimeLimit = TimeLimit,
                 RoundedMatrix = GTSP.Graph.PositionMatrixRound,
                 OrderConstraints = GTSP.ConstraintsOrder,
@@ -49,11 +51,12 @@ namespace SequencePlanner.Phraser.Template
             Built = true;
         }
 
-        public ORToolsResult Run()
+        public ORToolsLineResult Run()
         {
             if (!Built)
                 Build();
-            return ORTool.Solve();
+
+            return new ORToolsLineResult(ORTool.Solve(), this);
         }
     }
 }
