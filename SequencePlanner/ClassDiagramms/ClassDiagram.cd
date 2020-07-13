@@ -4,30 +4,14 @@
     <Position X="3.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAACAAAAAEAgAAAAIAAAAAAAAAAAAIAAAAAAg=</HashCode>
-      <FileName>GTSP\Alternative.cs</FileName>
+      <FileName>GTSP\PointLikeGTSP\Alternative.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.Edge">
     <Position X="10" Y="6.25" Width="1.5" />
-    <AssociationLine Name="NodeA" Type="SequencePlanner.GTSP.Position" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="10" Y="6.75" />
-        <Point X="8.875" Y="6.75" />
-        <Point X="8.875" Y="6.75" />
-        <Point X="7.25" Y="6.75" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="NodeB" Type="SequencePlanner.GTSP.Position" FixedFromPoint="true">
-      <Path>
-        <Point X="10" Y="6.438" />
-        <Point X="9.145" Y="6.438" Type="JumpStart" />
-        <Point X="8.979" Y="6.438" Type="JumpEnd" />
-        <Point X="7.25" Y="6.438" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAEAAAAAAAAQCAAAAABIAAAAAAAAAA=</HashCode>
-      <FileName>GTSP\Edge.cs</FileName>
+      <FileName>GTSP\CommonGTSP\Edge.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="NodeA" />
@@ -37,8 +21,8 @@
   <Class Name="SequencePlanner.GTSP.NodeBase">
     <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAAAgAAAAAAAgAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GTSP\NodeBase.cs</FileName>
+      <HashCode>BAAAAQAAAAAAgAAAAAAAAAQAAAAAAAEAAAAAAAAAEAA=</HashCode>
+      <FileName>GTSP\CommonGTSP\NodeBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.Position">
@@ -49,8 +33,8 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAgAAAADAAAAAAAEAgAAAAAAAAAAQAAAgEAAAICAAAA=</HashCode>
-      <FileName>GTSP\Position.cs</FileName>
+      <HashCode>AAgAAAADAAAAAAAEAgAAAAAAAAAAQAAAgEQAAAAAAAA=</HashCode>
+      <FileName>GTSP\CommonGTSP\Position.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Process" />
@@ -60,14 +44,14 @@
     <Position X="1.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABACAAAAAEAAAAAAAAAAAAAAAAAAAQAAAAAAg=</HashCode>
-      <FileName>GTSP\Process.cs</FileName>
+      <FileName>GTSP\PointLikeGTSP\Process.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.GraphRepresentation">
     <Position X="4.5" Y="7.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>QAAAgIAABCAAAIEAACAAEAIABAIAwAAAAAAAIAAAAAo=</HashCode>
-      <FileName>GTSP\GraphRepresentation.cs</FileName>
+      <HashCode>QAAAgIAABCAAAAEAACAAEAAABAIAwAAAAAAAIAAAAAo=</HashCode>
+      <FileName>GTSP\CommonGTSP\GraphRepresentation.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Edges" />
@@ -77,28 +61,28 @@
     <Position X="8.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAAAAAAkAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GTSP\Task.cs</FileName>
+      <FileName>GTSP\PointLikeGTSP\Task.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.ConstraintOrder">
     <Position X="8.25" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAA=</HashCode>
-      <FileName>GTSP\ConstraintOrder.cs</FileName>
+      <FileName>GTSP\CommonGTSP\ConstraintOrder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.ConstraintDisjoint">
     <Position X="10" Y="9" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAIAAAAABAAAAAAAAAAAAAEAAAA=</HashCode>
-      <FileName>GTSP\ConstraintDisjoint.cs</FileName>
+      <HashCode>AAIAAAAAAAAAAAAAAIIIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GTSP\CommonGTSP\ConstraintDisjoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.GTSPRepresentation">
     <Position X="1.25" Y="7.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>QEIAAKghAAIAAEAwAhEAAAKEIAAAgAiBAQCIIAAAwEI=</HashCode>
-      <FileName>GTSP\GTSPRepresentation.cs</FileName>
+      <HashCode>QAAAAIAgAAIAAAAgAAAAAAIEAAAAgAiAAQAIIAAAAAI=</HashCode>
+      <FileName>GTSP\CommonGTSP\GTSPRepresentation.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Graph" />
@@ -107,8 +91,8 @@
   <Class Name="SequencePlanner.ORToolsWrapper">
     <Position X="1.25" Y="16" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACgAAAAAAAgAAMAAAAoBAAAAAAAAAEABA=</HashCode>
-      <FileName>ORToolsWrapper.cs</FileName>
+      <HashCode>AAAAAAAAAAACgAAAAAAAgAAMAAAAoAACAAAAAAAEABA=</HashCode>
+      <FileName>OR-Tools\ORToolsWrapper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Options.OptionSet">
@@ -125,42 +109,11 @@
       <FileName>Phraser\Options\OptionSetPhraser.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Phraser.Options.SeqOptionSet">
+  <Class Name="SequencePlanner.Phraser.Options.FullOptionSet">
     <Position X="8.25" Y="16.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>Phraser\Options\SeqOptionSet.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.Phraser.Template.Template">
-    <Position X="9.25" Y="19.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
-      <FileName>Phraser\Template\Template.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.Phraser.Template.SeqTemplateValidator">
-    <Position X="11" Y="19.75" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>IAIAIAAAAACAAAAAAAAAAgRQAAAAAAAAAAAQAgAACAI=</HashCode>
-      <FileName>Phraser\Template\SeqTemplateValidator.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.Phraser.Template.SeqTemplate" Collapsed="true">
-    <Position X="9.25" Y="18.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAEQAIgIKEAAAEAkABAgAAECAEQAAJAAAAMAACCE4=</HashCode>
-      <FileName>Phraser\Template\SeqTemplate.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.Phraser.Template.SeqTemplateCompiler">
-    <Position X="13" Y="19.75" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAIAAAhAAAAAAAAAAAEAAAAAAAEAAACAEI=</HashCode>
-      <FileName>Phraser\Template\SeqTemplateCompiler.cs</FileName>
+      <FileName>Phraser\Options\FullOptionSet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
