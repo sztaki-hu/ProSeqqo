@@ -10,6 +10,7 @@ namespace SequencePlanner.GTSP
         public delegate double EdgeWeightFunction(List<double> a, List<double> b);
         private DistanceFunctionEnum CalcFunction { get; set; }
         private TrapezoidParams TrapezoidParam { get; set; }
+        private PositionMatrixOptionValue MatrixValue { get; set; }
 
         public EdgeWeightCalculator(DistanceFunctionEnum functionEnum)
         {
@@ -19,6 +20,11 @@ namespace SequencePlanner.GTSP
         public EdgeWeightCalculator(DistanceFunctionEnum functionEnum, TrapezoidParams trapezoidParams):this(functionEnum)
         {
             TrapezoidParam = trapezoidParams;
+        }
+
+        public EdgeWeightCalculator(DistanceFunctionEnum functionEnum, PositionMatrixOptionValue matrix) : this(functionEnum)
+        {
+            MatrixValue = matrix;
         }
 
         public double Calculate(List<double> a, List<double> b)
@@ -33,7 +39,38 @@ namespace SequencePlanner.GTSP
                 return Trapezoid_Time_WithTieBreaker(a, b);
             if (CalcFunction == DistanceFunctionEnum.Manhattan_Distance)
                 return Manhattan_Distance(a,b);
+            if (CalcFunction == DistanceFunctionEnum.FullMatrix)
+            {
+                Console.WriteLine("EdgeWeightCalculator: FullMatrix, use Calculate with parameter (int AID, int BID)!");
+                return 0.0;
+            }
+                
             return 0.0;
+        }
+
+        public double Calculate(int AUID, int BUID)
+        {
+            int aIndex = -1;
+            int bIndex = -1;
+            for (int i = 0; i < MatrixValue.ID.Count; i++)
+            {
+                if (MatrixValue.ID[i] == AUID)
+                    aIndex = i;
+
+                if (MatrixValue.ID[i] == BUID)
+                    bIndex = i;
+            }
+
+            if(aIndex==-1 || bIndex == -1)
+            {
+                Console.WriteLine("EdgeWeightCalculator: Get distance from matrix by ID: ID not found!");
+                return 0.0;
+            }
+            else
+            {
+                return MatrixValue.Matrix[aIndex, bIndex];
+            }
+
         }
 
         private double Euclidian_Distance(List<double> a, List<double> b)
@@ -53,8 +90,7 @@ namespace SequencePlanner.GTSP
                 return 0;
             }
         }
-
-        public double Max_Distance(List<double> a, List<double> b)
+        private double Max_Distance(List<double> a, List<double> b)
         {
             if (a.Count == b.Count)
             {
@@ -74,18 +110,15 @@ namespace SequencePlanner.GTSP
                 return 0;
             }
         }
-
-        public double Trapezoid_Time(List<double> a, List<double> b)
+        private double Trapezoid_Time(List<double> a, List<double> b)
         {
             return TrapezoidTimeCalculation(a, b, false);
         }
-
-        public double Trapezoid_Time_WithTieBreaker(List<double> a, List<double> b)
+        private double Trapezoid_Time_WithTieBreaker(List<double> a, List<double> b)
         {
             return TrapezoidTimeCalculation(a, b, true);
         }
-
-        public double Manhattan_Distance(List<double> a, List<double> b)
+        private double Manhattan_Distance(List<double> a, List<double> b)
         {
             if (a.Count == b.Count)
             {
@@ -102,7 +135,6 @@ namespace SequencePlanner.GTSP
                 return 0;
             }
         }
-
         private double TrapezoidTimeCalculation(List<double> a, List<double> b, bool withTieBreaker)
         {
             if (TrapezoidParam != null)

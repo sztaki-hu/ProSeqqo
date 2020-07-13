@@ -20,6 +20,7 @@ namespace SequencePlanner.Phraser.Options.Values
         Max_Distance,
         Trapezoid_Time,
         Manhattan_Distance,
-        Trapezoid_Time_WithTieBreaker
+        Trapezoid_Time_WithTieBreaker,
+        FullMatrix
     }
 }

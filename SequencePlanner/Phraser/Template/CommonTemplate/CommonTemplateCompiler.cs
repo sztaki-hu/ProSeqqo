@@ -109,7 +109,14 @@ namespace SequencePlanner.Phraser.Template
             }
             else
             {
-                Task.DistanceFunction = new EdgeWeightCalculator(Template.DistanceFunction);
+                if (Template.DistanceFunction == Options.Values.DistanceFunctionEnum.FullMatrix)
+                {
+                    Task.DistanceFunction = new EdgeWeightCalculator(Template.DistanceFunction, Template.PositionMatrix);
+                }
+                else
+                {
+                    Task.DistanceFunction = new EdgeWeightCalculator(Template.DistanceFunction);
+                }
             }
         }
     }

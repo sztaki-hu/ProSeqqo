@@ -213,26 +213,34 @@ namespace SequencePlanner.GTSP
         }
        private Edge createEdge(Position a, Position b)
         {
-            if (PositionMatrix == null)
+
+            return new Edge()
             {
-                return new Edge()
-                {
-                    NodeA = a,
-                    NodeB = b,
-                    Weight = EdgeWeightCalculator.Calculate(a.Configuration, b.Configuration),
-                    Directed = true
-                };
-            }
-            else
-            {
-                return new Edge()
-                {
-                    NodeA = a,
-                    NodeB = b,
-                    Weight = findEdgeWeight(a,b),
-                    Directed = true
-                };
-            }
+                NodeA = a,
+                NodeB = b,
+                Weight = EdgeWeightCalculator.Calculate(a.GID, b.GID),
+                Directed = true
+            };
+            //if (PositionMatrix == null)
+            //{
+            //    return new Edge()
+            //    {
+            //        NodeA = a,
+            //        NodeB = b,
+            //        Weight = EdgeWeightCalculator.Calculate(a.Configuration, b.Configuration),
+            //        Directed = true
+            //    };
+            //}
+            //else
+            //{
+            //    return new Edge()
+            //    {
+            //        NodeA = a,
+            //        NodeB = b,
+            //        Weight = findEdgeWeight(a,b),
+            //        Directed = true
+            //    };
+            //}
 
         }
 

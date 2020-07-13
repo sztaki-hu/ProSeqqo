@@ -14,7 +14,7 @@ namespace SequencePlanner.Phraser.Options
         {
             Name = "EdgeWeightSource";
             IncludeableNames = new List<string> { "PositionList", "DistanceFunction", "PositionNumber" };
-            Need = true;
+            Need = false;
         }
 
         public override ValidationResult Validate()

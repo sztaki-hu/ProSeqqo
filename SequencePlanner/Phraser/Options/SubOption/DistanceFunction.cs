@@ -55,6 +55,10 @@ namespace SequencePlanner.Phraser.Options
                         Value = DistanceFunctionEnum.Manhattan_Distance;
                         Validated = true;
                         break;
+                    case "FULLMATRIX":
+                        Value = DistanceFunctionEnum.FullMatrix;
+                        Validated = true;
+                        break;
                     default:
                         Console.WriteLine("Fail DistanceFunction");
                         break;
