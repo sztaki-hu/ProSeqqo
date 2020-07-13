@@ -24,7 +24,8 @@ namespace SequencePlanner.Phraser.Template
             Task.GTSP.WeightMultiplier = Task.WeightMultiplier;
             Task.GTSP.EdgeWeightCalculator = Task.DistanceFunction;
             Task.GTSP.PositionMatrixOriginal = Task.PositionMatrix;
-            Task.GTSP.PositionMatrix = Task.PositionMatrix.Matrix;
+            if(Task.PositionMatrix!=null)
+                Task.GTSP.PositionMatrix = Task.PositionMatrix.Matrix;
             ProcessHierarchy();
         }
 

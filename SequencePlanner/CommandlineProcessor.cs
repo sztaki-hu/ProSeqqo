@@ -28,8 +28,8 @@ namespace SequencePlanner
                 args = new string[] {"-i", "example/test10.txt", "-o", "example/test10_out.txt", "-g", "example/test10_graph.dot" };
                 args = new string[] {"-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot" };
                 //args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
-                args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot" };
-                args = new string[] {"-i", "example/testKocka.txt", "-o", "example/testKocka_out.txt", "-g", "example/testKocka_g.dot" };
+                //args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot" };
+                //args = new string[] {"-i", "example/testKocka.txt", "-o", "example/testKocka_out.txt", "-g", "example/testKocka_g.dot" };
                 Help(args);
                 input = Input(args);
                 output = Output(args);

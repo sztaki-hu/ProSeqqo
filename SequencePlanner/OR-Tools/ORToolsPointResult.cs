@@ -15,7 +15,6 @@ namespace SequencePlanner
         {
             SolutionPoint = new List<Position>();
             Task = task;
-            
             ResolveSolution();
         }
 

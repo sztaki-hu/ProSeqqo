@@ -26,6 +26,7 @@ namespace SequencePlanner.GTSP
         public Position( int id, String name = null, List<double> config = null) : base(name, id)
         {
             ID = IDmax++;
+            UID = id;
             if (config == null)
             {
                 Configuration = new List<double>();
