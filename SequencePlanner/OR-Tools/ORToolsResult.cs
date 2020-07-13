@@ -25,6 +25,9 @@ namespace SequencePlanner
             Time = result.Time;
         }
 
+
+        public virtual void CreateGraphViz(string graphviz) { }
+
         public virtual void WriteFull() { }
 
         public virtual void WriteSimple() { }

@@ -15,6 +15,7 @@ namespace SequencePlanner
         {
             SolutionPoint = new List<Position>();
             Task = task;
+            
             ResolveSolution();
         }
 
@@ -35,6 +36,11 @@ namespace SequencePlanner
                 Costs.Add(Task.GTSP.Graph.PositionMatrix[SolutionPoint[i-1].ID,SolutionPoint[i].ID]);
                 CostSum += Costs[i-1];
             }
+        }
+
+        public override void CreateGraphViz(string graphviz)
+        {
+            GraphViz.CreateGraphViz(Task.GTSP, graphviz);
         }
 
         public override void WriteSimple()

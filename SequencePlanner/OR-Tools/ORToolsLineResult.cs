@@ -55,6 +55,12 @@ namespace SequencePlanner
 
         }
 
+
+        public override void CreateGraphViz(string graphviz)
+        {
+            Console.WriteLine("LineLike task have no GraphViz representation yet.");
+        }
+
         public override void WriteFull() {
             WriteHeader();
             for (int i = 0; i < SolutionLine.Count - 1; i++)
@@ -81,7 +87,7 @@ namespace SequencePlanner
             Console.WriteLine("Length of lines: " + CostOfLines.ToString("F4"));
             Console.WriteLine("Length between lines: " + CostBetweenLines.ToString("F4"));
             //Console.WriteLine("Length between lines without penalty: " + CostBetweenLinesNoPenalty.ToString("F4"));
-            Console.WriteLine("Rate of line and between line: " + ((CostBetweenLines / CostSum) *100).ToString("F1")+"%");
+            Console.WriteLine("Rate of between lines: " + ((CostBetweenLines / CostSum) *100).ToString("F1")+"%");
             Console.WriteLine("Number of items: " + SolutionLine.Count);
             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
             Console.WriteLine("RunTime: " + elapsedTime);
