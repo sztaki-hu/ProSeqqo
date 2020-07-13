@@ -75,7 +75,6 @@ namespace SequencePlanner.Phraser.Template
                 if (optionSet != null)
                 {
                     TaskType = ((TaskType)optionSet.FindOption("TaskType")).Value;
-                    EdgeWeightSource = ((EdgeWeightSource)optionSet.FindOption("EdgeWeightSource")).Value;
                     DistanceFunction = ((DistanceFunction)optionSet.FindOption("DistanceFunction")).Value;
                     Dimension = ((Dimension)optionSet.FindOption("Dimension")).Value;
                     TimeLimit = ((TimeLimit)optionSet.FindOption("TimeLimit")).Value;

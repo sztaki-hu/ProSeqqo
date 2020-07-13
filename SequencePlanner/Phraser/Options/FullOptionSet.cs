@@ -9,7 +9,6 @@ namespace SequencePlanner.Phraser.Options
         public override void Init()
         {
             Options.Add(new TaskType());
-            Options.Add(new EdgeWeightSource());
             Options.Add(new Dimension());
             Options.Add(new TimeLimit());
             Options.Add(new CyclicSequence());
