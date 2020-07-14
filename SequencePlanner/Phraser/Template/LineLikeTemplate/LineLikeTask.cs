@@ -3,12 +3,12 @@ using System;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class LineLikeTask: CommonTask
+    public class LineLikeTask : CommonTask
     {
         public GTSPLineRepresentation GTSP { get; set; }
         public ORToolsParameters ORToolsParams { get; set; }
         private ORToolsWrapper ORTool { get; set; }
-        private bool Built { get; set; }
+        private LineLikeTemplate Template { get; set; }
 
         public LineLikeTask()
         {
@@ -16,7 +16,7 @@ namespace SequencePlanner.Phraser.Template
             ORToolsParams = new ORToolsParameters();
         }
 
-        public LineLikeTask(CommonTask common) : this()
+        public LineLikeTask(LineLikeTemplate template, CommonTask common) : this()
         {
             TaskType = common.TaskType;
             EdgeWeightSource = common.EdgeWeightSource;
@@ -31,7 +31,8 @@ namespace SequencePlanner.Phraser.Template
             PositionMatrix = common.PositionMatrix;
             GTSP.EdgeWeightCalculator = DistanceFunction;
             GTSP.WeightMultiplier = WeightMultiplier;
-
+            GTSP.Build(common.PositionList, template.LineList, template.LinePrecedence, template.ContourPrecedence, template.ContourPenalty);
+            FindStartDepo(template.StartDepotID);
         }
 
         public void Build()
@@ -57,6 +58,15 @@ namespace SequencePlanner.Phraser.Template
                 Build();
 
             return new ORToolsLineResult(ORTool.Solve(), this);
+        }
+
+        private void FindStartDepo(int ID)
+        {
+            foreach (var line in GTSP.Lines)
+            {
+                if (line.UID == ID)
+                    StartDepot = line;
+            }
         }
     }
 }

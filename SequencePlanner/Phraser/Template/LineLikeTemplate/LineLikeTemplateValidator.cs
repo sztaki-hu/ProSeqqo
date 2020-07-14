@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class LineLikeTemplateValidator : TemplateValidator
+    public class LineLikeTemplateValidator
     {
-        public override bool Validate(Template t)
+        public bool Validate(IAbstractTemplate template)
         {
             return true;
         }

@@ -12,16 +12,10 @@ namespace SequencePlanner.Phraser.Template
         public List<PrecedenceOptionValue> LinePrecedence { get; set; }
         public List<PrecedenceOptionValue> ContourPrecedence { get; set; }
         public int ContourPenalty { get; set; }
-        private OptionSet OptionSet { get; set; }
         private CommonTask CommonTask { get; set; }
 
-        public LineLikeTemplate(CommonTask commonTask)
-        {
-            CommonTask = commonTask;
-            StartDepotID = commonTask.StartDepot.UID;
 
-        }
-        public new LineLikeTask Parse(OptionSet optionSet, bool validate = true)
+        public LineLikeTemplate(OptionSet optionSet, bool validate = true): base(optionSet, validate)
         {
             OptionSet = optionSet;
             Fill(OptionSet);
@@ -29,30 +23,22 @@ namespace SequencePlanner.Phraser.Template
                 Validate();
             else
                 Console.WriteLine("Warning: Template not validated!");
-
-            return Compile();
         }
-        public new LineLikeTask Compile()
+        
+        public new IAbstractTask Compile()
         {
-            LineLikeTemplateCompiler compiler = new LineLikeTemplateCompiler();
-            return compiler.Compile(this, CommonTask);
+            CommonTask = (CommonTask) base.Compile();
+            StartDepotID = CommonTask.StartDepot.UID;
+            return new LineLikeTask(this, CommonTask);
         }
+
         public new void Validate()
         {
             LineLikeTemplateValidator validator = new LineLikeTemplateValidator();
             if (!validator.Validate(this))
                     Console.WriteLine("LikeLike Template validation Error!");
         }
-        public override string ToString()
-        {
-            string tmp = "\nLineLike Template details:";
-            tmp += "\n\tLineList: " + LineList?.ToString();
-            tmp += "\n\tLinePrecedence: " + LinePrecedence?.ToString();
-            tmp += "\n\tContourPrecedence: " + ContourPrecedence?.ToString();
-            tmp += "\n\tContourPenalty: " + ContourPenalty.ToString();
-            tmp += "\n\n: ";
-            return tmp;
-        }
+        
         private void Fill(OptionSet optionSet)
         {
             try
@@ -73,6 +59,17 @@ namespace SequencePlanner.Phraser.Template
             {
                 Console.WriteLine("Template:Validate failed " + e.Message);
             }
+        }
+
+        public override string ToString()
+        {
+            string tmp = "\nLineLike Template details:";
+            tmp += "\n\tLineList: " + LineList?.ToString();
+            tmp += "\n\tLinePrecedence: " + LinePrecedence?.ToString();
+            tmp += "\n\tContourPrecedence: " + ContourPrecedence?.ToString();
+            tmp += "\n\tContourPenalty: " + ContourPenalty.ToString();
+            tmp += "\n\n: ";
+            return tmp;
         }
     }
 }
