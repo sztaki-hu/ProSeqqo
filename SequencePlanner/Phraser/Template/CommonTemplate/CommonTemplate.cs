@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class CommonTemplate : Template
+    public class CommonTemplate : IAbstractTemplate
     {
         public TaskTypeEnum TaskType { get; set; }
         public EdgeWeightSourceEnum EdgeWeightSource { get; set; }
@@ -24,18 +24,21 @@ namespace SequencePlanner.Phraser.Template
         public List<PositionOptionValue> PositionList { get; set; }
         public PositionMatrixOptionValue PositionMatrix { get; set; }
 
+        public bool Validation { get; set; }
+        protected OptionSet OptionSet { get; set; }
 
-        public CommonTask Parse(OptionSet optionSet, bool validate = true)
+        public CommonTemplate(OptionSet optionSet, bool validate = true)
         {
+            Validation = validate;
+            OptionSet = optionSet;
             Fill(optionSet);
-            if (validate)
+            if (Validation)
                 Validate();
             else
                 Console.WriteLine("Warning: Template not validated!");
-            return Compile();
         }
 
-        public CommonTask Compile()
+        public IAbstractTask Compile()
         {
             CommonTemplateCompiler compiler = new CommonTemplateCompiler();
             return compiler.Compile(this);
@@ -47,27 +50,7 @@ namespace SequencePlanner.Phraser.Template
             if (!validator.Validate(this))
                 Console.WriteLine("Common Template Validation Error!");
         }
-
-        public override string ToString()
-        {
-            string tmp = "\nCommonTemplate details:";
-            tmp += "\n\tTaskType: " + TaskType.ToString();
-            tmp += "\n\tEdgeWeightSource: " + EdgeWeightSource.ToString();
-            tmp += "\n\tDistanceFunction: " + DistanceFunction.ToString();
-            tmp += "\n\tDimension: " + Dimension.ToString();
-            tmp += "\n\tTimeLimit: " + TimeLimit.ToString() + " sec";
-            tmp += "\n\tCyclicSequence: " + CyclicSequence.ToString();
-            tmp += "\n\tStartDepotID: " + StartDepotID.ToString();
-            tmp += "\n\tFinishDepotID: " + FinishDepotID.ToString();
-            tmp += "\n\tWeightMultiplierAuto: " + WeightMultiplierAuto.ToString();
-            tmp += "\n\tWeightMultiplier: " + WeightMultiplier.ToString();
-            tmp += "\n\tTrapezoidParamsAcceleration: " + TrapezoidParamsAcceleration;
-            tmp += "\n\tTrapezoidParamsSpeed: " + TrapezoidParamsSpeed;
-            tmp += "\n\tPositionList: " + PositionList?.ToString();
-            tmp += "\n\tPositionMatrix: " + PositionMatrix?.ToString();
-            tmp += "\n\n: ";
-            return tmp;
-        }
+        
         private void Fill(OptionSet optionSet)
         {
             try
@@ -96,6 +79,27 @@ namespace SequencePlanner.Phraser.Template
             {
                 Console.WriteLine("Template:Validate failed " + e.Message);
             }
+        }
+
+        public override string ToString()
+        {
+            string tmp = "\nCommonTemplate details:";
+            tmp += "\n\tTaskType: " + TaskType.ToString();
+            tmp += "\n\tEdgeWeightSource: " + EdgeWeightSource.ToString();
+            tmp += "\n\tDistanceFunction: " + DistanceFunction.ToString();
+            tmp += "\n\tDimension: " + Dimension.ToString();
+            tmp += "\n\tTimeLimit: " + TimeLimit.ToString() + " sec";
+            tmp += "\n\tCyclicSequence: " + CyclicSequence.ToString();
+            tmp += "\n\tStartDepotID: " + StartDepotID.ToString();
+            tmp += "\n\tFinishDepotID: " + FinishDepotID.ToString();
+            tmp += "\n\tWeightMultiplierAuto: " + WeightMultiplierAuto.ToString();
+            tmp += "\n\tWeightMultiplier: " + WeightMultiplier.ToString();
+            tmp += "\n\tTrapezoidParamsAcceleration: " + TrapezoidParamsAcceleration;
+            tmp += "\n\tTrapezoidParamsSpeed: " + TrapezoidParamsSpeed;
+            tmp += "\n\tPositionList: " + PositionList?.ToString();
+            tmp += "\n\tPositionMatrix: " + PositionMatrix?.ToString();
+            tmp += "\n\n: ";
+            return tmp;
         }
     }
 }

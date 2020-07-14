@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Xml.Schema;
 
 namespace SequencePlanner.Phraser.Options
 {
@@ -24,49 +25,16 @@ namespace SequencePlanner.Phraser.Options
 
         public abstract void Init();
 
-        public void ReadFile(string file)
+        public void ReadFile(string file, bool validate = true)
         {
             string[] lines = File.ReadAllLines(@file);
             OptionSetPhraser phraser = new OptionSetPhraser();
             List<string> linesList = phraser.ReadFile(lines);
             FillValues(linesList);
+            if (validate)
+                Validate();
         }
        
-        public void FillValues(List<string> lines)
-        {
-            List<string> tmp = new List<string>();
-
-            for (int i = 0; i < lines.Count; i++)
-            {
-                for (int j = 0; j < Options.Count; j++)
-                {
-                    if (lines[i].Contains(Options[j].Name))
-                    {
-                        tmp.Add("**NewParam**");
-                    }
-                }
-                tmp.Add(lines[i]);
-            }
-
-            for (int i = 0; i < tmp.Count; i++)
-            {
-                if (tmp[i].Contains("**NewParam**"))
-                {
-                    i++;
-                    var opt = FindOption(tmp[i]);
-                    if (opt != null && i < tmp.Count)
-                    {
-                        while ((tmp.Count > i) && !tmp[i].Contains("**NewParam**"))
-                        {
-                            opt.ValueString.Add(tmp[i]);
-                            i++;
-                        }
-                        i--;
-                    }
-                }
-            }
-        }
-
         public void Validate()
         {
             if (TemplateManager.DEBUG)
@@ -163,6 +131,41 @@ namespace SequencePlanner.Phraser.Options
                     return item;
             }
             return null;
+        }
+
+        private void FillValues(List<string> lines)
+        {
+            List<string> tmp = new List<string>();
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                for (int j = 0; j < Options.Count; j++)
+                {
+                    if (lines[i].Contains(Options[j].Name))
+                    {
+                        tmp.Add("**NewParam**");
+                    }
+                }
+                tmp.Add(lines[i]);
+            }
+
+            for (int i = 0; i < tmp.Count; i++)
+            {
+                if (tmp[i].Contains("**NewParam**"))
+                {
+                    i++;
+                    var opt = FindOption(tmp[i]);
+                    if (opt != null && i < tmp.Count)
+                    {
+                        while ((tmp.Count > i) && !tmp[i].Contains("**NewParam**"))
+                        {
+                            opt.ValueString.Add(tmp[i]);
+                            i++;
+                        }
+                        i--;
+                    }
+                }
+            }
         }
 
         private List<Option> GetOptionsByNames(List<string> options)

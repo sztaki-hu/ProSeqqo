@@ -1,4 +1,5 @@
 ﻿using SequencePlanner.GTSP;
+using SequencePlanner.Phraser.Options;
 using SequencePlanner.Phraser.Options.Values;
 using SequencePlanner.Phraser.Template;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace SequencePlanner
 {
-    public class CommonTask
+    public class CommonTask : IAbstractTask
     {
         public TaskTypeEnum TaskType { get; set; }
         public EdgeWeightSourceEnum EdgeWeightSource { get; set; }
@@ -20,5 +21,12 @@ namespace SequencePlanner
         public int WeightMultiplier { get; set; }
         public List<Position> PositionList { get; set; }
         public PositionMatrixOptionValue PositionMatrix { get; set; }
+
+        protected bool Built { get; set; }
+        protected OptionSet OptionSet { get; set; }
+        protected CommonTemplate CommonTemplate { get; set; }
+
+        public void Build() {}
+        public ORToolsResult Run(){ return null; }
     }
 }

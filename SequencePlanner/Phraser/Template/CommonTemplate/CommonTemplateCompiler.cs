@@ -5,14 +5,14 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class CommonTemplateCompiler : TemplateCompiler
+    public class CommonTemplateCompiler
     {
         private CommonTask Task { get; set; }
         private CommonTemplate Template { get; set; }
 
-        public CommonTask Compile(CommonTemplate template)
+        public IAbstractTask Compile(IAbstractTemplate template)
         {
-            Template = template;
+            Template = (CommonTemplate)template;
             Task = new CommonTask();
             Fill();
             PositionList();
