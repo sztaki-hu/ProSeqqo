@@ -11,31 +11,39 @@ namespace SequencePlanner
 {
     public static class CommandlineProcessor
     {
+        private static readonly bool RUN_IN_VISUALSTUDIO = true;
+
         private static string input;
         private static string output;
         private static string graphviz;
         private static bool debug;
+        private static bool validate;
 
         public static ORToolsResult CLI(string[] args)
         {
             if (args.Length == 0)
             {
-                //Release
-                //Help(new string[] { "-h" });
-
-                //Debug
-                //DefaultRun();
-                args = new string[] {"-i", "example/test10.txt", "-o", "example/test10_out.txt", "-g", "example/test10_graph.dot" };
-                args = new string[] {"-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot" };
-                //args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
-                //args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot" };
-                //args = new string[] {"-i", "example/testKocka.txt", "-o", "example/testKocka_out.txt", "-g", "example/testKocka_g.dot" };
-                Help(args);
-                input = Input(args);
-                output = Output(args);
-                graphviz = GraphVizOutput(args);
-                debug = Debug(args);
-                return Run();
+                if (!RUN_IN_VISUALSTUDIO) {
+                    //Release
+                    Help(new string[] { "-h" });
+                    return null;
+                }
+                else
+                {
+                    //Debug in VS
+                    args = new string[] { "-i", "example/test10.txt", "-o", "example/test10_out.txt", "-g", "example/test10_graph.dot" };
+                    args = new string[] { "-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot" };
+                    //args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
+                    //args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot" };
+                    //args = new string[] {"-i", "example/testKocka.txt", "-o", "example/testKocka_out.txt", "-g", "example/testKocka_g.dot" };
+                    Help(args);
+                    input = Input(args);
+                    output = Output(args);
+                    graphviz = GraphVizOutput(args);
+                    debug = Debug(args);
+                    validate = Validate(args);
+                    return Run();
+                }
             }
             else
             {
@@ -44,6 +52,7 @@ namespace SequencePlanner
                 output = Output(args);
                 graphviz = GraphVizOutput(args);
                 debug = Debug(args);
+                validate = Validate(args);
                 return Run();
             }
         }
@@ -52,16 +61,9 @@ namespace SequencePlanner
         {
             if (input != null)
             {
-                //SeqOptionSet optionSet = new SeqOptionSet();
-                //TemplateManager.DEBUG = debug;
-                //optionSet.ReadFile(input);
-                //optionSet.Validate();
-                //Template template = new SeqTemplate();
-                //SeqGTSPTask task = template.Parse(optionSet,false);
-                //task.Build();
-                TemplateManager manager = new TemplateManager();
-                
-                var solution = manager.Solve(input);
+                TemplateManager.DEBUG = debug;
+                TemplateManager manager = new TemplateManager();                
+                var solution = manager.Solve(input,validate);
                 if (solution != null)
                 {
                     solution.WriteFull();
@@ -71,11 +73,10 @@ namespace SequencePlanner
                         Console.WriteLine("Output file created at " + output + "!");
                     }
                 }
-                
                 if (graphviz != null)
                 {
                     solution.CreateGraphViz(graphviz);
-                    
+                    Console.WriteLine("Output file created at " + graphviz + "!");
                 }
                 return solution;
             }
@@ -168,6 +169,17 @@ namespace SequencePlanner
                 }
             }
             return false;
+        }
+        private static bool Validate(string[] args)
+        {
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i].Equals("-notvalidate") || args[i].Equals("-nv"))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
