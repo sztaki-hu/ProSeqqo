@@ -3,12 +3,12 @@ using System;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class PointLikeTask: CommonTask
+    public class PointLikeTask : CommonTask
     {
         public GTSPPointRepresentation GTSP { get; set; }
         public ORToolsParameters ORToolsParams { get; set; }
         private ORToolsWrapper ORTool { get; set; }
-        private bool Built { get; set; }
+        private PointLikeTemplate Template { get; set; }
 
         public PointLikeTask()
         {

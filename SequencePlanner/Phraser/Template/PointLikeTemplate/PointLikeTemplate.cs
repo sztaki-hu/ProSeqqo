@@ -6,63 +6,38 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class PointLikeTemplate : CommonTask
+    public class PointLikeTemplate : CommonTemplate
     {
         public List<ProcessHierarchyOptionValue> ProcessHierarchy { get; set; }
         public List<PrecedenceOptionValue> ProcessPrecedence { get; set; }
         public List<PrecedenceOptionValue> PositionPrecedence { get; set; }
         public CommonTask Task { get; set; }
 
-        public PointLikeTemplate(CommonTask task)
+        public PointLikeTemplate(OptionSet optionSet, bool validate = true) : base(optionSet)
         {
-            Task = task;
-        }
-
-        public PointLikeTask Parse(OptionSet optionSet, bool validate = true)
-        {
+            Validation = validate;
+            OptionSet = optionSet;
             Fill(optionSet);
-            if (validate)
+            if (Validation)
                 Validate();
             else
                 Console.WriteLine("Warning: Template not validated!");
-
-            return Compile();
         }
 
-        public PointLikeTask Compile()
+        public new IAbstractTask Compile()
         {
+            Task = (CommonTask) base.Compile();
             PointLikeTemplateCompiler compiler = new PointLikeTemplateCompiler();
             return compiler.Compile(this, Task);
         }
 
-        public void Validate()
+        public new void Validate()
         {
             PointLikeTemplateValidator validator = new PointLikeTemplateValidator();
             if (!validator.Validate(this))
                 Console.WriteLine("LikeLike Template validation Error!");
         }
 
-        internal PointLikeTask Parse(FullOptionSet optionSet, bool validate = true)
-        {
-            Fill(optionSet);
-            if (validate)
-                Validate();
-            else
-                Console.WriteLine("Warning: Template not validated!");
-
-            return Compile();
-        }
-
-        public override string ToString()
-        {
-            string tmp = "\nPointLikeTemplate details:";
-           
-            tmp += "\n\tProcessHierarchy: " + ProcessHierarchy?.ToString();
-            tmp += "\n\tProcessPrecedence: " + ProcessPrecedence?.ToString();
-            tmp += "\n\tPositionPrecedence: " + PositionPrecedence?.ToString();
-            tmp += "\n\n: ";
-            return tmp;
-        }
         private void Fill(OptionSet optionSet)
         {
             try
@@ -82,6 +57,17 @@ namespace SequencePlanner.Phraser.Template
             {
                 Console.WriteLine("Template:Validate failed " + e.Message);
             }
+        }
+
+        public override string ToString()
+        {
+            string tmp = "\nPointLikeTemplate details:";
+
+            tmp += "\n\tProcessHierarchy: " + ProcessHierarchy?.ToString();
+            tmp += "\n\tProcessPrecedence: " + ProcessPrecedence?.ToString();
+            tmp += "\n\tPositionPrecedence: " + PositionPrecedence?.ToString();
+            tmp += "\n\n: ";
+            return tmp;
         }
     }
 }

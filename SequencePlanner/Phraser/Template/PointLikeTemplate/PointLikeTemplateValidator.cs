@@ -6,13 +6,8 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class PointLikeTemplateValidator : TemplateValidator
+    public class PointLikeTemplateValidator
     {
-        public override bool Validate(Template t)
-        {
-            throw new NotImplementedException();
-        }
-
         public new bool Validate(PointLikeTemplate template)
         {
             if (template.TaskType == TaskTypeEnum.Point_Like)
@@ -22,7 +17,6 @@ namespace SequencePlanner.Phraser.Template
                 if (CheckPointHierarchy(template) == false)
                     return false;
             }
-
             return true;
         }
 
@@ -48,18 +42,18 @@ namespace SequencePlanner.Phraser.Template
                     bool findOnce = false;
                     foreach (var hierarchy in template.ProcessHierarchy)
                     {
-                        if (item.GID == hierarchy.PositionID)
+                        if (item.ID == hierarchy.PositionID)
                             if (findOnce == false)
                                 findOnce = true;
                             else
                             {
-                                Console.WriteLine(error + "Process hierarchy contains position more then once, ID: " + item.GID + "! ");
+                                Console.WriteLine(error + "Process hierarchy contains position more then once, ID: " + item.ID + "! ");
                                 return false;
                             }
                     }
                     if (findOnce == false)
                     {
-                        Console.WriteLine(error + "Process hierarchy not contains position, ID: " + item.GID + "! ");
+                        Console.WriteLine(error + "Process hierarchy not contains position, ID: " + item.ID + "! ");
                         return false;
                     }
                     findOnce = false;

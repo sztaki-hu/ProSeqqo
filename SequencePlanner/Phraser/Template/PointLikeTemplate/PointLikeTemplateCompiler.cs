@@ -5,12 +5,12 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Template
 {
-    public class PointLikeTemplateCompiler: TemplateCompiler
+    public class PointLikeTemplateCompiler
     {
         private PointLikeTask Task { get; set; }
         private PointLikeTemplate Template { get; set; }
 
-        public PointLikeTask Compile(PointLikeTemplate template, CommonTask common)
+        public IAbstractTask Compile(PointLikeTemplate template, CommonTask common)
         {
             Template = template;
             Task = new PointLikeTask(common);
