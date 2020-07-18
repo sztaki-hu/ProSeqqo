@@ -6,8 +6,8 @@ namespace SequencePlanner.GTSP
     public class ConstraintDisjoint
     {
         public long[] DisjointSet { get { return NodeListID.ToArray(); } private set { } }
-        private List<long> NodeListID;
-        private List<NodeBase> NodeList;
+        private readonly List<long> NodeListID;
+        private readonly List<NodeBase> NodeList;
 
         public ConstraintDisjoint()
         {
@@ -27,6 +27,16 @@ namespace SequencePlanner.GTSP
             {
                 Add(line);
             }
+        }
+
+        public override string ToString()
+        {
+            var tmp = "";
+            foreach (var item in NodeList)
+            {
+                tmp += item.UID + ", ";
+            }
+            return "Set: " + tmp;
         }
     }
 }

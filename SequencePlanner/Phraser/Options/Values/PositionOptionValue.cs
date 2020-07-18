@@ -19,7 +19,7 @@ namespace SequencePlanner.Phraser.Options.Values
             Name = "*";
         }
 
-        public void fromString(string input)
+        public void FromString(string input)
         {
             string[] tmp= input.Split(';','[',']');     //1;[x;y;z;];Name--->[1][][x][y][z][][Name]
             ID = int.Parse(tmp[0]);

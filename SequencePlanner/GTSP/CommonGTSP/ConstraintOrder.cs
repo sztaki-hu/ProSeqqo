@@ -10,5 +10,10 @@
             Before = before;
             After = after;
         }
+
+        public override string ToString()
+        {
+            return "Before: " + Before.UID + " After: " + After.UID;
+        }
     }
 }
