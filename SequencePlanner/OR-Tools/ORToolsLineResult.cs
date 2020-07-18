@@ -31,6 +31,7 @@ namespace SequencePlanner
                 {
                     if (line.ID == solutionID)
                     {
+                        if(!line.Virtual)
                         SolutionLine.Add(line);
                     }
                 }

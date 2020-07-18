@@ -34,7 +34,6 @@ namespace SequencePlanner.Phraser.Options
             if (validate)
                 Validate();
         }
-
         public void Validate()
         {
             ValidateNeeded();
@@ -43,7 +42,7 @@ namespace SequencePlanner.Phraser.Options
             VerifyValidations();
         }
 
-        public void ValidateNeeded()
+        private void ValidateNeeded()
         {
             //Validate Needed List
             foreach (var option in Need)
@@ -59,7 +58,7 @@ namespace SequencePlanner.Phraser.Options
                 }
             }
         }
-        public void ValidateIncluded()
+        private void ValidateIncluded()
         {
             //Validate Included List
             int included = -1;
@@ -86,7 +85,7 @@ namespace SequencePlanner.Phraser.Options
                     included = 0;
             }
         }
-        public void ValidateOthers()
+        private void ValidateOthers()
         {
             //Validate Others List
             foreach (var item in Options)
@@ -97,7 +96,7 @@ namespace SequencePlanner.Phraser.Options
                 }
             }
         }
-        public void VerifyValidations()
+        private void VerifyValidations()
         {
             if (TemplateManager.DEBUG)
             {
@@ -167,7 +166,6 @@ namespace SequencePlanner.Phraser.Options
             }
             return null;
         }
-
         private void FillValues(List<string> lines)
         {
             List<string> tmp = new List<string>();
@@ -202,7 +200,6 @@ namespace SequencePlanner.Phraser.Options
                 }
             }
         }
-
         private List<Option> GetOptionsByNames(List<string> options)
         {
             List<Option> ret = new List<Option>();
@@ -216,7 +213,6 @@ namespace SequencePlanner.Phraser.Options
             }
             return ret;
         }
-
         private int AddNeededIncludes(List<string> optionNames)
         {
             List<Option> tmp = GetOptionsByNames(optionNames);
@@ -240,7 +236,6 @@ namespace SequencePlanner.Phraser.Options
             }
             return included;
         }
-
         private int AddOptionalIncludes(List<string> optionNames)
         {
             List<Option> tmp = GetOptionsByNames(optionNames);

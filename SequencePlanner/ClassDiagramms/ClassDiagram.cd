@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SequencePlanner.Phraser.Template.CommonTemplateCompiler">
-    <Position X="15" Y="1.25" Width="2.25" />
+    <Position X="16.75" Y="1.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAgAABAAAEAAAAAAAAAAAAAAAAAACAAAAEAAAAACAEI=</HashCode>
       <FileName>Phraser\Template\CommonTemplate\CommonTemplateCompiler.cs</FileName>
@@ -26,7 +26,7 @@
   <Class Name="SequencePlanner.Phraser.Template.CommonTemplateValidator">
     <Position X="15" Y="5.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAACAAAAAAAAAAAAQAAAAAAAAAAAQAAAACAI=</HashCode>
+      <HashCode>IAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAI=</HashCode>
       <FileName>Phraser\Template\CommonTemplate\CommonTemplateValidator.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -41,7 +41,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAEAgAIEAAAAAAAAAAAgAAAAAAgAAAAAAAAAAAAAI=</HashCode>
+      <HashCode>AAAAEAgAIAAAAAAAAAAAAgAAAAAAgAAAAAAAAAAAAAI=</HashCode>
       <FileName>Phraser\Template\LineLikeTemplate\LineLikeTask.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -70,7 +70,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAEAgAAEAAAAAAAAAAAgAAAAAAgAAAAAAAAAAAAAI=</HashCode>
+      <HashCode>AAAAEAgAAAAAAAAAAAAAAgAAAAAAgAAAAAAAAAAAAAI=</HashCode>
       <FileName>Phraser\Template\PointLikeTemplate\PointLikeTask.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -79,13 +79,6 @@
     <TypeIdentifier>
       <HashCode>AAAAEAAAAACAAAAFAAAAAAAAEAAECAAAAAAAAAAAAEA=</HashCode>
       <FileName>Phraser\Template\PointLikeTemplate\PointLikeTemplate.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.Phraser.Template.PointLikeTemplateCompiler">
-    <Position X="17.5" Y="1.25" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAAAAABAAAAAAAAAAAEAAAAAEAEAAAAAEA=</HashCode>
-      <FileName>Phraser\Template\PointLikeTemplate\PointLikeTemplateCompiler.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Template.PointLikeTemplateValidator">
@@ -98,14 +91,14 @@
   <Class Name="SequencePlanner.Phraser.Options.Option">
     <Position X="3" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQACAAAAAACAAAAEAAQAAgQAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AQADAAAAAACAAAAEAAQAAgQAAAAAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>Phraser\Options\Option.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Options.OptionSet">
     <Position X="0.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAIAAAACAQAAEAAAAAgAAAAAAgAAAIAACAEBAAAA=</HashCode>
+      <HashCode>AAACCIAAAACAQAAUBAAAAiCAAEAAgBAAIAACAABAAAA=</HashCode>
       <FileName>Phraser\Options\OptionSet.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -120,30 +113,30 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Options.FullOptionSet">
-    <Position X="0.5" Y="5.25" Width="1.5" />
+    <Position X="3" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>Phraser\Options\FullOptionSet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Template.LineLikeTemplateValidator">
     <Position X="17.5" Y="6.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAACAAAAAAAAAAAAAAAAAAIAAAAAAAgAAAAA=</HashCode>
       <FileName>Phraser\Template\LineLikeTemplate\LineLikeTemplateValidator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.GTSPLineRepresentation">
-    <Position X="11.75" Y="14.5" Width="2" />
+    <Position X="12.75" Y="15" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAEgAAAAIAEAAAAAEAAAAIAIAAAgAAKAAABAAACAEA=</HashCode>
+      <HashCode>AAQEgAAAAAIEAAAAAEAAAgIAIAAAgAgKAAABAAACAEA=</HashCode>
       <FileName>GTSP\LineLikeGTSP\GTSPLineRepresentation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.GTSPPointRepresentation">
-    <Position X="16.75" Y="14.5" Width="2" />
+    <Position X="15.25" Y="15" Width="2" />
     <TypeIdentifier>
-      <HashCode>AEIAACgBAAIAAEARAhEAAACEIAAEgACBAACMAAAAwEA=</HashCode>
+      <HashCode>AEIAACgBABAAAAABAhEAAACAIAAAgACBAADMAAAAwAA=</HashCode>
       <FileName>GTSP\PointLikeGTSP\GTSPPointRepresentation.cs</FileName>
     </TypeIdentifier>
   </Class>
