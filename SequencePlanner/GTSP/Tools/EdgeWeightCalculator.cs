@@ -8,7 +8,7 @@ namespace SequencePlanner.GTSP
     public class EdgeWeightCalculator
     {
         public delegate double EdgeWeightFunction(List<double> a, List<double> b);
-        private DistanceFunctionEnum CalcFunction { get; set; }
+        public DistanceFunctionEnum CalcFunction { get; set; }
         private TrapezoidParams TrapezoidParam { get; set; }
         private PositionMatrixOptionValue MatrixValue { get; set; }
 
@@ -27,7 +27,19 @@ namespace SequencePlanner.GTSP
             MatrixValue = matrix;
         }
 
-        public double Calculate(List<double> a, List<double> b)
+        public double Calculate(Position a, Position b)
+        {
+            if(CalcFunction == DistanceFunctionEnum.FullMatrix)
+            {
+               return Calculate(a.UID, b.UID);
+            }
+            else
+            {
+               return Calculate(a.Configuration, b.Configuration);
+            }
+
+        }
+        private double Calculate(List<double> a, List<double> b)
         {
             if (CalcFunction == DistanceFunctionEnum.Euclidian_Distance)
                 return Euclidian_Distance(a,b);
@@ -48,7 +60,7 @@ namespace SequencePlanner.GTSP
             return 0.0;
         }
 
-        public double Calculate(int AUID, int BUID)
+        private double Calculate(int AUID, int BUID)
         {
             int aIndex = -1;
             int bIndex = -1;
