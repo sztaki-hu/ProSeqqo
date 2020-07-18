@@ -28,7 +28,10 @@ namespace SequencePlanner.Phraser.Template
         public new IAbstractTask Compile()
         {
             CommonTask = (CommonTask) base.Compile();
-            StartDepotID = CommonTask.StartDepot.UID;
+            if (CommonTask.StartDepot != null)
+                StartDepotID = CommonTask.StartDepot.UID;
+            else
+                StartDepotID = -1;
             return new LineLikeTask(this, CommonTask);
         }
 

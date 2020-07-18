@@ -25,8 +25,8 @@ namespace SequencePlanner
         public void Build()
         {
             Timer = new Stopwatch();
-            //manager = new RoutingIndexManager(param.GTSP.Graph.PositionMatrix.GetLength(0), 1, param.StartDepot);
-            manager = new RoutingIndexManager(param.RoundedMatrix.GetLength(0), 1, 0);
+            manager = new RoutingIndexManager(param.GTSP.Graph.PositionMatrix.GetLength(0), 1, param.StartDepot);
+            //manager = new RoutingIndexManager(param.RoundedMatrix.GetLength(0), 1, 0);
             // Create Routing Model.
             routing = new RoutingModel(manager);
 

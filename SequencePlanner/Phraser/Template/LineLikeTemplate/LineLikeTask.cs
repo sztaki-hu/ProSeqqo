@@ -31,7 +31,7 @@ namespace SequencePlanner.Phraser.Template
             PositionMatrix = common.PositionMatrix;
             GTSP.EdgeWeightCalculator = DistanceFunction;
             GTSP.WeightMultiplier = WeightMultiplier;
-            GTSP.Build(common.PositionList, template.LineList, template.LinePrecedence, template.ContourPrecedence, template.ContourPenalty);
+            GTSP.Build(common.PositionList, template.LineList, template.LinePrecedence, template.ContourPrecedence, template.ContourPenalty, CyclicSequence, (Position)StartDepot, (Position)FinishDepot);
             FindStartDepo(template.StartDepotID);
         }
 
@@ -40,7 +40,7 @@ namespace SequencePlanner.Phraser.Template
             GTSP.Build();
             ORToolsParameters parameters = new ORToolsParameters()
             {
-                StartDepot = StartDepot.ID,
+                StartDepot = GTSP.StartID,
                 TimeLimit = TimeLimit,
                 RoundedMatrix = GTSP.Graph.PositionMatrixRound,
                 OrderConstraints = GTSP.ConstraintsOrder,

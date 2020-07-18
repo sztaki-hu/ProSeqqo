@@ -11,9 +11,15 @@ namespace SequencePlanner.GTSP
         public List<Contour> Contours { get; set; }
         public List<Line> Lines { get; set; }
         public int ContourPenalty { get; set; }
+        public int StartID { get; set; }
+        public int FinishID { get; set; }
+        public Line StartLine { get; set; }
+        public Line FinishLine { get; set; }
 
         public GTSPLineRepresentation()
         {
+            StartID = 0;
+            FinishID = 0;
             Positions = new List<Position>();
             Lines = new List<Line>();
             Contours = new List<Contour>();
@@ -24,8 +30,9 @@ namespace SequencePlanner.GTSP
             };
         }
 
-        public void Build(List<Position> positions, List<LineListOptionValue> lines, List<PrecedenceOptionValue> linePrec, List<PrecedenceOptionValue> contPrec,int contourPenalty)
+        public void Build(List<Position> positions, List<LineListOptionValue> lines, List<PrecedenceOptionValue> linePrec, List<PrecedenceOptionValue> contPrec,int contourPenalty, bool cyclicSeq, Position startDepot, Position finishDepot)
         {
+
             Positions = positions;
             ContourPenalty = contourPenalty;
             CreateContours(lines);
@@ -37,8 +44,10 @@ namespace SequencePlanner.GTSP
                 WeightMultiplier = this.WeightMultiplier
             };
             CreateEdges();
+            ExtendStartFinish(cyclicSeq, startDepot, finishDepot);
             Graph.Build();
         }
+
         private void BuildGTSP(List<LineListOptionValue> lines)
         {
             foreach (var line in lines)
@@ -148,6 +157,92 @@ namespace SequencePlanner.GTSP
                 if (!IsInContourSet(line.ContourID))
                     Contours.Add(new Contour(line.ContourID));
             }
+        }
+        private void ExtendStartFinish(bool cyclicSeq, Position startDepot, Position finishDepot)
+        {
+            if(!cyclicSeq && startDepot == null && finishDepot == null)
+            {
+                AddVirualStart(); 
+                AddVirualFinish();
+            }
+        }
+
+        private void AddVirualStart()
+        {
+            var a = new Position() { Name = "VirtualStartLineA" };
+            var b = new Position() { Name = "VirtualStartLineB" };
+            Positions.Add(a);
+            Positions.Add(b);
+            Line startLine = new Line()
+            {
+                Name = "StartLine",
+                Virtual = true,
+                Start = a,
+                End = b,
+                Contour = new Contour()
+            };
+            Lines.Add(startLine);
+
+            foreach (var line in Lines)
+            {
+                Graph.Edges.Add(new Edge()
+                {
+                    NodeA = line,
+                    NodeB = startLine,
+                    Weight = 0,
+                    Directed = true,
+                    Tag = "VirtualStartLine"
+                });
+                Graph.Edges.Add(new Edge()
+                {
+                    NodeA = startLine,
+                    NodeB = line,
+                    Weight = 0,
+                    Directed = true,
+                    Tag = "VirtualStartLine"
+                });
+            }
+            StartID = startLine.ID;
+            StartLine = startLine;
+        }
+
+        private void AddVirualFinish()
+        {
+            var a = new Position() { Name = "VirtualFinishLineA" };
+            var b = new Position() { Name = "VirtualFinishLineB" };
+            Positions.Add(a);
+            Positions.Add(b);
+            Line finishLine = new Line()
+            {
+                Name = "FinishLine",
+                Virtual = true,
+                Start = a,
+                End = b,
+                Contour = new Contour()
+            };
+            Lines.Add(finishLine);
+
+            foreach (var line in Lines)
+            {
+                Graph.Edges.Add(new Edge()
+                {
+                    NodeA = line,
+                    NodeB = finishLine,
+                    Weight = 0,
+                    Directed = true,
+                    Tag = "VirtualFinishLine"
+                });
+                Graph.Edges.Add(new Edge()
+                {
+                    NodeA = finishLine,
+                    NodeB = line,
+                    Weight = 0,
+                    Directed = true,
+                    Tag = "VirtualFinishLine"
+                });
+            }
+            FinishID = finishLine.ID;
+            FinishLine = finishLine;
         }
 
         private bool IsInContourSet(int ID)
