@@ -21,6 +21,7 @@ namespace SequencePlanner.Phraser.Options
             Options.Add(new ProcessHierarchy());
             Options.Add(new ProcessPrecedence());
             Options.Add(new PositionPrecedence());
+            Options.Add(new BidirectionLineDefault());//Before the LineList!
             Options.Add(new LineList());
             Options.Add(new LinePrecedence());
             Options.Add(new ContourPrecedence());

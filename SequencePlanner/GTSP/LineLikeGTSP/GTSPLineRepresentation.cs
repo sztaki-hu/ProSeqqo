@@ -39,18 +39,51 @@ namespace SequencePlanner.GTSP
             CreateEdges();
             Graph.Build();
         }
+        private void BuildGTSP(List<LineListOptionValue> lines)
+        {
+            foreach (var line in lines)
+            {
+                var contour = FindCountour(line.ContourID);
+                ConstraintDisjoint constraint = new ConstraintDisjoint();
+                var newLine = new Line()
+                {
+                    UID = line.LineID,
+                    Name = line.Name,
+                    Start = FindPositionByUID(line.PositionA),
+                    End = FindPositionByUID(line.PositionB),
+                    Contour = contour
+                };
+                Lines.Add(newLine);
+                contour.AddLine(newLine);
+                constraint.Add(newLine);
 
-
+                if (line.Bidirectional)
+                {
+                    var newLineRev = new Line()
+                    {
+                        UID = line.LineID,
+                        Name = line.Name + "_Reverse",
+                        Start = FindPositionByUID(line.PositionB),
+                        End = FindPositionByUID(line.PositionA),
+                        Contour = contour
+                    };
+                    Lines.Add(newLineRev);
+                    contour.AddLine(newLineRev);
+                    constraint.Add(newLineRev);
+                }
+                ConstraintsDisjoints.Add(constraint);
+            }
+        }
         private void CreateEdges()
         {
-            var weight = 0.0;
             foreach (var lineFrom in Lines)
             {
                 foreach (var lineTo in Lines)
                 {
-                    if(lineFrom.ID != lineTo.ID)
+                    double weight;
+                    if (lineFrom.ID != lineTo.ID)
                     {
-                        weight = EdgeWeightCalculator.Calculate(lineFrom.End.Configuration, lineTo.Start.Configuration);
+                        weight = EdgeWeightCalculator.Calculate(lineFrom.End, lineTo.Start);
                         if (lineFrom.Contour.ID != lineTo.Contour.ID)
                             weight += ContourPenalty;
                     }
@@ -64,41 +97,9 @@ namespace SequencePlanner.GTSP
                         NodeB = lineTo,
                         Weight = weight,
                         Directed = true,
-                        Tag = "[" + lineFrom.ID + "][C:"+lineFrom.Contour.UID+"]" + lineFrom.Name + "--"+weight+"--> [" + lineTo.ID + "][C:" + lineFrom.Contour.UID + "]" + lineTo.Name
+                        Tag = "[" + lineFrom.ID + "][C:" + lineFrom.Contour.UID + "]" + lineFrom.Name + "--" + weight + "--> [" + lineTo.ID + "][C:" + lineFrom.Contour.UID + "]" + lineTo.Name
                     });
                 }
-            }
-        }
-
-        private void BuildGTSP(List<LineListOptionValue> lines)
-        {
-            foreach (var line in lines)
-            {
-                var contour = FindCountour(line.ContourID);
-                var newLine = new Line()
-                {
-                    UID = line.LineID,
-                    Name = line.Name,
-                    Start = FindPosition(line.PositionA),
-                    End = FindPosition(line.PositionB),
-                    Contour = contour
-                };
-                var newLineRev = new Line()
-                {
-                    UID = line.LineID,
-                    Name = line.Name + "_Reverse",
-                    Start = FindPosition(line.PositionB),
-                    End = FindPosition(line.PositionA),
-                    Contour = contour
-                };
-                Lines.Add(newLine);
-                Lines.Add(newLineRev);
-                contour.AddLine(newLine);
-                contour.AddLine(newLineRev);
-                ConstraintDisjoint constraint = new ConstraintDisjoint();
-                constraint.Add(newLine);
-                constraint.Add(newLineRev);
-                ConstraintsDisjoints.Add(constraint);
             }
         }
 
@@ -121,7 +122,6 @@ namespace SequencePlanner.GTSP
                 }
             }
         }
-
         private void CreateContourPrecedences(List<PrecedenceOptionValue> contPrec)
         {
             foreach (var precedence in contPrec)
@@ -141,13 +141,12 @@ namespace SequencePlanner.GTSP
 
             }
         }
-
         private void CreateContours(List<LineListOptionValue> lines)
         {
             foreach (var line in lines)
             {
                 if (!IsInContourSet(line.ContourID))
-                    Contours.Add(new Contour() { UID = line.ContourID });
+                    Contours.Add(new Contour(line.ContourID));
             }
         }
 
@@ -170,7 +169,6 @@ namespace SequencePlanner.GTSP
             }
             return null;
         }
-
         private List<Line> FindLine(int UID)
         {
             List<Line> tmp = new List<Line>(); ;
@@ -180,16 +178,6 @@ namespace SequencePlanner.GTSP
                     tmp.Add(line);
             }
             return tmp;
-        }
-
-        private Position FindPosition(int ID)
-        {
-            foreach (var position in Positions)
-            {
-                if (position.GID == ID)
-                    return position;
-            }
-            return null;
         }
     }
 }

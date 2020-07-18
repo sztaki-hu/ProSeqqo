@@ -14,7 +14,7 @@ namespace SequencePlanner.Phraser.Options
         public TaskType()
         {
             Name = "TaskType";
-            IncludeableNames = new List<string> { "ProcessHierarchy", "ProcessPrecedence", "PositionPrecedence", "Line", "Line Precedence", "Contour Precedence", "ContourPenalty" };
+            IncludeableNames = new List<string> { "ProcessHierarchy", "ProcessPrecedence", "PositionPrecedence", "Line", "LinePrecedence", "ContourPrecedence", "ContourPenalty" };
             Need = true;
         }
 
@@ -32,6 +32,7 @@ namespace SequencePlanner.Phraser.Options
                 {
                     case "LINE_LIKE":
                         Value = TaskTypeEnum.Line_Like;
+                        newInclude.Add("BidirectionLineDefault"); //Before the Line!!
                         newInclude.Add("Line");
                         newInclude.Add("LinePrecedence");
                         newInclude.Add("ContourPrecedence");
