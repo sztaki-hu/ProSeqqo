@@ -48,7 +48,7 @@ namespace SequencePlanner
              
             foreach (var line in SolutionLine)
             {
-                CostOfLines += Task.DistanceFunction.Calculate(line.Start.Configuration, line.End.Configuration);
+                CostOfLines += Task.DistanceFunction.Calculate(line.Start, line.End);
             }
             CostSum += CostOfLines;
             CostSumNoPenalty += CostSum;
@@ -65,10 +65,10 @@ namespace SequencePlanner
             WriteHeader();
             for (int i = 0; i < SolutionLine.Count - 1; i++)
             {
-                Console.WriteLine("\t| " + SolutionLine[i]+ " Cost: "+Task.DistanceFunction.Calculate(SolutionLine[i].Start.Configuration, SolutionLine[i].End.Configuration).ToString("F4"));
+                Console.WriteLine("\t| " + SolutionLine[i]+ " Cost: "+Task.DistanceFunction.Calculate(SolutionLine[i].Start, SolutionLine[i].End).ToString("F4"));
                 Console.WriteLine("\t|--" + Costs[i].ToString("F4"));
             }
-            Console.WriteLine("\t| " + SolutionLine[SolutionLine.Count - 1] + " Cost: " + Task.DistanceFunction.Calculate(SolutionLine[SolutionLine.Count - 1].Start.Configuration, SolutionLine[SolutionLine.Count - 1].End.Configuration).ToString("F4"));
+            Console.WriteLine("\t| " + SolutionLine[SolutionLine.Count - 1] + " Cost: " + Task.DistanceFunction.Calculate(SolutionLine[SolutionLine.Count - 1].Start, SolutionLine[SolutionLine.Count - 1].End).ToString("F4"));
             Console.WriteLine();
         }
 

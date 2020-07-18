@@ -19,10 +19,13 @@ namespace SequencePlanner
         }
         public ORToolsResult(ORToolsResult result)
         {
-            SolutionRaw = result.SolutionRaw;
-            Costs = result.Costs;
-            CostSum = result.CostSum;
-            Time = result.Time;
+            if (result != null)
+            {
+                SolutionRaw = result.SolutionRaw;
+                Costs = result.Costs;
+                CostSum = result.CostSum;
+                Time = result.Time;
+            }
         }
 
 

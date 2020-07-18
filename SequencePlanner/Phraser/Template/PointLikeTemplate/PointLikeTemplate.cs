@@ -11,7 +11,7 @@ namespace SequencePlanner.Phraser.Template
         public List<ProcessHierarchyOptionValue> ProcessHierarchy { get; set; }
         public List<PrecedenceOptionValue> ProcessPrecedence { get; set; }
         public List<PrecedenceOptionValue> PositionPrecedence { get; set; }
-        public CommonTask Task { get; set; }
+        public CommonTask CommonTask { get; set; }
 
         public PointLikeTemplate(OptionSet optionSet, bool validate = true) : base(optionSet)
         {
@@ -26,9 +26,9 @@ namespace SequencePlanner.Phraser.Template
 
         public new IAbstractTask Compile()
         {
-            Task = (CommonTask) base.Compile();
-            PointLikeTemplateCompiler compiler = new PointLikeTemplateCompiler();
-            return compiler.Compile(this, Task);
+            CommonTask = (CommonTask) base.Compile();
+            StartDepotID = CommonTask.StartDepot.UID;
+            return new PointLikeTask(this, CommonTask);
         }
 
         public new void Validate()
