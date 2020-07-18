@@ -8,7 +8,7 @@ namespace SequencePlanner.GTSP
     public class GraphRepresentation
     {
         private static double PlusInfity { get; set; }
-        private static double MinusInfity { get; set; }
+        //private static double MinusInfity { get; set; }
  
         public List<Edge> Edges { get; set; }
         public double[,] PositionMatrix {get;set;}
@@ -19,7 +19,7 @@ namespace SequencePlanner.GTSP
         public GraphRepresentation()
         {
             PlusInfity = int.MaxValue;
-            MinusInfity = int.MinValue;
+            //MinusInfity = int.MinValue;
             PositionNumber = -1;
             PositionMatrix = new double[1,1];
             WeightMultiplier = -1;
@@ -27,16 +27,14 @@ namespace SequencePlanner.GTSP
         }
         public void Build()
         {
-            initMatrices();
-            initEdgeWeightMultiplier();
+            InitMatrices();
+            InitEdgeWeightMultiplier();
             foreach (var edge in Edges)
             {
                 CalculateEdgeWeight(edge);
                 PositionMatrix[edge.NodeA.ID, edge.NodeB.ID] = edge.Weight;
                 PositionMatrixRound[edge.NodeA.ID, edge.NodeB.ID] = Convert.ToInt32(WeightMultiplier*edge.Weight);
             }
-            //WriteGraph();
-            //WriteMatrces();
         }
 
         public void CalculateEdgeWeight(Edge edge)
@@ -52,50 +50,10 @@ namespace SequencePlanner.GTSP
             }
         }
 
-        private void MakeFull(GTSPPointRepresentation gtsp)
+
+        private void InitMatrices()
         {
-            PositionMatrix = new double[gtsp.Positions.Count, gtsp.Positions.Count];
-            for (int i = 0; i < gtsp.Positions.Count; i++)
-            {
-                for (int j = 0; j < gtsp.Positions.Count; j++)
-                {
-                    if (i == j)
-                    {
-                        PositionMatrix[i, j] = MinusInfity;
-                    }
-                    else
-                    {
-                        PositionMatrix[i, j] = PlusInfity;
-                    }
-                }
-            }
-
-            foreach (var edge in Edges)
-            {
-                PositionMatrix[edge.NodeA.ID, edge.NodeB.ID] = edge.Weight;
-            }
-
-            for (int i = 0; i < gtsp.Positions.Count; i++)
-            {
-                for (int j = 0; j < gtsp.Positions.Count; j++)
-                {
-                    if (PositionMatrix[i, j] == PlusInfity)
-                    {
-                        Edges.Add(new Edge()
-                        {
-                            NodeA = gtsp.Positions[i],
-                            NodeB = gtsp.Positions[j],
-                            Directed = true,
-                            Weight = PlusInfity
-                        }) ;
-                    }
-                }
-            }
-        }
-
-        private void initMatrices()
-        {
-            var maxPID = FindMaxPID() + 1;
+            var maxPID = FindMaxID() + 1;
             PositionMatrix = new double[maxPID, maxPID];
             PositionMatrixRound = new int[maxPID, maxPID];
             for (int i = 0; i < maxPID; i++)
@@ -109,7 +67,7 @@ namespace SequencePlanner.GTSP
             PositionNumber = maxPID;
         }
 
-        private void initEdgeWeightMultiplier()
+        private void InitEdgeWeightMultiplier()
         {
             //This function set Weight Mulitplier automatically.
             //The values of edges need to be scaled up, becauese Google-OR-Tools uses round numbers (int, long)
@@ -124,7 +82,6 @@ namespace SequencePlanner.GTSP
             {
                 var minWeight = PlusInfity;
                 var maxWeight = 0.0;
-                var edgeNumber = Edges.Count;
                 foreach (var item in Edges)
                 {
                     if (item.Weight < minWeight)
@@ -134,7 +91,7 @@ namespace SequencePlanner.GTSP
                 }
 
                 var maxAvgWeight = PlusInfity / PositionNumber;
-                maxAvgWeight = maxAvgWeight / 10;
+                maxAvgWeight /= 10;
                 if (maxAvgWeight > maxWeight && maxWeight != 0)
                     WeightMultiplier = Convert.ToInt32(maxAvgWeight / maxWeight);
                 else
@@ -143,7 +100,7 @@ namespace SequencePlanner.GTSP
             }
         }
 
-        private int FindMaxPID()
+        private int FindMaxID()
         {
             int maxPID=0;
             foreach (var edge in Edges)
@@ -176,7 +133,10 @@ namespace SequencePlanner.GTSP
             {
                 for (int j = 0; j < PositionMatrix.GetLength(0);j++)
                 {
-                    Console.Write(PositionMatrix[i,j]+";");
+                    if(PositionMatrix[i, j]==int.MaxValue)
+                        Console.Write("+inf" + ";");
+                    else
+                        Console.Write(PositionMatrix[i,j]+";");
                 }
                 Console.Write("\n");
             }

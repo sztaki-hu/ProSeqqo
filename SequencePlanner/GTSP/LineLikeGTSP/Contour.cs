@@ -6,14 +6,14 @@ namespace SequencePlanner.GTSP
 {
     public class Contour : NodeBase
     {
-        private static int maxID = 0;
+        private static int maxContouID = 0;
 
         public List<Line> Lines { get; set; }
 
-        public Contour()
+        public Contour(int UserID = -1): base()
         {
-            ID = maxID;
-            ID++;
+            ID = maxContouID++;
+            UID = UserID;
             Lines = new List<Line>();
         }
 

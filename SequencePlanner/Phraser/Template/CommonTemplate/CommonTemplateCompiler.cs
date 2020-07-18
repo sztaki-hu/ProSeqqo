@@ -50,9 +50,9 @@ namespace SequencePlanner.Phraser.Template
             if (Template.PositionMatrix != null)
             {
                 Template.PositionList = new List<Options.Values.PositionOptionValue>();
-                string name = "";
                 for (int i = 0; i < Template.PositionMatrix.ID.Count; i++)
                 {
+                    string name;
                     if (Template.PositionMatrix.Name.Count > 0)
                     {
                         name = Template.PositionMatrix.Name[i];
@@ -62,7 +62,7 @@ namespace SequencePlanner.Phraser.Template
                         name = "Position_" + i;
                     }
                     Template.PositionList.Add(new Options.Values.PositionOptionValue() { ID = Template.PositionMatrix.ID[i], Name = name, Dim = 0, Position = new List<double>() });
-                    Task.PositionList.Add(new Position() { GID = Template.PositionMatrix.ID[i], Name = name, Configuration = new List<double>() });
+                    Task.PositionList.Add(new Position() { UID = Template.PositionMatrix.ID[i], Name = name, Configuration = new List<double>() });
                 }
             }
         }

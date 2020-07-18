@@ -18,10 +18,10 @@ namespace SequencePlanner.GTSP
             GID = maxGID++;
             Name = "NodeBase_" + GID;
         } 
-        public NodeBase(string name, int id)
+        public NodeBase(string name)
         {
+            GID = maxGID++;
             Name = name;
-            GID = id;
         }
     }
 }

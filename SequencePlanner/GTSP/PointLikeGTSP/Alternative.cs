@@ -6,49 +6,44 @@ namespace SequencePlanner.GTSP
 {
     public class Alternative: NodeBase
     {
-        private static int AID = 1000;
+        private static int maxAlternativeID = 3000;
         public List<Task> Tasks { get; set; }
         private Process process;
-        public Process Process { get { return process; } set { process = value; Start.Process = process; Finish.Process = process; } }
+        public Process Process { get { return process; } set { process = value; } }
         public Position Start { get; private set; } 
         public Position Finish { get; private set; } 
 
 
-        public Alternative()
+        public Alternative(int UserID = -1) : base()
         {
-            Name = "Alternative_" + AID++;
-            Start = new Position()
-            {
-                GID = AID++,
-                Name = Name + "_Start",
-                Process = Process,
-                Alternative = this,
-                Virtual = true
-            };
-            Finish = new Position()
-            {
-                GID = AID++,
-                Name = Name + "_Finish",
-                Virtual = true,
-                Process = Process,
-                Alternative = this
-            };
+            ID = maxAlternativeID++;
+            UID = UserID;
+            Name = "Alternative_" + UID;
             Tasks = new List<Task>();
+            //Start = new Position()
+            //{
+            //    Name = Name + "_Start",
+            //    Process = Process,
+            //    Alternative = this,
+            //    Virtual = true
+            //};
+            //Finish = new Position()
+            //{
+            //    Name = Name + "_Finish",
+            //    Virtual = true,
+            //    Process = Process,
+            //    Alternative = this
+            //};
         }
 
-        public Alternative(int id, String name = null) : this()
+        public Alternative(int UserID = -1, String name = null) : this(UserID)
         {
-            GID = id;
-            if (name == null)
-            {
-                Name = "Alternative_" + GID;
-            }
-            else
+            if (name != null)
             {
                 Name = name;
             }
-            Start.Name = Name + "_Start";
-            Finish.Name = Name + "_Finish";
+            //Start.Name = Name + "_Start";
+            //Finish.Name = Name + "_Finish";
         }
 
         public override string ToString()
@@ -58,7 +53,7 @@ namespace SequencePlanner.GTSP
             {
                 tmp += item.Name + ", ";
             }
-            return "[" + GID + "]" + Name + " Proc: "+Process.Name +" Tasks: " + tmp;
+            return "[" + UID + "]" + Name + " Proc: "+Process.Name +" Tasks: " + tmp;
         }
     }
 }

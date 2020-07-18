@@ -6,27 +6,23 @@ namespace SequencePlanner.GTSP
 {
     public class Position : NodeBase
     {
-        private static int IDmax = 0;
+        private static int maxPositionID = 0;
         public static int Dimension { get; set; }
         public Task Task { get; set; }
         public Process Process { get; set; }
         public Alternative Alternative { get; set; }
         public List<double> Configuration { get; set; }
 
-        public Position() : base()
+        public Position(int UserID = -1) : base()
         {
-            ID = IDmax++;
-            Name = "Position_" + GID;
-            Configuration = new List<double>();
-            Configuration.Add(0);
-            Configuration.Add(0);
-            Configuration.Add(0);
+            ID = maxPositionID++;
+            UID = UserID;
+            Name = "Position_" + UID;
+            Configuration = new List<double> {0,0,0};
         }
 
-        public Position( int id, String name = null, List<double> config = null) : base(name, id)
+        public Position( int UserID, List<double> config = null, string name = null) : this(UserID)
         {
-            ID = IDmax++;
-            UID = id;
             if (config == null)
             {
                 Configuration = new List<double>();
@@ -39,12 +35,12 @@ namespace SequencePlanner.GTSP
             {
                 Configuration = config;
             }
-
+            if (name != null)
+                Name = name;
         }
 
-        public Position(int id, String name = null, List<double> config = null, Alternative alternative = null, Process process = null) : this( id,name, config)
+        public Position(int id, string name, List<double> config = null, Alternative alternative = null, Process process = null) : this(id, config, name)
         {
-            ID = IDmax++;
             Alternative = alternative;
             Process = process;
         }
@@ -57,9 +53,9 @@ namespace SequencePlanner.GTSP
                 tmp += item + ", ";
             }
             if (!Virtual)
-                return "[" + GID + "]" + "[PID:" + GID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Task: " + Task.Name + " Config: [" + tmp + "]";
+                return "[" + UID + "]" + "[ID:" + ID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + " Task: " + Task.Name + " Config: [" + tmp + "]";
             else
-                return "[" + GID + "]" + "[PID:" + GID + "]" + Name + " Virtual!";
+                return "[" + UID + "]" + "[ID:" + ID + "]" + Name + " Virtual!";
         }
 
         public string ConfigString()
@@ -75,9 +71,9 @@ namespace SequencePlanner.GTSP
             return tmp;
         }
 
-        public static void initMaxID()
+        public static void InitMaxID()
         {
-            IDmax = 0;
+            maxPositionID = 0;
         }
     }
 }

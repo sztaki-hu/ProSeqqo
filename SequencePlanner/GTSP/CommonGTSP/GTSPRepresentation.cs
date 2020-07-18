@@ -35,12 +35,13 @@ namespace SequencePlanner.GTSP
 
         public virtual void Build() { }
         public virtual void GenerateDisjunctSets() { }
-        
-        public Position FindPositionByPID(int PID)
+
+
+        public Position FindPositionByGID(int GID)
         {
             foreach (var item in Positions)
             {
-                if (item.ID == PID)
+                if (item.GID == GID)
                 {
                     return item;
                 }
@@ -51,7 +52,18 @@ namespace SequencePlanner.GTSP
         {
             foreach (var item in Positions)
             {
-                if (item.GID == ID)
+                if (item.ID == ID)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+        public Position FindPositionByUID(int UserID)
+        {
+            foreach (var item in Positions)
+            {
+                if (item.UID == UserID)
                 {
                     return item;
                 }

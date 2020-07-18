@@ -4,29 +4,18 @@ namespace SequencePlanner.GTSP
 {
     public class Task: NodeBase
     {
+        private static int maxTaskID = 2000;
         public Alternative Alternative { get; set; }
         public Process Process { get; set; }
         public List<Position> Positions { get; set; }
     
         
-        public Task(): base()
+        public Task(int UserID = -1): base()
         {
-                Name = "Task_" + GID;
-                Positions = new List<Position>(); 
-        }
-
-        public Task(int id, string name = null) : this()
-        {
-            GID = id;
-            if (name == null)
-            {
-                Name = "Task_" + GID;
-            }
-            else
-            {
-                Name = name;
-            }
-
+            ID = maxTaskID++;
+            UID = UserID;
+            Name = "Task_" + UID;
+            Positions = new List<Position>(); 
         }
 
         public override string ToString()
@@ -36,7 +25,7 @@ namespace SequencePlanner.GTSP
             {
                 tmp += item.Name + ", ";
             }
-            return "[" + GID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + "  Positions: " + tmp;
+            return "[" + UID + "]" + Name + " Proc: " + Process.Name + " Alter: " + Alternative.Name + "  Positions: " + tmp;
         }
     }
 }
