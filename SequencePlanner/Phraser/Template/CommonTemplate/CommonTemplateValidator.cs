@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Phraser.Options.Values;
+﻿using SequencePlanner.Phraser.Helper;
+using SequencePlanner.Phraser.Options.Values;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,27 +10,18 @@ namespace SequencePlanner.Phraser.Template
     {
         public bool Validate(CommonTemplate template)
         {
-            if (CheckDimensions(template) == false)
-                return false;
-            if (PositionMatrix(template) == false)
-                return false;
-            if (CheckCyclic(template) == false)
-                return false;
-            if (CheckNotCyclic(template) == false)
-                return false;
-            if (CheckStartAndFinish(template) == false)
-                return false;
+            CheckDimensions(template);
+            PositionMatrix(template);
+            CheckCyclic(template);
             return true;
         }
 
-        private static bool CheckDimensions(CommonTemplate template)
+        private static void CheckDimensions(CommonTemplate template)
         {
             int dim = template.Dimension;
-            string error = "Template validation error: ";
             if (dim < 0)
             {
-                Console.WriteLine(error + "Dimension < 0!");
-                return false;
+                throw new SequencerException("Dimension should be >= 0, but now: " + dim + ".", "Change for Dimension: 0 if not used.");
             }
 
             //Check trapezoid dimension
@@ -37,14 +29,12 @@ namespace SequencePlanner.Phraser.Template
             {
                 if (template.TrapezoidParamsAcceleration.Count != dim)
                 {
-                    Console.WriteLine(error + "Trapezoid acceleration dimension mismatch!");
-                    return false;
+                    throw new SequencerException("TrapezoidParamsAcceleration dimension should be equal with Dimension, but now: " + dim + "!="+ template.TrapezoidParamsAcceleration.Count, "Format example with 2 dimension: TrapezoidParamsAcceleration: [1.0; 2.0]");
                 }
 
                 if (template.TrapezoidParamsSpeed.Count != dim)
                 {
-                    Console.WriteLine(error + "Trapezoid speed dimension mismatch!");
-                    return false;
+                    throw new SequencerException("TrapezoidParamsSpeed dimension should be equal with Dimension, but now: " + dim + "!=" + template.TrapezoidParamsSpeed.Count, "Format example with 2 dimension: TrapezoidParamsSpeed: [1.0; 2.0]");
                 }
             }
 
@@ -55,70 +45,40 @@ namespace SequencePlanner.Phraser.Template
                 {
                     if (position.Dim != position.Position.Count || position.Position.Count != dim)
                     {
-                        Console.WriteLine(error + "Position dimension mismatch, ID: " + position.ID + "!");
-                        return false;
-
+                        throw new SequencerException("Position dimension in PositionList should be equal with Dimension, but now: " + dim + "!=" + position.Position.Count + "at PositionID: "+position.ID+".", "Format example with 2 dimension: [5,0;  5,0]");
                     }
                 }
             }
-            return true;
         }
 
-        private static bool CheckCyclic(CommonTemplate template)
+        private static void CheckCyclic(CommonTemplate template)
         {
-            string error = "Template validation error: ";
             if (template.CyclicSequence)
             {
                 if (template.FinishDepotID != -1)
                 {
-                    Console.WriteLine(error + "In case of cyclic sequence finish depo not needed!");
-                    return false;
+                    throw new SequencerException("In case of cyclic sequence finish depo not needed!", "Delete FinishDepot: "+template.FinishDepotID+" from input file.");
                 }
                 if (template.StartDepotID == -1)
                 {
-                    Console.WriteLine(error + "In case of cyclic sequence start depo needed!");
-                    return false;
+                    throw new SequencerException("In case of cyclic sequence start depo not needed!", "Add StartDepot: X to input file.");
                 }
             }
-            return true;
         }
 
-        private static bool CheckNotCyclic(CommonTemplate template)
+        private static void PositionMatrix(CommonTemplate template)
         {
-            return true;
-        }
-
-        private static bool CheckStartAndFinish(CommonTemplate template)
-        {
-            return true;
-        }
-
-        private static bool PositionMatrix(CommonTemplate template)
-        {
-            string error = "Template validation error: ";
             if (template.PositionMatrix != null)
             {
                 if (template.PositionMatrix.ID.Count != template.PositionMatrix.Matrix.GetLength(0) || template.PositionMatrix.ID.Count != template.PositionMatrix.Matrix.GetLength(1))
                 {
-                    Console.WriteLine(error + " Position Matrix ID header and matrix should contain the same number of elements n+1 row and n column! ");
-                    return false;
+                    throw new SequencerException("PositionMatrix ID header length should be equal with matrix size!", "Check the length of ID header and matrix");
+                }
+                if(template.PositionMatrix.Matrix.GetLength(0) != template.PositionMatrix.Matrix.GetLength(1))
+                {
+                    throw new SequencerException("PositionMatrix should contain matrix with size n X n with an ID header", "Check number of rows and column in PositionMatrix");
                 }
             }
-            return true;
         }
     }
 }
-
-//TODO: Validate
-//TaskType
-//Dimension
-//TimeLimit
-//Cyclic
-//Start
-//Finish
-//WeightMultiplyer
-//EdgeWeightSource
-//DistaceFunc
-//TrapezoidAdd/Speed
-//PositionList
-//PositionMatrix
