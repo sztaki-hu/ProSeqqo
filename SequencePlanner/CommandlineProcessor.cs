@@ -34,7 +34,7 @@ namespace SequencePlanner
                     args = new string[] { "-i", "example/test10.txt", "-o", "example/test10_out.txt", "-g", "example/test10_graph.dot" };
                     args = new string[] { "-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot", "-d" };
                     //args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
-                    args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot" };
+                    args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot", "-d" };
                     //args = new string[] {"-i", "example/testKocka.txt", "-o", "example/testKocka_out.txt", "-g", "example/testKocka_g.dot", "-d" };
                     Help(args);
                     input = Input(args);
@@ -59,28 +59,36 @@ namespace SequencePlanner
 
         private static ORToolsResult Run()
         {
-            if (input != null)
+            try
             {
-                TemplateManager.DEBUG = debug;
-                TemplateManager manager = new TemplateManager();                
-                var solution = manager.Solve(input,validate);
-                if (solution != null)
+                if (input != null)
                 {
-                    solution.WriteFull();
-                    if (output != null)
+                    TemplateManager.DEBUG = debug;
+                    TemplateManager manager = new TemplateManager();
+                    var solution = manager.Solve(input, validate);
+                    if (solution != null)
                     {
-                        solution.WriteOutputFile(output);
-                        Console.WriteLine("Output file created at " + output + "!");
+                        solution.WriteFull();
+                        if (output != null)
+                        {
+                            solution.WriteOutputFile(output);
+                            Console.WriteLine("Output file created at " + output + "!");
+                        }
                     }
+                    if (graphviz != null)
+                    {
+                        solution.CreateGraphViz(graphviz);
+                        Console.WriteLine("Output file created at " + graphviz + "!");
+                    }
+                    return solution;
                 }
-                if (graphviz != null)
-                {
-                    solution.CreateGraphViz(graphviz);
-                    Console.WriteLine("Output file created at " + graphviz + "!");
-                }
-                return solution;
+                return null;
             }
-            return null;
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
 
         private static void Help(string[] args)
