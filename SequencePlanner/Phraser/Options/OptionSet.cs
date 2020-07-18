@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Phraser.Template;
+﻿using SequencePlanner.Phraser.Helper;
+using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,18 +13,17 @@ namespace SequencePlanner.Phraser.Options
         public List<Option> Options;
         public List<Option> Need;
         public List<Option> Included;
-        public List<Option> Validated;
 
         public OptionSet()
         {
             Options = new List<Option>();
             Need = new List<Option>();
             Included = new List<Option>();
-            Validated = new List<Option>();
             Init();
         }
 
         public abstract void Init();
+        public abstract void EtcValidationVertify();
 
         public void ReadFile(string file, bool validate = true)
         {
@@ -34,30 +34,34 @@ namespace SequencePlanner.Phraser.Options
             if (validate)
                 Validate();
         }
-       
+
         public void Validate()
         {
-            if (TemplateManager.DEBUG)
-                Console.WriteLine("Need:");
+            ValidateNeeded();
+            ValidateIncluded();
+            ValidateOthers();
+            VerifyValidations();
+        }
+
+        public void ValidateNeeded()
+        {
+            //Validate Needed List
             foreach (var option in Need)
             {
                 var result = option.Validate();
                 if (result != null)
                 {
-                    if (!result.Validated) {
-                        if (TemplateManager.DEBUG)
-                            Console.WriteLine("Error in validation: " + option.Name);
-                        return;
-                    }else
+                    if (result.Validated)
                     {
-                        if (TemplateManager.DEBUG)
-                            Console.WriteLine("Validated: " + option.Name + "!");
-                        AddIncluded(result.NewInclude);
+                        AddNeededIncludes(result.NewIncludeNeed);
+                        AddOptionalIncludes(result.NewIncludeOptional);
                     }
                 }
             }
-            if (TemplateManager.DEBUG)
-                Console.WriteLine("Included:");
+        }
+        public void ValidateIncluded()
+        {
+            //Validate Included List
             int included = -1;
             while (included != 0)
             {
@@ -69,58 +73,89 @@ namespace SequencePlanner.Phraser.Options
                         var result = Included[i].Validate();
                         if (result != null)
                         {
-                            if (!result.Validated)
+                            if (result.Validated)
                             {
-                                if (TemplateManager.DEBUG)
-                                    Console.WriteLine("Error in validation: " + Included[i].Name);
-                            }
-                            else
-                            {
-                                if (TemplateManager.DEBUG)
-                                        Console.WriteLine("Validated: " + Included[i].Name + "!");
                                 Included[i].Included = true;
-                                included += AddIncluded(result.NewInclude);
+                                included += AddNeededIncludes(result.NewIncludeNeed);
+                                included += AddOptionalIncludes(result.NewIncludeOptional);
                             }
                         }
                     }
-                    
                 }
-
-
                 if (included == -1)
                     included = 0;
             }
-            if (TemplateManager.DEBUG)
-                Console.WriteLine("Others:");
+        }
+        public void ValidateOthers()
+        {
+            //Validate Others List
             foreach (var item in Options)
             {
                 if (!item.Validated)
                 {
-                    var ret = item.Validate();
-                    if (ret != null)
-                    {
-                        if (TemplateManager.DEBUG)
-                        {
-                            if (ret.Validated)
-                                Console.WriteLine("Validated but not needed: " + item.Name + "!");
-                            else
-                                Console.WriteLine("Not validated but not needed: " + item.Name + "!");
-                        }
-                    }
+                    item.Validate();
+                }
+            }
+        }
+        public void VerifyValidations()
+        {
+            if (TemplateManager.DEBUG)
+            {
+                Console.WriteLine("Validate:");
+                Console.WriteLine("\tNeeded:");
+                foreach (var option in Options)
+                {
+                    if (option.Need && !option.Included)
+                        if (option.Validated)
+                            Console.WriteLine("\t\tOK: " + option.Name);
+                        else
+                            Console.WriteLine("\t\tFAIL: " + option.Name);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("\tIncluded and not Optional:");
+                foreach (var option in Options)
+                {
+                    if (option.Included && !option.Optional)
+                        if (option.Validated)
+                            Console.WriteLine("\t\tOK: " + option.Name);
+                        else
+                            Console.WriteLine("\t\tFAIL: " + option.Name);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("\tIncluded and Optional:");
+                foreach (var option in Options)
+                {
+                    if (option.Included && option.Optional)
+                        if (option.Validated)
+                            Console.WriteLine("\t\tOK: " + option.Name);
+                        else
+                            Console.WriteLine("\t\tFAIL: " + option.Name);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("\tEtc (Not needed and not included):");
+                foreach (var option in Options)
+                {
+                    if (!option.Included && !option.Need)
+                        if (option.Validated)
+                            Console.WriteLine("\t\tOK: " + option.Name);
+                        else
+                            Console.WriteLine("\t\tFAIL: " + option.Name);
                 }
             }
 
             foreach (var option in Options)
             {
-                if(option.Included || option.Need)
+                if (option.Need || option.Included)
                 {
-                    if (!option.Validated)
+                    if (!option.Validated && !option.Optional)
                     {
-                        Console.WriteLine(option.Name+" is missing or in wrong format!");
+                        throw new SequencerException(option.Name + " option not validated (missing or format not accepted) but needed because default parameter or included by an other.", "Add option to input file or overview syntax.");
                     }
                 }
             }
-
         }
 
         public Option FindOption(string Name)
@@ -182,7 +217,7 @@ namespace SequencePlanner.Phraser.Options
             return ret;
         }
 
-        private int AddIncluded(List<string> optionNames)
+        private int AddNeededIncludes(List<string> optionNames)
         {
             List<Option> tmp = GetOptionsByNames(optionNames);
             int included = 0;
@@ -198,6 +233,32 @@ namespace SequencePlanner.Phraser.Options
                 {
                     Included.Add(item);
                     item.Included = true;
+                    item.Need = true;
+                    item.Optional = false;
+                    included++;
+                }
+            }
+            return included;
+        }
+
+        private int AddOptionalIncludes(List<string> optionNames)
+        {
+            List<Option> tmp = GetOptionsByNames(optionNames);
+            int included = 0;
+            foreach (var item in tmp)
+            {
+                bool find = false;
+                for (int i = 0; i < Included.Count; i++)
+                {
+                    if (Included[i].Name == item.Name)
+                        find = true;
+                }
+                if (!find)
+                {
+                    Included.Add(item);
+                    item.Included = true;
+                    item.Need = false;
+                    item.Optional = true;
                     included++;
                 }
             }

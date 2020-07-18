@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SequencePlanner.Phraser.Helper;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -35,5 +36,19 @@ namespace SequencePlanner.Phraser.Options
                     Need.Add(item);
             }
         }
+
+        public override void EtcValidationVertify()
+        {
+            var mx = FindOption("PositionMatrix");
+            var list = FindOption("PositionList");
+            if(mx != null && list != null)
+            {
+                if(!mx.Validated && !list.Validated)
+                {
+                    throw new SequencerException("PositionMatrix or PositionList sould be validated (missing or format not accepted).", "Add option to input file or fix syntax.");
+                }
+            }
+        }
+
     }
 }

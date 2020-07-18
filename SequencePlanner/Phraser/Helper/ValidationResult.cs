@@ -6,12 +6,14 @@ namespace SequencePlanner.Phraser.Helper
 {
     public class ValidationResult
     {
-        public List<string> NewInclude { get; set; }
+        public List<string> NewIncludeNeed { get; set; }
+        public List<string> NewIncludeOptional { get; set; }
         public bool Validated { get; set; }
 
         public ValidationResult()
         {
-            NewInclude = new List<string>();
+            NewIncludeOptional = new List<string>();
+            NewIncludeNeed = new List<string>();
             Validated = false;
         }
     }

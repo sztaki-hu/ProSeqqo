@@ -16,7 +16,7 @@ namespace SequencePlanner.Phraser.Options
         {
             Name = "BidirectionLineDefault";
             IncludeableNames = new List<string> { };
-            Need = true;
+            Need = false;
         }
 
         public override ValidationResult Validate()

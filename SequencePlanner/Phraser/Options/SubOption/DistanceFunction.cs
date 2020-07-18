@@ -16,7 +16,7 @@ namespace SequencePlanner.Phraser.Options
         {
             Name = "DistanceFunction";
             IncludeableNames = new List<string> { "TrapezoidParams/Acceleration", "TrapezoidParams/Speed" };
-            Need = false;
+            Need = true;
         }
 
         public override ValidationResult Validate()
@@ -67,7 +67,7 @@ namespace SequencePlanner.Phraser.Options
                 return new ValidationResult()
                 {
                     Validated = this.Validated,
-                    NewInclude = newInclude
+                    NewIncludeNeed = newInclude
                 };
             }
             catch (Exception e)
