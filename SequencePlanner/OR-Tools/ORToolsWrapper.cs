@@ -25,7 +25,7 @@ namespace SequencePlanner
         public void Build()
         {
             Timer = new Stopwatch();
-            //manager = new RoutingIndexManager(param.GTSP.Graph.PositionMatrix.GetLength(0), 1, param.StartDepot.PID);
+            //manager = new RoutingIndexManager(param.GTSP.Graph.PositionMatrix.GetLength(0), 1, param.StartDepot);
             manager = new RoutingIndexManager(param.RoundedMatrix.GetLength(0), 1, 0);
             // Create Routing Model.
             routing = new RoutingModel(manager);
@@ -47,20 +47,22 @@ namespace SequencePlanner
                 routing.AddDisjunction(set.DisjointSet);
             }
 
-
-            //Add distance dimension
-            routing.AddDimension(transitCallbackIndex, 0, int.MaxValue - 100, true, "Distance");
-            RoutingDimension distanceDimension = routing.GetMutableDimension("Distance");
-
-            //Add order constraints
-            Solver solver = routing.solver();
-            for (int i = 0; i < param.OrderConstraints.Count; i++)
+            if (param.OrderConstraints.Count > 0)
             {
-                long beforeIndex = manager.NodeToIndex(param.OrderConstraints[i].Before.ID);
-                long afterIndex = manager.NodeToIndex(param.OrderConstraints[i].After.ID);
-                solver.Add(solver.MakeLessOrEqual(
-                      distanceDimension.CumulVar(beforeIndex),
-                      distanceDimension.CumulVar(afterIndex)));
+                //Add distance dimension
+                routing.AddDimension(transitCallbackIndex, 0, int.MaxValue - 100, true, "Distance");
+                RoutingDimension distanceDimension = routing.GetMutableDimension("Distance");
+
+                //Add order constraints
+                Solver solver = routing.solver();
+                for (int i = 0; i < param.OrderConstraints.Count; i++)
+                {
+                    long beforeIndex = manager.NodeToIndex(param.OrderConstraints[i].Before.ID);
+                    long afterIndex = manager.NodeToIndex(param.OrderConstraints[i].After.ID);
+                    solver.Add(solver.MakeLessOrEqual(
+                          distanceDimension.CumulVar(beforeIndex),
+                          distanceDimension.CumulVar(afterIndex)));
+                }
             }
 
             // Setting first solution heuristic.
@@ -77,21 +79,18 @@ namespace SequencePlanner
         //Run VRP Solver
         public ORToolsResult Solve()
         {
-            Stopwatch stopWatch = new Stopwatch();
             Console.WriteLine("\nSolver running!");
-            stopWatch.Start();
+            Timer.Start();
             Assignment solution = routing.SolveWithParameters(searchParameters);
-            stopWatch.Stop();
-            var time = stopWatch.Elapsed;
+            Timer.Stop();
             Console.WriteLine("Solver status: {0}", DecodeStatusCode(routing.GetStatus()));
             if(routing.GetStatus()==1)
-                return ProcessSolution(routing, manager, solution,time);
+                return ProcessSolution(routing, manager, solution, Timer.Elapsed);
             return null;
         }
 
         private ORToolsResult ProcessSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
         {
-
             List<long> rawSolution = new List<long>();
             var index = routing.Start(0);
             while (routing.IsEnd(index) == false)
@@ -120,5 +119,6 @@ namespace SequencePlanner
                default: return "NO_STATUS: Something went wrong. :(";
             }
         }
+
     }
 }

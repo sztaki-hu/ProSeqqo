@@ -8,7 +8,7 @@ namespace SequencePlanner.Phraser.Template
         public GTSPPointRepresentation GTSP { get; set; }
         public ORToolsParameters ORToolsParams { get; set; }
         private ORToolsWrapper ORTool { get; set; }
-        private PointLikeTemplate Template { get; set; }
+        //private PointLikeTemplate Template { get; set; }
 
         public PointLikeTask()
         {
@@ -16,7 +16,7 @@ namespace SequencePlanner.Phraser.Template
             ORToolsParams = new ORToolsParameters();
         }
 
-        public PointLikeTask(CommonTask common):this()
+        public PointLikeTask(PointLikeTemplate template, CommonTask common):this()
         {
             TaskType = common.TaskType;
             EdgeWeightSource = common.EdgeWeightSource;
@@ -29,9 +29,16 @@ namespace SequencePlanner.Phraser.Template
             WeightMultiplier = common.WeightMultiplier;
             PositionList = common.PositionList;
             PositionMatrix = common.PositionMatrix;
+
+            GTSP.EdgeWeightCalculator = DistanceFunction;
+            GTSP.WeightMultiplier = WeightMultiplier;
+            GTSP.PositionMatrixOriginal = PositionMatrix;
+            if (PositionMatrix != null)
+                GTSP.PositionMatrix = PositionMatrix.Matrix;
+            GTSP.Build(common.PositionList, template.ProcessHierarchy, template.ProcessPrecedence, template.PositionPrecedence);
         }
 
-        public void Build()
+        public new void Build()
         {
             GTSP.Build();
             ORToolsParameters parameters = new ORToolsParameters()
@@ -48,7 +55,7 @@ namespace SequencePlanner.Phraser.Template
             Built = true;
         }
 
-        public ORToolsResult Run()
+        public new ORToolsResult Run()
         {
             if (!Built)
                 Build();

@@ -27,7 +27,7 @@ namespace SequencePlanner.Phraser.Options
                 for (int i = 1; i < ValueString.Count; i++)
                 {
                     PositionOptionValue tmp = new PositionOptionValue();
-                    tmp.fromString(ValueString[i]);
+                    tmp.FromString(ValueString[i]);
                     Value.Add(tmp);
                     if (!Validated)
                         Validated = true;

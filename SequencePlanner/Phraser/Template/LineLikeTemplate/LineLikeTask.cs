@@ -8,7 +8,7 @@ namespace SequencePlanner.Phraser.Template
         public GTSPLineRepresentation GTSP { get; set; }
         public ORToolsParameters ORToolsParams { get; set; }
         private ORToolsWrapper ORTool { get; set; }
-        private LineLikeTemplate Template { get; set; }
+        //private LineLikeTemplate Template { get; set; }
 
         public LineLikeTask()
         {
@@ -35,7 +35,7 @@ namespace SequencePlanner.Phraser.Template
             FindStartDepo(template.StartDepotID);
         }
 
-        public void Build()
+        public new void Build()
         {
             GTSP.Build();
             ORToolsParameters parameters = new ORToolsParameters()
@@ -52,7 +52,7 @@ namespace SequencePlanner.Phraser.Template
             Built = true;
         }
 
-        public ORToolsLineResult Run()
+        public new ORToolsLineResult Run()
         {
             if (!Built)
                 Build();
