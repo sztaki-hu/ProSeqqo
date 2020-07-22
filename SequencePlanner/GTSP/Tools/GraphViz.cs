@@ -76,6 +76,7 @@ namespace SequencePlanner.GTSP
             //Console.WriteLine(viz);
             //if (file!=null)
             System.IO.File.WriteAllText(file, viz);
+            Console.WriteLine("Output file created at " + file + "!");
             return viz;
         }
 
