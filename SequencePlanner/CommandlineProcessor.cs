@@ -36,6 +36,7 @@ namespace SequencePlanner
                     //args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
                     args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot", "-d" };
                     //args = new string[] {"-i", "example/testKocka.txt", "-o", "example/testKocka_out.txt", "-g", "example/testKocka_g.dot", "-d" };
+                    args = new string[] {"-i", "example/CSOPA.txt", "-o", "example/CSOPA_out.txt", "-g", "example/CSOPA_g.dot", "-d", "-nv" };
                     Help(args);
                     input = Input(args);
                     output = Output(args);
@@ -72,13 +73,11 @@ namespace SequencePlanner
                         if (output != null)
                         {
                             solution.WriteOutputFile(output);
-                            Console.WriteLine("Output file created at " + output + "!");
                         }
                     }
                     if (graphviz != null)
                     {
                         solution.CreateGraphViz(graphviz);
-                        Console.WriteLine("Output file created at " + graphviz + "!");
                     }
                     return solution;
                 }

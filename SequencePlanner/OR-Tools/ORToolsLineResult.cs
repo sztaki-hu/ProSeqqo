@@ -31,7 +31,7 @@ namespace SequencePlanner
                 {
                     if (line.ID == solutionID)
                     {
-                        if(!line.Virtual)
+                       // if(!line.Virtual)
                         SolutionLine.Add(line);
                     }
                 }
@@ -53,12 +53,12 @@ namespace SequencePlanner
             }
             CostSum += CostOfLines;
             CostSumNoPenalty += CostSum;
-
         }
 
 
         public override void CreateGraphViz(string graphviz)
         {
+            Console.WriteLine("Output file NOT created at " + graphviz + "!");
             Console.WriteLine("LineLike task have no GraphViz representation yet.");
         }
 
@@ -77,17 +77,20 @@ namespace SequencePlanner
 
         public override void Write() { }
 
-        public override void WriteOutputFile(string File) { }
+        public override void WriteOutputFile(string File) {
+
+            Console.WriteLine("Output file NOT created at " + File + "!");//NOT CREATED
+        }
 
         public override void WriteMinimal() { }
 
         private void WriteHeader()
         {
             Console.WriteLine("Length: " + CostSum.ToString("F4"));
-            //Console.WriteLine("Length without penalty: " + CostSumNoPenalty.ToString("F4"));
+            Console.WriteLine("Length without penalty: " + CostSumNoPenalty.ToString("F4"));
             Console.WriteLine("Length of lines: " + CostOfLines.ToString("F4"));
             Console.WriteLine("Length between lines: " + CostBetweenLines.ToString("F4"));
-            //Console.WriteLine("Length between lines without penalty: " + CostBetweenLinesNoPenalty.ToString("F4"));
+            Console.WriteLine("Length between lines without penalty: " + CostBetweenLinesNoPenalty.ToString("F4"));
             Console.WriteLine("Rate of between lines: " + ((CostBetweenLines / CostSum) *100).ToString("F1")+"%");
             Console.WriteLine("Number of items: " + SolutionLine.Count);
             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);

@@ -113,8 +113,10 @@ namespace SequencePlanner
                         f.Write("[" + SolutionPoint[i].GID + "] " + SolutionPoint[i].Name + "  --" + Costs[i].ToString("F4") + "-->  ");
                     }
                     f.Write("[" + SolutionPoint[SolutionPoint.Count - 1].GID + "]" + SolutionPoint[SolutionPoint.Count - 1].Name + "\n");
+                    Console.WriteLine("Output file created at " + file + "!");
                 }
             }
+            Console.WriteLine("Output file NOT created at " + file + "!");
         }
 
         private void WriteSolutionHeader()
