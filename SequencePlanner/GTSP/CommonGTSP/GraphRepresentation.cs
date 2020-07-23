@@ -39,7 +39,7 @@ namespace SequencePlanner.GTSP
 
         public void CalculateEdgeWeight(Edge edge)
         {
-            if(edge.NodeA.Virtual || edge.NodeB.Virtual)
+            if(edge.NodeA.Virtual && edge.NodeB.Virtual)
             {
                 edge.Weight = 0;
             }

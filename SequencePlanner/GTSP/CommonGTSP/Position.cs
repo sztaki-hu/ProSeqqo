@@ -18,7 +18,8 @@ namespace SequencePlanner.GTSP
             ID = maxPositionID++;
             UID = UserID;
             Name = "Position_" + UID;
-            Configuration = new List<double> {0,0,0};
+            Configuration = new List<double>();
+            Dimension = 0;
         }
 
         public Position( int UserID, List<double> config = null, string name = null) : this(UserID)

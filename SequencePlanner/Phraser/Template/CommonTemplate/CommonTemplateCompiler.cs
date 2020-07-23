@@ -74,7 +74,7 @@ namespace SequencePlanner.Phraser.Template
                 bool find = false;
                 foreach (var pos in Task.PositionList)
                 {
-                    if (pos.GID == Template.StartDepotID)
+                    if (pos.UID == Template.StartDepotID)
                     {
                         Task.StartDepot = pos;
                         find = true;
@@ -89,7 +89,7 @@ namespace SequencePlanner.Phraser.Template
                 bool find = false;
                 foreach (var pos in Task.PositionList)
                 {
-                    if (pos.GID == Template.FinishDepotID)
+                    if (pos.UID == Template.FinishDepotID)
                     {
                         Task.FinishDepot = pos;
                         find = true;
