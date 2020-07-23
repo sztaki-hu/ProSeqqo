@@ -52,8 +52,8 @@ namespace SequencePlanner.Phraser.Options
                 {
                     if (result.Validated)
                     {
-                        AddNeededIncludes(result.NewIncludeNeed);
-                        AddOptionalIncludes(result.NewIncludeOptional);
+                        AddOptionalIncludes(result.NewIncludeOptional);//DO NOT SWAP
+                        AddNeededIncludes(result.NewIncludeNeed);//DO NOT SWAP
                     }
                 }
             }
@@ -75,8 +75,8 @@ namespace SequencePlanner.Phraser.Options
                             if (result.Validated)
                             {
                                 Included[i].Included = true;
-                                included += AddNeededIncludes(result.NewIncludeNeed);
-                                included += AddOptionalIncludes(result.NewIncludeOptional);
+                                included += AddOptionalIncludes(result.NewIncludeOptional);//DO NOT SWAP
+                                included += AddNeededIncludes(result.NewIncludeNeed);//DO NOT SWAP
                             }
                         }
                     }
