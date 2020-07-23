@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Phraser.Options.Values;
+﻿using SequencePlanner.Phraser.Helper;
+using SequencePlanner.Phraser.Options.Values;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,7 +31,7 @@ namespace SequencePlanner.GTSP
             };
         }
 
-        public void Build(List<Position> positions, List<LineListOptionValue> lines, List<PrecedenceOptionValue> linePrec, List<PrecedenceOptionValue> contPrec,int contourPenalty, bool cyclicSeq, Position startDepot, Position finishDepot)
+        public void Build(List<Position> positions, List<LineListOptionValue> lines, List<PrecedenceOptionValue> linePrec, List<PrecedenceOptionValue> contPrec, int contourPenalty, bool cyclicSeq, Position startDepot, Position finishDepot)
         {
 
             Positions = positions;
@@ -44,7 +45,7 @@ namespace SequencePlanner.GTSP
                 WeightMultiplier = this.WeightMultiplier
             };
             CreateEdges();
-            ExtendStartFinish(cyclicSeq, startDepot, finishDepot);
+            AbstractStart(cyclicSeq, startDepot, finishDepot);
             Graph.Build();
         }
 
@@ -158,14 +159,6 @@ namespace SequencePlanner.GTSP
                     Contours.Add(new Contour(line.ContourID));
             }
         }
-        private void ExtendStartFinish(bool cyclicSeq, Position startDepot, Position finishDepot)
-        {
-            if(!cyclicSeq && startDepot == null && finishDepot == null)
-            {
-                AddVirualStart(); 
-                AddVirualFinish();
-            }
-        }
 
         private void AddVirualStart()
         {
@@ -206,43 +199,107 @@ namespace SequencePlanner.GTSP
             StartLine = startLine;
         }
 
-        private void AddVirualFinish()
+        private Line AbstractStart(bool cyclicSeq, Position startDepot, Position finishDepot)
         {
-            var a = new Position() { Name = "VirtualFinishLineA" };
-            var b = new Position() { Name = "VirtualFinishLineB" };
-            Positions.Add(a);
-            Positions.Add(b);
-            Line finishLine = new Line()
+            bool startGiven = startDepot != null;
+            bool finishGiven = finishDepot != null;
+
+            if (cyclicSeq && finishGiven)
+                throw new SequencerException("In case of cyclic LineLike task can not use finish depot!");
+
+            if (!startGiven)
             {
-                Name = "FinishLine",
+                startDepot = new Position() { Name = "VirtualPositionA" , Virtual = true};
+                Positions.Add(startDepot);
+            }
+
+            if (!finishGiven)
+            {
+                finishDepot = new Position() { Name = "VirtualPositionB", Virtual = true };
+                Positions.Add(finishDepot);
+            }
+
+            double weightFromVirtualLine = 0.0;
+            double weightToVirtualLine = 0.0;
+            bool weightToVirtualLineZero = false;
+            bool weightFromVirtualLineZero = false;
+            Line startLine;
+
+            if (cyclicSeq && startGiven && !finishGiven)
+            {
+                finishDepot = startDepot;
+                weightToVirtualLineZero = false;
+                weightFromVirtualLineZero = false;
+            }
+
+            if (!cyclicSeq && !startGiven && !finishGiven)
+            {
+                weightToVirtualLineZero = true;
+                weightFromVirtualLineZero = true;
+            }
+
+
+            if (!cyclicSeq && startGiven && !finishGiven)
+            {
+                weightToVirtualLineZero = true;
+                weightFromVirtualLineZero = false;
+            }
+
+            if (!cyclicSeq && !startGiven && finishGiven)
+            {
+                weightToVirtualLineZero = false;
+                weightFromVirtualLineZero = true;
+            }
+
+            if (!cyclicSeq && startGiven && finishGiven)
+            {
+                weightToVirtualLineZero = false;
+                weightFromVirtualLineZero = false;
+            }
+
+            startLine = new Line()
+            {
+                Name = "StartLine",
                 Virtual = true,
-                Start = a,
-                End = b,
-                Contour = new Contour()
+                Start = finishDepot,
+                End = startDepot,
+                Contour = new Contour() { Name = "VirtualContour", Virtual = true }
             };
-            Lines.Add(finishLine);
 
             foreach (var line in Lines)
             {
+                if (weightToVirtualLineZero)
+                    weightToVirtualLine = 0.0;
+                else
+                    weightToVirtualLine = EdgeWeightCalculator.Calculate(line.End, startLine.Start);
+
+                if (weightFromVirtualLineZero)
+                    weightFromVirtualLine = 0.0;
+                else
+                    weightFromVirtualLine = EdgeWeightCalculator.Calculate(startLine.End, line.Start);
+
                 Graph.Edges.Add(new Edge()
                 {
                     NodeA = line,
-                    NodeB = finishLine,
-                    Weight = 0,
+                    NodeB = startLine,
+                    Weight = weightToVirtualLine,
                     Directed = true,
-                    Tag = "VirtualFinishLine"
+                    Tag = "VirtualStartLine"
                 });
+
                 Graph.Edges.Add(new Edge()
                 {
-                    NodeA = finishLine,
+                    NodeA = startLine,
                     NodeB = line,
-                    Weight = 0,
+                    Weight = weightFromVirtualLine,
                     Directed = true,
-                    Tag = "VirtualFinishLine"
+                    Tag = "VirtualStartLine"
                 });
             }
-            FinishID = finishLine.ID;
-            FinishLine = finishLine;
+            Lines.Add(startLine);
+            StartLine = startLine;
+            StartID = startLine.ID;
+            return startLine;
         }
 
         private bool IsInContourSet(int ID)
