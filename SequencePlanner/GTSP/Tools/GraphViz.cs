@@ -25,10 +25,11 @@ namespace SequencePlanner.GTSP
                 {
                     foreach (var pos in g.Positions)
                     {
-                        if (proc.GID == pos.Process.GID && InEdges(g.Graph, pos.GID))
-                        {
-                            subgraph += pos.Name + "; ";
-                        }
+                        if(!pos.Virtual)
+                            if (proc.GID == pos.Process.GID && InEdges(g.Graph, pos.GID))
+                            {
+                                subgraph += pos.Name + "; ";
+                            }
                     }
                 }
                 else
@@ -59,11 +60,12 @@ namespace SequencePlanner.GTSP
                         string subgraphAlt = "\t";
                         foreach (var pos in g.Positions)
                         {
-                            if (proc.GID == pos.Process.GID && pos.Alternative?.GID == alt.GID)
-                            {
-                                if (InEdges(g.Graph, pos.GID))
+                            if(!pos.Virtual)
+                                if (proc.GID == pos.Process.GID && pos.Alternative?.GID == alt.GID)
+                                {
+                                    if (InEdges(g.Graph, pos.GID))
                                     subgraphAlt += pos.Name + "; ";
-                            }
+                                }
                         }
                         viz += AddSubgraph(subgraphAlt, alt.Name, "\t\t", "lightblue");
                         viz += AddTasksSubgraph(alt);
