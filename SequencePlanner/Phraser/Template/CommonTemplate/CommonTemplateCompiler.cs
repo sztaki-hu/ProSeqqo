@@ -25,7 +25,6 @@ namespace SequencePlanner.Phraser.Template
         private void Fill()
         {
             Task.TaskType = Template.TaskType;
-            Task.EdgeWeightSource = Template.EdgeWeightSource ;
             Task.Dimension = Template.Dimension;
             Task.TimeLimit = Template.TimeLimit;
             Task.CyclicSequence = Template.CyclicSequence;

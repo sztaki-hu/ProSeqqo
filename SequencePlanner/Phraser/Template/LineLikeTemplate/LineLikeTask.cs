@@ -19,7 +19,6 @@ namespace SequencePlanner.Phraser.Template
         public LineLikeTask(LineLikeTemplate template, CommonTask common) : this()
         {
             TaskType = common.TaskType;
-            EdgeWeightSource = common.EdgeWeightSource;
             DistanceFunction = common.DistanceFunction;
             Dimension = common.Dimension;
             TimeLimit = common.TimeLimit;

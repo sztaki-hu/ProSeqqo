@@ -14,7 +14,7 @@ namespace SequencePlanner.Phraser.Options
         {
             Name = "TimeLimit";
             IncludeableNames = new List<string> { };
-            Need = true;
+            Need = false;
         }
         public override ValidationResult Validate()
         {

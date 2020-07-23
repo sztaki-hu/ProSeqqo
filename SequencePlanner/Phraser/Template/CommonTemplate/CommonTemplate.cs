@@ -10,7 +10,6 @@ namespace SequencePlanner.Phraser.Template
     public class CommonTemplate : IAbstractTemplate
     {
         public TaskTypeEnum TaskType { get; set; }
-        public EdgeWeightSourceEnum EdgeWeightSource { get; set; }
         public DistanceFunctionEnum DistanceFunction { get; set; }
         public int Dimension { get; set; }
         public int TimeLimit { get; set; }
@@ -85,7 +84,6 @@ namespace SequencePlanner.Phraser.Template
         {
             string tmp = "\nCommonTemplate details:";
             tmp += "\n\tTaskType: " + TaskType.ToString();
-            tmp += "\n\tEdgeWeightSource: " + EdgeWeightSource.ToString();
             tmp += "\n\tDistanceFunction: " + DistanceFunction.ToString();
             tmp += "\n\tDimension: " + Dimension.ToString();
             tmp += "\n\tTimeLimit: " + TimeLimit.ToString() + " sec";

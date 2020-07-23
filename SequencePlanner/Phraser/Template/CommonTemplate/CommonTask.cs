@@ -11,7 +11,6 @@ namespace SequencePlanner
     public class CommonTask : IAbstractTask
     {
         public TaskTypeEnum TaskType { get; set; }
-        public EdgeWeightSourceEnum EdgeWeightSource { get; set; }
         public EdgeWeightCalculator DistanceFunction { get; set; }
         public int Dimension { get; set; }
         public int TimeLimit { get; set; }

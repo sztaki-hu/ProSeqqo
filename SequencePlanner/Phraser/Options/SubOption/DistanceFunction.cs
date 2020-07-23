@@ -55,12 +55,12 @@ namespace SequencePlanner.Phraser.Options
                         Value = DistanceFunctionEnum.Manhattan_Distance;
                         Validated = true;
                         break;
-                    case "FULLMATRIX":
+                    case "FULL_MATRIX":
                         Value = DistanceFunctionEnum.FullMatrix;
                         Validated = true;
                         break;
                     default:
-                        Console.WriteLine("Fail DistanceFunction");
+                        throw new SequencerException("DistanceFunction parameter unknown!", "Make sure DistanceFunction: Euclidian_Distance/Max_Distance/Trapezoid_Time/Manhattan_Distance/Full_Matrix one of them given.");
                         break;
                 }
                 Validated = true;
