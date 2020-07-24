@@ -12,6 +12,7 @@ namespace SequencePlanner.GTSP
         public List<Contour> Contours { get; set; }
         public List<Line> Lines { get; set; }
         public int ContourPenalty { get; set; }
+        public bool BidirectionLineDefault { get; internal set; }
 
         public GTSPLineRepresentation()
         {

@@ -3,7 +3,7 @@
   <Class Name="SequencePlanner.CommonTask">
     <Position X="10" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAIIIEAAAAAAEAAAAAAAACwAAAAAAAMAACCAY=</HashCode>
+      <HashCode>AAAAAAAAIIIEAAAAAAEAAAAAAAACwAAAAAAAMAACCAY=</HashCode>
       <FileName>Phraser\Template\CommonTemplate\CommonTask.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -11,7 +11,7 @@
   <Class Name="SequencePlanner.Phraser.Template.CommonTemplate">
     <Position X="5.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAIIICAAAAEAmAAAAAAAAAASAABAAAAMAACCE4=</HashCode>
+      <HashCode>AAAAAAAIIICAAAAEAmAAAAAAAAAASAABAAAAMAACCE4=</HashCode>
       <FileName>Phraser\Template\CommonTemplate\CommonTemplate.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -32,14 +32,6 @@
   </Class>
   <Class Name="SequencePlanner.Phraser.Template.LineLikeTask">
     <Position X="12.5" Y="6.25" Width="2" />
-    <InheritanceLine Type="SequencePlanner.CommonTask" ManuallyRouted="true" FixedFromPoint="true">
-      <Path>
-        <Point X="11.266" Y="4.747" />
-        <Point X="11.266" Y="5.875" />
-        <Point X="13.5" Y="5.875" />
-        <Point X="13.5" Y="6.25" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAEAgAIAAAAAAAAAAAAgAAAAAAgAAAAAAAAAAAAAI=</HashCode>
       <FileName>Phraser\Template\LineLikeTemplate\LineLikeTask.cs</FileName>
@@ -47,28 +39,14 @@
   </Class>
   <Class Name="SequencePlanner.Phraser.Template.LineLikeTemplate">
     <Position X="7.5" Y="6.25" Width="2" />
-    <InheritanceLine Type="SequencePlanner.Phraser.Template.CommonTemplate" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="5.709" />
-        <Point X="6.25" Y="5.95" />
-        <Point X="8.438" Y="5.95" />
-        <Point X="8.438" Y="6.25" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgACAAAAFAAABAAAAACAACAAIAAAAAAAAAEA=</HashCode>
+      <HashCode>AAAAAAAAgACAAAAFAAABAAAAACAACAAIAAAAABAAAEA=</HashCode>
       <FileName>Phraser\Template\LineLikeTemplate\LineLikeTemplate.cs</FileName>
       <NewMemberFileName>Phraser\Template\LineLikeTemplate\LineLikeTemplateValidator.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Phraser.Template.PointLikeTask">
     <Position X="10" Y="6.25" Width="2.25" />
-    <InheritanceLine Type="SequencePlanner.CommonTask" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="11.25" Y="4.747" />
-        <Point X="11.25" Y="6.25" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAEAgAAAAAAAAAAAAAAgAAAAAAgAAAAAAAAAAAAAI=</HashCode>
       <FileName>Phraser\Template\PointLikeTemplate\PointLikeTask.cs</FileName>
@@ -129,21 +107,21 @@
   <Class Name="SequencePlanner.GTSP.GTSPLineRepresentation">
     <Position X="12.75" Y="15" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAQEgAAAAAIEAAAAAEAAAgIAIAAAgAgKAAABAAACAEA=</HashCode>
+      <HashCode>AAAEgAAAAAAEAAAAAEAAAAIAIAAAgAAKACABABACAEA=</HashCode>
       <FileName>GTSP\LineLikeGTSP\GTSPLineRepresentation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.GTSPPointRepresentation">
     <Position X="15.25" Y="15" Width="2" />
     <TypeIdentifier>
-      <HashCode>AEIAACgBABAAAAABAhEAAACAIAAAgACBAADMAAAAwAA=</HashCode>
+      <HashCode>AEIAACgBABAAAAABAhEAAACAIAAAgACBACDMAAAAwAA=</HashCode>
       <FileName>GTSP\PointLikeGTSP\GTSPPointRepresentation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSP.GTSPRepresentation">
     <Position X="14" Y="10" Width="2" />
     <TypeIdentifier>
-      <HashCode>QAAAAIAgAAIAAAAgAAAAAAIEAAAAgAiAAQAIIAAAAAI=</HashCode>
+      <HashCode>QAAAAIAgAAIAAAAgAAAAAgIEAAAAgAiAAQAIIAAAAAI=</HashCode>
       <FileName>GTSP\CommonGTSP\GTSPRepresentation.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -155,7 +133,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="SequencePlanner.Phraser.Template.ITemplateCompiler" Collapsed="true">
-    <Position X="16.25" Y="0.5" Width="2" />
+    <Position X="16.75" Y="0.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Phraser\Template\BaseTemplate\ITemplateCompiler.cs</FileName>

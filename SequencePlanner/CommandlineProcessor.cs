@@ -32,11 +32,11 @@ namespace SequencePlanner
                 {
                     //Debug in VS
                     args = new string[] { "-i", "example/test10.txt", "-o", "example/test10_out.txt", "-g", "example/test10_graph.dot" };
-                    args = new string[] { "-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot", "-d" };
+                    //args = new string[] { "-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot", "-d" };
                     //args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
                     args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot", "-d" };
-                    //args = new string[] {"-i", "example/testKocka.txt", "-o", "example/testKocka_out.txt", "-g", "example/testKocka_g.dot", "-d" };
-                    args = new string[] {"-i", "example/CSOPA.txt", "-o", "example/CSOPA_out.txt", "-g", "example/CSOPA_g.dot", "-d", "-nv" };
+                    //args = new string[] {"-i", "example/Kocka.txt", "-o", "example/Kocka_out.txt", "-g", "example/Kocka_graph.dot", "-d" };
+                    //args = new string[] {"-i", "example/CSOPA.txt", "-o", "example/CSOPA_out.txt", "-g", "example/CSOPA_g.dot", "-d" };
                     Help(args);
                     input = Input(args);
                     output = Output(args);
@@ -85,7 +85,10 @@ namespace SequencePlanner
             }
             catch(Exception e)
             {
-                Console.WriteLine(e);
+                if(TemplateManager.DEBUG)
+                    Console.WriteLine(e);
+                else
+                    Console.WriteLine(e.Message);
                 return null;
             }
         }
@@ -138,12 +141,10 @@ namespace SequencePlanner
             {
                 if (args[i].Equals("-output") || args[i].Equals("-o"))
                 {
-
                     return args[i + 1];
                 }
             }
-            Console.WriteLine("Output file needed!");
-
+            //Console.WriteLine("Output file needed!");
             return null;
         }
         private static string GraphVizOutput(string[] args)
@@ -155,7 +156,7 @@ namespace SequencePlanner
                     return args[i + 1];
                 }
             }
-            Console.WriteLine("GraphViz output file path needed! Use -h/-help command for details!");
+            //Console.WriteLine("GraphViz output file path needed! Use -h/-help command for details!");
             return null;
         }
         private static bool Debug(string[] args)

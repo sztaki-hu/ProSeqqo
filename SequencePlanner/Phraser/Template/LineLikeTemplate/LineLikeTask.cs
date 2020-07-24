@@ -28,6 +28,7 @@ namespace SequencePlanner.Phraser.Template
             WeightMultiplier = common.WeightMultiplier;
             PositionList = common.PositionList;
             PositionMatrix = common.PositionMatrix;
+            GTSP.BidirectionLineDefault = template.BidirectionLineDefault;
             GTSP.EdgeWeightCalculator = DistanceFunction;
             GTSP.WeightMultiplier = WeightMultiplier;
             GTSP.Build(common.PositionList, template.LineList, template.LinePrecedence, template.ContourPrecedence, template.ContourPenalty, CyclicSequence, (Position)StartDepot, (Position)FinishDepot);

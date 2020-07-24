@@ -12,6 +12,7 @@ namespace SequencePlanner.Phraser.Template
         public List<PrecedenceOptionValue> LinePrecedence { get; set; }
         public List<PrecedenceOptionValue> ContourPrecedence { get; set; }
         public int ContourPenalty { get; set; }
+        public bool BidirectionLineDefault { get; set; }
         private CommonTask CommonTask { get; set; }
 
 
@@ -52,6 +53,7 @@ namespace SequencePlanner.Phraser.Template
                     LinePrecedence = ((LinePrecedence)optionSet.FindOption("LinePrecedence")).Value;
                     ContourPrecedence = ((ContourPrecedence)optionSet.FindOption("ContourPrecedence")).Value;
                     ContourPenalty = ((ContourPenalty)optionSet.FindOption("ContourPenalty")).Value;
+                    BidirectionLineDefault = ((BidirectionLineDefault)optionSet.FindOption("BidirectionLineDefault")).Value;
                 }
                 else
                 {

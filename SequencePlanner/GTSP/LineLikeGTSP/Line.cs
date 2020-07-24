@@ -10,6 +10,7 @@ namespace SequencePlanner.GTSP
         public Position Start { get; set; }
         public Position End { get; set; }
         public Contour Contour { get; set; }
+        public double Length { get; internal set; }
 
         public Line(int UserID = -1, string name = null) : base()
         {

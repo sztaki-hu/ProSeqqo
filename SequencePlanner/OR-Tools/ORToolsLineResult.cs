@@ -34,6 +34,7 @@ namespace SequencePlanner
                     {
                        //if(!line.Virtual)
                         SolutionLine.Add(line);
+                        line.Length = Task.DistanceFunction.Calculate(line.Start, line.End);
                     }
                 }
             }
@@ -77,10 +78,10 @@ namespace SequencePlanner
                 }
             }
             else
-                Console.WriteLine("\t| " + SolutionLine[0] + " Cost: " + Task.DistanceFunction.Calculate(SolutionLine[0].Start, SolutionLine[0].End).ToString("F4"));
+                Console.WriteLine("\t| " + SolutionLine[0] + " Cost: " + SolutionLine[0].Length.ToString("F4"));
             for (int i = 1; i < SolutionLine.Count - 1; i++)
             {
-                Console.WriteLine("\t| " + SolutionLine[i]+ " Cost: "+Task.DistanceFunction.Calculate(SolutionLine[i].Start, SolutionLine[i].End).ToString("F4"));
+                Console.WriteLine("\t| " + SolutionLine[i]+ " Cost: "+ SolutionLine[i].Length.ToString("F4"));
                 Console.WriteLine("\t|--" + Costs[i].ToString("F4"));
             }
             if(SolutionLine[SolutionLine.Count - 1].Virtual)
@@ -91,7 +92,7 @@ namespace SequencePlanner
                 }
             }
             else
-                Console.WriteLine("\t| " + SolutionLine[SolutionLine.Count - 1] + " Cost: " + Task.DistanceFunction.Calculate(SolutionLine[SolutionLine.Count - 1].Start, SolutionLine[SolutionLine.Count - 1].End).ToString("F4"));
+                Console.WriteLine("\t| " + SolutionLine[SolutionLine.Count - 1] + " Cost: " + SolutionLine[0].Length.ToString("F4"));
             Console.WriteLine();
         }
 
@@ -100,8 +101,65 @@ namespace SequencePlanner
         public override void Write() { }
 
         public override void WriteOutputFile(string File) {
+            if (SolutionRaw != null)
+            {
+                using (System.IO.StreamWriter f = new System.IO.StreamWriter(@File, false))
+                {
+                    f.WriteLine("\n#LineID;ContourID;LineName;Length;PointA-ID;PointA-Name;PointA-Config;PointB-ID;PointB-Name;PointB-Config");
 
-            Console.WriteLine("Output file NOT created at " + File + "!");//NOT CREATED
+                    for (int i = 1; i < SolutionLine.Count - 1; i++)
+                    {
+                        f.WriteLine(SolutionLine[i].UID + ";"+ SolutionLine[i].Contour.UID+ ";" + SolutionLine[i].Name+ ";" + SolutionLine[i].Length.ToString("F4")  +";"+ SolutionLine[i].Start.UID+";"+SolutionLine[i].Start.Name + ";" + SolutionLine[i].Start.ConfigString() + ";" + SolutionLine[i].End.UID + ";" + SolutionLine[i].End.Name + ";" + SolutionLine[i].End.ConfigString());
+                        f.WriteLine(Costs[i]);
+                    }
+                    var last = SolutionLine.Count - 1;
+                    f.WriteLine(SolutionLine[last].UID + ";" + SolutionLine[last].Contour.UID + ";" + SolutionLine[last].Name + ";" + SolutionLine[last].Length.ToString("F4")+  ";" + SolutionLine[last].Start.UID + ";" + SolutionLine[last].Start.Name + ";" + SolutionLine[last].Start.ConfigString() + ";" + SolutionLine[last].End.UID + ";" + SolutionLine[last].End.Name + ";" + SolutionLine[last].End.ConfigString());
+
+                    f.WriteLine("\n#Solution params: ");
+                    f.WriteLine("#Full length: " + CostSum.ToString("F4"));
+                    f.WriteLine("#Length without penalty: " + CostSumNoPenalty.ToString("F4"));
+                    f.WriteLine("#Penalty: " + Penalty.ToString("F4"));
+                    f.WriteLine("#Length of lines: " + CostOfLines.ToString("F4"));
+                    f.WriteLine("#Length between lines: " + CostBetweenLines.ToString("F4"));
+                    f.WriteLine("#Length between lines without penalty: " + CostBetweenLinesNoPenalty.ToString("F4"));
+                    f.WriteLine("#Rate length and length between lines (without penalty): " + ((CostBetweenLinesNoPenalty / CostSumNoPenalty) * 100).ToString("F1") + "%");
+                    f.WriteLine("#Number of items: " + SolutionLine.Count);
+                    string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
+                    f.WriteLine("#RunTime: " + elapsedTime);
+
+
+                    f.WriteLine("\n#Task params: ");
+                    f.WriteLine("#TaskType: " + Task?.TaskType.ToString());
+                    f.WriteLine("#Dimension: " + Task?.Dimension.ToString());
+                    f.WriteLine("#DistanceFunction: " + Task?.DistanceFunction.CalcFunction.ToString());
+                    f.WriteLine("#CyclicSequence: " + Task?.CyclicSequence.ToString());
+                    f.WriteLine("#StartDepot: " + Task?.StartDepot.UID.ToString());
+                    f.WriteLine("#FinishDepot: " + Task?.FinishDepot.UID.ToString());
+                    f.WriteLine("#ContourPenalty: " + Task?.GTSP.ContourPenalty.ToString());
+                    f.WriteLine("#BidirectionLineDefault: " + Task?.GTSP.BidirectionLineDefault.ToString());
+                    f.WriteLine("#WeightMultiplier: " + (Task?.WeightMultiplier == -1 ? "Auto" : Task?.WeightMultiplier.ToString()));
+                    f.WriteLine("#LinePrecedences: ");
+                    foreach (var item in Task?.GTSP.ConstraintsOrder)
+                    {
+                        f.WriteLine("#" + item.Before.UID + ";" + item.After.UID);
+                    }
+                    f.WriteLine("#DisjointSets: ");
+                    foreach (var set in Task?.GTSP.ConstraintsDisjoints)
+                    {
+                        var tmp = "#";
+                        foreach (var item in set.DisjointSet)
+                        {
+                            tmp += item.ToString() + ";";
+                        }
+                        f.WriteLine(tmp);
+                    }
+                    Console.WriteLine("Output file created at " + File + "!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Output file NOT created at " + File + "!");
+            }
         }
 
         public override void WriteMinimal() { }
