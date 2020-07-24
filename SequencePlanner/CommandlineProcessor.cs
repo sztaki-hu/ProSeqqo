@@ -3,6 +3,7 @@ using SequencePlanner.Phraser.Options;
 using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -31,12 +32,20 @@ namespace SequencePlanner
                 else
                 {
                     //Debug in VS
-                    args = new string[] { "-i", "example/test10.txt", "-o", "example/test10_out.txt", "-g", "example/test10_graph.dot" };
-                    //args = new string[] { "-i", "example/test10mx.txt", "-o", "example/test10mx_out.txt", "-g", "example/test10mx_graph.dot", "-d" };
-                    //args = new string[] {"-i", "example/test_cam_pnp.txt", "-o", "example/test_cam_pnp_out.txt", "-g", "example/test_cam_pnp_graph.dot" };
-                    args = new string[] {"-i", "example/LineLike.txt", "-o", "example/LineLike_out.txt", "-g", "example/LineLike_g.dot", "-d" };
-                    //args = new string[] {"-i", "example/Kocka.txt", "-o", "example/Kocka_out.txt", "-g", "example/Kocka_graph.dot", "-d" };
-                    //args = new string[] {"-i", "example/CSOPA.txt", "-o", "example/CSOPA_out.txt", "-g", "example/CSOPA_g.dot", "-d" };
+                    string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName+"/Example";
+                    string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName+"/Example/out";
+                    string graph = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName+"/Example/graph";
+
+                    //args = new string[] {"-i", example+ "/PickAndPlace_Original.txt", "-o", outdir+ "/PickAndPlace_Original_out.txt","-g", graph+ "/PickAndPlace_Original_graph.dot", "-d" };
+                    //args = new string[] {"-i", example+ "/PickAndPlace_Matrix.txt",   "-o", outdir+ "/PickAndPlace_Matrix_out.txt",  "-g", graph+ "/PickAndPlace_Matrix_graph.dot",   "-d" };
+                    //args = new string[] {"-i", example+ "/PickAndPlace_Matrix.txt",   "-o", outdir+ "/PickAndPlace_Matrix_out.txt",  "-g", graph+ "/PickAndPlace_Matrix_graph.dot",   "-d" };
+                    args = new string[] {"-i", example+ "/LineLike_Original.txt",     "-o", outdir+ "/LineLike_Original_out.txt",    "-g", graph+ "/LineLike_Original_graph.dot",     "-d" };
+                    //args = new string[] {"-i", example+ "/LineLike_Matrix.txt",       "-o", outdir+ "/LineLike_Matrix_out.txt",      "-g", graph+ "/LineLike_Matrix_graph.dot",       "-d" };
+                    //args = new string[] {"-i", example+ "/Kocka.txt",                 "-o", outdir+ "/Kocka_out.txt",                "-g", graph+ "/Kocka_graph.dot",                 "-d" };
+                    //args = new string[] {"-i", example+ "/CSOPA.txt",                 "-o", outdir+ "/CSOPA_out.txt",                "-g", graph+ "/CSOPA_graph.dot",                 "-d" };
+                    args = new string[] {"-i", example+ "/PointLike_PosProcPrecedences.txt",   "-o", outdir+ "/PointLike_PosProcPrecedences_out.txt",  "-g", graph+ "/PointLike_PosProcPrecedences_graph.dot",   "-d" };
+                    args = new string[] {"-i", example+ "/PointLike_PosPrecedences.txt",   "-o", outdir+ "/PointLike_PosPrecedences_out.txt",  "-g", graph+ "/PointLike_PosPrecedences_graph.dot",   "-d" };
+
                     Help(args);
                     input = Input(args);
                     output = Output(args);

@@ -1,0 +1,74 @@
+TaskType: Point_Like
+Dimensions: 3
+WeightMultiplier: Auto
+CyclicSequence: False
+StartDepot: 0
+FinishDepot: 4
+EdgeWeightSource: Calculate_from_positions
+TimeLimit: 20
+DistanceFunction: Trapezoid_Time
+TrapezoidParams/Speed: [2.269; 2.269; 2.269]
+TrapezoidParams/Acceleration: [10.472; 10.472; 10.472]
+
+PositionList:
+#+-------+---------------------+------------------+
+#|   ID  |      Position       |  Name[optional]  |
+#+-------+---------------------+------------------+
+0;	[0;0;0];		Init
+1;	[8;8;8];		Cube1_PutDown
+2;	[10;10;10];     Cube2_PutDown
+3;	[18;18;18];     Cube3_PutDown
+4;	[15;15;15];     Cube4_PutDown
+5;	[-10;-10;0];    Cube1_A
+6;	[-10;-10;5];    Cube1_B
+7;	[-5;-5;0];		Cube2_A
+8;	[-5;-5;5];		Cube2_B
+9;	[-10;-5;0];		Cube3_A
+10;	[-10;-5;5];		Cube3_B
+11;	[-5;-10;0];		Cube4_A
+12;	[-5;-10;5];     Cube4_B
+
+
+ProcessHierarchy:
+#+-------------+---------+----------------+------------+
+#| Position ID | Task ID | Alternative ID | Process ID |
+#+-------------+---------+----------------+------------+
+	#Init
+		0;			29;			50;			  100;	
+	#Cube1
+		5;			30;			51;			  101;		
+		6;			30;		    51;			  101;		
+		1;			31;			51;			  101;
+	#Cube2
+		7;			32;			52;			  102;		
+		8;			32;		    52;			  102;		
+		2;			33;			52;			  102;
+	#Cube3
+		9;			34;			53;			  103;		
+		10;			34;		    53;			  103;		
+		3;			35;			53;			  103;
+	#Cube4
+		11;			36;			54;			  104;		
+		12;			36;		    54;			  104;		
+		4;			37;			54;			  104;
+
+ProcessPrecedence:
+#+----------------------+--------------------+------------------+
+#| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
+#+----------------------+--------------------+------------------+
+
+
+
+PositionPrecedence:
+#+----------------------+--------------------+------------------+
+#| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
+#+----------------------+--------------------+------------------+
+#Cube1-Cube2
+5;8
+6;8
+8;6
+
+#Cube2-Cube3
+9;7
+10;7
+7;9
