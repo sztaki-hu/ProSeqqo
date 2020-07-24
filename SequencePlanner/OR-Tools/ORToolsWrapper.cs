@@ -70,9 +70,7 @@ namespace SequencePlanner
             searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
             
             //Set time limit
-            if(param.TimeLimit == 0)
-                searchParameters.TimeLimit = new Duration { Seconds = DefaultTimeLimit };
-            else
+            if(param.TimeLimit != 0)
                 searchParameters.TimeLimit = new Duration { Seconds = param.TimeLimit };
         }
 

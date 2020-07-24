@@ -61,7 +61,7 @@ namespace SequencePlanner.Phraser.Template
                 }
                 if (template.StartDepotID == -1)
                 {
-                    throw new SequencerException("In case of cyclic sequence start depo not needed!", "Add StartDepot: X to input file.");
+                    throw new SequencerException("In case of cyclic sequence start depo needed!", "Add StartDepot: X to input file.");
                 }
             }
         }

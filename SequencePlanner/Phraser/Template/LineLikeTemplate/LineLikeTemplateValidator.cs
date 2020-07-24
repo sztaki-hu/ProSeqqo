@@ -65,27 +65,28 @@ namespace SequencePlanner.Phraser.Template
         }
         private void CheckLineList(LineLikeTemplate template)
         {
-            foreach (var line in template.LineList)
-            {
-                bool findPosA = false;
-                bool findPosB = false;
-                foreach (var position in template.PositionList)
+            if(template.PositionList!=null)
+                foreach (var line in template.LineList)
                 {
-                    if (line.PositionA == position.ID)
-                        findPosA = true;
-                    if (line.PositionB == position.ID)
-                        findPosB = true;
+                    bool findPosA = false;
+                    bool findPosB = false;
+                    foreach (var position in template.PositionList)
+                    {
+                        if (line.PositionA == position.ID)
+                            findPosA = true;
+                        if (line.PositionB == position.ID)
+                            findPosB = true;
+                    }
+                    if (!findPosA || !findPosB)
+                    {
+                        var missingID = -1;
+                        if (!findPosA)
+                            missingID = line.PositionA;
+                        if (!findPosB)
+                            missingID = line.PositionB;
+                        throw new SequencerException("Unknown PositionID in LineList section: " + missingID + ".", "Change the ID for valid PositionID or check syntax.");
+                    }
                 }
-                if (!findPosA || !findPosB)
-                {
-                    var missingID = -1;
-                    if (!findPosA)
-                        missingID = line.PositionA;
-                    if (!findPosB)
-                        missingID = line.PositionB;
-                    throw new SequencerException("Unknown PositionID in LineList section: " + missingID + ".", "Change the ID for valid PositionID or check syntax.");
-                }
-            }
         }
 
     }
