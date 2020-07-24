@@ -20,13 +20,16 @@ namespace SequencePlanner
 
         public void ResolveSolution()
         {
+            
             if (SolutionRaw != null)
             {
-                foreach (var item in SolutionRaw)
+                for (int i = 0; i < SolutionRaw.Count; i++)
                 {
+                    if (i == 0 && Task.FinishDepot != null)
+                        i++;
                     foreach (var position in Task.GTSP.Positions)
                     {
-                        if (position.ID == Convert.ToInt32(item))
+                        if (position.ID == Convert.ToInt32(SolutionRaw[i]) && !position.Virtual)
                         {
                             SolutionPoint.Add(position);
                         }

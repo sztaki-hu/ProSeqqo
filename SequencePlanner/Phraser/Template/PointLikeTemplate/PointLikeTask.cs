@@ -19,7 +19,6 @@ namespace SequencePlanner.Phraser.Template
         public PointLikeTask(PointLikeTemplate template, CommonTask common):this()
         {
             TaskType = common.TaskType;
-            EdgeWeightSource = common.EdgeWeightSource;
             DistanceFunction = common.DistanceFunction;
             Dimension = common.Dimension;
             TimeLimit = common.TimeLimit;
@@ -35,7 +34,7 @@ namespace SequencePlanner.Phraser.Template
             GTSP.PositionMatrixOriginal = PositionMatrix;
             if (PositionMatrix != null)
                 GTSP.PositionMatrix = PositionMatrix.Matrix;
-            GTSP.Build(common.PositionList, template.ProcessHierarchy, template.ProcessPrecedence, template.PositionPrecedence);
+            GTSP.Build(common.PositionList, template.ProcessHierarchy, template.ProcessPrecedence, template.PositionPrecedence, CyclicSequence, (Position)StartDepot, (Position)FinishDepot);
         }
 
         public new void Build()
@@ -43,7 +42,7 @@ namespace SequencePlanner.Phraser.Template
             GTSP.Build();
             ORToolsParameters parameters = new ORToolsParameters()
             {
-                StartDepot = StartDepot.ID,
+                StartDepot = GTSP.StartID,
                 TimeLimit = TimeLimit,
                 RoundedMatrix = GTSP.Graph.PositionMatrixRound,
                 OrderConstraints = GTSP.ConstraintsOrder,

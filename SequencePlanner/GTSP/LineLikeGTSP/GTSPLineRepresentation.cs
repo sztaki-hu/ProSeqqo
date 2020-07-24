@@ -12,15 +12,10 @@ namespace SequencePlanner.GTSP
         public List<Contour> Contours { get; set; }
         public List<Line> Lines { get; set; }
         public int ContourPenalty { get; set; }
-        public int StartID { get; set; }
-        public int FinishID { get; set; }
-        public Line StartLine { get; set; }
-        public Line FinishLine { get; set; }
 
         public GTSPLineRepresentation()
         {
             StartID = 0;
-            FinishID = 0;
             Positions = new List<Position>();
             Lines = new List<Line>();
             Contours = new List<Contour>();
@@ -33,7 +28,6 @@ namespace SequencePlanner.GTSP
 
         public void Build(List<Position> positions, List<LineListOptionValue> lines, List<PrecedenceOptionValue> linePrec, List<PrecedenceOptionValue> contPrec, int contourPenalty, bool cyclicSeq, Position startDepot, Position finishDepot)
         {
-
             Positions = positions;
             ContourPenalty = contourPenalty;
             CreateContours(lines);
@@ -48,7 +42,6 @@ namespace SequencePlanner.GTSP
             AbstractStart(cyclicSeq, startDepot, finishDepot);
             Graph.Build();
         }
-
         private void BuildGTSP(List<LineListOptionValue> lines)
         {
             foreach (var line in lines)
@@ -159,46 +152,6 @@ namespace SequencePlanner.GTSP
                     Contours.Add(new Contour(line.ContourID));
             }
         }
-
-        private void AddVirualStart()
-        {
-            var a = new Position() { Name = "VirtualStartLineA" };
-            var b = new Position() { Name = "VirtualStartLineB" };
-            Positions.Add(a);
-            Positions.Add(b);
-            Line startLine = new Line()
-            {
-                Name = "StartLine",
-                Virtual = true,
-                Start = a,
-                End = b,
-                Contour = new Contour()
-            };
-            Lines.Add(startLine);
-
-            foreach (var line in Lines)
-            {
-                Graph.Edges.Add(new Edge()
-                {
-                    NodeA = line,
-                    NodeB = startLine,
-                    Weight = 0,
-                    Directed = true,
-                    Tag = "VirtualStartLine"
-                });
-                Graph.Edges.Add(new Edge()
-                {
-                    NodeA = startLine,
-                    NodeB = line,
-                    Weight = 0,
-                    Directed = true,
-                    Tag = "VirtualStartLine"
-                });
-            }
-            StartID = startLine.ID;
-            StartLine = startLine;
-        }
-
         private Line AbstractStart(bool cyclicSeq, Position startDepot, Position finishDepot)
         {
             bool startGiven = startDepot != null;
@@ -297,11 +250,9 @@ namespace SequencePlanner.GTSP
                 });
             }
             Lines.Add(startLine);
-            StartLine = startLine;
             StartID = startLine.ID;
             return startLine;
         }
-
         private bool IsInContourSet(int ID)
         {
             foreach (var contour in Contours)
@@ -311,7 +262,6 @@ namespace SequencePlanner.GTSP
             }
             return false;
         }
-
         private Contour FindCountour(int UID)
         {
             foreach (var cont in Contours)

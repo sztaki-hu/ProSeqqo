@@ -27,7 +27,7 @@ namespace SequencePlanner.Phraser.Template
         public new IAbstractTask Compile()
         {
             CommonTask = (CommonTask) base.Compile();
-            StartDepotID = CommonTask.StartDepot.UID;
+            //StartDepotID = CommonTask.StartDepot.UID;
             return new PointLikeTask(this, CommonTask);
         }
 

@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Phraser.Options.Values;
+﻿using SequencePlanner.Phraser.Helper;
+using SequencePlanner.Phraser.Options.Values;
 using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace SequencePlanner.GTSP
                 WeightMultiplier = this.WeightMultiplier
             };
         }
-        public void Build(List<Position> positions, List<ProcessHierarchyOptionValue> processHierarchies, List<PrecedenceOptionValue> procPrec, List<PrecedenceOptionValue> posPrec)
+        public void Build(List<Position> positions, List<ProcessHierarchyOptionValue> processHierarchies, List<PrecedenceOptionValue> procPrec, List<PrecedenceOptionValue> posPrec, bool cyclicSeq, Position startDepot, Position finishDepot)
         {
             Positions = positions;
             CreateProcessHierarchy(processHierarchies);
@@ -35,9 +36,11 @@ namespace SequencePlanner.GTSP
             GenerateDisjunctSets();
             AddOrderConstraints(posPrec, procPrec);
             CreateEdges();
+            AbstractStart(cyclicSeq, startDepot, finishDepot);
             Graph.Build();
-            if(TemplateManager.DEBUG)
-                WriteGTSP();
+
+            //if(TemplateManager.DEBUG)
+               // WriteGTSP();
         }
 
         private void CreateProcessHierarchy(List<ProcessHierarchyOptionValue> processHierarchy)
@@ -274,6 +277,128 @@ namespace SequencePlanner.GTSP
                         NodeB = posB,
                         Weight = EdgeWeightCalculator.Calculate(posA, posB),
                         Directed = true
+                    });
+                }
+            }
+        }
+
+        private void AbstractStart(bool cyclicSeq, Position startDepot, Position finishDepot)
+        {
+            bool startGiven = startDepot != null;
+            bool finishGiven = finishDepot != null;
+
+            if (cyclicSeq && finishGiven)
+                throw new SequencerException("In case of cyclic PointLike task can not use finish depot!");
+
+            if (!startGiven)
+            {
+                startDepot = new Position() { 
+                    Name = "VirtualPositionA", 
+                    Virtual = true
+                };
+            }
+
+            if (!finishGiven)
+            {
+                finishDepot = new Position()
+                {
+                    Name = "VirtualPositionB",
+                    Virtual = true
+                };
+            }
+
+            if (cyclicSeq && startGiven && !finishGiven)
+            {
+                StartID = startDepot.ID;
+            }
+
+            if (!cyclicSeq && !startGiven && !finishGiven)
+            {
+                StartID = startDepot.ID;
+                foreach (var position in Positions)
+                {
+                    Graph.Edges.Add(new Edge()
+                    {
+                        NodeA = position,
+                        NodeB = startDepot,
+                        Weight = 0,
+                        Directed = false,
+                        Tag = "VirtualStart"
+                    });
+                    Graph.Edges.Add(new Edge()
+                    {
+                        NodeA = startDepot,
+                        NodeB = position,
+                        Weight = 0,
+                        Directed = false,
+                        Tag = "VirtualStart"
+                    });
+                }
+                Positions.Add(startDepot);
+            }
+
+            if (!cyclicSeq && startGiven && !finishGiven)
+            {
+                StartID = finishDepot.ID;
+                foreach (var position in Positions)
+                {
+                    Graph.Edges.Add(new Edge()
+                    {
+                        NodeA = finishDepot,
+                        NodeB = startDepot,
+                        Weight = 0,
+                        Directed = false,
+                        Tag = "VirtualStart"
+                    });
+                    Graph.Edges.Add(new Edge()
+                    {
+                        NodeA = position,
+                        NodeB = finishDepot,
+                        Weight = 0,
+                        Directed = false,
+                        Tag = "VirtualStart"
+                    });
+                }
+                Positions.Add(finishDepot);
+            }
+
+            if (!cyclicSeq && !startGiven && finishGiven)
+            {
+                StartID = finishDepot.ID;
+                foreach (var position in Positions)
+                {
+                    Graph.Edges.Add(new Edge()
+                    {
+                        NodeA = finishDepot,
+                        NodeB = startDepot,
+                        Weight = 0,
+                        Directed = false,
+                        Tag = "VirtualStart"
+                    });
+                    Graph.Edges.Add(new Edge()
+                    {
+                        NodeA = startDepot,
+                        NodeB = position,
+                        Weight = 0,
+                        Directed = false,
+                        Tag = "VirtualStart"
+                    });
+                }
+                Positions.Add(startDepot);
+            }
+
+            if (!cyclicSeq && startGiven && finishGiven)
+            {
+                StartID = finishDepot.ID;
+                foreach (var position in Positions)
+                {
+                    Graph.Edges.Add(new Edge()
+                    {
+                        NodeA = finishDepot,
+                        NodeB = startDepot,
+                        Weight = 0,
+                        Directed = false,
+                        Tag = "VirtualStart"
                     });
                 }
             }

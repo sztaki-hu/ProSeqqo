@@ -20,6 +20,7 @@ namespace SequencePlanner.GTSP
         public int WeightMultiplier { get; set; }
         public double[,] PositionMatrix { get; set; }
         public PositionMatrixOptionValue PositionMatrixOriginal { get; set; }
+        public int StartID { get; set; }
 
         public GTSPRepresentation()
         {
