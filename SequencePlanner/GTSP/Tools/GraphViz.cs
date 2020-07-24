@@ -7,7 +7,40 @@ namespace SequencePlanner.GTSP
 {
     public static class GraphViz
     {
-        public static string CreateGraphVizPointLike(GTSPPointRepresentation g, string file = null, bool virtualNodes = true)
+        public static void CreateGraphVizLineLike(GTSPLineRepresentation g, string file = null, bool virtualNodes = true)
+        {
+            if (g.Graph.Edges.Count < 1000)
+            {
+                string viz = "digraph G {\n";
+                viz += "node[style = filled];\n";
+                viz += "\n\t" + "style = filled;";
+                viz += "\n\t" + "color = salmon2;";
+                foreach (var item in g.Graph.Edges)
+                {
+                    viz += "\t" + item.NodeA.Name + " -> " + item.NodeB.Name + "[label = " + item.Weight.ToString("0,0.00", new CultureInfo("en-US", false)) + "];\n";
+                }
+
+                foreach (var cont in g.Contours)
+                {
+                    var sub = "";
+                    foreach (var line in cont.Lines)
+                    {
+                        if (cont.GID == line.Contour.GID)
+                        {
+                            sub += line.Name + ";";
+                        }
+                    }
+                    viz += AddSubgraph(sub, "Contour_" + cont.UID, "\t", "thistle3");
+                    viz += "\n\t}";
+                }
+                viz += "\n}";
+                System.IO.File.WriteAllText(file, viz);
+                Console.WriteLine("Output GraphViz file created at " + file + "!");
+            }else
+                Console.WriteLine("Output GraphViz file not created, edge number over 1000!");
+        }
+
+        public static void CreateGraphVizPointLike(GTSPPointRepresentation g, string file = null, bool virtualNodes = true)
         {
             string viz = "digraph G {\n";
             viz += "node[style = filled];\n";
@@ -79,7 +112,6 @@ namespace SequencePlanner.GTSP
             //if (file!=null)
             System.IO.File.WriteAllText(file, viz);
             Console.WriteLine("Output file created at " + file + "!");
-            return viz;
         }
 
         private static string AddSubgraph(string content, string label, string prefix = "\t", string color = "white")

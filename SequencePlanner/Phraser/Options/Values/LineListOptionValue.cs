@@ -48,35 +48,5 @@ namespace SequencePlanner.Phraser.Options.Values
                     Bidirectional = false;
             }
         }
-
-        //public void fromStringXYZ(string input)
-        //{
-        //    string[] tmp = input.Split(';', '[', ']');     //1;2;[x;y;z;];[x;y;z;];Name--->[1][2][][x][y][z][][][x][y][z][][Name]
-        //    LineID = int.Parse(tmp[0]);
-        //    ContourID = int.Parse(tmp[1]);
-        //    int i = 3;
-        //    int dim = 0;
-        //    while (!tmp[i].Equals(""))
-        //    {
-        //        PositionA.Add(Convert.ToDouble(tmp[i]));
-        //        dim++;
-        //        i++;
-        //    }
-        //    i++;
-        //    i++;
-        //    Dim = dim;
-        //    while (!tmp[i].Equals(""))
-        //    {
-        //        PositionB.Add(Convert.ToDouble(tmp[i]));
-        //        dim++;
-        //        i++;
-        //    }
-        //    Dim = dim;
-        //    i++;
-        //    if (tmp.Length != i)
-        //    {
-        //        Name = tmp[i];
-        //    }
-        //}
     }
 }

@@ -16,7 +16,10 @@ namespace SequencePlanner.GTSP
         {
             ID = maxLineID++;
             UID = UserID;
-            Name = "Line_" + UID;
+            if (name == null)
+                Name = "Line_" + UID;
+            else
+                Name = name;
         }
 
         public override string ToString()

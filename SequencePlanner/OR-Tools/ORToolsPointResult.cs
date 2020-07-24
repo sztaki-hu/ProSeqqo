@@ -97,7 +97,7 @@ namespace SequencePlanner
                 using (System.IO.StreamWriter f = new System.IO.StreamWriter(@file, false))
                 {
 
-                    for (int i = 1; i < SolutionPoint.Count-1; i++)
+                    for (int i = 0; i < SolutionPoint.Count-1; i++)
                     {
                         f.WriteLine(SolutionPoint[i].UID + ";" + SolutionPoint[i].Name + ";" + SolutionPoint[i].ConfigString());
                         f.WriteLine(Costs[i]);
@@ -114,21 +114,22 @@ namespace SequencePlanner
                     f.WriteLine("\n#Task params: ");
                     f.WriteLine("#TaskType: " + Task?.TaskType.ToString());
                     f.WriteLine("#Dimension: " + Task?.Dimension.ToString());
-                    f.WriteLine("#DistanceFunction: " + Task?.DistanceFunction.CalcFunction.ToString());
+                    f.WriteLine("#DistanceFunction: " + Task?.DistanceFunction?.CalcFunction.ToString());
                     f.WriteLine("#CyclicSequence: " + Task?.CyclicSequence.ToString());
-                    f.WriteLine("#StartDepot: " + Task?.StartDepot.UID.ToString());
-                    f.WriteLine("#FinishDepot: " + Task?.FinishDepot.UID.ToString());
+                    f.WriteLine("#StartDepot: " + Task?.StartDepot?.UID.ToString());
+                    f.WriteLine("#FinishDepot: " + Task?.FinishDepot?.UID.ToString());
                     f.WriteLine("#WeightMultiplier: " + (Task?.WeightMultiplier==-1?"Auto": Task?.WeightMultiplier.ToString()));
+                    f.WriteLine("#TimeLimit: " + Task?.TimeLimit.ToString());
                     f.WriteLine("#PositionPrecedences: ");
-                    foreach (var item in Task?.GTSP.ConstraintsOrder)
+                    foreach (var item in Task?.GTSP?.ConstraintsOrder)
                     {
                         f.WriteLine("#"+item.Before.UID+";"+item.After.UID);
                     }
                     f.WriteLine("#DisjointSets: ");
-                    foreach (var set in Task?.GTSP.ConstraintsDisjoints)
+                    foreach (var set in Task?.GTSP?.ConstraintsDisjoints)
                     {
                         var tmp = "#";
-                        foreach (var item in set.DisjointSet)
+                        foreach (var item in set?.DisjointSet)
                         {
                             tmp += item.ToString() + ";";
                         }
