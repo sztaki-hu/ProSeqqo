@@ -45,7 +45,7 @@ namespace SequencePlanner
 
         public override void CreateGraphViz(string graphviz)
         {
-            GraphViz.CreateGraphViz(Task.GTSP, graphviz);
+            GraphViz.CreateGraphVizPointLike(Task.GTSP, graphviz);
         }
 
         public override void WriteSimple()
@@ -55,9 +55,9 @@ namespace SequencePlanner
             {
                 for (int i = 0; i < SolutionPoint.Count - 1; i++)
                 {
-                    Console.Write("[" + SolutionPoint[i].GID + "] " + SolutionPoint[i].Name + "  --" + Costs[i].ToString("F4") + "-->  ");
+                    Console.Write("[" + SolutionPoint[i].UID + "] " + SolutionPoint[i].Name + "  --" + Costs[i].ToString("F4") + "-->  ");
                 }
-                Console.Write("[" + SolutionPoint[SolutionPoint.Count - 1].GID + "]" + SolutionPoint[SolutionPoint.Count - 1].Name + "\n");
+                Console.Write("[" + SolutionPoint[SolutionPoint.Count - 1].UID + "]" + SolutionPoint[SolutionPoint.Count - 1].Name + "\n");
                 Console.WriteLine();
             }
         }
@@ -69,7 +69,7 @@ namespace SequencePlanner
             {
                 for (int i = 0; i < SolutionPoint.Count; i++)
                 {
-                    Console.WriteLine("\t[" + SolutionPoint[i].GID + "]" + SolutionPoint[i].Name + " " + SolutionPoint[i].ConfigString());
+                    Console.WriteLine("\t[" + SolutionPoint[i].UID + "]" + SolutionPoint[i].Name + " " + SolutionPoint[i].ConfigString());
                 }
                 Console.WriteLine();
             }
@@ -82,12 +82,10 @@ namespace SequencePlanner
             {
                     for (int i = 0; i < SolutionPoint.Count - 1; i++)
                     {
-                        Console.WriteLine("\t| [" + SolutionPoint[i].GID + "]" + SolutionPoint[i].Name + " " + SolutionPoint[i].ConfigString());
-                        //Console.WriteLine("\t| ");
+                        Console.WriteLine("\t| [" + SolutionPoint[i].UID + "]" + SolutionPoint[i].Name + " " + SolutionPoint[i].ConfigString());
                         Console.WriteLine("\t|--" + Costs[i].ToString("F4"));
-                        //Console.WriteLine("\t| ");
                     }
-                    Console.WriteLine("\t| [" + SolutionPoint[SolutionPoint.Count - 1].GID + "]" + SolutionPoint[SolutionPoint.Count - 1].Name + " " + SolutionPoint[SolutionPoint.Count - 1].ConfigString());
+                    Console.WriteLine("\t| [" + SolutionPoint[SolutionPoint.Count - 1].UID + "]" + SolutionPoint[SolutionPoint.Count - 1].Name + " " + SolutionPoint[SolutionPoint.Count - 1].ConfigString());
                     Console.WriteLine();
                 }
         }
@@ -98,28 +96,51 @@ namespace SequencePlanner
             {
                 using (System.IO.StreamWriter f = new System.IO.StreamWriter(@file, false))
                 {
-                    f.WriteLine("Length: " + CostSum.ToString("F4"));
-                    f.WriteLine("Number of items: " + SolutionPoint.Count);
+
+                    for (int i = 1; i < SolutionPoint.Count-1; i++)
+                    {
+                        f.WriteLine(SolutionPoint[i].UID + ";" + SolutionPoint[i].Name + ";" + SolutionPoint[i].ConfigString());
+                        f.WriteLine(Costs[i]);
+                    }
+                    f.WriteLine(SolutionPoint[SolutionPoint.Count-1].UID + ";" + SolutionPoint[SolutionPoint.Count-1].Name + ";" + SolutionPoint[SolutionPoint.Count-1].ConfigString());
+
+                    f.WriteLine("\n#Solution params: ");
+                    f.WriteLine("#Length: " + CostSum.ToString("F4"));
+                    f.WriteLine("#Number of items: " + SolutionPoint.Count);
                     string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
-                    f.WriteLine("RunTime: " + elapsedTime);
-                    f.WriteLine("Solution: ");
+                    f.WriteLine("#RunTime: " + elapsedTime);
 
 
-                    for (int i = 0; i < SolutionPoint.Count; i++)
+                    f.WriteLine("\n#Task params: ");
+                    f.WriteLine("#TaskType: " + Task?.TaskType.ToString());
+                    f.WriteLine("#Dimension: " + Task?.Dimension.ToString());
+                    f.WriteLine("#DistanceFunction: " + Task?.DistanceFunction.CalcFunction.ToString());
+                    f.WriteLine("#CyclicSequence: " + Task?.CyclicSequence.ToString());
+                    f.WriteLine("#StartDepot: " + Task?.StartDepot.UID.ToString());
+                    f.WriteLine("#FinishDepot: " + Task?.FinishDepot.UID.ToString());
+                    f.WriteLine("#WeightMultiplier: " + (Task?.WeightMultiplier==-1?"Auto": Task?.WeightMultiplier.ToString()));
+                    f.WriteLine("#PositionPrecedences: ");
+                    foreach (var item in Task?.GTSP.ConstraintsOrder)
                     {
-                        f.WriteLine("\t[" + SolutionPoint[i].GID + "]" + SolutionPoint[i].Name + " " + SolutionPoint[i].ConfigString());
+                        f.WriteLine("#"+item.Before.UID+";"+item.After.UID);
                     }
-
-                    f.WriteLine("Timing: ");
-                    for (int i = 0; i < SolutionPoint.Count - 1; i++)
+                    f.WriteLine("#DisjointSets: ");
+                    foreach (var set in Task?.GTSP.ConstraintsDisjoints)
                     {
-                        f.Write("[" + SolutionPoint[i].GID + "] " + SolutionPoint[i].Name + "  --" + Costs[i].ToString("F4") + "-->  ");
+                        var tmp = "#";
+                        foreach (var item in set.DisjointSet)
+                        {
+                            tmp += item.ToString() + ";";
+                        }
+                        f.WriteLine(tmp);
                     }
-                    f.Write("[" + SolutionPoint[SolutionPoint.Count - 1].GID + "]" + SolutionPoint[SolutionPoint.Count - 1].Name + "\n");
                     Console.WriteLine("Output file created at " + file + "!");
                 }
             }
-            Console.WriteLine("Output file NOT created at " + file + "!");
+            else
+            {
+                Console.WriteLine("Output file NOT created at " + file + "!");
+            }
         }
 
         private void WriteSolutionHeader()

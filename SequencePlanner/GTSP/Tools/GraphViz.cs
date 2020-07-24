@@ -7,7 +7,7 @@ namespace SequencePlanner.GTSP
 {
     public static class GraphViz
     {
-        public static string CreateGraphViz(GTSPPointRepresentation g, string file = null, bool virtualNodes = true)
+        public static string CreateGraphVizPointLike(GTSPPointRepresentation g, string file = null, bool virtualNodes = true)
         {
             string viz = "digraph G {\n";
             viz += "node[style = filled];\n";
