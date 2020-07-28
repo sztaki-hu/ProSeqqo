@@ -1,4 +1,6 @@
-﻿using SequencePlanner.Phraser.Options.Values;
+﻿using SequencePlanner.Phraser.Helper;
+using SequencePlanner.Phraser.Options.Values;
+using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,10 +12,21 @@ namespace SequencePlanner.Phraser.Options
 
         public DistanceFunctionEnum Value { get; set; }
 
+        public DistanceFunction()
+        {
+            Name = "DistanceFunction";
+            IncludeableNames = new List<string> { "TrapezoidParams/Acceleration", "TrapezoidParams/Speed" };
+            Need = true;
+        }
+
         public override ValidationResult Validate()
         {
             try
             {
+                if (ValueString.Count == 0)
+                {
+                    return new ValidationResult() { Validated = false };
+                }
                 string tmp = ValueString[1].ToUpper();
                 List<string> newInclude = new List<string>();
                 switch (tmp)
@@ -32,26 +45,40 @@ namespace SequencePlanner.Phraser.Options
                         newInclude.Add("TrapezoidParams/Speed");
                         Validated = true;
                         break;
+                    case "TRAPEZOID_TIME_WITHTIEBREAKER":
+                        Value = DistanceFunctionEnum.Trapezoid_Time_WithTieBreaker;
+                        newInclude.Add("TrapezoidParams/Acceleration");
+                        newInclude.Add("TrapezoidParams/Speed");
+                        Validated = true;
+                        break;
                     case "MANHATTAN_DISTANCE":
                         Value = DistanceFunctionEnum.Manhattan_Distance;
                         Validated = true;
                         break;
+                    case "FULL_MATRIX":
+                        Value = DistanceFunctionEnum.FullMatrix;
+                        Validated = true;
+                        break;
                     default:
-                        Console.WriteLine("Fail DistanceFunction");
+                        throw new SequencerException("DistanceFunction parameter unknown!", "Make sure DistanceFunction: Euclidian_Distance/Max_Distance/Trapezoid_Time/Manhattan_Distance/Full_Matrix one of them given.");
                         break;
                 }
                 Validated = true;
                 return new ValidationResult()
                 {
                     Validated = this.Validated,
-                    NewInclude = newInclude
+                    NewIncludeNeed = newInclude
                 };
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
+                Validated = false;
+                if (TemplateManager.DEBUG)
+                    Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
                 return null;
             }
         }
+
+        
     }
 }

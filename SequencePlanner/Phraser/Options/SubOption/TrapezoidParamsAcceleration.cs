@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SequencePlanner.Phraser.Helper;
+using SequencePlanner.Phraser.Template;
 
 namespace SequencePlanner.Phraser.Options
 {
@@ -8,10 +10,19 @@ namespace SequencePlanner.Phraser.Options
     {
         public List<double> Value { get; set; }
 
+        public TrapezoidParamsAcceleration()
+        {
+            Name = "TrapezoidParams/Acceleration";
+        }
+
         public override ValidationResult Validate()
         {
             try
             {
+                if (ValueString.Count == 0)
+                {
+                    return new ValidationResult() { Validated = false };
+                }
                 string[] list = ValueString[1].Split(';', '[', ']');
                 List<double> ret = new List<double>();
                 int i = 1;
@@ -26,7 +37,8 @@ namespace SequencePlanner.Phraser.Options
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
+                if (TemplateManager.DEBUG)
+                    Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
                 return null;
             }
         }

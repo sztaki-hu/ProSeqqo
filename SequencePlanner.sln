@@ -5,14 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequencePlanner", "SequencePlanner\SequencePlanner.csproj", "{68B8FFC2-3C5E-4810-BCB3-080B3FA5B662}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Seqencer", "Seqencer\Seqencer.csproj", "{76AB713C-ECCB-44B7-A778-C682D7060438}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequenceUnitTests", "SequenceUnitTests\SequenceUnitTests.csproj", "{9AA38B26-29F5-4045-BF97-26700C9F59DA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84E1BFCF-384D-454C-AEAA-4B7EB629F4E8}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sequencer", "Sequencer\Sequencer.csproj", "{76AB713C-ECCB-44B7-A778-C682D7060438}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +21,6 @@ Global
 		{76AB713C-ECCB-44B7-A778-C682D7060438}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76AB713C-ECCB-44B7-A778-C682D7060438}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76AB713C-ECCB-44B7-A778-C682D7060438}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9AA38B26-29F5-4045-BF97-26700C9F59DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AA38B26-29F5-4045-BF97-26700C9F59DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AA38B26-29F5-4045-BF97-26700C9F59DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AA38B26-29F5-4045-BF97-26700C9F59DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

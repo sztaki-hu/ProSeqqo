@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SequencePlanner.Phraser.Helper;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,6 +13,7 @@ namespace SequencePlanner.Phraser.Options
         public List<String> IncludedNames { get; set; }
 
         public bool Need { get; set; }
+        public bool Optional { get; set; }
         public bool Included { get; set; }
         public bool Validated { get; set; }
 

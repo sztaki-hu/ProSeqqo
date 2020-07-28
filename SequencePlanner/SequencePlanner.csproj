@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Google.OrTools" Version="7.6.7691" />
+    <PackageReference Include="Google.OrTools" Version="7.7.7816" />
   </ItemGroup>
 
 </Project>

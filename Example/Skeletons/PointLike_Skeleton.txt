@@ -1,0 +1,53 @@
+TaskType: Point_Like
+Dimensions: <int>
+DistanceFunction: Euclidian_Distance/Max_Distance/Trapezoid_Time/Manhattan_Distance/Full_Matrix
+TrapezoidParams/Speed: <double[]>
+TrapezoidParams/Acceleration: <double[]>
+WeightMultiplyer: Auto / <int>
+CyclicSequence: True/False
+StartDepot: <PositionID>
+FinishDepot: <PositionID>
+TimeLimit: <int> 
+
+PositionList:
+#+-------+---------------------+------------------+
+#|   ID  |      Position       |  Name[optional]  |
+#+-------+---------------------+------------------+
+#| <int> | <double[Dimension]> |     <string>     |
+#+-------+---------------------+------------------+
+
+PositionMatrix:
+#+----------+----------+-----+------------------+
+#|     1    |     2    | ... | [NumberOfPoints] |        (PositionID/PositionID) 
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (1) 
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (2) 
+#+----------+----------+-----+------------------+
+#|    ...   |    ...   | ... |        ...       |        (...) 
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (NumberOfPoints)
+#+----------+----------+-----+------------------+
+#| <string> | <string> | ... |     <string>     |        (Name[optional])   
+#+----------+----------+-----+------------------+
+
+ProcessHierarchy:
+#+-------------+---------+----------------+------------+
+#| Position ID | Task ID | Alternative ID | Process ID |
+#+-------------+---------+----------------+------------+
+#|    <int>    |  <int>  |      <int>     |   <int>    | 
+#+-------------+---------+----------------+------------+
+
+ProcessPrecedence:
+#+----------------------+--------------------+
+#| PredecessorProcessID | SuccessorProcessID |
+#+----------------------+--------------------+
+#|         <int>        |        <int>       |
+#+----------------------+--------------------+
+
+PositionPrecedence:
+#+----------------------+--------------------+
+#|  PredecessorNodeID   |  SuccessorNodeID   |
+#+----------------------+--------------------+
+#|         <int>        |        <int>       |
+#+----------------------+--------------------+

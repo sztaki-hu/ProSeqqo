@@ -1,22 +1,33 @@
 ﻿using SequencePlanner.Phraser.Options.Values;
+using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SequencePlanner.Phraser.Helper;
 
 namespace SequencePlanner.Phraser.Options
 {
     public class ProcessHierarchy : Option
     {
         public List<ProcessHierarchyOptionValue> Value { get;set; }
+
+        public ProcessHierarchy()
+        {
+            Name = "ProcessHierarchy";
+        }
         public override ValidationResult Validate()
         {
             try
             {
+                if (ValueString.Count == 0)
+                {
+                    return new ValidationResult() { Validated = false };
+                }
                 Value = new List<ProcessHierarchyOptionValue>();
                 for (int i = 1; i < ValueString.Count; i++)
                 {
                     ProcessHierarchyOptionValue tmp = new ProcessHierarchyOptionValue();
-                    tmp.fromString(ValueString[i]);
+                    tmp.FromString(ValueString[i]);
                     Value.Add(tmp);
                 }
                 Validated = true;
@@ -24,9 +35,19 @@ namespace SequencePlanner.Phraser.Options
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
+                Validated = false;
+                if (TemplateManager.DEBUG)
+                    Console.WriteLine("Error in validation: " + this.GetType().Name + " " + e.Message);
                 return null;
             }
+        }
+        public bool ValidateByValues(List<PositionOptionValue> values)
+        {
+            foreach (var item in values)
+            {
+                
+            }
+            return true;
         }
     }
 }

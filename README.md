@@ -7,12 +7,16 @@
 <!--:computer: [Use from code](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-code) <br>-->
 
 ## About
+>  Under heavy development
+¯\＿(ツ)＿/¯
+
 Generic task sequencer that captures typical sequencing problems encountered in robot applications.
 * Easily integrated into complex solution workflows
 * Standalone exe with file interface or DLL function calls
 * Provides close-to-optimal (but not necessarily optimal) solutions quickly, e.g., in <1 sec for typical cases
 * Compact solver based on an open-source VRP solver engine - Google-OR-Tools
 * Visualize created graph with GraphViz
+
 
 Two dedicated task type for point-to-point workflow (point-like) and line-like optimization.
 
@@ -56,25 +60,19 @@ The given task translated to a general travelling salesman (GTSP) graph as an in
 Installation:
 ------
 
->  Under heavy development
-¯\＿(ツ)＿/¯
 
 - **Standalone executable:**
 Download the latest [release](https://git.sztaki.hu/zahoranl/sequenceplanner/-/releases) of the project, unzip and run in PowerShell/cmd on created tasks. Find details of task descriptor file [here](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file).
 
-- **Reuse as Dynamic Link Library (.dll):**
+- **Reuse as .dll (Dynamic Link Library):**
 Download the latest [release](https://git.sztaki.hu/zahoranl/sequenceplanner/-/releases) and add Sequencer.dll to your project as a dependency.
 
 - **Use source:**
 Clone the `master` branch of the project, it always contains the source code of the latest stable version as Visual Studio Solution.
 
-- Other platforms: The project and the given artefacts are supported on Windows x64/x86. In specific case .NET Standard component compilable on Linux and OSX platforms.
+- Other platforms: The project and the given artefacts are supported on Windows x64/x86. In specific case .NET Standard part able to build on Linux and OSX.
 
 [More detailed instructions about installation.](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Installation)
-
-<!--Documentation:
-------
-:earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home) :clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets) :computer: [Use from code](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-code) :file_folder: [Use from file](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)-->
 
 
 Contributing:
