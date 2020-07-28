@@ -12,7 +12,7 @@ namespace SequencePlanner
 {
     public static class CommandlineProcessor
     {
-        private static readonly bool RUN_IN_VISUALSTUDIO = true;
+        private static readonly bool RUN_IN_VISUALSTUDIO = false;
 
         private static string input;
         private static string output;
@@ -41,10 +41,10 @@ namespace SequencePlanner
                     //args = new string[] {"-i", example+ "/PickAndPlace_Matrix.txt",   "-o", outdir+ "/PickAndPlace_Matrix_out.txt",  "-g", graph+ "/PickAndPlace_Matrix_graph.dot",   "-d" };
                     args = new string[] {"-i", example+ "/LineLike_Original.txt",     "-o", outdir+ "/LineLike_Original_out.txt",    "-g", graph+ "/LineLike_Original_graph.dot",     "-d" };
                     //args = new string[] {"-i", example+ "/LineLike_Matrix.txt",       "-o", outdir+ "/LineLike_Matrix_out.txt",      "-g", graph+ "/LineLike_Matrix_graph.dot",       "-d" };
-                    //args = new string[] {"-i", example+ "/Kocka.txt",                 "-o", outdir+ "/Kocka_out.txt",                "-g", graph+ "/Kocka_graph.dot",                 "-d" };
+                    args = new string[] {"-i", example+ "/Kocka.txt",                 "-o", outdir+ "/Kocka_out.txt",                "-g", graph+ "/Kocka_graph.dot",                 "-d" };
                     //args = new string[] {"-i", example+ "/CSOPA.txt",                 "-o", outdir+ "/CSOPA_out.txt",                "-g", graph+ "/CSOPA_graph.dot",                 "-d" };
-                    args = new string[] {"-i", example+ "/PointLike_PosProcPrecedences.txt",   "-o", outdir+ "/PointLike_PosProcPrecedences_out.txt",  "-g", graph+ "/PointLike_PosProcPrecedences_graph.dot",   "-d" };
-                    args = new string[] {"-i", example+ "/PointLike_PosPrecedences.txt",   "-o", outdir+ "/PointLike_PosPrecedences_out.txt",  "-g", graph+ "/PointLike_PosPrecedences_graph.dot",   "-d" };
+                    //args = new string[] {"-i", example+ "/PointLike_PosProcPrecedences.txt",   "-o", outdir+ "/PointLike_PosProcPrecedences_out.txt",  "-g", graph+ "/PointLike_PosProcPrecedences_graph.dot",   "-d" };
+                    //args = new string[] {"-i", example+ "/PointLike_PosPrecedences.txt",   "-o", outdir+ "/PointLike_PosPrecedences_out.txt",  "-g", graph+ "/PointLike_PosPrecedences_graph.dot",   "-d" };
 
                     Help(args);
                     input = Input(args);
