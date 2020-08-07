@@ -17,49 +17,56 @@ namespace SequencePlanner.Phraser.Template
 
         private void CheckLinePrecedences(LineLikeTemplate template)
         {
-            foreach (var precedence in template.LinePrecedence)
+            if (template.LinePrecedence != null)
             {
-                bool findBeforeID = false;
-                bool findAfterID = false;
-                foreach (var line in template.LineList)
+                foreach (var precedence in template.LinePrecedence)
                 {
-                    if (precedence.BeforeID == line.LineID)
-                        findBeforeID = true;
-                    if (precedence.AfterID == line.LineID)
-                        findAfterID = true;
-                }
-                if (!findBeforeID || !findAfterID)
-                {
-                    var missingID = -1;
-                    if (!findBeforeID)
-                        missingID = precedence.BeforeID;
-                    if (!findAfterID)
-                        missingID = precedence.AfterID;
-                    throw new SequencerException("Unknown LineID in LinePrecedences section: " + missingID + ".", "Change the ID for valid LineID or check syntax.");
+                    bool findBeforeID = false;
+                    bool findAfterID = false;
+                    foreach (var line in template.LineList)
+                    {
+                        if (precedence.BeforeID == line.LineID)
+                            findBeforeID = true;
+                        if (precedence.AfterID == line.LineID)
+                            findAfterID = true;
+                    }
+                    if (!findBeforeID || !findAfterID)
+                    {
+                        var missingID = -1;
+                        if (!findBeforeID)
+                            missingID = precedence.BeforeID;
+                        if (!findAfterID)
+                            missingID = precedence.AfterID;
+                        throw new SequencerException("Unknown LineID in LinePrecedences section: " + missingID + ".", "Change the ID for valid LineID or check syntax.");
+                    }
                 }
             }
+            
         }
         private void CheckContourPrecedences(LineLikeTemplate template)
         {
-            foreach (var precedence in template.ContourPrecedence)
+            if(template.ContourPrecedence != null)
             {
-                bool findBeforeID = false;
-                bool findAfterID = false;
-                foreach (var line in template.LineList)
+                foreach (var precedence in template.ContourPrecedence)
                 {
-                    if (precedence.BeforeID == line.ContourID)
-                        findBeforeID = true;
-                    if (precedence.AfterID == line.ContourID)
-                        findAfterID = true;
-                }
-                if (!findBeforeID || !findAfterID)
-                {
-                    var missingID = -1;
-                    if (!findBeforeID)
-                        missingID = precedence.BeforeID;
-                    if (!findAfterID)
-                        missingID = precedence.AfterID;
-                    throw new SequencerException("Unknown ContourID in ContourPrecedence section: " + missingID + ".", "Change the ID for valid ContourID or check syntax.");
+                    bool findBeforeID = false;
+                    bool findAfterID = false;
+                    foreach (var line in template.LineList)
+                    {
+                        if (precedence.BeforeID == line.ContourID)
+                            findBeforeID = true;
+                        if (precedence.AfterID == line.ContourID)
+                            findAfterID = true;
+                    }
+                    if (!findBeforeID || !findAfterID)
+                    {
+                        var missingID = -1;
+                        if (!findBeforeID)
+                            missingID = precedence.BeforeID;
+                        if (!findAfterID)
+                            missingID = precedence.AfterID;
+                        throw new SequencerException("Unknown ContourID in ContourPrecedence section: " + missingID + ".", "Change the ID for valid ContourID or check syntax.");
+                    }
                 }
             }
         }
