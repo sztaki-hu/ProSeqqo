@@ -37,7 +37,7 @@ namespace SequencePlanner
 
         public virtual void Write() { }
 
-        public virtual void WriteOutputFile(string File) { }
+        public virtual void WriteOutputFile(string File, string input = null) { }
 
         public virtual void WriteMinimal() { }
     }

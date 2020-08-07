@@ -108,49 +108,20 @@ namespace SequencePlanner
 
         public override void Write() { }
 
-        public override void WriteOutputFile(string File) {
+        public override void WriteOutputFile(string File, string input) {
             if (SolutionRaw != null)
             {
                 using (System.IO.StreamWriter f = new System.IO.StreamWriter(@File, false))
                 {
-                    f.WriteLine("\n#LineID;ContourID;LineName;Length;PointA-ID;PointA-Name;PointA-Config;PointB-ID;PointB-Name;PointB-Config\n");
 
-                    if (SolutionLine[0].Virtual)
-                    {
-                        if (!SolutionLine[0].End.Virtual)
-                        {
-                            f.WriteLine("Start: " + SolutionLine[0].End.UID + ";" + SolutionLine[0].End.Name + ";" + SolutionLine[0].End.ConfigString());
-                        }
-                    }
+                    if (input == null)
+                        f.WriteLine("#Input: Unkown");
                     else
-                    {
-                        f.WriteLine(SolutionLine[0].UID + ";" + SolutionLine[0].Contour.UID + ";" + SolutionLine[0].Name + ";" + SolutionLine[0].Length.ToString("F4") + ";" + SolutionLine[0].Start.UID + ";" + SolutionLine[0].Start.Name + ";" + SolutionLine[0].Start.ConfigString() + ";" + SolutionLine[0].End.UID + ";" + SolutionLine[0].End.Name + ";" + SolutionLine[0].End.ConfigString());
-                    }
-
-                    for (int i = 1; i < SolutionLine.Count - 1; i++)
-                    {
-                        f.WriteLine(Costs[i-1]);
-                        f.WriteLine(SolutionLine[i].UID + ";"+ SolutionLine[i].Contour.UID+ ";" + SolutionLine[i].Name+ ";" + SolutionLine[i].Length.ToString("F4")  +";"+ SolutionLine[i].Start.UID+";"+SolutionLine[i].Start.Name + ";" + SolutionLine[i].Start.ConfigString() + ";" + SolutionLine[i].End.UID + ";" + SolutionLine[i].End.Name + ";" + SolutionLine[i].End.ConfigString());
-                    }
-
-                    var last = SolutionLine.Count - 1;
-                    if (last - 1 >= 0)
-                        f.WriteLine(Costs[last - 1]);
-                    if (SolutionLine[last].Virtual)
-                    {
-                        if (!SolutionLine[last].Start.Virtual)
-                        {
-                            f.WriteLine("Finish: " + SolutionLine[last].Start.UID + ";" + SolutionLine[last].Start.Name + ";" + SolutionLine[last].Start.ConfigString());
-                        }
-                    }
-                    else
-                    {
-                        f.WriteLine(SolutionLine[last].UID + ";" + SolutionLine[last].Contour.UID + ";" + SolutionLine[last].Name + ";" + SolutionLine[last].Length.ToString("F4") + ";" + SolutionLine[last].Start.UID + ";" + SolutionLine[last].Start.Name + ";" + SolutionLine[last].Start.ConfigString() + ";" + SolutionLine[last].End.UID + ";" + SolutionLine[last].End.Name + ";" + SolutionLine[last].End.ConfigString());
-                    }
-
-
+                        f.WriteLine("#Input: " + input);
+                    f.WriteLine("#Run at " + DateTime.Now);
 
                     f.WriteLine("\n#Solution params: ");
+                    
                     f.WriteLine("#Full length: " + CostSum.ToString("F4"));
                     f.WriteLine("#Length without penalty: " + CostSumNoPenalty.ToString("F4"));
                     f.WriteLine("#Penalty: " + Penalty.ToString("F4"));
@@ -162,6 +133,40 @@ namespace SequencePlanner
                     string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
                     f.WriteLine("#RunTime: " + elapsedTime);
 
+
+                    f.WriteLine("\n#LineID ; ContourID ; LineName ; Length ; PointA-ID ; PointA-Name ; PointA-Config ; PointB-ID ; PointB-Name ; PointB-Config ; CostToNext \n");
+
+                    if (SolutionLine[0].Virtual)
+                    {
+                        if (!SolutionLine[0].End.Virtual)
+                        {
+                            f.WriteLine("Start: " + SolutionLine[0].End.UID + ";" + SolutionLine[0].End.Name + ";" + SolutionLine[0].End.ConfigString());
+                        }
+                    }
+                    else
+                    {
+                        f.WriteLine(SolutionLine[0].UID + ";" + SolutionLine[0].Contour.UID + ";" + SolutionLine[0].Name + ";" + SolutionLine[0].Length.ToString("F4") + ";" + SolutionLine[0].Start.UID + ";" + SolutionLine[0].Start.Name + ";" + SolutionLine[0].Start.ConfigString() + ";" + SolutionLine[0].End.UID + ";" + SolutionLine[0].End.Name + ";" + SolutionLine[0].End.ConfigString()+";"+ Costs[0]);
+                    }
+
+                    for (int i = 1; i < SolutionLine.Count - 1; i++)
+                    {
+                        f.WriteLine(SolutionLine[i].UID + ";"+ SolutionLine[i].Contour.UID+ ";" + SolutionLine[i].Name+ ";" + SolutionLine[i].Length.ToString("F4")  +";"+ SolutionLine[i].Start.UID+";"+SolutionLine[i].Start.Name + ";" + SolutionLine[i].Start.ConfigString() + ";" + SolutionLine[i].End.UID + ";" + SolutionLine[i].End.Name + ";" + SolutionLine[i].End.ConfigString()+";" + Costs[i]);
+                    }
+
+                    var last = SolutionLine.Count - 1;
+                    if (last - 1 >= 0)
+                        //f.WriteLine(Costs[last - 1]);
+                    if (SolutionLine[last].Virtual)
+                    {
+                        if (!SolutionLine[last].Start.Virtual)
+                        {
+                            f.WriteLine("Finish: " + SolutionLine[last].Start.UID + ";" + SolutionLine[last].Start.Name + ";" + SolutionLine[last].Start.ConfigString());
+                        }
+                    }
+                    else
+                    {
+                        f.WriteLine(SolutionLine[last].UID + ";" + SolutionLine[last].Contour.UID + ";" + SolutionLine[last].Name + ";" + SolutionLine[last].Length.ToString("F4") + ";" + SolutionLine[last].Start.UID + ";" + SolutionLine[last].Start.Name + ";" + SolutionLine[last].Start.ConfigString() + ";" + SolutionLine[last].End.UID + ";" + SolutionLine[last].End.Name + ";" + SolutionLine[last].End.ConfigString());
+                    }
 
                     f.WriteLine("\n#Task params: ");
                     f.WriteLine("#TaskType: " + Task?.TaskType.ToString());

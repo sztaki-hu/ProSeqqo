@@ -7,12 +7,13 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SequencePlanner
 {
     public static class CommandlineProcessor
     {
-        private static readonly bool RUN_IN_VISUALSTUDIO = false;
+        private static readonly bool RUN_IN_VISUALSTUDIO = true;
 
         private static string input;
         private static string output;
@@ -31,6 +32,8 @@ namespace SequencePlanner
                 }
                 else
                 {
+
+
                     //Debug in VS
                     string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName+"/Example";
                     string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName+"/Example/out";
@@ -41,8 +44,10 @@ namespace SequencePlanner
                     //args = new string[] {"-i", example+ "/PickAndPlace_Matrix.txt",   "-o", outdir+ "/PickAndPlace_Matrix_out.txt",  "-g", graph+ "/PickAndPlace_Matrix_graph.dot",   "-d" };
                     args = new string[] {"-i", example+ "/LineLike_Original.txt",     "-o", outdir+ "/LineLike_Original_out.txt",    "-g", graph+ "/LineLike_Original_graph.dot",     "-d" };
                     //args = new string[] {"-i", example+ "/LineLike_Matrix.txt",       "-o", outdir+ "/LineLike_Matrix_out.txt",      "-g", graph+ "/LineLike_Matrix_graph.dot",       "-d" };
-                    args = new string[] {"-i", example+ "/Kocka.txt",                 "-o", outdir+ "/Kocka_out.txt",                "-g", graph+ "/Kocka_graph.dot",                 "-d" };
-                    //args = new string[] {"-i", example+ "/CSOPA.txt",                 "-o", outdir+ "/CSOPA_out.txt",                "-g", graph+ "/CSOPA_graph.dot",                 "-d" };
+                    //args = new string[] {"-i", example+ "/Kocka.txt",                 "-o", outdir+ "/Kocka_out.txt",                "-g", graph+ "/Kocka_graph.dot",                 "-d" };
+                    args = new string[] {"-i", example+ "/CSOPA.txt",                 "-o", outdir+ "/CSOPA_out.txt",                "-g", graph+ "/CSOPA_graph.dot",                 "-d" };
+                    args = new string[] {"-i", example+ "/CelticLaser_Contour.txt",                 "-o", outdir+ "/CelticLaser_Contour_out.txt",                "-g", graph+ "/CelticLaser_Contour_graph.dot",                 "-d" };
+                    args = new string[] {"-i", example+ "/CelticLaser_Fill.txt",                 "-o", outdir+ "/CelticLaser_Fill_out.txt",                "-g", graph+ "/CelticLaser_Fill_graph.dot",                 "-d" };
                     //args = new string[] {"-i", example+ "/PointLike_PosProcPrecedences.txt",   "-o", outdir+ "/PointLike_PosProcPrecedences_out.txt",  "-g", graph+ "/PointLike_PosProcPrecedences_graph.dot",   "-d" };
                     //args = new string[] {"-i", example+ "/PointLike_PosPrecedences.txt",   "-o", outdir+ "/PointLike_PosPrecedences_out.txt",  "-g", graph+ "/PointLike_PosPrecedences_graph.dot",   "-d" };
 
@@ -81,7 +86,7 @@ namespace SequencePlanner
                         solution.WriteFull();
                         if (output != null)
                         {
-                            solution.WriteOutputFile(output);
+                            solution.WriteOutputFile(output, input);
                         }
                     }
                     if (graphviz != null)

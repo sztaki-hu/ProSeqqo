@@ -90,26 +90,31 @@ namespace SequencePlanner
                 }
         }
 
-        public override void WriteOutputFile(String file)
+        public override void WriteOutputFile(String file, string input)
         {
             if (SolutionRaw != null)
             {
                 using (System.IO.StreamWriter f = new System.IO.StreamWriter(@file, false))
                 {
-
-                    for (int i = 0; i < SolutionPoint.Count-1; i++)
-                    {
-                        f.WriteLine(SolutionPoint[i].UID + ";" + SolutionPoint[i].Name + ";" + SolutionPoint[i].ConfigString());
-                        f.WriteLine(Costs[i]);
-                    }
-                    f.WriteLine(SolutionPoint[SolutionPoint.Count-1].UID + ";" + SolutionPoint[SolutionPoint.Count-1].Name + ";" + SolutionPoint[SolutionPoint.Count-1].ConfigString());
-
                     f.WriteLine("\n#Solution params: ");
+                    if (input == null)
+                        f.WriteLine("#Input: Unkown");
+                    else
+                        f.WriteLine("#Input: " + input);
+                    f.WriteLine("#Run at " + DateTime.Now);
                     f.WriteLine("#Length: " + CostSum.ToString("F4"));
                     f.WriteLine("#Number of items: " + SolutionPoint.Count);
                     string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", Time.Hours, Time.Minutes, Time.Seconds, Time.Milliseconds / 10);
                     f.WriteLine("#RunTime: " + elapsedTime);
 
+                    f.WriteLine("\n#PositionID ; PositionName ; Config ; CostToNext \n");
+
+
+                    for (int i = 0; i < SolutionPoint.Count-1; i++)
+                    {
+                        f.WriteLine(SolutionPoint[i].UID + ";" + SolutionPoint[i].Name + ";" + SolutionPoint[i].ConfigString()+";"+Costs[i]);
+                    }
+                    f.WriteLine(SolutionPoint[SolutionPoint.Count-1].UID + ";" + SolutionPoint[SolutionPoint.Count-1].Name + ";" + SolutionPoint[SolutionPoint.Count-1].ConfigString());
 
                     f.WriteLine("\n#Task params: ");
                     f.WriteLine("#TaskType: " + Task?.TaskType.ToString());
