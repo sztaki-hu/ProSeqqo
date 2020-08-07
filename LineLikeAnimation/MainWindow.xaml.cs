@@ -104,7 +104,7 @@ namespace LineLikeAnimation
             set
             {
                 this.invisibleLines = value;
-                this.RaisePropertyChanged("UnvisibleLines");
+                this.RaisePropertyChanged("InvisibleLines");
             }
         }
         public Point3DCollection Points
@@ -157,9 +157,9 @@ namespace LineLikeAnimation
             //{
             //    workLines.Clear();
             //}
-            //if (!ShowUnvisibleLines)
+            //if (!ShowInvisibleLines)
             //{
-            //    unvisibleLines.Clear();
+            //    invisibleLines.Clear();
             //}
             //if (!ShowPoints)
             //{
