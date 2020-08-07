@@ -1,0 +1,54 @@
+﻿<Window x:Class="LineLikeAnimation.MainWindow"
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:h="http://helix-toolkit.org/wpf"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:pointsAndLinesBinding="clr-namespace:LineLikeAnimation"
+        Title="LineLike Task Animation" 
+        Width="640"
+        Height="480"
+        d:DataContext="{pointsAndLinesBinding:MainWindow}"
+        mc:Ignorable="d"
+        >
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Click="Open_Click" Header="Open File"/>
+                <MenuItem Click="ExitClick" Header="Exit" />
+            </MenuItem>
+            <MenuItem Header="Content">
+                <MenuItem Header="Show work lines" IsCheckable="True" IsChecked="{Binding ShowWorkLines}"/>
+                <MenuItem Header="Show travel lines" IsCheckable="True" IsChecked="{Binding ShowTravelLines}"/>
+                <MenuItem Header="Show invisible lines" IsCheckable="True" IsChecked="{Binding ShowInvisibleLines}"/>
+                <MenuItem Header="Show points" IsCheckable="True" IsChecked="{Binding ShowPoints}"/>
+                <!--<MenuItem Header="Show grid" IsCheckable="True" IsChecked="{Binding ShowGrid}"/>-->
+            </MenuItem>
+        </Menu>
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button Width="40" Margin="2"
+                       DockPanel.Dock="Left"
+                       Content="Play"
+                        Click="Play_Click"   
+                    />
+            <TextBlock Width="80" Margin="2"
+                       DockPanel.Dock="Left"
+                       Text="{Binding NumberOfPoints, StringFormat='N = {0}'}"
+                       TextAlignment="Center"
+                       />
+            <Slider Margin="5" Padding="2" LargeChange="100"
+                    Maximum="{Binding MaxNumberOfLines}"  Minimum="0"
+                    SmallChange="1"
+                    Value="{Binding NumberOfPoints}"
+                    />
+        </DockPanel>
+        <h:HelixViewport3D x:Name="ViewPort3D" InfiniteSpin="True" ShowFrameRate="True">
+            <h:DefaultLights />
+            <h:GridLinesVisual3D Width="100" Length="100" MinorDistance="1" MajorDistance="1" Thickness="0.01"/>
+            <h:LinesVisual3D Points="{Binding InvisibleLines}" Color="Gray" Thickness="1"/>
+            <h:LinesVisual3D Points="{Binding TravelLines}" Color="Red" Thickness="4"/>
+            <h:LinesVisual3D Points="{Binding WorkLines}" Color="Blue" Thickness="4"/>
+            <h:PointsVisual3D Points="{Binding Points}" Color="Red" Size="6" />
+        </h:HelixViewport3D>
+    </DockPanel>
+</Window>
