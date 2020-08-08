@@ -47,7 +47,8 @@ namespace SequencePlanner
                     //args = new string[] {"-i", example+ "/Kocka.txt",                 "-o", outdir+ "/Kocka_out.txt",                "-g", graph+ "/Kocka_graph.dot",                 "-d" };
                     args = new string[] {"-i", example+ "/CSOPA.txt",                 "-o", outdir+ "/CSOPA_out.txt",                "-g", graph+ "/CSOPA_graph.dot",                 "-d" };
                     args = new string[] {"-i", example+ "/CelticLaser_Contour.txt",                 "-o", outdir+ "/CelticLaser_Contour_out.txt",                "-g", graph+ "/CelticLaser_Contour_graph.dot",                 "-d" };
-                    args = new string[] {"-i", example+ "/CelticLaser_Fill.txt",                 "-o", outdir+ "/CelticLaser_Fill_out.txt",                "-g", graph+ "/CelticLaser_Fill_graph.dot",                 "-d" };
+                    //args = new string[] {"-i", example+ "/CelticLaser_Fill.txt",                 "-o", outdir+ "/CelticLaser_Fill_out.txt",                "-g", graph+ "/CelticLaser_Fill_graph.dot",                 "-d" };
+                    args = new string[] {"-i", example+ "/CelticLaser.txt",                 "-o", outdir+ "/CelticLaser_out.txt",                "-g", graph+ "/CelticLaser_graph.dot",                 "-d" };
                     //args = new string[] {"-i", example+ "/PointLike_PosProcPrecedences.txt",   "-o", outdir+ "/PointLike_PosProcPrecedences_out.txt",  "-g", graph+ "/PointLike_PosProcPrecedences_graph.dot",   "-d" };
                     //args = new string[] {"-i", example+ "/PointLike_PosPrecedences.txt",   "-o", outdir+ "/PointLike_PosPrecedences_out.txt",  "-g", graph+ "/PointLike_PosPrecedences_graph.dot",   "-d" };
 

@@ -39,6 +39,7 @@ namespace SequencePlanner.GTSP
             {
                 WeightMultiplier = this.WeightMultiplier
             };
+            Graph.Init(FindMaxID()+2);
             CreateEdges();
             AbstractStart(cyclicSeq, startDepot, finishDepot);
             Graph.Build();
@@ -88,6 +89,10 @@ namespace SequencePlanner.GTSP
                     if (lineFrom.ID != lineTo.ID)
                     {
                         weight = EdgeWeightCalculator.Calculate(lineFrom.End, lineTo.Start);
+                        //if (weight > 0)
+                        //{
+                        //    weight += ContourPenalty;
+                        //}
                         if (lineFrom.Contour.ID != lineTo.Contour.ID)
                             weight += ContourPenalty;
                     }
@@ -95,14 +100,7 @@ namespace SequencePlanner.GTSP
                     {
                         weight = 0.0;
                     }
-                    Graph.Edges.Add(new Edge()
-                    {
-                        NodeA = lineFrom,
-                        NodeB = lineTo,
-                        Weight = weight,
-                        Directed = true,
-                        Tag = "[" + lineFrom.ID + "][C:" + lineFrom.Contour.UID + "]" + lineFrom.Name + "--" + weight + "--> [" + lineTo.ID + "][C:" + lineFrom.Contour.UID + "]" + lineTo.Name
-                    });
+                    Graph.AddEdge(lineFrom.ID, lineTo.ID, weight);
                 }
             }
         }
@@ -232,23 +230,9 @@ namespace SequencePlanner.GTSP
                 else
                     weightFromVirtualLine = EdgeWeightCalculator.Calculate(startLine.End, line.Start);
 
-                Graph.Edges.Add(new Edge()
-                {
-                    NodeA = line,
-                    NodeB = startLine,
-                    Weight = weightToVirtualLine,
-                    Directed = true,
-                    Tag = "VirtualStartLine"
-                });
-
-                Graph.Edges.Add(new Edge()
-                {
-                    NodeA = startLine,
-                    NodeB = line,
-                    Weight = weightFromVirtualLine,
-                    Directed = true,
-                    Tag = "VirtualStartLine"
-                });
+                Graph.AddEdge(line.ID, startLine.ID, weightToVirtualLine);
+                Graph.AddEdge(startLine.ID, line.ID, weightFromVirtualLine);
+                
             }
             Lines.Add(startLine);
             StartID = startLine.ID;
@@ -282,5 +266,16 @@ namespace SequencePlanner.GTSP
             }
             return tmp;
         }
+        private int FindMaxID()
+        {
+            var maxID = -1;
+            foreach (var item in Lines)
+            {
+                if (item.ID > maxID)
+                    maxID = item.ID;
+            }
+            return maxID;
+        }
+
     }
 }

@@ -13,6 +13,7 @@ namespace SequencePlanner.GTSP
         public List<Edge> Edges { get; set; }
         public double[,] PositionMatrix {get;set;}
         public int[,] PositionMatrixRound { get; set; }
+        public int MatrixSize { get; set; }
         public int WeightMultiplier { get; set; }
         private int PositionNumber { get; set; }
 
@@ -21,20 +22,31 @@ namespace SequencePlanner.GTSP
             PlusInfity = int.MaxValue;
             //MinusInfity = int.MinValue;
             PositionNumber = -1;
+            MatrixSize = 0;
             PositionMatrix = new double[1,1];
             WeightMultiplier = -1;
             Edges = new List<Edge>();
         }
         public void Build()
         {
-            InitMatrices();
-            InitEdgeWeightMultiplier();
-            foreach (var edge in Edges)
-            {
-                CalculateEdgeWeight(edge);
-                PositionMatrix[edge.NodeA.ID, edge.NodeB.ID] = edge.Weight;
-                PositionMatrixRound[edge.NodeA.ID, edge.NodeB.ID] = Convert.ToInt32(WeightMultiplier*edge.Weight);
-            }
+            //InitMatrices();
+            //InitEdgeWeightMultiplier();
+            //foreach (var edge in Edges)
+            //{
+            //    CalculateEdgeWeight(edge);
+            //    PositionMatrix[edge.NodeA.ID, edge.NodeB.ID] = edge.Weight;
+            //    PositionMatrixRound[edge.NodeA.ID, edge.NodeB.ID] = Convert.ToInt32(WeightMultiplier*edge.Weight);
+            //}
+        }
+
+        public void AddEdge(int AID, int BID, double weight)
+        {
+            PositionMatrix[AID, BID] = weight;
+            PositionMatrixRound[AID, BID] = Convert.ToInt32(WeightMultiplier * weight);
+            if (AID > MatrixSize)
+                MatrixSize = AID+1;
+            if (BID > MatrixSize)
+                MatrixSize = BID+1;
         }
 
         public void CalculateEdgeWeight(Edge edge)
@@ -51,9 +63,14 @@ namespace SequencePlanner.GTSP
         }
 
 
-        private void InitMatrices()
+
+        public void Init(int maxPID)
         {
-            var maxPID = FindMaxID() + 1;
+            if (WeightMultiplier == -1)
+            {
+                WeightMultiplier = 1000;
+            }
+
             PositionMatrix = new double[maxPID, maxPID];
             PositionMatrixRound = new int[maxPID, maxPID];
             for (int i = 0; i < maxPID; i++)
