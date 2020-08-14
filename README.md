@@ -1,4 +1,3 @@
-
 :earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
 :clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets)<br>
 :file_folder: [Use from file](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)<br>
@@ -56,6 +55,8 @@ The given task translated to a general travelling salesman (GTSP) graph as an in
 **Nodes** → Lines (If the bidirectional visit of lines allowed, lines are duplicated.)  
 **Edges** → From every end of a line to every start of others.  
 **Edge weights** → Implemented common distance functions (e.g., max, Euclidean, trapezoid speed, etc.). Distance matrix (in case of complex paths between lines).
+
+![LineLike Animation](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/uploads/b866c8fe015cb7e57ca40d860d1f82ac/image.png)
 
 Installation:
 ------
