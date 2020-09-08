@@ -1,7 +1,7 @@
 :earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
 :clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets)<br>
 :file_folder: [Use from file](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)<br>
-:dart: [Pick and Place example](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets/18)  <br>
+<!--:dart: [Pick and Place example](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets/18)  <br>
 <!--:paperclip: [Project background]()<br>-->
 <!--:computer: [Use from code](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-code) <br>-->
 
