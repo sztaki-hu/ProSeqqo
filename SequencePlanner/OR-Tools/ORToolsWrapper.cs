@@ -71,8 +71,13 @@ namespace SequencePlanner
             
             //Set time limit
             if(param.TimeLimit != 0)
-                searchParameters.TimeLimit = new Duration { Seconds = param.TimeLimit };
+            {
+                var sec = param.TimeLimit / 1000;
+                var ns = (param.TimeLimit - (sec * 1000)) * 1000000;
+                searchParameters.TimeLimit = new Duration { Seconds = sec, Nanos = ns };
+            }
         }
+        //param.TimeLimit*1 000 000
 
         //Run VRP Solver
         public ORToolsResult Solve()

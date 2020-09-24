@@ -89,12 +89,12 @@ namespace SequencePlanner.GTSP
                     if (lineFrom.ID != lineTo.ID)
                     {
                         weight = EdgeWeightCalculator.Calculate(lineFrom.End, lineTo.Start);
-                        //if (weight > 0)
-                        //{
-                        //    weight += ContourPenalty;
-                        //}
-                        if (lineFrom.Contour.ID != lineTo.Contour.ID)
+                        if (weight > 0)
+                        {
                             weight += ContourPenalty;
+                        }
+                        //if (lineFrom.Contour.ID != lineTo.Contour.ID)
+                        //    weight += ContourPenalty;
                     }
                     else
                     {
@@ -107,40 +107,47 @@ namespace SequencePlanner.GTSP
 
         private void CreateLinePrecedences(List<PrecedenceOptionValue> linePrec)
         {
-            foreach (var precedence in linePrec)
+            if (linePrec != null)
             {
-                //Find original line and reverse too!
-                var beforeList = FindLine(precedence.BeforeID);
-                var afterList = FindLine(precedence.AfterID);
-                if (beforeList != null && afterList != null)
+                foreach (var precedence in linePrec)
                 {
-                    foreach (var before in beforeList)
+                    //Find original line and reverse too!
+                    var beforeList = FindLine(precedence.BeforeID);
+                    var afterList = FindLine(precedence.AfterID);
+                    if (beforeList != null && afterList != null)
                     {
-                        foreach (var after in afterList)
+                        foreach (var before in beforeList)
                         {
-                            ConstraintsOrder.Add(new ConstraintOrder(before, after));
+                            foreach (var after in afterList)
+                            {
+                                ConstraintsOrder.Add(new ConstraintOrder(before, after));
+                            }
                         }
                     }
                 }
             }
         }
+
         private void CreateContourPrecedences(List<PrecedenceOptionValue> contPrec)
         {
-            foreach (var precedence in contPrec)
+            if (contPrec != null)
             {
-                var contBefore = FindCountour(precedence.BeforeID);
-                var contAfter = FindCountour(precedence.AfterID);
-                if (contBefore != null && contAfter != null)
+                foreach (var precedence in contPrec)
                 {
-                    foreach (var before in contBefore?.Lines)
+                    var contBefore = FindCountour(precedence.BeforeID);
+                    var contAfter = FindCountour(precedence.AfterID);
+                    if (contBefore != null && contAfter != null)
                     {
-                        foreach (var after in contAfter?.Lines)
+                        foreach (var before in contBefore?.Lines)
                         {
-                            ConstraintsOrder.Add(new ConstraintOrder(before, after));
+                            foreach (var after in contAfter?.Lines)
+                            {
+                                ConstraintsOrder.Add(new ConstraintOrder(before, after));
+                            }
                         }
                     }
-                }
 
+                }
             }
         }
         private void CreateContours(List<LineListOptionValue> lines)

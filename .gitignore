@@ -28,6 +28,7 @@ bld/
 [Ll]og/
 [Ee]xample/out
 [Ee]xample/graph
+[Ee]xample/LocalTests
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
