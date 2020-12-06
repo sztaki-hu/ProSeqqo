@@ -9,10 +9,16 @@ before_script:
 
 build:
     stage: build
+    tags:
+        - sztaki-docker
+
     script:
         - "dotnet build"
 
 test:
     stage: test
+    tags:
+        - sztaki-docker
+
     script:
         - "dotnet test"
