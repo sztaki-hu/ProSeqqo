@@ -1,0 +1,198 @@
+digraph G {
+node[style = filled];
+
+	style = filled;
+	color = salmon2;	Init -> Cube1_A[label = 02.83];
+	Init -> Cube1_B[label = 02.83];
+	Init -> Cube2_A[label = 03.61];
+	Init -> Cube2_B[label = 03.61];
+	Init -> Cube3_A[label = 04.24];
+	Init -> Cube3_B[label = 04.24];
+	Init -> Cube4_A[label = 05.00];
+	Init -> Cube4_B[label = 05.00];
+	Init -> Cube5_A[label = 05.00];
+	Init -> Cube5_B[label = 05.00];
+	Cube1_PutDown -> Init[label = 06.08];
+	Cube1_PutDown -> Cube2_A[label = 04.47];
+	Cube1_PutDown -> Cube2_B[label = 04.47];
+	Cube1_PutDown -> Cube3_A[label = 03.61];
+	Cube1_PutDown -> Cube3_B[label = 03.61];
+	Cube1_PutDown -> Cube4_A[label = 04.24];
+	Cube1_PutDown -> Cube4_B[label = 04.24];
+	Cube1_PutDown -> Cube5_A[label = 04.24];
+	Cube1_PutDown -> Cube5_B[label = 04.24];
+	Cube2_PutDown -> Init[label = 06.32];
+	Cube2_PutDown -> Cube1_A[label = 04.00];
+	Cube2_PutDown -> Cube1_B[label = 04.00];
+	Cube2_PutDown -> Cube3_A[label = 03.16];
+	Cube2_PutDown -> Cube3_B[label = 03.16];
+	Cube2_PutDown -> Cube4_A[label = 03.61];
+	Cube2_PutDown -> Cube4_B[label = 03.61];
+	Cube2_PutDown -> Cube5_A[label = 03.61];
+	Cube2_PutDown -> Cube5_B[label = 03.61];
+	Cube3_PutDown -> Init[label = 06.71];
+	Cube3_PutDown -> Cube1_A[label = 04.12];
+	Cube3_PutDown -> Cube1_B[label = 04.12];
+	Cube3_PutDown -> Cube2_A[label = 04.00];
+	Cube3_PutDown -> Cube2_B[label = 04.00];
+	Cube3_PutDown -> Cube4_A[label = 03.16];
+	Cube3_PutDown -> Cube4_B[label = 03.16];
+	Cube3_PutDown -> Cube5_A[label = 03.16];
+	Cube3_PutDown -> Cube5_B[label = 03.16];
+	Cube4_PutDown -> Init[label = 07.21];
+	Cube4_PutDown -> Cube1_A[label = 04.47];
+	Cube4_PutDown -> Cube1_B[label = 04.47];
+	Cube4_PutDown -> Cube2_A[label = 04.12];
+	Cube4_PutDown -> Cube2_B[label = 04.12];
+	Cube4_PutDown -> Cube3_A[label = 03.16];
+	Cube4_PutDown -> Cube3_B[label = 03.16];
+	Cube4_PutDown -> Cube5_A[label = 03.00];
+	Cube4_PutDown -> Cube5_B[label = 03.00];
+	Cube5_PutDown -> Init[label = 07.81];
+	Cube5_PutDown -> Cube1_A[label = 05.00];
+	Cube5_PutDown -> Cube1_B[label = 05.00];
+	Cube5_PutDown -> Cube2_A[label = 04.47];
+	Cube5_PutDown -> Cube2_B[label = 04.47];
+	Cube5_PutDown -> Cube3_A[label = 03.61];
+	Cube5_PutDown -> Cube3_B[label = 03.61];
+	Cube5_PutDown -> Cube4_A[label = 03.16];
+	Cube5_PutDown -> Cube4_B[label = 03.16];
+	Cube1_A -> Cube1_PutDown[label = 04.12];
+	Cube1_B -> Cube1_PutDown[label = 04.12];
+	Cube2_A -> Cube2_PutDown[label = 04.12];
+	Cube2_B -> Cube2_PutDown[label = 04.12];
+	Cube3_A -> Cube3_PutDown[label = 03.00];
+	Cube3_B -> Cube3_PutDown[label = 03.00];
+	Cube4_A -> Cube4_PutDown[label = 03.00];
+	Cube4_B -> Cube4_PutDown[label = 03.00];
+	Cube5_A -> Cube5_PutDown[label = 03.16];
+	Cube5_B -> Cube5_PutDown[label = 03.16];
+
+subgraph cluster_Process_0{
+	style = filled;
+	color = thistle3;
+	label = Process_0;
+		Init; 
+		subgraph cluster_Alternative_0{
+			style = filled;
+			color = lightblue;
+			label = Alternative_0;
+			Init; subgraph cluster_Task_0{
+style = filled;
+color = peachpuff1 ;
+label = Task_0;Init;}
+
+		}
+
+	}
+
+subgraph cluster_Process_1{
+	style = filled;
+	color = thistle3;
+	label = Process_1;
+		Cube1_PutDown; Cube1_A; Cube1_B; 
+		subgraph cluster_Alternative_1{
+			style = filled;
+			color = lightblue;
+			label = Alternative_1;
+			Cube1_PutDown; Cube1_A; Cube1_B; subgraph cluster_Task_1{
+style = filled;
+color = peachpuff1 ;
+label = Task_1;Cube1_A;Cube1_B;}
+subgraph cluster_Task_2{
+style = filled;
+color = peachpuff1 ;
+label = Task_2;Cube1_PutDown;}
+
+		}
+
+	}
+
+subgraph cluster_Process_2{
+	style = filled;
+	color = thistle3;
+	label = Process_2;
+		Cube2_PutDown; Cube2_A; Cube2_B; 
+		subgraph cluster_Alternative_2{
+			style = filled;
+			color = lightblue;
+			label = Alternative_2;
+			Cube2_PutDown; Cube2_A; Cube2_B; subgraph cluster_Task_3{
+style = filled;
+color = peachpuff1 ;
+label = Task_3;Cube2_A;Cube2_B;}
+subgraph cluster_Task_4{
+style = filled;
+color = peachpuff1 ;
+label = Task_4;Cube2_PutDown;}
+
+		}
+
+	}
+
+subgraph cluster_Process_3{
+	style = filled;
+	color = thistle3;
+	label = Process_3;
+		Cube3_PutDown; Cube3_A; Cube3_B; 
+		subgraph cluster_Alternative_3{
+			style = filled;
+			color = lightblue;
+			label = Alternative_3;
+			Cube3_PutDown; Cube3_A; Cube3_B; subgraph cluster_Task_5{
+style = filled;
+color = peachpuff1 ;
+label = Task_5;Cube3_A;Cube3_B;}
+subgraph cluster_Task_6{
+style = filled;
+color = peachpuff1 ;
+label = Task_6;Cube3_PutDown;}
+
+		}
+
+	}
+
+subgraph cluster_Process_4{
+	style = filled;
+	color = thistle3;
+	label = Process_4;
+		Cube4_PutDown; Cube4_A; Cube4_B; 
+		subgraph cluster_Alternative_4{
+			style = filled;
+			color = lightblue;
+			label = Alternative_4;
+			Cube4_PutDown; Cube4_A; Cube4_B; subgraph cluster_Task_7{
+style = filled;
+color = peachpuff1 ;
+label = Task_7;Cube4_A;Cube4_B;}
+subgraph cluster_Task_8{
+style = filled;
+color = peachpuff1 ;
+label = Task_8;Cube4_PutDown;}
+
+		}
+
+	}
+
+subgraph cluster_Process_5{
+	style = filled;
+	color = thistle3;
+	label = Process_5;
+		Cube5_PutDown; Cube5_A; Cube5_B; 
+		subgraph cluster_Alternative_5{
+			style = filled;
+			color = lightblue;
+			label = Alternative_5;
+			Cube5_PutDown; Cube5_A; Cube5_B; subgraph cluster_Task_9{
+style = filled;
+color = peachpuff1 ;
+label = Task_9;Cube5_A;Cube5_B;}
+subgraph cluster_Task_10{
+style = filled;
+color = peachpuff1 ;
+label = Task_10;Cube5_PutDown;}
+
+		}
+
+	}
+}

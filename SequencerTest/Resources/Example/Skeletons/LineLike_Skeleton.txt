@@ -1,0 +1,55 @@
+TaskType: Line_Like
+Dimensions: <int> 
+DistanceFunction: Euclidian_Distance/Max_Distance/Trapezoid_Time/Manhattan_Distance/Full_Matrix
+TrapezoidParams/Speed: <double[]>
+TrapezoidParams/Acceleration: <double[]>
+WeightMultiplier: Auto / <int>
+CyclicSequence: True/False
+StartDepot: <PositionID>
+FinishDepot: <PositionID>
+TimeLimit: <int> 
+ContourPenalty: <int>
+BidirectionLineDefault: True/False
+
+PositionList:
+#+-------+---------------------+------------------+
+#|   ID  |      Position       |  Name[optional]  |
+#+-------+---------------------+------------------+
+#| <int> | <double[Dimension]> |     <string>     |
+#+-------+---------------------+------------------+
+
+PositionMatrix:
+#+----------+----------+-----+------------------+
+#|     1    |     2    | ... | [NumberOfPoints] |        (PositionID/PositionID) 
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (1) 
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (2) 
+#+----------+----------+-----+------------------+
+#|    ...   |    ...   | ... |        ...       |        (...) 
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (NumberOfPoints)
+#+----------+----------+-----+------------------+
+#| <string> | <string> | ... |     <string>     |        (Name[optional])   
+#+----------+----------+-----+------------------+
+
+LineList:
+#+--------+-----------+-------------+-------------+-------------------+---------------------------+
+#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]   | Bidirectional [optional]  |
+#+--------+-----------+-------------+-------------+-------------------+---------------------------+
+#|  <int> |   <int>   |    <int>    |    <int>    |     <string>      |         True/False        |
+#+--------+-----------+-------------+-------------+-------------------+---------------------------+
+
+LinePrecedence:
+#+-------------------------+----------------------+
+#|  PredecessorLineID      |  SuccessorLineID     |
+#+-------------------------+----------------------+
+#|          <int>          |         <int>        |
+#+-------------------------+----------------------+
+
+ContourPrecedence:
+#+-------------------------+----------------------+
+#|  PredecessorContourID   |  SuccessorContourID  |
+#+-------------------------+----------------------+
+#|          <int>          |         <int>        |
+#+-------------------------+----------------------+

@@ -1,0 +1,49 @@
+
+#LineID;ContourID;LineName;Length;PointA-ID;PointA-Name;PointA-Config;PointB-ID;PointB-Name;PointB-Config
+
+Start: 5;E;[]
+0
+12;10;LineEF;6,0000;5;E;[];6;F;[]
+7
+13;10;LineGH;8,0000;7;G;[];8;H;[]
+9
+14;10;LineIJ;10,0000;9;I;[];10;J;[]
+3
+10;2;LineAB;2,0000;1;A;[];2;B;[]
+0
+15;2;LineBC;3,0000;2;B;[];3;C;[]
+0
+11;2;LineCD;4,0000;3;C;[];4;D;[]
+3
+Finish: 3;C;[]
+
+#Solution params: 
+#Full length: 55,0000
+#Length without penalty: 53,0000
+#Penalty: 2,0000
+#Length of lines: 33,0000
+#Length between lines: 22,0000
+#Length between lines without penalty: 20,0000
+#Rate length and length between lines (without penalty): 37,7%
+#Number of items: 8
+#RunTime: 00:00:00.02
+
+#Task params: 
+#TaskType: Line_Like
+#Dimension: 2
+#DistanceFunction: FullMatrix
+#CyclicSequence: False
+#StartDepot: 5
+#FinishDepot: 3
+#ContourPenalty: 2
+#BidirectionLineDefault: False
+#WeightMultiplier: Auto
+#TimeLimit: 20
+#LinePrecedences: 
+#DisjointSets: 
+#0;1;
+#2;3;
+#4;5;
+#6;7;
+#8;9;
+#10;11;

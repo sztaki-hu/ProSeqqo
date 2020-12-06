@@ -31,10 +31,10 @@ namespace SequencerTest.Units.DistanceFunction
         public void EuclidianDistanceFunction()
         {
             func = new EuclidianDistanceFunction();
-            Assert.AreEqual(1, func.ComputeDistance(A, B));
-            Assert.AreEqual(1, func.ComputeDistance(A, C));
-            Assert.AreEqual(1, func.ComputeDistance(A, D));
-            Assert.AreEqual(1, func.ComputeDistance(A, E));
+            Assert.AreEqual(5, func.ComputeDistance(A, B));
+            Assert.AreEqual(5, func.ComputeDistance(A, C));
+            Assert.AreEqual(5, func.ComputeDistance(A, D));
+            Assert.AreEqual(Math.Round(8.660254,2), Math.Round(func.ComputeDistance(A, E),2));
         }
 
         [TestMethod()]

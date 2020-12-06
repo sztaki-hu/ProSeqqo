@@ -235,6 +235,8 @@ namespace SequencerTest.Units
 
             serializer = new LineLikeTaskSerializer();
             serializer.ExportXML(task, "exportLLDual.xml");
+
+            
         }
 
         [TestMethod]

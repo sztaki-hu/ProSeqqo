@@ -1,0 +1,66 @@
+TaskType: Line_Like
+DistanceFunction: Euclidian_Distance
+Dimensions: 2
+TimeLimit: 20
+WeightMultiplier: Auto
+CyclicSequence: True
+StartDepot: 5
+#FinishDepot: 3
+ContourPenalty: 2
+#BidirectionLineDefault: True
+UseResources: True
+ResourceCostMethod: Add
+ResourceCostValue: 15
+ResourceCostMatrix:
+ 1; 5    #ID header
+ 0; 9    #Cost 1->1 and 1->5
+ 2; 0    #Cost 5->1 and 5->5
+
+ResourceMapping:
+#ResourceID;PositionID
+1;8      #When change to [1] resource touch [8] position.
+5;10     #When change to [5] resource touch [10] position.
+
+PositionList:
+#+-------+---------------------+------------------+------------------------+
+#|   ID  |      Position       |  Name[optional]  |  ResourceID[optional]  |
+#+-------+---------------------+------------------+------------------------+
+#| <int> | <double[Dimension]> |     <string>     |          <int>         |
+#+-------+---------------------+------------------+------------------------+
+1; [5,0000;  5,0000];  A ; 1
+2; [10,0000; 10,0000]; B ; 1
+3; [10,0000; 10,0000]; C ; 1
+4; [8,0000;  8,0000];  D ; 5
+5; [-15,0000;-20,0000];E ; 1
+6; [-2,0000; -8,0000]; F ; 5
+7; [0,0000;  0,0000];  G ; 1
+8; [-5,0000; -5,0000]; H ; 1
+9; [0,0000; 0,0000];   I ; 5
+10;[4,0000;  4,0000];  J ; 1
+
+LineList:
+#+--------+-----------+-------------+-------------+-------------------+
+#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]   |
+#+--------+-----------+-------------+-------------+-------------------+
+#|  <int> |   <int>   |    <int>    |    <int>    |     <string>      |
+#+--------+-----------+-------------+-------------+-------------------+
+10;2;1;2; LineAB
+15;2;2;3; LineBC
+11;2;3;4; LineCD
+12;10;5;6; LineEF
+13;10;7;8; LineGH
+14;10;9;10; LineIJ
+
+LinePrecedence:
+#+-------------------------+----------------------+-------------------+
+#|  PredecessorLineID      |  SuccessorLineID     |   Name[optional]  |
+#+-------------------------+----------------------+-------------------+
+#|          <int>          |         <int>        |      <string>     |
+#+-------------------------+----------------------+-------------------+
+
+ContourPrecedence:
+#+-------------------------+----------------------+-------------------+
+#|  PredecessorContourID   |  SuccessorContourID  |   Name[optional]  |
+#+-------------------------+----------------------+-------------------+
+#|          <int>          |         <int>        |      <string>     |
+#+-------------------------+----------------------+-------------------+

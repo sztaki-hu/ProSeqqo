@@ -1,0 +1,210 @@
+digraph G {
+node[style = filled];
+
+	style = filled;
+	color = salmon2;	LineAB -> LineAB[label = 00.00];
+	LineAB -> LineAB_Reverse[label = 00.00];
+	LineAB -> LineBC[label = 00.00];
+	LineAB -> LineBC_Reverse[label = 00.00];
+	LineAB -> LineCD[label = 00.00];
+	LineAB -> LineCD_Reverse[label = 04.83];
+	LineAB -> LineEF[label = 41.05];
+	LineAB -> LineEF_Reverse[label = 23.63];
+	LineAB -> LineGH[label = 16.14];
+	LineAB -> LineGH_Reverse[label = 23.21];
+	LineAB -> LineIJ[label = 16.14];
+	LineAB -> LineIJ_Reverse[label = 10.49];
+	LineAB_Reverse -> LineAB[label = 00.00];
+	LineAB_Reverse -> LineAB_Reverse[label = 00.00];
+	LineAB_Reverse -> LineBC[label = 09.07];
+	LineAB_Reverse -> LineBC_Reverse[label = 09.07];
+	LineAB_Reverse -> LineCD[label = 09.07];
+	LineAB_Reverse -> LineCD_Reverse[label = 06.24];
+	LineAB_Reverse -> LineEF[label = 34.02];
+	LineAB_Reverse -> LineEF_Reverse[label = 16.76];
+	LineAB_Reverse -> LineGH[label = 09.07];
+	LineAB_Reverse -> LineGH_Reverse[label = 16.14];
+	LineAB_Reverse -> LineIJ[label = 09.07];
+	LineAB_Reverse -> LineIJ_Reverse[label = 03.41];
+	LineBC -> LineAB[label = 09.07];
+	LineBC -> LineAB_Reverse[label = 00.00];
+	LineBC -> LineBC[label = 00.00];
+	LineBC -> LineBC_Reverse[label = 00.00];
+	LineBC -> LineCD[label = 00.00];
+	LineBC -> LineCD_Reverse[label = 04.83];
+	LineBC -> LineEF[label = 41.05];
+	LineBC -> LineEF_Reverse[label = 23.63];
+	LineBC -> LineGH[label = 16.14];
+	LineBC -> LineGH_Reverse[label = 23.21];
+	LineBC -> LineIJ[label = 16.14];
+	LineBC -> LineIJ_Reverse[label = 10.49];
+	LineBC_Reverse -> LineAB[label = 09.07];
+	LineBC_Reverse -> LineAB_Reverse[label = 00.00];
+	LineBC_Reverse -> LineBC[label = 00.00];
+	LineBC_Reverse -> LineBC_Reverse[label = 00.00];
+	LineBC_Reverse -> LineCD[label = 00.00];
+	LineBC_Reverse -> LineCD_Reverse[label = 04.83];
+	LineBC_Reverse -> LineEF[label = 41.05];
+	LineBC_Reverse -> LineEF_Reverse[label = 23.63];
+	LineBC_Reverse -> LineGH[label = 16.14];
+	LineBC_Reverse -> LineGH_Reverse[label = 23.21];
+	LineBC_Reverse -> LineIJ[label = 16.14];
+	LineBC_Reverse -> LineIJ_Reverse[label = 10.49];
+	LineCD -> LineAB[label = 06.24];
+	LineCD -> LineAB_Reverse[label = 04.83];
+	LineCD -> LineBC[label = 04.83];
+	LineCD -> LineBC_Reverse[label = 04.83];
+	LineCD -> LineCD[label = 00.00];
+	LineCD -> LineCD_Reverse[label = 00.00];
+	LineCD -> LineEF[label = 38.24];
+	LineCD -> LineEF_Reverse[label = 20.87];
+	LineCD -> LineGH[label = 13.31];
+	LineCD -> LineGH_Reverse[label = 20.38];
+	LineCD -> LineIJ[label = 13.31];
+	LineCD -> LineIJ_Reverse[label = 07.66];
+	LineCD_Reverse -> LineAB[label = 09.07];
+	LineCD_Reverse -> LineAB_Reverse[label = 00.00];
+	LineCD_Reverse -> LineBC[label = 00.00];
+	LineCD_Reverse -> LineBC_Reverse[label = 00.00];
+	LineCD_Reverse -> LineCD[label = 00.00];
+	LineCD_Reverse -> LineCD_Reverse[label = 00.00];
+	LineCD_Reverse -> LineEF[label = 41.05];
+	LineCD_Reverse -> LineEF_Reverse[label = 23.63];
+	LineCD_Reverse -> LineGH[label = 16.14];
+	LineCD_Reverse -> LineGH_Reverse[label = 23.21];
+	LineCD_Reverse -> LineIJ[label = 16.14];
+	LineCD_Reverse -> LineIJ_Reverse[label = 10.49];
+	LineEF -> LineAB[label = 16.76];
+	LineEF -> LineAB_Reverse[label = 23.63];
+	LineEF -> LineBC[label = 23.63];
+	LineEF -> LineBC_Reverse[label = 23.63];
+	LineEF -> LineCD[label = 23.63];
+	LineEF -> LineCD_Reverse[label = 20.87];
+	LineEF -> LineEF[label = 00.00];
+	LineEF -> LineEF_Reverse[label = 00.00];
+	LineEF -> LineGH[label = 10.25];
+	LineEF -> LineGH_Reverse[label = 06.24];
+	LineEF -> LineIJ[label = 10.25];
+	LineEF -> LineIJ_Reverse[label = 15.42];
+	LineEF_Reverse -> LineAB[label = 34.02];
+	LineEF_Reverse -> LineAB_Reverse[label = 41.05];
+	LineEF_Reverse -> LineBC[label = 41.05];
+	LineEF_Reverse -> LineBC_Reverse[label = 41.05];
+	LineEF_Reverse -> LineCD[label = 41.05];
+	LineEF_Reverse -> LineCD_Reverse[label = 38.24];
+	LineEF_Reverse -> LineEF[label = 00.00];
+	LineEF_Reverse -> LineEF_Reverse[label = 00.00];
+	LineEF_Reverse -> LineGH[label = 27.00];
+	LineEF_Reverse -> LineGH_Reverse[label = 20.03];
+	LineEF_Reverse -> LineIJ[label = 27.00];
+	LineEF_Reverse -> LineIJ_Reverse[label = 32.61];
+	LineGH -> LineAB[label = 16.14];
+	LineGH -> LineAB_Reverse[label = 23.21];
+	LineGH -> LineBC[label = 23.21];
+	LineGH -> LineBC_Reverse[label = 23.21];
+	LineGH -> LineCD[label = 23.21];
+	LineGH -> LineCD_Reverse[label = 20.38];
+	LineGH -> LineEF[label = 20.03];
+	LineGH -> LineEF_Reverse[label = 06.24];
+	LineGH -> LineGH[label = 00.00];
+	LineGH -> LineGH_Reverse[label = 00.00];
+	LineGH -> LineIJ[label = 09.07];
+	LineGH -> LineIJ_Reverse[label = 14.73];
+	LineGH_Reverse -> LineAB[label = 09.07];
+	LineGH_Reverse -> LineAB_Reverse[label = 16.14];
+	LineGH_Reverse -> LineBC[label = 16.14];
+	LineGH_Reverse -> LineBC_Reverse[label = 16.14];
+	LineGH_Reverse -> LineCD[label = 16.14];
+	LineGH_Reverse -> LineCD_Reverse[label = 13.31];
+	LineGH_Reverse -> LineEF[label = 27.00];
+	LineGH_Reverse -> LineEF_Reverse[label = 10.25];
+	LineGH_Reverse -> LineGH[label = 00.00];
+	LineGH_Reverse -> LineGH_Reverse[label = 00.00];
+	LineGH_Reverse -> LineIJ[label = 00.00];
+	LineGH_Reverse -> LineIJ_Reverse[label = 07.66];
+	LineIJ -> LineAB[label = 03.41];
+	LineIJ -> LineAB_Reverse[label = 10.49];
+	LineIJ -> LineBC[label = 10.49];
+	LineIJ -> LineBC_Reverse[label = 10.49];
+	LineIJ -> LineCD[label = 10.49];
+	LineIJ -> LineCD_Reverse[label = 07.66];
+	LineIJ -> LineEF[label = 32.61];
+	LineIJ -> LineEF_Reverse[label = 15.42];
+	LineIJ -> LineGH[label = 07.66];
+	LineIJ -> LineGH_Reverse[label = 14.73];
+	LineIJ -> LineIJ[label = 00.00];
+	LineIJ -> LineIJ_Reverse[label = 00.00];
+	LineIJ_Reverse -> LineAB[label = 09.07];
+	LineIJ_Reverse -> LineAB_Reverse[label = 16.14];
+	LineIJ_Reverse -> LineBC[label = 16.14];
+	LineIJ_Reverse -> LineBC_Reverse[label = 16.14];
+	LineIJ_Reverse -> LineCD[label = 16.14];
+	LineIJ_Reverse -> LineCD_Reverse[label = 13.31];
+	LineIJ_Reverse -> LineEF[label = 27.00];
+	LineIJ_Reverse -> LineEF_Reverse[label = 10.25];
+	LineIJ_Reverse -> LineGH[label = 00.00];
+	LineIJ_Reverse -> LineGH_Reverse[label = 09.07];
+	LineIJ_Reverse -> LineIJ[label = 00.00];
+	LineIJ_Reverse -> LineIJ_Reverse[label = 00.00];
+	LineAB -> StartLine[label = 00.00];
+	StartLine -> LineAB[label = 32.02];
+	LineAB_Reverse -> StartLine[label = 07.07];
+	StartLine -> LineAB_Reverse[label = 39.05];
+	LineBC -> StartLine[label = 00.00];
+	StartLine -> LineBC[label = 39.05];
+	LineBC_Reverse -> StartLine[label = 00.00];
+	StartLine -> LineBC_Reverse[label = 39.05];
+	LineCD -> StartLine[label = 02.83];
+	StartLine -> LineCD[label = 39.05];
+	LineCD_Reverse -> StartLine[label = 00.00];
+	StartLine -> LineCD_Reverse[label = 36.24];
+	LineEF -> StartLine[label = 21.63];
+	StartLine -> LineEF[label = 00.00];
+	LineEF_Reverse -> StartLine[label = 39.05];
+	StartLine -> LineEF_Reverse[label = 17.69];
+	LineGH -> StartLine[label = 21.21];
+	StartLine -> LineGH[label = 25.00];
+	LineGH_Reverse -> StartLine[label = 14.14];
+	StartLine -> LineGH_Reverse[label = 18.03];
+	LineIJ -> StartLine[label = 08.49];
+	StartLine -> LineIJ[label = 25.00];
+	LineIJ_Reverse -> StartLine[label = 14.14];
+	StartLine -> LineIJ_Reverse[label = 30.61];
+
+	subgraph cluster_Contour_2{
+		style = filled;
+		color = thistle3;
+		label = Contour_2;
+		LineAB;LineAB_Reverse;LineBC;LineBC_Reverse;LineCD;LineCD_Reverse;
+	}
+	subgraph cluster_Contour_2{
+		style = filled;
+		color = thistle3;
+		label = Contour_2;
+		
+	}
+	subgraph cluster_Contour_2{
+		style = filled;
+		color = thistle3;
+		label = Contour_2;
+		
+	}
+	subgraph cluster_Contour_10{
+		style = filled;
+		color = thistle3;
+		label = Contour_10;
+		LineEF;LineEF_Reverse;LineGH;LineGH_Reverse;LineIJ;LineIJ_Reverse;
+	}
+	subgraph cluster_Contour_10{
+		style = filled;
+		color = thistle3;
+		label = Contour_10;
+		
+	}
+	subgraph cluster_Contour_10{
+		style = filled;
+		color = thistle3;
+		label = Contour_10;
+		
+	}
+}

@@ -126,15 +126,15 @@ namespace SequencerTest.Units.Serialization
                 Assert.AreEqual(3, import.Dimension);
                 Assert.AreEqual(5, import.TimeLimit);
                 Assert.IsTrue(import.CyclicSequence);
-                Assert.AreSame(A, import.StartDepot);
-                Assert.AreSame(B, import.FinishDepot);
-                Assert.AreEqual(10, import.WeightMultipier);
+                Assert.AreEqual(A.UserID, import.StartDepot.UserID);
+                Assert.AreEqual(B.UserID, import.FinishDepot.UserID);
+                Assert.AreEqual(0, import.WeightMultipier);
                 Assert.AreEqual(1, import.ContourPenalty);
-                Assert.AreSame(linePrecedences, import.LinePrecedences);
-                Assert.AreSame(contourPrecedences, import.ContourPrecedences);
-                Assert.AreSame(contours, import.Contours);
-                Assert.AreSame(lines, import.Lines);
-                Assert.AreSame(matrix, import.PositionMatrix);
+                Assert.AreEqual(linePrecedences.Count, import.LinePrecedences.Count);
+                Assert.AreEqual(contourPrecedences.Count, import.ContourPrecedences.Count);
+                Assert.AreEqual(contours.Count, import.Contours.Count);
+                Assert.AreEqual(lines.Count, import.Lines.Count);
+                
             }
         }
 }

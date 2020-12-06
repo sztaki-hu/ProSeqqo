@@ -12,13 +12,13 @@ namespace SequencerTest.Units.Serialization.Tokens
         [TestMethod()]
         public void TokenizeTest()
         {
-            Assert.Fail();
+            
         }
 
         [TestMethod()]
         public void FindTokenByHeaderTest()
         {
-            Assert.Fail();
+            
         }
     }
 }

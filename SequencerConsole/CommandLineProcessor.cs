@@ -56,7 +56,6 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\LocalTests/DEV_LL.txt",            "-o", outdir + "\\LocalTests/DEV_LL_out.txt",            "-g", graph + "\\LocalTests/DEV_LL_graph.dot",            "-d" };
                     //args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        "-g", graph + "\\seqtest_graph.dot",                      "-d" };
                     
-
                     Help(args);
                     input = Input(args);
                     output = Output(args);

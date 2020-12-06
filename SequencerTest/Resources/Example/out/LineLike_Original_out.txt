@@ -1,0 +1,44 @@
+#Input: H:\SZTAKI\git\SeqPlanner\sequenceplanner/Example/LineLike_Original.txt
+#Run at 2020. 08. 07. 18:18:31
+
+#Solution params: 
+#Full length: 52,8045
+#Length without penalty: 50,8045
+#Penalty: 2,0000
+#Length of lines: 40,3192
+#Length between lines: 12,4853
+#Length between lines without penalty: 10,4853
+#Rate length and length between lines (without penalty): 20,6%
+#Number of items: 8
+#RunTime: 00:00:00.01
+
+#LineID ; ContourID ; LineName ; Length ; PointA-ID ; PointA-Name ; PointA-Config ; PointB-ID ; PointB-Name ; PointB-Config ; CostToNext 
+
+Start: 5;E;[-15,0000; -20,0000]
+12;10;LineEF;17,6918;5;E;[-15,0000; -20,0000];6;F;[-2,0000; -8,0000];6,242640687119285
+13;10;LineGH_Reverse;7,0711;8;H;[-5,0000; -5,0000];7;G;[0,0000; 0,0000];0
+14;10;LineIJ;5,6569;9;I;[0,0000; 0,0000];10;J;[4,0000; 4,0000];3,414213562373095
+10;2;LineAB;7,0711;1;A;[5,0000; 5,0000];2;B;[10,0000; 10,0000];0
+15;2;LineBC_Reverse;0,0000;3;C;[10,0000; 10,0000];2;B;[10,0000; 10,0000];0
+11;2;LineCD;2,8284;3;C;[10,0000; 10,0000];4;D;[8,0000; 8,0000];2,8284271247461903
+Finish: 3;C;[10,0000; 10,0000]
+
+#Task params: 
+#TaskType: Line_Like
+#Dimension: 2
+#DistanceFunction: Euclidian_Distance
+#CyclicSequence: False
+#StartDepot: 5
+#FinishDepot: 3
+#ContourPenalty: 2
+#BidirectionLineDefault: False
+#WeightMultiplier: Auto
+#TimeLimit: 20
+#LinePrecedences: 
+#DisjointSets: 
+#0;1;
+#2;3;
+#4;5;
+#6;7;
+#8;9;
+#10;11;

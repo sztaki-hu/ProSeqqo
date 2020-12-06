@@ -18,12 +18,12 @@ namespace SequencerTest.Integration.Sequencing
         public void Test1()
         {
             LineLikeTaskSerializer seq = new LineLikeTaskSerializer();
-            LineLikeTask task = seq.ImportSEQ("Example/LineLike_Matrix.txt");
+            LineLikeTask task = seq.ImportSEQ("Resources/Example/LineLike_Matrix.txt");
             //task.ValidateModel();
             //asdf
             var result = task.RunModel();
             seq = new LineLikeTaskSerializer();
-            seq.ExportSEQ(task,"Example/Export/LineLike_Matrix.txt");
+            seq.ExportSEQ(task, "Resources/Example/Export/LineLike_Matrix.txt");
             Console.WriteLine(result);
 
         }
@@ -32,10 +32,10 @@ namespace SequencerTest.Integration.Sequencing
         public void Test2()
         {
             LineLikeTaskSerializer seq = new LineLikeTaskSerializer();
-            LineLikeTask task = seq.ImportSEQ("Example/LineLike_Original.txt");
+            LineLikeTask task = seq.ImportSEQ("Resources/Example/LineLike_Original.txt");
             var result = task.RunModel();
             seq = new LineLikeTaskSerializer();
-            seq.ExportSEQ(task, "Example/Export/LineLike_Original.txt");
+            seq.ExportSEQ(task, "Resources/Example/Export/LineLike_Original.txt");
             Console.WriteLine(result);
         }
 
@@ -43,10 +43,10 @@ namespace SequencerTest.Integration.Sequencing
         public void Test3()
         {
             LineLikeTaskSerializer seq = new LineLikeTaskSerializer();
-            LineLikeTask task = seq.ImportSEQ("Example/CSOPA.txt");
+            LineLikeTask task = seq.ImportSEQ("Resources/Example/CSOPA.txt");
             var result = task.RunModel();
             seq = new LineLikeTaskSerializer();
-            seq.ExportSEQ(task, "Example/Export/CSOPA.txt");
+            seq.ExportSEQ(task, "Resources/Example/Export/CSOPA.txt");
             Console.WriteLine(result);
         }
     }

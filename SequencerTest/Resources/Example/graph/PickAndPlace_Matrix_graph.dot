@@ -1,0 +1,140 @@
+digraph G {
+node[style = filled];
+
+	style = filled;
+	color = salmon2;	Cam -> P2[label = 02.00];
+	Cam -> P3[label = 03.00];
+	Cam -> P4[label = 04.00];
+	Cam -> P5[label = 05.00];
+	Cam -> P6[label = 06.00];
+	P2 -> Cam[label = 01.00];
+	P3 -> Cam[label = 01.00];
+	P2 -> P4[label = 04.00];
+	P3 -> P4[label = 04.00];
+	P2 -> P5[label = 05.00];
+	P3 -> P5[label = 05.00];
+	P2 -> P6[label = 06.00];
+	P3 -> P6[label = 06.00];
+	P4 -> Cam[label = 01.00];
+	P4 -> P2[label = 02.00];
+	P4 -> P3[label = 03.00];
+	P4 -> P5[label = 05.00];
+	P4 -> P6[label = 06.00];
+	P5 -> Cam[label = 01.00];
+	P5 -> P2[label = 02.00];
+	P5 -> P3[label = 03.00];
+	P5 -> P4[label = 04.00];
+	P5 -> P6[label = 06.00];
+	P6 -> Cam[label = 01.00];
+	P6 -> P2[label = 02.00];
+	P6 -> P3[label = 03.00];
+	P6 -> P4[label = 04.00];
+	P6 -> P5[label = 05.00];
+	P6 -> Cam[label = 00.00];
+	P6 -> Cam[label = 00.00];
+	P6 -> Cam[label = 00.00];
+	P6 -> Cam[label = 00.00];
+	P6 -> Cam[label = 00.00];
+	P6 -> Cam[label = 00.00];
+
+subgraph cluster_Process_101{
+	style = filled;
+	color = thistle3;
+	label = Process_101;
+		Cam; 
+		subgraph cluster_Alternative_50{
+			style = filled;
+			color = lightblue;
+			label = Alternative_50;
+			Cam; subgraph cluster_Task_20{
+style = filled;
+color = peachpuff1 ;
+label = Task_20;Cam;}
+
+		}
+
+	}
+
+subgraph cluster_Process_102{
+	style = filled;
+	color = thistle3;
+	label = Process_102;
+		P2; P3; 
+		subgraph cluster_Alternative_51{
+			style = filled;
+			color = lightblue;
+			label = Alternative_51;
+			P2; subgraph cluster_Task_21{
+style = filled;
+color = peachpuff1 ;
+label = Task_21;P2;}
+
+		}
+
+		subgraph cluster_Alternative_52{
+			style = filled;
+			color = lightblue;
+			label = Alternative_52;
+			P3; subgraph cluster_Task_22{
+style = filled;
+color = peachpuff1 ;
+label = Task_22;P3;}
+
+		}
+
+	}
+
+subgraph cluster_Process_104{
+	style = filled;
+	color = thistle3;
+	label = Process_104;
+		P4; 
+		subgraph cluster_Alternative_53{
+			style = filled;
+			color = lightblue;
+			label = Alternative_53;
+			P4; subgraph cluster_Task_23{
+style = filled;
+color = peachpuff1 ;
+label = Task_23;P4;}
+
+		}
+
+	}
+
+subgraph cluster_Process_105{
+	style = filled;
+	color = thistle3;
+	label = Process_105;
+		P5; 
+		subgraph cluster_Alternative_54{
+			style = filled;
+			color = lightblue;
+			label = Alternative_54;
+			P5; subgraph cluster_Task_24{
+style = filled;
+color = peachpuff1 ;
+label = Task_24;P5;}
+
+		}
+
+	}
+
+subgraph cluster_Process_106{
+	style = filled;
+	color = thistle3;
+	label = Process_106;
+		P6; 
+		subgraph cluster_Alternative_55{
+			style = filled;
+			color = lightblue;
+			label = Alternative_55;
+			P6; subgraph cluster_Task_25{
+style = filled;
+color = peachpuff1 ;
+label = Task_25;P6;}
+
+		}
+
+	}
+}

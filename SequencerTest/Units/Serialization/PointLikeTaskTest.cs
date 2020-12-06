@@ -132,7 +132,7 @@ namespace SequencerTest.Units
         }
 
         [TestMethod]
-        public void ImportExportJSONTest()
+        private void ImportExportJSONTest()
         {
             PointLikeTask task = new PointLikeTask()
             {
@@ -151,9 +151,9 @@ namespace SequencerTest.Units
             };
 
             var serializer = new PointLikeTaskSerializer();
-            serializer.ExportJSON(task, "exportPL.json");
+            serializer.ExportJSON(task, "Resources/Example/Export/exportPL.json");
             serializer = new PointLikeTaskSerializer();
-            serializer.ImportJSON("exportPL.json");
+            serializer.ImportJSON("Resources/Example/Export/exportPL.json");
 
             Assert.AreEqual(3, task.Dimension);
             Assert.AreEqual(5, task.TimeLimit);
@@ -170,7 +170,7 @@ namespace SequencerTest.Units
         }
 
         [TestMethod]
-        public void ImportExportXMLTest()
+        private void ImportExportXMLTest()
         {
             PointLikeTask task = new PointLikeTask()
             {
@@ -189,9 +189,9 @@ namespace SequencerTest.Units
             };
 
             var serializer = new PointLikeTaskSerializer();
-            serializer.ExportXML(task, "exportPL.xml");
+            serializer.ExportXML(task, "Resources/Example/Export/exportPL.xml");
             serializer = new PointLikeTaskSerializer();
-            serializer.ImportXML("exportPL.xml");
+            serializer.ImportXML("Resources/Example/Export/exportPL.xml");
 
             Assert.AreEqual(3, task.Dimension);
             Assert.AreEqual(5, task.TimeLimit);
@@ -208,7 +208,7 @@ namespace SequencerTest.Units
         }
 
         [TestMethod]
-        public void ImportExportSEQTest()
+        private void ImportExportSEQTest()
         {
             PointLikeTask task = new PointLikeTask()
             {
@@ -227,9 +227,9 @@ namespace SequencerTest.Units
             };
 
             var serializer = new PointLikeTaskSerializer();
-            serializer.ExportSEQ(task, "exportPL.seq");
+            serializer.ExportSEQ(task, "Resources/Example/Export/exportPL.seq");
             serializer = new PointLikeTaskSerializer();
-            serializer.ImportSEQ("exportPL.seq");
+            serializer.ImportSEQ("Resources/Example/Export/exportPL.seq");
 
             Assert.AreEqual(3, task.Dimension);
             Assert.AreEqual(5, task.TimeLimit);
