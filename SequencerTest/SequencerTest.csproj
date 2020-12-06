@@ -44,6 +44,9 @@
     <None Update="Resources\Example\">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Example\Kocka.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Example\Kocka2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
