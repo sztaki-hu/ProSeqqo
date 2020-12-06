@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SequencePlanner\SequencePlanner.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Units\GTSP\" />
+    <Folder Include="Units\Helper\" />
+    <Folder Include="Units\OR-Tools\" />
+    <Folder Include="Units\Serialization\Token\" />
+    <Folder Include="Units\Serialization\SerializationObject\" />
+  </ItemGroup>
+
+</Project>

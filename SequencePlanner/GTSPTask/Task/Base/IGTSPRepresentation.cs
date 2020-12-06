@@ -1,0 +1,16 @@
+﻿using SequencePlanner.GTSP;
+using System.Collections.Generic;
+
+namespace SequencePlanner.GTSPTask.Task.Base
+{
+    public interface IGTSPRepresentation
+    {
+        public static int WEIGHT_MULTIPLIER = 1000;
+        public int StartDepot { get; set; }
+        public List<GTSPPrecedenceConstraint> PrecedenceConstraints { get; set; }
+        public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
+        public int[,] RoundedMatrix { get; set; }
+        public double[,] Matrix { get; set; }
+        public long[][] InitialRoutes { get; set; }
+    }
+}

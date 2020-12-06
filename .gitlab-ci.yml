@@ -1,0 +1,18 @@
+image: microsoft/dotnet:3.1
+
+stages:
+    - build
+    - test
+
+before_script:
+    - "dotnet restore"
+
+build:
+    stage: build
+    script:
+        - "dotnet build"
+
+test:
+    stage: test
+    script:
+        - "dotnet test"
