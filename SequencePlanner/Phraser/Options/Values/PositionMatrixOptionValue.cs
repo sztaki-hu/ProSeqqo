@@ -7,6 +7,7 @@ namespace SequencePlanner.Phraser.Options.Values
     public class PositionMatrixOptionValue
     {
         public List<int> ID { get; set; }
+        public List<int> ResourceID { get; set; }
         public List<string> Name { get; set; }
         public int Dim { get; set; }
         public double[,] Matrix { get; set; }
@@ -14,6 +15,7 @@ namespace SequencePlanner.Phraser.Options.Values
         public PositionMatrixOptionValue()
         {
             ID = new List<int>();
+            ResourceID = new List<int>();
             Dim = 0;
             Name = new List<string>();
         }
@@ -41,6 +43,14 @@ namespace SequencePlanner.Phraser.Options.Values
                 for (int i = 0; i < tmp.Length; i++)
                 {
                     Name.Add(tmp[i]);
+                }
+            }
+            if (input.Count > Dim + 2)
+            {
+                tmp = input[input.Count - 1].Split(';');
+                for (int i = 0; i < tmp.Length; i++)
+                {
+                    ResourceID.Add(Int32.Parse(tmp[i]));
                 }
             }
         }

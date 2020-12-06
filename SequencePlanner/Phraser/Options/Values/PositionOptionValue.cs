@@ -10,6 +10,7 @@ namespace SequencePlanner.Phraser.Options.Values
         public int Dim { get; set; }
         public List<double> Position{ get;set;}
         public string Name { get; set; }
+        public int ResourceID { get; set; }
 
         public PositionOptionValue()
         {
@@ -17,6 +18,7 @@ namespace SequencePlanner.Phraser.Options.Values
             Dim = 0;
             Position = new List<double>();
             Name = "*";
+            ResourceID = -1;
         }
 
         public void FromString(string input)
@@ -36,6 +38,11 @@ namespace SequencePlanner.Phraser.Options.Values
             if (tmp.Length != i)
             {
                 Name = tmp[i];
+            }
+            i++;
+            if (tmp.Length != i)
+            {
+                ResourceID = Convert.ToInt32(tmp[i]);
             }
         }
     }

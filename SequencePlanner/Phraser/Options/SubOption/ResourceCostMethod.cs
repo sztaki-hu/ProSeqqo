@@ -1,5 +1,6 @@
 ﻿
 using SequencePlanner.Phraser.Helper;
+using SequencePlanner.Phraser.Options.Values;
 using SequencePlanner.Phraser.Template;
 using System;
 using System.Collections.Generic;
@@ -7,15 +8,14 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Options
 {
-    public class CyclicSequence: Option
+    public class ResourceCostMethod: Option
     {
-        public bool Value { get; set; }
+        public ResourceCostMethodEnum Value { get; set; }
 
-        public CyclicSequence()
+        public ResourceCostMethod()
         {
-            Name = "CyclicSequence";
+            Name = "ResourceCostMethod";
             IncludeableNames = new List<string> { };
-            Need = true;
         }
 
         public override ValidationResult Validate()
@@ -26,34 +26,24 @@ namespace SequencePlanner.Phraser.Options
                 {
                     return new ValidationResult() { Validated = false };
                 }
-
                 string tmp = ValueString[1].ToUpper();
                 List<string> newInclude = new List<string>();
-                List<string> newIncludeOptional = new List<string>();
                 switch (tmp)
                 {
-                    case "TRUE":
-                        Value = true;
-                        newInclude.Add("StartDepot");
+                    case "ADD":
+                        Value = ResourceCostMethodEnum.Add;
                         break;
-                    case "FALSE":
-                        Value = false;
-                        newIncludeOptional.Add("StartDepot");
-                        newIncludeOptional.Add("FinishDepot");
+                    case "MAX":
+                        Value = ResourceCostMethodEnum.Max;
                         break;
                     default:
-                        throw new SequencerException("UseResource parameter unknown!", "Make sure UseResources: True/False one of them given.");
+                        throw new SequencerException("ResourceCostMethod parameter unknown!", "Make sure ResourceCostMethod: Add/Max one of them given.");
                 }
                 Validated = true;
                 return new ValidationResult()
                 {
-                    Validated = true,
-                    NewIncludeNeed = newInclude,
-                    NewIncludeOptional = newIncludeOptional,
+                    Validated = this.Validated
                 };
-
-
-
             }
             catch (Exception e)
             {

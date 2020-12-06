@@ -9,7 +9,6 @@ namespace SequencePlanner
 {
     public class ORToolsWrapper
     {
-        private readonly int DefaultTimeLimit = 10;
         private readonly ORToolsParameters param;
         private RoutingIndexManager manager;
         private RoutingModel routing;
@@ -122,6 +121,5 @@ namespace SequencePlanner
                default: return "NO_STATUS: Something went wrong. :(";
             }
         }
-
     }
 }

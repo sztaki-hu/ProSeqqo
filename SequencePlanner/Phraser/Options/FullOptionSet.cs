@@ -19,6 +19,10 @@ namespace SequencePlanner.Phraser.Options
             Options.Add(new TrapezoidParamsSpeed());
             Options.Add(new StartDepot());
             Options.Add(new FinishDepot());
+            Options.Add(new UseResources());
+            Options.Add(new ResourceCostMethod());
+            Options.Add(new ResourceCostValue());
+            Options.Add(new ResourceCostMatrix());
             Options.Add(new ProcessHierarchy());
             Options.Add(new ProcessPrecedence());
             Options.Add(new PositionPrecedence());
@@ -49,6 +53,5 @@ namespace SequencePlanner.Phraser.Options
                 }
             }
         }
-
     }
 }

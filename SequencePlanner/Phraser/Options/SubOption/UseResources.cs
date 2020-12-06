@@ -7,13 +7,13 @@ using System.Text;
 
 namespace SequencePlanner.Phraser.Options
 {
-    public class CyclicSequence: Option
+    public class UseResources: Option
     {
         public bool Value { get; set; }
 
-        public CyclicSequence()
+        public UseResources()
         {
-            Name = "CyclicSequence";
+            Name = "UseResources";
             IncludeableNames = new List<string> { };
             Need = true;
         }
@@ -34,12 +34,12 @@ namespace SequencePlanner.Phraser.Options
                 {
                     case "TRUE":
                         Value = true;
-                        newInclude.Add("StartDepot");
+                        newInclude.Add("ResourceCostMethod");
+                        newIncludeOptional.Add("ResourceCostMatrix");
+                        newIncludeOptional.Add("ResourceCostValue");
                         break;
                     case "FALSE":
                         Value = false;
-                        newIncludeOptional.Add("StartDepot");
-                        newIncludeOptional.Add("FinishDepot");
                         break;
                     default:
                         throw new SequencerException("UseResource parameter unknown!", "Make sure UseResources: True/False one of them given.");
@@ -51,9 +51,6 @@ namespace SequencePlanner.Phraser.Options
                     NewIncludeNeed = newInclude,
                     NewIncludeOptional = newIncludeOptional,
                 };
-
-
-
             }
             catch (Exception e)
             {

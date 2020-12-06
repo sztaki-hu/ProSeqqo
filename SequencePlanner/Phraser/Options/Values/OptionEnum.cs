@@ -19,4 +19,10 @@ namespace SequencePlanner.Phraser.Options.Values
         Trapezoid_Time_WithTieBreaker,
         FullMatrix
     }
+
+    public enum ResourceCostMethodEnum
+    {
+        Add,
+        Max
+    }
 }

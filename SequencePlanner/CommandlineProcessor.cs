@@ -32,8 +32,6 @@ namespace SequencePlanner
                 }
                 else
                 {
-
-
                     //Debug in VS
                     string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName+"/Example";
                     string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName+"/Example/out";
@@ -51,6 +49,8 @@ namespace SequencePlanner
                     args = new string[] {"-i", example+ "/CelticLaser.txt",                 "-o", outdir+ "/CelticLaser_out.txt",                "-g", graph+ "/CelticLaser_graph.dot",                 "-d" };
                     //args = new string[] {"-i", example+ "/PointLike_PosProcPrecedences.txt",   "-o", outdir+ "/PointLike_PosProcPrecedences_out.txt",  "-g", graph+ "/PointLike_PosProcPrecedences_graph.dot",   "-d" };
                     //args = new string[] {"-i", example+ "/PointLike_PosPrecedences.txt",   "-o", outdir+ "/PointLike_PosPrecedences_out.txt",  "-g", graph+ "/PointLike_PosPrecedences_graph.dot",   "-d" };
+                    args = new string[] {"-i", example+ "/LocalTests/DEV_LL.txt",   "-o", outdir+ "/LocalTests/DEV_LL_out.txt",  "-g", graph+ "/LocalTests/DEV_LL_graph.dot", "-d" };
+                    args = new string[] {"-i", example+ "/seqtest.txt",   "-o", outdir+ "/seqtest_o.txt",  "-g", graph+ "/seqtest_graph.dot", "-d" };
 
                     Help(args);
                     input = Input(args);

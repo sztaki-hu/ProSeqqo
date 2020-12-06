@@ -61,7 +61,6 @@ namespace SequencePlanner.Phraser.Options
                         break;
                     default:
                         throw new SequencerException("DistanceFunction parameter unknown!", "Make sure DistanceFunction: Euclidian_Distance/Max_Distance/Trapezoid_Time/Manhattan_Distance/Full_Matrix one of them given.");
-                        break;
                 }
                 Validated = true;
                 return new ValidationResult()

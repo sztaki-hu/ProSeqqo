@@ -124,7 +124,6 @@ namespace SequencePlanner.GTSP
                     //item.AfterID();
                     //Template.GTSP.ConstraintsOrder.Add(new ConstraintOrder(item.BeforeID, item.AfterID));
                 }
-
             }
         }
         public new void GenerateDisjunctSets()
