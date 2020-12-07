@@ -5,11 +5,12 @@ TimeLimit: 20
 WeightMultiplier: Auto
 CyclicSequence: True
 StartDepot: 5
-FinishDepot: 8
+#FinishDepot: 8
 ContourPenalty: 2
-ResourceSource: ConstantResource
+ResourceSource: NoResource
 ResourceDistanceFunction: Add
-ResourceCostConstant: 0
+#ResourceCostConstant: 2
+#UseMIPprecedenceSolver: True
 
 PositionMatrix:
 1;2;3;4;5;6;7;8;9;10
@@ -24,6 +25,7 @@ PositionMatrix:
 1;2;3;4;5;6;7;8;0;10
 1;2;3;4;5;6;7;8;9;0
 A;B;C;D;E;F;G;H;I;J
+1;2;3;1;2;3;1;2;3;4
 
 
 LineList:
