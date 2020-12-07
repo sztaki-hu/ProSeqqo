@@ -133,7 +133,7 @@ namespace SequencerTest.Units.Serialization
             Assert.AreEqual(null, SerObj.DistanceFunction.DistanceMatrix);
             Assert.AreEqual(LineLikeTask.PositionMatrix.ResourceFunction.FunctionName, SerObj.ResourceFunction.ResourceSource);
             Assert.AreEqual(1, SerObj.ResourceFunction.ResourceCostConstant);
-            Assert.AreNotEqual(null, SerObj.ResourceFunction.ResourceCostMatrix2);
+            Assert.IsNull(SerObj.ResourceFunction.ResourceCostMatrix2);
             Assert.AreEqual("Add", SerObj.ResourceFunction.ResourceDistanceFunction);
 
             foreach (var serPos in SerObj.PositionList)
