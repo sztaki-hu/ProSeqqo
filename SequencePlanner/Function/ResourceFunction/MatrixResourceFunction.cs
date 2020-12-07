@@ -19,9 +19,9 @@ namespace SequencePlanner.Function.ResourceFunction
             var idb = -1;
             for (int i = 0; i < CostMatrixIDHeader.Count; i++)
             {
-                if (CostMatrixIDHeader[i] == A.GlobalID)
+                if (CostMatrixIDHeader[i] == A.ResourceID)
                     ida = i;
-                if (CostMatrixIDHeader[i] == B.GlobalID)
+                if (CostMatrixIDHeader[i] == B.ResourceID)
                     idb = i;
             }
             return CostMatrix[ida][idb];

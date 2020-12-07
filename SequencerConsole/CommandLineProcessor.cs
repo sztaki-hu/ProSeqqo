@@ -44,9 +44,9 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PickAndPlace_Original.txt",        "-o", outdir + "\\PickAndPlace_Original_out.json",       "-g", graph + "\\PickAndPlace_Original_graph.dot",        "-d" };
                     //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          "-g", graph + "\\PickAndPlace_Matrix_graph.dot",          "-d" };
                     //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",          "-g", graph + "\\PickAndPlace_Matrix_graph.dot",          "-d" };
-                    args = new string[] { "-i", example + "\\LineLike_Original.txt",            "-o", outdir + "\\LineLike_Original_out.json",           "-g", graph + "\\LineLike_Original_graph.dot",            "-d" };
+                    //args = new string[] { "-i", example + "\\LineLike_Original.txt",            "-o", outdir + "\\LineLike_Original_out.json",           "-g", graph + "\\LineLike_Original_graph.dot",            "-d" };
                     //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",             "-g", graph + "\\LineLike_Matrix_graph.dot",              "-d" };
-                    //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.txt",                        "-g", graph + "\\Kocka_graph.dot",                        "-d" };
+                    args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        "-g", graph + "\\Kocka_graph.dot",                        "-d" };
                     //args = new string[] { "-i", example + "\\CSOPA.txt",                        "-o", outdir + "\\CSOPA_out.json",                        "-g", graph + "\\CSOPA_graph.dot",                        "-d" };
                     //args = new string[] { "-i", example + "\\CelticLaser_Contour.txt",          "-o", outdir + "\\CelticLaser_Contour_out.txt",          "-g", graph + "\\CelticLaser_Contour_graph.dot",          "-d" };
                     //args = new string[] { "-i", example + "\\CelticLaser_Fill.txt",             "-o", outdir + "\\CelticLaser_Fill_out.txt",             "-g", graph + "\\CelticLaser_Fill_graph.dot",             "-d" };
@@ -318,16 +318,16 @@ namespace SequencerConsole
             {
                 if (args[i].Equals("-log") || args[i].Equals("-l"))
                 {
-                    switch (args[i + 1])
+                    return (args[i + 1]) switch
                     {
-                        case "Trace:":    return LogLevel.Trace;
-                        case "Debug:":    return LogLevel.Debug;
-                        case "Info:":     return LogLevel.Info;
-                        case "Warning:":  return LogLevel.Warning;
-                        case "Error:":    return LogLevel.Error;
-                        case "Critical:": return LogLevel.Critical;
-                        default: throw new SequencerException("Unkonwn loglevel! Use -help/-h for more details.");
-                    }
+                        "Trace:" => LogLevel.Trace,
+                        "Debug:" => LogLevel.Debug,
+                        "Info:" => LogLevel.Info,
+                        "Warning:" => LogLevel.Warning,
+                        "Error:" => LogLevel.Error,
+                        "Critical:" => LogLevel.Critical,
+                        _ => throw new SequencerException("Unkonwn loglevel! Use -help/-h for more details."),
+                    };
                 }
             }
             return LogLevel.Info;

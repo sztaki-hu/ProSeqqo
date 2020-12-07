@@ -71,7 +71,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             var result = ResolveSolution(orTools.Solve());
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
-            
+            result.ToString();
             return result;
         }
 

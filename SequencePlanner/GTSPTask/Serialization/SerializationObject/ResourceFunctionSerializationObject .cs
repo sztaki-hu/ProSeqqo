@@ -12,8 +12,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public string ResourceDistanceFunction { get; set; }
         public string ResourceSource { get; set; }
         public double ResourceCostConstant { get; set; }
-        public List<int> ResourceCostMatrixIDHeader { get; set; }
-        public List<List<double>> ResourceCostMatrix { get; set; }
         public ResourceMatrixSerializationObject ResourceCostMatrix2 { get; set; }
 
         public ResourceFunctionSerializationObject() { }
@@ -28,8 +26,8 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             }
             if (ResourceSource == "MatrixResource")
             {
-                ResourceCostMatrix = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrix;
-                ResourceCostMatrixIDHeader = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrixIDHeader;
+                ResourceCostMatrix2.ResourceCostMatrix = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrix;
+                ResourceCostMatrix2.IDHeader = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrixIDHeader;
             }
         }
 
@@ -46,19 +44,19 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 seq += "ResourceCostConstant: " + ResourceCostConstant + newline;
             if(ResourceSource == "MatrixResource")
             {
-                seq += "ResourceCostConstant: " + ResourceCostConstant + newline;
+                //TODO: Create ResourceCostMatrix2.ToSEQ;
                 seq += "ResourceCostMatrix: " + newline;
-                for (int i = 0; i < ResourceCostMatrix.Count; i++)
+                for (int i = 0; i < ResourceCostMatrix2.ResourceCostMatrix.Count; i++)
                 {
                     seq += open;
-                    for (int j = 0; j < ResourceCostMatrix[i].Count; j++)
+                    for (int j = 0; j < ResourceCostMatrix2.ResourceCostMatrix[i].Count; j++)
                     {
-                        seq += ResourceCostMatrix[i][j].ToString("0.####");
-                        if (j < ResourceCostMatrix[i].Count - 1)
+                        seq += ResourceCostMatrix2.ResourceCostMatrix[i][j].ToString("0.####");
+                        if (j < ResourceCostMatrix2.ResourceCostMatrix[i].Count - 1)
                             seq += separator;
                     }
                     seq += close;
-                    if (i < ResourceCostMatrix.Count - 1)
+                    if (i < ResourceCostMatrix2.ResourceCostMatrix.Count - 1)
                         seq += separator;
                 }
                 seq += newline;
@@ -76,7 +74,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             IResourceFunction resourceFunction = ResourceSource switch
             {
                 "ConstantResource" => new ConstantResourceFunction(ResourceCostConstant, resourceDistanceLinkFunction),
-                "MatrixResource" => new MatrixResourceFunction(ResourceCostMatrix, ResourceCostMatrixIDHeader, resourceDistanceLinkFunction),
+                "MatrixResource" => new MatrixResourceFunction(ResourceCostMatrix2.ResourceCostMatrix, ResourceCostMatrix2.IDHeader, resourceDistanceLinkFunction),
                 "PositionBasedResource" => throw new SequencerException("PositionBasedResource not implemented yet!"),
                 _ => throw new SequencerException("ResourceFunction unknown!"),
             };

@@ -8,7 +8,7 @@ DistanceFunction: EuclidianDistance
 ResourceDistanceFunction: Add
 ResourceSource: ConstantResource
 ResourceCostConstant: 0
-
+UseMIPprecedenceSolver: True
 
 PositionList:
 #+-------+---------------------+------------------+
