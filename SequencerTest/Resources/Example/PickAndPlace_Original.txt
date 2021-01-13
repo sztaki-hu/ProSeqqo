@@ -1,4 +1,4 @@
-TaskType: Point_Like
+TaskType: PointLike
 Dimension: 6
 WeightMultiplier: Auto
 CyclicSequence: False

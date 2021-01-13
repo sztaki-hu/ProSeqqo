@@ -20,6 +20,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         public List<GTSPPrecedenceConstraint> ProcessPrecedence { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
         public PointLikeGTSPRepresentation GTSPRepresentation { get; set; }
+        public bool UseShortcutInAlternatives { get; set; }
         private int MAX_SEQUENCING_ID = 0;
 
         public PointLikeTask(): base()

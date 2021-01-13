@@ -123,7 +123,7 @@ namespace SequencerTest.Units.Serialization
         public void BaseObjectTest()
         {
             Assert.AreEqual(LineLikeTask.Dimension, SerObj.Dimension);
-            Assert.AreEqual("Line_Like", SerObj.TaskType);
+            Assert.AreEqual("LineLike", SerObj.TaskType);
             Assert.AreEqual(LineLikeTask.StartDepot.UserID, SerObj.StartDepot);
             Assert.AreEqual(LineLikeTask.FinishDepot.UserID, SerObj.FinishDepot);
             Assert.AreEqual(LineLikeTask.CyclicSequence, SerObj.CyclicSequence);

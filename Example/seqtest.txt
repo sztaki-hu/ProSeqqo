@@ -1,5 +1,5 @@
-TaskType: Point_Like
-Dimension: 6
+TaskType: PointLike
+//Dimension: 6
 DistanceFunction: TrapezoidTimeDistance
 TrapezoidSpeed: [0.266667;0.266667;0.266667;0.266667;0.266667;0.266667]
 TrapezoidAcceleration: [0.666667;0.666667;0.666667;0.666667;0.666667;0.666667]
@@ -11,6 +11,8 @@ ResourceDistanceFunction: Add
 ResourceSource: ConstantResource
 ResourceCostConstant: 0
 UseResources: False
+UseMIPprecedenceSolver: True
+UseShortcutInAlternatives: True
 
 PositionList:
 #+-------+---------------------+------------------+
@@ -126,4 +128,3 @@ ProcessPrecedence:
 #68;75
 #69;75
 #70;75
-

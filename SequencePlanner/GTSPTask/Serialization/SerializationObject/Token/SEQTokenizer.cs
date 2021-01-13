@@ -1,4 +1,5 @@
 ﻿using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -52,7 +53,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             string[] words;
             foreach (var line in lines)
             {
-                words = line.Line.Split('#');
+                words = line.Line.Split(new string[] { "#", "//" }, StringSplitOptions.None);
                 noComments.Add(new TokenLineDeserializationObject() { 
                     LineNumber = line.LineNumber,
                     Line = words[0]

@@ -33,7 +33,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         }
         public LineLikeTaskSerializationObject(LineLikeTask task):base(task)
         {
-            TaskType = "Line_Like";
+            TaskType = "LineLike";
             LineList = new List<LineSerializationObject>();
             LinePrecedences = new List<OrderConstraintSerializationObject>();
             ContourPrecedences = new List<OrderConstraintSerializationObject>();

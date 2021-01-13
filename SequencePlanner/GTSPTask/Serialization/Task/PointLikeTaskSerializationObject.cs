@@ -18,6 +18,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public List<OrderConstraintSerializationObject> PositionPrecedences { get; set; }
         [JsonProperty(Order = 13)]
         public List<OrderConstraintSerializationObject> ProcessPrecedences { get; set; }
+        public bool UseShortcutInAlternatives { get; set; }
 
         public PointLikeTaskSerializationObject() : base()
         {
@@ -30,7 +31,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         }
         public PointLikeTaskSerializationObject(PointLikeTask task):base(task)
         {
-            TaskType = "Point_Like";
+            TaskType = "PointLike";
+            UseShortcutInAlternatives = task.UseShortcutInAlternatives;
             ProcessHierarchy = new List<ProcessHierarchySerializationObject>();
             PositionPrecedences = new List<OrderConstraintSerializationObject>();
             ProcessPrecedences = new List<OrderConstraintSerializationObject>();
@@ -79,6 +81,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             base.ToBaseTask((BaseTask)PointLikeTask);
             CreateProcessHierarchy(PointLikeTask);
             CreatePrecedences(PointLikeTask);
+            PointLikeTask.UseShortcutInAlternatives = UseShortcutInAlternatives;
             return PointLikeTask;
         }
 
@@ -165,6 +168,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             base.FillBySEQTokens(tokenizer);
+            UseShortcutInAlternatives = TokenConverter.GetBoolByHeader("UseShortcutInAlternatives", tokenizer);
             ProcessHierarchy = TokenConverter.GetProcessHierarchyByHeader("ProcessHierarchy", tokenizer);
             PositionPrecedences = TokenConverter.GetPrecedenceListByHeader("PositionPrecedence", tokenizer);
             ProcessPrecedences = TokenConverter.GetPrecedenceListByHeader("ProcessPrecedence", tokenizer);
@@ -174,7 +178,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             string seq = "";
             string newline = "\n";
             seq+=base.ToSEQShort();
-            seq+=base.ToSEQLong();
+            seq += "UseShortcutInAlternatives: " + UseShortcutInAlternatives + newline;
+            seq +=base.ToSEQLong();
             seq += "ProcessHierarchy:" + newline;
             foreach (var line in ProcessHierarchy)
             {

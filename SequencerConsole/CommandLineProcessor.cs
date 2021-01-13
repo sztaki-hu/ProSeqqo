@@ -45,8 +45,8 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          "-g", graph + "\\PickAndPlace_Matrix_graph.dot",          "-d" };
                     //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",          "-g", graph + "\\PickAndPlace_Matrix_graph.dot",          "-d" };
                     //args = new string[] { "-i", example + "\\LineLike_Original.txt",            "-o", outdir + "\\LineLike_Original_out.json",           "-g", graph + "\\LineLike_Original_graph.dot",            "-d" };
-                    //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",             "-g", graph + "\\LineLike_Matrix_graph.dot",              "-d" };
-                    args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        "-g", graph + "\\Kocka_graph.dot",                        "-d" };
+                    args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",             "-g", graph + "\\LineLike_Matrix_graph.dot",              "-d" };
+                    //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        "-g", graph + "\\Kocka_graph.dot",                        "-d" };
                     //args = new string[] { "-i", example + "\\CSOPA.txt",                        "-o", outdir + "\\CSOPA_out.json",                        "-g", graph + "\\CSOPA_graph.dot",                        "-d" };
                     //args = new string[] { "-i", example + "\\CelticLaser_Contour.txt",          "-o", outdir + "\\CelticLaser_Contour_out.txt",          "-g", graph + "\\CelticLaser_Contour_graph.dot",          "-d" };
                     //args = new string[] { "-i", example + "\\CelticLaser_Fill.txt",             "-o", outdir + "\\CelticLaser_Fill_out.txt",             "-g", graph + "\\CelticLaser_Fill_graph.dot",             "-d" };
@@ -54,7 +54,7 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PointLike_PosProcPrecedences.txt", "-o", outdir + "\\PointLike_PosProcPrecedences_out.txt", "-g", graph + "\\PointLike_PosProcPrecedences_graph.dot", "-d" };
                     //args = new string[] { "-i", example + "\\PointLike_PosPrecedences.txt",     "-o", outdir + "\\PointLike_PosPrecedences_out.txt",     "-g", graph + "\\PointLike_PosPrecedences_graph.dot",     "-d" };
                     //args = new string[] { "-i", example + "\\LocalTests/DEV_LL.txt",            "-o", outdir + "\\LocalTests/DEV_LL_out.txt",            "-g", graph + "\\LocalTests/DEV_LL_graph.dot",            "-d" };
-                    //args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        "-g", graph + "\\seqtest_graph.dot",                      "-d" };
+                    args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        "-g", graph + "\\seqtest_graph.dot",                      "-d" };
                     
                     Help(args);
                     input = Input(args);
@@ -359,9 +359,9 @@ namespace SequencerConsole
         {
             foreach (var line in File.ReadAllLines(input))
             {
-                if (line.Contains("Line_Like"))
+                if (line.Contains("LineLike"))
                     return TaskType.LineLike;
-                if (line.Contains("Point_Like"))
+                if (line.Contains("PointLike"))
                     return TaskType.PoitnLike;
             }
             return TaskType.Unknown;

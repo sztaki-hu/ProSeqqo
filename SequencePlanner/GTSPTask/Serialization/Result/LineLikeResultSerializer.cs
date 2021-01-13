@@ -11,7 +11,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
     {
         public void ExportSEQ(LineTaskResult result, string path)
         {
-            SeqLogger.Info("Output task type: Line_Like", nameof(LineLikeResultSerializer));
+            SeqLogger.Info("Output task type: LineLike", nameof(LineLikeResultSerializer));
             SeqLogger.Info("Output file: " + path, nameof(LineLikeResultSerializer));
             SeqLogger.Info("Output type: SEQ", nameof(LineLikeResultSerializer));
             var ser = new LineLikeResultSerializationObject(result);
@@ -22,7 +22,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public LineTaskResult ImportSEQ(string path)
         {
-            SeqLogger.Info("Input task type: Line_Like", nameof(LineLikeResultSerializer));
+            SeqLogger.Info("Input task type: LineLike", nameof(LineLikeResultSerializer));
             SeqLogger.Info("Input file: " + path, nameof(LineLikeResultSerializer));
             SeqLogger.Info("Input type: SEQ", nameof(LineLikeResultSerializer));
             var seqString = File.ReadAllLines(path).ToList();
@@ -33,7 +33,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public void ExportJSON(LineTaskResult result, string path)
         {
-            SeqLogger.Info("Output task type: Line_Like", nameof(LineLikeResultSerializer));
+            SeqLogger.Info("Output task type: LineLike", nameof(LineLikeResultSerializer));
             SeqLogger.Info("Output file: " + path, nameof(LineLikeResultSerializer));
             SeqLogger.Info("Output type: JSON", nameof(LineLikeResultSerializer));
             var seqObject = new LineLikeResultSerializationObject(result);
@@ -44,7 +44,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public LineTaskResult ImportJSON(string path)
         {
-            SeqLogger.Info("Input task type: Line_Like", nameof(LineLikeResultSerializer));
+            SeqLogger.Info("Input task type: LineLike", nameof(LineLikeResultSerializer));
             SeqLogger.Info("Input file: " + path, nameof(LineLikeResultSerializer));
             SeqLogger.Info("Input type: JSON", nameof(LineLikeResultSerializer));
             var jsonString = File.ReadAllText(path);
@@ -55,7 +55,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public void ExportXML(LineTaskResult result, string path)
         {
-            SeqLogger.Info("Output task type: Line_Like", nameof(LineLikeResultSerializer));
+            SeqLogger.Info("Output task type: LineLike", nameof(LineLikeResultSerializer));
             SeqLogger.Info("Output file: " + path, nameof(LineLikeResultSerializer));
             SeqLogger.Info("Output type: XML", nameof(LineLikeResultSerializer));
             var seqObject = new LineLikeResultSerializationObject(result);
@@ -68,7 +68,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public LineTaskResult ImportXML(string path)
         {
-            SeqLogger.Info("Input task type: Line_Like", nameof(LineLikeResultSerializer));
+            SeqLogger.Info("Input task type: LineLike", nameof(LineLikeResultSerializer));
             SeqLogger.Info("Input file: " + path, nameof(LineLikeResultSerializer));
             SeqLogger.Info("Input type: XML", nameof(LineLikeResultSerializer));
             XmlSerializer x = new XmlSerializer(typeof(LineLikeResultSerializer));

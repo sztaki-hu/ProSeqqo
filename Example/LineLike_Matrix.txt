@@ -8,9 +8,9 @@ StartDepot: 5
 #FinishDepot: 8
 ContourPenalty: 2
 ResourceSource: NoResource
-ResourceDistanceFunction: Add
+#ResourceDistanceFunction: Add
 #ResourceCostConstant: 2
-#UseMIPprecedenceSolver: True
+UseMIPprecedenceSolver: True
 
 PositionMatrix:
 1;2;3;4;5;6;7;8;9;10

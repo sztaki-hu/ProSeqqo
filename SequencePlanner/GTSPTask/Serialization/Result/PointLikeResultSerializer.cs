@@ -11,7 +11,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
     {
         public void ExportSEQ(PointTaskResult result, string path)
         {
-            SeqLogger.Info("Output task type: Point_Like", nameof(PointLikeResultSerializer));
+            SeqLogger.Info("Output task type: PointLike", nameof(PointLikeResultSerializer));
             SeqLogger.Info("Output file: " + path, nameof(PointLikeResultSerializer));
             SeqLogger.Info("Output type: SEQ", nameof(PointLikeResultSerializer));
             var ser = new PointLikeResultSerializationObject(result);
@@ -22,7 +22,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public PointTaskResult ImportSEQ(string path)
         {
-            SeqLogger.Info("Output task type: Point_Like", nameof(PointLikeResultSerializer));
+            SeqLogger.Info("Output task type: PointLike", nameof(PointLikeResultSerializer));
             SeqLogger.Info("Output file: " + path, nameof(PointLikeResultSerializer));
             SeqLogger.Info("Output type: SEQ", nameof(PointLikeResultSerializer));
             var seqString = File.ReadAllLines(path).ToList();
@@ -33,7 +33,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public void ExportJSON(PointTaskResult result, string path)
         {
-            SeqLogger.Info("Output task type: Point_Like", nameof(PointLikeResultSerializer));
+            SeqLogger.Info("Output task type: PointLike", nameof(PointLikeResultSerializer));
             SeqLogger.Info("Output file: " + path, nameof(PointLikeResultSerializer));
             SeqLogger.Info("Output type: JSON", nameof(PointLikeResultSerializer));
             var seqObject = new PointLikeResultSerializationObject(result);
@@ -45,7 +45,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public PointTaskResult ImportJSON(string path)
         {
-            SeqLogger.Info("Input task type: Point_Like", nameof(PointLikeResultSerializer));
+            SeqLogger.Info("Input task type: PointLike", nameof(PointLikeResultSerializer));
             SeqLogger.Info("Input file: " + path, nameof(PointLikeResultSerializer));
             SeqLogger.Info("Input type: JSON", nameof(PointLikeResultSerializer));
             var jsonString = File.ReadAllText(path);
@@ -56,7 +56,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public void ExportXML(PointTaskResult result, string path)
         {
-            SeqLogger.Info("Output task type: Point_Like", nameof(PointLikeResultSerializer));
+            SeqLogger.Info("Output task type: PointLike", nameof(PointLikeResultSerializer));
             SeqLogger.Info("Output file: " + path, nameof(PointLikeResultSerializer));
             SeqLogger.Info("Output type: XML", nameof(PointLikeResultSerializer));
             var seqObject = new PointLikeResultSerializationObject(result);
@@ -69,7 +69,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public PointTaskResult ImportXML(string path)
         {
-            SeqLogger.Info("Input task type: Point_Like", nameof(PointLikeResultSerializer));
+            SeqLogger.Info("Input task type: PointLike", nameof(PointLikeResultSerializer));
             SeqLogger.Info("Input file: " + path, nameof(PointLikeResultSerializer));
             SeqLogger.Info("Input type: XML", nameof(PointLikeResultSerializer));
             XmlSerializer x = new XmlSerializer(typeof(PointLikeResultSerializationObject));
