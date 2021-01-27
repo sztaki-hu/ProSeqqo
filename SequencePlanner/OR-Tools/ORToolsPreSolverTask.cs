@@ -11,6 +11,7 @@ namespace SequencePlanner.OR_Tools
         public int NumberOfNodes { get; set; }
         public int StartDepot { get; set; }
         public List<GTSPPrecedenceConstraint> PrecedenceConstraints { get; set; }
+        public List<GTSPPrecedenceConstraint> PrecedenceHierarchy { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
     }
 }

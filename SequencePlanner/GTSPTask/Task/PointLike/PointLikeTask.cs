@@ -38,8 +38,9 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             var ORPreSolver = new ORToolsPreSolverWrapper(new ORToolsPreSolverTask()
             {
                 NumberOfNodes = PositionMatrix.Positions.Count,
-                DisjointConstraints = DisjointConstraints,
-                PrecedenceConstraints = PositionPrecedence,
+                DisjointConstraints = GTSPRepresentation.DisjointConstraints,
+                PrecedenceHierarchy = CreatePrecedenceHierarchiesForInitialSolution(),
+                PrecedenceConstraints = CreatePrecedenceConstraints(true),
                 StartDepot = StartDepot.SequencingID
             });
             var result = ORPreSolver.Solve();
@@ -101,7 +102,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         }
 
-        private List<GTSPPrecedenceConstraint> CreatePrecedenceConstraints()
+        private List<GTSPPrecedenceConstraint> CreatePrecedenceConstraints(bool fullProcessPrecedence=false)
         {
             var precedences = new List<GTSPPrecedenceConstraint>();
 
@@ -122,10 +123,13 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 foreach (var precedence in ProcessPrecedence)
                 {
-                    precedences.AddRange(CreateProcessPrecedence(precedence));
+                    if (fullProcessPrecedence)
+                        precedences.AddRange(CreateProcessPrecedenceFull(precedence));
+                    else
+                        precedences.AddRange(CreateProcessPrecedence(precedence));
                 }
             }
-            return PositionPrecedence;
+            return precedences;
         }
 
         private IEnumerable<GTSPPrecedenceConstraint> CreateProcessPrecedence(GTSPPrecedenceConstraint precedence)
@@ -142,6 +146,34 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                             foreach (var posAfter in alterAfter.Tasks[0].Positions)
                             {
                                 positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore, posAfter));
+                            }
+                        }
+                    }
+                }
+            }
+            return positionPrecedences;
+        }
+
+        private IEnumerable<GTSPPrecedenceConstraint> CreateProcessPrecedenceFull(GTSPPrecedenceConstraint precedence)
+        {
+            List<GTSPPrecedenceConstraint> positionPrecedences = new List<GTSPPrecedenceConstraint>();
+            foreach (var alterBefore in ((Process)precedence.Before).Alternatives)
+            {
+                foreach (var alterAfter in ((Process)precedence.After).Alternatives)
+                {
+                    if (alterBefore.Tasks.Count > 0 && alterAfter.Tasks.Count > 0)
+                    {
+                        for (int i = 0; i < alterBefore.Tasks.Count; i++)
+                        {
+                            for (int j = 0; j < alterAfter.Tasks.Count; j++)
+                            {
+                                foreach (var posBefore in alterBefore.Tasks[i].Positions)
+                                {
+                                    foreach (var posAfter in alterAfter.Tasks[j].Positions)
+                                    {
+                                        positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore, posAfter));
+                                    }
+                                }
                             }
                         }
                     }
@@ -215,7 +247,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 }
             }
             matrix = ConnectProcesses(Processes, matrix);
-
+            matrix = ConnectInAlternatives(matrix);
             return matrix;
         }
 
@@ -241,6 +273,18 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                             }
                         }
                     }
+                }
+            }
+            return matrix;
+        }
+
+        private double[,] ConnectInAlternatives(double[,] matrix)
+        {
+            foreach (var alternative in Alternatives)
+            {
+                for (int i = 0; i < alternative.Tasks.Count - 1; i++)
+                {
+                    ConnectTasks(alternative.Tasks[i], alternative.Tasks[i + 1], matrix);
                 }
             }
             return matrix;
@@ -313,6 +357,54 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
            
             SeqLogger.Info("Solution resolved!", nameof(PointLikeTask));
             return taskResult;
+        }
+
+        public List<GTSPPrecedenceConstraint> CreatePrecedenceHierarchiesForInitialSolution()
+        {
+            var prec = new List<GTSPPrecedenceConstraint>();
+            foreach (var alternative in Alternatives)
+            {
+                if(alternative.Tasks.Count>1)
+                    for (int i = 0; i < alternative.Tasks.Count-1; i++)
+                    {
+                       // for (int j = i+1; j < alternative.Tasks.Count; j++)
+                       // {
+                            foreach (var p in alternative.Tasks[i].Positions)
+                            {
+                                //foreach (var p2 in alternative.Tasks[j].Positions)
+                                foreach (var p2 in alternative.Tasks[i+1].Positions)
+                                {
+                                    prec.Add(new GTSPPrecedenceConstraint(p, p2));
+                                }
+                            }
+                       // }
+                    }
+            }
+            return prec;
+        }
+
+        public List<GTSPPrecedenceConstraint> CreateOrderPrecedenceForInitialSolution()
+        {
+            var prec = new List<GTSPPrecedenceConstraint>();
+            foreach (var alternative in Alternatives)
+            {
+                if (alternative.Tasks.Count > 1)
+                    for (int i = 0; i < alternative.Tasks.Count - 1; i++)
+                    {
+                        // for (int j = i+1; j < alternative.Tasks.Count; j++)
+                        // {
+                        foreach (var p in alternative.Tasks[i].Positions)
+                        {
+                            //foreach (var p2 in alternative.Tasks[j].Positions)
+                            foreach (var p2 in alternative.Tasks[i + 1].Positions)
+                            {
+                                prec.Add(new GTSPPrecedenceConstraint(p, p2));
+                            }
+                        }
+                        // }
+                    }
+            }
+            return prec;
         }
     }
 }
