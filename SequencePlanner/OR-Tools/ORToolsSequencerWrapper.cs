@@ -14,6 +14,8 @@ namespace SequencePlanner.OR_Tools
         private RoutingIndexManager manager;
         private RoutingModel routing;
         private RoutingSearchParameters searchParameters;
+        private Assignment InitialSolution;
+
         private Stopwatch Timer;
 
         public ORToolsSequencerWrapper(ORToolsTask parameters)
@@ -71,13 +73,6 @@ namespace SequencePlanner.OR_Tools
                 }
             }
 
-            if(param.GTSPRepresentation.InitialRoutes!=null && param.GTSPRepresentation.InitialRoutes.Length > 0)
-            {
-                routing.ReadAssignmentFromRoutes(param.GTSPRepresentation.InitialRoutes, true);
-                SeqLogger.Info("Initial route given with " + param.GTSPRepresentation.InitialRoutes[0].Length+" element.", nameof(ORToolsSequencerWrapper));
-            }else
-                SeqLogger.Info("Initial route not given.", nameof(ORToolsSequencerWrapper));
-
             // Setting first solution heuristic.
             SeqLogger.Info("Search parameters: Default", nameof(ORToolsSequencerWrapper));
             searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
@@ -87,6 +82,19 @@ namespace SequencePlanner.OR_Tools
             //searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
             //searchParameters.UseCp = Google.OrTools.Util.OptionalBoolean.BoolTrue;
             //searchParameters.UseCpSat = Google.OrTools.Util.OptionalBoolean.BoolTrue;
+
+            routing.CloseModelWithParameters(searchParameters);
+
+            if (param.GTSPRepresentation.InitialRoutes!=null && param.GTSPRepresentation.InitialRoutes.Length > 0)
+            {
+                InitialSolution = routing.ReadAssignmentFromRoutes(param.GTSPRepresentation.InitialRoutes, false);
+                if (InitialSolution == null)
+                    SeqLogger.Error("Initial solution given, but not accepted!", nameof(ORToolsSequencerWrapper));
+                else
+                    SeqLogger.Info("Initial route given with " + param.GTSPRepresentation.InitialRoutes[0].Length+" element.", nameof(ORToolsSequencerWrapper));
+            }else
+                SeqLogger.Info("Initial route not given.", nameof(ORToolsSequencerWrapper));
+
 
             //Set time limit
             if (param.TimeLimit != 0)
@@ -107,7 +115,11 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Info("Solver running!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent++;
             Timer.Start();
-            Assignment solution = routing.SolveWithParameters(searchParameters);
+            Assignment solution;
+            if (InitialSolution != null)
+                solution = routing.SolveFromAssignmentWithParameters(InitialSolution, searchParameters);
+            else
+                solution = routing.SolveWithParameters(searchParameters);
             Timer.Stop();
             SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(routing.GetStatus()), nameof(ORToolsSequencerWrapper));
             SeqLogger.Info("Solver run time: " + Timer.Elapsed.ToString(), nameof(ORToolsSequencerWrapper));
