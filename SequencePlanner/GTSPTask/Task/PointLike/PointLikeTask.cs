@@ -35,12 +35,12 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         protected long[][] CreateInitialRout()
         {
 
-            var ORPreSolver = new ORToolsPreSolverWrapper(new ORToolsPreSolverTask()
+            var ORPreSolver = new ORToolsPointLikePreSolverWrapper(new ORToolsPointLikePreSolverTask()
             {
                 NumberOfNodes = PositionMatrix.Positions.Count,
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
-                PrecedenceHierarchy = CreatePrecedenceHierarchiesForInitialSolution(),
-                PrecedenceConstraints = CreatePrecedenceConstraints(true),
+                StrictOrderPrecedenceHierarchy = CreatePrecedenceHierarchiesForInitialSolution(),
+                OrderPrecedenceConstraints = CreatePrecedenceConstraints(true),
                 StartDepot = StartDepot.SequencingID,
                 Processes = Processes
             });

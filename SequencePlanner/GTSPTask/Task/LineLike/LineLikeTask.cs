@@ -52,11 +52,11 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         protected long[][] CreateInitialRout()
         {
 
-            var ORPreSolver = new ORToolsPreSolverWrapper(new ORToolsPreSolverTask()
+            var ORPreSolver = new ORToolsLineLikePreSolverWrapper(new ORToolsLineLikePreSolverTask()
             {
                 NumberOfNodes = Lines.Count,
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
-                PrecedenceConstraints = GTSPRepresentation.PrecedenceConstraints,
+                OrderPrecedenceConstraints = GTSPRepresentation.PrecedenceConstraints,
                 StartDepot = GTSPRepresentation.StartDepot
             });
             var result = ORPreSolver.Solve();
