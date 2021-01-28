@@ -7,18 +7,18 @@ using System.Linq;
 
 namespace SequencePlanner.OR_Tools
 {
-    public class ORToolsPreSolverWrapper
+    public class ORToolsPointLikePreSolverWrapper
     {
-        private readonly ORToolsPreSolverTask param;
-        private Stopwatch Timer;
+        private readonly ORToolsPointLikePreSolverTask parameters;
+        private Stopwatch timer;
         private Variable[] x;                 
         private Variable[] position; 
         private int[] alternativeID;
         private int[] processID;
 
-        public ORToolsPreSolverWrapper(ORToolsPreSolverTask parameters)
+        public ORToolsPointLikePreSolverWrapper(ORToolsPointLikePreSolverTask parameters)
         {
-            param = parameters;
+            this.parameters = parameters;
         }
 
         public List<int> Solve()
@@ -27,21 +27,21 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Info("ORTools building started!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent++;
             Solver solver = Solver.CreateSolver("CBC_MIXED_INTEGER_PROGRAMMING");
-            x = solver.MakeIntVarArray(param.NumberOfNodes, 0.0, 1.0, "x");                                                     // Boolean, indicates if node is selected
-            position = solver.MakeIntVarArray(param.NumberOfNodes, 0.0, param.DisjointConstraints.Count - 1, "pos");            // Int, indicates order of nodes
-            alternativeID = new int[param.NumberOfNodes];                                                                       // Alternative ID of Node
-            processID = new int[param.NumberOfNodes];                                                                           // Process ID of Node
-            FillAlternativesAndProcesses(solver, param.Processes);                                                              // Fill ProcessID and AlternativeID
+            x = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 1.0, "x");                                                     // Boolean, indicates if node is selected
+            position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count - 1, "pos");            // Int, indicates order of nodes
+            alternativeID = new int[parameters.NumberOfNodes];                                                                       // Alternative ID of Node
+            processID = new int[parameters.NumberOfNodes];                                                                           // Process ID of Node
+            FillAlternativesAndProcesses(solver, parameters.Processes);                                                              // Fill ProcessID and AlternativeID
 
             // Precedences
-            if (param.StartDepot > -1)                                                                                          //If Start depo exist, position = 0
-                solver.Add(position[param.StartDepot] == 0.0);
-            AddDisjointConstraints(solver, param.DisjointConstraints)    ;                                                      //Add disjoint sets of alternative nodes
-            AddPrecedenceConstraints(solver, param.PrecedenceConstraints);                                                      //Add order precedences, node1 should be before node2 in the solution if both are selected
-            AddStrictPrecedenceConstraints(solver, param.PrecedenceHierarchy);                                                  //Add strct order precedences, node1 must be followed by node2 directly
-            AddAlternativeDenyConstraints(solver, param.Processes);
-            SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPreSolverWrapper));
-            SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPreSolverWrapper));
+            if (parameters.StartDepot > -1)                                                                                          //If Start depo exist, position = 0
+                solver.Add(position[parameters.StartDepot] == 0.0);
+            AddDisjointConstraints(solver, parameters.DisjointConstraints)    ;                                                      //Add disjoint sets of alternative nodes
+            AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                                      //Add order precedences, node1 should be before node2 in the solution if both are selected
+            AddStrictPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                                  //Add strct order precedences, node1 must be followed by node2 directly
+            AddAlternativeDenyConstraints(solver, parameters.Processes);
+            SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPointLikePreSolverWrapper));
 
             // Solve
             Solver.ResultStatus resultStatus = RunSolver(solver);
@@ -51,9 +51,9 @@ namespace SequencePlanner.OR_Tools
         private Solver.ResultStatus RunSolver(Solver solver)
         {
             //Solve            
-            SeqLogger.Info("Solver running!", nameof(ORToolsPreSolverWrapper));
+            SeqLogger.Info("Solver running!", nameof(ORToolsPointLikePreSolverWrapper));
             Solver.ResultStatus resultStatus = solver.Solve();
-            SeqLogger.Info("Solver finished!", nameof(ORToolsPreSolverWrapper));
+            SeqLogger.Info("Solver finished!", nameof(ORToolsPointLikePreSolverWrapper));
             return resultStatus;
         }
 
@@ -88,33 +88,33 @@ namespace SequencePlanner.OR_Tools
 
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
         {
-            SeqLogger.Trace("Precedences: ", nameof(ORToolsPreSolverWrapper)); SeqLogger.Indent++;
-            foreach (var item in param.PrecedenceConstraints)
+            SeqLogger.Trace("Precedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            foreach (var item in parameters.OrderPrecedenceConstraints)
             {
                 solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID] );
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPreSolverWrapper));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
             }
             SeqLogger.Indent--;
         }
 
         private void AddStrictPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceHierarchy)
         {
-            SeqLogger.Trace("StrictPrecedences: ", nameof(ORToolsPreSolverWrapper)); SeqLogger.Indent++;
-            foreach (var item in param.PrecedenceHierarchy)
+            SeqLogger.Trace("StrictPrecedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            foreach (var item in parameters.StrictOrderPrecedenceHierarchy)
             {
                 solver.Add(position[item.Before.SequencingID] + 1 == position[item.After.SequencingID]);
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPreSolverWrapper));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
             }
             SeqLogger.Indent--;
         }
 
         private void AddDisjointConstraints(Solver solver, List<GTSPDisjointConstraint> disjointConstraints)
         {
-            SeqLogger.Trace("DisjointSets: ", nameof(ORToolsPreSolverWrapper)); SeqLogger.Indent++;
-            foreach (var item in param.DisjointConstraints)
+            SeqLogger.Trace("DisjointSets: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            foreach (var item in parameters.DisjointConstraints)
             {
                 solver.Add(CreateDisjointConstraint(item, x));
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPreSolverWrapper));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
             }
             SeqLogger.Indent--;
         }
@@ -143,14 +143,14 @@ namespace SequencePlanner.OR_Tools
             var solution = new List<int>();
             var solutionString = "Initial solution found: ";
             
-            for (int i = 0; i < param.Processes.Count; i++)
+            for (int i = 0; i < parameters.Processes.Count; i++)
             {
                 processes.Add(new Process());
             }
 
             if (resultStatus == Solver.ResultStatus.OPTIMAL)
             {
-                for (int i = 0; i < param.NumberOfNodes; i++)
+                for (int i = 0; i < parameters.NumberOfNodes; i++)
                 {
                     if (x[i].SolutionValue() == 1) {                                                    //If node selected
                         int aktProcessID = (int)processID[i];
@@ -166,28 +166,28 @@ namespace SequencePlanner.OR_Tools
                 List<Process> SortedList = processes.OrderBy(o => o.min).ToList();                      //Order the processes by the minimum
                 foreach (var item in SortedList)
                     solution.AddRange(item.GetResult());                                                //Add the nodes of the process
-                solution.Remove(param.StartDepot);                                                      //Remove the first "start depot" because OR-Tools routing requires the initial solution without depot.
+                solution.Remove(parameters.StartDepot);                                                      //Remove the first "start depot" because OR-Tools routing requires the initial solution without depot.
                 foreach (var item in solution)
                     solutionString += item.ToString() + ",";
 
-                for (int p = 0; p < param.NumberOfNodes; p++)                                           //Trace the selected nodes
+                for (int p = 0; p < parameters.NumberOfNodes; p++)                                           //Trace the selected nodes
                 {
                     if (x[p].SolutionValue() == 1)
-                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + this.position[p].SolutionValue() + ", Alternative = " + this.alternativeID[p] + ", Process = " + this.processID[p], nameof(OR_Tools.ORToolsPreSolverWrapper));
+                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + this.position[p].SolutionValue() + ", Alternative = " + this.alternativeID[p] + ", Process = " + this.processID[p], nameof(OR_Tools.ORToolsPointLikePreSolverWrapper));
                 }   
-                SeqLogger.Info(solutionString, nameof(ORToolsPreSolverWrapper));
+                SeqLogger.Info(solutionString, nameof(ORToolsPointLikePreSolverWrapper));
             }
             else
             {
-                SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPreSolverWrapper));
-                SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsPreSolverWrapper));
+                SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPointLikePreSolverWrapper));
+                SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsPointLikePreSolverWrapper));
                 throw new SequencerException("Can not find optimal initial solution with MIP solver!");
             }
-            SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPreSolverWrapper));
-            SeqLogger.Info("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsPreSolverWrapper));
-            SeqLogger.Info("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsPreSolverWrapper));
+            SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Info("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Info("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsPointLikePreSolverWrapper));
             SeqLogger.Indent--;
-            SeqLogger.Info("ORTools building finished!", nameof(ORToolsPreSolverWrapper));
+            SeqLogger.Info("ORTools building finished!", nameof(ORToolsPointLikePreSolverWrapper));
             return solution;
         }
 
