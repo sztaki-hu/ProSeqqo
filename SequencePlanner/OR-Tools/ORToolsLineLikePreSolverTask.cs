@@ -1,18 +1,14 @@
 ﻿using SequencePlanner.GTSP;
 using SequencePlanner.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SequencePlanner.OR_Tools
 {
-    public class ORToolsPreSolverTask
+    public class ORToolsLineLikePreSolverTask: IORToolsPreSolverTask
     {
         public int NumberOfNodes { get; set; }
         public int StartDepot { get; set; }
-        public List<GTSPPrecedenceConstraint> PrecedenceConstraints { get; set; }
-        public List<GTSPPrecedenceConstraint> PrecedenceHierarchy { get; set; }
+        public List<GTSPPrecedenceConstraint> OrderPrecedenceConstraints { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
-        public List<Process> Processes { get; internal set; }
     }
 }
