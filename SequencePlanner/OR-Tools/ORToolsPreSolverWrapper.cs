@@ -25,35 +25,19 @@ namespace SequencePlanner.OR_Tools
             Variable[] x = solver.MakeIntVarArray(param.NumberOfNodes, 0.0, 1.0, "x");  // Boolean, indicates if node is selected
             Variable[] pos = solver.MakeIntVarArray(param.NumberOfNodes, 0.0, param.DisjointConstraints.Count - 1, "pos");  // Boolean, indicates if node is selected
 
-            foreach (var item in param.DisjointConstraints)
-            {
-                solver.Add(CreateLinearConstraint(item, x));
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPreSolverWrapper));
-            }
+            // Precedences
             if (param.StartDepot > -1)
                 solver.Add(pos[param.StartDepot] == 0.0);
+            AddDisjointConstraints(solver, param.DisjointConstraints, x);
+            AddPrecedenceConstraints(solver, param.PrecedenceConstraints, x, pos, param.DisjointConstraints.Count);
+            AddStrictPrecedenceConstraints(solver, param.PrecedenceHierarchy, x, pos, param.DisjointConstraints.Count);
 
-            // Precedences
-            foreach (var item in param.PrecedenceConstraints)
-            {
-                solver.Add(CreateLinearConstraint(item, pos, x, param.DisjointConstraints.Count));
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPreSolverWrapper));
-            }
-            SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPreSolverWrapper));
-            SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPreSolverWrapper));
-
-            foreach (var item in param.PrecedenceHierarchy)
-            {
-                solver.Add(CreateLinearStrictConstraint1(item, pos, x, param.DisjointConstraints.Count));
-                //solver.Add(CreateLinearStrcktConstraint2(item, pos, x, param.DisjointConstraints.Count));
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPreSolverWrapper));
-            }
-            SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPreSolverWrapper));
-            SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPreSolverWrapper));
+            //Solve            
             SeqLogger.Info("Solver running!", nameof(ORToolsPreSolverWrapper));
             Solver.ResultStatus resultStatus = solver.Solve();
             SeqLogger.Info("Solver finished!", nameof(ORToolsPreSolverWrapper));
 
+            //Solution
             var solution = new List<int>();
             if (resultStatus == Solver.ResultStatus.OPTIMAL)
             {
@@ -89,23 +73,39 @@ namespace SequencePlanner.OR_Tools
             return solution;
         }
 
-        private LinearConstraint CreateLinearConstraint(GTSPPrecedenceConstraint item, Variable[] pos, Variable[] x, int numberOfDisjunctives)
+        private void AddStrictPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceHierarchy, Variable[] x, Variable[] pos, int count)
         {
-            return pos[item.Before.SequencingID] + 1 <= pos[item.After.SequencingID] + numberOfDisjunctives * (2 - x[item.Before.SequencingID] - x[item.After.SequencingID]);
+            foreach (var item in param.PrecedenceHierarchy)
+            {
+                solver.Add(pos[item.Before.SequencingID] + 1 == pos[item.After.SequencingID] + count * (2 - x[item.Before.SequencingID] - x[item.After.SequencingID]));
+                solver.Add(pos[item.Before.SequencingID] + 1 >= pos[item.After.SequencingID]);
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsPreSolverWrapper));
+            }
+            SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPreSolverWrapper));
+            SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPreSolverWrapper));
         }
 
-        private LinearConstraint CreateLinearStrictConstraint1(GTSPPrecedenceConstraint item, Variable[] pos, Variable[] x, int numberOfDisjunctives)
+        private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints, Variable[] x, Variable[] pos, int count)
         {
-            return pos[item.Before.SequencingID] + 1 == pos[item.After.SequencingID] + numberOfDisjunctives * (2 - x[item.Before.SequencingID] - x[item.After.SequencingID]);
+            foreach (var item in param.PrecedenceConstraints)
+            {
+                solver.Add(pos[item.Before.SequencingID] + 1 <= pos[item.After.SequencingID] + count * (2 - x[item.Before.SequencingID] - x[item.After.SequencingID]));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsPreSolverWrapper));
+            }
+            SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPreSolverWrapper));
+            SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPreSolverWrapper));
         }
 
-        private LinearConstraint CreateLinearStrictConstraint2(GTSPPrecedenceConstraint item, Variable[] pos, Variable[] x, int numberOfDisjunctives)
+        private void AddDisjointConstraints(Solver solver, List<GTSPDisjointConstraint> disjointConstraints, Variable[] x)
         {
-            return pos[item.Before.SequencingID] + 1 >= pos[item.After.SequencingID];
+            foreach (var item in param.DisjointConstraints)
+            {
+                solver.Add(CreateDisjointConstraint(item, x));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsPreSolverWrapper));
+            }
         }
 
-
-        private LinearConstraint CreateLinearConstraint(GTSPDisjointConstraint disjoint, Variable[] x)
+        private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint, Variable[] x)
         {
             LinearExpr constraintExpr = new LinearExpr();
             foreach (var item in disjoint.DisjointSet)
