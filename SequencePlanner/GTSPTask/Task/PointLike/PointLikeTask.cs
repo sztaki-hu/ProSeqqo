@@ -41,7 +41,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
                 PrecedenceHierarchy = CreatePrecedenceHierarchiesForInitialSolution(),
                 PrecedenceConstraints = CreatePrecedenceConstraints(true),
-                StartDepot = StartDepot.SequencingID
+                StartDepot = StartDepot.SequencingID,
+                Processes = Processes
             });
             var result = ORPreSolver.Solve();
             if (result.Count > 0)

@@ -13,5 +13,6 @@ namespace SequencePlanner.OR_Tools
         public List<GTSPPrecedenceConstraint> PrecedenceConstraints { get; set; }
         public List<GTSPPrecedenceConstraint> PrecedenceHierarchy { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
+        public List<Process> Processes { get; internal set; }
     }
 }
