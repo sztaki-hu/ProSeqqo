@@ -42,15 +42,15 @@ namespace SequencePlanner.OR_Tools
             AddDisjointConstraints(solver, parameters.DisjointConstraints)    ;                                                      //Add disjoint sets of alternative nodes
             AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                                 //Add order precedences, node1 should be before node2 in the solution if both are selected
             AddStrictPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                       //Add strct order precedences, node1 must be followed by node2 directly
-            AddAlternativeDenyConstraints(solver, parameters.Processes);
+            AddStrictOrderPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                       //Add strct order precedences, node1 must be followed by node2 directly
+            //AddAlternativeDenyConstraints(solver, parameters.Processes);
             SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPointLikePreSolverWrapper));
             SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPointLikePreSolverWrapper));
 
             // Solve
             Solver.ResultStatus resultStatus = RunSolver(solver);
-            return ProcessSolution2(solver, resultStatus);
+            return ProcessSolution1(solver, resultStatus);
         }
-
         private Solver.ResultStatus RunSolver(Solver solver)
         {
             //Solve            
@@ -59,55 +59,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Info("Solver finished!", nameof(ORToolsPointLikePreSolverWrapper));
             return resultStatus;
         }
-
-        private void AddAlternativeDenyConstraints(Solver solver, List<Model.Process> processes)
-        {
-            SeqLogger.Trace("Deny alternative step across: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
-            for (int i = 0; i < processes.Count; i++)
-            {
-                if (processes[i].Alternatives.Count > 2)
-                {
-                    for (int j = 0; j < processes[i].Alternatives.Count - 1; j++)
-                    {
-                        for (int k = j+1; k < processes[i].Alternatives.Count; k++)
-                        {
-                            for (int d = 0; d < processes[i].Alternatives[j].Tasks.Count; d++)
-                            {
-
-                                for (int f = d+1; f < processes[i].Alternatives[k].Tasks.Count; f++)
-                                {
-                                    foreach (var ap in processes[i].Alternatives[k].Tasks[d].Positions)
-                                    {
-                                        foreach (var bp in processes[i].Alternatives[j].Tasks[f].Positions)
-                                        {
-                                            solver.Add(x[ap.SequencingID] != x[bp.SequencingID]);                                   //If ap node and bp node are in the same process and in different alternative, only one alternative must be selected.
-                                            SeqLogger.Trace("Disjoint pair: " + ap + ", " + bp, nameof(ORToolsPointLikePreSolverWrapper)); //Must not to step across form a alternative to b alternative 
-                                        }
-                                    }
-                                }
-                            }
-
-                            //foreach (var a in processes[i].Alternatives[j].Tasks)
-                            //{
-                            //    foreach (var b in processes[i].Alternatives[k].Tasks)
-                            //    {
-                            //        foreach (var ap in a.Positions)
-                            //        {
-                            //            foreach (var bp in b.Positions)
-                            //            {
-                            //                solver.Add(x[ap.SequencingID] != x[bp.SequencingID]);                                   //If ap node and bp node are in the same process and in different alternative, only one alternative must be selected.
-                            //                SeqLogger.Trace("Disjoint pair: "+ap+", "+bp, nameof(ORToolsPointLikePreSolverWrapper)); //Must not to step across form a alternative to b alternative 
-                            //            }                                                                                      
-                            //        }
-                            //    }
-                            //}
-                        }
-                    }
-                }
-            }
-            SeqLogger.Indent--;
-        }
-
+        
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
         {
             SeqLogger.Trace("Precedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
@@ -117,19 +69,33 @@ namespace SequencePlanner.OR_Tools
                 SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
             }
             SeqLogger.Indent--;
-        }
-
-        private void AddStrictPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceHierarchy)
+        }        
+        private void AddStrictPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraintList> precedenceHierarchy)
         {
             SeqLogger.Trace("StrictPrecedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
-            foreach (var item in parameters.StrictOrderPrecedenceHierarchy)
+            foreach (var item in precedenceHierarchy)
             {
-                solver.Add(position[item.Before.SequencingID] + 1 == position[item.After.SequencingID]);
+                solver.Add(CreateStrictOrderPrecedence(item.Before, item.After));
                 SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
             }
             SeqLogger.Indent--;
         }
-
+        private void AddStrictOrderPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraintList> strictOrderPrecedenceHierarchy)
+        {
+            SeqLogger.Trace("StrictOrderPrecedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            foreach (var item in strictOrderPrecedenceHierarchy)
+            {
+                foreach (var b in item.Before)
+                {
+                    foreach (var a in item.After)
+                    {
+                        solver.Add(position[b.SequencingID]+1 == position[a.SequencingID]);
+                        SeqLogger.Trace(new GTSPPrecedenceConstraint(b,a).ToString(), nameof(ORToolsPointLikePreSolverWrapper));
+                    }
+                }     
+            }
+            SeqLogger.Indent--;
+        }
         private void AddDisjointConstraints(Solver solver, List<GTSPDisjointConstraint> disjointConstraints)
         {
             SeqLogger.Trace("DisjointSets: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
@@ -141,6 +107,20 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent--;
         }
 
+        private LinearConstraint CreateStrictOrderPrecedence(List<Model.BaseNode> before, List<Model.BaseNode> after)
+        {
+            LinearExpr beforExpr = new LinearExpr();
+            foreach (var item in before)
+            {
+                beforExpr += x[item.SequencingID];
+            }
+            LinearExpr afterExpr = new LinearExpr();
+            foreach (var item in after)
+            {
+                afterExpr += x[item.SequencingID];
+            }
+            return beforExpr == afterExpr;
+        }
         private void FillAlternativesAndProcesses(Solver solver, List<Model.Process> processes)
         {
             for (int i = 0; i < processes.Count; i++)
@@ -158,8 +138,7 @@ namespace SequencePlanner.OR_Tools
                 }
             }
         }
-
-        private List<int> ProcessSolution2(Solver solver, Solver.ResultStatus resultStatus)
+        private List<int> ProcessSolution1(Solver solver, Solver.ResultStatus resultStatus)
         {
             List<Process> processes = new List<Process>();
             var solution = new List<int>();
@@ -212,8 +191,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Info("ORTools building finished!", nameof(ORToolsPointLikePreSolverWrapper));
             return solution;
         }
-
-        private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint, Variable[] x)
+        private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint)
         {
             LinearExpr constraintExpr = new LinearExpr();
             foreach (var item in disjoint.DisjointSet)
@@ -223,7 +201,6 @@ namespace SequencePlanner.OR_Tools
             LinearConstraint contraint = constraintExpr == 1.0;
             return contraint;
         }
-
         private string DecodeStatusCode(Solver.ResultStatus status)
         {
             return status switch
