@@ -54,8 +54,12 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PointLike_PosProcPrecedences.txt", "-o", outdir + "\\PointLike_PosProcPrecedences_out.txt", "-g", graph + "\\PointLike_PosProcPrecedences_graph.dot", "-d" };
                     //args = new string[] { "-i", example + "\\PointLike_PosPrecedences.txt",     "-o", outdir + "\\PointLike_PosPrecedences_out.txt",     "-g", graph + "\\PointLike_PosPrecedences_graph.dot",     "-d" };
                     //args = new string[] { "-i", example + "\\LocalTests/DEV_LL.txt",            "-o", outdir + "\\LocalTests/DEV_LL_out.txt",            "-g", graph + "\\LocalTests/DEV_LL_graph.dot",            "-d" };
-                    args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        "-g", graph + "\\seqtest_graph.dot",                      "-d" };
-                    
+                    //args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        "-g", graph + "\\seqtest_graph.dot",                      "-d" };
+                    args = new string[] { "-i", example + "\\seqtest2.txt",                      "-o", outdir + "\\seqtest2_o.json",                        "-g", graph + "\\seqtest2_graph.dot",                      "-d" };
+                    //args = new string[] { "-i", example + "\\etalon.txt",                      "-o", outdir + "\\etalon_o.json",                        "-g", graph + "\\etalon_graph.dot",                      "-d" };
+                    //args = new string[] { "-i", example + "\\seqtest3.txt",                      "-o", outdir + "\\seqtest3_o.json",                        "-g", graph + "\\seqtest3_graph.dot",                      "-d" };
+                    //args = new string[] { "-i", example + "\\seq_fill_half.txt",                      "-o", outdir + "\\seq_fill_half_o.json",                        "-g", graph + "\\seq_fill_half_graph.dot",                      "-d" };
+                    //args = new string[] { "-i", example + "\\seq_contours_half.txt",                      "-o", outdir + "\\seq_contours_half.json",                        "-g", graph + "\\seq_contours_half.dot",                      "-d" };
                     Help(args);
                     input = Input(args);
                     output = Output(args);
