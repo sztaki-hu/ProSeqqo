@@ -62,31 +62,50 @@ namespace SequencePlanner.OR_Tools
 
         private void AddAlternativeDenyConstraints(Solver solver, List<Model.Process> processes)
         {
+            SeqLogger.Trace("Deny alternative step across: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
             for (int i = 0; i < processes.Count; i++)
             {
                 if (processes[i].Alternatives.Count > 2)
                 {
                     for (int j = 0; j < processes[i].Alternatives.Count - 1; j++)
                     {
-                        for (int k = j; k < processes[i].Alternatives.Count; k++)
+                        for (int k = j+1; k < processes[i].Alternatives.Count; k++)
                         {
-                            foreach (var a in processes[i].Alternatives[j].Tasks)
+                            for (int d = 0; d < processes[i].Alternatives[j].Tasks.Count; d++)
                             {
-                                foreach (var b in processes[i].Alternatives[k].Tasks)
+
+                                for (int f = d+1; f < processes[i].Alternatives[k].Tasks.Count; f++)
                                 {
-                                    foreach (var ap in a.Positions)
+                                    foreach (var ap in processes[i].Alternatives[k].Tasks[d].Positions)
                                     {
-                                        foreach (var bp in b.Positions)
+                                        foreach (var bp in processes[i].Alternatives[j].Tasks[f].Positions)
                                         {
-                                            solver.Add(x[ap.SequencingID] != x[bp.SequencingID]);                               //If ap node and bp node are in the same process and in different alternative, only one alternative must be selected.
-                                        }                                                                                       //Must not to step across form a alternative to b alternative 
+                                            solver.Add(x[ap.SequencingID] != x[bp.SequencingID]);                                   //If ap node and bp node are in the same process and in different alternative, only one alternative must be selected.
+                                            SeqLogger.Trace("Disjoint pair: " + ap + ", " + bp, nameof(ORToolsPointLikePreSolverWrapper)); //Must not to step across form a alternative to b alternative 
+                                        }
                                     }
                                 }
                             }
+
+                            //foreach (var a in processes[i].Alternatives[j].Tasks)
+                            //{
+                            //    foreach (var b in processes[i].Alternatives[k].Tasks)
+                            //    {
+                            //        foreach (var ap in a.Positions)
+                            //        {
+                            //            foreach (var bp in b.Positions)
+                            //            {
+                            //                solver.Add(x[ap.SequencingID] != x[bp.SequencingID]);                                   //If ap node and bp node are in the same process and in different alternative, only one alternative must be selected.
+                            //                SeqLogger.Trace("Disjoint pair: "+ap+", "+bp, nameof(ORToolsPointLikePreSolverWrapper)); //Must not to step across form a alternative to b alternative 
+                            //            }                                                                                      
+                            //        }
+                            //    }
+                            //}
                         }
                     }
                 }
             }
+            SeqLogger.Indent--;
         }
 
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
