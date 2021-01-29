@@ -353,26 +353,22 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             return taskResult;
         }
 
-        public List<GTSPPrecedenceConstraint> CreatePrecedenceHierarchiesForInitialSolution()
+        public List<GTSPPrecedenceConstraintList> CreatePrecedenceHierarchiesForInitialSolution()
         {
-            var prec = new List<GTSPPrecedenceConstraint>();
+            var prec = new List<GTSPPrecedenceConstraintList>();
             foreach (var alternative in Alternatives)
             {
-                if(alternative.Tasks.Count>1)
+                if (alternative.Tasks.Count >= 2)
+                {
+                    GTSPPrecedenceConstraintList tmp = null;
                     for (int i = 0; i < alternative.Tasks.Count-1; i++)
                     {
-                       // for (int j = i+1; j < alternative.Tasks.Count; j++)
-                       // {
-                            foreach (var p in alternative.Tasks[i].Positions)
-                            {
-                                //foreach (var p2 in alternative.Tasks[j].Positions)
-                                foreach (var p2 in alternative.Tasks[i+1].Positions)
-                                {
-                                    prec.Add(new GTSPPrecedenceConstraint(p, p2));
-                                }
-                            }
-                       // }
+                        tmp = new GTSPPrecedenceConstraintList() ;
+                        tmp.Before.AddRange(alternative.Tasks[i].Positions);
+                        tmp.After.AddRange(alternative.Tasks[i + 1].Positions);
+                        prec.Add(tmp);
                     }
+                }
             }
             return prec;
         }

@@ -60,6 +60,7 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\seqtest3.txt",                      "-o", outdir + "\\seqtest3_o.json",                        "-g", graph + "\\seqtest3_graph.dot",                      "-d" };
                     //args = new string[] { "-i", example + "\\seq_fill_half.txt",                      "-o", outdir + "\\seq_fill_half_o.json",                        "-g", graph + "\\seq_fill_half_graph.dot",                      "-d" };
                     //args = new string[] { "-i", example + "\\seq_contours_half.txt",                      "-o", outdir + "\\seq_contours_half.json",                        "-g", graph + "\\seq_contours_half.dot",                      "-d" };
+
                     Help(args);
                     input = Input(args);
                     output = Output(args);
