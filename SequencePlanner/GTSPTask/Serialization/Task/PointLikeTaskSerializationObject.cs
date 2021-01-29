@@ -119,9 +119,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             foreach (var item in ProcessHierarchy)
             {
                 Process proc = FindProcess(item.ProcessID, pointLikeTask);
-                Alternative alter = FindAlternative(item.AlternativeID, pointLikeTask);
-                Model.Task task = FindTask(item.TaskID, pointLikeTask);
-                Position position = FindPosition(item.PositionID, pointLikeTask);
 
                 if (proc == null)
                 {
@@ -132,6 +129,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     pointLikeTask.Processes.Add(proc);
                 }
 
+                Alternative alter = FindAlternative(item.AlternativeID, pointLikeTask, proc);
+                
                 if (alter == null)
                 {
                     alter = new Alternative()
@@ -142,6 +141,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     proc.Alternatives.Add(alter);
                 }
 
+                Model.Task task = FindTask(item.TaskID, pointLikeTask, alter);
+                
                 if (task == null)
                 {
                     task = new Model.Task
@@ -151,6 +152,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     pointLikeTask.Tasks.Add(task);
                     alter.Tasks.Add(task);
                 }
+           
+                Position position = FindPosition(item.PositionID, pointLikeTask);
 
                 if (position == null)
                 {
@@ -211,26 +214,42 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return null;
         }
-        public Alternative FindAlternative(int userID, PointLikeTask task)
+        public Alternative FindAlternative(int userID, PointLikeTask task, Process process)
         {
-            foreach (var item in task.Alternatives)
+            if (process != null)
             {
-                if (item.UserID == userID)
+                foreach (var item in process.Alternatives)
                 {
-                    return item;
+                    if (item.UserID == userID)
+                        return item;
                 }
             }
+            //foreach (var item in task.Alternatives)
+            //{
+            //    if (item.UserID == userID)
+            //    {
+            //        return item;
+            //    }
+            //}
             return null;
         }
-        public Model.Task FindTask(int userID, PointLikeTask task)
+        public Model.Task FindTask(int userID, PointLikeTask task, Alternative alternative)
         {
-            foreach (var item in task.Tasks)
+            if (alternative != null)
             {
-                if (item.UserID == userID)
+                foreach (var item in alternative.Tasks)
                 {
-                    return item;
+                    if (item.UserID == userID)
+                        return item;
                 }
             }
+            //foreach (var item in task.Tasks)
+            //{
+            //    if (item.UserID == userID)
+            //    {
+            //        return item;
+            //    }
+            //}
             return null;
         }
         public Position FindPosition(int userID, PointLikeTask task)
