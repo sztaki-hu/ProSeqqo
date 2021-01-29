@@ -209,22 +209,15 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                         var constraint = new GTSPDisjointConstraint();
                         for (int j = 0; j < process.Alternatives.Count; j++)
                         {
-                            if (taskNumberOfAlternatives[j] < maxTaskNumber)
-                            {
+                            if (taskNumberOfAlternatives[j] <= i)
                                 //Add positions of positions of j. alternative last layer
-                                foreach (var position in process.Alternatives[j].Tasks[taskNumberOfAlternatives[j - 1]].Positions)
-                                {
+                                foreach (var position in process.Alternatives[j].Tasks[taskNumberOfAlternatives[j]-1].Positions)
                                     constraint.Add(position);
-                                }
-                            }
                             else
-                            {
                                 //Add positions of positions of j. alternative i.layer
                                 foreach (var position in process.Alternatives[j].Tasks[i].Positions)
-                                {
                                     constraint.Add(position);
-                                }
-                            }
+                            
                         }
                         DisjointConstraints.Add(constraint);
                     }
