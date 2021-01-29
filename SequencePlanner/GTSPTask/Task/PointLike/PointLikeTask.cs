@@ -67,7 +67,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 TimeLimit = TimeLimit,
                 GTSPRepresentation = GTSPRepresentation,
-
+                
             };
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
@@ -86,8 +86,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 Matrix = CreateGTSPMatrix(),
                 DisjointConstraints = CreateDisjointConstraints(),
-                PrecedenceConstraints = CreatePrecedenceConstraints()
-                //StartDepot = startSeqID
+                PrecedenceConstraints = CreatePrecedenceConstraints(),
+                StartDepot = StartDepot.SequencingID
             };
             if (UseMIPprecedenceSolver)
                 GTSPRepresentation.InitialRoutes = CreateInitialRout();

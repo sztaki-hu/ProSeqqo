@@ -29,8 +29,11 @@ namespace SequencePlanner.OR_Tools
             position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count - 1, "pos");       // Int, indicates order of nodes
 
             // Precedences
-            if (parameters.StartDepot > -1)                                                                                          //If Start depo exist, position = 0
+            if (parameters.StartDepot > -1)                                                                                         //If Start depo exist, position = 0 and selected x = 1
+            {
                 solver.Add(position[parameters.StartDepot] == 0.0);
+                solver.Add(x[parameters.StartDepot] == 1.0);
+            }
             AddDisjointConstraints(solver, parameters.DisjointConstraints)    ;                                                      //Add disjoint sets of alternative nodes
             AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                                 //Add order precedences, node1 should be before node2 in the solution if both are selected
             SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPointLikePreSolverWrapper));

@@ -27,18 +27,21 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Info("ORTools building started!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent++;
             Solver solver = Solver.CreateSolver("CBC_MIXED_INTEGER_PROGRAMMING");
-            x = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 1.0, "x");                                                     // Boolean, indicates if node is selected
-            position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count - 1, "pos");            // Int, indicates order of nodes
-            alternativeID = new int[parameters.NumberOfNodes];                                                                       // Alternative ID of Node
-            processID = new int[parameters.NumberOfNodes];                                                                           // Process ID of Node
-            FillAlternativesAndProcesses(solver, parameters.Processes);                                                              // Fill ProcessID and AlternativeID
+            x = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 1.0, "x");                                                    // Boolean, indicates if node is selected
+            position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count - 1, "pos");      // Int, indicates order of nodes
+            alternativeID = new int[parameters.NumberOfNodes];                                                                      // Alternative ID of Node
+            processID = new int[parameters.NumberOfNodes];                                                                          // Process ID of Node
+            FillAlternativesAndProcesses(solver, parameters.Processes);                                                             // Fill ProcessID and AlternativeID
 
             // Precedences
-            if (parameters.StartDepot > -1)                                                                                          //If Start depo exist, position = 0
+            if (parameters.StartDepot > -1)                                                                                         //If Start depo exist, position = 0 and selected x = 1
+            {
                 solver.Add(position[parameters.StartDepot] == 0.0);
+                solver.Add(x[parameters.StartDepot] == 1.0);
+            }
             AddDisjointConstraints(solver, parameters.DisjointConstraints)    ;                                                      //Add disjoint sets of alternative nodes
-            AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                                      //Add order precedences, node1 should be before node2 in the solution if both are selected
-            AddStrictPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                                  //Add strct order precedences, node1 must be followed by node2 directly
+            AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                                 //Add order precedences, node1 should be before node2 in the solution if both are selected
+            AddStrictPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                       //Add strct order precedences, node1 must be followed by node2 directly
             AddAlternativeDenyConstraints(solver, parameters.Processes);
             SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPointLikePreSolverWrapper));
             SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPointLikePreSolverWrapper));
