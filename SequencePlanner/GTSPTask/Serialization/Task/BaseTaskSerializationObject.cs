@@ -2,6 +2,7 @@
 using SequencePlanner.GTSPTask.Serialization.SerializationObject;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 using SequencePlanner.GTSPTask.Task.Base;
+using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System;
 using System.Collections.Generic;
@@ -108,6 +109,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 if (newPosition.UserID == FinishDepot)
                     task.FinishDepot = newPosition;
             }
+            if ((StartDepot != null && StartDepot != -1) && task.StartDepot == null)
+                SeqLogger.Error("StartDepot not exist position!", nameof(BaseTaskSerializationObject));
+            if ((FinishDepot != null && FinishDepot != -1) && task.FinishDepot == null)
+                SeqLogger.Error("FinishDepot not exist as position!", nameof(BaseTaskSerializationObject));
             task.TimeLimit = TimeLimit;
             task.PositionMatrix.DistanceFunction = DistanceFunction.ToDistanceFunction();
             task.PositionMatrix.ResourceFunction = ResourceFunction.ToResourceFunction();
