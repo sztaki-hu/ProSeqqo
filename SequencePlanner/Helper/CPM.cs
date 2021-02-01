@@ -40,11 +40,11 @@ namespace SequencePlanner.Helper
             return path;
         }
 
-        public BaseNode PreviousNode(int B)
+        public BaseNode PreviousNode(BaseNode B)
         {
             foreach (var edge in Edges)
             {
-                if (edge.B.SequencingID == B)
+                if (edge.B.SequencingID == B.SequencingID)
                     return edge.A;
             }
             throw new SequencerException("CPM error!");
