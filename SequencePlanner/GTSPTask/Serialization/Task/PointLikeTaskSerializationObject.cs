@@ -214,6 +214,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return null;
         }
+
         public Alternative FindAlternative(int userID, PointLikeTask task, Process process)
         {
             if (process != null)
@@ -224,15 +225,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                         return item;
                 }
             }
-            //foreach (var item in task.Alternatives)
-            //{
-            //    if (item.UserID == userID)
-            //    {
-            //        return item;
-            //    }
-            //}
             return null;
         }
+
         public Model.Task FindTask(int userID, PointLikeTask task, Alternative alternative)
         {
             if (alternative != null)
@@ -243,15 +238,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                         return item;
                 }
             }
-            //foreach (var item in task.Tasks)
-            //{
-            //    if (item.UserID == userID)
-            //    {
-            //        return item;
-            //    }
-            //}
             return null;
         }
+
         public Position FindPosition(int userID, PointLikeTask task)
         {
             foreach (var item in task.PositionMatrix.Positions)

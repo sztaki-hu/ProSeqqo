@@ -101,7 +101,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Trace("DisjointSets: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.DisjointConstraints)
             {
-                solver.Add(CreateDisjointConstraint(item, x));
+                solver.Add(CreateDisjointConstraint(item));
                 SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
             }
             SeqLogger.Indent--;

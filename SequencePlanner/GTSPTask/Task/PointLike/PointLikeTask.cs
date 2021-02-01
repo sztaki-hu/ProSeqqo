@@ -62,16 +62,16 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         {
             SeqLogger.Info("RunModel started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
+            //ChangeAlternatives here
             GenerateModel();
             var orToolsParam = new ORToolsTask()
             {
                 TimeLimit = TimeLimit,
-                GTSPRepresentation = GTSPRepresentation,
-                
+                GTSPRepresentation = GTSPRepresentation
             };
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
-            var result = ResolveSolution(orTools.Solve());
+            var result = ResolveSolution(orTools.Solve()); //ChangeBack Alternatives here
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
             result.ToString();
@@ -95,8 +95,6 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             SeqLogger.Indent--;
             SeqLogger.Info("Model generation finished!", nameof(PointLikeTask));
         }
-
-        
 
         private void CreateHierarchy()
         {
