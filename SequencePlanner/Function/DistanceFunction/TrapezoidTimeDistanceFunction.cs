@@ -1,30 +1,37 @@
 ﻿using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System;
+using System.Collections.Generic;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
-    public class TrapezoidTimeDistanceFunction : IDistanceFunction
+    public class TrapezoidTimeDistanceFunction : DistanceFunction
     {
-        public string FunctionName { get { return "TrapezoidTime"; } }
         public double[] MaxAcceleration;
         public double[] MaxSpeed;
         protected double[] JointThresholdTime;
         protected double[] JointThresholdDist;
 
-        public TrapezoidTimeDistanceFunction(double[] maxAcceleration, double[] maxSpeed)
+
+        public TrapezoidTimeDistanceFunction(double[] maxAcceleration, double[] maxSpeed) : base()
         {
+            FunctionName = "TrapezoidTime";
             MaxAcceleration = maxAcceleration;
             MaxSpeed = maxSpeed;
             InitParameters();
             Validate();
         }
-        public virtual double ComputeDistance(Position A, Position B)
+
+        public override double ComputeDistance(Position A, Position B)
         {
-            return TrapezoidTimeCalculation(A, B, false);
+            var givenDistance = GetStrictEdgeWeight(A, B);
+            if (givenDistance != null)
+                return givenDistance.Weight;
+            else
+                return TrapezoidTimeCalculation(A, B, false);
         }
 
-        public void Validate()
+        public override void Validate()
         {
             if (MaxAcceleration.Length != MaxSpeed.Length)
                 throw new SequencerException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
