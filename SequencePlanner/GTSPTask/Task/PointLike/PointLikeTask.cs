@@ -62,7 +62,6 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         {
             SeqLogger.Info("RunModel started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
-            //ChangeAlternatives here
             GenerateModel();
             var orToolsParam = new ORToolsTask()
             {
@@ -71,7 +70,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             };
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
-            var result = ResolveSolution(orTools.Solve()); //ChangeBack Alternatives here
+            var result = ResolveSolution(orTools.Solve());
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
             result.ToString();
@@ -82,6 +81,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         {
             SeqLogger.Info("Model generation started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
+            if (UseShortcutInAlternatives)
+                CreateAlternativeShortcuts();
             GTSPRepresentation = new PointLikeGTSPRepresentation()
             {
                 Matrix = CreateGTSPMatrix(),
@@ -94,6 +95,28 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             SeqLogger.Indent--;
             SeqLogger.Info("Model generation finished!", nameof(PointLikeTask));
+        }
+
+        private void CreateAlternativeShortcuts()
+        {
+            for (int i = 0; i < Alternatives.Count; i++)
+            {
+                if (Alternatives[i].Tasks.Count > 1)                                                                     
+                {
+                    var shortcut = new AlternativeShortcut();                                                           //Create alternative with shortcut for every alternative
+                    shortcut.Assimilate(Alternatives[i]);                                                               //Init with the original, it is saved inside the new one.
+                    shortcut.CreateShortcut(PositionMatrix.DistanceFunction, PositionMatrix.ResourceFunction);          //Create shortcuts between every position of first and last tasks.
+                    Alternatives[i] = shortcut;                                                                         //Change the alternatives for the new ones
+                    foreach (var process in Processes)                                                                  //also in processes.
+                    {
+                        for (int j = 0; j < process.Alternatives.Count; j++)
+                        {
+                            if (process.Alternatives[j].GlobalID == shortcut.GlobalID)
+                                process.Alternatives[j] = shortcut;
+                        }
+                    }
+                }
+            }
         }
 
         private void CreateHierarchy()
@@ -346,8 +369,14 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 taskResult.Costs.Add(GTSPRepresentation.Matrix[taskResult.PositionResult[i - 1].SequencingID, taskResult.PositionResult[i].SequencingID]);
                 taskResult.CostSum += taskResult.Costs[i - 1];
             }
-           
+            if (UseShortcutInAlternatives)
+                taskResult = ResolveSolutionWithAlternativeShortcuts(taskResult);
             SeqLogger.Info("Solution resolved!", nameof(PointLikeTask));
+            return taskResult;
+        }
+
+        private PointTaskResult ResolveSolutionWithAlternativeShortcuts(PointTaskResult taskResult)
+        {
             return taskResult;
         }
 
