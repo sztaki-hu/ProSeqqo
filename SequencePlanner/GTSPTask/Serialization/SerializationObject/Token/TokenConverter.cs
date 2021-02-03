@@ -1,4 +1,5 @@
 ﻿using SequencePlanner.Helper;
+using SequencePlanner.Model;
 using System;
 using System.Collections.Generic;
 
@@ -138,6 +139,40 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                     }
                 }
                 return hierarchy;
+            }
+            catch (Exception e)
+            {
+                throw new SequencerException("Can not phrase header " + header, e);
+            }
+        }
+
+        public static StrictEdgeWeightSetSerializationObject GetStrictEdgeWeightSet(string header, SEQTokenizer tokenizer)
+        {
+            try
+            {
+                var edgeSet = new StrictEdgeWeightSetSerializationObject();
+                foreach (var token in tokenizer.Tokens)
+                {
+                    if (token.Header.ToUpper().Equals(header.ToUpper()))
+                    {
+                        for (int i = 0; i < token.Lines.Count; i++)
+                        {
+                            string[] line = token.Lines[i].Line.Split(";");
+                            StrictEdgeWeightSerializationObject edge = new StrictEdgeWeightSerializationObject
+                            {
+                                A = Int32.Parse(line[0]),
+                                B = Int32.Parse(line[1]),
+                                Weight = Double.Parse(line[2])
+                            };
+                            if (line.Length > 3)
+                                edge.Bidirectional = Boolean.Parse(line[3]);
+                            edgeSet.Weights.Add(edge);
+                        }
+                        SeqLogger.Info(token.Header + ": " + edgeSet.Weights.Count + "weights found", nameof(TokenConverter));
+                    }
+                    
+                }
+                return edgeSet;
             }
             catch (Exception e)
             {

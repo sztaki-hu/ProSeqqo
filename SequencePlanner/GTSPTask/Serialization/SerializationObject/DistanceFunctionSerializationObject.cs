@@ -2,6 +2,7 @@
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
+using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 {
@@ -11,14 +12,17 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public DistanceMatrixSerializationObject DistanceMatrix { get; set; }
         public double[] TrapezoidAcceleration { get; set; }
         public double[] TrapezoidSpeed { get; set; }
+        public StrictEdgeWeightSetSerializationObject StrictUserEdgeWeights { get; set; }
 
 
         public DistanceFunctionSerializationObject()
         {
         }
+
         public DistanceFunctionSerializationObject(PositionMatrix positionMatrix)
         {
             Function = positionMatrix.DistanceFunction.FunctionName;
+            StrictUserEdgeWeights = new StrictEdgeWeightSetSerializationObject(positionMatrix.DistanceFunction.StrictUserEdgeWeights);
 
             if (Function == "MatrixDistance")
             {
@@ -49,6 +53,8 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 TrapezoidAcceleration = ((TrapezoidTimeDistanceFunction)positionMatrix.DistanceFunction).MaxAcceleration;
                 TrapezoidSpeed = ((TrapezoidTimeDistanceFunction)positionMatrix.DistanceFunction).MaxSpeed;
             }
+
+
         }
 
         public string ToSEQShort()
@@ -96,10 +102,16 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 seq += "PositionMatrix: " + newline;
                 seq += DistanceMatrix.ToSEQ();
             }
+            if (StrictUserEdgeWeights != null && StrictUserEdgeWeights.Weights.Count>0)
+            {
+                seq += "StrictEdgeWeights: " + newline;
+                seq += StrictUserEdgeWeights.ToSEQ();
+                
+            }
             return seq;
         }
 
-        public IDistanceFunction ToDistanceFunction()
+        public IDistanceFunction ToDistanceFunction(List<Position> positions)
         {
             IDistanceFunction newDistanceFunction = Function switch
             {
@@ -111,11 +123,13 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 "MatrixDistance" => new MatrixDistanceFunction(DistanceMatrix.DistanceMatrix, DistanceMatrix.IDHeader),
                 _ => throw new SequencerException("DistanceFunction is unknown!"),
             };
+            newDistanceFunction.StrictUserEdgeWeights = StrictUserEdgeWeights.ToStrictEdgeWeightSet(positions);
             return newDistanceFunction;
         }
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             Function = TokenConverter.GetStringByHeader("DistanceFunction", tokenizer);
+            StrictUserEdgeWeights = TokenConverter.GetStrictEdgeWeightSet("StrictEdgeWeights", tokenizer);
             if (Function != null)
             {
                 if (Function == "MatrixDistance")
@@ -128,7 +142,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                     TrapezoidAcceleration = TokenConverter.GetDoubleVectorByHeader("TrapezoidAcceleration", tokenizer);
                     TrapezoidSpeed = TokenConverter.GetDoubleVectorByHeader("TrapezoidSpeed", tokenizer);
                 }
-
             }
         }   
     }

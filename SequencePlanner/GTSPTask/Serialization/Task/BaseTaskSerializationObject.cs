@@ -114,7 +114,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             if ((FinishDepot != null && FinishDepot != -1) && task.FinishDepot == null)
                 SeqLogger.Error("FinishDepot not exist as position!", nameof(BaseTaskSerializationObject));
             task.TimeLimit = TimeLimit;
-            task.PositionMatrix.DistanceFunction = DistanceFunction.ToDistanceFunction();
+            task.PositionMatrix.DistanceFunction = DistanceFunction.ToDistanceFunction(task.PositionMatrix.Positions);
             task.PositionMatrix.ResourceFunction = ResourceFunction.ToResourceFunction();
             task.UseMIPprecedenceSolver = UseMIPprecedenceSolver;
         }
