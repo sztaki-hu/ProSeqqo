@@ -8,6 +8,7 @@ namespace SequencePlanner.Model
     {
         private List<StrictEdgeWeight> List { get; set; }
 
+
         public StrictEdgeWeightSet()
         {
             List = new List<StrictEdgeWeight>();
@@ -36,11 +37,12 @@ namespace SequencePlanner.Model
             else
                 return tmp;
         }
+
         public StrictEdgeWeight Get(BaseNode node1, BaseNode node2)
         {
             foreach (var item in List)
             {
-                if ((item.A.GlobalID == node1.GlobalID && item.B.GlobalID == node2.GlobalID) || (item.A.GlobalID == node2.GlobalID && item.B.GlobalID == node1.GlobalID))
+                if (item.FitFor(node1, node2))
                     return item;
             }
             return null;
@@ -56,9 +58,11 @@ namespace SequencePlanner.Model
             List.Add(strictEdge);
         }
 
-        public void Delete(Position A, Position B)
+        public void Delete(Position A, Position B, bool anyDirection = true)
         {
-            List.Remove(Get(A, (BaseNode)B));
+            List.Remove(Get(A, B));
+            if (anyDirection)
+                List.Remove(Get(B, A));
         }
 
         //Delete edges that contains the given position
@@ -72,6 +76,5 @@ namespace SequencePlanner.Model
                 }
             }
         }
-
     }
 }
