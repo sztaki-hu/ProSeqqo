@@ -99,6 +99,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         private void CreateAlternativeShortcuts()
         {
+            SeqLogger.Info("Alternative change started!", nameof(PointLikeTask));
+            SeqLogger.Indent++;
             for (int i = 0; i < Alternatives.Count; i++)
             {
                 if (Alternatives[i].Tasks.Count > 1)                                                                     
@@ -117,6 +119,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     }
                 }
             }
+            SeqLogger.Indent--;
+            SeqLogger.Info("Alternative change finished!", nameof(PointLikeTask));
         }
 
         private void CreateHierarchy()

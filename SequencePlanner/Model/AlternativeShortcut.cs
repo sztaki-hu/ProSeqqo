@@ -42,6 +42,7 @@ namespace SequencePlanner.Model
                 
                 FindShortcuts(distanceFunction,resourceFunction);
             }
+            SeqLogger.Trace(CriticalPaths.Count+" shortcut created in [UID:"+Original.UserID+"] alternative, between: "+FrontProxy.ToString()+" and "+ BackProxy.ToString(), nameof(AlternativeShortcut));
         }
 
         private void FindShortcuts(IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
