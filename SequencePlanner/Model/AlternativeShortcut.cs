@@ -37,9 +37,6 @@ namespace SequencePlanner.Model
             {
                 FrontProxy = Original.Tasks[0];
                 BackProxy = Original.Tasks[Original.Tasks.Count - 1];
-                Tasks.Add(FrontProxy);
-                Tasks.Add(BackProxy);
-                
                 FindShortcuts(distanceFunction,resourceFunction);
             }
             SeqLogger.Trace(CriticalPaths.Count+" shortcut created in [UID:"+Original.UserID+"] alternative, between: "+FrontProxy.ToString()+" and "+ BackProxy.ToString(), nameof(AlternativeShortcut));
@@ -50,8 +47,9 @@ namespace SequencePlanner.Model
             CPM cpm = new CPM(Original.Tasks, distanceFunction, resourceFunction);
             foreach (var openPos in FrontProxy.Positions)
             {
-                CriticalPaths.AddRange(cpm.CalculateCriticelRoute(openPos, BackProxy.Positions));
+                CriticalPaths.AddRange(cpm.CalculateCriticalRoute(openPos, BackProxy.Positions));
             }
+
         }
 
         public double[,] OverrideWeights(double[,] matrix)
