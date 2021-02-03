@@ -32,28 +32,43 @@ namespace SequencePlanner.Helper
 
         public List<CriticalPath> CalculateCriticalRoute(Position openPos, List<Position> positions)
         {
+            foreach (var pos in Tasks[0].Positions)
+            {
+                Values[pos.SequencingID] = 0;
+            }
+
             foreach (var pos in Tasks[1].Positions)
             {
                 Values[pos.SequencingID] = FindEdge(openPos, pos);
             }
 
-            for (int i = 2; i < Tasks.Count-1; i++)
+            for (int i = 1; i < Tasks.Count-1; i++)
             {
-                foreach (var posPrev in Tasks[i].Positions)
+                Position minPos = null;
+                var min = double.MaxValue;
+                for (int j = 0; j < Tasks[i].Positions.Count; j++)
                 {
-                    foreach (var posNext in Tasks[i+1].Positions)
+                    if (Values[Tasks[i].Positions[j].SequencingID] < min)
                     {
-                        var cost = Values[posPrev.SequencingID] + FindEdge(posPrev, posNext);
-                        if (cost < Values[posNext.SequencingID])
-                            Values[posNext.SequencingID] = Values[posPrev.SequencingID] + FindEdge(posPrev, posNext);
+                        min = Values[Tasks[i].Positions[j].SequencingID];
+                        minPos = Tasks[i].Positions[j];
                     }
                 }
+                foreach (var posNext in Tasks[i+1].Positions)
+                {
+                    var cost = Values[minPos.SequencingID] + FindEdge(minPos, posNext);
+                    if (cost < Values[posNext.SequencingID])
+                        Values[posNext.SequencingID] = Values[minPos.SequencingID] + FindEdge(minPos, posNext);
+                }
             }
+            //SeqLogger.Indent++;
             var tmp = new List<CriticalPath>();
             foreach (var pos in positions)
             {
                 tmp.Add(RollbackSolution(openPos, pos));
+                //SeqLogger.Trace("Shortcut between "+openPos+" and "+ pos+" wit cost: "+tmp[tmp.Count-1].Cost, nameof(CPM));
             }
+            //SeqLogger.Indent--;
             return tmp;
         }
 
@@ -70,6 +85,8 @@ namespace SequencePlanner.Helper
             }
             list.Reverse();
             path.Cut = list;
+
+
             return path;
         }
 
