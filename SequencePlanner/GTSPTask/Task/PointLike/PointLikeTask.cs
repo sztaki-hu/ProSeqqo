@@ -20,6 +20,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         public List<GTSPPrecedenceConstraint> ProcessPrecedence { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
         public PointLikeGTSPRepresentation GTSPRepresentation { get; set; }
+        private List<Position> DeletedPositionsOfShortcuts { get; set; }
         public bool UseShortcutInAlternatives { get; set; }
         private int MAX_SEQUENCING_ID = 0;
 
@@ -30,6 +31,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             Processes = new List<Process>();
             PositionPrecedence = new List<GTSPPrecedenceConstraint>();
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
+            DeletedPositionsOfShortcuts = new List<Position>();
         }
 
         protected long[][] CreateInitialRout()
@@ -103,11 +105,21 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             SeqLogger.Indent++;
             for (int i = 0; i < Alternatives.Count; i++)
             {
-                if (Alternatives[i].Tasks.Count > 1)                                                                     
+                if (Alternatives[i].Tasks.Count > 2)                                                                     
                 {
                     var shortcut = new AlternativeShortcut();                                                           //Create alternative with shortcut for every alternative
                     shortcut.Assimilate(Alternatives[i]);                                                               //Init with the original, it is saved inside the new one.
                     shortcut.CreateShortcut(PositionMatrix.DistanceFunction, PositionMatrix.ResourceFunction);          //Create shortcuts between every position of first and last tasks.
+                    //SeqLogger.Trace("Shortcut between "+shortcut.BackProxy+" and "+ pos+" wit cost: "+tmp[tmp.Count-1].Cost, nameof(CPM));
+                    for (int j = 1; j < Alternatives[i].Tasks.Count-1; j++)
+                    {
+                        foreach (var position in Alternatives[i].Tasks[j].Positions)
+                        {
+                            PositionMatrix.Positions.Remove(position);
+                            DeletedPositionsOfShortcuts.Add(position);
+                            SeqLogger.Trace("Deleted position:" + position, nameof(PointLikeTask));
+                        }
+                    }
                     Alternatives[i] = shortcut;                                                                         //Change the alternatives for the new ones
                     foreach (var process in Processes)                                                                  //also in processes.
                     {
@@ -119,6 +131,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     }
                 }
             }
+
             SeqLogger.Indent--;
             SeqLogger.Info("Alternative change finished!", nameof(PointLikeTask));
         }

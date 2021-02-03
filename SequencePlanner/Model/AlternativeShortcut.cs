@@ -9,14 +9,16 @@ namespace SequencePlanner.Model
     {
         public Alternative Original { get; set; }
         public Task FrontProxy { get; set; }
-        public List<CriticalPath> CriticalPaths{get;set;}
         public Task BackProxy { get; set; }
+        public List<CriticalPath> CriticalPaths{get;set;}
+        public StrictEdgeWeightSet StrictSystemEdgeWeightSet { get; set; }
 
         public AlternativeShortcut():base()
         {
             Name = UserID + "_Alternative_" + GlobalID;
             Tasks = new List<Task>();
             CriticalPaths = new List<CriticalPath>();
+            StrictSystemEdgeWeightSet = new StrictEdgeWeightSet();
         }
         
         public void Assimilate(Alternative alternative)
@@ -27,7 +29,7 @@ namespace SequencePlanner.Model
             this.ResourceID = alternative.ResourceID;
             this.Name = alternative.Name;
             this.Virtual = alternative.Virtual;
-            this.Tasks = alternative.Tasks;
+            //this.Tasks = alternative.Tasks;
             Original = alternative;
         }
 
@@ -37,9 +39,16 @@ namespace SequencePlanner.Model
             {
                 FrontProxy = Original.Tasks[0];
                 BackProxy = Original.Tasks[Original.Tasks.Count - 1];
+                Tasks.Add(FrontProxy);
+                Tasks.Add(BackProxy);
                 FindShortcuts(distanceFunction,resourceFunction);
             }
             SeqLogger.Trace(CriticalPaths.Count+" shortcut created in [UID:"+Original.UserID+"] alternative, between: "+FrontProxy.ToString()+" and "+ BackProxy.ToString(), nameof(AlternativeShortcut));
+            foreach (var path in CriticalPaths)
+            {
+                StrictSystemEdgeWeightSet.Add(new StrictEdgeWeight(path.Front, path.Back, path.Cost));
+                SeqLogger.Trace("\tContains "+path.Cut.Count+" in cut with "+path.Cost+" cost, between: "+path.Front.ToString()+" and "+ path.Back.ToString(), nameof(AlternativeShortcut));
+            }
         }
 
         private void FindShortcuts(IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
@@ -49,7 +58,6 @@ namespace SequencePlanner.Model
             {
                 CriticalPaths.AddRange(cpm.CalculateCriticalRoute(openPos, BackProxy.Positions));
             }
-
         }
 
         public double[,] OverrideWeights(double[,] matrix)
