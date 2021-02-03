@@ -47,7 +47,7 @@ namespace SequencePlanner.Model
             foreach (var path in CriticalPaths)
             {
                 StrictSystemEdgeWeightSet.Add(new StrictEdgeWeight(path.Front, path.Back, path.Cost));
-                SeqLogger.Trace("\tContains "+path.Cut.Count+" in cut with "+path.Cost+" cost, between: "+path.Front.ToString()+" and "+ path.Back.ToString(), nameof(AlternativeShortcut));
+                SeqLogger.Trace("Contains "+path.Cut.Count+" in cut with "+path.Cost+" cost, between: "+path.Front.ToString()+" and "+ path.Back.ToString(), nameof(AlternativeShortcut));
             }
         }
 

@@ -101,12 +101,14 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         private void CreateAlternativeShortcuts()
         {
-            SeqLogger.Info("Alternative change started!", nameof(PointLikeTask));
+            SeqLogger.Info("Alternative shortcut creation started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
             for (int i = 0; i < Alternatives.Count; i++)
             {
                 if (Alternatives[i].Tasks.Count > 2)                                                                     
                 {
+                    SeqLogger.Trace("Alternative "+ Alternatives[i] +" in process!", nameof(PointLikeTask));
+                    SeqLogger.Indent++;
                     var shortcut = new AlternativeShortcut();                                                           //Create alternative with shortcut for every alternative
                     shortcut.Assimilate(Alternatives[i]);                                                               //Init with the original, it is saved inside the new one.
                     shortcut.CreateShortcut(PositionMatrix.DistanceFunction, PositionMatrix.ResourceFunction);          //Create shortcuts between every position of first and last tasks.
@@ -129,11 +131,13 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                                 process.Alternatives[j] = shortcut;
                         }
                     }
+                    SeqLogger.Indent--;
+                    //SeqLogger.Info("Alternative shortcut creation finished!", nameof(PointLikeTask));
                 }
             }
 
             SeqLogger.Indent--;
-            SeqLogger.Info("Alternative change finished!", nameof(PointLikeTask));
+            SeqLogger.Info("Alternative shortcut creation finished!", nameof(PointLikeTask));
         }
 
         private void CreateHierarchy()

@@ -85,7 +85,7 @@ namespace SequencePlanner.Helper
             }
             list.Reverse();
             path.Cut = list;
-
+            path.Cost = Values[to.SequencingID];
 
             return path;
         }
