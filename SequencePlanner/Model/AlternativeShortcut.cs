@@ -28,6 +28,7 @@ namespace SequencePlanner.Model
             this.Name = alternative.Name;
             this.Virtual = alternative.Virtual;
             this.Tasks = alternative.Tasks;
+            Original = alternative;
         }
 
         public void CreateShortcut(IDistanceFunction distanceFunction, IResourceFunction resourceFunction)

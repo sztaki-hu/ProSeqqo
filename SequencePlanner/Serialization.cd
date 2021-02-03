@@ -17,14 +17,14 @@
         <Point X="13.958" Y="3.25" />
       </Path>
     </InheritanceLine>
-    <AssociationLine Name="PositionPrecedences" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.OrderConstraintSerializationObject">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.339" Y="1.186" />
-      </MemberNameLabel>
-    </AssociationLine>
     <AssociationLine Name="ProcessHierarchy" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.ProcessHierarchySerializationObject">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.071" Y="0.84" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="PositionPrecedences" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.OrderConstraintSerializationObject">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.339" Y="1.186" />
       </MemberNameLabel>
     </AssociationLine>
     <AssociationLine Name="ProcessPrecedences" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.OrderConstraintSerializationObject">
@@ -37,8 +37,8 @@
       <FileName>GTSPTask\Serialization\Task\PointLikeTaskSerializationObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="PositionPrecedences" />
       <Property Name="ProcessHierarchy" />
+      <Property Name="PositionPrecedences" />
       <Property Name="ProcessPrecedences" />
     </ShowAsCollectionAssociation>
   </Class>
@@ -59,11 +59,6 @@
         <Point X="16.396" Y="3.25" />
       </Path>
     </InheritanceLine>
-    <AssociationLine Name="ContourPrecedences" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.OrderConstraintSerializationObject">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.334" Y="0.85" />
-      </MemberNameLabel>
-    </AssociationLine>
     <AssociationLine Name="LineList" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.LineSerializationObject">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.044" Y="0.835" />
@@ -74,18 +69,29 @@
         <Position X="0.113" Y="1.192" />
       </MemberNameLabel>
     </AssociationLine>
+    <AssociationLine Name="ContourPrecedences" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.OrderConstraintSerializationObject">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.334" Y="0.85" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAIAgAAAgIgGAAAAAAABAAAAACAAgAAIAAAAABAAABA=</HashCode>
       <FileName>GTSPTask\Serialization\Task\LineLikeTaskSerializationObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="ContourPrecedences" />
       <Property Name="LineList" />
       <Property Name="LinePrecedences" />
+      <Property Name="ContourPrecedences" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.GTSPTask.Serialization.Task.BaseTaskSerializationObject">
     <Position X="10" Y="3.25" Width="2.25" />
+    <AssociationLine Name="PositionList" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.PositionSerializationObject" FixedFromPoint="true">
+      <Path>
+        <Point X="10" Y="5.25" />
+        <Point X="8" Y="5.25" />
+      </Path>
+    </AssociationLine>
     <AssociationLine Name="DistanceFunction" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.DistanceFunctionSerializationObject" FixedFromPoint="true">
       <Path>
         <Point X="10" Y="6.312" />
@@ -97,12 +103,6 @@
         <Point X="10.438" Y="6.728" />
         <Point X="10.438" Y="9.625" />
         <Point X="8" Y="9.625" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="PositionList" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.PositionSerializationObject" FixedFromPoint="true">
-      <Path>
-        <Point X="10" Y="5.25" />
-        <Point X="8" Y="5.25" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -182,7 +182,7 @@
   <Class Name="SequencePlanner.GTSPTask.Serialization.SerializationObject.DistanceFunctionSerializationObject">
     <Position X="5.25" Y="6" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAABACAAAAAAAAAAIABAAAIAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAQAAAAABACAAAAAAAAAAIABAAEIAAACAAAAAAAAAA=</HashCode>
       <FileName>GTSPTask\Serialization\SerializationObject\DistanceFunctionSerializationObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -208,13 +208,6 @@
     <ShowAsCollectionAssociation>
       <Property Name="Lines" />
     </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="SequencePlanner.GTSPTask.Serialization.SerializationObject.Token.TokenConverter">
-    <Position X="16.25" Y="12.75" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAKAIgAAAAAAAAAAQIAAAAAAAIAAAAEAAAAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Serialization\SerializationObject\Token\TokenConverter.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSPTask.Serialization.SerializationObject.Token.TokenLineDeserializationObject">
     <Position X="16.25" Y="15.75" Width="2.5" />
@@ -272,6 +265,13 @@
     <TypeIdentifier>
       <HashCode>AAKQAAAACAgCAQAAAAAAAAQAQCAAAAAAAAAAACAABAA=</HashCode>
       <FileName>GTSPTask\Serialization\Result\LineLikeResultSerializationObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GTSPTask.Serialization.SerializationObject.Token.TokenConverter">
+    <Position X="16.25" Y="12.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAKAIgAAAAAAAAAAQIAAAAAAAIAAAAEgAAAAAAAAA=</HashCode>
+      <FileName>GTSPTask\Serialization\SerializationObject\Token\TokenConverter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
