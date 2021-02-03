@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Result
 {
-    public class LineTaskResult : TaskResult, ITaskResult
+    public class LineTaskResult : TaskResult
     {
         public List<Line> LineResult { get; set; }
         public List<int> Result { get; set; }

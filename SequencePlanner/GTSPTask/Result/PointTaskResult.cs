@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Result
 {
-    public class PointTaskResult : TaskResult, ITaskResult
+    public class PointTaskResult : TaskResult
     {
         public List<Position> PositionResult { get; set; }
         public List<int> ResultIDs { get; set; }
