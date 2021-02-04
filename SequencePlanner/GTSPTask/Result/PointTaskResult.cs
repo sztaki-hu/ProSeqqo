@@ -1,4 +1,6 @@
-﻿using SequencePlanner.Model;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Model;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Result
@@ -12,6 +14,11 @@ namespace SequencePlanner.GTSPTask.Result
         {
             PositionResult = new List<Position>();
             ResultIDs = new List<int>();
+        }
+
+        public void ToLog(LogLevel info)
+        {
+            throw new NotImplementedException();
         }
     }
 }
