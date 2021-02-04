@@ -9,12 +9,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
     public class PointLikeResultSerializationObject: TaskResultSerializationObject
     {
         public List<Position> PositionResult { get; set; }
-        public List<int> ResultIDs { get; set; }
 
         public PointLikeResultSerializationObject(PointTaskResult result): base(result)
         {
             PositionResult = result.PositionResult;
-            ResultIDs = result.ResultIDs;
         }
 
         public PointLikeResultSerializationObject(List<string> seqString) : base(seqString)

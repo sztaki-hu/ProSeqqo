@@ -21,14 +21,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         public LineLikeResultSerializationObject(LineTaskResult result): base(result)
         {
             CostBetweenLines = result.CostBetweenLines;
-            CostBetweenLinesNoPenalty = result.CostBetweenLinesNoPenalty;
             Penalty = result.Penalty;
-            CostSumNoPenalty = result.CostSumNoPenalty;
-            CostOfLines = result.CostOfLines;
-            CostOfLinesList = result.CostOfLinesList;
             LineResults = new List<LineSerializationObject>();
-            Result = result.Result;
-            ResultWithVirtual = result.ResultWithVirtual;
             foreach (var line in result.LineResult)
             {
                 LineResults.Add(new LineSerializationObject()

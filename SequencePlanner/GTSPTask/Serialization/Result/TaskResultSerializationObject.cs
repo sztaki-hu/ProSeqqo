@@ -17,9 +17,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public TaskResultSerializationObject(TaskResult result)
         {
-            Time = result.Time.ToString();
+            Time = result.FullTime.ToString();
             SolutionRaw = result.SolutionRaw;
-            Costs = result.Costs;
+            Costs = result.CostsRaw;
             CostSum = result.CostSum;
             StatusCode = result.StatusCode;
             StatusMessage = result.StatusMessage;
