@@ -389,10 +389,12 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             validator.Validate(this);
         }
 
-        private PointTaskResult ResolveSolution(TaskResult result)
+        private PointTaskResult ResolveSolution(PointTaskResult result)
         {
-            PointTaskResult taskResult = new PointTaskResult(result);
-            foreach (var raw in taskResult.SolutionRaw)
+            result.Log = SeqLogger.Backlog;
+            var ORoutputRaw = result.SolutionRaw;
+            result.SolutionRaw = new List<long>();
+            foreach (var raw in ORoutputRaw)
             {
                 var find = false;
                 foreach (var position in PositionMatrix.Positions)
@@ -401,8 +403,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     {
                         if (!position.Virtual)
                         {
-                            taskResult.ResultIDs.Add(position.UserID);
-                            taskResult.PositionResult.Add(position);
+                            result.SolutionRaw.Add(position.UserID);
+                            result.PositionResult.Add(position);
                         }
                         else
                         {
@@ -416,15 +418,15 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     throw new SequencerException("Result of OR-Tools can not be resolved, no line found with the SequenceID: " + raw);
             }
 
-            for (int i = 1; i < taskResult.PositionResult.Count; i++)
+            for (int i = 1; i < result.PositionResult.Count; i++)
             {
-                taskResult.Costs.Add(GTSPRepresentation.Matrix[taskResult.PositionResult[i - 1].SequencingID, taskResult.PositionResult[i].SequencingID]);
-                taskResult.CostSum += taskResult.Costs[i - 1];
+                result.CostsRaw.Add(GTSPRepresentation.Matrix[result.PositionResult[i - 1].SequencingID, result.PositionResult[i].SequencingID]);
+                result.CostSum += result.CostsRaw[i - 1];
             }
             if (UseShortcutInAlternatives)
-                taskResult = ResolveSolutionWithAlternativeShortcuts(taskResult);
+                result = ResolveSolutionWithAlternativeShortcuts(result);
             SeqLogger.Info("Solution resolved!", nameof(PointLikeTask));
-            return taskResult;
+            return result;
         }
 
         private PointTaskResult ResolveSolutionWithAlternativeShortcuts(TaskResult taskResult)

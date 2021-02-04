@@ -144,7 +144,7 @@ namespace SequencePlanner.OR_Tools
 
             TaskResult result = new TaskResult()
             {
-                Time = time,
+                FullTime = time,
                 SolutionRaw = rawSolution,
                 StatusCode = routing.GetStatus(),
                 StatusMessage = DecodeStatusCode(routing.GetStatus())
