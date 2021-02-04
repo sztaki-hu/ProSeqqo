@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SequencePlanner.Helper
 {
@@ -6,6 +7,7 @@ namespace SequencePlanner.Helper
     {
         public static LogLevel LogLevel = LogLevel.Trace;
         public static int Indent=0;
+        public static List<string> Backlog { get; set; }
 
         public static void Trace(string message, string nameOfClass = null)
         {
@@ -36,6 +38,11 @@ namespace SequencePlanner.Helper
             WriteLog(LogLevel.Critical, message, nameOfClass);
         }
 
+        public static void InitBacklog()
+        {
+            Backlog.Clear();
+        }
+
         public static void WriteLog(LogLevel level, string message, string nameOfClass = null)
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -55,12 +62,54 @@ namespace SequencePlanner.Helper
                 {
                     indent += "  ";
                 }
-                Console.Write(indent+level.ToString()+":\t");
+                var log = indent + level.ToString() + "   ";
+                Console.Write(indent + level.ToString() + ":\t");
                 Console.ForegroundColor = ConsoleColor.White;
-                if(nameOfClass!=null)
+                if (nameOfClass != null)
+                {
                     Console.Write(nameOfClass + ":\t");
+                    log += nameOfClass + ":   ";
+                }
                 Console.Write(message+"\n");
+                log += message;
+                if (Backlog == null)
+                    Backlog = new List<string>();
+                else
+                    Backlog.Add(log);
             }
+        }
+
+        internal static string ToList(List<double> list)
+        {
+            string tmp = "";
+            for (int i = 0; i < list.Count - 1; i++)
+            {
+                tmp += list[i].ToString("0.##") + "; ";
+            }
+            tmp += list[list.Count - 1];
+            return tmp;
+        }
+
+        public  static string ToList(List<long> list)
+        {
+            string tmp = "";
+            for (int i = 0; i < list.Count - 1; i++)
+            {
+                tmp += list[i] + ", ";
+            }
+            tmp += list[list.Count - 1];
+            return tmp;
+        }
+
+        public static string ToList(List<int> list)
+        {
+            string tmp = "";
+            for (int i = 0; i < list.Count-1; i++)
+            {
+                tmp += list[i] + ", ";
+            }
+            tmp += list[list.Count-1];
+            return tmp;
         }
     }
 
