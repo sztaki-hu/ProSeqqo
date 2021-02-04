@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -65,6 +66,12 @@ namespace SequencePlanner.Model
                 List.Remove(Get(B, A));
         }
 
+
+        public void DeleteAll()
+        {
+            List.Clear();
+        }
+
         //Delete edges that contains the given position
         public void Delete(Position position){
             for (int i = 0; i < List.Count; i++)
@@ -74,6 +81,14 @@ namespace SequencePlanner.Model
                     List.RemoveAt(i);
                     i--;
                 }
+            }
+        }
+        public void ToLog(LogLevel level)
+        {
+            foreach (var edge in List)
+            {
+                SeqLogger.WriteLog(level, edge.ToString() , nameof(StrictEdgeWeightSet));
+
             }
         }
     }
