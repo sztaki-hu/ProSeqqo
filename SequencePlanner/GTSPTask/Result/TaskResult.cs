@@ -1,35 +1,47 @@
-﻿using System;
+﻿using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Result
 {
     public class TaskResult : ITaskResult
     {
-        public TimeSpan Time { get; set; }
-        public List<long> SolutionRaw { get; set; }
-        public List<double> Costs { get; }
-        public double CostSum { get; set; }
-        public int StatusCode { get; set; }
-        public string StatusMessage { get; set; }
+        public TimeSpan FullTime { get; set; }          //Run time of build and execute task
+        public TimeSpan SolverTime { get; set; }        //Run time of OR-Tools VRP solver
+        public List<long> SolutionRaw { get; set; }     //Solution of 
+        public List<double> CostsRaw { get; set; }      //Costs of solution between the steps
+        public double CostSum { get; set; }             //Sum of solution costs (CostsRaw)
+        public int StatusCode { get; set; }             //OR-Tools exit status code
+        public string StatusMessage { get; set; }       //OR-Tools exit message
+        public List<string> Log { get; set; }                 //Console log of task running
 
         public TaskResult(TaskResult task)
         {
-            Time = task.Time;
+            FullTime = task.FullTime;
+            SolverTime = task.SolverTime;
             SolutionRaw = task.SolutionRaw;
+            CostsRaw = task.CostsRaw;
+            CostSum = task.CostSum;
             StatusCode = task.StatusCode;
             StatusMessage = task.StatusMessage;
-            Costs = new List<double>();
-        }
+            Log = task.Log;
+    }
 
         public TaskResult()
         {
+            FullTime = new TimeSpan();
+            SolverTime = new TimeSpan();
             SolutionRaw = new List<long>();
-            Costs = new List<double>();
+            CostsRaw = new List<double>();
+            CostSum = -1;
+            StatusCode = -1;
+            StatusMessage = "Not filled yet!";
+            Log = new List<string>();
         }
 
         public override string ToString()
         {
-            string a = "Time: " + Time;
+            string a = "Time: " + FullTime;
             a += "\nSolution: ";
             foreach (var item in SolutionRaw)
             {
@@ -37,6 +49,29 @@ namespace SequencePlanner.GTSPTask.Result
             }
             a += "\nStatus message: "+StatusMessage;
             return a;
+        }
+
+        public void ToLog(LogLevel lvl)
+        {
+            if(StatusCode == 1)
+            {
+                SeqLogger.Info("StatusCode: " + StatusCode);
+                SeqLogger.Info("StatusMessage: " + StatusMessage);
+                SeqLogger.Info("FullTime: "+ FullTime);
+                SeqLogger.Info("SolverTime: " + SolverTime);
+                SeqLogger.Info("SolutionRaw: " + SeqLogger.ToList(SolutionRaw));
+                SeqLogger.Info("CostsRaw: " + SeqLogger.ToList(CostsRaw));
+                SeqLogger.Info("CostSum: " + CostSum);
+                SeqLogger.Info("Log size: " + Log.Count+" lines");
+            }
+            else
+            {
+                SeqLogger.Info("StatusCode: " + StatusCode);
+                SeqLogger.Info("StatusMessage: " + StatusMessage);
+                SeqLogger.Info("FullTime: "+ FullTime);
+                SeqLogger.Info("SolverTime: " + SolverTime);
+                SeqLogger.Info("Log size: " + Log.Count+" lines");
+            }
         }
     }
 }
