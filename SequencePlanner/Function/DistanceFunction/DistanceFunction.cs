@@ -22,7 +22,8 @@ namespace SequencePlanner.Function.DistanceFunction
             var system = StrictSystemEdgeWeights.Get(A, B);
             if (system != null)
             {
-                SeqLogger.Warning("System generated edge weight ovveride user given, between positions with " + A.GlobalID + ", " + B.GlobalID + "global id.", nameof(DistanceFunction));
+                if(user!=null)
+                    SeqLogger.Warning("System generated edge weight ovveride user given, between positions with " + A.UserID + ", " + B.UserID + " user id.", nameof(DistanceFunction));
                 return system;
             }
             if (user != null)

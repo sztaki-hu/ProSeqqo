@@ -13,6 +13,8 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
 
         }
 
+        //TODO: PositionPrecedence only between processes, no inside alternatives and between alternatives in one process.
+
         public void Validate(PointLikeTask lineLikeTask)
         {
             SeqLogger.Info("Validation started!", nameof(PointLikeTaskValidator));
@@ -62,7 +64,6 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             }
             SeqLogger.Trace("CheckPositionMatrix validated!", nameof(PointLikeTaskValidator));
         }
-
 
         private void ListContainsPrecedenceItems(GTSPPrecedenceConstraint precedence, IEnumerable<BaseNode> nodes)
         {

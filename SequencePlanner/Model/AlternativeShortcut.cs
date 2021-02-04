@@ -1,6 +1,8 @@
 ﻿using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
+using SequencePlanner.GTSP;
 using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Model
@@ -46,7 +48,7 @@ namespace SequencePlanner.Model
             SeqLogger.Trace(CriticalPaths.Count+" shortcut created in [UID:"+Original.UserID+"] alternative, between: "+FrontProxy.ToString()+" and "+ BackProxy.ToString(), nameof(AlternativeShortcut));
             foreach (var path in CriticalPaths)
             {
-                StrictSystemEdgeWeightSet.Add(new StrictEdgeWeight(path.Front, path.Back, path.Cost));
+                distanceFunction.StrictSystemEdgeWeights.Add(new StrictEdgeWeight(path.Front, path.Back, path.Cost));
                 SeqLogger.Trace("Contains "+path.Cut.Count+" in cut with "+path.Cost+" cost, between: "+path.Front.ToString()+" and "+ path.Back.ToString(), nameof(AlternativeShortcut));
             }
         }
@@ -63,6 +65,57 @@ namespace SequencePlanner.Model
         public double[,] OverrideWeights(double[,] matrix)
         {
             return matrix;
+        }
+
+        public List<GTSPPrecedenceConstraint> FindPrecedenceHeaderOfPositions(GTSPPrecedenceConstraint gTSPPrecedenceConstraint)
+        {
+            var newPrecedences = new List<GTSPPrecedenceConstraint>();
+            var findBefore = false;
+            var findAfter = false;
+            foreach (var path in CriticalPaths)
+            {
+                foreach (var position in path.Cut)
+                {
+                    if (position.GlobalID == gTSPPrecedenceConstraint.Before.GlobalID)
+                        findBefore = true;
+                    if (position.GlobalID == gTSPPrecedenceConstraint.After.GlobalID)
+                        findAfter = true;
+                }
+                if (findBefore && findAfter)
+                {
+                    SeqLogger.Error("Position precedence found where before and after is in the same alternative.");
+                    throw new SequencerException("Position precedence inside the an alternative!", "Remove precedence with these userids: [" + gTSPPrecedenceConstraint.Before.UserID + ";" + gTSPPrecedenceConstraint.After.UserID + "]");
+                }
+
+                if (findBefore || findAfter)
+                {
+                    var prec = new GTSPPrecedenceConstraint();
+                    if (findBefore)
+                        prec.Before = path.Front;
+                    else
+                        prec.Before = gTSPPrecedenceConstraint.Before;
+                    if (findAfter)
+                        prec.After = path.Front;
+                    else
+                        prec.After = gTSPPrecedenceConstraint.After;
+
+                    var containsNewPrec = false;
+                    foreach (var precedence in newPrecedences)
+                    {
+                        if ((precedence.Before.GlobalID == prec.Before.GlobalID) && (precedence.After.GlobalID == prec.After.GlobalID))
+                            containsNewPrec = true;
+                    }
+                    if (!containsNewPrec)
+                    {
+                        newPrecedences.Add(prec);
+                        SeqLogger.Trace("Position precendence "+gTSPPrecedenceConstraint +" changed to "+ prec, nameof(AlternativeShortcut) );
+                        containsNewPrec = false;
+                    }
+                }
+                findBefore = false;
+                findAfter = false;
+            }
+            return newPrecedences;
         }
     }
 }
