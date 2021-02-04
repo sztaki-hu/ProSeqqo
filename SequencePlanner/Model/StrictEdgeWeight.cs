@@ -26,5 +26,10 @@ namespace SequencePlanner.Model
             else
                 return (this.A.GlobalID == a.GlobalID && B.GlobalID == b.GlobalID);
         }
+
+        public override string ToString()
+        {
+            return A.ToString() + ";" + B.ToString() + ";" + Weight + ";" + Bidirectional;
+        }
     }
 }

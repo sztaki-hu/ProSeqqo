@@ -30,5 +30,12 @@ namespace SequencePlanner.Function.ResourceFunction
                 throw new SequencerException("ConstantResourceFunction.LinkingFunction not given - NULL.");
             }
         }
+
+        public void ToLog(LogLevel level)
+        {
+            SeqLogger.Indent++;
+            SeqLogger.WriteLog(level, "ResourceFunction: " + FunctionName, nameof(DistanceFunction));
+            SeqLogger.Indent--;
+        }
     }
 }

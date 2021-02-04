@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Model;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Model;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Function.DistanceFunction
@@ -10,5 +11,6 @@ namespace SequencePlanner.Function.DistanceFunction
         public StrictEdgeWeightSet StrictSystemEdgeWeights {get;set;}
         public double ComputeDistance(Position A, Position B);
         public void Validate();
+        public void ToLog(LogLevel level);
     }
 }

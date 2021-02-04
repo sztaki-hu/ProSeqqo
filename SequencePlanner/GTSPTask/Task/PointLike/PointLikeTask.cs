@@ -21,6 +21,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
         public PointLikeGTSPRepresentation GTSPRepresentation { get; set; }
         private List<Position> DeletedPositionsOfShortcuts { get; set; }
+        private List<AlternativeShortcut> AlternativeShortcuts { get; set; }
         public bool UseShortcutInAlternatives { get; set; }
         private int MAX_SEQUENCING_ID = 0;
 
@@ -32,6 +33,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             PositionPrecedence = new List<GTSPPrecedenceConstraint>();
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
             DeletedPositionsOfShortcuts = new List<Position>();
+            AlternativeShortcuts = new List<AlternativeShortcut>();
         }
 
         protected long[][] CreateInitialRout()
@@ -92,17 +94,20 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 PrecedenceConstraints = CreatePrecedenceConstraints(),
                 StartDepot = StartDepot.SequencingID
             };
+            PositionMatrix.Matrix = GTSPRepresentation.Matrix;
             if (UseMIPprecedenceSolver)
                 GTSPRepresentation.InitialRoutes = CreateInitialRout();
             GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             SeqLogger.Indent--;
             SeqLogger.Info("Model generation finished!", nameof(PointLikeTask));
+            ToLog(LogLevel.Warning);
         }
 
         private void CreateAlternativeShortcuts()
         {
             SeqLogger.Info("Alternative shortcut creation started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
+            AlternativeShortcuts.Clear();
             for (int i = 0; i < Alternatives.Count; i++)
             {
                 if (Alternatives[i].Tasks.Count > 2)                                                                     
@@ -122,13 +127,16 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                             SeqLogger.Trace("Deleted position:" + position, nameof(PointLikeTask));
                         }
                     }
+                    AlternativeShortcuts.Add(shortcut);
                     Alternatives[i] = shortcut;                                                                         //Change the alternatives for the new ones
                     foreach (var process in Processes)                                                                  //also in processes.
                     {
                         for (int j = 0; j < process.Alternatives.Count; j++)
                         {
                             if (process.Alternatives[j].GlobalID == shortcut.GlobalID)
+                            {
                                 process.Alternatives[j] = shortcut;
+                            }
                         }
                     }
                     SeqLogger.Indent--;
@@ -401,6 +409,24 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             return taskResult;
         }
 
+        private void ReverseAlternativeShortcuts()
+        {
+            for (int i = 0; i < Alternatives.Count; i++)
+            {
+                foreach (var shortcut in AlternativeShortcuts)
+                {
+                    if (Alternatives[i].GlobalID == shortcut.GlobalID)
+                        Alternatives[i] = shortcut.Original;
+                }
+            }
+            if (PositionMatrix!=null && PositionMatrix.Positions!=null)
+                foreach (var position in DeletedPositionsOfShortcuts)
+                {
+                    PositionMatrix.Positions.Add(position);
+                }
+            PositionMatrix.DistanceFunction.StrictSystemEdgeWeights.DeleteAll();
+        }
+
         public List<GTSPPrecedenceConstraintList> CreatePrecedenceHierarchiesForInitialSolution()
         {
             var prec = new List<GTSPPrecedenceConstraintList>();
@@ -443,6 +469,37 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     }
             }
             return prec;
+        }
+
+        public void ToLog(LogLevel level)
+        {
+            base.ToLog(level);
+            SeqLogger.WriteLog(level, "Hierarchy:");
+            SeqLogger.Indent++;
+            foreach (var process in Processes)
+            {
+                SeqLogger.WriteLog(level, process.ToString(), nameof(PointLikeTask));
+                SeqLogger.Indent++;
+                foreach (var alternative in process.Alternatives)
+                {
+                    SeqLogger.WriteLog(level, alternative.ToString(), nameof(PointLikeTask));
+                    SeqLogger.Indent++;
+                    foreach (var task in alternative.Tasks)
+                    {
+                        SeqLogger.WriteLog(level, task.ToString(), nameof(PointLikeTask));
+                        SeqLogger.Indent++;
+                        foreach (var position in task.Positions)
+                        {
+                            SeqLogger.WriteLog(level, position.ToString(), nameof(PointLikeTask));
+                            
+                        }
+                        SeqLogger.Indent--;
+                    }
+                    SeqLogger.Indent--;
+                }
+                SeqLogger.Indent--;
+            }
+            SeqLogger.Indent--;
         }
     }
 }

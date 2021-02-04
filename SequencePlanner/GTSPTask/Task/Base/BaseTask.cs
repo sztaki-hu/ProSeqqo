@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Model;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Model;
 using SequencePlanner.OR_Tools;
 using System;
 
@@ -42,5 +43,16 @@ namespace SequencePlanner.GTSPTask.Task.Base
 
         public abstract void ValidateModel();
 
+        public void ToLog(LogLevel level)
+        {
+
+            SeqLogger.WriteLog(level, "Dimension: " + Dimension, nameof(BaseTask));
+            SeqLogger.WriteLog(level, "CyclicSequence: " + CyclicSequence, nameof(BaseTask));
+            SeqLogger.WriteLog(level, "StartDepot: " + StartDepot, nameof(BaseTask));
+            SeqLogger.WriteLog(level, "FinishDepot: " + FinishDepot, nameof(BaseTask));
+            SeqLogger.WriteLog(level, "TimeLimit: " + TimeLimit, nameof(BaseTask));
+            SeqLogger.WriteLog(level, "UseMIPprecedenceSolver: " + UseMIPprecedenceSolver, nameof(BaseTask));
+            PositionMatrix.ToLog(level);
+        }
     }
 }

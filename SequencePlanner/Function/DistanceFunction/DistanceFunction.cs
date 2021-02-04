@@ -31,5 +31,17 @@ namespace SequencePlanner.Function.DistanceFunction
             }
             return null;
         }
+
+        public void ToLog(LogLevel level)
+        {
+            SeqLogger.WriteLog(level, "DistanceFunction: "+FunctionName, nameof(DistanceFunction));
+            SeqLogger.Indent++;
+            SeqLogger.WriteLog(level, "FunctionName: "+FunctionName, nameof(DistanceFunction));
+            SeqLogger.WriteLog(level, "User defined strict edge weights: ", nameof(DistanceFunction));
+            StrictUserEdgeWeights.ToLog(level);
+            SeqLogger.WriteLog(level, "System defined strict edge weights: ", nameof(DistanceFunction));
+            StrictSystemEdgeWeights.ToLog(level);
+            SeqLogger.Indent--;
+        }
     }
 }

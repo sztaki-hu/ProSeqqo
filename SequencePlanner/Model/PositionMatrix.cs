@@ -1,6 +1,7 @@
 ﻿using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Model
@@ -59,12 +60,38 @@ namespace SequencePlanner.Model
                 throw new SequencerException("PositionMatrix.Positions not given.");
         }
 
+        public void ToLog(LogLevel level)
+        {
+            DistanceFunction.ToLog(level);
+            ResourceFunction.ToLog(level);
+            SeqLogger.WriteLog(level, "Positions:", nameof(PositionMatrix));
+            SeqLogger.Indent++;
+            foreach (var position in Positions)
+            {
+                SeqLogger.WriteLog(level, position.ToString(), nameof(PositionMatrix));
+            }
+            SeqLogger.Indent--;
+
+            SeqLogger.WriteLog(level, "Matrix[SeqID,SeqID]", nameof(PositionMatrix));
+            SeqLogger.Indent++;
+            for (int i = 0; i < Matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < Matrix.GetLength(1); j++)
+                {
+                    SeqLogger.WriteLog(level, "Matrix["+i+";"+j+"]="+Matrix[i,j], nameof(PositionMatrix));
+                }
+            }
+            foreach (var position in Positions)
+            {
+                SeqLogger.WriteLog(level, position.ToString(), nameof(PositionMatrix));
+            }
+            SeqLogger.Indent--;
+        }
 
         //private void CheckMatrix(double[,] matrix)
         //{
         //    if (matrix.GetLength(0) != matrix.GetLength(1))
         //        throw new SequencerException("Matrix dimension mismatch, it should be n x n.", "Check input parameters of PositionMatrix!");
         //}
-
     }
 }
