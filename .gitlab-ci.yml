@@ -42,5 +42,5 @@ publish:
     artifacts:
         when: always
         paths:
-            - ./artifacts/SequencerConsole
+            - ./artifacts/SequencerConsole/*
         expire_in: 2 days
