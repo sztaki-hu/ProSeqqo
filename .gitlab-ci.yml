@@ -25,7 +25,7 @@ test:
         - 'dotnet test --test-adapter-path:. --logger:"junit;LogFilePath=..\artifacts\{assembly}-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose" /p:CollectCoverage=true'
     artifacts:
         when: always
-        keep_last: 3
+        expire_in: 2 days
         paths:
             - ./**/*test-result.xml
         reports:
@@ -43,4 +43,4 @@ publish:
         when: always
         paths:
             - ./artifacts/SequencerConsole/*
-        keep_last: 3
+        expire_in: 2 days
