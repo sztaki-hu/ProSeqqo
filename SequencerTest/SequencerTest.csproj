@@ -23,7 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Units\GTSP\" />
+    <Folder Include="Units\GTSPTask\Result\" />
+    <Folder Include="Units\GTSPTask\Task\Base\" />
+    <Folder Include="Units\GTSPTask\Task\LineLike\" />
+    <Folder Include="Units\GTSPTask\Task\PointLike\" />
     <Folder Include="Units\Helper\" />
     <Folder Include="Units\OR-Tools\" />
     <Folder Include="Units\Serialization\Token\" />
@@ -31,46 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Example\CelticLaser.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\CelticLaser_Contour.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\CelticLaser_Fill.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\CSOPA.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Resources\Example\Export\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Example\">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\Kocka.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\Kocka2.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\LineLike_Matrix.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\LineLike_Original.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\PickAndPlace_Matrix.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\PickAndPlace_Original.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\PointLike_PosPrecedences.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Example\PointLike_PosProcPrecedences.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Example\seqtest.txt">

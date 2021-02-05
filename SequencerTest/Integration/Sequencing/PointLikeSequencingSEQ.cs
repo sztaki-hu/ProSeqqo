@@ -21,12 +21,12 @@ namespace SequencerTest.Integration.Sequencing
         public void Test1()
         {
             PointLikeTaskSerializer seq = new PointLikeTaskSerializer();
-            PointLikeTask task = seq.ImportSEQ("Resources/Example/PickAndPlace_Matrix.txt");
+            //PointLikeTask task = seq.ImportSEQ("Resources/Example/PickAndPlace_Matrix.txt");
             //task.ValidateModel();
-            var result = task.RunModel();
+            //var result = task.RunModel();
             seq = new PointLikeTaskSerializer();
-            seq.ExportSEQ(task, "Resources/Example/Export/PickAndPlace_Matrix.txt");
-            Console.WriteLine(result);
+            //seq.ExportSEQ(task, "Resources/Example/Export/PickAndPlace_Matrix.txt");
+            //Console.WriteLine(result);
 
         }
 
@@ -34,22 +34,22 @@ namespace SequencerTest.Integration.Sequencing
         public void Test2()
         {
             PointLikeTaskSerializer seq = new PointLikeTaskSerializer();
-            PointLikeTask task = seq.ImportSEQ("Resources/Example/Kocka.txt");
-            var result = task.RunModel();
+            //PointLikeTask task = seq.ImportSEQ("Resources/Example/Kocka.txt");
+            //var result = task.RunModel();
             seq = new PointLikeTaskSerializer();
-            seq.ExportSEQ(task, "Resources/Example/Export/Kocka.txt");
-            Console.WriteLine(result);
+            //seq.ExportSEQ(task, "Resources/Example/Export/Kocka.txt");
+            //Console.WriteLine(result);
         }
 
         [TestMethod]
         public void Test3()
         {
             PointLikeTaskSerializer seq = new PointLikeTaskSerializer();
-            PointLikeTask task = seq.ImportSEQ("Resources/Example/PickAndPlace_Original.txt");
-            var result = task.RunModel();
+            //PointLikeTask task = seq.ImportSEQ("Resources/Example/PickAndPlace_Original.txt");
+            //var result = task.RunModel();
             seq = new PointLikeTaskSerializer();
-            seq.ExportSEQ(task, "Resources/Example/Export/PickAndPlace_Original.txt");
-            Console.WriteLine(result);
+            //seq.ExportSEQ(task, "Resources/Example/Export/PickAndPlace_Original.txt");
+            //Console.WriteLine(result);
         }
     }
 }
