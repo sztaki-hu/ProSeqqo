@@ -72,13 +72,13 @@ namespace SequencePlanner.Model
             }
             SeqLogger.Indent--;
 
-            SeqLogger.WriteLog(level, "Matrix[SeqID,SeqID]", nameof(PositionMatrix));
+            SeqLogger.WriteLog(level, "Matrix[SeqID,SeqID] = ["+Matrix.GetLength(0)+";"+Matrix.GetLength(1)+"]", nameof(PositionMatrix));
             SeqLogger.Indent++;
             for (int i = 0; i < Matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < Matrix.GetLength(1); j++)
                 {
-                    SeqLogger.WriteLog(level, "Matrix["+i+";"+j+"]="+Matrix[i,j], nameof(PositionMatrix));
+                    SeqLogger.Trace("Matrix["+i+";"+j+"]="+Matrix[i,j], nameof(PositionMatrix));
                 }
             }
             foreach (var position in Positions)

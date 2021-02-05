@@ -45,6 +45,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             {
                 seq += position.UserID +d+ "["+SeqLogger.ToList(position.Vector)+"]"+d+ position.Name +d +position.ResourceID+ newline;
             }
+            seq += nameof(Log) + ": " + newline;
+            foreach (var line in Log)
+            {
+                seq += line.Replace(':', '>') + newline;
+            }
             return seq;
         }
     }

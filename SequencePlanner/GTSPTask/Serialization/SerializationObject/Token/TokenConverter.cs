@@ -30,12 +30,12 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                         }
 
                         if (find)
-                            Console.WriteLine(token.Header + ": " + result);
+                            SeqLogger.Debug(token.Header + ": " + result, nameof(TokenConverter));
                         return result;
                     }
                 }
                 if (find == false)
-                    Console.WriteLine("Can not find header with: " + header);
+                    SeqLogger.Critical("Can not find header with: " + header, nameof(TokenConverter));
                 return false;
             }
             catch (Exception e)
@@ -53,7 +53,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
                         double result = Double.Parse(token.Lines[0].Line);
-                        Console.WriteLine(token.Header + ": " + result);
+                        SeqLogger.Debug(token.Header + ": " + result, nameof(TokenConverter));
                         return result;
                     }
                 }
@@ -100,7 +100,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
                         int result = Int32.Parse(token.Lines[0].Line);
-                        Console.WriteLine(token.Header + ": " + result);
+                        SeqLogger.Debug(token.Header + ": " + result, nameof(TokenConverter));
                         return result;
                     }
                 }
@@ -134,7 +134,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                             hierarchy.Add(hierarchyObj);
                         }
 
-                        Console.WriteLine(token.Header + ": " + hierarchy.Count + "lines found");
+                        SeqLogger.Debug(token.Header + ": " + hierarchy.Count + " lines found", nameof(TokenConverter));
                         return hierarchy;
                     }
                 }
@@ -168,9 +168,8 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                                 edge.Bidirectional = Boolean.Parse(line[3]);
                             edgeSet.Weights.Add(edge);
                         }
-                        SeqLogger.Info(token.Header + ": " + edgeSet.Weights.Count + "weights found", nameof(TokenConverter));
+                        SeqLogger.Trace(token.Header + ": " + edgeSet.Weights.Count + "weights found", nameof(TokenConverter));
                     }
-                    
                 }
                 return edgeSet;
             }
@@ -209,8 +208,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                                 lineObj.Bidirectional = Boolean.Parse(line[6]);
                             lines.Add(lineObj);
                         }
-
-                        Console.WriteLine(token.Header + ": " + lines.Count + "lines found");
+                        SeqLogger.Debug(token.Header + ": " + lines.Count + " lines found", nameof(TokenConverter));
                         return lines;
                     }
                 }
@@ -285,8 +283,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                                 AfterID = Int32.Parse(line[1])
                             });
                         }
-
-                        Console.WriteLine(token.Header + ": " + precedences.Count + " precedence found");
+                        SeqLogger.Trace(token.Header + ": " + precedences.Count + " precedence found", nameof(TokenConverter));
                         return precedences;
                     }
                 }
@@ -313,7 +310,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                     }
                 }
                 if (find == false)
-                    Console.WriteLine("Can not find header with: " + header);
+                    SeqLogger.Critical("Can not find header with: " + header, nameof(TokenConverter));
                 return result;
             }
             catch (Exception e)

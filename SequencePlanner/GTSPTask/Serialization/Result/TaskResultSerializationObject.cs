@@ -46,13 +46,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             seq += nameof(CostSum) + ": " + CostSum + newline;
             seq += nameof(SolutionRaw) + ": " + SeqLogger.ToList(SolutionRaw) + newline;
             seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
-            seq += nameof(Log) + ": " + newline;
-            foreach (var line in Log)
-            {
-                seq += line.Replace(':', '>') + newline;
-            }
             return seq;
-
         }
 
         public TaskResultSerializationObject(List<string> seqString)

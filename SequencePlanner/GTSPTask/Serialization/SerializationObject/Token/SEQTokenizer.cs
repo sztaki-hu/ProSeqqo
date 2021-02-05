@@ -12,7 +12,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
 
         public void Tokenize(List<string> seqString)
         {
-            SeqLogger.Info("Tokenization started!", nameof(SEQTokenizer));
+            SeqLogger.Debug("Tokenization started!", nameof(SEQTokenizer));
             SeqLogger.Indent++;
             Tokens = new List<Token>();
             var lines = new List<TokenLineDeserializationObject>();

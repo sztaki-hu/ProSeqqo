@@ -55,6 +55,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 TimeLimit = TimeLimit,
                 GTSPRepresentation = GTSPRepresentation
             };
+            ToLog(LogLevel.Debug);
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
             PointTaskResult pointResult = new PointTaskResult(orTools.Solve());
@@ -94,7 +95,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         private void CreateAlternativeShortcuts()
         {
-            SeqLogger.Info("Alternative shortcut creation started!", nameof(PointLikeTask));
+            SeqLogger.Debug("Alternative shortcut creation started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
             AlternativeShortcuts.Clear();
             for (int i = 0; i < Alternatives.Count; i++)
@@ -434,10 +435,14 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         private PointTaskResult ResolveSolutionWithAlternativeShortcuts(PointTaskResult taskResult)
         {
+            SeqLogger.Debug("Solution update by alternative shortcuts started!", nameof(PointLikeTask));
+            SeqLogger.Indent++;
             foreach (var alternative in AlternativeShortcuts)
             {
                 taskResult = alternative.ResolveSolution(taskResult);
             }
+            SeqLogger.Indent--;
+            SeqLogger.Info("Solution update by alternative shortcuts finished!", nameof(PointLikeTask));
             return taskResult;
         }
 

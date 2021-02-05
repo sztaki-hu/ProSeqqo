@@ -26,7 +26,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             SeqLogger.Info("Input file: " + path, nameof(LineLikeResultSerializer));
             SeqLogger.Info("Input type: SEQ", nameof(LineLikeResultSerializer));
             var seqString = File.ReadAllLines(path).ToList();
-            SeqLogger.Info("Input readed!", nameof(LineLikeResultSerializer));
+            SeqLogger.Debug("Input readed!", nameof(LineLikeResultSerializer));
             var seqObject = new LineLikeResultSerializationObject(seqString);
             return seqObject.ToLineLikeResult();
         }

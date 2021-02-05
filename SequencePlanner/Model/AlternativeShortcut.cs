@@ -127,18 +127,17 @@ namespace SequencePlanner.Model
                 {
                     if ((path.Front.SequencingID == taskResult.PositionResult[i].SequencingID) && (path.Back.SequencingID == taskResult.PositionResult[i + 1].SequencingID))
                     {
-                        SeqLogger.Info("Cut found" + path.Front.UserID + ";" + path.Back.UserID);
+                        SeqLogger.Trace("Cut found [" + path.Front.UserID + ";" + path.Back.UserID+"] and changed to ["+SeqLogger.ToList(path.Cut)+"]");
                         for (int j = 1; j < path.Cut.Count-1; j++)
                         {
                             taskResult.PositionResult.Insert(i+j, (Position) path.Cut[j]);
                             taskResult.SolutionRaw.Insert(i+j, (long) path.Cut[j].UserID);
-                            SeqLogger.Info("Cut" + path.Cut[j]);
                         }
+                        SeqLogger.Trace("Costs from " + taskResult.CostsRaw[i] + " hanged to [" + SeqLogger.ToList(path.Costs)+"]" );
                         taskResult.CostsRaw.RemoveAt(i);
                         for (int j = 0; j < path.Costs.Count; j++)
                         {
                             taskResult.CostsRaw.Insert(i + j, (long)path.Costs[j]);
-                            SeqLogger.Info("Cost:" + path.Costs[j]);
                         }
                         taskResult.Calculate();
                     }
