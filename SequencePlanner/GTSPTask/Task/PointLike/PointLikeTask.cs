@@ -58,12 +58,12 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
             PointTaskResult pointResult = new PointTaskResult(orTools.Solve());
+            pointResult = ResolveSolution(pointResult);
             if (UseShortcutInAlternatives)
             {
                 pointResult = ResolveSolutionWithAlternativeShortcuts(pointResult);
                 ReverseAlternativeShortcuts();
             }
-            pointResult = ResolveSolution(pointResult);
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
             Timer.Stop();
@@ -434,6 +434,10 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         private PointTaskResult ResolveSolutionWithAlternativeShortcuts(PointTaskResult taskResult)
         {
+            foreach (var alternative in AlternativeShortcuts)
+            {
+                taskResult = alternative.ResolveSolution(taskResult);
+            }
             return taskResult;
         }
 

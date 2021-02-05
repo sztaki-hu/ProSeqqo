@@ -10,6 +10,7 @@ namespace SequencePlanner.Helper
         public BaseNode Front { get; set; }
         public BaseNode Back { get; set; }
         public List<BaseNode> Cut { get; set; }
+        public List<double> Costs { get; set; }
         public double Cost { get; set; }
 
         public CriticalPath(BaseNode front, BaseNode back, double cost)
@@ -17,6 +18,7 @@ namespace SequencePlanner.Helper
             Front = front;
             Back = back;
             Cut = new List<BaseNode>();
+            Costs = new List<double>();
             Cost = cost;
         }
     }

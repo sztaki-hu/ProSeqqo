@@ -34,10 +34,19 @@ namespace SequencePlanner.GTSPTask.Result
             SolverTime = new TimeSpan();
             SolutionRaw = new List<long>();
             CostsRaw = new List<double>();
-            CostSum = -1;
+            CostSum = 0;
             StatusCode = -1;
             StatusMessage = "Not filled yet!";
             Log = new List<string>();
+        }
+
+        public virtual void Calculate()
+        {
+            CostSum = 0;
+            foreach (var cost in CostsRaw)
+            {
+                CostSum += cost;
+            }
         }
 
         public override string ToString()

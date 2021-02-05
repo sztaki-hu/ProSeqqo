@@ -86,7 +86,10 @@ namespace SequencePlanner.Helper
             list.Reverse();
             path.Cut = list;
             path.Cost = Values[to.SequencingID];
-
+            for (int i = 0; i < path.Cut.Count-1; i++)
+            {
+                path.Costs.Add(FindEdge(path.Cut[i], path.Cut[i+1]));
+            }
             return path;
         }
 
@@ -133,7 +136,7 @@ namespace SequencePlanner.Helper
             return weight;
         }
 
-        public double FindEdge(Position A, Position B)
+        public double FindEdge(BaseNode A, BaseNode B)
         {
             foreach (var item in Edges)
             {

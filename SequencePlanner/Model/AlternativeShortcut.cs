@@ -1,6 +1,7 @@
 ﻿using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.GTSP;
+using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.Helper;
 using System;
 using System.Collections.Generic;
@@ -116,6 +117,34 @@ namespace SequencePlanner.Model
                 findAfter = false;
             }
             return newPrecedences;
+        }
+
+        public PointTaskResult ResolveSolution(PointTaskResult taskResult)
+        {
+            foreach (var path in CriticalPaths)
+            {
+                for (int i = 0; i < taskResult.PositionResult.Count-1; i++)
+                {
+                    if ((path.Front.SequencingID == taskResult.PositionResult[i].SequencingID) && (path.Back.SequencingID == taskResult.PositionResult[i + 1].SequencingID))
+                    {
+                        SeqLogger.Info("Cut found" + path.Front.UserID + ";" + path.Back.UserID);
+                        for (int j = 1; j < path.Cut.Count-1; j++)
+                        {
+                            taskResult.PositionResult.Insert(i+j, (Position) path.Cut[j]);
+                            taskResult.SolutionRaw.Insert(i+j, (long) path.Cut[j].UserID);
+                            SeqLogger.Info("Cut" + path.Cut[j]);
+                        }
+                        taskResult.CostsRaw.RemoveAt(i);
+                        for (int j = 0; j < path.Costs.Count; j++)
+                        {
+                            taskResult.CostsRaw.Insert(i + j, (long)path.Costs[j]);
+                            SeqLogger.Info("Cost:" + path.Costs[j]);
+                        }
+                        taskResult.Calculate();
+                    }
+                }
+            }
+            return taskResult;
         }
     }
 }
