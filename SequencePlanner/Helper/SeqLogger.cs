@@ -60,10 +60,10 @@ namespace SequencePlanner.Helper
                 var indent = "";
                 for (int i = 0; i < Indent; i++)
                 {
-                    indent += "  ";
+                    indent += "   ";
                 }
-                var log = indent + level.ToString() + "   ";
-                Console.Write(indent + level.ToString() + ":\t");
+                var log = level.ToString()+":  " + indent;
+                Console.Write(level.ToString()+ ":  " + indent);
                 Console.ForegroundColor = ConsoleColor.White;
                 if (nameOfClass != null)
                 {
@@ -77,6 +77,21 @@ namespace SequencePlanner.Helper
                 else
                     Backlog.Add(log);
             }
+        }
+
+        internal static string ToList(double[] list)
+        {
+            if (list.Length > 1)
+            {
+                string tmp = "";
+                for (int i = 0; i < list.Length-1; i++)
+                {
+                    tmp += list[i].ToString("0.##") + "; ";
+                }
+                tmp += list[list.Length - 1];
+                return tmp;
+            }
+            return "";
         }
 
         internal static string ToList(List<double> list)

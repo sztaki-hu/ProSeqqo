@@ -1,5 +1,6 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
+using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,17 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public string ToSEQ()
         {
-            throw new NotImplementedException();
+            string seq ="";
+            string newline ="\n";
+            string d = ";";
+            seq += base.ToSEQ();
+            //seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
+            seq += nameof(PositionResult) + ": " + newline;
+            foreach (var position in PositionResult)
+            {
+                seq += position.UserID +d+ "["+SeqLogger.ToList(position.Vector)+"]"+d+ position.Name +d +position.ResourceID+ newline;
+            }
+            return seq;
         }
     }
 }

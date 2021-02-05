@@ -1,5 +1,6 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
+using SequencePlanner.Helper;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,21 +9,29 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 {
     public class TaskResultSerializationObject
     {
-        public string Time { get; set; }
+        public string Created { get { return DateTime.UtcNow.ToString(); } }
+        public string FullTime { get; set; }
+        public string SolverTime { get; set; }
+        public string PreSolverTime { get; set; }
         public List<long> SolutionRaw { get; set; }
-        public List<double> Costs { get; }
+        public List<double> CostsRaw { get; }
         public double CostSum { get; set; }
         public int StatusCode { get; set; }
         public string StatusMessage { get; set; }
-
+        public List<string> Log { get; set; }
+       
         public TaskResultSerializationObject(TaskResult result)
         {
-            Time = result.FullTime.ToString();
+            FullTime = result.FullTime.ToString();
+            SolverTime = result.SolverTime.ToString();
+            PreSolverTime = result.PreSolverTime.ToString();
             SolutionRaw = result.SolutionRaw;
-            Costs = result.CostsRaw;
+            CostsRaw = result.CostsRaw;
             CostSum = result.CostSum;
             StatusCode = result.StatusCode;
             StatusMessage = result.StatusMessage;
+            Log = result.Log;
+        }
 
         public  string ToSEQ()
         {
