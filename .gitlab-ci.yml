@@ -38,9 +38,9 @@ publish:
     tags:
         - sztaki-docker
     script:
-        - 'dotnet publish SequencerConsole -c Release -o ../artifacts/SequencerConsole'
+        - 'dotnet publish SequencerConsole -c Release -o /artifacts/SequencerConsole'
     artifacts:
         when: always
         paths:
-            - ./artifacts/**/*
+            - ./artifacts/SequencerConsole/*
         expire_in: 2 days
