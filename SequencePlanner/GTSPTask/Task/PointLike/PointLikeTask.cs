@@ -43,6 +43,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         public PointTaskResult RunModel()
         {
+            Timer.Reset();
+            Timer.Start();
             if (UseShortcutInAlternatives)
                 CreateAlternativeShortcuts();
             SeqLogger.Info("RunModel started!", nameof(PointLikeTask));
@@ -64,8 +66,10 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             pointResult = ResolveSolution(pointResult);
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
+            Timer.Stop();
+            pointResult.FullTime = Timer.Elapsed;
             pointResult.ToLog(LogLevel.Info);
-            ToLog(LogLevel.Warning);
+            //ToLog(LogLevel.Warning);
             return pointResult;
         }
 
@@ -138,7 +142,6 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                         PositionPrecedence.RemoveAt(i);
                         PositionPrecedence.AddRange(newPrec);
                     }
-
                 }
             }
             SeqLogger.Indent--;
@@ -158,6 +161,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             });
 
             var result = ORPreSolver.Solve();
+            MIPRunTime = ORPreSolver.RunTime;
             if (result.Count > 0)
             {
                 long[][] initialSolution = new long[1][];
@@ -392,6 +396,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         private PointTaskResult ResolveSolution(PointTaskResult result)
         {
             result.Log = SeqLogger.Backlog;
+            result.PreSolverTime = MIPRunTime;
             var ORoutputRaw = result.SolutionRaw;
             result.SolutionRaw = new List<long>();
             foreach (var raw in ORoutputRaw)
@@ -423,16 +428,13 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 result.CostsRaw.Add(GTSPRepresentation.Matrix[result.PositionResult[i - 1].SequencingID, result.PositionResult[i].SequencingID]);
                 result.CostSum += result.CostsRaw[i - 1];
             }
-            if (UseShortcutInAlternatives)
-                result = ResolveSolutionWithAlternativeShortcuts(result);
             SeqLogger.Info("Solution resolved!", nameof(PointLikeTask));
             return result;
         }
 
-        private PointTaskResult ResolveSolutionWithAlternativeShortcuts(TaskResult taskResult)
+        private PointTaskResult ResolveSolutionWithAlternativeShortcuts(PointTaskResult taskResult)
         {
-            var solution = new PointTaskResult(taskResult);
-            return solution;
+            return taskResult;
         }
 
         private void ReverseAlternativeShortcuts()

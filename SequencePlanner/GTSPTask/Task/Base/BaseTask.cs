@@ -2,11 +2,13 @@
 using SequencePlanner.Model;
 using SequencePlanner.OR_Tools;
 using System;
+using System.Diagnostics;
 
 namespace SequencePlanner.GTSPTask.Task.Base
 {
     public abstract class BaseTask: IBaseTask
     {
+        protected Stopwatch Timer { get; set; }
         public int Dimension { get;  set; }
         public bool CyclicSequence  { get;  set; }
         public int WeightMultipier  { get;  set; }
@@ -15,11 +17,13 @@ namespace SequencePlanner.GTSPTask.Task.Base
         public PositionMatrix PositionMatrix  { get;  set; }
         public int TimeLimit { get; set; }
         public bool UseMIPprecedenceSolver { get; set; }
+        protected TimeSpan MIPRunTime { get; set; }
 
         public event IBaseTask.TaskCompleted SequencingTaskCompleted;
 
         public BaseTask()
         {
+            Timer = new Stopwatch();
             PositionMatrix = new PositionMatrix();
         }
 

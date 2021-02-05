@@ -8,6 +8,7 @@ namespace SequencePlanner.GTSPTask.Result
     {
         public TimeSpan FullTime { get; set; }          //Run time of build and execute task
         public TimeSpan SolverTime { get; set; }        //Run time of OR-Tools VRP solver
+        public TimeSpan PreSolverTime { get; set; }     //Run time of MIP presolver
         public List<long> SolutionRaw { get; set; }     //Solution of 
         public List<double> CostsRaw { get; set; }      //Costs of solution between the steps
         public double CostSum { get; set; }             //Sum of solution costs (CostsRaw)
@@ -59,6 +60,7 @@ namespace SequencePlanner.GTSPTask.Result
                 SeqLogger.Info("StatusMessage: " + StatusMessage);
                 SeqLogger.Info("FullTime: "+ FullTime);
                 SeqLogger.Info("SolverTime: " + SolverTime);
+                SeqLogger.Info("PreSolverTime: " + PreSolverTime);
                 SeqLogger.Info("SolutionRaw: " + SeqLogger.ToList(SolutionRaw));
                 SeqLogger.Info("CostsRaw: " + SeqLogger.ToList(CostsRaw));
                 SeqLogger.Info("CostSum: " + CostSum);
