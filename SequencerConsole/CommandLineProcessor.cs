@@ -5,6 +5,7 @@ using SequencePlanner.GTSPTask.Task.LineLike;
 using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
@@ -12,8 +13,8 @@ namespace SequencerConsole
 {
     public class CommandLineProcessor
     {
-        private static readonly bool RUN_IN_VISUALSTUDIO = true;
-        private static readonly LogLevel LOG_LEVEL = LogLevel.Trace;
+        private static readonly bool RUN_IN_VISUALSTUDIO = false;
+        private static readonly LogLevel LOG_LEVEL = LogLevel.Info;
 
         private static string input;
         private static FormatType inputType = FormatType.Unknown;
@@ -21,21 +22,19 @@ namespace SequencerConsole
         private static FormatType outputType = FormatType.Unknown;
         private static TaskType taskType = TaskType.Unknown;
         private static bool debug;
+        private static bool convert;
         private static bool validate;
         private static LogLevel log = LogLevel.Info;
 
         public static void CLI(string[] args)
         {
-            SeqLogger.LogLevel = LOG_LEVEL;
             if (args.Length == 0)
             {
-                if (!RUN_IN_VISUALSTUDIO)
-                {
-                    //Release
+                #if !DEBUG
                     Help(new string[] { "-h" });
-                }
-                else
+                #else
                 {
+                    SeqLogger.LogLevel = LOG_LEVEL;
                     //Debug in VS
                     string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example";
                     string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\out";
@@ -45,7 +44,7 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          "-g", graph + "\\PickAndPlace_Matrix_graph.dot",          "-d" };
                     //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",          "-g", graph + "\\PickAndPlace_Matrix_graph.dot",          "-d" };
                     //args = new string[] { "-i", example + "\\LineLike_Original.txt",            "-o", outdir + "\\LineLike_Original_out.json",           "-g", graph + "\\LineLike_Original_graph.dot",            "-d" };
-                    args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",             "-g", graph + "\\LineLike_Matrix_graph.dot",              "-d" };
+                    //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",             "-g", graph + "\\LineLike_Matrix_graph.dot",              "-d" };
                     //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        "-g", graph + "\\Kocka_graph.dot",                        "-d" };
                     //args = new string[] { "-i", example + "\\CSOPA.txt",                        "-o", outdir + "\\CSOPA_out.json",                        "-g", graph + "\\CSOPA_graph.dot",                        "-d" };
                     //args = new string[] { "-i", example + "\\CelticLaser_Contour.txt",          "-o", outdir + "\\CelticLaser_Contour_out.txt",          "-g", graph + "\\CelticLaser_Contour_graph.dot",          "-d" };
@@ -56,7 +55,8 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\LocalTests/DEV_LL.txt",            "-o", outdir + "\\LocalTests/DEV_LL_out.txt",            "-g", graph + "\\LocalTests/DEV_LL_graph.dot",            "-d" };
                     //args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        "-g", graph + "\\seqtest_graph.dot",                      "-d" };
                     //args = new string[] { "-i", example + "\\seqtest2.txt",                      "-o", outdir + "\\seqtest2_o.json",                        "-g", graph + "\\seqtest2_graph.dot",                      "-d" };
-                    args = new string[] { "-i", example + "\\etalon.txt",                      "-o", outdir + "\\etalon_o.json",                        "-g", graph + "\\etalon_graph.dot",                      "-d" };
+                    //args = new string[] { "-i", example + "\\etalon.txt",                      "-o", outdir + "\\etalon_o.json",                        "-g", graph + "\\etalon_graph.dot",                      "-d" };
+                    args = new string[] { "-i", example + "\\etalonMatrix.txt",                      "-o", outdir + "\\etalonMatrix_o.seq",                        "-g", graph + "\\etalon_graph.dot",                      "-d" };
                     //args = new string[] { "-i", example + "\\seqtest3.txt",                      "-o", outdir + "\\seqtest3_o.json",                        "-g", graph + "\\seqtest3_graph.dot",                      "-d" };
                     //args = new string[] { "-i", example + "\\seq_fill_half.txt",                      "-o", outdir + "\\seq_fill_half_o.json",                        "-g", graph + "\\seq_fill_half_graph.dot",                      "-d" };
                     //args = new string[] { "-i", example + "\\seq_contours_half.txt",                      "-o", outdir + "\\seq_contours_half.json",                        "-g", graph + "\\seq_contours_half.dot",                      "-d" };
@@ -69,16 +69,119 @@ namespace SequencerConsole
                     log = LOG_LEVEL;
                     Run();
                 }
+                #endif
             }
             else
             {
                 Help(args);
                 input = Input(args);
                 output = Output(args);
-                debug = Debug(args);
                 validate = Validate(args);
+                convert = Convert(args);
                 log = Log(args);
-                Run();
+                if (convert)
+                    Convert();
+                else
+                    Run();
+            }
+        }
+
+        private static void Convert()
+        {
+            try
+            {
+                SeqLogger.LogLevel = log;
+                if (taskType != TaskType.Unknown)
+                {
+                    if (taskType == TaskType.LineLike)
+                        ConvertLineLike();
+                    
+                    if (taskType == TaskType.PoitnLike)
+                        ConvertPointLike();
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                SeqLogger.Critical(e.Message);
+            }
+        }
+
+        private static void ConvertPointLike()
+        {
+            if (inputType != FormatType.Unknown && input != null)
+            {
+                PointLikeTaskSerializer ser = new PointLikeTaskSerializer();
+                PointLikeTask task;
+                switch (inputType)
+                {
+                    case FormatType.SEQ:
+                    case FormatType.TXT:
+                        task = ser.ImportSEQ(input);
+                        break;
+                    case FormatType.JSON:
+                        task = ser.ImportJSON(input);
+                        break;
+                    case FormatType.XML:
+                        task = ser.ImportXML(input);
+                        break;
+                    default:
+                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
+                }
+                switch (outputType)
+                {
+                    case FormatType.SEQ:
+                    case FormatType.TXT:
+                        ser.ExportSEQ(task, output);
+                        break;
+                    case FormatType.JSON:
+                        ser.ExportJSON(task, output);
+                        break;
+                    case FormatType.XML:
+                        ser.ExportXML(task, output);
+                        break;
+                    default:
+                        throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml!");
+                }
+            }
+        }
+
+        private static void ConvertLineLike()
+        {
+            if (inputType != FormatType.Unknown && input != null)
+            {
+                LineLikeTaskSerializer ser = new LineLikeTaskSerializer();
+                LineLikeTask task;
+                switch (inputType)
+                {
+                    case FormatType.SEQ:
+                    case FormatType.TXT:
+                        task = ser.ImportSEQ(input);
+                        break;
+                    case FormatType.JSON:
+                        task = ser.ImportJSON(input);
+                        break;
+                    case FormatType.XML:
+                        task = ser.ImportXML(input);
+                        break;
+                    default:
+                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
+                }
+                switch (outputType)
+                {
+                    case FormatType.SEQ:
+                    case FormatType.TXT:
+                        ser.ExportSEQ(task, output);
+                        break;
+                    case FormatType.JSON:
+                        ser.ExportJSON(task, output);
+                        break;
+                    case FormatType.XML:
+                        ser.ExportXML(task, output);
+                        break;
+                    default:
+                        throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml!");
+                }
             }
         }
 
@@ -97,16 +200,14 @@ namespace SequencerConsole
                     if (taskType == TaskType.PoitnLike)
                     {
                         var result = RunPointLike();
+                        //result.ToLog(LogLevel.Info);
                         OutPointLine(result);
                     }
                 }
             }
             catch (Exception e)
             {
-                if (debug)
-                    Console.WriteLine(e);
-                else
-                    Console.WriteLine(e.Message);
+                SeqLogger.Critical(e.Message);
             }
         }
 
@@ -134,8 +235,6 @@ namespace SequencerConsole
                 if (validate)
                     task.ValidateModel();
                 return task.RunModel();
-                //var ct = new CancellationToken();
-                //WaitForSolution("Solver running!", ct);
             }
             return null;
         }
@@ -233,20 +332,22 @@ namespace SequencerConsole
                                       "| -out        |    -o    | < Output path >                |  .seq/.txt/.json/.xml              |\n" +
                                       //"+-------------+----------+--------------------------------+------------------------------------+\n" +
                                       //"| -graphViz   |    -g    | < Graphviz output file paht>   |  GraphViz diagram output file(.dot)|\n" +
+                                      //"+-------------+----------+--------------------------------+------------------------------------+\n" +
+                                      //"| -debug      |    -d    | -                              |  Write details of execution.       |\n" +
                                       "+-------------+----------+--------------------------------+------------------------------------+\n" +
-                                      "| -debug      |    -d    | -                              |  Write details of execution.       |\n" +
+                                      "| -convert    |    -c    | -in -out                       |  Change task format of -in to -out |\n" +
+                                      "|             |          |                                |  t.seq/.txt/.json/.xml             |\n" +
                                       "+-------------+----------+--------------------------------+------------------------------------+\n" +
                                       "| -log        |    -l    | Trace                          |  Write details of execution.       |\n" +
-                                      "|             |          | Debug                          |                                    |\n" +                                      "|             |          | Info                           |                                    |\n" +
-                                      "|             |          | Info                           |  Default                           |\n" +                                      "|             |          | Info                           |                                    |\n" +
-                                      "|             |          | Warning                        |                                    |\n" +                                      "|             |          | Info                           |                                    |\n" +
-                                      "|             |          | Error                          |                                    |\n" +                                      "|             |          | Info                           |                                    |\n" +
-                                      "|             |          | Critical                       |                                    |\n" +                                      "|             |          | Info                           |                                    |\n" +
-                                      "|             |          | Off                            |                                    |\n" +                                      "|             |          | Info                           |                                    |\n" +
+                                      "|             |          | Debug                          |                                    |\n" +
+                                      "|             |          | Info                           |  Default                           |\n" +
+                                      "|             |          | Warning                        |                                    |\n" +
+                                      "|             |          | Error                          |                                    |\n" +
+                                      "|             |          | Critical                       |                                    |\n" +
                                       "+-------------+----------+--------------------------------+------------------------------------+\n");
 
 
-                    Console.WriteLine("Example: Sequencer.exe -i test.txt -o outputFile.txt -g visualgraph.dot");
+                    Console.WriteLine("Example: Sequencer.exe -i test.txt -o outputFile.txt -l Info");
                     var url = "https://git.sztaki.hu/zahoranl/sequenceplanner/";
                     Console.WriteLine("Input file details: " + url);
                     Console.WriteLine("Press [w] to open SZTAKI GitLab!");
@@ -323,20 +424,33 @@ namespace SequencerConsole
             {
                 if (args[i].Equals("-log") || args[i].Equals("-l"))
                 {
-                    return (args[i + 1]) switch
+                    return (args[i + 1].ToUpper()) switch
                     {
-                        "Trace:" => LogLevel.Trace,
-                        "Debug:" => LogLevel.Debug,
-                        "Info:" => LogLevel.Info,
-                        "Warning:" => LogLevel.Warning,
-                        "Error:" => LogLevel.Error,
-                        "Critical:" => LogLevel.Critical,
+                        "TRACE" => LogLevel.Trace,
+                        "DEBUG" => LogLevel.Debug,
+                        "INFO" => LogLevel.Info,
+                        "WARNING" => LogLevel.Warning,
+                        "ERROR" => LogLevel.Error,
+                        "CRITICAL" => LogLevel.Critical,
                         _ => throw new SequencerException("Unkonwn loglevel! Use -help/-h for more details."),
                     };
                 }
             }
             return LogLevel.Info;
         }
+
+        private static bool Convert(string[] args)
+        {
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i].Equals("-convert") || args[i].Equals("-c"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private static bool Debug(string[] args)
         {
             for (int i = 0; i < args.Length; i++)
@@ -348,6 +462,7 @@ namespace SequencerConsole
             }
             return false;
         }
+
         private static bool Validate(string[] args)
         {
             for (int i = 0; i < args.Length; i++)
