@@ -14,7 +14,7 @@ namespace SequencePlanner.GTSPTask.Result
         public double CostSum { get; set; }             //Sum of solution costs (CostsRaw)
         public int StatusCode { get; set; }             //OR-Tools exit status code
         public string StatusMessage { get; set; }       //OR-Tools exit message
-        public List<string> Log { get; set; }                 //Console log of task running
+        public List<string> Log { get; set; }           //Console log of task running
 
         public TaskResult(TaskResult task)
         {
@@ -47,18 +47,6 @@ namespace SequencePlanner.GTSPTask.Result
             {
                 CostSum += cost;
             }
-        }
-
-        public override string ToString()
-        {
-            string a = "Time: " + FullTime;
-            a += "\nSolution: ";
-            foreach (var item in SolutionRaw)
-            {
-                a += item + ";";
-            }
-            a += "\nStatus message: "+StatusMessage;
-            return a;
         }
 
         public void ToLog(LogLevel lvl)

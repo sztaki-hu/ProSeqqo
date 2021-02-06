@@ -17,6 +17,17 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             Bidirectional = Line.BIDIRECTIONAL_DEFAULT;
         }
 
+        public LineSerializationObject(Line line)
+        {
+            LineID = line.UserID;
+            //ContourID = line.
+            PositionIDA = line.NodeA.UserID;
+            PositionIDB = line.NodeB.UserID;
+            Name = line.Name;
+            ResourceID = line.ResourceID;
+            Bidirectional = line.Bidirectional;
+        }
+
         public string ToSEQ()
         {
             string separator = ";";

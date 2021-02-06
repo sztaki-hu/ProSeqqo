@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Model;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Model;
 using System;
 using System.Collections.Generic;
 
@@ -7,39 +8,31 @@ namespace SequencePlanner.GTSPTask.Result
     public class LineTaskResult : TaskResult
     {
         public List<Line> LineResult { get; set; }
-        public double CostBetweenLines { get; set; }
-        public double Penalty { get; set; }
 
         public LineTaskResult(TaskResult baseTask) : base(baseTask)
         {
             LineResult = new List<Line>();
         }
 
-        public void WriteFull()
+        public void ToLog(LogLevel lvl)
         {
-            for (int i = 0; i < LineResult.Count; i++)
+            SeqLogger.Info("Result: ");
+            SeqLogger.Indent++;
+            base.ToLog(lvl);
+            if (StatusCode == 1)
             {
-                if(i!=0)
-                    Console.WriteLine("\t|--" + CostsRaw[i-1].ToString("F4"));
-                Console.WriteLine("\t| " + LineResult[i]+"["+LineResult[i].NodeA.Name+";"+LineResult[i].NodeB.Name+"]" + " Cost: " + LineResult[i].Length.ToString("F4"));
+                SeqLogger.Info("Solution: ");
+                SeqLogger.Indent++;
+                for (int i = 0; i < LineResult.Count - 1; i++)
+                {
+                    SeqLogger.Info(LineResult[i].ToString());
+                    SeqLogger.Info("--" + CostsRaw[i].ToString());
+                }
+                SeqLogger.Info(LineResult[LineResult.Count - 1].ToString());
+
+                SeqLogger.Indent--;
             }
-            Console.WriteLine();
-        }
-        public void WriteHeader()
-        {
-            Console.WriteLine(base.ToString());
-            Console.WriteLine("Full length: " + CostSum.ToString("F4"));
-            Console.WriteLine("Penalty: " + Penalty.ToString("F4"));
-            Console.WriteLine("Length between lines: " + CostBetweenLines.ToString("F4"));
-            Console.WriteLine("Number of items: " + LineResult.Count);
-            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", FullTime.Hours, FullTime.Minutes, FullTime.Seconds, FullTime.Milliseconds / 10);
-            Console.WriteLine("RunTime: " + elapsedTime);
-        }
-        public override string ToString()
-        {
-            WriteHeader();
-            WriteFull();
-            return "";
+            SeqLogger.Indent--;
         }
     }
 }
