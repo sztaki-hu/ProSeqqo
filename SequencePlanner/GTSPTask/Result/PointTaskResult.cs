@@ -14,8 +14,6 @@ namespace SequencePlanner.GTSPTask.Result
             PositionResult = new List<Position>();
         }
 
-        public override void Calculate() => base.Calculate();
-
         public void ToLog(LogLevel lvl)
         {
             SeqLogger.Info("Result: ");
