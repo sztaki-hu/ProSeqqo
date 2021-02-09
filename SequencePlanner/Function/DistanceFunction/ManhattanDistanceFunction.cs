@@ -1,5 +1,6 @@
 ﻿using SequencePlanner.Helper;
 using SequencePlanner.Model;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Function.DistanceFunction
@@ -23,9 +24,21 @@ namespace SequencePlanner.Function.DistanceFunction
                 return givenDistance.Weight;
             else
             {
-                SeqLogger.Error("ManhattanDistanceFunction not implemented yet!", nameof(ManhattanDistanceFunction));
-                throw new SequencerException("ManhattanDistanceFunction not implemented yet!");
-                return 3;
+                if (A.Vector.Length == B.Vector.Length)
+                {
+                    double tmp = 0;
+                    for (int i = 0; i < A.Vector.Length; i++)
+                    {
+                        tmp += Math.Abs(A.Vector[i] - B.Vector[i]);
+                    }
+                    return tmp;
+                }
+                else
+                {
+                    SeqLogger.Error("ManhattanDistanceFunction find dimension mismatch position userids: "+A.UserID+"-"+B.UserID);
+                    return 0;
+                }
+
             }
         }
 

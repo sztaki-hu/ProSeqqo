@@ -1,5 +1,6 @@
 ﻿using SequencePlanner.Helper;
 using SequencePlanner.Model;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Function.DistanceFunction
@@ -22,9 +23,24 @@ namespace SequencePlanner.Function.DistanceFunction
                 return givenDistance.Weight;
             else
             {
-                SeqLogger.Error("MaxDistanceFunction not implemented yet!", nameof(MaxDistanceFunction));
-                throw new SequencerException("MaxDistanceFunction not implemented yet!");
-                return 2;
+                if (A.Vector.Length == B.Vector.Length)
+                {
+                    double max = 0;
+                    for (int i = 0; i < A.Vector.Length; i++)
+                    {
+                        if (Math.Abs(A.Vector[i] - B.Vector[i]) > max)
+                        {
+                            max = Math.Abs(A.Vector[i] - B.Vector[i]);
+                        }
+                    }
+                    return max;
+                }
+                else
+                {
+                    SeqLogger.Error("ManhattanDistanceFunction find dimension mismatch position userids: " + A.UserID + "-" + B.UserID);
+                    return 0;
+                }
+
             }
         }
 
