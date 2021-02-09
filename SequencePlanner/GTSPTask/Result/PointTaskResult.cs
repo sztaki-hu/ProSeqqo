@@ -23,13 +23,15 @@ namespace SequencePlanner.GTSPTask.Result
             {
                 SeqLogger.Info("Solution: ");
                 SeqLogger.Indent++;
-                for (int i = 0; i < PositionResult.Count-1; i++)
+                if(PositionResult!=null && PositionResult.Count > 0)
                 {
-                     SeqLogger.Info(PositionResult[i].ToString());
-                     SeqLogger.Info("--"+CostsRaw[i].ToString());
+                    for (int i = 0; i < PositionResult.Count - 1; i++)
+                    {
+                        SeqLogger.Info(PositionResult[i].ToString());
+                        SeqLogger.Info("--" + CostsRaw[i].ToString());
+                    }
+                    SeqLogger.Info(PositionResult[PositionResult.Count - 1].ToString());
                 }
-                SeqLogger.Info(PositionResult[PositionResult.Count-1].ToString());
-
                 SeqLogger.Indent--;
             }
             SeqLogger.Indent--;

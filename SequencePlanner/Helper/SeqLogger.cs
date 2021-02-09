@@ -98,11 +98,14 @@ namespace SequencePlanner.Helper
         internal static string ToList(List<double> list)
         {
             string tmp = "";
-            for (int i = 0; i < list.Count - 1; i++)
+            if (list.Count > 0 && list != null)
             {
-                tmp += list[i].ToString("0.##") + "; ";
+                for (int i = 0; i < list.Count - 1; i++)
+                {
+                    tmp += list[i].ToString("0.##") + "; ";
+                }
+                tmp += list[list.Count - 1];
             }
-            tmp += list[list.Count - 1];
             return tmp;
         }
 
