@@ -4,6 +4,13 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <Version>0.3.0</Version>
+    <Authors>Andras Kovacs, Laszlo Zahoran</Authors>
+    <Company>SZTAKI</Company>
+    <Copyright>SZTAKI</Copyright>
+    <PackageProjectUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</PackageProjectUrl>
+    <RepositoryUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
