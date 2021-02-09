@@ -7,10 +7,16 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
-    internal class LineLikeResultSerializationObject: TaskResultSerializationObject
+    public class LineLikeResultSerializationObject: TaskResultSerializationObject
     {
         public List<Line> LineResults { get; set; }
         public List<Position> PositionResult { get; set; }
+
+        public LineLikeResultSerializationObject() : base()
+        {
+            LineResults = new List<Line>();
+            PositionResult = new List<Position>();
+        }
 
         public LineLikeResultSerializationObject(LineTaskResult result): base(result)
         {

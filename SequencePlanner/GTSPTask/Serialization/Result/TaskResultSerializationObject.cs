@@ -3,7 +3,6 @@ using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 using SequencePlanner.Helper;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
@@ -19,7 +18,14 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         public int StatusCode { get; set; }
         public string StatusMessage { get; set; }
         public List<string> Log { get; set; }
-       
+
+        public TaskResultSerializationObject()
+        {
+            SolutionRaw = new List<long>();
+            CostsRaw = new List<double>();
+            Log = new List<string>();
+        }
+
         public TaskResultSerializationObject(TaskResult result)
         {
             FullTime = result.FullTime.ToString();
