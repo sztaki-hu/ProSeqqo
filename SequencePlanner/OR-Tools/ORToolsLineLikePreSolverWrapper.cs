@@ -1,6 +1,7 @@
 ﻿using Google.OrTools.LinearSolver;
 using SequencePlanner.GTSP;
 using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace SequencePlanner.OR_Tools
 {
     public class ORToolsLineLikePreSolverWrapper
     {
+        public TimeSpan RunTime { get; private set; }
         private readonly ORToolsLineLikePreSolverTask parameters;
         private Stopwatch timer;
         private Variable[] x;                 
@@ -17,11 +19,15 @@ namespace SequencePlanner.OR_Tools
         public ORToolsLineLikePreSolverWrapper(ORToolsLineLikePreSolverTask parameters)
         {
             this.parameters = parameters;
+            timer = new Stopwatch();
+            RunTime = new TimeSpan();
         }
 
         public List<int> Solve()
         {
             // Init
+            timer.Reset();
+            timer.Start();
             SeqLogger.Info("ORTools building started!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent++;
             Solver solver = Solver.CreateSolver("CBC_MIXED_INTEGER_PROGRAMMING");
@@ -41,6 +47,8 @@ namespace SequencePlanner.OR_Tools
 
             // Solve
             Solver.ResultStatus resultStatus = RunSolver(solver);
+            timer.Stop();
+            RunTime = timer.Elapsed;
             return ProcessSolution(solver, resultStatus);
         }
 

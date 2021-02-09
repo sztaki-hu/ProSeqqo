@@ -64,6 +64,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 StartDepot = GTSPRepresentation.StartDepot
             });
             var result = ORPreSolver.Solve();
+            MIPRunTime = ORPreSolver.RunTime;
             if (result.Count > 0)
             {
                 long[][] initialSolution = new long[1][];
@@ -298,6 +299,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         {
             LineTaskResult taskResult = new LineTaskResult(result);
             taskResult.Log = SeqLogger.Backlog;
+            taskResult.PreSolverTime = MIPRunTime;
             foreach (var raw in taskResult.SolutionRaw)
             {
                 var find = false;
