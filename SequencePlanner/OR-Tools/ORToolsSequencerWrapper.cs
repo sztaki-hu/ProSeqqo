@@ -103,8 +103,8 @@ namespace SequencePlanner.OR_Tools
                 var ns = (param.TimeLimit - (sec * 1000)) * 1000000;
                 searchParameters.TimeLimit = new Duration { Seconds = sec, Nanos = ns };
                 SeqLogger.Info("Time Limit: " + searchParameters.TimeLimit.ToDiagnosticString(), nameof(ORToolsSequencerWrapper));
-            }
-            SeqLogger.Info("No time limit!", nameof(ORToolsSequencerWrapper));
+            }else
+                SeqLogger.Info("No time limit!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent--;
             SeqLogger.Info("ORTools building finished!", nameof(ORToolsSequencerWrapper));
         }
