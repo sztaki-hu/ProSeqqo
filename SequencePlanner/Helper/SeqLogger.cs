@@ -87,9 +87,9 @@ namespace SequencePlanner.Helper
                 string tmp = "";
                 for (int i = 0; i < list.Length-1; i++)
                 {
-                    tmp += list[i].ToString("0.##") + "; ";
+                    tmp += list[i].ToString("0.#####") + "; ";
                 }
-                tmp += list[list.Length - 1];
+                tmp += list[list.Length - 1].ToString("0.#####");
                 return tmp;
             }
             return "";

@@ -46,7 +46,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             foreach (var line in LineResults)
             {
                 //seq += line.LineID + d + line.PositionIDA + d + line.PositionIDA + line.Name + d + line.ResourceID + newline;
-                seq += line.UserID + d + line.NodeA.UserID + d + line.NodeB.UserID + line.Name + d + line.ResourceID + newline;
+                seq += line.UserID + d + line.NodeA.UserID + d + line.NodeB.UserID +d+ line.Name + d + line.ResourceID + newline;
             }
             seq += nameof(PositionResult) + ": " + newline;
             foreach (var postition in PositionResult)
