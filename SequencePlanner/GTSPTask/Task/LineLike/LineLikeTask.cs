@@ -30,6 +30,8 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
 
         public LineTaskResult RunModel()
         {
+            Timer.Reset();
+            Timer.Start();
             SeqLogger.Info("RunModel started!", nameof(LineLikeTask));
             SeqLogger.Indent++;
             GenerateModel();
@@ -45,7 +47,9 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             var result = ResolveSolution(orTools.Solve());
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(LineLikeTask));
-            result.ToString();
+            Timer.Stop();
+            result.FullTime = Timer.Elapsed;
+            result.ToLog(LogLevel.Info);
             return result;
         }
 
@@ -293,54 +297,40 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         private LineTaskResult ResolveSolution(TaskResult result)
         {
             LineTaskResult taskResult = new LineTaskResult(result);
-            //foreach (var raw in taskResult.SolutionRaw)
-            //{
-            //    var find = false;
-            //    foreach (var line in Lines)
-            //    {
-            //        if(line.SequencingID == raw)
-            //        {
-            //            if (!line.Virtual)
-            //            {
-            //                taskResult.Result.Add(line.UserID);
-            //                taskResult.ResultWithVirtual.Add(line.UserID);
-            //                taskResult.LineResult.Add(line);
-            //            }
-            //            else
-            //            {
-            //                taskResult.ResultWithVirtual.Add(line.UserID);
-            //            }
-            //            find = true;
-            //            break;
-            //        }
-            //    }
-            //    if (!find)
-            //        throw new SequencerException("Result of OR-Tools can not be resolved, no line found with the SequenceID: "+raw);
-            //}
+            taskResult.Log = SeqLogger.Backlog;
+            foreach (var raw in taskResult.SolutionRaw)
+            {
+                var find = false;
+                foreach (var line in Lines)
+                {
+                    if(line.SequencingID == raw)
+                    {
+                        if (!line.Virtual)
+                        {
+                            taskResult.LineResult.Add(line);
+                            taskResult.PositionResult.Add(line.NodeA);
+                            taskResult.PositionResult.Add(line.NodeB);
+                        }
+                        find = true;
+                        break;
+                    }
+                }
+                if (!find)
+                    throw new SequencerException("Result of OR-Tools can not be resolved, no line found with the SequenceID: "+raw);
+            }
 
-            //for (int i = 1; i < taskResult.LineResult.Count; i++)
-            //{
-            //    taskResult.Costs.Add(GTSPRepresentation.Matrix[taskResult.LineResult[i - 1].SequencingID, taskResult.LineResult[i].SequencingID]);
-            //    taskResult.CostBetweenLines += taskResult.Costs[i - 1];
-            //    if (taskResult.Costs[i-1]>0 && !taskResult.LineResult[i - 1].Virtual && !taskResult.LineResult[i].Virtual)
-            //    {
-            //        taskResult.CostBetweenLinesNoPenalty -= ContourPenalty;
-            //        taskResult.Penalty += ContourPenalty;
-            //    }
-            //}
-            //taskResult.CostSum = taskResult.CostBetweenLines;
-            //taskResult.CostSumNoPenalty += taskResult.CostBetweenLinesNoPenalty;
-            //taskResult.CostBetweenLinesNoPenalty += taskResult.CostBetweenLines;
+            taskResult.SolutionRaw.Clear();
+            foreach (var line in taskResult.LineResult)
+            {
+                taskResult.SolutionRaw.Add(line.UserID);
+            }
 
-            //foreach (var line in taskResult.LineResult)
-            //{
-            //    if (!line.Virtual) {
-            //        taskResult.CostOfLines += PositionMatrix.DistanceFunction.ComputeDistance(line.NodeA, line.NodeB);
-            //        line.Length = PositionMatrix.DistanceFunction.ComputeDistance(line.NodeA, line.NodeB);
-            //    }
-            //}
-            //taskResult.CostSum += taskResult.CostOfLines;
-            //taskResult.CostSumNoPenalty += taskResult.CostSum;
+            for (int i = 1; i < taskResult.LineResult.Count; i++)
+            {
+                taskResult.CostsRaw.Add(GTSPRepresentation.Matrix[taskResult.LineResult[i - 1].SequencingID, taskResult.LineResult[i].SequencingID]);
+                taskResult.CostSum += taskResult.CostsRaw[i - 1];
+            }
+
             SeqLogger.Info("Solution resolved!", nameof(LineLikeTask));
             return taskResult;
         }
