@@ -35,7 +35,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                     }
                 }
                 if (find == false)
-                    SeqLogger.Critical("Can not find header with: " + header, nameof(TokenConverter));
+                    SeqLogger.Warning("Can not find header with: " + header, nameof(TokenConverter));
                 return false;
             }
             catch (Exception e)
@@ -310,7 +310,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                     }
                 }
                 if (find == false)
-                    SeqLogger.Critical("Can not find header with: " + header, nameof(TokenConverter));
+                    SeqLogger.Warning("Can not find header with: " + header, nameof(TokenConverter));
                 return result;
             }
             catch (Exception e)
