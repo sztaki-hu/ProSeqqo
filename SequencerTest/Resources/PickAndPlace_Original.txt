@@ -11,6 +11,8 @@ TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
 ResourceDistanceFunction: Add
 ResourceSource: ConstantResource
 ResourceCostConstant: 0
+UseShortcutInAlternatives: True
+UseMIPprecedenceSolver: True
 
 PositionList:
 #+-------+---------------------+------------------+
@@ -106,5 +108,5 @@ PositionPrecedence:
 		1;					8
 		1;					9
 		1;					10
-		10;1
+	#	10;1
 
