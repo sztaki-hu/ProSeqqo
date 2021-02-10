@@ -342,3 +342,9 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 SequencerTest/coverage.json
+Example/hibrid.txt
+Example/seq_contours_half.txt
+Example/seq_fill_half.txt
+Example/tmp_eng2.svg
+Example/tmp_ger2.png
+Example/tmp_ger2.svg
