@@ -6,11 +6,12 @@ WeightMultiplier: Auto
 CyclicSequence: True
 StartDepot: 5
 #FinishDepot: 8
-ContourPenalty: 2
+ContourPenalty: 0
 ResourceSource: NoResource
 #ResourceDistanceFunction: Add
 #ResourceCostConstant: 2
 UseMIPprecedenceSolver: True
+BidirectionLineDefault: True
 
 PositionMatrix:
 1;2;3;4;5;6;7;8;9;10
@@ -34,12 +35,15 @@ LineList:
 #+--------+-----------+-------------+-------------+-------------------+
 #|  <int> |   <int>   |    <int>    |    <int>    |     <string>      |
 #+--------+-----------+-------------+-------------+-------------------+
-10;2;1;2; LineAB
-15;2;2;3; LineBC
-11;2;3;4; LineCD
-12;10;5;6; LineEF
-13;10;7;8; LineGH
-14;10;9;10; LineIJ
+0;0;1;2; LineAB
+1;0;2;3; LineBC
+2;0;3;4; LineCD
+3;0;4;5; LineDE
+4;0;5;6; LineEF
+5;1;6;7; LineFG
+6;1;7;8; LineGH
+7;1;8;9; LineHI
+8;1;9;10; LineIJ
 
 LinePrecedence:
 #+-------------------------+----------------------+-------------------+

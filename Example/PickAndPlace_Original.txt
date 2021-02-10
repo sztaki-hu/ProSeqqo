@@ -11,6 +11,7 @@ TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
 ResourceDistanceFunction: Add
 ResourceSource: ConstantResource
 ResourceCostConstant: 0
+UseMIPprecedenceSolver: True
 
 PositionList:
 #+-------+---------------------+------------------+
