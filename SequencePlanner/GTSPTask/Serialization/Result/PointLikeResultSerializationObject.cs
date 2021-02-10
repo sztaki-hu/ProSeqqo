@@ -35,7 +35,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public PointTaskResult ToPointLikeResult()
         {
-            throw new NotImplementedException();
+            var result = new PointTaskResult();
+            result = (PointTaskResult)base.ToTaskResult(result);
+            result.PositionResult = PositionResult;
+            return result;
         }
 
         public string ToSEQ()

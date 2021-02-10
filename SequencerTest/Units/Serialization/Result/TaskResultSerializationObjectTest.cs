@@ -1,19 +1,20 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
-using SequencerTest.Units.Helper;
 using System;
 
 namespace SequencerTest.Units.Serialization.Result
 {
     [TestClass]
-    public class LineLikeResultSerializationObjectTest
+    public class TaskResultSerializationObjectTest
     {
-        private LineLikeResultSerializationObject result;
+        private TaskResultSerializationObject result;
 
         [TestInitialize()]
         public void Initialize()
         {
-            result = new LineLikeResultSerializationObject();
+            result = new TaskResultSerializationObject();
+            result = new TaskResultSerializationObject();
             result.SolutionRaw.Add(0);
             result.CostsRaw.Add(1);
             result.CostSum = 2;
@@ -23,9 +24,6 @@ namespace SequencerTest.Units.Serialization.Result
             result.StatusCode = 3;
             result.StatusMessage = "Status";
             result.Log.Add("FirstLog");
-            result.LineResult.Add(TestObjects.GetLine());
-            result.PositionResult.Add(TestObjects.GetLinePosA());
-            result.PositionResult.Add(TestObjects.GetLinePosB());
         }
 
         [TestMethod]
@@ -40,25 +38,22 @@ namespace SequencerTest.Units.Serialization.Result
             Assert.AreEqual(result.StatusCode, 3);
             Assert.AreEqual(result.StatusMessage, "Status");
             Assert.AreEqual(result.Log[0], "FirstLog");
-            Assert.IsTrue(TestObjects.CheckLine(result.LineResult[0]));
-            Assert.IsTrue(TestObjects.CheckLinePosA(result.PositionResult[0]));
-            Assert.IsTrue(TestObjects.CheckLinePosB(result.PositionResult[1]));
         }
 
 
         [TestMethod]
         public void EmptyCalls()
         {
-            var result = new LineLikeResultSerializationObject();
-            result.ToLineLikeResult();
+            var result = new TaskResultSerializationObject();
+            var taskResult = new TaskResult();
             result.ToSEQ();
+            result.ToTaskResult(taskResult);
             result.ToString();
         }
 
         [TestMethod]
         public void FilledCalls()
         {
-            result.ToLineLikeResult();
             result.ToSEQ();
             result.ToString();
         }

@@ -6,14 +6,14 @@ using System;
 namespace SequencerTest.Units.Serialization.Result
 {
     [TestClass]
-    public class LineLikeResultSerializationObjectTest
+    public class PointLikeResultSerializationObjectTest
     {
-        private LineLikeResultSerializationObject result;
+        private PointLikeResultSerializationObject result;
 
         [TestInitialize()]
         public void Initialize()
         {
-            result = new LineLikeResultSerializationObject();
+            result = new PointLikeResultSerializationObject();
             result.SolutionRaw.Add(0);
             result.CostsRaw.Add(1);
             result.CostSum = 2;
@@ -23,9 +23,8 @@ namespace SequencerTest.Units.Serialization.Result
             result.StatusCode = 3;
             result.StatusMessage = "Status";
             result.Log.Add("FirstLog");
-            result.LineResult.Add(TestObjects.GetLine());
-            result.PositionResult.Add(TestObjects.GetLinePosA());
-            result.PositionResult.Add(TestObjects.GetLinePosB());
+            result.PositionResult.Add(TestObjects.GetPosA());
+            result.PositionResult.Add(TestObjects.GetPosB());
         }
 
         [TestMethod]
@@ -40,17 +39,16 @@ namespace SequencerTest.Units.Serialization.Result
             Assert.AreEqual(result.StatusCode, 3);
             Assert.AreEqual(result.StatusMessage, "Status");
             Assert.AreEqual(result.Log[0], "FirstLog");
-            Assert.IsTrue(TestObjects.CheckLine(result.LineResult[0]));
-            Assert.IsTrue(TestObjects.CheckLinePosA(result.PositionResult[0]));
-            Assert.IsTrue(TestObjects.CheckLinePosB(result.PositionResult[1]));
+            Assert.IsTrue(TestObjects.CheckPosA(result.PositionResult[0]));
+            Assert.IsTrue(TestObjects.CheckPosB(result.PositionResult[1]));
         }
 
 
         [TestMethod]
         public void EmptyCalls()
         {
-            var result = new LineLikeResultSerializationObject();
-            result.ToLineLikeResult();
+            var result = new PointLikeResultSerializationObject();
+            result.ToPointLikeResult();
             result.ToSEQ();
             result.ToString();
         }
@@ -58,7 +56,7 @@ namespace SequencerTest.Units.Serialization.Result
         [TestMethod]
         public void FilledCalls()
         {
-            result.ToLineLikeResult();
+            result.ToPointLikeResult();
             result.ToSEQ();
             result.ToString();
         }

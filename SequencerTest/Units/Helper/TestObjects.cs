@@ -1,7 +1,4 @@
 ﻿using SequencePlanner.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SequencerTest.Units.Helper
 {
@@ -51,6 +48,8 @@ namespace SequencerTest.Units.Helper
             };
             return position;
         }
+
+
 
         public static bool CheckLine(Line line)
         {
@@ -116,6 +115,25 @@ namespace SequencerTest.Units.Helper
                 return false;
             return true;
         }
+        public  static Position GetPosA()
+        {
+            return GetLinePosA();
+        }
 
+        public static Position GetPosB()
+        {
+            return GetLinePosB();
+        }
+
+
+        public static bool CheckPosA(Position position)
+        {
+            return CheckLinePosA(position);
+        }
+
+        public static bool CheckPosB(Position position)
+        {
+            return CheckLinePosB(position);
+        }
     }
 }

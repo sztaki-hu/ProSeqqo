@@ -14,6 +14,11 @@ namespace SequencePlanner.GTSPTask.Result
             PositionResult = new List<Position>();
         }
 
+        public PointTaskResult()
+        {
+            PositionResult = new List<Position>();
+        }
+
         public void ToLog(LogLevel lvl)
         {
             SeqLogger.Info("Result: ");
