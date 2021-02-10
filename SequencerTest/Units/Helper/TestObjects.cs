@@ -1,4 +1,5 @@
 ﻿using SequencePlanner.Model;
+using System.Collections.Generic;
 
 namespace SequencerTest.Units.Helper
 {
@@ -49,8 +50,6 @@ namespace SequencerTest.Units.Helper
             return position;
         }
 
-
-
         public static bool CheckLine(Line line)
         {
             if (!CheckLinePosA(line.NodeA))
@@ -82,8 +81,8 @@ namespace SequencerTest.Units.Helper
                 return false;
             if (position.ResourceID != 200)
                 return false;
-            if (position.SequencingID != 2)
-                return false;
+            //if (position.SequencingID != 2)
+            //    return false;
             if (position.Virtual)
                 return false;
             if (position.Vector[0] != 1)
@@ -103,8 +102,8 @@ namespace SequencerTest.Units.Helper
                 return false;
             if (position.ResourceID != 201)
                 return false;
-            if (position.SequencingID != 1)
-                return false;
+            //if (position.SequencingID != 1)
+            //    return false;
             if (position.Virtual)
                 return false;
             if (position.Vector[0] != 3)
@@ -125,7 +124,6 @@ namespace SequencerTest.Units.Helper
             return GetLinePosB();
         }
 
-
         public static bool CheckPosA(Position position)
         {
             return CheckLinePosA(position);
@@ -134,6 +132,18 @@ namespace SequencerTest.Units.Helper
         public static bool CheckPosB(Position position)
         {
             return CheckLinePosB(position);
+        }
+    
+        public static Alternative GetAlternative()
+        {
+
+            return new Alternative() {
+                UserID = 99,
+                ResourceID = 100,
+                SequencingID = 101,
+                Name = "Alternative",
+                Virtual = false
+            };
         }
     }
 }

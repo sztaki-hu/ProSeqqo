@@ -17,7 +17,6 @@ namespace SequencePlanner.Helper
         private IResourceFunction ResourceFunction { get; set; }
         private List<Model.Task> Tasks { get; set; }
 
-
         public ShortestPathSearch(List<Model.Task> tasks, IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
         {
             Level = tasks.Count;
@@ -72,7 +71,7 @@ namespace SequencePlanner.Helper
             return tmp;
         }
 
-        public ShortestPath RollbackSolution(Position from, Position to)
+        private ShortestPath RollbackSolution(Position from, Position to)
         {
             var path = new ShortestPath(from, to, Values.GetValueOrDefault(from.SequencingID));
             var list = new List<BaseNode>();
@@ -93,7 +92,7 @@ namespace SequencePlanner.Helper
             return path;
         }
 
-        public BaseNode PreviousNode(BaseNode B)
+        private BaseNode PreviousNode(BaseNode B)
         {
             foreach (var edge in Edges)
             {

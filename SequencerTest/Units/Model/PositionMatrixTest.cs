@@ -54,11 +54,11 @@ namespace SequencerTest.Units.Model
             {
                 PositionMatrix posMatrix = new PositionMatrix(null, distFunc, resourceFunc);
                 Assert.Fail();
-            }catch(SequencerException e)
+            }catch(SeqException e)
             {
                 lastCatchedException = e;
             }
-            Assert.IsInstanceOfType(lastCatchedException, typeof(SequencerException));
+            Assert.IsInstanceOfType(lastCatchedException, typeof(SeqException));
             lastCatchedException = null;
             
             //B
@@ -67,11 +67,11 @@ namespace SequencerTest.Units.Model
                 PositionMatrix posMatrix = new PositionMatrix(positionList, null, resourceFunc);
                 Assert.Fail();
             }
-            catch (SequencerException e)
+            catch (SeqException e)
             {
                 lastCatchedException = e;
             }
-            Assert.IsInstanceOfType(lastCatchedException, typeof(SequencerException));
+            Assert.IsInstanceOfType(lastCatchedException, typeof(SeqException));
             lastCatchedException = null;
             
             //C
@@ -80,11 +80,11 @@ namespace SequencerTest.Units.Model
                 PositionMatrix posMatrix = new PositionMatrix(positionList, distFunc, null);
                 Assert.Fail();
             }
-            catch (SequencerException e)
+            catch (SeqException e)
             {
                 lastCatchedException = e;
             }
-            Assert.IsInstanceOfType(lastCatchedException, typeof(SequencerException));
+            Assert.IsInstanceOfType(lastCatchedException, typeof(SeqException));
         }
 
 
