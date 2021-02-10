@@ -39,7 +39,7 @@ namespace SequencePlanner.Function.ResourceFunction
         {
             if (LinkingFunction == null)
             {
-                throw new SequencerException("ConstantResourceFunction.LinkingFunction not given - NULL.");
+                throw new SeqException("ConstantResourceFunction.LinkingFunction not given - NULL.");
             }
         }
         public void ToLog(LogLevel level)

@@ -83,8 +83,8 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 "NoResource" => new NoResourceFunction(),
                 "ConstantResource" => new ConstantResourceFunction(ResourceCostConstant, resourceDistanceLinkFunction),
                 "MatrixResource" => new MatrixResourceFunction(ResourceCostMatrix2.ResourceCostMatrix, ResourceCostMatrix2.IDHeader, resourceDistanceLinkFunction),
-                "PositionBasedResource" => throw new SequencerException("PositionBasedResource not implemented yet!"),
-                _ => throw new SequencerException("ResourceFunction unknown!"),
+                "PositionBasedResource" => throw new SeqException("PositionBasedResource not implemented yet!"),
+                _ => throw new SeqException("ResourceFunction unknown!"),
             };
             return resourceFunction;
         }
@@ -105,9 +105,9 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                     ResourceCostMatrix2.FillBySEQTokens(tokenizer);
                     break;
                 case "PositionBasedResource":
-                    throw new SequencerException("PositionBasedResource not implemented yet!");
+                    throw new SeqException("PositionBasedResource not implemented yet!");
                 default:
-                    throw new SequencerException("ResourceFunction unknown!");
+                    throw new SeqException("ResourceFunction unknown!");
             }
         }
     }

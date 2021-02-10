@@ -39,9 +39,9 @@ namespace SequencePlanner.Model
         public void Validate()
         {
             if (NodeA == null)
-                throw new SequencerException("Line with UserID: "+UserID+" NodeA should not be null.");
+                throw new SeqException("Line with UserID: "+UserID+" NodeA should not be null.");
             if (NodeB == null)
-                throw new SequencerException("Line with UserID: " + UserID + " NodeB should not be null.");
+                throw new SeqException("Line with UserID: " + UserID + " NodeB should not be null.");
         }
 
         public override string ToString()

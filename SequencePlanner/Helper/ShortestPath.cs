@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SequencePlanner.Helper
 {
-    public class CriticalPath
+    public class ShortestPath
     {
         public BaseNode Front { get; set; }
         public BaseNode Back { get; set; }
@@ -13,7 +13,7 @@ namespace SequencePlanner.Helper
         public List<double> Costs { get; set; }
         public double Cost { get; set; }
 
-        public CriticalPath(BaseNode front, BaseNode back, double cost)
+        public ShortestPath(BaseNode front, BaseNode back, double cost)
         {
             Front = front;
             Back = back;

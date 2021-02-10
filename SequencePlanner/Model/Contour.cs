@@ -16,9 +16,9 @@ namespace SequencePlanner.Model
         public void Validate()
         {
             if (Lines == null)
-                throw new SequencerException("Contour with UserID: " + UserID + " Lines should not be null.");
+                throw new SeqException("Contour with UserID: " + UserID + " Lines should not be null.");
             if(Lines.Count<1)
-                throw new SequencerException("Contour with UserID: " + UserID + " is empty.");
+                throw new SeqException("Contour with UserID: " + UserID + " is empty.");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception)
             {
-                throw new SequencerException("Can't phrase int value at Line "+LineNumber+" - "+KeyWord);
+                throw new SeqException("Can't phrase int value at Line "+LineNumber+" - "+KeyWord);
             }
         }
         public bool ToBool()
@@ -30,7 +30,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception)
             {
-                throw new SequencerException("Can't phrase bool value at Line " + LineNumber + " - " + KeyWord);
+                throw new SeqException("Can't phrase bool value at Line " + LineNumber + " - " + KeyWord);
             }
         }
 
@@ -42,7 +42,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception)
             {
-                throw new SequencerException("Can't phrase csv value at Line " + LineNumber + " - " + KeyWord);
+                throw new SeqException("Can't phrase csv value at Line " + LineNumber + " - " + KeyWord);
             }
         }
     }

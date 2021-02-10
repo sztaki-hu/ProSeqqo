@@ -318,7 +318,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                     }
                 }
                 if (!find)
-                    throw new SequencerException("Result of OR-Tools can not be resolved, no line found with the SequenceID: "+raw);
+                    throw new SeqException("Result of OR-Tools can not be resolved, no line found with the SequenceID: "+raw);
             }
 
             taskResult.SolutionRaw.Clear();

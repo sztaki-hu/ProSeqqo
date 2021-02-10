@@ -33,9 +33,9 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             if (cyclicSequence)
             {
                 if(startDepot == null)
-                    throw new SequencerException("In case of CyclicSequence StartDepot needed!");
+                    throw new SeqException("In case of CyclicSequence StartDepot needed!");
                 if(finishDepot != null)
-                    throw new SequencerException("In case of CyclicSequence FinishDepot not useable!");
+                    throw new SeqException("In case of CyclicSequence FinishDepot not useable!");
             }
             SeqLogger.Trace("CheckCycle validated!", nameof(PointLikeTaskValidator));
         }
@@ -43,21 +43,21 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         private void CheckDimension(int dimension)
         {
             if (dimension <= 0)
-                throw new SequencerException("Dimension should be > 0!");
+                throw new SeqException("Dimension should be > 0!");
             SeqLogger.Trace("CheckDimension validated!", nameof(PointLikeTaskValidator));
         }
 
         private void CheckTimeLimit(int timelimit)
         {
             if (timelimit < 0)
-                throw new SequencerException("Timelimit should be positive, 0 - NO LIMIT");
+                throw new SeqException("Timelimit should be positive, 0 - NO LIMIT");
             SeqLogger.Trace("CheckDimension validated!", nameof(PointLikeTaskValidator));
         }
 
         private void CheckPositionMatrix(PositionMatrix positionMatrix)
         {
             if (positionMatrix == null)
-                throw new SequencerException("PositionMatrix.PositionMatrix not given.");
+                throw new SeqException("PositionMatrix.PositionMatrix not given.");
             else
             {
                 positionMatrix.Validate();
@@ -79,7 +79,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                     return;
             }
             if (!findBefore || !findAfter)
-                throw new SequencerException("Precedence list item.Before/After not found in Line/Contour list.");
+                throw new SeqException("Precedence list item.Before/After not found in Line/Contour list.");
         }
     }
 }

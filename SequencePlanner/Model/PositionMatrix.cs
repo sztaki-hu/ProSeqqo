@@ -43,21 +43,21 @@ namespace SequencePlanner.Model
         public void Validate()
         {
             if (DistanceFunction == null)
-                throw new SequencerException("PositionMatrix.DistanceFunction not given.");
+                throw new SeqException("PositionMatrix.DistanceFunction not given.");
             else
             {
                 DistanceFunction.Validate();
             }
 
             if (ResourceFunction == null)
-                throw new SequencerException("PositionMatrix.ResourceFunction not given.");
+                throw new SeqException("PositionMatrix.ResourceFunction not given.");
             else
             {
                 ResourceFunction.Validate();
             }
 
             if (Positions == null)
-                throw new SequencerException("PositionMatrix.Positions not given.");
+                throw new SeqException("PositionMatrix.Positions not given.");
         }
 
         public void ToLog(LogLevel level)

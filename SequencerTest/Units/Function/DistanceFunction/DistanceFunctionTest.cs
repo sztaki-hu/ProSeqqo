@@ -90,7 +90,7 @@ namespace SequencerTest.Units.DistanceFunction
             {
                 func.ComputeDistance(A, C);
             }
-            catch (SequencerException ex)
+            catch (SeqException ex)
             {
                 expectedExcetpion = ex;
             }
@@ -100,7 +100,7 @@ namespace SequencerTest.Units.DistanceFunction
             {
                 func.ComputeDistance(D, A);
             }
-            catch (SequencerException ex)
+            catch (SeqException ex)
             {
                 expectedExcetpion = ex;
             }

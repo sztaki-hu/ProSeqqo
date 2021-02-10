@@ -111,7 +111,7 @@ namespace SequencePlanner.OR_Tools
             {
                 SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsLineLikePreSolverWrapper));
                 SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsLineLikePreSolverWrapper));
-                throw new SequencerException("Can not find optimal initial solution with MIP solver!");
+                throw new SeqException("Can not find optimal initial solution with MIP solver!");
             }
             SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsLineLikePreSolverWrapper));
             SeqLogger.Info("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsLineLikePreSolverWrapper));

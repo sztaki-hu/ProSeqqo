@@ -210,7 +210,7 @@ namespace SequencerConsole
                     }
                 }
                 else
-                    throw new SequencerException("Unknown task type!", "It should be TaskType: LineLike or PointLike");
+                    throw new SeqException("Unknown task type!", "It should be TaskType: LineLike or PointLike");
             }
             catch (Exception e)
             {
@@ -456,7 +456,7 @@ namespace SequencerConsole
                         "WARNING" => LogLevel.Warning,
                         "ERROR" => LogLevel.Error,
                         "CRITICAL" => LogLevel.Critical,
-                        _ => throw new SequencerException("Unkonwn loglevel! Use -help/-h for more details."),
+                        _ => throw new SeqException("Unkonwn loglevel! Use -help/-h for more details."),
                     };
                 }
             }

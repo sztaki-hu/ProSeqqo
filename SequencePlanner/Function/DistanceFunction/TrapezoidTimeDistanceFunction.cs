@@ -34,30 +34,30 @@ namespace SequencePlanner.Function.DistanceFunction
         public override void Validate()
         {
             if (MaxAcceleration.Length != MaxSpeed.Length)
-                throw new SequencerException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
+                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
             if (JointThresholdTime.Length != JointThresholdDist.Length)
-                throw new SequencerException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of JointThresholdTime/JointThresholdDist.");
+                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of JointThresholdTime/JointThresholdDist.");
             if (JointThresholdTime.Length != MaxAcceleration.Length)
-                throw new SequencerException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/JointThresholdTime.");
+                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/JointThresholdTime.");
             for (int i = 0; i < MaxSpeed.Length; i++)
             {
                 if(MaxAcceleration[i]<=0)
-                    throw new SequencerException("MaxAcceleration contains >=0 !");
+                    throw new SeqException("MaxAcceleration contains >=0 !");
                 if(MaxSpeed[i]<=0)
-                    throw new SequencerException("MaxSpeed contains >=0 !");
+                    throw new SeqException("MaxSpeed contains >=0 !");
                 if(JointThresholdTime[i]<=0)
-                    throw new SequencerException("JointThresholdTime contains >=0 !");
+                    throw new SeqException("JointThresholdTime contains >=0 !");
                 if(JointThresholdDist[i]<=0)
-                    throw new SequencerException("JointThresholdDist contains >=0 !");
+                    throw new SeqException("JointThresholdDist contains >=0 !");
             }
         }
 
         protected double TrapezoidTimeCalculation(Position A, Position B, bool withTieBreaker)
         {
             if (A == null || B == null)
-                throw new SequencerException("TrapezoidTimeDistanceFunction A/B position null!");
+                throw new SeqException("TrapezoidTimeDistanceFunction A/B position null!");
             if (A.Dimension != B.Dimension)
-                throw new SequencerException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
+                throw new SeqException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
             int Dimension = A.Dimension;
             if (B.Dimension == Dimension && MaxAcceleration.Length == Dimension && MaxSpeed.Length == Dimension)
             {
@@ -96,7 +96,7 @@ namespace SequencePlanner.Function.DistanceFunction
         private void InitParameters()
         {
             if(MaxAcceleration.Length != MaxSpeed.Length)
-                throw new SequencerException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
+                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
             int Dimension = MaxSpeed.Length;
             JointThresholdTime = new double[Dimension];
             JointThresholdDist = new double[Dimension];

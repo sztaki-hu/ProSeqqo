@@ -21,9 +21,9 @@ namespace SequencePlanner.Function.DistanceFunction
         public override double ComputeDistance(Position A, Position B)
         {
             if (A == null || B == null)
-                throw new SequencerException("MatrixDistanceFunction A/B position null!");
+                throw new SeqException("MatrixDistanceFunction A/B position null!");
             if (A.Dimension != B.Dimension)
-                throw new SequencerException("MatrixDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
+                throw new SeqException("MatrixDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
 
             var givenDistance = GetStrictEdgeWeight(A, B);
             if (givenDistance != null)
@@ -40,9 +40,9 @@ namespace SequencePlanner.Function.DistanceFunction
                         bid = i;
                 }
                 if (aid == -1)
-                    throw new SequencerException("Matrix distance function can not find user position ID. PositionA: [G:" + A.UserID + "] " + A.Name);
+                    throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + A.UserID + "] " + A.Name);
                 if (bid == -1)
-                    throw new SequencerException("Matrix distance function can not find user position ID. PositionA: [G:" + B.UserID + "] " + B.Name);
+                    throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + B.UserID + "] " + B.Name);
                 return CostMatrix[aid][bid];
             }
         }
@@ -50,11 +50,11 @@ namespace SequencePlanner.Function.DistanceFunction
         public override void Validate()
         {
             if (CostMatrix==null || IDList==null)
-                throw new SequencerException("MatrixDistanceFunction contains null property, ResourceIDList/CostMatrix.");
+                throw new SeqException("MatrixDistanceFunction contains null property, ResourceIDList/CostMatrix.");
             if (CostMatrix.Count != CostMatrix[0].Count)
-                throw new SequencerException("MatrixDistanceFunction.CostMatrix size should be n x n.");
+                throw new SeqException("MatrixDistanceFunction.CostMatrix size should be n x n.");
             if (CostMatrix.Count != IDList.Count)
-                throw new SequencerException("MatrixDistanceFunction.CostMatrix and ResourceIDList dimension should be equal.");
+                throw new SeqException("MatrixDistanceFunction.CostMatrix and ResourceIDList dimension should be equal.");
         }
     }
 }

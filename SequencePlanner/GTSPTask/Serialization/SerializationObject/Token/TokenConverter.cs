@@ -40,7 +40,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
 
@@ -61,7 +61,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
 
@@ -87,7 +87,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
 
@@ -108,7 +108,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
 
@@ -142,7 +142,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
 
@@ -175,7 +175,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
 
@@ -216,7 +216,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
 
@@ -261,7 +261,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
 
@@ -291,7 +291,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
 
@@ -315,7 +315,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             catch (Exception e)
             {
-                throw new SequencerException("Can not phrase header " + header, e);
+                throw new SeqException("Can not phrase header " + header, e);
             }
         }
     }

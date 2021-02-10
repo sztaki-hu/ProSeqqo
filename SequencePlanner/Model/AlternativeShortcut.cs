@@ -13,14 +13,14 @@ namespace SequencePlanner.Model
         public Alternative Original { get; set; }
         public Task FrontProxy { get; set; }
         public Task BackProxy { get; set; }
-        public List<CriticalPath> CriticalPaths{get;set;}
+        public List<ShortestPath> CriticalPaths{get;set;}
         public StrictEdgeWeightSet StrictSystemEdgeWeightSet { get; set; }
 
         public AlternativeShortcut():base()
         {
             Name = UserID + "_Alternative_" + GlobalID;
             Tasks = new List<Task>();
-            CriticalPaths = new List<CriticalPath>();
+            CriticalPaths = new List<ShortestPath>();
             StrictSystemEdgeWeightSet = new StrictEdgeWeightSet();
         }
         
@@ -56,7 +56,7 @@ namespace SequencePlanner.Model
 
         private void FindShortcuts(IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
         {
-            CPM cpm = new CPM(Original.Tasks, distanceFunction, resourceFunction);
+            ShortestPathSearch cpm = new ShortestPathSearch(Original.Tasks, distanceFunction, resourceFunction);
             foreach (var openPos in FrontProxy.Positions)
             {
                 CriticalPaths.AddRange(cpm.CalculateCriticalRoute(openPos, BackProxy.Positions));
@@ -85,7 +85,7 @@ namespace SequencePlanner.Model
                 if (findBefore && findAfter)
                 {
                     SeqLogger.Error("Position precedence found where before and after is in the same alternative.");
-                    throw new SequencerException("Position precedence inside the an alternative!", "Remove precedence with these userids: [" + gTSPPrecedenceConstraint.Before.UserID + ";" + gTSPPrecedenceConstraint.After.UserID + "]");
+                    throw new SeqException("Position precedence inside the an alternative!", "Remove precedence with these userids: [" + gTSPPrecedenceConstraint.Before.UserID + ";" + gTSPPrecedenceConstraint.After.UserID + "]");
                 }
 
                 if (findBefore || findAfter)

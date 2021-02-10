@@ -15,9 +15,9 @@ namespace SequencePlanner.Function.DistanceFunction
         public override double ComputeDistance(Position A, Position B)
         {
             if (A == null || B == null)
-                throw new SequencerException("EuclidianDistanceFunction A/B position null!");
+                throw new SeqException("EuclidianDistanceFunction A/B position null!");
             if (A.Dimension != B.Dimension)
-                throw new SequencerException("EuclidianDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID+", "+ B.UserID);
+                throw new SeqException("EuclidianDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID+", "+ B.UserID);
 
             var givenDistance = GetStrictEdgeWeight(A, B);
             if (givenDistance != null)

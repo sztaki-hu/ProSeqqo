@@ -121,7 +121,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 "TrapezoidTimeDistance" => new TrapezoidTimeDistanceFunction(TrapezoidAcceleration, TrapezoidSpeed),
                 "TrapezoidTimeDistanceWithTimeBreaker" => new TrapezoidTimeWithTimeBreakerDistanceFunction(TrapezoidAcceleration, TrapezoidSpeed),
                 "MatrixDistance" => new MatrixDistanceFunction(DistanceMatrix.DistanceMatrix, DistanceMatrix.IDHeader),
-                _ => throw new SequencerException("DistanceFunction is unknown!"),
+                _ => throw new SeqException("DistanceFunction is unknown!"),
             };
             newDistanceFunction.StrictUserEdgeWeights = StrictUserEdgeWeights.ToStrictEdgeWeightSet(positions);
             return newDistanceFunction;

@@ -152,7 +152,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 var before = FindLine(linePrec.BeforeID, lineLikeTask.Lines);
                 var after = FindLine(linePrec.AfterID, lineLikeTask.Lines);
                 if (before == null || after == null)
-                    throw new SequencerException("Phrase error line precedence user id not found!");
+                    throw new SeqException("Phrase error line precedence user id not found!");
                 lineLikeTask.LinePrecedences.Add(new GTSP.GTSPPrecedenceConstraint()
                 {
                     Before = before,
@@ -165,7 +165,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 var before = FindContour(contourPrec.BeforeID, lineLikeTask.Contours);
                 var after = FindContour(contourPrec.AfterID, lineLikeTask.Contours);
                 if (before == null || after == null)
-                    throw new SequencerException("Phrase error contour precedence user id not found!");
+                    throw new SeqException("Phrase error contour precedence user id not found!");
                 lineLikeTask.ContourPrecedences.Add(new GTSP.GTSPPrecedenceConstraint()
                 {
                     Before = before,

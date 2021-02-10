@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SequencePlanner.Helper
 {
-    public class CPM
+    public class ShortestPathSearch
     {
         private int Level { get; set; }
         private Dictionary<int, double> Values { get; set; }
@@ -18,7 +18,7 @@ namespace SequencePlanner.Helper
         private List<Model.Task> Tasks { get; set; }
 
 
-        public CPM(List<Model.Task> tasks, IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
+        public ShortestPathSearch(List<Model.Task> tasks, IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
         {
             Level = tasks.Count;
             List = new List<BaseNode>();
@@ -30,7 +30,7 @@ namespace SequencePlanner.Helper
             Build();
         }
 
-        public List<CriticalPath> CalculateCriticalRoute(Position openPos, List<Position> positions)
+        public List<ShortestPath> CalculateCriticalRoute(Position openPos, List<Position> positions)
         {
             foreach (var pos in Tasks[0].Positions)
             {
@@ -62,7 +62,7 @@ namespace SequencePlanner.Helper
                 }
             }
             //SeqLogger.Indent++;
-            var tmp = new List<CriticalPath>();
+            var tmp = new List<ShortestPath>();
             foreach (var pos in positions)
             {
                 tmp.Add(RollbackSolution(openPos, pos));
@@ -72,9 +72,9 @@ namespace SequencePlanner.Helper
             return tmp;
         }
 
-        public CriticalPath RollbackSolution(Position from, Position to)
+        public ShortestPath RollbackSolution(Position from, Position to)
         {
-            var path = new CriticalPath(from, to, Values.GetValueOrDefault(from.SequencingID));
+            var path = new ShortestPath(from, to, Values.GetValueOrDefault(from.SequencingID));
             var list = new List<BaseNode>();
             BaseNode akt = to;
             list.Add(akt);
@@ -100,7 +100,7 @@ namespace SequencePlanner.Helper
                 if (edge.B.SequencingID == B.SequencingID)
                     return edge.A;
             }
-            throw new SequencerException("CPM error!");
+            throw new SeqException("CPM error!");
         }
 
         private void Build()
@@ -143,7 +143,7 @@ namespace SequencePlanner.Helper
                 if (item.A.GlobalID == A.GlobalID && item.B.GlobalID == B.GlobalID)
                     return item.Weight;
             }
-            throw new SequencerException("Edge not found in CPM!");
+            throw new SeqException("Edge not found in CPM!");
         }
     }
 

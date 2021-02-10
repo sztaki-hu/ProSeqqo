@@ -187,7 +187,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
             //Check circle in process precedences
             if (GTSPPrecedenceConstraint.isCyclic(ProcessPrecedence))
-                throw new SequencerException("Process precedences are cyclic.");
+                throw new SeqException("Process precedences are cyclic.");
 
             if (PositionPrecedence != null)
             {
@@ -421,7 +421,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     }
                 }
                 if (!find)
-                    throw new SequencerException("Result of OR-Tools can not be resolved, no line found with the SequenceID: " + raw);
+                    throw new SeqException("Result of OR-Tools can not be resolved, no line found with the SequenceID: " + raw);
             }
 
             for (int i = 1; i < result.PositionResult.Count; i++)

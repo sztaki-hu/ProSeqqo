@@ -42,9 +42,9 @@ namespace SequencePlanner.GTSP
         public void Validate()
         {
             if (Before == null)
-                throw new SequencerException("GTSPPrecedenceConstraint.Before is null!");
+                throw new SeqException("GTSPPrecedenceConstraint.Before is null!");
             if (After == null)
-                throw new SequencerException("GTSPPrecedenceConstraint.After is null!");
+                throw new SeqException("GTSPPrecedenceConstraint.After is null!");
         }
     }
 }
