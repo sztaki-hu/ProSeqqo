@@ -10,7 +10,7 @@ namespace SequencePlanner.Model
 {
     public class AlternativeShortcut : Alternative
     {
-        public Alternative Original { get; set; }
+        public Alternative Original { get; private set; }
         public Task FrontProxy { get; set; }
         public Task BackProxy { get; set; }
         public List<ShortestPath> CriticalPaths{get;set;}
@@ -38,20 +38,22 @@ namespace SequencePlanner.Model
 
         public void CreateShortcut(IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
         {
-            if(Original.Tasks.Count > 1)
+            if(Original is not null && Original.Tasks is not null && Original.Tasks.Count > 1)
             {
                 FrontProxy = Original.Tasks[0];
                 BackProxy = Original.Tasks[Original.Tasks.Count - 1];
                 Tasks.Add(FrontProxy);
                 Tasks.Add(BackProxy);
-                FindShortcuts(distanceFunction,resourceFunction);
+                FindShortcuts(distanceFunction, resourceFunction);
+                
+                SeqLogger.Trace(CriticalPaths.Count + " shortcut created in [UID:" + Original.UserID + "] alternative, between: " + FrontProxy.ToString() + " and " + BackProxy.ToString(), nameof(AlternativeShortcut));
+                foreach (var path in CriticalPaths)
+                {
+                    distanceFunction.StrictSystemEdgeWeights.Add(new StrictEdgeWeight(path.Front, path.Back, path.Cost));
+                    SeqLogger.Trace("Contains " + path.Cut.Count + " in cut with " + path.Cost + " cost, between: " + path.Front.ToString() + " and " + path.Back.ToString(), nameof(AlternativeShortcut));
+                }
             }
-            SeqLogger.Trace(CriticalPaths.Count+" shortcut created in [UID:"+Original.UserID+"] alternative, between: "+FrontProxy.ToString()+" and "+ BackProxy.ToString(), nameof(AlternativeShortcut));
-            foreach (var path in CriticalPaths)
-            {
-                distanceFunction.StrictSystemEdgeWeights.Add(new StrictEdgeWeight(path.Front, path.Back, path.Cost));
-                SeqLogger.Trace("Contains "+path.Cut.Count+" in cut with "+path.Cost+" cost, between: "+path.Front.ToString()+" and "+ path.Back.ToString(), nameof(AlternativeShortcut));
-            }
+            
         }
 
         private void FindShortcuts(IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
@@ -61,11 +63,6 @@ namespace SequencePlanner.Model
             {
                 CriticalPaths.AddRange(cpm.CalculateCriticalRoute(openPos, BackProxy.Positions));
             }
-        }
-
-        public double[,] OverrideWeights(double[,] matrix)
-        {
-            return matrix;
         }
 
         public List<GTSPPrecedenceConstraint> FindPrecedenceHeaderOfPositions(GTSPPrecedenceConstraint gTSPPrecedenceConstraint)

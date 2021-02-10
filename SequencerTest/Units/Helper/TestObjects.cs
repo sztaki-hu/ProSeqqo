@@ -136,14 +136,53 @@ namespace SequencerTest.Units.Helper
     
         public static Alternative GetAlternative()
         {
-
+            var Tasks = new List<Task>();
+            Task TA = new Task();
+            TA.Positions.Add(TestObjects.GetPosA());
+            TA.Positions.Add(TestObjects.GetPosB());
+            Task TB = new Task();
+            TB.Positions.Add(TestObjects.GetPosA());
+            TB.Positions.Add(TestObjects.GetPosB());
+            Task TC = new Task();
+            TC.Positions.Add(TestObjects.GetPosA());
+            TC.Positions.Add(TestObjects.GetPosB());
+            Tasks.Add(TA);
+            Tasks.Add(TB);
+            Tasks.Add(TC);
+            
             return new Alternative() {
                 UserID = 99,
                 ResourceID = 100,
                 SequencingID = 101,
                 Name = "Alternative",
-                Virtual = false
+                Virtual = false, 
+                Tasks = Tasks
             };
+        }
+
+        public static bool CheckAlternative(Alternative alternative)
+        {
+            if (!CheckLinePosA(alternative.Tasks[0].Positions[0]))
+                return false;
+            if (!CheckLinePosB(alternative.Tasks[0].Positions[1]))
+                return false;
+            if (!CheckLinePosA(alternative.Tasks[1].Positions[0]))
+                return false;
+            if (!CheckLinePosB(alternative.Tasks[1].Positions[1]))
+                return false;
+            if (!CheckLinePosA(alternative.Tasks[2].Positions[0]))
+                return false;
+            if (!CheckLinePosB(alternative.Tasks[2].Positions[1]))
+                return false;
+            if(alternative.Name != "Alternative")
+                return false;
+            if (alternative.ResourceID != 100)
+                return false;
+            if (alternative.UserID != 99)
+                return false;
+            if (alternative.Virtual)
+                return false;
+            return true;
         }
     }
 }
