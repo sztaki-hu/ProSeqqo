@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
@@ -27,7 +27,6 @@
     <Folder Include="Units\GTSPTask\Task\Base\" />
     <Folder Include="Units\GTSPTask\Task\LineLike\" />
     <Folder Include="Units\GTSPTask\Task\PointLike\" />
-    <Folder Include="Units\Helper\" />
     <Folder Include="Units\OR-Tools\" />
     <Folder Include="Units\Serialization\Token\" />
     <Folder Include="Units\Serialization\SerializationObject\" />
