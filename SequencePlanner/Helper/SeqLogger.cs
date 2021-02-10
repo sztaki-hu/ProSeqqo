@@ -8,7 +8,8 @@ namespace SequencePlanner.Helper
     {
         public static LogLevel LogLevel = LogLevel.Trace;
         public static int Indent=0;
-        public static List<string> Backlog { get; set; }
+        private static List<string> backlog = new List<string>();
+        public static List<string> Backlog { get { return backlog; } set { backlog = value; } }
 
         public static void Trace(string message, string nameOfClass = null)
         {
