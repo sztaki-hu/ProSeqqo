@@ -187,7 +187,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
             //Check circle in process precedences
             if (GTSPPrecedenceConstraint.isCyclic(ProcessPrecedence))
-                throw new SequencerException("Process precedences is cyclic.");
+                throw new SequencerException("Process precedences are cyclic.");
 
             if (PositionPrecedence != null)
             {

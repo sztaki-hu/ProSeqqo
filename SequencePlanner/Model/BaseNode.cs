@@ -26,7 +26,7 @@ namespace SequencePlanner.Model
         public override string ToString()
         {
             var str = Name;
-            str += "[Global:" + GlobalID;
+            str += " [Global:" + GlobalID;
             str += "|UserID:" + UserID;
             str += "|SeqID:" + SequencingID+"]";
             return str;

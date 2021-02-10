@@ -112,33 +112,43 @@ namespace SequencePlanner.Helper
         public  static string ToList(List<long> list)
         {
             string tmp = "";
-            for (int i = 0; i < list.Count - 1; i++)
+            if (list.Count > 0 && list != null)
             {
-                tmp += list[i] + ", ";
+                for (int i = 0; i < list.Count - 1; i++)
+                {
+                    tmp += list[i] + ", ";
+                }
+                tmp += list[list.Count - 1];
             }
-            tmp += list[list.Count - 1];
             return tmp;
         }
 
         public static string ToList(List<int> list)
         {
             string tmp = "";
-            for (int i = 0; i < list.Count-1; i++)
+            if (list.Count > 0 && list != null)
             {
-                tmp += list[i] + ", ";
+                for (int i = 0; i < list.Count - 1; i++)
+                {
+                    tmp += list[i] + ", ";
+                }
+                tmp += list[list.Count - 1];
+
             }
-            tmp += list[list.Count-1];
             return tmp;
         }
 
         public static string ToList(List<BaseNode> list)
         {
             string tmp = "";
-            for (int i = 0; i < list.Count - 1; i++)
+            if (list.Count > 0 && list != null)
             {
-                tmp += list[i].UserID + ", ";
+                for (int i = 0; i < list.Count - 1; i++)
+                {
+                    tmp += list[i].UserID + ", ";
+                }
+                tmp += list[list.Count - 1].UserID;
             }
-            tmp += list[list.Count - 1].UserID;
             return tmp;
         }
     }

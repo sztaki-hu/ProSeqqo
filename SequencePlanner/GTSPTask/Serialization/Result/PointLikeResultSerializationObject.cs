@@ -11,6 +11,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
     {
         public List<Position> PositionResult { get; set; }
 
+        public PointLikeResultSerializationObject() : base()
+        {
+            PositionResult = new List<Position>();
+        }
+
         public PointLikeResultSerializationObject(PointTaskResult result): base(result)
         {
             PositionResult = result.PositionResult;
@@ -39,16 +44,19 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             string newline ="\n";
             string d = ";";
             seq += base.ToSEQ();
-            //seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
-            seq += nameof(PositionResult) + ": " + newline;
-            foreach (var position in PositionResult)
+            if (StatusCode == 1)
             {
-                seq += position.UserID +d+ "["+SeqLogger.ToList(position.Vector)+"]"+d+ position.Name +d +position.ResourceID+ newline;
-            }
-            seq += nameof(Log) + ": " + newline;
-            foreach (var line in Log)
-            {
-                seq += line.Replace(':', '>') + newline;
+                //seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
+                seq += nameof(PositionResult) + ": " + newline;
+                foreach (var position in PositionResult)
+                {
+                    seq += position.UserID + d + "[" + SeqLogger.ToList(position.Vector) + "]" + d + position.Name + d + position.ResourceID + newline;
+                }
+                seq += nameof(Log) + ": " + newline;
+                foreach (var line in Log)
+                {
+                    seq += line.Replace(':', '>') + newline;
+                }
             }
             return seq;
         }
