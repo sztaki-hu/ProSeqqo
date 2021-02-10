@@ -1,14 +1,20 @@
-﻿TaskType: PointLike
-Dimensions: 0
+TaskType: PointLike
+Dimension: 0
 WeightMultiplier: 10
 CyclicSequence: False
 StartDepot: 1
 FinishDepot: 6
 TimeLimit: 20
 DistanceFunction: MatrixDistance
-ResourceDistanceFunction: Add
-ResourceSource: ConstantResource
-ResourceCostConstant: 0
+ResourceDistanceFunction: Max
+ResourceSource: MatrixResource
+ResourceCostConstant: 5
+UseMIPprecedenceSolver: True
+
+MatrixResource:
+1;5
+99;88
+77;66
 
 PositionMatrix:
 1;2;3;4;5;6
@@ -21,6 +27,7 @@ PositionMatrix:
 1;2;3;4;5;0
 #--------
 Cam;P2;P3;P4;P5;P6
+1;  5; 5; 5; 5; 1
 
 ProcessHierarchy:
 #+-------------+---------+----------------+------------+
@@ -48,7 +55,7 @@ PositionPrecedence:
 #+----------------------+--------------------+------------------+
 1;3
 1;2
-2;4
-3;4
+#2;4
+#3;4
 #4;5
 5;6
