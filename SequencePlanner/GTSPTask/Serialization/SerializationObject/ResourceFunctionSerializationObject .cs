@@ -17,7 +17,8 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public ResourceFunctionSerializationObject() { }
         public ResourceFunctionSerializationObject(PositionMatrix positionMatrix)
         {
-            ResourceDistanceFunction = positionMatrix.ResourceFunction.LinkingFunction.FunctionName;
+            if(positionMatrix.ResourceFunction.LinkingFunction!=null)
+                ResourceDistanceFunction = positionMatrix.ResourceFunction.LinkingFunction.FunctionName;
             ResourceSource = positionMatrix.ResourceFunction.FunctionName;
 
             if (ResourceSource == "NoResource")
@@ -30,6 +31,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             }
             if (ResourceSource == "MatrixResource")
             {
+                ResourceCostMatrix2 = new ResourceMatrixSerializationObject();
                 ResourceCostMatrix2.ResourceCostMatrix = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrix;
                 ResourceCostMatrix2.IDHeader = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrixIDHeader;
             }

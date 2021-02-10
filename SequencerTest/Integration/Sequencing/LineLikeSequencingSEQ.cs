@@ -18,36 +18,35 @@ namespace SequencerTest.Integration.Sequencing
         public void Test1()
         {
             LineLikeTaskSerializer seq = new LineLikeTaskSerializer();
-            //LineLikeTask task = seq.ImportSEQ("Resources/Example/LineLike_Matrix.txt");
-            //task.ValidateModel();
-            //asdf
-            //var result = task.RunModel();
-            //seq = new LineLikeTaskSerializer();
-            //seq.ExportSEQ(task, "Resources/Example/Export/LineLike_Matrix.txt");
-            //Console.WriteLine(result);
+            LineLikeTask task = seq.ImportSEQ("Resources/LineLike_Matrix.txt");
+            task.ValidateModel();
+            var result = task.RunModel();
+            seq = new LineLikeTaskSerializer();
+            seq.ExportSEQ(task, "Resources/Export/LineLike_Matrix.txt");
+            Console.WriteLine(result);
 
         }
 
         [TestMethod]
         public void Test2()
         {
-            //LineLikeTaskSerializer seq = new LineLikeTaskSerializer();
-            //LineLikeTask task = seq.ImportSEQ("Resources/Example/LineLike_Original.txt");
-            //var result = task.RunModel();
-            //seq = new LineLikeTaskSerializer();
-            //seq.ExportSEQ(task, "Resources/Example/Export/LineLike_Original.txt");
-            //Console.WriteLine(result);
+            LineLikeTaskSerializer seq = new LineLikeTaskSerializer();
+            LineLikeTask task = seq.ImportSEQ("Resources/LineLike_Original.txt");
+            var result = task.RunModel();
+            seq = new LineLikeTaskSerializer();
+            seq.ExportSEQ(task, "Resources/Export/LineLike_Original.txt");
+            Console.WriteLine(result);
         }
 
         [TestMethod]
         public void Test3()
         {
-            //LineLikeTaskSerializer seq = new LineLikeTaskSerializer();
-            //LineLikeTask task = seq.ImportSEQ("Resources/Example/CSOPA.txt");
-            //var result = task.RunModel();
-            //seq = new LineLikeTaskSerializer();
-            //seq.ExportSEQ(task, "Resources/Example/Export/CSOPA.txt");
-            //Console.WriteLine(result);
+            LineLikeTaskSerializer seq = new LineLikeTaskSerializer();
+            LineLikeTask task = seq.ImportSEQ("Resources/CSOPA.txt");
+            var result = task.RunModel();
+            seq = new LineLikeTaskSerializer();
+            seq.ExportSEQ(task, "Resources/Export/CSOPA.txt");
+            Console.WriteLine(result);
         }
     }
 }
