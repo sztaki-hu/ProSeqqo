@@ -39,6 +39,21 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             Log = result.Log;
         }
 
+        public TaskResult ToTaskResult(TaskResult result)
+        {
+            if(FullTime is not null)
+                result.FullTime = TimeSpan.Parse(FullTime);
+            result.SolverTime =  TimeSpan.Parse(SolverTime);
+            result.PreSolverTime =  TimeSpan.Parse(PreSolverTime);
+            result.SolutionRaw = SolutionRaw;
+            result.CostsRaw = CostsRaw;
+            result.CostSum = CostSum;
+            result.StatusCode = StatusCode;
+            result.StatusMessage = StatusMessage;
+            result.Log = Log;
+            return result;
+        }
+
         public  string ToSEQ()
         {
             var seq = "";

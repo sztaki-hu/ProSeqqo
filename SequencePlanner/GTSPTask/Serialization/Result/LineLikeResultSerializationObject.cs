@@ -9,18 +9,18 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 {
     public class LineLikeResultSerializationObject: TaskResultSerializationObject
     {
-        public List<Line> LineResults { get; set; }
+        public List<Line> LineResult { get; set; }
         public List<Position> PositionResult { get; set; }
 
         public LineLikeResultSerializationObject() : base()
         {
-            LineResults = new List<Line>();
+            LineResult = new List<Line>();
             PositionResult = new List<Position>();
         }
 
         public LineLikeResultSerializationObject(LineTaskResult result): base(result)
         {
-            LineResults = result.LineResult;
+            LineResult = result.LineResult;
             PositionResult = result.PositionResult;
         }
 
@@ -38,7 +38,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public LineTaskResult ToLineLikeResult()
         {
-            throw new NotImplementedException();
+            var result = new LineTaskResult();
+            result = (LineTaskResult)base.ToTaskResult(result);
+            result.LineResult = LineResult;
+            result.PositionResult = PositionResult;
+            return result;
         }
 
         public string ToSEQ()
@@ -48,8 +52,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             string d = ";";
             seq += base.ToSEQ();
             //seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
-            seq += nameof(LineResults) + ": " + newline;
-            foreach (var line in LineResults)
+            seq += nameof(LineResult) + ": " + newline;
+            foreach (var line in LineResult)
             {
                 //seq += line.LineID + d + line.PositionIDA + d + line.PositionIDA + line.Name + d + line.ResourceID + newline;
                 seq += line.UserID + d + line.NodeA.UserID + d + line.NodeB.UserID +d+ line.Name + d + line.ResourceID + newline;
