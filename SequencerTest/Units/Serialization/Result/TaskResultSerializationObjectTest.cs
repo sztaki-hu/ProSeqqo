@@ -54,7 +54,9 @@ namespace SequencerTest.Units.Serialization.Result
         [TestMethod]
         public void FilledCalls()
         {
+            var taskResult = new TaskResult();
             result.ToSEQ();
+            result.ToTaskResult(taskResult);
             result.ToString();
         }
     }
