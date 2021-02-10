@@ -1,0 +1,73 @@
+Created: 2021. 02. 10. 8:33:11
+StatusCode: 1
+StatusMessage: 1 - ROUTING_SUCCESS: Problem solved successfully.
+FullTime: 00:00:00.0845897
+SolverTime: 00:00:00.0016722
+PreSolverTime: 00:00:00
+CostSum: 18
+SolutionRaw: 1, 6, 5, 4, 2, 1
+CostsRaw: 6; 5; 4; 2; 1
+PositionResult: 
+1;[];Cam;0
+6;[];P6;0
+5;[];P5;0
+4;[];P4;0
+2;[];P2;0
+1;[];Cam;0
+Log: 
+Info>  PointLikeTaskSerializer>   Input file> Example/PointLike_PosProcPrecedences.txt
+Info>  PointLikeTaskSerializer>   Input type> SEQ
+Info>  PointLikeTaskSerializer>   Input readed!
+Info>  SEQTokenizer>   Tokenization finished!
+Warning>  TokenConverter>   Can not find header with> UseMIPprecedenceSolver
+Warning>  TokenConverter>   Can not find header with> ResourceDistanceFunction
+Warning>  TokenConverter>   Can not find header with> UseShortcutInAlternatives
+Info>  PointLikeTaskValidator>   Validation started!
+Info>  PointLikeTaskValidator>   Validation finished!
+Info>  PointLikeTask>   RunModel started!
+Info>     PointLikeTask>   Model generation started!
+Info>     PointLikeTask>   Model generation finished!
+Info>     ORToolsSequencerWrapper>   ORTools building started!
+Info>        ORToolsSequencerWrapper>   GTSP Matrix Dimension> 6x6
+Info>        ORToolsSequencerWrapper>   GTSP Start Depot seqID> 0
+Info>        ORToolsSequencerWrapper>   GTSP Disjoint constraint number> 5
+Info>        ORToolsSequencerWrapper>   GTSP Order constraint number> 6
+Info>        ORToolsSequencerWrapper>   Search parameters> Default
+Info>        ORToolsSequencerWrapper>   First solution strategy> Automatic
+Info>        ORToolsSequencerWrapper>   Use depth first search> False
+Info>        ORToolsSequencerWrapper>   Local search metahearustic Automatic
+Info>        ORToolsSequencerWrapper>   Initial route not given.
+Info>        ORToolsSequencerWrapper>   Time Limit> "0.020s"
+Info>     ORToolsSequencerWrapper>   ORTools building finished!
+Info>     ORToolsSequencerWrapper>   Solver running!
+Info>        ORToolsSequencerWrapper>   Solver stopped with status code> 1 - ROUTING_SUCCESS> Problem solved successfully.
+Info>        ORToolsSequencerWrapper>   Solver run time> 00>00>00.0016722
+Info>     ORToolsSequencerWrapper>   Solver finished!
+Info>     ORToolsSequencerWrapper>   Solution processed!
+Info>     PointLikeTask>   Solution resolved!
+Info>  PointLikeTask>   RunModel finished!
+Info>  Result> 
+Info>     StatusCode> 1
+Info>     StatusMessage> 1 - ROUTING_SUCCESS> Problem solved successfully.
+Info>     FullTime> 00>00>00.0845897
+Info>     SolverTime> 00>00>00.0016722
+Info>     PreSolverTime> 00>00>00
+Info>     SolutionRaw> 1, 6, 5, 4, 2, 1
+Info>     CostsRaw> 6; 5; 4; 2; 1
+Info>     CostSum> 18
+Info>     Log size> 40 lines
+Info>     Solution> 
+Info>        Cam [Global>1|UserID>1|SeqID>0]
+Info>        --6
+Info>        P6 [Global>6|UserID>6|SeqID>5]
+Info>        --5
+Info>        P5 [Global>5|UserID>5|SeqID>4]
+Info>        --4
+Info>        P4 [Global>4|UserID>4|SeqID>3]
+Info>        --2
+Info>        P2 [Global>2|UserID>2|SeqID>1]
+Info>        --1
+Info>        Cam [Global>1|UserID>1|SeqID>0]
+Info>  PointLikeResultSerializer>   Output task type> PointLike
+Info>  PointLikeResultSerializer>   Output file> Out/PointLike_PosProcPrecedences.seq
+Info>  PointLikeResultSerializer>   Output type> SEQ
