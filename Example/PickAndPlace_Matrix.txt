@@ -1,5 +1,5 @@
-TaskType: Point_Like
-Dimensions: 0
+TaskType: PointLike
+Dimension: 0
 WeightMultiplier: 10
 CyclicSequence: False
 StartDepot: 1
@@ -55,7 +55,7 @@ PositionPrecedence:
 #+----------------------+--------------------+------------------+
 1;3
 1;2
-2;4
-3;4
+#2;4
+#3;4
 #4;5
 5;6

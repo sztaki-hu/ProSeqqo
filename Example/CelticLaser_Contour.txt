@@ -1,12 +1,13 @@
-TaskType: Line_Like
-DistanceFunction: Euclidian_Distance
-Dimensions: 2
-TimeLimit: 200
+TaskType: LineLike
+DistanceFunction: EuclidianDistance
+Dimension: 2
+TimeLimit: 2000
 WeightMultiplier: Auto
 CyclicSequence: False
 StartDepot: 5
 #FinishDepot: 3
 ContourPenalty: 2
+ResourceSource: NoResource
 #BidirectionLineDefault: True
 
 PositionList:

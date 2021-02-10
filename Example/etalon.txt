@@ -9,7 +9,7 @@ StartDepot: 0
 TimeLimit: 10000
 ResourceDistanceFunction: Add
 ResourceSource: ConstantResource
-ResourceCostConstant: 0
+ResourceCostConstant: 5
 UseResources: False
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: True

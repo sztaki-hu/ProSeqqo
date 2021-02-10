@@ -1,13 +1,14 @@
-TaskType: Line_Like
-DistanceFunction: Euclidian_Distance
-Dimensions: 2
-TimeLimit: 600
-WeightMultiplier: Auto
+TaskType: LineLike
+DistanceFunction: EuclidianDistance
+Dimension: 2
+TimeLimit: 6000
 CyclicSequence: False
 StartDepot: 5
 #FinishDepot: 3
-ContourPenalty: 2
-#BidirectionLineDefault: True
+ContourPenalty: 0
+BidirectionLineDefault: True
+ResourceSource: NoResource
+UseMIPprecedenceSolver: True
 
 PositionList:
 #+-------+---------------------+------------------+
