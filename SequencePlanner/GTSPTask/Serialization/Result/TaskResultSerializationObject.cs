@@ -43,8 +43,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         {
             if(FullTime is not null)
                 result.FullTime = TimeSpan.Parse(FullTime);
-            result.SolverTime =  TimeSpan.Parse(SolverTime);
-            result.PreSolverTime =  TimeSpan.Parse(PreSolverTime);
+            if(SolverTime is not null)
+                result.SolverTime =  TimeSpan.Parse(SolverTime);
+            if(PreSolverTime is not null)
+                result.PreSolverTime =  TimeSpan.Parse(PreSolverTime);
             result.SolutionRaw = SolutionRaw;
             result.CostsRaw = CostsRaw;
             result.CostSum = CostSum;

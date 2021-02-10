@@ -18,9 +18,9 @@ namespace SequencerTest.Units.Serialization.Result
             result.SolutionRaw.Add(0);
             result.CostsRaw.Add(1);
             result.CostSum = 2;
-            result.FullTime = DateTime.Today.ToString();
-            result.PreSolverTime = DateTime.Today.ToString();
-            result.SolverTime = DateTime.Today.ToString();
+            result.FullTime = new TimeSpan().ToString();
+            result.PreSolverTime = new TimeSpan().ToString();
+            result.SolverTime = new TimeSpan().ToString();
             result.StatusCode = 3;
             result.StatusMessage = "Status";
             result.Log.Add("FirstLog");
@@ -35,9 +35,9 @@ namespace SequencerTest.Units.Serialization.Result
             Assert.AreEqual(result.SolutionRaw[0], 0);
             Assert.AreEqual(result.CostsRaw[0], 1);
             Assert.AreEqual(result.CostSum, 2);
-            Assert.AreEqual(result.FullTime, DateTime.Today.ToString());
-            Assert.AreEqual(result.PreSolverTime, DateTime.Today.ToString());
-            Assert.AreEqual(result.SolverTime, DateTime.Today.ToString());
+            Assert.AreEqual(result.FullTime, new TimeSpan().ToString());
+            Assert.AreEqual(result.PreSolverTime, new TimeSpan().ToString());
+            Assert.AreEqual(result.SolverTime, new TimeSpan().ToString());
             Assert.AreEqual(result.StatusCode, 3);
             Assert.AreEqual(result.StatusMessage, "Status");
             Assert.AreEqual(result.Log[0], "FirstLog");
