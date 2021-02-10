@@ -7,6 +7,7 @@ using SequencePlanner.Helper;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 
 namespace SequencerConsole
@@ -14,7 +15,7 @@ namespace SequencerConsole
     public class CommandLineProcessor
     {
         private static readonly bool RUN_IN_VISUALSTUDIO = false;
-        private static readonly LogLevel LOG_LEVEL = LogLevel.Info;
+        private static readonly LogLevel LOG_LEVEL = LogLevel.Trace;
 
         private static string input;
         private static FormatType inputType = FormatType.Unknown;
@@ -40,28 +41,30 @@ namespace SequencerConsole
                     string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\out";
                     string graph = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\graph";
 
-                    //args = new string[] { "-i", example + "\\PickAndPlace_Original.txt",        "-o", outdir + "\\PickAndPlace_Original_out.json",       "-g", graph + "\\PickAndPlace_Original_graph.dot",        "-d" };
-                    //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          "-g", graph + "\\PickAndPlace_Matrix_graph.dot",          "-d" };
-                    //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",          "-g", graph + "\\PickAndPlace_Matrix_graph.dot",          "-d" };
-                    //args = new string[] { "-i", example + "\\LineLike_Original.txt",            "-o", outdir + "\\LineLike_Original_out.json",           "-g", graph + "\\LineLike_Original_graph.dot",            "-d" };
-                    //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",             "-g", graph + "\\LineLike_Matrix_graph.dot",              "-d" };
-                    //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        "-g", graph + "\\Kocka_graph.dot",                        "-d" };
-                    //args = new string[] { "-i", example + "\\CSOPA.txt",                        "-o", outdir + "\\CSOPA_out.json",                        "-g", graph + "\\CSOPA_graph.dot",                        "-d" };
-                    //args = new string[] { "-i", example + "\\CelticLaser_Contour.txt",          "-o", outdir + "\\CelticLaser_Contour_out.txt",          "-g", graph + "\\CelticLaser_Contour_graph.dot",          "-d" };
-                    //args = new string[] { "-i", example + "\\CelticLaser_Fill.txt",             "-o", outdir + "\\CelticLaser_Fill_out.txt",             "-g", graph + "\\CelticLaser_Fill_graph.dot",             "-d" };
-                    //args = new string[] { "-i", example + "\\CelticLaser.txt",                  "-o", outdir + "\\CelticLaser_out.txt",                  "-g", graph + "\\CelticLaser_graph.dot",                  "-d" };
-                    //args = new string[] { "-i", example + "\\PointLike_PosProcPrecedences.txt", "-o", outdir + "\\PointLike_PosProcPrecedences_out.txt", "-g", graph + "\\PointLike_PosProcPrecedences_graph.dot", "-d" };
-                    //args = new string[] { "-i", example + "\\PointLike_PosPrecedences.txt",     "-o", outdir + "\\PointLike_PosPrecedences_out.txt",     "-g", graph + "\\PointLike_PosPrecedences_graph.dot",     "-d" };
-                    //args = new string[] { "-i", example + "\\LocalTests/DEV_LL.txt",            "-o", outdir + "\\LocalTests/DEV_LL_out.txt",            "-g", graph + "\\LocalTests/DEV_LL_graph.dot",            "-d" };
-                    //args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        "-g", graph + "\\seqtest_graph.dot",                      "-d" };
-                    //args = new string[] { "-i", example + "\\seqtest2.txt",                      "-o", outdir + "\\seqtest2_o.json",                        "-g", graph + "\\seqtest2_graph.dot",                      "-d" };
-                    //args = new string[] { "-i", example + "\\etalon.txt",                      "-o", outdir + "\\etalon_o.json",                        "-g", graph + "\\etalon_graph.dot",                      "-d" };
-                    args = new string[] { "-i", example + "\\etalonMatrix.txt",                      "-o", outdir + "\\etalonMatrix_o.seq",                        "-g", graph + "\\etalon_graph.dot",                      "-d" };
-                    //args = new string[] { "-i", example + "\\seqtest3.txt",                      "-o", outdir + "\\seqtest3_o.json",                        "-g", graph + "\\seqtest3_graph.dot",                      "-d" };
-                    //args = new string[] { "-i", example + "\\seq_fill_half.txt",                      "-o", outdir + "\\seq_fill_half_o.json",                        "-g", graph + "\\seq_fill_half_graph.dot",                      "-d" };
-                    //args = new string[] { "-i", example + "\\seq_contours_half.txt",                      "-o", outdir + "\\seq_contours_half.json",                        "-g", graph + "\\seq_contours_half.dot",                      "-d" };
+                    //args = new string[] { "-i", example + "\\PickAndPlace_Original.txt",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
+                    //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          };
+                    //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",           };
+                    //args = new string[] { "-i", example + "\\LineLike_Original.txt",            "-o", outdir + "\\LineLike_Original_out.json",            };
+                    //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",              };
+                    //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.seq",               };
+                    //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        };
+                    //args = new string[] { "-i", example + "\\CSOPA.txt",                        "-o", outdir + "\\CSOPA_out.json",                        };
+                    //args = new string[] { "-i", example + "\\CelticLaser_Contour.txt",          "-o", outdir + "\\CelticLaser_Contour_out.txt",           };
+                    //args = new string[] { "-i", example + "\\CelticLaser_Fill.txt",             "-o", outdir + "\\CelticLaser_Fill_out.txt",              };
+                    //args = new string[] { "-i", example + "\\CelticLaser.txt",                  "-o", outdir + "\\CelticLaser_out.txt",                   };
+                    //args = new string[] { "-i", example + "\\PointLike_PosProcPrecedences.txt", "-o", outdir + "\\PointLike_PosProcPrecedences_out.txt"   };
+                    //args = new string[] { "-i", example + "\\PointLike_PosPrecedences.txt",     "-o", outdir + "\\PointLike_PosPrecedences_out.txt"       };
+                    //args = new string[] { "-i", example + "\\LocalTests/DEV_LL.txt",            "-o", outdir + "\\LocalTests/DEV_LL_out.txt",             };
+                    args = new string[] { "-i", example + "\\seqtest.txt",                        "-o", outdir + "\\seqtest_o.json",                        };
+                    //args = new string[] { "-i", example + "\\seqtest2.txt",                     "-o", outdir + "\\seqtest2_o.json",                       };
+                    //args = new string[] { "-i", example + "\\etalon.txt",                       "-o", outdir + "\\etalon_o.json",                         };
+                    //args = new string[] { "-i", example + "\\etalonMatrix.txt",                 "-o", outdir + "\\etalonMatrix_o.seq",                    };
+                    //args = new string[] { "-i", example + "\\seqtest3.txt",                     "-o", outdir + "\\seqtest3_o.json",                       };
+                    //args = new string[] { "-i", example + "\\seq_fill_half.txt",                "-o", outdir + "\\seq_fill_half_o.json",                  };
+                    //args = new string[] { "-i", example + "\\seq_contours_half.txt",            "-o", outdir + "\\seq_contours_half.json"                 };
 
                     Help(args);
+                    Version(args);
                     input = Input(args);
                     output = Output(args);
                     debug = Debug(args);
@@ -74,6 +77,7 @@ namespace SequencerConsole
             else
             {
                 Help(args);
+                Version(args);
                 input = Input(args);
                 output = Output(args);
                 validate = Validate(args);
@@ -85,6 +89,7 @@ namespace SequencerConsole
                     Run();
             }
         }
+
 
         private static void Convert()
         {
@@ -103,7 +108,7 @@ namespace SequencerConsole
             }
             catch (Exception e)
             {
-                SeqLogger.Critical(e.Message);
+                SeqLogger.Critical(e.ToString());
             }
         }
 
@@ -190,7 +195,7 @@ namespace SequencerConsole
             try
             {
                 SeqLogger.LogLevel = log;
-                if(taskType!= TaskType.Unknown)
+                if (taskType != TaskType.Unknown)
                 {
                     if (taskType == TaskType.LineLike)
                     {
@@ -204,10 +209,12 @@ namespace SequencerConsole
                         OutPointLine(result);
                     }
                 }
+                else
+                    throw new SequencerException("Unknown task type!", "It should be TaskType: LineLike or PointLike");
             }
             catch (Exception e)
             {
-                SeqLogger.Critical(e.Message);
+                SeqLogger.Critical(e.ToString());
             }
         }
 
@@ -321,6 +328,7 @@ namespace SequencerConsole
             {
                 if (item.Equals("-help") || item.Equals("-h"))
                 {
+                    Console.WriteLine("\nSequencePlanner \u00a9 SZTAKI \nVersion: " + AssemblyName.GetAssemblyName("SequencePlanner.dll").Version);
                     Console.WriteLine("\nCommands:");
                     Console.WriteLine("+-------------+----------+--------------------------------+------------------------------------+\n" +
                                       "|   Command   | Shortcut |           Parameter            |               Comment              |\n" +
@@ -344,6 +352,8 @@ namespace SequencerConsole
                                       "|             |          | Warning                        |                                    |\n" +
                                       "|             |          | Error                          |                                    |\n" +
                                       "|             |          | Critical                       |                                    |\n" +
+                                      "+-------------+----------+--------------------------------+------------------------------------+\n" +
+                                      "| -version    |    -v    |                                |  Version info                      |\n" +
                                       "+-------------+----------+--------------------------------+------------------------------------+\n");
 
 
@@ -354,9 +364,23 @@ namespace SequencerConsole
                     Console.WriteLine("Press any other key to exit!");
                     if (Console.ReadKey().Key == ConsoleKey.W)
                         System.Diagnostics.Process.Start("explorer", url);
+                    System.Environment.Exit(0);
                 }
             }
         }
+
+        private static void Version(string[] args)
+        {
+            foreach (var item in args)
+            {
+                if (item.Equals("-version") || item.Equals("-v"))
+                {
+                    Console.WriteLine("SequencePlanner \u00a9 SZTAKI \nVersion: " + AssemblyName.GetAssemblyName("SequencePlanner.dll").Version+"\n");
+                    System.Environment.Exit(0);
+                }
+            }
+        }
+
         private static string Input(string[] args)
         {
             for (int i = 0; i < args.Length; i++)
