@@ -21,10 +21,14 @@ namespace SequencePlanner.Model
 
         public bool FitFor(BaseNode a, BaseNode b)
         {
-            if (Bidirectional)
-                return ((this.A.GlobalID == a.GlobalID && B.GlobalID == b.GlobalID) || (this.A.GlobalID == b.GlobalID && B.GlobalID == a.GlobalID));
-            else
-                return (this.A.GlobalID == a.GlobalID && B.GlobalID == b.GlobalID);
+            if(A is not null && B is not null && a is not null && b is not null)
+            {
+                if (Bidirectional)
+                    return ((this.A.GlobalID == a.GlobalID && B.GlobalID == b.GlobalID) || (this.A.GlobalID == b.GlobalID && B.GlobalID == a.GlobalID));
+                else
+                    return (this.A.GlobalID == a.GlobalID && B.GlobalID == b.GlobalID);
+            }
+            return false;
         }
 
         public override string ToString()
