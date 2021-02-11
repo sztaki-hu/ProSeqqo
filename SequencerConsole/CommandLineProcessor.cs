@@ -62,6 +62,7 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\seqtest3.txt",                     "-o", outdir + "\\seqtest3_o.json",                       };
                     //args = new string[] { "-i", example + "\\seq_fill_half.txt",                "-o", outdir + "\\seq_fill_half_o.json",                  };
                     //args = new string[] { "-i", example + "\\seq_contours_half.txt",            "-o", outdir + "\\seq_contours_half.json"                 };
+                    args = new string[] { "-i", example + "\\Frochliche.txt",            "-o", outdir + "\\Frochliche.json" };
 
                     Help(args);
                     Version(args);
