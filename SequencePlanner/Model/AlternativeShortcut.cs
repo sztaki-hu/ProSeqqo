@@ -122,7 +122,7 @@ namespace SequencePlanner.Model
             {
                 for (int i = 0; i < taskResult.PositionResult.Count-1; i++)
                 {
-                    if ((path.Front.SequencingID == taskResult.PositionResult[i].SequencingID) && (path.Back.SequencingID == taskResult.PositionResult[i + 1].SequencingID))
+                    if ((path.Front.GlobalID == taskResult.PositionResult[i].GlobalID) && (path.Back.GlobalID == taskResult.PositionResult[i + 1].GlobalID))
                     {
                         SeqLogger.Trace("Cut found [" + path.Front.UserID + ";" + path.Back.UserID+"] and changed to ["+SeqLogger.ToList(path.Cut)+"]");
                         for (int j = 1; j < path.Cut.Count-1; j++)

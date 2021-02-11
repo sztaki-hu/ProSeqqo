@@ -131,20 +131,29 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     SeqLogger.Indent--;
                 }
             }
-            for (int i = 0; i < PositionPrecedence.Count; i++)                             //Check position precedences, if one of the positions part of shortcut,
+            foreach (var shortcut in AlternativeShortcuts)                             //Check position precedences, if one of the positions part of shortcut,
             {                                                                              //it have to be override with the first position of the cut
-                foreach (var shortcut in AlternativeShortcuts)
+                for (int i = 0; i < PositionPrecedence.Count; i++)
                 {
                     var newPrec = shortcut.FindPrecedenceHeaderOfPositions(PositionPrecedence[i]);
                     if (newPrec != null && newPrec.Count > 0)
                     {
                         DeletedPositionPrecedencesOfShortcuts.Add(PositionPrecedence[i]);
                         PositionPrecedencesOfShortcuts.AddRange(newPrec);
-                        PositionPrecedence.RemoveAt(i);
-                        PositionPrecedence.AddRange(newPrec);
+                        //PositionPrecedence.RemoveAt(i);
+                        //PositionPrecedence.AddRange(newPrec);
                     }
                 }
             }
+            foreach (var item in DeletedPositionPrecedencesOfShortcuts)
+            {
+                PositionPrecedence.Remove(item);
+            }
+            foreach (var item in PositionPrecedencesOfShortcuts)
+            {
+                PositionPrecedence.Add(item);
+            }
+
             SeqLogger.Indent--;
             SeqLogger.Info("Alternative shortcut creation finished!", nameof(PointLikeTask));
         }
@@ -476,7 +485,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 for (int j = 0; j < PositionPrecedencesOfShortcuts.Count; j++)
                 {
-                    if (PositionPrecedence[i].Before.GlobalID == PositionPrecedencesOfShortcuts[j].Before.GlobalID && PositionPrecedence[i].After.GlobalID == PositionPrecedencesOfShortcuts[i].After.GlobalID)
+                    if (PositionPrecedence[i].Before.GlobalID == PositionPrecedencesOfShortcuts[j].Before.GlobalID && PositionPrecedence[i].After.GlobalID == PositionPrecedencesOfShortcuts[j].After.GlobalID)
                         PositionPrecedence.RemoveAt(i);
                 }
             }
