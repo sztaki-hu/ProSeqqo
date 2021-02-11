@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequencerTest", "SequencerT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequencerConsole", "SequencerConsole\SequencerConsole.csproj", "{CD70EBE3-6651-4B97-BF51-1A0456D483FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineAnimation", "LineAnimation\LineAnimation.csproj", "{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{CD70EBE3-6651-4B97-BF51-1A0456D483FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD70EBE3-6651-4B97-BF51-1A0456D483FD}.Release|x64.ActiveCfg = Release|Any CPU
 		{CD70EBE3-6651-4B97-BF51-1A0456D483FD}.Release|x64.Build.0 = Release|Any CPU
+		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Debug|x64.Build.0 = Debug|Any CPU
+		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Release|x64.ActiveCfg = Release|Any CPU
+		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
