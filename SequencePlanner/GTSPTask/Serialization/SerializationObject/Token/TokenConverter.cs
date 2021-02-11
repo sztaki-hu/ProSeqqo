@@ -249,7 +249,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                                 posObj.Name = line[i];
                             }
                             i++;
-                            if (line.Length != i)
+                            if (line.Length > i)
                             {
                                 posObj.ResourceID = Convert.ToInt32(line[i]);
                             }
