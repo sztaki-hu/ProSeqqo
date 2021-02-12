@@ -1,6 +1,7 @@
 TaskType: Line_Like
 Dimension: <int> 
 DistanceFunction: EuclidianDistance/MaxDistance/TrapezoidTime/ManhattanDistance/MatrixDistance
+LocalSearchStrategie: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
 TrapezoidParams/Speed: <double[]>                        #In case of TrapezoidTime
 TrapezoidParams/Acceleration: <double[]>                 #In case of TrapezoidTime
 CyclicSequence: True/False                        	
@@ -20,11 +21,11 @@ MatrixResource:							                #Needed if ResourceSource: MatrixResource
 UseMIPprecedenceSolver: True/False				        #Try to resolve precedences first, with pre-solver 
 
 PositionList:
-#+-------+---------------------+------------------+
-#|   ID  |      Position       |  Name[optional]  |
-#+-------+---------------------+------------------+
-#| <int> | <double[Dimension]> |     <string>     |
-#+-------+---------------------+------------------+
+#+-------+---------------------+------------------+------------+
+#|   ID  |      Position       |  Name[optional]  | ResourceID |
+#+-------+---------------------+------------------+------------+
+#| <int> | <double[Dimension]> |     <string>     |   <int>    |
+#+-------+---------------------+------------------+------------+
 
 PositionMatrix:
 #+----------+----------+-----+------------------+
@@ -42,11 +43,11 @@ PositionMatrix:
 #+----------+----------+-----+------------------+
 
 LineList:
-#+--------+-----------+-------------+-------------+-------------------+---------------------------+
-#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]   | Bidirectional [optional]  |
-#+--------+-----------+-------------+-------------+-------------------+---------------------------+
-#|  <int> |   <int>   |    <int>    |    <int>    |     <string>      |         True/False        |
-#+--------+-----------+-------------+-------------+-------------------+---------------------------+
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
+#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]  |  ResourceID [optional]  | Bidirectional [optional]  |
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
+#|  <int> |   <int>   |    <int>    |    <int>    |     <string>     |          <int>          |         True/False        |
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
 
 LinePrecedence:
 #+-------------------------+----------------------+
@@ -63,4 +64,8 @@ ContourPrecedence:
 #+-------------------------+----------------------+
 
 StrictEdgeWeights:
-#PositionIDA;PositionIDB;Weight;Bidirectional[optional]
+#+-------------+-------------+-----------+------------------------+
+#| PositionAID | PositionAID |  Weight   | Bidirectional[optional]|
+#+-------------+-------------+-----------+------------------------+
+#|    <int>    |    <int>    | <double>  |         <bool>         |
+#+-------------+-------------+-----------+------------------------+
