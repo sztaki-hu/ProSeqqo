@@ -27,7 +27,6 @@
     <Folder Include="Units\GTSPTask\Task\Base\" />
     <Folder Include="Units\GTSPTask\Task\LineLike\" />
     <Folder Include="Units\GTSPTask\Task\PointLike\" />
-    <Folder Include="Units\OR-Tools\" />
     <Folder Include="Units\Serialization\Token\" />
     <Folder Include="Units\Serialization\SerializationObject\" />
   </ItemGroup>
