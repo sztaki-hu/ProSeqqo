@@ -1,10 +1,9 @@
 TaskType: PointLike/LineLike
 Dimension: <int> 
 DistanceFunction: EuclidianDistance/MaxDistance/TrapezoidTime/ManhattanDistance/MatrixDistance
-LocalSearchStrategie: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
 TrapezoidParams/Speed: <double[]>
 TrapezoidParams/Acceleration: <double[]>
-WeightMultiplier: Auto / <int>
+LocalSearchStrategie: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
 CyclicSequence: True/False
 StartDepot: <PositionID>
 FinishDepot: <PositionID>
