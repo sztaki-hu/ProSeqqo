@@ -9,6 +9,7 @@ CyclicSequence: False
 ContourPenalty: 100
 BidirectionLineDefault: True
 ResourceSource: NoResource
+#LocalSearchStrategie: GuidedLocalSearch
 
 
 PositionList:

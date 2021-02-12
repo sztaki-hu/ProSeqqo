@@ -18,13 +18,14 @@ namespace SequencePlanner.GTSPTask.Task.Base
         public int TimeLimit { get; set; }
         public bool UseMIPprecedenceSolver { get; set; }
         protected TimeSpan MIPRunTime { get; set; }
-
+        public LocalSearchStrategieEnum.Metaheuristics LocalSearchStrategie { get; set; }
         public event IBaseTask.TaskCompleted SequencingTaskCompleted;
 
         public BaseTask()
         {
             Timer = new Stopwatch();
             PositionMatrix = new PositionMatrix();
+            LocalSearchStrategie = LocalSearchStrategieEnum.Metaheuristics.Automatic;
         }
 
 
@@ -49,13 +50,13 @@ namespace SequencePlanner.GTSPTask.Task.Base
 
         public void ToLog(LogLevel level)
         {
-
             SeqLogger.WriteLog(level, "Dimension: " + Dimension, nameof(BaseTask));
             SeqLogger.WriteLog(level, "CyclicSequence: " + CyclicSequence, nameof(BaseTask));
             SeqLogger.WriteLog(level, "StartDepot: " + StartDepot, nameof(BaseTask));
             SeqLogger.WriteLog(level, "FinishDepot: " + FinishDepot, nameof(BaseTask));
             SeqLogger.WriteLog(level, "TimeLimit: " + TimeLimit, nameof(BaseTask));
             SeqLogger.WriteLog(level, "UseMIPprecedenceSolver: " + UseMIPprecedenceSolver, nameof(BaseTask));
+            SeqLogger.WriteLog(level, "LocalSearchStrategie: " + LocalSearchStrategie, nameof(BaseTask));
             PositionMatrix.ToLog(level);
         }
     }

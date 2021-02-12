@@ -73,9 +73,20 @@ namespace SequencePlanner.OR_Tools
                 }
             }
 
-            // Setting first solution heuristic.
-            SeqLogger.Info("Search parameters: Default", nameof(ORToolsSequencerWrapper));
             searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
+            
+            //Set time limit
+            if (param.TimeLimit != 0)
+            {
+                var sec = param.TimeLimit / 1000;
+                var ns = (param.TimeLimit - (sec * 1000)) * 1000000;
+                searchParameters.TimeLimit = new Duration { Seconds = sec, Nanos = ns };
+                SeqLogger.Info("Time Limit: " + searchParameters.TimeLimit.ToDiagnosticString(), nameof(ORToolsSequencerWrapper));
+            }else
+                SeqLogger.Info("No time limit!", nameof(ORToolsSequencerWrapper));
+
+            // Setting first solution heuristic.
+            searchParameters.LocalSearchMetaheuristic = LocalSearchStrategieEnum.ResolveEnum(param.LocalSearchStrategie);
             SeqLogger.Info("First solution strategy: "+ searchParameters.FirstSolutionStrategy.ToString(), nameof(ORToolsSequencerWrapper));
             SeqLogger.Info("Use depth first search: "+ searchParameters.UseDepthFirstSearch.ToString(), nameof(ORToolsSequencerWrapper));
             SeqLogger.Info("Local search metahearustic "+ searchParameters.LocalSearchMetaheuristic.ToString(), nameof(ORToolsSequencerWrapper));
@@ -96,15 +107,6 @@ namespace SequencePlanner.OR_Tools
                 SeqLogger.Info("Initial route not given.", nameof(ORToolsSequencerWrapper));
 
 
-            //Set time limit
-            if (param.TimeLimit != 0)
-            {
-                var sec = param.TimeLimit / 1000;
-                var ns = (param.TimeLimit - (sec * 1000)) * 1000000;
-                searchParameters.TimeLimit = new Duration { Seconds = sec, Nanos = ns };
-                SeqLogger.Info("Time Limit: " + searchParameters.TimeLimit.ToDiagnosticString(), nameof(ORToolsSequencerWrapper));
-            }else
-                SeqLogger.Info("No time limit!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent--;
             SeqLogger.Info("ORTools building finished!", nameof(ORToolsSequencerWrapper));
         }
