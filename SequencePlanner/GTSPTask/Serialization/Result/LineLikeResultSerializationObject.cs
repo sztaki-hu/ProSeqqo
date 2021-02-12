@@ -11,6 +11,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
     {
         public List<Line> LineResult { get; set; }
         public List<Position> PositionResult { get; set; }
+        public double FullLength { get; set; }
+        public double TravelLength { get; set; }
+        public double Penalty { get; set; }
+        public double LineLength { get; set; }
 
         public LineLikeResultSerializationObject() : base()
         {
@@ -22,6 +26,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         {
             LineResult = result.LineResult;
             PositionResult = result.PositionResult;
+            TravelLength = result.TravelLength;
+            FullLength = result.FullLength;
+            LineLength = result.LineLength;
+            Penalty = result.Penalty;
         }
 
         public LineLikeResultSerializationObject(List<string> seqString): base(seqString)
@@ -51,7 +59,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             string newline = "\n";
             string d = ";";
             seq += base.ToSEQ();
-            //seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
+            seq += nameof(Penalty) + ": " + Penalty + newline;
+            seq += nameof(FullLength) + ": " + FullLength + newline;
+            seq += nameof(LineLength) + ": " + LineLength + newline;
+            seq += nameof(TravelLength) + ": " + TravelLength + newline;
             seq += nameof(LineResult) + ": " + newline;
             foreach (var line in LineResult)
             {

@@ -9,6 +9,10 @@ namespace SequencePlanner.GTSPTask.Result
     {
         public List<Line> LineResult { get; set; }
         public List<Position> PositionResult { get; set; }
+        public double FullLength { get; internal set; }
+        public double TravelLength { get; internal set; }
+        public double Penalty { get; internal set; }
+        public double LineLength { get; internal set; }
 
         public LineTaskResult(TaskResult baseTask) : base(baseTask)
         {
@@ -29,6 +33,10 @@ namespace SequencePlanner.GTSPTask.Result
             base.ToLog(lvl);
             if (StatusCode == 1)
             {
+                SeqLogger.Info("Penalty: "+Penalty);
+                SeqLogger.Info("FullLength: "+FullLength);
+                SeqLogger.Info("LineLength: " + LineLength);
+                SeqLogger.Info("TravelLength: " + TravelLength);
                 SeqLogger.Info("Solution: ");
                 SeqLogger.Indent++;
                 if(LineResult != null && LineResult.Count > 0)

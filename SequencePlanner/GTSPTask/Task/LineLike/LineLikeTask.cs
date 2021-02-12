@@ -19,6 +19,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         public List<GTSPPrecedenceConstraint> ContourPrecedences { get; set; }
         private LineLikeGTSPRepresentation GTSPRepresentation { get; set; }
         private int MAX_SEQUENCING_ID = 0;
+        private readonly double PenaltyEpsilon = 1;
 
         public LineLikeTask():base()
         {
@@ -309,6 +310,14 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                     {
                         if (!line.Virtual)
                         {
+                            line.Length = PositionMatrix.DistanceFunction.ComputeDistance(line.NodeA, line.NodeB);
+                            line.Length = PositionMatrix.ResourceFunction.ComputeResourceCost(line.NodeA, line.NodeB, line.Length);
+                            //if (weight > 0)
+                            //if (line.Length > PenaltyEpsilon)
+                            //{
+                            //    line.Length += ContourPenalty;
+                            //}
+                            taskResult.LineLength += line.Length;
                             taskResult.LineResult.Add(line);
                             taskResult.PositionResult.Add(line.NodeA);
                             taskResult.PositionResult.Add(line.NodeB);
@@ -317,6 +326,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                         break;
                     }
                 }
+                
                 if (!find)
                     throw new SeqException("Result of OR-Tools can not be resolved, no line found with the SequenceID: "+raw);
             }
@@ -331,8 +341,17 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             {
                 taskResult.CostsRaw.Add(GTSPRepresentation.Matrix[taskResult.LineResult[i - 1].SequencingID, taskResult.LineResult[i].SequencingID]);
                 taskResult.CostSum += taskResult.CostsRaw[i - 1];
+                if (taskResult.CostsRaw[i - 1] > PenaltyEpsilon)
+                {
+                    taskResult.Penalty += ContourPenalty;
+                    taskResult.TravelLength += taskResult.CostsRaw[i - 1] - ContourPenalty;
+                }
+                else
+                {
+                    taskResult.TravelLength += taskResult.CostsRaw[i - 1];
+                }
             }
-
+            taskResult.FullLength = taskResult.TravelLength + taskResult.LineLength;
             SeqLogger.Info("Solution resolved!", nameof(LineLikeTask));
             return taskResult;
         }
@@ -343,7 +362,8 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 return 0.0;
             double weight = PositionMatrix.DistanceFunction.ComputeDistance(lineFrom.NodeB, lineTo.NodeA);
             weight = PositionMatrix.ResourceFunction.ComputeResourceCost(lineFrom.NodeB, lineTo.NodeB, weight);
-            if (weight > 0)
+            //if (weight > 0)
+            if (weight > PenaltyEpsilon)
             {
                 weight += ContourPenalty;
             }
