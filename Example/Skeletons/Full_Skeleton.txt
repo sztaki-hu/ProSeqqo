@@ -1,6 +1,6 @@
-TaskType: Point_Like/Line_Like
-Dimensions: <int> 
-DistanceFunction: Euclidian_Distance/Max_Distance/Trapezoid_Time/Manhattan_Distance/Full_Matrix
+TaskType: PointLike/LineLike
+Dimension: <int> 
+DistanceFunction: EuclidianDistance/MaxDistance/TrapezoidTime/ManhattanDistance/MatrixDistance
 TrapezoidParams/Speed: <double[]>
 TrapezoidParams/Acceleration: <double[]>
 WeightMultiplier: Auto / <int>
@@ -9,7 +9,17 @@ StartDepot: <PositionID>
 FinishDepot: <PositionID>
 TimeLimit: <int> 
 ContourPenalty: <int>
+ResourceSource: NoResource/ConstantResource/MatrixResource
 BidirectionLineDefault: True/False
+ResourceDistanceFunction: Add/Max
+ResourceCostConstant: <double>
+MatrixResource:
+1;2;3 #ResourceIDHeader
+5;5;5 #CostMatrix
+8;8;8
+9;9;9
+UseMIPprecedenceSolver: True/False
+UseShortcutInAlternatives: True/False
 
 PositionList:
 #+-------+---------------------+------------------+
@@ -74,3 +84,6 @@ ContourPrecedence:
 #+-------------------------+----------------------+
 #|          <int>          |         <int>        |
 #+-------------------------+----------------------+
+
+StrictEdgeWeights:
+#PositionIDA;PositionIDB;Weight;Bidirectional[optional]

@@ -1,13 +1,16 @@
-TaskType: Point_Like
-Dimensions: 6
+TaskType: PointLike
+Dimension: 6
 WeightMultiplier: Auto
 CyclicSequence: False
 StartDepot: 1
 FinishDepot: 5
 TimeLimit: 20
-DistanceFunction: Trapezoid_Time
-TrapezoidParams/Speed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
-TrapezoidParams/Acceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
+DistanceFunction: TrapezoidTimeDistance
+TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
+TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
+ResourceDistanceFunction: Add
+ResourceSource: ConstantResource
+ResourceCostConstant: 0
 
 PositionList:
 #+-------+---------------------+------------------+
@@ -98,9 +101,10 @@ PositionPrecedence:
 #| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
 #+----------------------+--------------------+------------------+
 	#Camera first:
-	#	1;					6;
-	#	1;					7;
-	#	1;					8;
-	#	1;					9;
-	#	1;					10;
+		1;					6
+		1;					7
+		1;					8
+		1;					9
+		1;					10
+		10;1
 

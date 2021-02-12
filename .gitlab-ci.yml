@@ -1,0 +1,46 @@
+image: mcr.microsoft.com/dotnet/sdk:5.0
+
+stages:
+    - build
+    - test
+    - publish
+
+before_script:
+    - "dotnet restore"
+
+build:
+    stage: build
+    tags:
+        - sztaki-docker
+
+    script:
+        - "dotnet build"
+
+test:
+    stage: test
+    tags:
+        - sztaki-docker
+
+    script:
+        - 'dotnet test --test-adapter-path:. --logger:"junit;LogFilePath=..\artifacts\{assembly}-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose" /p:CollectCoverage=true'
+    artifacts:
+        when: always
+        expire_in: 2 days
+        paths:
+            - ./**/*test-result.xml
+        reports:
+            junit:
+                - ./**/*test-result.xml
+        
+
+publish:
+    stage: publish
+    tags:
+        - sztaki-docker
+    script:
+        - 'dotnet publish SequencerConsole -c Release -o ./artifacts/SequencerConsole'
+    artifacts:
+        when: always
+        paths:
+            - ./artifacts/SequencerConsole/*
+        expire_in: 2 days
