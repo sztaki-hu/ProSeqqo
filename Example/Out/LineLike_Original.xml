@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LineLikeResultSerializationObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FullTime>00:00:00.1404305</FullTime>
+  <SolverTime>00:00:00.0018527</SolverTime>
+  <PreSolverTime>00:00:00.0442056</PreSolverTime>
+  <SolutionRaw>
+    <long>10</long>
+    <long>11</long>
+    <long>12</long>
+    <long>15</long>
+    <long>14</long>
+    <long>13</long>
+  </SolutionRaw>
+  <CostsRaw>
+    <double>0</double>
+    <double>0</double>
+    <double>13.313708498984761</double>
+    <double>7.656854249492381</double>
+    <double>20.027756377319946</double>
+  </CostsRaw>
+  <CostSum>40.99831912579709</CostSum>
+  <StatusCode>1</StatusCode>
+  <StatusMessage>1 - ROUTING_SUCCESS: Problem solved successfully.</StatusMessage>
+  <Log>
+    <string>Info:  LineLikeTaskSerializer:   Input file: Example/LineLike_Original.txt</string>
+    <string>Info:  LineLikeTaskSerializer:   Input type: SEQ</string>
+    <string>Info:  LineLikeTaskSerializer:   Input readed!</string>
+    <string>Info:  SEQTokenizer:   Tokenization finished!</string>
+    <string>Info:  LineLikeTaskValidator:   Validation finished!</string>
+    <string>Info:  LineLikeTask:   RunModel started!</string>
+    <string>Info:     LineLikeTask:   Generate model started!</string>
+    <string>Info:        LineLikeTask:   Virtual start and finish handled!</string>
+    <string>Info:        LineLikeTask:   Disjoint precedences created!</string>
+    <string>Info:        LineLikeTask:   Order precedences created!</string>
+    <string>Info:        LineLikeTask:   GTSP matrix created!</string>
+    <string>Info:     LineLikeTask:   Generate model finished!</string>
+    <string>Info:     ORToolsSequencerWrapper:   ORTools building started!</string>
+    <string>Info:        ORToolsPointLikePreSolverWrapper:   Number of variables = 14</string>
+    <string>Info:        ORToolsPointLikePreSolverWrapper:   Number of constraints = 19</string>
+    <string>Info:        ORToolsPointLikePreSolverWrapper:   Solver running!</string>
+    <string>Info:        ORToolsPointLikePreSolverWrapper:   Solver finished!</string>
+    <string>Info:        ORToolsLineLikePreSolverWrapper:   Initial solution found: 0,1,2,3,4,5</string>
+    <string>Info:        ORToolsLineLikePreSolverWrapper:   Solver stopped with status code: 0 - OPTIMAL: Problem solved.</string>
+    <string>Info:        ORToolsLineLikePreSolverWrapper:   Problem solved in 29 milliseconds</string>
+    <string>Info:        ORToolsLineLikePreSolverWrapper:   Problem solved in 0 branch-and-bound nodes</string>
+    <string>Info:     ORToolsLineLikePreSolverWrapper:   ORTools building finished!</string>
+    <string>Info:     ORToolsSequencerWrapper:   ORTools building started!</string>
+    <string>Info:        ORToolsSequencerWrapper:   GTSP Matrix Dimension: 7x7</string>
+    <string>Info:        ORToolsSequencerWrapper:   GTSP Start Depot seqID: 6</string>
+    <string>Info:        ORToolsSequencerWrapper:   GTSP Disjoint constraint number: 7</string>
+    <string>Info:        ORToolsSequencerWrapper:   GTSP Order constraint number: 10</string>
+    <string>Info:        ORToolsSequencerWrapper:   Search parameters: Default</string>
+    <string>Info:        ORToolsSequencerWrapper:   First solution strategy: Automatic</string>
+    <string>Info:        ORToolsSequencerWrapper:   Use depth first search: False</string>
+    <string>Info:        ORToolsSequencerWrapper:   Local search metahearustic Automatic</string>
+    <string>Info:        ORToolsSequencerWrapper:   Initial route given with 6 element.</string>
+    <string>Info:        ORToolsSequencerWrapper:   No time limit!</string>
+    <string>Info:     ORToolsSequencerWrapper:   ORTools building finished!</string>
+    <string>Info:     ORToolsSequencerWrapper:   Solver running!</string>
+    <string>Info:        ORToolsSequencerWrapper:   Solver stopped with status code: 1 - ROUTING_SUCCESS: Problem solved successfully.</string>
+    <string>Info:        ORToolsSequencerWrapper:   Solver run time: 00:00:00.0018527</string>
+    <string>Info:     ORToolsSequencerWrapper:   Solver finished!</string>
+    <string>Info:     ORToolsSequencerWrapper:   Solution processed!</string>
+    <string>Info:     LineLikeTask:   Solution resolved!</string>
+    <string>Info:  LineLikeTask:   RunModel finished!</string>
+    <string>Info:  Result: </string>
+    <string>Info:     StatusCode: 1</string>
+    <string>Info:     StatusMessage: 1 - ROUTING_SUCCESS: Problem solved successfully.</string>
+    <string>Info:     FullTime: 00:00:00.1404305</string>
+    <string>Info:     SolverTime: 00:00:00.0018527</string>
+    <string>Info:     PreSolverTime: 00:00:00.0442056</string>
+    <string>Info:     SolutionRaw: 10, 11, 12, 15, 14, 13</string>
+    <string>Info:     CostsRaw: 0; 0; 13,31; 7,66; 20,027756377319946</string>
+    <string>Info:     CostSum: 40,99831912579709</string>
+    <string>Info:     Log size: 50 lines</string>
+    <string>Info:     Solution: </string>
+    <string>Info:        [10] LineAB</string>
+    <string>Info:        --0</string>
+    <string>Info:        [11] LineBC</string>
+    <string>Info:        --0</string>
+    <string>Info:        [12] LineCD</string>
+    <string>Info:        --13,313708498984761</string>
+    <string>Info:        [15] LineIJ</string>
+    <string>Info:        --7,656854249492381</string>
+    <string>Info:        [14] LineGH</string>
+    <string>Info:        --20,027756377319946</string>
+    <string>Info:        [13] LineEF</string>
+    <string>Info:     Positions: </string>
+    <string>Info:        [1] A 5; 5 ResID:0</string>
+    <string>Info:        [2] B 10; 10 ResID:0</string>
+    <string>Info:        [2] B 10; 10 ResID:0</string>
+    <string>Info:        [3] C 10; 10 ResID:0</string>
+    <string>Info:        [3] C 10; 10 ResID:0</string>
+    <string>Info:        [4] D 8; 8 ResID:0</string>
+    <string>Info:        [9] I 0; 0 ResID:0</string>
+    <string>Info:        [10] J 4; 4 ResID:0</string>
+    <string>Info:        [7] G 0; 0 ResID:0</string>
+    <string>Info:        [8] H -5; -5 ResID:0</string>
+    <string>Info:        [5] E -15; -20 ResID:0</string>
+    <string>Info:        [6] F -2; -8 ResID:0</string>
+    <string>Info:  LineLikeResultSerializer:   Output task type: LineLike</string>
+    <string>Info:  LineLikeResultSerializer:   Output file: Out/LineLike_Original.xml</string>
+    <string>Info:  LineLikeResultSerializer:   Output type: XML</string>
+  </Log>
+  <LineResults>
+    <Line>
+      <UserID>10</UserID>
+      <GlobalID>11</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>0</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>LineAB</Name>
+      <NodeA>
+        <UserID>1</UserID>
+        <GlobalID>1</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>A</Name>
+        <Vector>
+          <double>5</double>
+          <double>5</double>
+        </Vector>
+      </NodeA>
+      <NodeB>
+        <UserID>2</UserID>
+        <GlobalID>2</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>B</Name>
+        <Vector>
+          <double>10</double>
+          <double>10</double>
+        </Vector>
+      </NodeB>
+      <Bidirectional>false</Bidirectional>
+      <Length>0</Length>
+    </Line>
+    <Line>
+      <UserID>11</UserID>
+      <GlobalID>13</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>LineBC</Name>
+      <NodeA>
+        <UserID>2</UserID>
+        <GlobalID>2</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>B</Name>
+        <Vector>
+          <double>10</double>
+          <double>10</double>
+        </Vector>
+      </NodeA>
+      <NodeB>
+        <UserID>3</UserID>
+        <GlobalID>3</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>C</Name>
+        <Vector>
+          <double>10</double>
+          <double>10</double>
+        </Vector>
+      </NodeB>
+      <Bidirectional>false</Bidirectional>
+      <Length>0</Length>
+    </Line>
+    <Line>
+      <UserID>12</UserID>
+      <GlobalID>14</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>2</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>LineCD</Name>
+      <NodeA>
+        <UserID>3</UserID>
+        <GlobalID>3</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>C</Name>
+        <Vector>
+          <double>10</double>
+          <double>10</double>
+        </Vector>
+      </NodeA>
+      <NodeB>
+        <UserID>4</UserID>
+        <GlobalID>4</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>D</Name>
+        <Vector>
+          <double>8</double>
+          <double>8</double>
+        </Vector>
+      </NodeB>
+      <Bidirectional>false</Bidirectional>
+      <Length>0</Length>
+    </Line>
+    <Line>
+      <UserID>15</UserID>
+      <GlobalID>18</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>5</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>LineIJ</Name>
+      <NodeA>
+        <UserID>9</UserID>
+        <GlobalID>9</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>I</Name>
+        <Vector>
+          <double>0</double>
+          <double>0</double>
+        </Vector>
+      </NodeA>
+      <NodeB>
+        <UserID>10</UserID>
+        <GlobalID>10</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>J</Name>
+        <Vector>
+          <double>4</double>
+          <double>4</double>
+        </Vector>
+      </NodeB>
+      <Bidirectional>false</Bidirectional>
+      <Length>0</Length>
+    </Line>
+    <Line>
+      <UserID>14</UserID>
+      <GlobalID>17</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>4</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>LineGH</Name>
+      <NodeA>
+        <UserID>7</UserID>
+        <GlobalID>7</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>G</Name>
+        <Vector>
+          <double>0</double>
+          <double>0</double>
+        </Vector>
+      </NodeA>
+      <NodeB>
+        <UserID>8</UserID>
+        <GlobalID>8</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>H</Name>
+        <Vector>
+          <double>-5</double>
+          <double>-5</double>
+        </Vector>
+      </NodeB>
+      <Bidirectional>false</Bidirectional>
+      <Length>0</Length>
+    </Line>
+    <Line>
+      <UserID>13</UserID>
+      <GlobalID>15</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>3</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>LineEF</Name>
+      <NodeA>
+        <UserID>5</UserID>
+        <GlobalID>5</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>E</Name>
+        <Vector>
+          <double>-15</double>
+          <double>-20</double>
+        </Vector>
+      </NodeA>
+      <NodeB>
+        <UserID>6</UserID>
+        <GlobalID>6</GlobalID>
+        <ResourceID>0</ResourceID>
+        <SequencingID>-1</SequencingID>
+        <Virtual>false</Virtual>
+        <Name>F</Name>
+        <Vector>
+          <double>-2</double>
+          <double>-8</double>
+        </Vector>
+      </NodeB>
+      <Bidirectional>false</Bidirectional>
+      <Length>0</Length>
+    </Line>
+  </LineResults>
+  <PositionResult>
+    <Position>
+      <UserID>1</UserID>
+      <GlobalID>1</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>A</Name>
+      <Vector>
+        <double>5</double>
+        <double>5</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>2</UserID>
+      <GlobalID>2</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>B</Name>
+      <Vector>
+        <double>10</double>
+        <double>10</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>2</UserID>
+      <GlobalID>2</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>B</Name>
+      <Vector>
+        <double>10</double>
+        <double>10</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>3</UserID>
+      <GlobalID>3</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>C</Name>
+      <Vector>
+        <double>10</double>
+        <double>10</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>3</UserID>
+      <GlobalID>3</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>C</Name>
+      <Vector>
+        <double>10</double>
+        <double>10</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>4</UserID>
+      <GlobalID>4</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>D</Name>
+      <Vector>
+        <double>8</double>
+        <double>8</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>9</UserID>
+      <GlobalID>9</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>I</Name>
+      <Vector>
+        <double>0</double>
+        <double>0</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>10</UserID>
+      <GlobalID>10</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>J</Name>
+      <Vector>
+        <double>4</double>
+        <double>4</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>7</UserID>
+      <GlobalID>7</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>G</Name>
+      <Vector>
+        <double>0</double>
+        <double>0</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>8</UserID>
+      <GlobalID>8</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>H</Name>
+      <Vector>
+        <double>-5</double>
+        <double>-5</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>5</UserID>
+      <GlobalID>5</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>E</Name>
+      <Vector>
+        <double>-15</double>
+        <double>-20</double>
+      </Vector>
+    </Position>
+    <Position>
+      <UserID>6</UserID>
+      <GlobalID>6</GlobalID>
+      <ResourceID>0</ResourceID>
+      <SequencingID>-1</SequencingID>
+      <Virtual>false</Virtual>
+      <Name>F</Name>
+      <Vector>
+        <double>-2</double>
+        <double>-8</double>
+      </Vector>
+    </Position>
+  </PositionResult>
+</LineLikeResultSerializationObject>

@@ -1,9 +1,10 @@
-TaskType: Point_Like
+TaskType: PointLike
 Dimensions: 0
 WeightMultiplier: Auto
 CyclicSequence: True
 StartDepot: 1
-DistanceFunction: Full_Matrix
+DistanceFunction: MatrixDistance
+ResourceSource: NoResource
 TimeLimit: 20
 
 PositionMatrix:

@@ -1,3 +1,6 @@
+[![pipeline status](https://git.sztaki.hu/zahoranl/sequenceplanner/badges/release_0.3/pipeline.svg)](https://git.sztaki.hu/zahoranl/sequenceplanner/-/commits/release_0.3)
+[![coverage report](https://git.sztaki.hu/zahoranl/sequenceplanner/badges/release_0.3/coverage.svg)](https://git.sztaki.hu/zahoranl/sequenceplanner/-/commits/release_0.3)
+
 :earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
 :clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets)<br>
 :file_folder: [Use from file](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)<br>

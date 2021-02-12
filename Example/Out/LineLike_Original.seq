@@ -1,0 +1,109 @@
+Created: 2021. 02. 10. 0:15:18
+StatusCode: 1
+StatusMessage: 1 - ROUTING_SUCCESS: Problem solved successfully.
+FullTime: 00:00:00.1135878
+SolverTime: 00:00:00.0012844
+PreSolverTime: 00:00:00.0273520
+CostSum: 40,99831912579709
+SolutionRaw: 10, 11, 12, 15, 14, 13
+CostsRaw: 0; 0; 13,31; 7,66; 20,027756377319946
+LineResults: 
+10;1;2;LineAB;0
+11;2;3;LineBC;0
+12;3;4;LineCD;0
+15;9;10;LineIJ;0
+14;7;8;LineGH;0
+13;5;6;LineEF;0
+PositionResult: 
+1;5; 5;A;0
+2;10; 10;B;0
+2;10; 10;B;0
+3;10; 10;C;0
+3;10; 10;C;0
+4;8; 8;D;0
+9;0; 0;I;0
+10;4; 4;J;0
+7;0; 0;G;0
+8;-5; -5;H;0
+5;-15; -20;E;0
+6;-2; -8;F;0
+Log: 
+Info>  LineLikeTaskSerializer>   Input file> Example/LineLike_Original.txt
+Info>  LineLikeTaskSerializer>   Input type> SEQ
+Info>  LineLikeTaskSerializer>   Input readed!
+Info>  SEQTokenizer>   Tokenization finished!
+Info>  LineLikeTaskValidator>   Validation finished!
+Info>  LineLikeTask>   RunModel started!
+Info>     LineLikeTask>   Generate model started!
+Info>        LineLikeTask>   Virtual start and finish handled!
+Info>        LineLikeTask>   Disjoint precedences created!
+Info>        LineLikeTask>   Order precedences created!
+Info>        LineLikeTask>   GTSP matrix created!
+Info>     LineLikeTask>   Generate model finished!
+Info>     ORToolsSequencerWrapper>   ORTools building started!
+Info>        ORToolsPointLikePreSolverWrapper>   Number of variables = 14
+Info>        ORToolsPointLikePreSolverWrapper>   Number of constraints = 19
+Info>        ORToolsPointLikePreSolverWrapper>   Solver running!
+Info>        ORToolsPointLikePreSolverWrapper>   Solver finished!
+Info>        ORToolsLineLikePreSolverWrapper>   Initial solution found> 0,1,2,3,4,5
+Info>        ORToolsLineLikePreSolverWrapper>   Solver stopped with status code> 0 - OPTIMAL> Problem solved.
+Info>        ORToolsLineLikePreSolverWrapper>   Problem solved in 23 milliseconds
+Info>        ORToolsLineLikePreSolverWrapper>   Problem solved in 0 branch-and-bound nodes
+Info>     ORToolsLineLikePreSolverWrapper>   ORTools building finished!
+Info>     ORToolsSequencerWrapper>   ORTools building started!
+Info>        ORToolsSequencerWrapper>   GTSP Matrix Dimension> 7x7
+Info>        ORToolsSequencerWrapper>   GTSP Start Depot seqID> 6
+Info>        ORToolsSequencerWrapper>   GTSP Disjoint constraint number> 7
+Info>        ORToolsSequencerWrapper>   GTSP Order constraint number> 10
+Info>        ORToolsSequencerWrapper>   Search parameters> Default
+Info>        ORToolsSequencerWrapper>   First solution strategy> Automatic
+Info>        ORToolsSequencerWrapper>   Use depth first search> False
+Info>        ORToolsSequencerWrapper>   Local search metahearustic Automatic
+Info>        ORToolsSequencerWrapper>   Initial route given with 6 element.
+Info>        ORToolsSequencerWrapper>   No time limit!
+Info>     ORToolsSequencerWrapper>   ORTools building finished!
+Info>     ORToolsSequencerWrapper>   Solver running!
+Info>        ORToolsSequencerWrapper>   Solver stopped with status code> 1 - ROUTING_SUCCESS> Problem solved successfully.
+Info>        ORToolsSequencerWrapper>   Solver run time> 00>00>00.0012844
+Info>     ORToolsSequencerWrapper>   Solver finished!
+Info>     ORToolsSequencerWrapper>   Solution processed!
+Info>     LineLikeTask>   Solution resolved!
+Info>  LineLikeTask>   RunModel finished!
+Info>  Result> 
+Info>     StatusCode> 1
+Info>     StatusMessage> 1 - ROUTING_SUCCESS> Problem solved successfully.
+Info>     FullTime> 00>00>00.1135878
+Info>     SolverTime> 00>00>00.0012844
+Info>     PreSolverTime> 00>00>00.0273520
+Info>     SolutionRaw> 10, 11, 12, 15, 14, 13
+Info>     CostsRaw> 0; 0; 13,31; 7,66; 20,027756377319946
+Info>     CostSum> 40,99831912579709
+Info>     Log size> 50 lines
+Info>     Solution> 
+Info>        [10] LineAB
+Info>        --0
+Info>        [11] LineBC
+Info>        --0
+Info>        [12] LineCD
+Info>        --13,313708498984761
+Info>        [15] LineIJ
+Info>        --7,656854249492381
+Info>        [14] LineGH
+Info>        --20,027756377319946
+Info>        [13] LineEF
+Info>     Positions> 
+Info>        [1] A 5; 5 ResID>0
+Info>        [2] B 10; 10 ResID>0
+Info>        [2] B 10; 10 ResID>0
+Info>        [3] C 10; 10 ResID>0
+Info>        [3] C 10; 10 ResID>0
+Info>        [4] D 8; 8 ResID>0
+Info>        [9] I 0; 0 ResID>0
+Info>        [10] J 4; 4 ResID>0
+Info>        [7] G 0; 0 ResID>0
+Info>        [8] H -5; -5 ResID>0
+Info>        [5] E -15; -20 ResID>0
+Info>        [6] F -2; -8 ResID>0
+Info>  LineLikeResultSerializer>   Output task type> LineLike
+Info>  LineLikeResultSerializer>   Output file> Out/LineLike_Original.seq
+Info>  LineLikeResultSerializer>   Output type> SEQ
