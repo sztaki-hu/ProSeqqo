@@ -22,8 +22,10 @@ Visual Studio 2019 Solution:
 *  SequencePlanner - .NET 5.0 Class Library
 *  SequenceConsole - .NET 5.0 Console Application
 *  SequencerTest   - .NET 5.0 MSTest Framework Application
-*  ~~LineSequenceVisualizer~~
-*  ~~SequencePlannerService~~
+*  LineAnimation  - .NET 5.0 WPF Application with HelixToolkit
+*  Example
+*  Example/Skeletons
+*  ~~SequencePlannerService - ASP.NET 5.0 REST Web Service with Docker support~~
 
 
 ## Point-like task
