@@ -5,11 +5,7 @@ using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static SequencePlanner.OR_Tools.LocalSearchStrategieEnum;
 
 namespace CodeExample.PointLike
