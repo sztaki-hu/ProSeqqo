@@ -69,5 +69,10 @@ namespace SequencePlanner.GTSPTask.Result
         {
             SeqLogger.Info("["+position.UserID + "] " + position.Name + " " + SeqLogger.ToList(position.Vector) + " ResID:" + position.ResourceID);
         }
+
+        public string ToCSV()
+        {
+            return base.ToCSV();
+        }
     }
 }

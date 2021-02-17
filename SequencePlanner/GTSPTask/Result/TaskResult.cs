@@ -40,6 +40,12 @@ namespace SequencePlanner.GTSPTask.Result
             Log = new List<string>();
         }
 
+        internal string ToCSV()
+        {
+            var s = ";";
+            return FullTime.ToString()+s+StatusCode+s+StatusMessage+s+CostSum+s+SeqLogger.ToList(CostsRaw)+s+SeqLogger.ToList(SolutionRaw)+s;
+        }
+
         public virtual void Calculate()
         {
             CostSum = 0;

@@ -41,5 +41,10 @@ namespace SequencePlanner.GTSPTask.Result
             }
             SeqLogger.Indent--;
         }
+
+        public string ToCSV()
+        {
+            return base.ToCSV();
+        }
     }
 }
