@@ -8,7 +8,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
 {
     public class ShortestPathSearch
     {
-        private int Level { get; set; }
+        private int Level { get; set; } 
         private Dictionary<int, double> Values { get; set; }
         private List<BaseNode> List { get; set; }
         private List<Edge> Edges { get; set; }
