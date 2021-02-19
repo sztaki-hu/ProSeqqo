@@ -7,6 +7,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
     {
         public BaseNode Front { get; set; }
         public BaseNode Back { get; set; }
+        public BaseNode Representer { get; set; }
         public List<BaseNode> Cut { get; set; }
         public List<double> Costs { get; set; }
         public double Cost { get; set; }
@@ -15,6 +16,15 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
         {
             Front = front;
             Back = back;
+            Representer = null;
+            Cut = new List<BaseNode>();
+            Costs = new List<double>();
+            Cost = cost;
+        }
+
+        public ShortestPath(BaseNode representer, double cost)
+        {
+            Representer = representer;
             Cut = new List<BaseNode>();
             Costs = new List<double>();
             Cost = cost;

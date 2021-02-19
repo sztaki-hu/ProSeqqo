@@ -64,9 +64,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
             foreach (var pos in positions)
             {
                 tmp.Add(RollbackSolution(openPos, pos));
-                //SeqLogger.Trace("Shortcut between "+openPos+" and "+ pos+" wit cost: "+tmp[tmp.Count-1].Cost, nameof(CPM));
             }
-            //SeqLogger.Indent--;
             return tmp;
         }
 

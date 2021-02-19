@@ -14,6 +14,8 @@ namespace SequencePlanner.Model
         public Alternative Original { get; private set; }
         public Task FrontProxy { get; set; }
         public Task BackProxy { get; set; }
+        public Task Proxy { get; set; }
+
         public List<ShortestPath> CriticalPaths{get;set;}
         public StrictEdgeWeightSet StrictSystemEdgeWeightSet { get; set; }
 
@@ -54,7 +56,6 @@ namespace SequencePlanner.Model
                     SeqLogger.Trace("Contains " + path.Cut.Count + " in cut with " + path.Cost + " cost, between: " + path.Front.ToString() + " and " + path.Back.ToString(), nameof(AlternativeShortcut));
                 }
             }
-            
         }
 
         private void FindShortcuts(IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
