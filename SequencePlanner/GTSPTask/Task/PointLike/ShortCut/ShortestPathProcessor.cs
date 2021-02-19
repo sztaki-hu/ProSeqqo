@@ -39,9 +39,9 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                     {
                         SeqLogger.Trace("Alternative " + PointLikeTask.Alternatives[i] + " in process!", nameof(PointLikeTask));
                         SeqLogger.Indent++;
-                        var shortcut = new AlternativeShortcut();                                                           //Create alternative with shortcut for every alternative
-                        shortcut.Assimilate(PointLikeTask.Alternatives[i]);                                                               //Init with the original, it is saved inside the new one.
-                        shortcut.CreateShortcut(PointLikeTask.PositionMatrix.DistanceFunction, PointLikeTask.PositionMatrix.ResourceFunction);          //Create shortcuts between every position of first and last tasks.
+                        var shortcut = new AlternativeShortcut();                                                                               //Create alternative with shortcut for every alternative
+                        shortcut.Assimilate(PointLikeTask.Alternatives[i]);                                                                     //Init with the original, it is saved inside the new one.
+                        shortcut.CreateShortcut(PointLikeTask.PositionMatrix.DistanceFunction, PointLikeTask.PositionMatrix.ResourceFunction);  //Create shortcuts between every position of first and last tasks.
                         for (int j = 1; j < PointLikeTask.Alternatives[i].Tasks.Count - 1; j++)
                         {
                             foreach (var position in PointLikeTask.Alternatives[i].Tasks[j].Positions)
@@ -52,8 +52,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                             }
                         }
                         AlternativeShortcuts.Add(shortcut);
-                        PointLikeTask.Alternatives[i] = shortcut;                                                                         //Change the alternatives for the new ones
-                        foreach (var process in PointLikeTask.Processes)                                                                  //also in processes.
+                        PointLikeTask.Alternatives[i] = shortcut;                                                                               //Change the alternatives for the new ones
+                        foreach (var process in PointLikeTask.Processes)                                                                        //also in processes.
                         {
                             for (int j = 0; j < process.Alternatives.Count; j++)
                             {
@@ -66,8 +66,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                         SeqLogger.Indent--;
                     }
                 }
-                foreach (var shortcut in AlternativeShortcuts)                             //Check position precedences, if one of the positions part of shortcut,
-                {                                                                              //it have to be override with the first position of the cut
+                foreach (var shortcut in AlternativeShortcuts)                                                                                  //Check position precedences, if one of the positions part of shortcut,
+                {                                                                                                                               //it have to be override with the first position of the cut
                     for (int i = 0; i < PointLikeTask.PositionPrecedence.Count; i++)
                     {
                         var newPrec = shortcut.FindPrecedenceHeaderOfPositions(PointLikeTask.PositionPrecedence[i]);
@@ -84,6 +84,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                 {
                     PointLikeTask.PositionPrecedence.Remove(item);
                 }
+
                 foreach (var item in PositionPrecedencesOfShortcuts)
                 {
                     PointLikeTask.PositionPrecedence.Add(item);
@@ -95,6 +96,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
 
         public void ChangeBack()
         {
+
             foreach (var shortcut in AlternativeShortcuts)
             {
                 for (int i = 0; i < PointLikeTask.Alternatives.Count; i++)                    //Change back alternatives in Alternatives collection to original.
@@ -112,14 +114,15 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                 }
             }
 
-            if (PointLikeTask.PositionMatrix != null && PointLikeTask.PositionMatrix.Positions != null)         //Add deleted positions of original alternatives to Positions collection.
+            if (PointLikeTask.PositionMatrix != null && PointLikeTask.PositionMatrix.Positions != null) {       //Add deleted positions of original alternatives to Positions collection.
                 foreach (var position in DeletedPositionsOfShortcuts)
                 {
                     PointLikeTask.PositionMatrix.Positions.Add(position);
                 }
-            PointLikeTask.PositionMatrix.DistanceFunction.StrictSystemEdgeWeights.DeleteAll();//Delete the edge weight ovverides of shortcuts.
+                PointLikeTask.PositionMatrix.DistanceFunction.StrictSystemEdgeWeights.DeleteAll();              //Delete the edge weight ovverides of shortcuts.
+            }         
 
-            for (int i = 0; i < PointLikeTask.PositionPrecedence.Count; i++)                  //Remove precedences of shortcuts
+            for (int i = 0; i < PointLikeTask.PositionPrecedence.Count; i++)                                    //Remove precedences of shortcuts
             {
                 for (int j = 0; j < PositionPrecedencesOfShortcuts.Count; j++)
                 {
@@ -127,7 +130,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                         PointLikeTask.PositionPrecedence.RemoveAt(i);
                 }
             }
-            foreach (var posPrec in DeletedPositionPrecedencesOfShortcuts)      //Add original precedences
+
+            foreach (var posPrec in DeletedPositionPrecedencesOfShortcuts)                                      //Add original precedences
             {
                 PointLikeTask.PositionPrecedence.Add(posPrec);
             }
@@ -144,12 +148,11 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
             SeqLogger.Indent++;
             foreach (var alternative in AlternativeShortcuts)
             {
-                taskResult = alternative.ResolveSolution(taskResult);
+                taskResult = alternative.ResolveSolution(taskResult);                                           //If AlternativeShortcut fits for result, replace it.
             }
             SeqLogger.Indent--;
             SeqLogger.Info("Solution update by alternative shortcuts finished!", nameof(PointLikeTask));
             return taskResult;
         }
-
     }
 }
