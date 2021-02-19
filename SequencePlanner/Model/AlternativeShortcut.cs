@@ -2,6 +2,7 @@
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.GTSP;
 using SequencePlanner.GTSPTask.Result;
+using SequencePlanner.GTSPTask.Task.PointLike.ShortCut;
 using SequencePlanner.Helper;
 using System;
 using System.Collections.Generic;

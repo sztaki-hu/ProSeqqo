@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Helper;
+using SequencePlanner.GTSPTask.Task.PointLike.ShortCut;
 using SequencePlanner.Model;
 
 namespace SequencerTest.Units.Helper

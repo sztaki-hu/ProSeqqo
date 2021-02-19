@@ -1,9 +1,7 @@
 ﻿using SequencePlanner.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SequencePlanner.Helper
+namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
 {
     public class ShortestPath
     {
