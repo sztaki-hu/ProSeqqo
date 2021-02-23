@@ -173,12 +173,14 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 });
             }
         }
-        private Position FindPosition(int ID, List<Position> posList)
+        private Position FindPosition(int ID, List<GTSPNode> posList)
         {
             foreach (var pos in posList)
             {
-                if (pos.UserID == ID)
-                    return pos;
+                if (pos.In.UserID == ID)
+                    return pos.In;
+                if (pos.Out.UserID == ID)
+                    return pos.Out;
             }
             return null;
         }

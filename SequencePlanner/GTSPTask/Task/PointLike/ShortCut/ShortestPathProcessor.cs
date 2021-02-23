@@ -14,7 +14,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
     public class ShortestPathProcessor
     {
         private PointLikeTask PointLikeTask { get; set; }
-        private List<Position> DeletedPositionsOfShortcuts { get; set; }
+        private List<GTSPNode> DeletedPositionsOfShortcuts { get; set; }
         private List<GTSPPrecedenceConstraint> DeletedPositionPrecedencesOfShortcuts { get; set; }
         private List<GTSPPrecedenceConstraint> PositionPrecedencesOfShortcuts { get; set; }
         private List<AlternativeShortcut> AlternativeShortcuts { get; set; }
@@ -22,7 +22,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
 
         public ShortestPathProcessor(PointLikeTask pointTask) {
             PointLikeTask = pointTask;
-            DeletedPositionsOfShortcuts = new List<Position>();
+            DeletedPositionsOfShortcuts = new List<GTSPNode>();
             AlternativeShortcuts = new List<AlternativeShortcut>();
             DeletedPositionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();
             PositionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();

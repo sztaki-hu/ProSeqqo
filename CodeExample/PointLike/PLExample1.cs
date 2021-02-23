@@ -29,7 +29,7 @@ namespace CodeExample.PointLike
 
             //Create Positions
             Task.PositionMatrix = new PositionMatrix();
-            Task.PositionMatrix.Positions = new List<Position>();
+            Task.PositionMatrix.Positions = new List<GTSPNode>();
             Task.PositionMatrix.DistanceFunction = new EuclidianDistanceFunction();
             //Task.PositionMatrix.DistanceFunction = new MatrixDistanceFunction()
             Task.PositionMatrix.DistanceFunction.StrictUserEdgeWeights = new StrictEdgeWeightSet();

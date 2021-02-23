@@ -32,11 +32,11 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 };
                 foreach (var position in positionMatrix.Positions)
                 {
-                    if (!position.Virtual)
+                    if (!position.Node.Virtual)
                     {
-                        DistanceMatrix.IDHeader.Add(position.UserID);
-                        DistanceMatrix.NameFooter.Add(position.Name);
-                        DistanceMatrix.ResourceFooter.Add(position.ResourceID);
+                        DistanceMatrix.IDHeader.Add(position.Node.UserID);
+                        DistanceMatrix.NameFooter.Add(position.Node.Name);
+                        DistanceMatrix.ResourceFooter.Add(position.Node.ResourceID);
                     }
                         
                 }
@@ -111,7 +111,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             return seq;
         }
 
-        public IDistanceFunction ToDistanceFunction(List<Position> positions)
+        public IDistanceFunction ToDistanceFunction(List<GTSPNode> positions)
         {
             IDistanceFunction newDistanceFunction = Function switch
             {

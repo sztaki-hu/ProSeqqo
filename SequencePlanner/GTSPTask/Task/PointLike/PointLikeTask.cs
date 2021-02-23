@@ -161,7 +161,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                         {
                             foreach (var posAfter in alterAfter.Tasks[0].Positions)
                             {
-                                positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore, posAfter));
+                                positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore.In, posAfter.In));
                             }
                         }
                     }
@@ -187,7 +187,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                                 {
                                     foreach (var posAfter in alterAfter.Tasks[j].Positions)
                                     {
-                                        positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore, posAfter));
+                                        positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore.In, posAfter.In));
                                     }
                                 }
                             }
@@ -227,11 +227,11 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                             if (taskNumberOfAlternatives[j] <= i)
                                 //Add positions of positions of j. alternative last layer
                                 foreach (var position in process.Alternatives[j].Tasks[taskNumberOfAlternatives[j] - 1].Positions)
-                                    constraint.Add(position);
+                                    constraint.Add(position.Node);
                             else
                                 //Add positions of positions of j. alternative i.layer
                                 foreach (var position in process.Alternatives[j].Tasks[i].Positions)
-                                    constraint.Add(position);
+                                    constraint.Add(position.Node);
 
                         }
                         DisjointConstraints.Add(constraint);
@@ -245,7 +245,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         {
             foreach (var position in PositionMatrix.Positions)
             {
-                position.SequencingID = MAX_SEQUENCING_ID++;
+                position.Node.SequencingID = MAX_SEQUENCING_ID++;
             }
             double[,] matrix = new double[MAX_SEQUENCING_ID, MAX_SEQUENCING_ID];
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -305,7 +305,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 foreach (var posB in b.Positions)
                 {
-                    matrix[posA.SequencingID, posB.SequencingID] = CalculateWeight(posA, posB);
+                    matrix[posA.Node.SequencingID, posB.Node.SequencingID] = CalculateWeight(posA.Out, posB.In);
                 }
             }
             return matrix;
@@ -342,11 +342,11 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 var find = false;
                 foreach (var position in PositionMatrix.Positions)
                 {
-                    if (position.SequencingID == raw)
+                    if (position.Node.SequencingID == raw)
                     {
-                        if (!position.Virtual)
+                        if (!position.Node.Virtual)
                         {
-                            result.SolutionRaw.Add(position.UserID);
+                            result.SolutionRaw.Add(position.Node.UserID);
                             result.PositionResult.Add(position);
                         }
                         else
@@ -363,7 +363,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
             for (int i = 1; i < result.PositionResult.Count; i++)
             {
-                result.CostsRaw.Add(GTSPRepresentation.Matrix[result.PositionResult[i - 1].SequencingID, result.PositionResult[i].SequencingID]);
+                result.CostsRaw.Add(GTSPRepresentation.Matrix[result.PositionResult[i - 1].Node.SequencingID, result.PositionResult[i].Node.SequencingID]);
                 result.CostSum += result.CostsRaw[i - 1];
             }
             SeqLogger.Info("Solution resolved!", nameof(PointLikeTask));
@@ -381,8 +381,14 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     for (int i = 0; i < alternative.Tasks.Count - 1; i++)
                     {
                         tmp = new GTSPPrecedenceConstraintList();
-                        tmp.Before.AddRange(alternative.Tasks[i].Positions);
-                        tmp.After.AddRange(alternative.Tasks[i + 1].Positions);
+                        foreach (var item in alternative.Tasks[i].Positions)
+                        {
+                            tmp.Before.Add(item.Node);
+                        }
+                        foreach (var item in alternative.Tasks[i + 1].Positions)
+                        {
+                            tmp.After.Add(item.Node);
+                        }
                         prec.Add(tmp);
                     }
                 }
@@ -405,7 +411,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                             //foreach (var p2 in alternative.Tasks[j].Positions)
                             foreach (var p2 in alternative.Tasks[i + 1].Positions)
                             {
-                                prec.Add(new GTSPPrecedenceConstraint(p, p2));
+                                prec.Add(new GTSPPrecedenceConstraint(p.Node, p2.Node));
                             }
                         }
                         // }

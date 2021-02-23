@@ -7,16 +7,16 @@ namespace SequencePlanner.GTSPTask.Result
 {
     public class PointTaskResult : TaskResult
     {
-        public List<Position> PositionResult { get; set; }
+        public List<GTSPNode> PositionResult { get; set; }
 
         public PointTaskResult(TaskResult baseTask) : base(baseTask)
         {
-            PositionResult = new List<Position>();
+            PositionResult = new List<GTSPNode>();
         }
 
         public PointTaskResult()
         {
-            PositionResult = new List<Position>();
+            PositionResult = new List<GTSPNode>();
         }
 
         public void ToLog(LogLevel lvl)

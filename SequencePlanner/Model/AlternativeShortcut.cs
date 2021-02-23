@@ -52,7 +52,7 @@ namespace SequencePlanner.Model
                 SeqLogger.Trace(CriticalPaths.Count + " shortcut created in [UID:" + Original.UserID + "] alternative, between: " + FrontProxy.ToString() + " and " + BackProxy.ToString(), nameof(AlternativeShortcut));
                 foreach (var path in CriticalPaths)
                 {
-                    distanceFunction.StrictSystemEdgeWeights.Add(new StrictEdgeWeight(path.Front, path.Back, path.Cost));
+                    distanceFunction.StrictSystemEdgeWeights.Add(new StrictEdgeWeight(path.Front.Node, path.Back.Node, path.Cost));
                     SeqLogger.Trace("Contains " + path.Cut.Count + " in cut with " + path.Cost + " cost, between: " + path.Front.ToString() + " and " + path.Back.ToString(), nameof(AlternativeShortcut));
                 }
             }
@@ -76,9 +76,9 @@ namespace SequencePlanner.Model
             {
                 foreach (var position in path.Cut)
                 {
-                    if (position.GlobalID == gTSPPrecedenceConstraint.Before.GlobalID)
+                    if (position.Node.GlobalID == gTSPPrecedenceConstraint.Before.GlobalID)
                         findBefore = true;
-                    if (position.GlobalID == gTSPPrecedenceConstraint.After.GlobalID)
+                    if (position.Node.GlobalID == gTSPPrecedenceConstraint.After.GlobalID)
                         findAfter = true;
                 }
                 if (findBefore && findAfter)
@@ -91,11 +91,11 @@ namespace SequencePlanner.Model
                 {
                     var prec = new GTSPPrecedenceConstraint();
                     if (findBefore)
-                        prec.Before = path.Front;
+                        prec.Before = path.Front.Node;
                     else
                         prec.Before = gTSPPrecedenceConstraint.Before;
                     if (findAfter)
-                        prec.After = path.Front;
+                        prec.After = path.Front.Node;
                     else
                         prec.After = gTSPPrecedenceConstraint.After;
 
@@ -124,13 +124,13 @@ namespace SequencePlanner.Model
             {
                 for (int i = 0; i < taskResult.PositionResult.Count-1; i++)
                 {
-                    if ((path.Front.GlobalID == taskResult.PositionResult[i].GlobalID) && (path.Back.GlobalID == taskResult.PositionResult[i + 1].GlobalID))
+                    if ((path.Front.Node.GlobalID == taskResult.PositionResult[i].Node.GlobalID) && (path.Back.Node.GlobalID == taskResult.PositionResult[i + 1].Node.GlobalID))
                     {
-                        SeqLogger.Trace("Cut found [" + path.Front.UserID + ";" + path.Back.UserID+"] and changed to ["+SeqLogger.ToList(path.Cut)+"]");
+                        SeqLogger.Trace("Cut found [" + path.Front.Node.UserID + ";" + path.Back.Node.UserID+"] and changed to ["+SeqLogger.ToList(path.Cut)+"]");
                         for (int j = 1; j < path.Cut.Count-1; j++)
                         {
-                            taskResult.PositionResult.Insert(i+j, (Position) path.Cut[j]);
-                            taskResult.SolutionRaw.Insert(i+j, (long) path.Cut[j].UserID);
+                            taskResult.PositionResult.Insert(i+j, path.Cut[j]);
+                            taskResult.SolutionRaw.Insert(i+j, (long) path.Cut[j].Node.UserID);
                         }
                         SeqLogger.Trace("Costs from " + taskResult.CostsRaw[i] + " hanged to [" + SeqLogger.ToList(path.Costs)+"]" );
                         taskResult.CostsRaw.RemoveAt(i);

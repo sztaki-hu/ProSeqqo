@@ -49,7 +49,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                                 ProcessID = proc.UserID,
                                 AlternativeID = alternative.UserID,
                                 TaskID = lineTask.UserID,
-                                PositionID = position.UserID
+                                PositionID = position.Node.UserID
                             });
                         }
                     }
@@ -161,10 +161,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     {
                         UserID = item.PositionID
                     };
-                    pointLikeTask.PositionMatrix.Positions.Add(position);
+                    pointLikeTask.PositionMatrix.Positions.Add(new GTSPNode(position));
                     Console.WriteLine("PointLike GTSP builder process hierarchy ID error, this error sholud be caught by validation!");
                 }
-                task.Positions.Add(position);
+                task.Positions.Add(new GTSPNode(position));
             }
         }
 
@@ -245,9 +245,13 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         {
             foreach (var item in task.PositionMatrix.Positions)
             {
-                if (item.UserID == userID)
+                if (item.In.UserID == userID)
                 {
-                    return item;
+                    return item.In;
+                }
+                if (item.Out.UserID == userID)
+                {
+                    return item.Out;
                 }
             }
             return null;

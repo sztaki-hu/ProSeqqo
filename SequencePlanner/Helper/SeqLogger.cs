@@ -152,6 +152,20 @@ namespace SequencePlanner.Helper
             }
             return tmp;
         }
+
+        public static string ToList(List<GTSPNode> list)
+        {
+            string tmp = "";
+            if (list.Count > 0 && list != null)
+            {
+                for (int i = 0; i < list.Count - 1; i++)
+                {
+                    tmp += list[i].Node.UserID + ", ";
+                }
+                tmp += list[list.Count - 1].Node.UserID;
+            }
+            return tmp;
+        }
     }
 
     public enum LogLevel

@@ -15,19 +15,24 @@ namespace SequencePlanner.Model
         public double AdditionalWeightOut { get; set; }
         public double OverrideWeightIn { get; set; }
         public double OverrideWeightOut { get; set; }
+        public BaseNode Node { get; set; }
+
+        public GTSPNode()
+        {
+        }
 
         public GTSPNode(Position position)
         {
+            Node = position;
             In = position;
             Out = position;
-            Weight = 0;
         }
 
         public GTSPNode(Line line)
         {
+            Node = line;
             In = line.NodeA;
             Out = line.NodeB;
-            Weight = line.Length;
         }
     }
 }

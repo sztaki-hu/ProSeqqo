@@ -141,8 +141,8 @@ namespace SequencePlanner.OR_Tools
                     {
                         for (int m = 0; m < processes[i].Alternatives[j].Tasks[k].Positions.Count; m++)
                         {
-                            processID[processes[i].Alternatives[j].Tasks[k].Positions[m].SequencingID] = i;         // i is the index of process; processID[n] n is the number of node
-                            alternativeID[processes[i].Alternatives[j].Tasks[k].Positions[m].SequencingID] = j;     // j is the index of alternative in i process; processID[n] n is the number of node
+                            processID[processes[i].Alternatives[j].Tasks[k].Positions[m].Node.SequencingID] = i;         // i is the index of process; processID[n] n is the number of node
+                            alternativeID[processes[i].Alternatives[j].Tasks[k].Positions[m].Node.SequencingID] = j;     // j is the index of alternative in i process; processID[n] n is the number of node
                         }
                     }
                 }

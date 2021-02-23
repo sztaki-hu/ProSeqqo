@@ -53,7 +53,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             PositionList = new List<PositionSerializationObject>();
             foreach (var item in baseTask.PositionMatrix.Positions)
             {
-                PositionList.Add(new PositionSerializationObject(item));
+                PositionList.Add(new PositionSerializationObject(item.Out)); ///TODO: Rapid FIX change it!
             }
 
             DistanceFunction = new DistanceFunctionSerializationObject(baseTask.PositionMatrix);
@@ -107,7 +107,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             foreach (var pos in PositionList)
             {
                 var newPosition = pos.ToPosition();
-                task.PositionMatrix.Positions.Add(newPosition);
+                task.PositionMatrix.Positions.Add(new GTSPNode(newPosition));
                 if (newPosition.UserID == StartDepot)
                     task.StartDepot = newPosition;
                 if (newPosition.UserID == FinishDepot)
