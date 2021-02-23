@@ -139,7 +139,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQ=</HashCode>
       <FileName>OR-Tools\ORToolsTask.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -170,17 +170,13 @@
   </Class>
   <Class Name="SequencePlanner.OR_Tools.ORToolsLineLikePreSolverWrapper">
     <Position X="23.75" Y="10" Width="2.5" />
-    <AssociationLine Name="parameters" Type="SequencePlanner.OR_Tools.ORToolsLineLikePreSolverTask" FixedToPoint="true">
-      <Path>
-        <Point X="25.625" Y="13.286" />
-        <Point X="25.625" Y="15.5" />
-      </Path>
+    <AssociationLine Name="parameters" Type="SequencePlanner.OR_Tools.ORToolsLineLikePreSolverTask">
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
         <Position X="0.056" Y="1.977" Height="0.182" Width="0.961" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAQAAAAEAAAQAAAAAAAAoAAIAAAAAAACAABAAACQAAA=</HashCode>
+      <HashCode>AAQAAAAEAAAQAAAAAAAAoAgIAAAAAAACAABAAACQAAA=</HashCode>
       <FileName>OR-Tools\ORToolsLineLikePreSolverWrapper.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -232,15 +228,12 @@
   <Class Name="SequencePlanner.Model.AlternativeShortcut">
     <Position X="13" Y="26.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAgAAQBAAAAAAAQAAAAAAAAAACgAAAAAQBAAQAAAQ=</HashCode>
+      <HashCode>BAAAgAAQCAAAAAAAQAAAAAAAAAACgAAAAAQBAAQAAAQ=</HashCode>
       <FileName>Model\AlternativeShortcut.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Original" />
     </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="CriticalPaths" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.Helper.SequencerException">
     <Position X="23.5" Y="23.5" Width="1.75" />
@@ -252,7 +245,7 @@
   <Class Name="SequencePlanner.Helper.SeqLogger">
     <Position X="21.75" Y="25.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAEAYAAAEAAABAAAAAAABIAAAgAAEAAAAA=</HashCode>
+      <HashCode>AAAIAAAAAAAEAYAAAEAAABAAAAAAABIAAAgAAEAACAA=</HashCode>
       <FileName>Helper\SeqLogger.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -312,35 +305,17 @@
   </Class>
   <Class Name="SequencePlanner.GTSPTask.Task.LineLike.LineLikeTask">
     <Position X="3" Y="9" Width="2.25" />
-    <AssociationLine Name="LinePrecedences" Type="SequencePlanner.GTSP.GTSPPrecedenceConstraint" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="4.625" Y="14.405" />
-        <Point X="4.625" Y="15.762" />
-        <Point X="11.996" Y="15.762" />
-        <Point X="11.996" Y="12.625" />
-        <Point X="14" Y="12.625" />
-      </Path>
+    <AssociationLine Name="LinePrecedences" Type="SequencePlanner.GTSP.GTSPPrecedenceConstraint">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.271" Y="0.024" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="ContourPrecedences" Type="SequencePlanner.GTSP.GTSPPrecedenceConstraint" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="4.5" Y="14.405" />
-        <Point X="4.5" Y="15.925" />
-        <Point X="12.184" Y="15.925" />
-        <Point X="12.184" Y="12.875" />
-        <Point X="14" Y="12.875" />
-      </Path>
+    <AssociationLine Name="ContourPrecedences" Type="SequencePlanner.GTSP.GTSPPrecedenceConstraint">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.055" Y="0.032" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="GTSPRepresentation" Type="SequencePlanner.GTSPTask.Task.LineLike.LineLikeGTSPRepresentation" FixedToPoint="true">
-      <Path>
-        <Point X="4.375" Y="14.405" />
-        <Point X="4.375" Y="17.25" />
-      </Path>
+    <AssociationLine Name="GTSPRepresentation" Type="SequencePlanner.GTSPTask.Task.LineLike.LineLikeGTSPRepresentation">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.196" Y="1.756" />
       </MemberNameLabel>
@@ -377,7 +352,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAIIEAAAAIkAAAAIAAAAAYAAAQAAAAAAEAAY=</HashCode>
+      <HashCode>AAIAAAAAAIIEAAAAIkAAAAIAAAAAYAAAQAEAAAAEAAY=</HashCode>
       <FileName>GTSPTask\Task\Base\BaseTask.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -480,6 +455,8 @@
     <AssociationLine Name="PositionPrecedence" Type="SequencePlanner.GTSP.GTSPPrecedenceConstraint" FixedToPoint="true">
       <Path>
         <Point X="8.75" Y="12.062" />
+        <Point X="13.823" Y="12.062" Type="JumpStart" />
+        <Point X="13.99" Y="12.062" Type="JumpEnd" />
         <Point X="14" Y="12.062" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
@@ -489,6 +466,8 @@
     <AssociationLine Name="ProcessPrecedence" Type="SequencePlanner.GTSP.GTSPPrecedenceConstraint" FixedToPoint="true">
       <Path>
         <Point X="8.75" Y="12.375" />
+        <Point X="13.823" Y="12.375" Type="JumpStart" />
+        <Point X="13.99" Y="12.375" Type="JumpEnd" />
         <Point X="14" Y="12.375" />
       </Path>
     </AssociationLine>
@@ -498,7 +477,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>EEAAEIIBaBAAAQC4okAAAgYIUEQAgAAhAAAIEAAgCAA=</HashCode>
+      <HashCode>EEAAEIIBIBAAAQCIAkAAAgYIEEQAgAAhAAAIGAAgAAA=</HashCode>
       <FileName>GTSPTask\Task\PointLike\PointLikeTask.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -572,7 +551,7 @@
   <Class Name="SequencePlanner.GTSPTask.Result.TaskResult">
     <Position X="29.5" Y="15.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAgAAAAGAIAAAAIAADiAAAAAIAAAAIAAAAA=</HashCode>
+      <HashCode>AAABAAAAAAgAAAACAIAAAAJAADiAAAAAIAAAAIAAAAA=</HashCode>
       <FileName>GTSPTask\Result\TaskResult.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -580,14 +559,14 @@
   <Class Name="SequencePlanner.GTSPTask.Result.PointTaskResult">
     <Position X="30.5" Y="18.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAACAAAAAAAAAIAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>GTSPTask\Result\PointTaskResult.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSPTask.Result.LineTaskResult">
     <Position X="28.25" Y="18.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AACQAAAAAAAAAAAEAAAAAAQAAAAAAAAAAACgAAAAAAA=</HashCode>
+      <HashCode>AACAACAAAAAAIAAAAAABAAZAAAAAAAAAAAAIABAAAAA=</HashCode>
       <FileName>GTSPTask\Result\LineTaskResult.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -674,7 +653,7 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIIEAAAAAEAAAAAAAAAAYAAAQAAAAAAAAAY=</HashCode>
+      <HashCode>AAAAAAAAAIIEAAAAAEAAAAAAAAAAYAAAQAEAAAAAAAY=</HashCode>
       <FileName>GTSPTask\Task\Base\IBaseTask.cs</FileName>
     </TypeIdentifier>
   </Interface>
