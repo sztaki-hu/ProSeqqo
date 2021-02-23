@@ -27,7 +27,7 @@ namespace SequencerTest.Units.Model
         [TestMethod()]
         public void GetterSetterTest()
         {
-            var positions = new List<Position>() { new Position(), new Position(), new Position() };
+            var positions = new List<GTSPNode>() { new GTSPNode(new Position()), new GTSPNode(new Position()), new GTSPNode(new Position()) };
             Task task = new Task()
             {
                 UserID = 1,

@@ -13,10 +13,10 @@ namespace SequencerTest.Units
     [TestClass]
     public class PointLikeTaskTest
     {
-        Position A;
-        Position B;
-        Position C;
-        Position D;
+        GTSPNode A;
+        GTSPNode B;
+        GTSPNode C;
+        GTSPNode D;
         Task T1;
         Task T2;
         Task T3;
@@ -25,7 +25,7 @@ namespace SequencerTest.Units
         Alternative A3;
         Process P1;
         Process P2;
-        List<Position> positionList;
+        List<GTSPNode> positionList;
         PositionMatrix matrix;
         List<Task> tasks;
         List<Alternative> alternatives;
@@ -36,45 +36,45 @@ namespace SequencerTest.Units
         [TestInitialize()]
         public void Initialize()
         {
-            A = new Position()
+            A = new GTSPNode(new Position()
             {
                 Name = "A",
                 UserID = 1,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            B = new Position()
+            B = new GTSPNode(new Position()
             {
                 Name = "B",
                 UserID = 2,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            C = new Position()
+            C = new GTSPNode(new Position()
             {
                 Name = "C",
                 UserID = 3,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            D = new Position()
+            D = new GTSPNode(new Position()
             {
                 Name = "D",
                 UserID = 4,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            T1 = new Task() { Positions = new List<Position>() { A } };
-            T2 = new Task() { Positions = new List<Position>() { B } };
-            T3 = new Task() { Positions = new List<Position>() { C, D } };
+            T1 = new Task() { Positions = new List<GTSPNode>() { A } };
+            T2 = new Task() { Positions = new List<GTSPNode>() { B } };
+            T3 = new Task() { Positions = new List<GTSPNode>() { C, D } };
             A1 = new Alternative() { Tasks = new List<Task>() { T1 } };
             A2 = new Alternative() { Tasks = new List<Task>() { T2 } };
             A3 = new Alternative() { Tasks = new List<Task>() { T3 } };
@@ -82,7 +82,7 @@ namespace SequencerTest.Units
             P2 = new Process() { Alternatives = new List<Alternative>() { A2,A3 } };
             
 
-            positionList = new List<Position>() { A, B, C, D };
+            positionList = new List<GTSPNode>() { A, B, C, D };
             matrix = new PositionMatrix()
             {
                 Positions = positionList,
@@ -94,7 +94,7 @@ namespace SequencerTest.Units
             tasks = new List<Task>() { T1, T2, T3 };
             alternatives = new List<Alternative>() {A1,A2, A3};
             processes = new List<Process>() {P1, P2 };
-            positionPrecedences = new List<GTSPPrecedenceConstraint>() { new GTSPPrecedenceConstraint() { Before = A, After = B} };
+            positionPrecedences = new List<GTSPPrecedenceConstraint>() { new GTSPPrecedenceConstraint() { Before = A.In, After = B.In} };
             processPrecedences = new List<GTSPPrecedenceConstraint>() { new GTSPPrecedenceConstraint() { Before = P1, After = P2} };
         }
 
@@ -106,8 +106,8 @@ namespace SequencerTest.Units
                 Dimension = 3,
                 TimeLimit =5,
                 CyclicSequence = false,
-                StartDepot = A,
-                FinishDepot = B,
+                StartDepot = A.In,
+                FinishDepot = B.Out,
                 WeightMultipier = 10,
                 PositionMatrix = matrix,
                 Tasks = tasks,
@@ -120,8 +120,8 @@ namespace SequencerTest.Units
             Assert.AreEqual(3, task.Dimension);
             Assert.AreEqual(5, task.TimeLimit);
             Assert.IsFalse(task.CyclicSequence);
-            Assert.AreSame(A, task.StartDepot);
-            Assert.AreSame(B, task.FinishDepot);
+            Assert.AreSame(A.In, task.StartDepot);
+            Assert.AreSame(B.In, task.FinishDepot);
             Assert.AreEqual(10, task.WeightMultipier);
             Assert.AreSame(matrix, task.PositionMatrix);
             Assert.AreSame(tasks, task.Tasks);
@@ -139,8 +139,8 @@ namespace SequencerTest.Units
                 Dimension = 3,
                 TimeLimit = 5,
                 CyclicSequence = true,
-                StartDepot = A,
-                FinishDepot = B,
+                StartDepot = A.Out,
+                FinishDepot = B.Out,
                 WeightMultipier = 10,
                 PositionMatrix = matrix,
                 Tasks = tasks,
@@ -177,8 +177,8 @@ namespace SequencerTest.Units
                 Dimension = 3,
                 TimeLimit = 5,
                 CyclicSequence = true,
-                StartDepot = A,
-                FinishDepot = B,
+                StartDepot = A.Out,
+                FinishDepot = B.Out,
                 WeightMultipier = 10,
                 PositionMatrix = matrix,
                 Tasks = tasks,
@@ -215,8 +215,8 @@ namespace SequencerTest.Units
                 Dimension = 3,
                 TimeLimit = 5,
                 CyclicSequence = true,
-                StartDepot = A,
-                FinishDepot = B,
+                StartDepot = A.In,
+                FinishDepot = B.Out,
                 WeightMultipier = 10,
                 PositionMatrix = matrix,
                 Tasks = tasks,

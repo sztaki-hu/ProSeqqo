@@ -39,23 +39,23 @@ namespace SequencerTest.Units.Helper
         {
             var tmp = Search.CalculateCriticalRoute(Tasks[0].Positions[0], Tasks[2].Positions);
             Assert.AreEqual(tmp.Count, 2);
-            Assert.IsTrue(TestObjects.CheckPosA((Position)tmp[0].Front));
-            Assert.IsTrue(TestObjects.CheckPosA((Position)tmp[0].Back));
+            Assert.IsTrue(TestObjects.CheckPosA((Position)tmp[0].Front.In));
+            Assert.IsTrue(TestObjects.CheckPosA((Position)tmp[0].Back.In));
             Assert.AreEqual(tmp[0].Costs.Count, 2);
             Assert.AreEqual(tmp[0].Cut.Count, 3);
-            Assert.IsTrue(TestObjects.CheckPosA((Position)tmp[1].Front));
-            Assert.IsTrue(TestObjects.CheckPosB((Position)tmp[1].Back));
+            Assert.IsTrue(TestObjects.CheckPosA((Position)tmp[1].Front.In));
+            Assert.IsTrue(TestObjects.CheckPosB((Position)tmp[1].Back.In));
             Assert.AreEqual(tmp[1].Costs.Count, 2);
             Assert.AreEqual(tmp[1].Cut.Count, 3);
 
             tmp = Search.CalculateCriticalRoute(Tasks[0].Positions[1], Tasks[2].Positions);
             Assert.AreEqual(tmp.Count, 2);
-            Assert.IsTrue(TestObjects.CheckPosB((Position)tmp[0].Front));
-            Assert.IsTrue(TestObjects.CheckPosA((Position)tmp[0].Back));
+            Assert.IsTrue(TestObjects.CheckPosB((Position)tmp[0].Front.In));
+            Assert.IsTrue(TestObjects.CheckPosA((Position)tmp[0].Back.In));
             Assert.AreEqual(tmp[0].Costs.Count, 2);
             Assert.AreEqual(tmp[0].Cut.Count, 3);
-            Assert.IsTrue(TestObjects.CheckPosB((Position)tmp[1].Front));
-            Assert.IsTrue(TestObjects.CheckPosB((Position)tmp[1].Back));
+            Assert.IsTrue(TestObjects.CheckPosB((Position)tmp[1].Front.In));
+            Assert.IsTrue(TestObjects.CheckPosB((Position)tmp[1].Back.In));
             Assert.AreEqual(tmp[1].Costs.Count, 2);
             Assert.AreEqual(tmp[1].Cut.Count, 3);
         }

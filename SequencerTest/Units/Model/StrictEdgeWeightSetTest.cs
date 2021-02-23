@@ -22,8 +22,8 @@ namespace SequencerTest.Units.Model
         [TestInitialize()]
         public void Initialize()
         {
-            a = TestObjects.GetPosA();
-            b = TestObjects.GetPosB();
+            a = TestObjects.GetPosA().In;
+            b = TestObjects.GetPosB().In;
             list = InitList();
         }
 

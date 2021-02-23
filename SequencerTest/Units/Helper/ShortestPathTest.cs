@@ -22,10 +22,10 @@ namespace SequencerTest.Units.Helper
         [TestMethod]
         public void GetSet()
         {
-            Assert.IsTrue(TestObjects.CheckPosA((Position)Path.Front));
-            Assert.IsTrue(TestObjects.CheckPosB((Position)Path.Back));
-            Assert.IsTrue(TestObjects.CheckPosA((Position)Path.Cut[0]));
-            Assert.IsTrue(TestObjects.CheckPosB((Position)Path.Cut[1]));
+            Assert.IsTrue(TestObjects.CheckPosA((Position)Path.Front.In));
+            Assert.IsTrue(TestObjects.CheckPosB((Position)Path.Back.In));
+            Assert.IsTrue(TestObjects.CheckPosA((Position)Path.Cut[0].In));
+            Assert.IsTrue(TestObjects.CheckPosB((Position)Path.Cut[1].In));
             Assert.AreEqual(Path.Costs[0], 9);
             Assert.AreEqual(Path.Costs[1], 10);
             Assert.AreEqual(Path.Cost, 2);
