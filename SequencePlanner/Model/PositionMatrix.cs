@@ -71,21 +71,23 @@ namespace SequencePlanner.Model
                 SeqLogger.WriteLog(level, position.ToString(), nameof(PositionMatrix));
             }
             SeqLogger.Indent--;
-
-            SeqLogger.WriteLog(level, "Matrix[SeqID,SeqID] = ["+Matrix.GetLength(0)+";"+Matrix.GetLength(1)+"]", nameof(PositionMatrix));
-            SeqLogger.Indent++;
-            for (int i = 0; i < Matrix.GetLength(0); i++)
+            if(Matrix is not null)
             {
-                for (int j = 0; j < Matrix.GetLength(1); j++)
+                SeqLogger.WriteLog(level, "Matrix[SeqID,SeqID] = ["+Matrix.GetLength(0)+";"+Matrix.GetLength(1)+"]", nameof(PositionMatrix));
+                SeqLogger.Indent++;
+                for (int i = 0; i < Matrix.GetLength(0); i++)
                 {
-                    SeqLogger.Trace("Matrix["+i+";"+j+"]="+Matrix[i,j], nameof(PositionMatrix));
+                    for (int j = 0; j < Matrix.GetLength(1); j++)
+                    {
+                        SeqLogger.Trace("Matrix[" + i + ";" + j + "]=" + Matrix[i, j], nameof(PositionMatrix));
+                    }
                 }
+                SeqLogger.Indent--;
             }
             foreach (var position in Positions)
             {
                 SeqLogger.WriteLog(level, position.ToString(), nameof(PositionMatrix));
             }
-            SeqLogger.Indent--;
         }
 
         //private void CheckMatrix(double[,] matrix)

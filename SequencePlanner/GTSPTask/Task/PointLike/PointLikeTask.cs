@@ -42,8 +42,9 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             if (UseShortcutInAlternatives)
             {
                 ShortestPathProcessor = new ShortestPathProcessor(this);
-                ShortestPathProcessor.Change();
+                ShortestPathProcessor.Change2();
             }
+            ToLog(LogLevel.Critical); ///DEBUG
             SeqLogger.Info("RunModel started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
             GenerateModel();
@@ -61,7 +62,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             if (UseShortcutInAlternatives)
             {
                 pointResult = ShortestPathProcessor.ResolveSolution(pointResult);
-                ShortestPathProcessor.ChangeBack();
+                //ShortestPathProcessor.ChangeBack();
             }
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
@@ -353,15 +354,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 {
                     if (position.Node.SequencingID == raw)
                     {
-                        if (!position.Node.Virtual)
-                        {
-                            result.SolutionRaw.Add(position.Node.UserID);
-                            result.PositionResult.Add(position);
-                        }
-                        else
-                        {
-                            //taskResult.ResultWithVirtual.Add(position.UserID);
-                        }
+                        result.SolutionRaw.Add(position.Node.UserID);
+                        result.PositionResult.Add(position);
                         find = true;
                         break;
                     }
@@ -460,28 +454,37 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             SeqLogger.Indent--;
 
             SeqLogger.WriteLog(level, "ProcessPrecedences:");
-            SeqLogger.Indent++;
-            foreach (var prec in ProcessPrecedence)
+            if(ProcessPrecedence is not null)
             {
-                SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                SeqLogger.Indent++;
+                foreach (var prec in ProcessPrecedence)
+                {
+                    SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                }
+                SeqLogger.Indent--;
             }
-            SeqLogger.Indent--;
 
             SeqLogger.WriteLog(level, "PositionPrecedences:");
-            SeqLogger.Indent++;
-            foreach (var prec in PositionPrecedence)
+            if(PositionPrecedence is not null)
             {
-                SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                SeqLogger.Indent++;
+                foreach (var prec in PositionPrecedence)
+                {
+                    SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                }
+                SeqLogger.Indent--;
             }
-            SeqLogger.Indent--;
 
             SeqLogger.WriteLog(level, "DisjointSets:");
-            SeqLogger.Indent++;
-            foreach (var prec in DisjointConstraints)
+            if(DisjointConstraints is not null)
             {
-                SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                SeqLogger.Indent++;
+                foreach (var prec in DisjointConstraints)
+                {
+                    SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                }
+                SeqLogger.Indent--;
             }
-            SeqLogger.Indent--;
         }
     }
 }
