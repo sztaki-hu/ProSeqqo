@@ -174,5 +174,28 @@ namespace SequencePlanner.Model
             }
             return taskResult;
         }
+
+        public PointTaskResult ResolveSolution3(PointTaskResult taskResult)
+        {
+            foreach (var path in CriticalPaths)
+            {
+                for (int i = 0; i < taskResult.ResolveHelper.Count; i++)
+                {
+                    if (taskResult.ResolveHelper[i].Node.Node.GlobalID == path.Representer.Node.GlobalID)
+                    {
+                        SeqLogger.Trace("Cut found [" + path.Front.Node.ToString() + ";" + path.Back.Node.ToString() + "] and changed to [" + SeqLogger.ToList(path.Cut) + "]");
+                        for (int j = 0; j < path.Cut.Count-1; j++)
+                        {
+                            taskResult.ResolveHelper[i].Resolve.Add(path.Cut[j]);
+                            taskResult.ResolveHelper[i].ResolveCost.Add(path.Costs[j]);
+                        }
+                        taskResult.ResolveHelper[i].Resolved = true;
+                        taskResult.ResolveHelper[i].Resolve.Add(path.Cut[path.Cut.Count-1]);
+                    }
+                }
+            }
+            return taskResult;
+        }
+
     }
 }

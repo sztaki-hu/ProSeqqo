@@ -24,6 +24,9 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         public PointLikeGTSPRepresentation GTSPRepresentation { get; set; }
         public ShortestPathProcessor ShortestPathProcessor { get; set; }
         public bool UseShortcutInAlternatives { get; set; }
+        public delegate double CalculateWeightDelegate(GTSPNode A, GTSPNode B);
+        public CalculateWeightDelegate CalculateWeightFunction { get; set; }
+
 
         public PointLikeTask() : base()
         {
@@ -33,7 +36,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             PositionPrecedence = new List<GTSPPrecedenceConstraint>();
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
             ShortestPathProcessor = null;
-        }
+            CalculateWeightFunction = CalculateWeight;
+    }
 
         public PointTaskResult RunModel()
         {
@@ -58,10 +62,11 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
             PointTaskResult pointResult = new PointTaskResult(orTools.Solve());
+            pointResult.CreateRawGeneralIDStruct();
             pointResult = ResolveSolution(pointResult);
             if (UseShortcutInAlternatives)
             {
-                pointResult = ShortestPathProcessor.ResolveSolution(pointResult);
+                pointResult = ShortestPathProcessor.ResolveSolution(pointResult, CalculateWeightFunction);
                 //ShortestPathProcessor.ChangeBack();
             }
             SeqLogger.Indent--;
@@ -312,6 +317,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             return matrix;
         }
 
+        
         private double CalculateWeight(GTSPNode A, GTSPNode B)
         {
             if (A.Node.Virtual || B.Node.Virtual)
@@ -363,11 +369,17 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 if (!find)
                     throw new SeqException("Result of OR-Tools can not be resolved, no line found with the SequenceID: " + raw);
             }
-
-            for (int i = 1; i < result.PositionResult.Count; i++)
+            for (int i = 0; i < result.ResolveHelper.Count; i++)
             {
-                result.CostsRaw.Add(GTSPRepresentation.Matrix[result.PositionResult[i - 1].Node.SequencingID, result.PositionResult[i].Node.SequencingID]);
-                result.CostSum += result.CostsRaw[i - 1];
+                result.ResolveHelper[i].Node = result.PositionResult[i];
+                result.ResolveHelper[i].GID = result.PositionResult[i].Node.GlobalID;
+            }
+
+            for (int i = 0; i < result.PositionResult.Count-1; i++)
+            {
+                result.CostsRaw.Add(GTSPRepresentation.Matrix[result.PositionResult[i].Node.SequencingID, result.PositionResult[i+1].Node.SequencingID]);
+                result.ResolveHelper[i].Cost = GTSPRepresentation.Matrix[result.PositionResult[i].Node.SequencingID, result.PositionResult[i+1].Node.SequencingID];
+                result.CostSum += result.CostsRaw[i];
             }
             SeqLogger.Info("Solution resolved!", nameof(PointLikeTask));
             return result;

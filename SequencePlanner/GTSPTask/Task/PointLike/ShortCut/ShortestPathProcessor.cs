@@ -2,6 +2,7 @@
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
@@ -238,14 +239,18 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
             PositionPrecedencesOfShortcuts.Clear();
         }
 
-        public PointTaskResult ResolveSolution(PointTaskResult taskResult)
+        public PointTaskResult ResolveSolution(PointTaskResult taskResult, PointLikeTask.CalculateWeightDelegate calculateWeightFunction)
         {
             SeqLogger.Debug("Solution update by alternative shortcuts started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
             foreach (var alternative in AlternativeShortcuts)
             {
-                taskResult = alternative.ResolveSolution2(taskResult);                                           //If AlternativeShortcut fits for result, replace it.
+                taskResult = alternative.ResolveSolution3(taskResult);                                           //If AlternativeShortcut fits for result, replace it.
             }
+
+            taskResult.Calculate();
+            taskResult.ResolveHelperStruct();
+            taskResult.ResolveCosts(calculateWeightFunction);
             SeqLogger.Indent--;
             SeqLogger.Info("Solution update by alternative shortcuts finished!", nameof(PointLikeTask));
             return taskResult;
