@@ -28,10 +28,10 @@ namespace SequencerTest.Benchmark
             parameters.Add(new List<Dictionary<string, string>>());
             parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GreedyDescent",     ["USIA"] = "False", });
             parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "False", });
-            //parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GreedyDescent",     ["USIA"] = "True", });
-            //parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "True", });
-            parameters[0].Add(new Dictionary<string, string>() { ["T"] = "5000", ["LSS"] = "GreedyDescent",     ["USIA"] = "False", });
-            parameters[0].Add(new Dictionary<string, string>() { ["T"] = "5000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "False", });
+            parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GreedyDescent",     ["USIA"] = "True", });
+            parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "True", });
+            //parameters[0].Add(new Dictionary<string, string>() { ["T"] = "5000", ["LSS"] = "GreedyDescent",     ["USIA"] = "False", });
+            //parameters[0].Add(new Dictionary<string, string>() { ["T"] = "5000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "False", });
             parameters.Add(new List<Dictionary<string, string>>());
             parameters.Add(new List<Dictionary<string, string>>());
             var t = DateTime.Now;
