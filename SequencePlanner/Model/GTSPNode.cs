@@ -34,5 +34,13 @@ namespace SequencePlanner.Model
             In = line.NodeA;
             Out = line.NodeB;
         }
+
+        public override string ToString()
+        {
+            var tmp = In.ToString();
+            if (In.GlobalID != Out.GlobalID)
+                tmp += " --To--> " + Out.ToString();
+            return tmp;
+        }
     }
 }

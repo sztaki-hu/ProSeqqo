@@ -1,4 +1,5 @@
 ﻿using SequencePlanner.Model;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
@@ -7,27 +8,37 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
     {
         public GTSPNode Front { get; set; }
         public GTSPNode Back { get; set; }
-        public BaseNode Representer { get; set; }
+        public GTSPNode Representer { get; set; }
         public List<GTSPNode> Cut { get; set; }
         public List<double> Costs { get; set; }
-        public double Cost { get; set; }
+        public double Cost { get { return cost; } set { setCost(value);  } }
+        private double cost;
 
         public ShortestPath(GTSPNode front, GTSPNode back, double cost)
         {
             Front = front;
             Back = back;
-            Representer = null;
+            Representer = new GTSPNode(new Line() { 
+                NodeA = front.In,
+                NodeB = back.Out,
+                Virtual = true,
+                Name = "Shortcut_" + Front.In.UserID + "_" + Back.Out.UserID
+            });
+            Representer.Weight = cost;
+            Representer.AdditionalWeightIn = cost;
             Cut = new List<GTSPNode>();
             Costs = new List<double>();
             Cost = cost;
         }
 
-        public ShortestPath(BaseNode representer, double cost)
+        private void setCost(double cost)
         {
-            Representer = representer;
-            Cut = new List<GTSPNode>();
-            Costs = new List<double>();
-            Cost = cost;
+            this.cost = cost;
+            if (Representer != null)
+            {
+                Representer.Weight = cost;
+                Representer.AdditionalWeightIn = cost;
+            }
         }
     }
 }

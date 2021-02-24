@@ -84,7 +84,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
             path.Cost = Values[to.Node.SequencingID];
             for (int i = 0; i < path.Cut.Count-1; i++)
             {
-                path.Costs.Add(FindEdge(path.Cut[i].Out, path.Cut[i+1].In));
+                //path.Costs.Add(FindEdge(path.Cut[i].Out, path.Cut[i+1].In));
+                path.Costs.Add(CalculateWeight(path.Cut[i], path.Cut[i + 1]));
             }
             return path;
         }
@@ -117,18 +118,26 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                 {
                     foreach (var posNext in Tasks[i + 1].Positions)
                     {
-                        Edges.Add(new Edge() { A = posPrev, B = posNext, Weight = CalculateWeight(posPrev.Out, posNext.In) });
+                        Edges.Add(new Edge() { A = posPrev, B = posNext, Weight = CalculateWeight(posPrev, posNext) });
                     }
                 }
             }
         }
 
-        private double CalculateWeight(Position A, Position B)
+        private double CalculateWeight(GTSPNode A, GTSPNode B)
         {
-            if (A.Virtual || B.Virtual)
+            if (A.Node.Virtual || B.Node.Virtual)
                 return 0.0;
-            double weight = DistanceFunction.ComputeDistance(A, B);
-            weight = ResourceFunction.ComputeResourceCost(A, B, weight);
+            if (A.OverrideWeightOut > 0)
+                return A.OverrideWeightOut;
+            if (B.OverrideWeightIn > 0)
+                return B.OverrideWeightIn;
+            double weight = DistanceFunction.ComputeDistance(A.Out, B.In);
+            weight = ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
+            if (A.AdditionalWeightOut > 0)
+                weight += A.AdditionalWeightOut;
+            if (B.AdditionalWeightIn > 0)
+                weight += B.AdditionalWeightIn;
             return weight;
         }
 

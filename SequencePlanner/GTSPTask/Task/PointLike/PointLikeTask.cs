@@ -305,18 +305,26 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 foreach (var posB in b.Positions)
                 {
-                    matrix[posA.Node.SequencingID, posB.Node.SequencingID] = CalculateWeight(posA.Out, posB.In);
+                    matrix[posA.Node.SequencingID, posB.Node.SequencingID] = CalculateWeight(posA, posB);
                 }
             }
             return matrix;
         }
 
-        private double CalculateWeight(Position A, Position B)
+        private double CalculateWeight(GTSPNode A, GTSPNode B)
         {
-            if (A.Virtual || B.Virtual)
+            if (A.Node.Virtual || B.Node.Virtual)
                 return 0.0;
-            double weight = PositionMatrix.DistanceFunction.ComputeDistance(A, B);
-            weight = PositionMatrix.ResourceFunction.ComputeResourceCost(A, B, weight);
+            if (A.OverrideWeightOut > 0)
+                return A.OverrideWeightOut;
+            if (B.OverrideWeightIn > 0)
+                return B.OverrideWeightIn;
+            double weight = PositionMatrix.DistanceFunction.ComputeDistance(A.Out, B.In);
+            weight = PositionMatrix.ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
+            if (A.AdditionalWeightOut > 0)
+                weight += A.AdditionalWeightOut;
+            if (B.AdditionalWeightIn > 0)
+                weight += B.AdditionalWeightIn;
             return weight;
         }
 
@@ -333,6 +341,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         private PointTaskResult ResolveSolution(PointTaskResult result)
         {
+            result.ToLog(LogLevel.Error);
             result.Log = SeqLogger.Backlog;
             result.PreSolverTime = MIPRunTime;
             var ORoutputRaw = result.SolutionRaw;

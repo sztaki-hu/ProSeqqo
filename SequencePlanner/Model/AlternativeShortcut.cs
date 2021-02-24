@@ -132,11 +132,11 @@ namespace SequencePlanner.Model
                             taskResult.PositionResult.Insert(i+j, path.Cut[j]);
                             taskResult.SolutionRaw.Insert(i+j, (long) path.Cut[j].Node.UserID);
                         }
-                        SeqLogger.Trace("Costs from " + taskResult.CostsRaw[i] + " hanged to [" + SeqLogger.ToList(path.Costs)+"]" );
+                        SeqLogger.Trace("Costs from " + taskResult.CostsRaw[i] + " canged to [" + SeqLogger.ToList(path.Costs)+"]" );
                         taskResult.CostsRaw.RemoveAt(i);
                         for (int j = 0; j < path.Costs.Count; j++)
                         {
-                            taskResult.CostsRaw.Insert(i + j, (long)path.Costs[j]);
+                            taskResult.CostsRaw.Insert(i + j, path.Costs[j]);
                         }
                         taskResult.Calculate();
                     }

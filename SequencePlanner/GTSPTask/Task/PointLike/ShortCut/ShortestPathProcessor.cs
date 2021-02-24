@@ -35,7 +35,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                 AlternativeShortcuts.Clear();
                 for (int i = 0; i < PointLikeTask.Alternatives.Count; i++)
                 {
-                    if (PointLikeTask.Alternatives[i].Tasks.Count > 2)
+                    if (PointLikeTask.Alternatives[i].Tasks.Count > 1)
                     {
                         SeqLogger.Trace("Alternative " + PointLikeTask.Alternatives[i] + " in process!", nameof(PointLikeTask));
                         SeqLogger.Indent++;
@@ -46,7 +46,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                         {
                             foreach (var position in PointLikeTask.Alternatives[i].Tasks[j].Positions)
                             {
-                            PointLikeTask.PositionMatrix.Positions.Remove(position);
+                                PointLikeTask.PositionMatrix.Positions.Remove(position);
                                 DeletedPositionsOfShortcuts.Add(position);
                                 SeqLogger.Trace("Deleted position:" + position, nameof(PointLikeTask));
                             }
