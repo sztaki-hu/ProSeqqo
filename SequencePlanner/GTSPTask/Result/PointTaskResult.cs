@@ -63,9 +63,11 @@ namespace SequencePlanner.GTSPTask.Result
         public void ResolveCosts(PointLikeTask.CalculateWeightDelegate calculateWeightFunction)
         {
             CostsRaw = new List<double>();
+            CostSum = 0;
             for (int i = 0; i < PositionResult.Count-1; i++)
             {
                 CostsRaw.Add(calculateWeightFunction(PositionResult[i], PositionResult[i + 1]));
+                CostSum += CostsRaw[i];
             }
         }
 

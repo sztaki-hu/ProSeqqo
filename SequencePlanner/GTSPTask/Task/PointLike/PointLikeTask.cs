@@ -46,9 +46,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             if (UseShortcutInAlternatives)
             {
                 ShortestPathProcessor = new ShortestPathProcessor(this);
-                ShortestPathProcessor.Change2();
+                ShortestPathProcessor.Change();
             }
-            ToLog(LogLevel.Critical); ///DEBUG
             SeqLogger.Info("RunModel started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
             GenerateModel();

@@ -32,72 +32,6 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
 
         public void Change()
         {
-                SeqLogger.Debug("Alternative shortcut creation started!", nameof(PointLikeTask));
-                SeqLogger.Indent++;
-                AlternativeShortcuts.Clear();
-                for (int i = 0; i < PointLikeTask.Alternatives.Count; i++)
-                {
-                    if (PointLikeTask.Alternatives[i].Tasks.Count > 1)
-                    {
-                        SeqLogger.Trace("Alternative " + PointLikeTask.Alternatives[i] + " in process!", nameof(PointLikeTask));
-                        SeqLogger.Indent++;
-                        var shortcut = new AlternativeShortcut();                                                                               //Create alternative with shortcut for every alternative
-                        shortcut.Assimilate(PointLikeTask.Alternatives[i]);                                                                     //Init with the original, it is saved inside the new one.
-                        shortcut.CreateShortcut(PointLikeTask.PositionMatrix.DistanceFunction, PointLikeTask.PositionMatrix.ResourceFunction);  //Create shortcuts between every position of first and last tasks.
-                        for (int j = 1; j < PointLikeTask.Alternatives[i].Tasks.Count - 1; j++)
-                        {
-                            foreach (var position in PointLikeTask.Alternatives[i].Tasks[j].Positions)
-                            {
-                                PointLikeTask.PositionMatrix.Positions.Remove(position);
-                                DeletedPositions.Add(position);
-                                SeqLogger.Trace("Deleted position:" + position, nameof(PointLikeTask));
-                            }
-                        }
-                        AlternativeShortcuts.Add(shortcut);
-                        PointLikeTask.Alternatives[i] = shortcut;                                                                               //Change the alternatives for the new ones
-                        foreach (var process in PointLikeTask.Processes)                                                                        //also in processes.
-                        {
-                            for (int j = 0; j < process.Alternatives.Count; j++)
-                            {
-                                if (process.Alternatives[j].GlobalID == shortcut.GlobalID)
-                                {
-                                    process.Alternatives[j] = shortcut;
-                                }
-                            }
-                        }
-                        SeqLogger.Indent--;
-                    }
-                }
-                foreach (var shortcut in AlternativeShortcuts)                                                                                  //Check position precedences, if one of the positions part of shortcut,
-                {                                                                                                                               //it have to be override with the first position of the cut
-                    for (int i = 0; i < PointLikeTask.PositionPrecedence.Count; i++)
-                    {
-                        var newPrec = shortcut.FindPrecedenceHeaderOfPositions(PointLikeTask.PositionPrecedence[i]);
-                        if (newPrec != null && newPrec.Count > 0)
-                        {
-                            DeletedPositionPrecedencesOfShortcuts.Add(PointLikeTask.PositionPrecedence[i]);
-                            PositionPrecedencesOfShortcuts.AddRange(newPrec);
-                            //PositionPrecedence.RemoveAt(i);
-                            //PositionPrecedence.AddRange(newPrec);
-                        }
-                    }
-                }
-                foreach (var item in DeletedPositionPrecedencesOfShortcuts)
-                {
-                    PointLikeTask.PositionPrecedence.Remove(item);
-                }
-
-                foreach (var item in PositionPrecedencesOfShortcuts)
-                {
-                    PointLikeTask.PositionPrecedence.Add(item);
-                }
-
-                SeqLogger.Indent--;
-                SeqLogger.Info("Alternative shortcut creation finished!", nameof(PointLikeTask));
-        }
-
-        public void Change2()
-        {
             SeqLogger.Debug("Alternative shortcut creation started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
             AlternativeShortcuts.Clear();
@@ -245,7 +179,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
             SeqLogger.Indent++;
             foreach (var alternative in AlternativeShortcuts)
             {
-                taskResult = alternative.ResolveSolution3(taskResult);                                           //If AlternativeShortcut fits for result, replace it.
+                taskResult = alternative.ResolveSolution(taskResult);                                           //If AlternativeShortcut fits for result, replace it.
             }
 
             taskResult.Calculate();

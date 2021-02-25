@@ -4,7 +4,6 @@ using SequencePlanner.GTSP;
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.PointLike.ShortCut;
 using SequencePlanner.Helper;
-using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Model
@@ -15,7 +14,6 @@ namespace SequencePlanner.Model
         public Task FrontProxy { get; set; }
         public Task BackProxy { get; set; }
         public Task Proxy { get; set; }
-
         public List<ShortestPath> CriticalPaths{get;set;}
         public StrictEdgeWeightSet StrictSystemEdgeWeightSet { get; set; }
 
@@ -35,7 +33,6 @@ namespace SequencePlanner.Model
             this.ResourceID = alternative.ResourceID;
             this.Name = alternative.Name;
             this.Virtual = alternative.Virtual;
-            //this.Tasks = alternative.Tasks;
             Original = alternative;
         }
 
@@ -45,15 +42,12 @@ namespace SequencePlanner.Model
             {
                 FrontProxy = Original.Tasks[0];
                 BackProxy = Original.Tasks[Original.Tasks.Count - 1];
-                //Tasks.Add(FrontProxy);
-                //Tasks.Add(BackProxy);
                 FindShortcuts(distanceFunction, resourceFunction);
                 SeqLogger.Trace(CriticalPaths.Count + " shortcut created in [UID:" + Original.UserID + "] alternative, between: " + FrontProxy.ToString() + " and " + BackProxy.ToString(), nameof(AlternativeShortcut));
                 Tasks.Add(new Task() { Name = "ShortcutPathOf" + Name });
                 foreach (var path in CriticalPaths)
                 {
                     Tasks[0].Positions.Add(path.Representer);
-                    //distanceFunction.StrictSystemEdgeWeights.Add(new StrictEdgeWeight(path.Front.Node, path.Back.Node, path.Cost));
                     SeqLogger.Trace("Contains " + path.Cut.Count + " in cut with " + path.Cost + " cost, between: " + path.Front.ToString() + " and " + path.Back.ToString(), nameof(AlternativeShortcut));
                 }
                 Proxy = Tasks[0];
@@ -124,61 +118,6 @@ namespace SequencePlanner.Model
         {
             foreach (var path in CriticalPaths)
             {
-                for (int i = 0; i < taskResult.PositionResult.Count-1; i++)
-                {
-                    if ((path.Front.Node.GlobalID == taskResult.PositionResult[i].Node.GlobalID) && (path.Back.Node.GlobalID == taskResult.PositionResult[i + 1].Node.GlobalID))
-                    {
-                        SeqLogger.Trace("Cut found [" + path.Front.Node.UserID + ";" + path.Back.Node.UserID+"] and changed to ["+SeqLogger.ToList(path.Cut)+"]");
-                        for (int j = 1; j < path.Cut.Count-1; j++)
-                        {
-                            taskResult.PositionResult.Insert(i+j, path.Cut[j]);
-                            taskResult.SolutionRaw.Insert(i+j, (long) path.Cut[j].Node.UserID);
-                        }
-                        SeqLogger.Trace("Costs from " + taskResult.CostsRaw[i] + " canged to [" + SeqLogger.ToList(path.Costs)+"]" );
-                        taskResult.CostsRaw.RemoveAt(i);
-                        for (int j = 0; j < path.Costs.Count; j++)
-                        {
-                            taskResult.CostsRaw.Insert(i + j, path.Costs[j]);
-                        }
-                        taskResult.Calculate();
-                    }
-                }
-            }
-            return taskResult;
-        }
-
-        public PointTaskResult ResolveSolution2(PointTaskResult taskResult)
-        {
-            foreach (var path in CriticalPaths)
-            {
-                for (int i = 0; i < taskResult.PositionResult.Count - 1; i++)
-                {
-                    if (taskResult.PositionResult[i].Node.GlobalID==path.Representer.Node.GlobalID)
-                    {
-                        SeqLogger.Trace("Cut found [" + path.Front.Node.ToString() + ";" + path.Back.Node.ToString() + "] and changed to [" + SeqLogger.ToList(path.Cut) + "]");
-                        taskResult.CostsRaw.RemoveAt(i);
-                        for (int j = 0; j < path.Cut.Count; j++)
-                        {
-                            taskResult.PositionResult.Insert(i + j, path.Cut[j]);
-                            taskResult.SolutionRaw.Insert(i + j, (long)path.Cut[j].Node.UserID);
-                        }
-                        //SeqLogger.Trace("Costs from " + taskResult.CostsRaw[i] + " canged to [" + SeqLogger.ToList(path.Costs) + "]");
-                        
-                        for (int j = 0; j < path.Costs.Count; j++)
-                        {
-                            taskResult.CostsRaw.Insert(i + j, path.Costs[j]);
-                        }
-                        taskResult.Calculate();
-                    }
-                }
-            }
-            return taskResult;
-        }
-
-        public PointTaskResult ResolveSolution3(PointTaskResult taskResult)
-        {
-            foreach (var path in CriticalPaths)
-            {
                 for (int i = 0; i < taskResult.ResolveHelper.Count; i++)
                 {
                     if (taskResult.ResolveHelper[i].Node.Node.GlobalID == path.Representer.Node.GlobalID)
@@ -196,6 +135,5 @@ namespace SequencePlanner.Model
             }
             return taskResult;
         }
-
     }
 }
