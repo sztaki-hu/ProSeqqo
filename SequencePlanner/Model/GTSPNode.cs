@@ -41,6 +41,7 @@ namespace SequencePlanner.Model
             tmp += In.ToString();
             if (In.GlobalID != Out.GlobalID)
                 tmp += " --To--> " + Out.ToString();
+            tmp += " Weight: " + Weight;
             return tmp;
         }
     }

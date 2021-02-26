@@ -40,10 +40,16 @@ namespace SequencePlanner.GTSPTask.Result
             Log = new List<string>();
         }
 
-        internal string ToCSV()
+        public static string ToCSVHeader()
         {
             var s = ";";
-            return FullTime.ToString()+s+StatusCode+s+StatusMessage+s+CostSum+s+SeqLogger.ToList(CostsRaw)+s+SeqLogger.ToList(SolutionRaw)+s;
+            return nameof(FullTime)+"[ms]" + s + nameof(SolverTime)+"[ms]" + s + nameof(PreSolverTime)+ "[ms]" + s + nameof(StatusCode) + s + nameof(StatusMessage) + s + nameof(CostSum) + s + nameof(CostsRaw) + s + nameof(SolutionRaw);
+        }
+
+        public string ToCSV()
+        {
+            var s = ";";
+            return FullTime.TotalMilliseconds.ToString()+s+SolverTime.TotalMilliseconds.ToString()+s+PreSolverTime.TotalMilliseconds.ToString()+s+StatusCode+s+StatusMessage+s+CostSum+s+SeqLogger.ToList(CostsRaw)+s+SeqLogger.ToList(SolutionRaw);
         }
 
         public virtual void Calculate()

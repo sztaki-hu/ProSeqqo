@@ -1,7 +1,6 @@
 ﻿using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
-using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Result
@@ -94,12 +93,8 @@ namespace SequencePlanner.GTSPTask.Result
             SeqLogger.Indent--;
         }
 
-        public string ToCSV()
-        {
-            return base.ToCSV();
-        }
-
-
+        public static string ToCSVHeader() => TaskResult.ToCSVHeader();
+        public string ToCSV() => base.ToCSV();
     }
 
     public class ResolveStruct

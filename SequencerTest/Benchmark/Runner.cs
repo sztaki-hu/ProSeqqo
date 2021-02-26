@@ -14,6 +14,7 @@ namespace SequencerTest.Benchmark
         List<List<Dictionary<string, string>>> parameters = new List<List<Dictionary<string, string>>>();
         List<Template> templates = new List<Template>();
         string generationDir;
+        int firstNTemplate = 20;
 
 
         [TestInitialize]
@@ -27,9 +28,9 @@ namespace SequencerTest.Benchmark
             directories.Add("Resources/Benchmark/Celta");
             parameters.Add(new List<Dictionary<string, string>>());
             parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GreedyDescent",     ["USIA"] = "False", });
-            parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "False", });
+            //parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "False", });
             parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GreedyDescent",     ["USIA"] = "True", });
-            parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "True", });
+            //parameters[0].Add(new Dictionary<string, string>() { ["T"] = "1000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "True", });
             //parameters[0].Add(new Dictionary<string, string>() { ["T"] = "5000", ["LSS"] = "GreedyDescent",     ["USIA"] = "False", });
             //parameters[0].Add(new Dictionary<string, string>() { ["T"] = "5000", ["LSS"] = "GuidedLocalSearch", ["USIA"] = "False", });
             parameters.Add(new List<Dictionary<string, string>>());
@@ -49,9 +50,9 @@ namespace SequencerTest.Benchmark
                 var outDir = Path.Combine(genDir, "Out");
                 Directory.CreateDirectory(outDir);
                 var files = Directory.GetFiles(templateDirectories[i]);
-                foreach (var item in files)
+                for (int j = 0; j < files.Length; j++)
                 {
-                    var tmp = new Template(item, genDir, outDir, parameters[i]);
+                    var tmp = new Template(files[j], genDir, outDir, parameters[i]);
                     templates.Add(tmp);
                 }
             }
@@ -65,20 +66,23 @@ namespace SequencerTest.Benchmark
             {
                 item.CreateTasks();
             }
-            int i = 0;
-            foreach (var item in templates)
+            int j = 0;
+            if (firstNTemplate <= 0)
+                firstNTemplate = templates.Count;
+            for (int i = 0; i < firstNTemplate; i++)
             {
-                SeqLogger.Info(i++ + "/" + templates.Count + "Template running: "+item.FileName);
+                SeqLogger.Info(j++ + "/" + templates.Count + " Template running: "+templates[i].FileName);
                 SeqLogger.Indent++;
-                item.RunTasks();
+                templates[i].RunTasks();
                 SeqLogger.Indent--;
             }
 
             using (StreamWriter file = File.CreateText("Resources/Benchmark/" + generationDir + ".csv"))
             {
-                foreach (var item in templates)
+                file.WriteLine(Template.ToCSVHeader());
+                for (int i = 0; i < firstNTemplate; i++)
                 {
-                    file.WriteLine(item.ToCSV());
+                    file.WriteLine(templates[i].ToCSV());
                 }
             }
         }  

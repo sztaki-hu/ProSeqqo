@@ -1,6 +1,7 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
 using SequencePlanner.GTSPTask.Serialization.Task;
+using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.LineLike;
 using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
@@ -155,6 +156,11 @@ namespace SequencerTest.Benchmark
                 SeqLogger.Error("Task type or file format error: " + path);
         }
 
+        public static string ToCSVHeader()
+        {
+            var s = ";";
+            return "TemplateName" + s + nameof(GeneretedTasks) + s + nameof(TaskType) + s + TaskResult.ToCSVHeader();
+        }
         public string ToCSV()
         {
             var tmp = "";
@@ -169,9 +175,10 @@ namespace SequencerTest.Benchmark
                     tmp += LineResults[i].ToCSV();
                 if (TaskType == TaskType.PoitnLike)
                     tmp += PointResults[i].ToCSV();
-
-                tmp += "\n";
+                if(i!=GeneretedTasks.Count-1)
+                    tmp += "\n";
             }
+
             return tmp;
         }
 
