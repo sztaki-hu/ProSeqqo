@@ -1,9 +1,9 @@
-TaskType: Point_Like
+TaskType: PointLike
 Dimensions: 2
 WeightMultiplier: Auto
 CyclicSequence: False
 StartDepot: 0
-DistanceFunction: Euclidian_Distance
+DistanceFunction: EuclidianDistance
 ResourceSource: NoResource
 TimeLimit: <*T*>
 UseMIPprecedenceSolver: <*MIP*>

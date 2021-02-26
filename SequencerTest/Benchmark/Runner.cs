@@ -127,6 +127,7 @@ namespace SequencerTest.Benchmark
                 {
                     file.WriteLine(templates[i].ToCSV());
                 }
+                SeqLogger.Info("Resources/Benchmark/" + generationDir + ".csv created!", "BenchmarkRunner");
             }
         }  
     }
