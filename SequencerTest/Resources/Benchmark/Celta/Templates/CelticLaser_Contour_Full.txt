@@ -1,8 +1,7 @@
-TaskType: Line_Like
-DistanceFunction: Euclidian_Distance
+TaskType: LineLike
+DistanceFunction: EuclidianDistance
 Dimensions: 2
 TimeLimit: 0
-WeightMultiplier: Auto
 CyclicSequence: False
 StartDepot: 1
 #FinishDepot: 3
