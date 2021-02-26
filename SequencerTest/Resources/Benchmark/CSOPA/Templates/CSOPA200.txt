@@ -1,14 +1,13 @@
-TaskType: Line_Like
-EdgeWeightSource: Calculate_from_positions
-DistanceFunction: Euclidian_Distance
+TaskType: LineLike
+DistanceFunction: EuclidianDistance
 Dimensions: 2
 TimeLimit: 200
-WeightMultiplier: Auto
 CyclicSequence: False
 StartDepot: 1
 #FinishDepot: 218
 ContourPenalty: 1
 BidirectionLineDefault: True
+ResourceSource: NoResource
 
 PositionList:
 #+-------+---------------------+------------------+
