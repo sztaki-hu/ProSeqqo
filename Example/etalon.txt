@@ -12,7 +12,7 @@ ResourceSource: ConstantResource
 ResourceCostConstant: 5
 UseResources: False
 UseMIPprecedenceSolver: True
-UseShortcutInAlternatives: True
+UseShortcutInAlternatives: False
 
 PositionList:
 #+-------+---------------------+------------------+

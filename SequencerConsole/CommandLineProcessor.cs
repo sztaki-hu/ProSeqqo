@@ -14,8 +14,7 @@ namespace SequencerConsole
 {
     public class CommandLineProcessor
     {
-        private static readonly bool RUN_IN_VISUALSTUDIO = false;
-        private static readonly LogLevel LOG_LEVEL = LogLevel.Trace;
+        private static readonly LogLevel LOG_LEVEL = LogLevel.Info;
 
         private static string input;
         private static FormatType inputType = FormatType.Unknown;
@@ -33,11 +32,15 @@ namespace SequencerConsole
             {
                 #if !DEBUG
                     Help(new string[] { "-h" });
-                #else
+#else
                 {
-                    SeqLogger.LogLevel = LOG_LEVEL;
                     //Debug in VS
+                    SeqLogger.LogLevel = LogLevel.Trace;
                     string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example";
+                    string local = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTest";
+                    string localOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTest\\Out";
+                    string kocka = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTest\\Kockapakolas";
+                    string kockaOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTest\\Kockapakolas";
                     string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\out";
                     string graph = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\graph";
 
@@ -55,14 +58,27 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PointLike_PosProcPrecedences.txt", "-o", outdir + "\\PointLike_PosProcPrecedences_out.txt"   };
                     //args = new string[] { "-i", example + "\\PointLike_PosPrecedences.txt",     "-o", outdir + "\\PointLike_PosPrecedences_out.txt"       };
                     //args = new string[] { "-i", example + "\\LocalTests/DEV_LL.txt",            "-o", outdir + "\\LocalTests/DEV_LL_out.txt",             };
-                    args = new string[] { "-i", example + "\\seqtest.txt",                        "-o", outdir + "\\seqtest_o.json",                        };
+                    //args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        };
                     //args = new string[] { "-i", example + "\\seqtest2.txt",                     "-o", outdir + "\\seqtest2_o.json",                       };
                     //args = new string[] { "-i", example + "\\etalon.txt",                       "-o", outdir + "\\etalon_o.json",                         };
                     //args = new string[] { "-i", example + "\\etalonMatrix.txt",                 "-o", outdir + "\\etalonMatrix_o.seq",                    };
                     //args = new string[] { "-i", example + "\\seqtest3.txt",                     "-o", outdir + "\\seqtest3_o.json",                       };
                     //args = new string[] { "-i", example + "\\seq_fill_half.txt",                "-o", outdir + "\\seq_fill_half_o.json",                  };
                     //args = new string[] { "-i", example + "\\seq_contours_half.txt",            "-o", outdir + "\\seq_contours_half.json"                 };
-                    args = new string[] { "-i", example + "\\Frochliche.txt",            "-o", outdir + "\\Frochliche.json" };
+                    //args = new string[] { "-i", example + "\\Frochliche.txt",                   "-o", outdir + "\\Frochliche.json"                        };
+                    //args = new string[] { "-i", local + "\\test11_0.txt",                       "-o", localOut + "\\test11_0.json"                        };
+                    //args = new string[] { "-i", local + "\\test11_1.txt",                       "-o", localOut + "\\test11_1.json"                        };
+                    //args = new string[] { "-i", local + "\\test11_2.txt",                       "-o", localOut + "\\test11_2.json"                        };
+                    //args = new string[] { "-i", local + "\\test11_3.txt",                       "-o", localOut + "\\test11_3.json"                        };
+                    args = new string[] { "-i", local + "\\test90_0.txt",                         "-o", localOut + "\\test90_0.json"                        };
+                    args = new string[] { "-i", local + "\\test90_1.txt",                         "-o", localOut + "\\test90_1.json"                        };
+                    //args = new string[] { "-i", local + "\\test1_1.txt",                        "-o", localOut + "\\test1_1.json"                         };
+                    //args = new string[] { "-i", local + "\\test1_1 copy.txt",                   "-o", localOut + "\\test1_1.json"                         };
+                    //args = new string[] { "-i", local + "\\test1_3.txt",                        "-o", localOut + "\\test1_3.json"                         };
+                    //args = new string[] { "-i", local + "\\test1_1MX.txt",                      "-o", localOut + "\\test1_1MX.json"                       };
+                    //args = new string[] { "-i", local + "\\test1_3MX.txt",                      "-o", localOut + "\\test1_3MX.json"                       };
+                    args = new string[] { "-i", kocka + "\\sequencer_img2_model5_problem.txt",    "-o", kockaOut + "\\sequencer_img2_model5_problem.json"   };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model4_problem.txt",  "-o", kockaOut + "\\sequencer_img3_model4_problem.json"   };
 
                     Help(args);
                     Version(args);
@@ -70,10 +86,10 @@ namespace SequencerConsole
                     output = Output(args);
                     debug = Debug(args);
                     validate = Validate(args);
-                    log = LOG_LEVEL;
+                    log = LogLevel.Trace;
                     Run();
                 }
-                #endif
+#endif
             }
             else
             {
