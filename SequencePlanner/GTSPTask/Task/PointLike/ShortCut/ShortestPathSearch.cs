@@ -58,6 +58,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
                     if (cost < Values[posNext.Node.SequencingID])
                         Values[posNext.Node.SequencingID] = Values[minPos.Node.SequencingID] + FindEdge(minPos.Out, posNext.In);
                 }
+                System.Console.WriteLine(minPos);
             }
             //SeqLogger.Indent++;
             var tmp = new List<ShortestPath>();
@@ -74,11 +75,12 @@ namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
             var list = new List<GTSPNode>();
             GTSPNode akt = to;
             list.Add(akt);
-            for (int i = 0; i < Level-1; i++)
+            for (int i = 0; i < Level-2; i++)
             {
                 akt = PreviousNode(akt);
                 list.Add(akt);
             }
+            list.Add(from);
             list.Reverse();
             path.Cut = list;
             path.Cost = Values[to.Node.SequencingID];

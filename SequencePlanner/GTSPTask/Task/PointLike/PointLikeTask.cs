@@ -319,8 +319,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         
         private double CalculateWeight(GTSPNode A, GTSPNode B)
         {
-            if (A.Node.Virtual || B.Node.Virtual)
-                return 0.0;
+            //if (A.Node.Virtual || B.Node.Virtual)
+            //    return 0.0;
             if (A.OverrideWeightOut > 0)
                 return A.OverrideWeightOut;
             if (B.OverrideWeightIn > 0)
@@ -347,7 +347,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         private PointTaskResult ResolveSolution(PointTaskResult result)
         {
-            result.ToLog(LogLevel.Error);
+            //result.ToLog(LogLevel.Error);
             result.Log = SeqLogger.Backlog;
             result.PreSolverTime = MIPRunTime;
             var ORoutputRaw = result.SolutionRaw;
