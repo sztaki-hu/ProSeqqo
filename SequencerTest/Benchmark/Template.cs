@@ -180,7 +180,7 @@ namespace SequencerTest.Benchmark
         public static string ToCSVHeader()
         {
             var s = ";";
-            return "TemplateName" + s + nameof(GeneretedTasks) + s + nameof(TaskType) + s + TaskResult.ToCSVHeader();
+            return "TemplateName" + s + nameof(GeneretedTasks) + s + nameof(TaskType) + s + TaskResult.ToCSVHeader() + s+ nameof(ParameterCombinatrions);
         }
         public string ToCSV()
         {
@@ -196,10 +196,18 @@ namespace SequencerTest.Benchmark
                     tmp += LineResults[i].ToCSV();
                 if (TaskType == TaskType.PoitnLike)
                     tmp += PointResults[i].ToCSV();
-                if(i!=GeneretedTasks.Count-1)
+                
+                if(ParameterCombinatrions.Count>i)
+                {
+                    tmp += s;
+                    foreach (var item in ParameterCombinatrions[i])
+                    {
+                        tmp += item.Key + "=" + item.Value+",";
+                    }
+                }
+                if (i!=GeneretedTasks.Count-1)
                     tmp += "\n";
             }
-
             return tmp;
         }
 

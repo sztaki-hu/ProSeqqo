@@ -23,8 +23,8 @@ namespace SequencerTest.Benchmark
                 TemplateDir = "Resources/Benchmark/Kockapakolas/Templates",
                 Dir = "Resources/Benchmark/Kockapakolas",
                 Parameters = new List<Dictionary<string, string>>() {
-                    new Dictionary<string, string>() { ["T"] = "10000", ["MIP"] = "True", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
-                    new Dictionary<string, string>() { ["T"] = "10000", ["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+                    new Dictionary<string, string>() { ["T"] = "1000", ["MIP"] = "True", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+                    new Dictionary<string, string>() { ["T"] = "1000", ["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
                 }
             });
 
