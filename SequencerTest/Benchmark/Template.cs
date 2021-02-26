@@ -45,12 +45,13 @@ namespace SequencerTest.Benchmark
 
         public void CreateTasks()
         {
+            string newGeneration = "";
             if (ParameterCombinatrions.Count > 0)
             {
                 var i = 0;
                 foreach (var param in ParameterCombinatrions)
                 {
-                    var newGeneration = Path.Combine(GeneratePath, FileName.Split(".")[0]+"_"+(i++)+"."+ FileName.Split(".")[1]);
+                    newGeneration = Path.Combine(GeneratePath, FileName.Split(".")[0]+"_"+(i++)+"."+ FileName.Split(".")[1]);
                     File.Copy(FilePath, newGeneration);
                     foreach (var item in param)
                     {
@@ -59,15 +60,15 @@ namespace SequencerTest.Benchmark
                         File.WriteAllText(newGeneration, text);
                     }
                     GeneretedTasks.Add(newGeneration);
-                    SeqLogger.Info("Task created: "+newGeneration);
                 }
             }
             else
             {
-                var newGeneration = Path.Combine(GeneratePath, FileName);
+                newGeneration = Path.Combine(GeneratePath, FileName);
                 File.Copy(FilePath, newGeneration);
                 GeneretedTasks.Add(newGeneration);
             }
+            SeqLogger.Info("Task created: " + newGeneration);
         }
 
         public void RunTasks()
@@ -96,34 +97,45 @@ namespace SequencerTest.Benchmark
             {
                 if (TaskType == TaskType.PoitnLike)
                 {
-                    SeqLogger.LogLevel = LogLevel.Error;
-                    serPL = new PointLikeTaskSerializer();
-                    switch (FormatType)
+                    try
                     {
-                        case FormatType.SEQ:
-                        case FormatType.TXT:
-                            pointLikeTask = serPL.ImportSEQ(path);
-                            break;
-                        case FormatType.JSON:
-                            pointLikeTask = serPL.ImportJSON(path);
-                            break;
-                        case FormatType.XML:
-                            pointLikeTask = serPL.ImportXML(path);
-                            break;
-                        default:
-                            throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
+                        SeqLogger.LogLevel = LogLevel.Error;
+                        serPL = new PointLikeTaskSerializer();
+                        switch (FormatType)
+                        {
+                            case FormatType.SEQ:
+                            case FormatType.TXT:
+                                pointLikeTask = serPL.ImportSEQ(path);
+                                break;
+                            case FormatType.JSON:
+                                pointLikeTask = serPL.ImportJSON(path);
+                                break;
+                            case FormatType.XML:
+                                pointLikeTask = serPL.ImportXML(path);
+                                break;
+                            default:
+                                throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
+                        }
+                        pointTaskResult = pointLikeTask.RunModel();
+                        PointLikeResultSerializer serRes = new PointLikeResultSerializer();
+                        serRes.ExportJSON(pointTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
+                        SeqLogger.LogLevel = LogLevel.Info;
+                        SeqLogger.Info(pointTaskResult.StatusMessage+" Solver Time:"+ pointTaskResult.SolverTime+" Cost:"+ pointTaskResult.CostSum);
+                        pointTaskResult.Log.Clear();
+                        PointResults.Add(pointTaskResult);    
+                    }catch(Exception e)
+                    {
+                        SeqLogger.Indent = 0;
+                        PointResults.Add(new PointTaskResult() { 
+                            StatusMessage = "Stop with error",    
+                            ErrorMessage = new List<string>() { e.ToString() } 
+                        });
                     }
-                    pointTaskResult = pointLikeTask.RunModel();
-                    PointLikeResultSerializer serRes = new PointLikeResultSerializer();
-                    serRes.ExportJSON(pointTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
-                    SeqLogger.LogLevel = LogLevel.Info;
-                    SeqLogger.Info(pointTaskResult.StatusMessage+" Solver Time:"+ pointTaskResult.SolverTime+" Cost:"+ pointTaskResult.CostSum);
-                    pointTaskResult.Log.Clear();
-                    PointResults.Add(pointTaskResult);    
                 }
 
                 if (TaskType == TaskType.LineLike)
                 {
+                    try { 
                     SeqLogger.LogLevel = LogLevel.Error;
                     serLL = new LineLikeTaskSerializer();
                     switch (FormatType)
@@ -148,8 +160,17 @@ namespace SequencerTest.Benchmark
                     SeqLogger.LogLevel = LogLevel.Info;
                     SeqLogger.Info(lineTaskResult.StatusMessage+" Solver Time:"+lineTaskResult.SolverTime+" Cost:"+lineTaskResult.CostSum);
                     lineTaskResult.Log.Clear();
-                    LineResults.Add(lineTaskResult);    
+                    LineResults.Add(lineTaskResult);
+                }catch (Exception e)
+                {
+                        SeqLogger.Indent = 0;
+                    PointResults.Add(new PointTaskResult()
+                    {
+                        StatusMessage = "Stop with error",
+                        ErrorMessage = new List<string>() { e.ToString() }
+                    });
                 }
+            }
 
             }
             else

@@ -78,6 +78,75 @@
     <None Update="Resources\Benchmark\CSOPA\Templates\CSOPANOLIMIT.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img1_model3_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img1_model4_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img2_model3_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img3_model2_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img3_model4_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img4_model3_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img4_model5_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img5_model3_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img5_model5_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img6_model2_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img6_model4_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic10_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic11_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic12_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic1_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic2_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic3_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic4_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic5_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic6_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic7_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic8_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_mosaic9_problem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Benchmark\PickAndPlace\Out\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
