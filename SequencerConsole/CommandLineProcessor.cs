@@ -37,10 +37,10 @@ namespace SequencerConsole
                     //Debug in VS
                     SeqLogger.LogLevel = LogLevel.Trace;
                     string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example";
-                    string local = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTest";
-                    string localOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTest\\Out";
-                    string kocka = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTest\\Kockapakolas";
-                    string kockaOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTest\\Kockapakolas";
+                    string local = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests";
+                    string localOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests\\Out";
+                    string kocka = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests\\Kockapakolas";
+                    string kockaOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests\\Kockapakolas\\Out";
                     string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\out";
                     string graph = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\graph";
 
@@ -78,6 +78,11 @@ namespace SequencerConsole
                     //args = new string[] { "-i", local + "\\test1_1MX.txt",                      "-o", localOut + "\\test1_1MX.json"                       };
                     //args = new string[] { "-i", local + "\\test1_3MX.txt",                      "-o", localOut + "\\test1_3MX.json"                       };
                     args = new string[] { "-i", kocka + "\\sequencer_img2_model5_problem.txt",    "-o", kockaOut + "\\sequencer_img2_model5_problem.json"   };
+                    args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
+                    args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
+                    args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
+                    args = new string[] { "-i", kocka + "\\sequencer_img2_model3_problem_1.txt",    "-o", kockaOut + "\\sequencer_img2_model3_problem_1.json" };
+                    args = new string[] { "-i", kocka + "\\sequencer_img2_model3_problem_0.txt",    "-o", kockaOut + "\\sequencer_img2_model3_problem_0.json" };
                     //args = new string[] { "-i", kocka + "\\sequencer_img3_model4_problem.txt",  "-o", kockaOut + "\\sequencer_img3_model4_problem.json"   };
 
                     Help(args);
@@ -518,6 +523,8 @@ namespace SequencerConsole
 
         public static TaskType CheckTaskType(string input)
         {
+            if (!File.Exists(input))
+                SeqLogger.Critical("File not exists: " + input);
             foreach (var line in File.ReadAllLines(input))
             {
                 if (line.Contains("LineLike"))
