@@ -81,8 +81,9 @@ namespace SequencerConsole
                     args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
                     args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
                     args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
-                    args = new string[] { "-i", kocka + "\\sequencer_img2_model3_problem_1.txt",    "-o", kockaOut + "\\sequencer_img2_model3_problem_1.json" };
-                    args = new string[] { "-i", kocka + "\\sequencer_img2_model3_problem_0.txt",    "-o", kockaOut + "\\sequencer_img2_model3_problem_0.json" };
+                    args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt",    "-o", kockaOut + "\\sequencer_img2_model3_problem_1.json" };
+                    args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_0.txt",    "-o", kockaOut + "\\sequencer_img3_model2_problem_0.json" };
+                    args = new string[] { "-i", kocka + "\\sequencer_img1_model4_problem_0.txt",    "-o", kockaOut + "\\sequencer_img1_model4_problem_0.json" };
                     //args = new string[] { "-i", kocka + "\\sequencer_img3_model4_problem.txt",  "-o", kockaOut + "\\sequencer_img3_model4_problem.json"   };
 
                     Help(args);
