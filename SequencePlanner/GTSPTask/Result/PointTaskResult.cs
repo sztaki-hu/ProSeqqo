@@ -1,4 +1,5 @@
-﻿using SequencePlanner.GTSPTask.Task.PointLike;
+﻿using SequencePlanner.GTSP;
+using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System.Collections.Generic;
@@ -92,8 +93,88 @@ namespace SequencePlanner.GTSPTask.Result
             }
             SeqLogger.Indent--;
         }
+        public void Validate(List<GTSPDisjointConstraint> disjointConstraints, List<GTSPPrecedenceConstraint> positionPrecedence, List<GTSPPrecedenceConstraint> processPrecedence)
+        {
+            ValidateDisjoint(disjointConstraints);
+            ValidatePositionPrec(positionPrecedence);
+            ValidateProcessPrec(processPrecedence);
+        }
+
+        private void ValidateProcessPrec(List<GTSPPrecedenceConstraint> processPrecedence)
+        {
+            //foreach (var prec in processPrecedence)
+            //{
+            //    var findFirst = false;
+            //    var first = -1;
+
+            //    var findSecond = false;
+            //    var second = -1;
+            //    for (int i = 0; i < PositionResult.Count; i++)
+            //    {
+            //        if (PositionResult[i].Node.UserID == prec.Before.UserID)
+            //        {
+            //            findFirst = true;
+            //            first = i;
+            //        }
+            //        if (PositionResult[i].Node.UserID == prec.After.UserID)
+            //        {
+            //            findSecond = true;
+            //            second = i;
+            //        }
+            //    }
+            //    if (findSecond && findFirst && first > second)
+            //        throw new SeqException("Result violates position precedence: " + prec);
+            //}
+        }
+
+        private void ValidatePositionPrec(List<GTSPPrecedenceConstraint> positionPrecedence)
+        {
+            foreach (var prec in positionPrecedence)
+            {
+                var findFirst = false;
+                var first = -1;
+                var findSecond = false;
+                var second = -1;
+                for (int i = 0; i < PositionResult.Count; i++)
+                {
+                    if (PositionResult[i].Node.UserID == prec.Before.UserID)
+                    {
+                        findFirst = true;
+                        first = i;
+                    }
+                    if (PositionResult[i].Node.UserID == prec.After.UserID)
+                    {
+                        findSecond = true;
+                        second = i;
+                    }
+                }
+                if(findSecond && findFirst && first>second)
+                    throw new SeqException("Result violates position precedence: "+prec);
+            }
+        }
+
+        private void ValidateDisjoint(List<GTSPDisjointConstraint> disjointConstraints)
+        {
+            foreach (var disj in disjointConstraints)
+            {
+                foreach (var d in disj.DisjointSetUser)
+                {
+                    var findOne = false;
+                    for (int i = 0; i < PositionResult.Count-1; i++)
+                    {
+                        if (d == PositionResult[i].Node.UserID)
+                            if (findOne == true)
+                                throw new SeqException("Result contains more than one element of disjoint set.");
+                            else
+                                findOne = true;
+                    }
+                }
+            };
+        }
 
         public static string ToCSVHeader() => TaskResult.ToCSVHeader();
+
+
         public string ToCSV() => base.ToCSV();
     }
 
