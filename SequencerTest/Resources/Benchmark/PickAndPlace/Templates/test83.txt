@@ -10,6 +10,8 @@ TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
 TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
 LocalSearchStrategie: <*LSS*>
 UseShortcutInAlternatives: <*USIA*>
+UseMIPprecedenceSolver: <*MIP*>
+
 PositionList:
  1; [-1.86855;-1.44418;1.69802;-1.99163;-1.51983;-0.293486]; Camera
  2; [-1.30622;3.53614;-0.522001;-2.01178;-5.41566;2.35001]; Grasp1_1
