@@ -124,7 +124,7 @@ namespace SequencePlanner.OR_Tools
         private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint, Variable[] x)
         {
             LinearExpr constraintExpr = new LinearExpr();
-            foreach (var item in disjoint.DisjointSet)
+            foreach (var item in disjoint.DisjointSetSeq)
             {
                 constraintExpr += x[item];
             }

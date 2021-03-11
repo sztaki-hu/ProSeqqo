@@ -18,6 +18,7 @@ namespace SequencePlanner.OR_Tools
         private int[] alternativeID;
         private int[] processID;
 
+        private List<string> constraints =  new List<string>(); //DEBUG
 
         public ORToolsPointLikePreSolverWrapper(ORToolsPointLikePreSolverTask parameters)
         {
@@ -36,22 +37,24 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent++;
             Solver solver = Solver.CreateSolver("CBC_MIXED_INTEGER_PROGRAMMING");
             x = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 1.0, "x");                                                    // Boolean, indicates if node is selected
-            position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count - 1, "pos");      // Int, indicates order of nodes
+            position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count, "pos");      // Int, indicates order of nodes
+            //position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count*1000, "pos");      // Int, indicates order of nodes
+            //position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 9.0, "pos");      // Int, indicates order of nodes
             alternativeID = new int[parameters.NumberOfNodes];                                                                      // Alternative ID of Node
             processID = new int[parameters.NumberOfNodes];                                                                          // Process ID of Node
             FillAlternativesAndProcesses(solver, parameters.Processes);                                                             // Fill ProcessID and AlternativeID
 
             // Precedences
-            if (parameters.StartDepot > -1)                                                                                         //If Start depo exist, position = 0 and selected x = 1
-            {
-                solver.Add(position[parameters.StartDepot] == 0.0);
-                solver.Add(x[parameters.StartDepot] == 1.0);
-            }
-            AddDisjointConstraints(solver, parameters.DisjointConstraints)    ;                                                      //Add disjoint sets of alternative nodes
+            AddStartDepotConstraints(solver);
+            AddDisjointConstraints(solver, parameters.DisjointConstraints);                                                      //Add disjoint sets of alternative nodes
             AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                                 //Add order precedences, node1 should be before node2 in the solution if both are selected
             AddStrictPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                       //Add strct order precedences, node1 must be followed by node2 directly
             AddStrictOrderPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                       //Add strct order precedences, node1 must be followed by node2 directly
             //AddAlternativeDenyConstraints(solver, parameters.Processes);
+            //foreach (var item in constraints)
+            //{
+            //    SeqLogger.Critical(item);
+            //}
             SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPointLikePreSolverWrapper));
             SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPointLikePreSolverWrapper));
 
@@ -70,12 +73,25 @@ namespace SequencePlanner.OR_Tools
             return resultStatus;
         }
         
+        private void AddStartDepotConstraints(Solver solver)
+        {
+            if (parameters.StartDepot > -1)                                                                                         //If Start depo exist, position = 0 and selected x = 1
+            {
+                solver.Add(position[parameters.StartDepot] == 0.0);
+                constraints.Add((position[parameters.StartDepot] == 0.0).ToString());
+                solver.Add(x[parameters.StartDepot] == 1.0);
+                constraints.Add((x[parameters.StartDepot] == 1.0).ToString());
+            }
+        }
+
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
         {
             SeqLogger.Trace("Precedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.OrderPrecedenceConstraints)
             {
-                solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID] );
+                solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID]+parameters.DisjointConstraints.Count*(2-x[item.Before.SequencingID]-x[item.After.SequencingID]));
+                //solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID]+9*(2-x[item.Before.SequencingID]-x[item.After.SequencingID]));
+                constraints.Add((position[item.Before.SequencingID] + 1 <= position[item.After.SequencingID] + parameters.DisjointConstraints.Count * (2 - x[item.Before.SequencingID] - x[item.After.SequencingID])).ToString());
                 SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
             }
             SeqLogger.Indent--;
@@ -100,6 +116,7 @@ namespace SequencePlanner.OR_Tools
                     foreach (var a in item.After)
                     {
                         solver.Add(position[b.SequencingID]+1 == position[a.SequencingID]);
+                        constraints.Add((position[b.SequencingID] + 1 == position[a.SequencingID]).ToString());
                         SeqLogger.Trace(new GTSPPrecedenceConstraint(b,a).ToString(), nameof(ORToolsPointLikePreSolverWrapper));
                     }
                 }     
@@ -129,6 +146,7 @@ namespace SequencePlanner.OR_Tools
             {
                 afterExpr += x[item.SequencingID];
             }
+            constraints.Add((beforExpr == afterExpr).ToString());
             return beforExpr == afterExpr;
         }
         private void FillAlternativesAndProcesses(Solver solver, List<Model.Process> processes)
@@ -204,11 +222,12 @@ namespace SequencePlanner.OR_Tools
         private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint)
         {
             LinearExpr constraintExpr = new LinearExpr();
-            foreach (var item in disjoint.DisjointSet)
+            foreach (var item in disjoint.DisjointSetSeq)
             {
                 constraintExpr += x[item];
             }
             LinearConstraint contraint = constraintExpr == 1.0;
+            constraints.Add(contraint.ToString());
             return contraint;
         }
         private string DecodeStatusCode(Solver.ResultStatus status)

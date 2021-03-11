@@ -50,7 +50,7 @@ namespace SequencePlanner.OR_Tools
             foreach (var set in param.GTSPRepresentation.DisjointConstraints)
             {
                 SeqLogger.Trace(set.ToString(), nameof(ORToolsSequencerWrapper));
-                routing.AddDisjunction(set.DisjointSet);
+                routing.AddDisjunction(set.DisjointSetSeq);
             }
 
             SeqLogger.Info("GTSP Order constraint number: " + param.GTSPRepresentation.PrecedenceConstraints.Count, nameof(ORToolsSequencerWrapper));
@@ -98,7 +98,9 @@ namespace SequencePlanner.OR_Tools
 
             if (param.GTSPRepresentation.InitialRoutes!=null && param.GTSPRepresentation.InitialRoutes.Length > 0)
             {
-                InitialSolution = routing.ReadAssignmentFromRoutes(param.GTSPRepresentation.InitialRoutes, false);
+                SeqLogger.Info("Initial route: "+SeqLogger.ToList(param.GTSPRepresentation.InitialRoutes[0]), nameof(ORToolsSequencerWrapper));
+                InitialSolution = routing.ReadAssignmentFromRoutes(param.GTSPRepresentation.InitialRoutes, true);
+                //InitialSolution = routing.ReadAssignmentFromRoutes(
                 if (InitialSolution == null)
                     SeqLogger.Error("Initial solution given, but not accepted!", nameof(ORToolsSequencerWrapper));
                 else
