@@ -66,7 +66,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             if (UseShortcutInAlternatives)
             {
                 pointResult = ShortestPathProcessor.ResolveSolution(pointResult, CalculateWeightFunction);
-                //ShortestPathProcessor.ChangeBack();
+                ShortestPathProcessor.ChangeBack();
             }
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
@@ -74,6 +74,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             pointResult.FullTime = Timer.Elapsed;
             pointResult.ToLog(LogLevel.Info);
             //ToLog(LogLevel.Warning);
+            pointResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
             return pointResult;
         }
 
@@ -118,9 +119,31 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 {
                     initialSolution[0][i] = result[i];
                 }
+                ResolveInitialSolution(initialSolution);
                 return initialSolution;
             }
             return null;
+        }
+
+        private void ResolveInitialSolution(long[][] initialSolution)
+        {
+            var InitialSolurionUserIDs = "";
+            PointTaskResult pointTaskResult = new PointTaskResult();
+            foreach (var solutionItem in initialSolution[0])
+            {
+                foreach (var pos in PositionMatrix.Positions)
+                {
+                    if (((int)solutionItem) == pos.Node.SequencingID)
+                    {
+                        InitialSolurionUserIDs += pos.Node.UserID + ", ";
+                        pointTaskResult.PositionResult.Add(pos);
+                    }
+                }
+            }
+            SeqLogger.Error(InitialSolurionUserIDs);
+            SeqLogger.Error("Initial solution validation started!");
+            pointTaskResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
+            SeqLogger.Error("Initial solution validation finished!");
         }
 
         private List<GTSPPrecedenceConstraint> CreatePrecedenceConstraints(bool fullProcessPrecedence = false)
