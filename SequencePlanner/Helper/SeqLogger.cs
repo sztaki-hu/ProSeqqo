@@ -166,6 +166,20 @@ namespace SequencePlanner.Helper
             }
             return tmp;
         }
+
+        internal static string ToList(long[] list)
+        {
+            string tmp = "";
+            if (list.Length > 0 && list != null)
+            {
+                for (int i = 0; i < list.Length - 1; i++)
+                {
+                    tmp += list[i] + ", ";
+                }
+                tmp += list[list.Length - 1];
+            }
+            return tmp;
+        }
     }
 
     public enum LogLevel
