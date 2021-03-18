@@ -129,27 +129,57 @@ namespace SequencePlanner.GTSPTask.Result
 
         private void ValidatePositionPrec(List<GTSPPrecedenceConstraint> positionPrecedence)
         {
-            foreach (var prec in positionPrecedence)
+            if(positionPrecedence is not null &&  PositionResult is not null && PositionResult.Count > 0 && positionPrecedence.Count > 0)
             {
                 var findFirst = false;
                 var first = -1;
                 var findSecond = false;
                 var second = -1;
-                for (int i = 0; i < PositionResult.Count; i++)
+                foreach (var prec in positionPrecedence)
                 {
-                    if (PositionResult[i].Node.UserID == prec.Before.UserID)
+                    findFirst = false;
+                    first = -1;
+                    findSecond = false;
+                    second = -1;
+                    for (int i = 0; i < PositionResult.Count - 1; i++)
                     {
-                        findFirst = true;
-                        first = i;
+                        if (PositionResult[i].Node.UserID == prec.Before.UserID)
+                        {
+                            findFirst = true;
+                            first = i;
+                        }
+                        if (PositionResult[i].Node.UserID == prec.After.UserID)
+                        {
+                            findSecond = true;
+                            second = i;
+                        }
                     }
-                    if (PositionResult[i].Node.UserID == prec.After.UserID)
+
+                    if (findSecond && findFirst && first > second)
+                            throw new SeqException("Result violates position precedence: " + prec);
+                
+                    //Check last result item, if not equal with the start depot
+                    if (PositionResult[0].Node.GlobalID != PositionResult[PositionResult.Count-1].Node.GlobalID)
                     {
-                        findSecond = true;
-                        second = i;
-                    }
+                        findFirst = false;
+                        first = -1;
+                        findSecond = false;
+                        second = -1;
+                        if (PositionResult[PositionResult.Count-1].Node.UserID == prec.Before.UserID)
+                        {
+                            findFirst = true;
+                            first = PositionResult.Count;
+                        }
+                        if (PositionResult[PositionResult.Count-1].Node.UserID == prec.After.UserID)
+                        {
+                            findSecond = true;
+                            second = PositionResult.Count;
+                        }
+                    } 
+
+                    if (findSecond && findFirst && first > second)
+                        throw new SeqException("Result violates position precedence: " + prec);
                 }
-                if(findSecond && findFirst && first>second)
-                    throw new SeqException("Result violates position precedence: "+prec);
             }
         }
 
