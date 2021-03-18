@@ -18,29 +18,29 @@ namespace SequencerTest.Benchmark
         public void Init()
         {
             benchmarkTasks = new List<BenchmarkTask>();
-            //benchmarkTasks.Add(new BenchmarkTask()
-            //{
-            //    TemplateDir = "Resources/Benchmark/Kockapakolas/Templates",
-            //    Dir = "Resources/Benchmark/Kockapakolas",
-            //    Parameters = new List<Dictionary<string, string>>() {
-            //        new Dictionary<string, string>() { ["T"] = "10000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "True", },
-            //        new Dictionary<string, string>() { ["T"] = "10000", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "False", },
-            //        new Dictionary<string, string>() { ["T"] = "10000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "False", },
-            //        new Dictionary<string, string>() { ["T"] = "10000", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "True", },
-            //    }
-            //});
-
             benchmarkTasks.Add(new BenchmarkTask()
             {
-                TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
-                Dir = "Resources/Benchmark/PickAndPlace",
+                TemplateDir = "Resources/Benchmark/Kockapakolas/Templates",
+                Dir = "Resources/Benchmark/Kockapakolas",
                 Parameters = new List<Dictionary<string, string>>() {
-                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
-                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
-                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "True", },
-                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "True", }
+                    //new Dictionary<string, string>() { ["T"] = "10000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "True", },
+                    new Dictionary<string, string>() { ["T"] = "0", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "False", },
+                    new Dictionary<string, string>() { ["T"] = "0", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "False", },
+                    //new Dictionary<string, string>() { ["T"] = "10000", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "True", },
                 }
             });
+
+            //benchmarkTasks.Add(new BenchmarkTask()
+            //{
+            //    TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
+            //    Dir = "Resources/Benchmark/PickAndPlace",
+            //    Parameters = new List<Dictionary<string, string>>() {
+            //        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+            //        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+            //        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "True", },
+            //        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "True", }
+            //    }
+            //});
 
             //benchmarkTasks.Add(new BenchmarkTask()
             //{

@@ -5,7 +5,6 @@ using SequencePlanner.GTSPTask.Task.LineLike;
 using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -30,7 +29,7 @@ namespace SequencerConsole
         {
             if (args.Length == 0)
             {
-                #if !DEBUG
+#if !DEBUG
                     Help(new string[] { "-h" });
 #else
                 {
@@ -70,21 +69,23 @@ namespace SequencerConsole
                     //args = new string[] { "-i", local + "\\test11_1.txt",                       "-o", localOut + "\\test11_1.json"                        };
                     //args = new string[] { "-i", local + "\\test11_2.txt",                       "-o", localOut + "\\test11_2.json"                        };
                     //args = new string[] { "-i", local + "\\test11_3.txt",                       "-o", localOut + "\\test11_3.json"                        };
-                    args = new string[] { "-i", local + "\\test90_0.txt",                         "-o", localOut + "\\test90_0.json"                        };
-                    args = new string[] { "-i", local + "\\test90_1.txt",                         "-o", localOut + "\\test90_1.json"                        };
+                    args = new string[] { "-i", local + "\\test90_0.txt", "-o", localOut + "\\test90_0.json" };
+                    args = new string[] { "-i", local + "\\test90_1.txt", "-o", localOut + "\\test90_1.json" };
                     //args = new string[] { "-i", local + "\\test1_1.txt",                        "-o", localOut + "\\test1_1.json"                         };
                     //args = new string[] { "-i", local + "\\test1_1 copy.txt",                   "-o", localOut + "\\test1_1.json"                         };
                     //args = new string[] { "-i", local + "\\test1_3.txt",                        "-o", localOut + "\\test1_3.json"                         };
                     //args = new string[] { "-i", local + "\\test1_1MX.txt",                      "-o", localOut + "\\test1_1MX.json"                       };
                     //args = new string[] { "-i", local + "\\test1_3MX.txt",                      "-o", localOut + "\\test1_3MX.json"                       };
-                    args = new string[] { "-i", kocka + "\\sequencer_img2_model5_problem.txt",    "-o", kockaOut + "\\sequencer_img2_model5_problem.json"   };
-                    args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
-                    args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
-                    args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
-                    args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt",    "-o", kockaOut + "\\sequencer_img2_model3_problem_1.json" };
-                    args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_0.txt",    "-o", kockaOut + "\\sequencer_img3_model2_problem_0.json" };
-                    args = new string[] { "-i", kocka + "\\sequencer_img1_model4_problem_0.txt",    "-o", kockaOut + "\\sequencer_img1_model4_problem_0.json" };
-                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model4_problem.txt",  "-o", kockaOut + "\\sequencer_img3_model4_problem.json"   };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img2_model5_problem.txt",    "-o", kockaOut + "\\sequencer_img2_model5_problem.json"   };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt",    "-o", kockaOut + "\\sequencer_img2_model3_problem_1.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_0.txt",    "-o", kockaOut + "\\sequencer_img3_model2_problem_0.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt",    "-o", kockaOut + "\\sequencer_img3_model2_problem_1.json" };
+                    args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt", "-o", kockaOut + "\\sequencer_img3_model2_problem_1.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_mosaic1_problem_1.txt",    "-o", kockaOut + "\\sequencer_mosaic1_problem_1.json" };
+                    args = new string[] { "-i", kocka + "\\sequencer_img3_model4_problem_1.txt", "-o", kockaOut + "\\sequencer_img3_model4_problem_1.json" };
 
                     Help(args);
                     Version(args);
@@ -123,10 +124,10 @@ namespace SequencerConsole
                 {
                     if (taskType == TaskType.LineLike)
                         ConvertLineLike();
-                    
+
                     if (taskType == TaskType.PoitnLike)
                         ConvertPointLike();
-                    
+
                 }
             }
             catch (Exception e)
@@ -307,7 +308,7 @@ namespace SequencerConsole
                 {
                     case FormatType.SEQ:
                     case FormatType.TXT:
-                        ser.ExportSEQ(result,output);
+                        ser.ExportSEQ(result, output);
                         break;
                     case FormatType.JSON:
                         ser.ExportJSON(result, output);
@@ -398,7 +399,7 @@ namespace SequencerConsole
             {
                 if (item.Equals("-version") || item.Equals("-v"))
                 {
-                    Console.WriteLine("SequencePlanner \u00a9 SZTAKI \nVersion: " + AssemblyName.GetAssemblyName("SequencePlanner.dll").Version+"\n");
+                    Console.WriteLine("SequencePlanner \u00a9 SZTAKI \nVersion: " + AssemblyName.GetAssemblyName("SequencePlanner.dll").Version + "\n");
                     System.Environment.Exit(0);
                 }
             }
@@ -442,7 +443,7 @@ namespace SequencerConsole
                 if (args[i].Equals("-output") || args[i].Equals("-o"))
                 {
                     var filename = args[i + 1].Split(".");
-                    if (filename!=null && filename.Length>1)
+                    if (filename != null && filename.Length > 1)
                     {
                         if (filename[1].ToUpper() == "SEQ")
                             outputType = FormatType.SEQ;
@@ -453,7 +454,7 @@ namespace SequencerConsole
                         if (filename[1].ToUpper() == "XML")
                             outputType = FormatType.XML;
                         if (outputType == FormatType.Unknown)
-                            throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml:"+args[i + 1]);
+                            throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml:" + args[i + 1]);
                     }
                     else
                     {
@@ -538,16 +539,16 @@ namespace SequencerConsole
         public static void WaitForSolution(string text, CancellationToken token)
         {
             var counter = 0;
-            while(token.IsCancellationRequested)
+            while (token.IsCancellationRequested)
             {
                 switch (counter % 4)
                 {
                     case 0: Console.Write("/" + text); break;
                     case 1: Console.Write("-" + text); break;
-                    case 2: Console.Write("\\"+ text); break;
+                    case 2: Console.Write("\\" + text); break;
                     case 3: Console.Write("|" + text); break;
                 }
-                Console.SetCursorPosition(Console.CursorLeft - (1+text.Length), Console.CursorTop);
+                Console.SetCursorPosition(Console.CursorLeft - (1 + text.Length), Console.CursorTop);
                 counter++;
                 Thread.Sleep(100);
             }
