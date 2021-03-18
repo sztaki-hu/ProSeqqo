@@ -57,7 +57,7 @@ namespace SequencePlanner.OR_Tools
             if (param.GTSPRepresentation.PrecedenceConstraints.Count > 0)
             {
                 //Add distance dimension
-                routing.AddDimension(transitCallbackIndex, 0, int.MaxValue - 100, true, "Distance");
+                routing.AddDimension(transitCallbackIndex,0, int.MaxValue - 100, true, "Distance");
                 RoutingDimension distanceDimension = routing.GetMutableDimension("Distance");
 
                 //Add order constraints
@@ -67,9 +67,10 @@ namespace SequencePlanner.OR_Tools
                     SeqLogger.Trace(param.GTSPRepresentation.PrecedenceConstraints[i].ToString(), nameof(ORToolsSequencerWrapper));
                     long beforeIndex = manager.NodeToIndex(param.GTSPRepresentation.PrecedenceConstraints[i].Before.SequencingID);
                     long afterIndex = manager.NodeToIndex(param.GTSPRepresentation.PrecedenceConstraints[i].After.SequencingID);
-                    solver.Add(solver.MakeLessOrEqual(
-                          distanceDimension.CumulVar(beforeIndex),
-                          distanceDimension.CumulVar(afterIndex)));
+                    //solver.Add(solver.MakeLessOrEqual(
+                    //      distanceDimension.CumulVar(beforeIndex),
+                    //      distanceDimension.CumulVar(afterIndex)));
+                    solver.Add(routing.ActiveVar(beforeIndex) * routing.ActiveVar(afterIndex) * distanceDimension.CumulVar(beforeIndex) <= distanceDimension.CumulVar(afterIndex));
                 }
             }
 
@@ -100,15 +101,12 @@ namespace SequencePlanner.OR_Tools
             {
                 SeqLogger.Info("Initial route: "+SeqLogger.ToList(param.GTSPRepresentation.InitialRoutes[0]), nameof(ORToolsSequencerWrapper));
                 InitialSolution = routing.ReadAssignmentFromRoutes(param.GTSPRepresentation.InitialRoutes, true);
-                //InitialSolution = routing.ReadAssignmentFromRoutes(
                 if (InitialSolution == null)
                     SeqLogger.Error("Initial solution given, but not accepted!", nameof(ORToolsSequencerWrapper));
                 else
                     SeqLogger.Info("Initial route given with " + param.GTSPRepresentation.InitialRoutes[0].Length+" element.", nameof(ORToolsSequencerWrapper));
             }else
                 SeqLogger.Info("Initial route not given.", nameof(ORToolsSequencerWrapper));
-
-
             SeqLogger.Indent--;
             SeqLogger.Info("ORTools building finished!", nameof(ORToolsSequencerWrapper));
         }
@@ -120,6 +118,8 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent++;
             Timer.Start();
             Assignment solution;
+
+            
             if (InitialSolution != null)
                 solution = routing.SolveFromAssignmentWithParameters(InitialSolution, searchParameters);
             else
