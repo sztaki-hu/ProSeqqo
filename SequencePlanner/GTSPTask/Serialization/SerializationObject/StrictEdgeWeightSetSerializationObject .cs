@@ -29,7 +29,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             }
         }
 
-        public StrictEdgeWeightSet ToStrictEdgeWeightSet(List<Position> positions)
+        public StrictEdgeWeightSet ToStrictEdgeWeightSet(List<GTSPNode> positions)
         {
             var tmp = new StrictEdgeWeightSet();
             foreach (var item in Weights)
@@ -38,10 +38,10 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 Position b = null;
                 foreach (var pos in positions)
                 {
-                    if (pos.UserID == item.A)
-                        a = pos;
-                    if (pos.UserID == item.B)
-                        b = pos;
+                    if (pos.Node.UserID == item.A)
+                        a = pos.Out;
+                    if (pos.Node.UserID == item.B)
+                        b = pos.Out;
                 }
                 if (a == null)
                     SeqLogger.Error("StrictEdgeWeight not find position with user id " + item.A, nameof(StrictEdgeWeightSetSerializationObject));

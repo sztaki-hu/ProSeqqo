@@ -8,12 +8,12 @@ namespace SequencePlanner.Model
 {
     public class PositionMatrix
     {
-        public List<Position> Positions { get; set; }
+        public List<GTSPNode> Positions { get; set; }
         public double[,] Matrix { get; set; }
         public IDistanceFunction DistanceFunction { get; set; }
         public IResourceFunction ResourceFunction { get; set; }
 
-        public PositionMatrix(List<Position> positions, IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
+        public PositionMatrix(List<GTSPNode> positions, IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
         {
             Positions = positions;
             DistanceFunction = distanceFunction;
@@ -24,7 +24,7 @@ namespace SequencePlanner.Model
 
         public PositionMatrix()
         {
-            Positions = new List<Position>();
+            Positions = new List<GTSPNode>();
         }
 
         public void UpdateMatrixFromPositions()
@@ -34,8 +34,8 @@ namespace SequencePlanner.Model
             {
                 for (int j = 0; j < Positions.Count; j++)
                 {
-                    Matrix[i, j] = DistanceFunction.ComputeDistance(Positions[i], Positions[j]);
-                    Matrix[i, j] = ResourceFunction.ComputeResourceCost(Positions[i], Positions[j], Matrix[i, j]);
+                    Matrix[i, j] = DistanceFunction.ComputeDistance(Positions[i].Out, Positions[j].In);
+                    Matrix[i, j] = ResourceFunction.ComputeResourceCost(Positions[i].Out, Positions[j].In, Matrix[i, j]);
                 }
             }
         }
@@ -71,21 +71,23 @@ namespace SequencePlanner.Model
                 SeqLogger.WriteLog(level, position.ToString(), nameof(PositionMatrix));
             }
             SeqLogger.Indent--;
-
-            SeqLogger.WriteLog(level, "Matrix[SeqID,SeqID] = ["+Matrix.GetLength(0)+";"+Matrix.GetLength(1)+"]", nameof(PositionMatrix));
-            SeqLogger.Indent++;
-            for (int i = 0; i < Matrix.GetLength(0); i++)
+            if(Matrix is not null)
             {
-                for (int j = 0; j < Matrix.GetLength(1); j++)
+                SeqLogger.WriteLog(level, "Matrix[SeqID,SeqID] = ["+Matrix.GetLength(0)+";"+Matrix.GetLength(1)+"]", nameof(PositionMatrix));
+                SeqLogger.Indent++;
+                for (int i = 0; i < Matrix.GetLength(0); i++)
                 {
-                    SeqLogger.Trace("Matrix["+i+";"+j+"]="+Matrix[i,j], nameof(PositionMatrix));
+                    for (int j = 0; j < Matrix.GetLength(1); j++)
+                    {
+                        SeqLogger.Trace("Matrix[" + i + ";" + j + "]=" + Matrix[i, j], nameof(PositionMatrix));
+                    }
                 }
+                SeqLogger.Indent--;
             }
             foreach (var position in Positions)
             {
                 SeqLogger.WriteLog(level, position.ToString(), nameof(PositionMatrix));
             }
-            SeqLogger.Indent--;
         }
 
         //private void CheckMatrix(double[,] matrix)

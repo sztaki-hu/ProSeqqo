@@ -13,15 +13,15 @@ namespace SequencerTest.Integration.Sequencing
     [TestClass]
     public class LineLikeEqual
     {
-        Position A;
-        Position B;
-        Position C;
-        Position D;
+        GTSPNode A;
+        GTSPNode B;
+        GTSPNode C;
+        GTSPNode D;
         Line line;
         Line line2;
         Contour contour;
         Contour contour2;
-        List<Position> positionList;
+        List<GTSPNode> positionList;
         PositionMatrix matrix;
         List<Line> lines;
         List<Contour> contours;
@@ -31,61 +31,61 @@ namespace SequencerTest.Integration.Sequencing
         [TestInitialize()]
         public void Initialize()
         {
-            A = new Position()
+            A = new GTSPNode(new Position()
             {
                 Name = "A",
                 UserID = 1,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            B = new Position()
+            B = new GTSPNode(new Position()
             {
                 Name = "B",
                 UserID = 2,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            C = new Position()
+            C = new GTSPNode(new Position()
             {
                 Name = "C",
                 UserID = 3,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            D = new Position()
+            D = new GTSPNode(new Position()
             {
                 Name = "D",
                 UserID = 4,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
             contour = new Contour();
             contour2 = new Contour();
 
             line = new Line()
             {
-                NodeA = A,
-                NodeB = B
+                NodeA = A.In,
+                NodeB = B.In
             };
 
             line2 = new Line()
             {
-                NodeA = C,
-                NodeB = D
+                NodeA = C.In,
+                NodeB = D.In
             };
 
             contour.Lines.Add(line);
             contour2.Lines.Add(line2);
 
-            positionList = new List<Position>() { A, B, C, D };
+            positionList = new List<GTSPNode>() { A, B, C, D };
             matrix = new PositionMatrix()
             {
                 Positions = positionList,
@@ -107,7 +107,7 @@ namespace SequencerTest.Integration.Sequencing
                 Dimension = 3,
                 TimeLimit = 5000,
                 CyclicSequence = true,
-                StartDepot = A,
+                StartDepot = A.In,
                 //FinishDepot = finish,
                 WeightMultipier = 10,
                 ContourPenalty = 1,

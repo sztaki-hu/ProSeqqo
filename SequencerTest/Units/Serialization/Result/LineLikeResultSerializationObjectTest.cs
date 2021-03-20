@@ -24,8 +24,8 @@ namespace SequencerTest.Units.Serialization.Result
             result.StatusMessage = "Status";
             result.Log.Add("FirstLog");
             result.LineResult.Add(TestObjects.GetLine());
-            result.PositionResult.Add(TestObjects.GetLinePosA());
-            result.PositionResult.Add(TestObjects.GetLinePosB());
+            result.PositionResult.Add(TestObjects.GetLinePosA().In);
+            result.PositionResult.Add(TestObjects.GetLinePosB().In);
         }
 
         [TestMethod]

@@ -8,14 +8,14 @@ namespace SequencePlanner.Helper
         public SeqException() { }
         public SeqException(string message) : base("\nError:" + message)
         {
-            SeqLogger.Error(message); 
+            SeqLogger.Critical(message); 
         }
         public SeqException(string message, string instruction) : base("\nError: " + message + "\n" + "Instruction: " + instruction)
         {
-            SeqLogger.Error(message);
+            SeqLogger.Critical(message);
         }
         public SeqException(string message, Exception inner) : base(message, inner) {
-            SeqLogger.Error(message);
+            SeqLogger.Critical(message);
         }
     }
 }

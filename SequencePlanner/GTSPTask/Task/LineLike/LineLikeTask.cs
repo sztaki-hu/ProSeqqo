@@ -19,7 +19,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         public List<GTSPPrecedenceConstraint> ContourPrecedences { get; set; }
         private LineLikeGTSPRepresentation GTSPRepresentation { get; set; }
         private int MAX_SEQUENCING_ID = 0;
-        private readonly double PenaltyEpsilon = 1;
+        private readonly double PenaltyEpsilon = 0;
 
         public LineLikeTask():base()
         {
@@ -39,7 +39,9 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             var orToolsParam = new ORToolsTask()
             {
                 TimeLimit = TimeLimit,
-                GTSPRepresentation = GTSPRepresentation
+                GTSPRepresentation = GTSPRepresentation,
+                LocalSearchStrategie = LocalSearchStrategie
+                
             };
             if (UseMIPprecedenceSolver)
                 GTSPRepresentation.InitialRoutes = CreateInitialRout();

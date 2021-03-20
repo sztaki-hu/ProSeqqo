@@ -1,0 +1,239 @@
+TaskType: PointLike
+Dimension: 3
+CyclicSequence: True
+StartDepot: 64
+TimeLimit: 0
+DistanceFunction: EuclidianDistance
+ResourceDistanceFunction: Add
+ResourceSource: ConstantResource
+ResourceCostConstant: 0
+UseMIPprecedenceSolver: True
+
+PositionList:
+#+-------+---------------------+------------------+
+#|   ID  |      Position       |  Name[optional]  |
+#+-------+---------------------+------------------+
+64;[-20;-20;-20];Init
+#Put down X
+0;[0;0;0];0A_0_Putdown_x
+1;[0;10;0];0A_1_Putdown_x
+2;[0;20;0];0A_2_Putdown_x
+3;[0;30;0];0A_3_Putdown_x
+4;[0;40;0];0A_4_Putdown_x
+5;[10;40;0];0B_0_Putdown_x
+6;[20;40;0];0B_1_Putdown_x
+7;[30;40;0];0B_2_Putdown_x
+8;[40;40;0];0B_3_Putdown_x
+9;[40;30;0];0C_0_Putdown_x
+10;[40;20;0];0C_1_Putdown_x
+11;[40;10;0];0C_2_Putdown_x
+12;[40;0;0];0C_3_Putdown_x
+13;[30;0;0];0D_0_Putdown_x
+14;[20;0;0];0D_1_Putdown_x
+15;[10;0;0];0D_2_Putdown_x
+#Put down Y
+16;[0;0;0];0A_0_Putdown_y
+17;[0;10;0];0A_1_Putdown_y
+18;[0;20;0];0A_2_Putdown_y
+19;[0;30;0];0A_3_Putdown_y
+20;[0;40;0];0A_4_Putdown_y
+21;[10;40;0];0B_0_Putdown_y
+22;[20;40;0];0B_1_Putdown_y
+23;[30;40;0];0B_2_Putdown_y
+24;[40;40;0];0B_3_Putdown_y
+25;[40;30;0];0C_0_Putdown_y
+26;[40;20;0];0C_1_Putdown_y
+27;[40;10;0];0C_2_Putdown_y
+28;[40;0;0];0C_3_Putdown_y
+29;[30;0;0];0D_0_Putdown_y
+30;[20;0;0];0D_1_Putdown_y
+31;[10;0;0];0D_2_Putdown_y
+#Pick up X
+32;[-20;-20;-20];0A_0_Pickup_X
+33;[-20;-20;-20];0A_1_Pickup_X
+34;[-20;-20;-20];0A_2_Pickup_X
+35;[-20;-20;-20];0A_3_Pickup_X
+36;[-20;-20;-20];0A_4_Pickup_X
+37;[-20;-20;-20];0B_0_Pickup_X
+38;[-20;-20;-20];0B_1_Pickup_X
+39;[-20;-20;-20];0B_2_Pickup_X
+40;[-20;-20;-20];0B_3_Pickup_X
+41;[-20;-20;-20];0C_0_Pickup_X
+42;[-20;-20;-20];0C_1_Pickup_X
+43;[-20;-20;-20];0C_2_Pickup_X
+44;[-20;-20;-20];0C_3_Pickup_X
+45;[-20;-20;-20];0D_0_Pickup_X
+46;[-20;-20;-20];0D_1_Pickup_X
+47;[-20;-20;-20];0D_2_Pickup_X
+#Pick up Y
+48;[-20;-20;-20];0A_0_Pickup_Y
+49;[-20;-20;-20];0A_1_Pickup_Y
+50;[-20;-20;-20];0A_2_Pickup_Y
+51;[-20;-20;-20];0A_3_Pickup_Y
+52;[-20;-20;-20];0A_4_Pickup_Y
+53;[-20;-20;-20];0B_0_Pickup_Y
+54;[-20;-20;-20];0B_1_Pickup_Y
+55;[-20;-20;-20];0B_2_Pickup_Y
+56;[-20;-20;-20];0B_3_Pickup_Y
+57;[-20;-20;-20];0C_0_Pickup_Y
+58;[-20;-20;-20];0C_1_Pickup_Y
+59;[-20;-20;-20];0C_2_Pickup_Y
+60;[-20;-20;-20];0C_3_Pickup_Y
+61;[-20;-20;-20];0D_0_Pickup_Y
+62;[-20;-20;-20];0D_1_Pickup_Y
+63;[-20;-20;-20];0D_2_Pickup_Y
+
+ProcessHierarchy:
+#+-------------+---------+----------------+------------+
+#| Position ID | Task ID | Alternative ID | Process ID |
+#+-------------+---------+----------------+------------+
+64 ;	0 ;	0 ;	64	#Init
+#Cube: 0A_0
+32 ;	0 ;	0 ;	0	#0A_0_Pickup_X
+0 ;	1 ;	0 ;	0	#0A_0_Putdown_X
+48 ;	0 ;	1 ;	0	#0A_0_Pickup_Y
+16 ;	1 ;	1 ;	0	#0A_0_Putdown_Y
+#Cube: 0A_1
+33 ;	0 ;	0 ;	1	#0A_1_Pickup_X
+1 ;	1 ;	0 ;	1	#0A_1_Putdown_X
+49 ;	0 ;	1 ;	1	#0A_1_Pickup_Y
+17 ;	1 ;	1 ;	1	#0A_1_Putdown_Y
+#Cube: 0A_2
+34 ;	0 ;	0 ;	2	#0A_2_Pickup_X
+2 ;	1 ;	0 ;	2	#0A_2_Putdown_X
+50 ;	0 ;	1 ;	2	#0A_2_Pickup_Y
+18 ;	1 ;	1 ;	2	#0A_2_Putdown_Y
+#Cube: 0A_3
+35 ;	0 ;	0 ;	3	#0A_3_Pickup_X
+3 ;	1 ;	0 ;	3	#0A_3_Putdown_X
+51 ;	0 ;	1 ;	3	#0A_3_Pickup_Y
+19 ;	1 ;	1 ;	3	#0A_3_Putdown_Y
+#Cube: 0A_4
+36 ;	0 ;	0 ;	4	#0A_4_Pickup_X
+4 ;	1 ;	0 ;	4	#0A_4_Putdown_X
+52 ;	0 ;	1 ;	4	#0A_4_Pickup_Y
+20 ;	1 ;	1 ;	4	#0A_4_Putdown_Y
+#Cube: 0B_0
+37 ;	0 ;	0 ;	5	#0B_0_Pickup_X
+5 ;	1 ;	0 ;	5	#0B_0_Putdown_X
+53 ;	0 ;	1 ;	5	#0B_0_Pickup_Y
+21 ;	1 ;	1 ;	5	#0B_0_Putdown_Y
+#Cube: 0B_1
+38 ;	0 ;	0 ;	6	#0B_1_Pickup_X
+6 ;	1 ;	0 ;	6	#0B_1_Putdown_X
+54 ;	0 ;	1 ;	6	#0B_1_Pickup_Y
+22 ;	1 ;	1 ;	6	#0B_1_Putdown_Y
+#Cube: 0B_2
+39 ;	0 ;	0 ;	7	#0B_2_Pickup_X
+7 ;	1 ;	0 ;	7	#0B_2_Putdown_X
+55 ;	0 ;	1 ;	7	#0B_2_Pickup_Y
+23 ;	1 ;	1 ;	7	#0B_2_Putdown_Y
+#Cube: 0B_3
+40 ;	0 ;	0 ;	8	#0B_3_Pickup_X
+8 ;	1 ;	0 ;	8	#0B_3_Putdown_X
+56 ;	0 ;	1 ;	8	#0B_3_Pickup_Y
+24 ;	1 ;	1 ;	8	#0B_3_Putdown_Y
+#Cube: 0C_0
+41 ;	0 ;	0 ;	9	#0C_0_Pickup_X
+9 ;	1 ;	0 ;	9	#0C_0_Putdown_X
+57 ;	0 ;	1 ;	9	#0C_0_Pickup_Y
+25 ;	1 ;	1 ;	9	#0C_0_Putdown_Y
+#Cube: 0C_1
+42 ;	0 ;	0 ;	10	#0C_1_Pickup_X
+10 ;	1 ;	0 ;	10	#0C_1_Putdown_X
+58 ;	0 ;	1 ;	10	#0C_1_Pickup_Y
+26 ;	1 ;	1 ;	10	#0C_1_Putdown_Y
+#Cube: 0C_2
+43 ;	0 ;	0 ;	11	#0C_2_Pickup_X
+11 ;	1 ;	0 ;	11	#0C_2_Putdown_X
+59 ;	0 ;	1 ;	11	#0C_2_Pickup_Y
+27 ;	1 ;	1 ;	11	#0C_2_Putdown_Y
+#Cube: 0C_3
+44 ;	0 ;	0 ;	12	#0C_3_Pickup_X
+12 ;	1 ;	0 ;	12	#0C_3_Putdown_X
+60 ;	0 ;	1 ;	12	#0C_3_Pickup_Y
+28 ;	1 ;	1 ;	12	#0C_3_Putdown_Y
+#Cube: 0D_0
+45 ;	0 ;	0 ;	13	#0D_0_Pickup_X
+13 ;	1 ;	0 ;	13	#0D_0_Putdown_X
+61 ;	0 ;	1 ;	13	#0D_0_Pickup_Y
+29 ;	1 ;	1 ;	13	#0D_0_Putdown_Y
+#Cube: 0D_1
+46 ;	0 ;	0 ;	14	#0D_1_Pickup_X
+14 ;	1 ;	0 ;	14	#0D_1_Putdown_X
+62 ;	0 ;	1 ;	14	#0D_1_Pickup_Y
+30 ;	1 ;	1 ;	14	#0D_1_Putdown_Y
+#Cube: 0D_2
+47 ;	0 ;	0 ;	15	#0D_2_Pickup_X
+15 ;	1 ;	0 ;	15	#0D_2_Putdown_X
+63 ;	0 ;	1 ;	15	#0D_2_Pickup_Y
+31 ;	1 ;	1 ;	15	#0D_2_Putdown_Y
+
+PositionPrecedence:
+#+----------------------+--------------------+
+#| PredecessorProcessID | SuccessorProcessID |
+#+----------------------+--------------------+
+16 ;	15	#0A_0 Yaxis ---Ahed---> 0D_2 Xaxis
+16 ;	31	#0A_0 Yaxis ---Ahed---> 0D_2 Yaxis
+0 ;	1	#0A_0 Xaxis ---Right---> 0A_1 Xaxis
+0 ;	17	#0A_0 Xaxis ---Right---> 0A_1 Yaxis
+1 ;	0	#0A_1 Xaxis ---Left---> 0A_0 Xaxis
+1 ;	16	#0A_1 Xaxis ---Left---> 0A_0 Yaxis
+1 ;	2	#0A_1 Xaxis ---Right---> 0A_2 Xaxis
+1 ;	18	#0A_1 Xaxis ---Right---> 0A_2 Yaxis
+2 ;	1	#0A_2 Xaxis ---Left---> 0A_1 Xaxis
+2 ;	17	#0A_2 Xaxis ---Left---> 0A_1 Yaxis
+2 ;	3	#0A_2 Xaxis ---Right---> 0A_3 Xaxis
+2 ;	19	#0A_2 Xaxis ---Right---> 0A_3 Yaxis
+3 ;	2	#0A_3 Xaxis ---Left---> 0A_2 Xaxis
+3 ;	18	#0A_3 Xaxis ---Left---> 0A_2 Yaxis
+3 ;	4	#0A_3 Xaxis ---Right---> 0A_4 Xaxis
+3 ;	20	#0A_3 Xaxis ---Right---> 0A_4 Yaxis
+20 ;	5	#0A_4 Yaxis ---Ahed---> 0B_0 Xaxis
+20 ;	21	#0A_4 Yaxis ---Ahed---> 0B_0 Yaxis
+4 ;	3	#0A_4 Xaxis ---Left---> 0A_3 Xaxis
+4 ;	19	#0A_4 Xaxis ---Left---> 0A_3 Yaxis
+21 ;	6	#0B_0 Yaxis ---Ahed---> 0B_1 Xaxis
+21 ;	22	#0B_0 Yaxis ---Ahed---> 0B_1 Yaxis
+21 ;	4	#0B_0 Yaxis ---Back---> 0A_4 Xaxis
+21 ;	20	#0B_0 Yaxis ---Back---> 0A_4 Yaxis
+22 ;	7	#0B_1 Yaxis ---Ahed---> 0B_2 Xaxis
+22 ;	23	#0B_1 Yaxis ---Ahed---> 0B_2 Yaxis
+22 ;	5	#0B_1 Yaxis ---Back---> 0B_0 Xaxis
+22 ;	21	#0B_1 Yaxis ---Back---> 0B_0 Yaxis
+23 ;	8	#0B_2 Yaxis ---Ahed---> 0B_3 Xaxis
+23 ;	24	#0B_2 Yaxis ---Ahed---> 0B_3 Yaxis
+23 ;	6	#0B_2 Yaxis ---Back---> 0B_1 Xaxis
+23 ;	22	#0B_2 Yaxis ---Back---> 0B_1 Yaxis
+24 ;	7	#0B_3 Yaxis ---Back---> 0B_2 Xaxis
+24 ;	23	#0B_3 Yaxis ---Back---> 0B_2 Yaxis
+8 ;	9	#0B_3 Xaxis ---Left---> 0C_0 Xaxis
+8 ;	25	#0B_3 Xaxis ---Left---> 0C_0 Yaxis
+9 ;	10	#0C_0 Xaxis ---Left---> 0C_1 Xaxis
+9 ;	26	#0C_0 Xaxis ---Left---> 0C_1 Yaxis
+9 ;	8	#0C_0 Xaxis ---Right---> 0B_3 Xaxis
+9 ;	24	#0C_0 Xaxis ---Right---> 0B_3 Yaxis
+10 ;	11	#0C_1 Xaxis ---Left---> 0C_2 Xaxis
+10 ;	27	#0C_1 Xaxis ---Left---> 0C_2 Yaxis
+10 ;	9	#0C_1 Xaxis ---Right---> 0C_0 Xaxis
+10 ;	25	#0C_1 Xaxis ---Right---> 0C_0 Yaxis
+11 ;	12	#0C_2 Xaxis ---Left---> 0C_3 Xaxis
+11 ;	28	#0C_2 Xaxis ---Left---> 0C_3 Yaxis
+11 ;	10	#0C_2 Xaxis ---Right---> 0C_1 Xaxis
+11 ;	26	#0C_2 Xaxis ---Right---> 0C_1 Yaxis
+28 ;	13	#0C_3 Yaxis ---Back---> 0D_0 Xaxis
+28 ;	29	#0C_3 Yaxis ---Back---> 0D_0 Yaxis
+12 ;	11	#0C_3 Xaxis ---Right---> 0C_2 Xaxis
+12 ;	27	#0C_3 Xaxis ---Right---> 0C_2 Yaxis
+29 ;	12	#0D_0 Yaxis ---Ahed---> 0C_3 Xaxis
+29 ;	28	#0D_0 Yaxis ---Ahed---> 0C_3 Yaxis
+29 ;	14	#0D_0 Yaxis ---Back---> 0D_1 Xaxis
+29 ;	30	#0D_0 Yaxis ---Back---> 0D_1 Yaxis
+30 ;	13	#0D_1 Yaxis ---Ahed---> 0D_0 Xaxis
+30 ;	29	#0D_1 Yaxis ---Ahed---> 0D_0 Yaxis
+30 ;	15	#0D_1 Yaxis ---Back---> 0D_2 Xaxis
+30 ;	31	#0D_1 Yaxis ---Back---> 0D_2 Yaxis
+31 ;	14	#0D_2 Yaxis ---Ahed---> 0D_1 Xaxis
+31 ;	30	#0D_2 Yaxis ---Ahed---> 0D_1 Yaxis
+31 ;	0	#0D_2 Yaxis ---Back---> 0A_0 Xaxis
+31 ;	16	#0D_2 Yaxis ---Back---> 0A_0 Yaxis

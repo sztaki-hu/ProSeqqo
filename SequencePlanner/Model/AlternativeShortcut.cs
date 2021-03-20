@@ -2,8 +2,8 @@
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.GTSP;
 using SequencePlanner.GTSPTask.Result;
+using SequencePlanner.GTSPTask.Task.PointLike.ShortCut;
 using SequencePlanner.Helper;
-using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Model
@@ -13,6 +13,7 @@ namespace SequencePlanner.Model
         public Alternative Original { get; private set; }
         public Task FrontProxy { get; set; }
         public Task BackProxy { get; set; }
+        public Task Proxy { get; set; }
         public List<ShortestPath> CriticalPaths{get;set;}
         public StrictEdgeWeightSet StrictSystemEdgeWeightSet { get; set; }
 
@@ -32,7 +33,6 @@ namespace SequencePlanner.Model
             this.ResourceID = alternative.ResourceID;
             this.Name = alternative.Name;
             this.Virtual = alternative.Virtual;
-            //this.Tasks = alternative.Tasks;
             Original = alternative;
         }
 
@@ -42,18 +42,16 @@ namespace SequencePlanner.Model
             {
                 FrontProxy = Original.Tasks[0];
                 BackProxy = Original.Tasks[Original.Tasks.Count - 1];
-                Tasks.Add(FrontProxy);
-                Tasks.Add(BackProxy);
                 FindShortcuts(distanceFunction, resourceFunction);
-                
                 SeqLogger.Trace(CriticalPaths.Count + " shortcut created in [UID:" + Original.UserID + "] alternative, between: " + FrontProxy.ToString() + " and " + BackProxy.ToString(), nameof(AlternativeShortcut));
+                Tasks.Add(new Task() { Name = "ShortcutPathOf" + Name });
                 foreach (var path in CriticalPaths)
                 {
-                    distanceFunction.StrictSystemEdgeWeights.Add(new StrictEdgeWeight(path.Front, path.Back, path.Cost));
+                    Tasks[0].Positions.Add(path.Representer);
                     SeqLogger.Trace("Contains " + path.Cut.Count + " in cut with " + path.Cost + " cost, between: " + path.Front.ToString() + " and " + path.Back.ToString(), nameof(AlternativeShortcut));
                 }
+                Proxy = Tasks[0];
             }
-            
         }
 
         private void FindShortcuts(IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
@@ -74,9 +72,9 @@ namespace SequencePlanner.Model
             {
                 foreach (var position in path.Cut)
                 {
-                    if (position.GlobalID == gTSPPrecedenceConstraint.Before.GlobalID)
+                    if (position.Node.GlobalID == gTSPPrecedenceConstraint.Before.GlobalID)
                         findBefore = true;
-                    if (position.GlobalID == gTSPPrecedenceConstraint.After.GlobalID)
+                    if (position.Node.GlobalID == gTSPPrecedenceConstraint.After.GlobalID)
                         findAfter = true;
                 }
                 if (findBefore && findAfter)
@@ -89,11 +87,11 @@ namespace SequencePlanner.Model
                 {
                     var prec = new GTSPPrecedenceConstraint();
                     if (findBefore)
-                        prec.Before = path.Front;
+                        prec.Before = path.Front.Node;
                     else
                         prec.Before = gTSPPrecedenceConstraint.Before;
                     if (findAfter)
-                        prec.After = path.Front;
+                        prec.After = path.Front.Node;
                     else
                         prec.After = gTSPPrecedenceConstraint.After;
 
@@ -120,23 +118,18 @@ namespace SequencePlanner.Model
         {
             foreach (var path in CriticalPaths)
             {
-                for (int i = 0; i < taskResult.PositionResult.Count-1; i++)
+                for (int i = 0; i < taskResult.ResolveHelper.Count; i++)
                 {
-                    if ((path.Front.GlobalID == taskResult.PositionResult[i].GlobalID) && (path.Back.GlobalID == taskResult.PositionResult[i + 1].GlobalID))
+                    if (taskResult.ResolveHelper[i].Node.Node.GlobalID == path.Representer.Node.GlobalID)
                     {
-                        SeqLogger.Trace("Cut found [" + path.Front.UserID + ";" + path.Back.UserID+"] and changed to ["+SeqLogger.ToList(path.Cut)+"]");
-                        for (int j = 1; j < path.Cut.Count-1; j++)
+                        SeqLogger.Trace("Cut found [" + path.Front.Node.ToString() + ";" + path.Back.Node.ToString() + "] and changed to [" + SeqLogger.ToList(path.Cut) + "]");
+                        for (int j = 0; j < path.Cut.Count-1; j++)
                         {
-                            taskResult.PositionResult.Insert(i+j, (Position) path.Cut[j]);
-                            taskResult.SolutionRaw.Insert(i+j, (long) path.Cut[j].UserID);
+                            taskResult.ResolveHelper[i].Resolve.Add(path.Cut[j]);
+                            taskResult.ResolveHelper[i].ResolveCost.Add(path.Costs[j]);
                         }
-                        SeqLogger.Trace("Costs from " + taskResult.CostsRaw[i] + " hanged to [" + SeqLogger.ToList(path.Costs)+"]" );
-                        taskResult.CostsRaw.RemoveAt(i);
-                        for (int j = 0; j < path.Costs.Count; j++)
-                        {
-                            taskResult.CostsRaw.Insert(i + j, (long)path.Costs[j]);
-                        }
-                        taskResult.Calculate();
+                        taskResult.ResolveHelper[i].Resolved = true;
+                        taskResult.ResolveHelper[i].Resolve.Add(path.Cut[path.Cut.Count-1]);
                     }
                 }
             }

@@ -4,6 +4,7 @@ using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
+using SequencePlanner.OR_Tools;
 using System;
 using System.Collections.Generic;
 
@@ -27,6 +28,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public List<PositionSerializationObject> PositionList { get; set; }
         public DistanceFunctionSerializationObject DistanceFunction {get;set;}
         public ResourceFunctionSerializationObject ResourceFunction {get;set;}
+        public string LocalSearchStrategie { get; set; }
 
         public BaseTaskSerializationObject()
         {
@@ -51,11 +53,12 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             PositionList = new List<PositionSerializationObject>();
             foreach (var item in baseTask.PositionMatrix.Positions)
             {
-                PositionList.Add(new PositionSerializationObject(item));
+                PositionList.Add(new PositionSerializationObject(item.Out)); ///TODO: Rapid FIX change it!
             }
 
             DistanceFunction = new DistanceFunctionSerializationObject(baseTask.PositionMatrix);
             ResourceFunction = new ResourceFunctionSerializationObject(baseTask.PositionMatrix);
+            LocalSearchStrategie = baseTask.LocalSearchStrategie.ToString();
         }
 
         public string ToSEQShort()
@@ -72,7 +75,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             if(FinishDepot!=-1)
                 seq += "FinishDepot: " + FinishDepot + newline;
             seq += "TimeLimit: " + TimeLimit + newline;
-            seq += "UseMIPPrecedenceSolver: " + UseMIPprecedenceSolver + newline;
+            seq += "TimeLimit: " + TimeLimit + newline;
+            seq += "LocalSearchStrategie: " + LocalSearchStrategie + newline;
             seq += DistanceFunction.ToSEQShort();
             seq += ResourceFunction.ToSEQ();
             return seq;
@@ -103,7 +107,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             foreach (var pos in PositionList)
             {
                 var newPosition = pos.ToPosition();
-                task.PositionMatrix.Positions.Add(newPosition);
+                task.PositionMatrix.Positions.Add(new GTSPNode(newPosition));
                 if (newPosition.UserID == StartDepot)
                     task.StartDepot = newPosition;
                 if (newPosition.UserID == FinishDepot)
@@ -117,6 +121,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             task.PositionMatrix.DistanceFunction = DistanceFunction.ToDistanceFunction(task.PositionMatrix.Positions);
             task.PositionMatrix.ResourceFunction = ResourceFunction.ToResourceFunction();
             task.UseMIPprecedenceSolver = UseMIPprecedenceSolver;
+            task.LocalSearchStrategie = LocalSearchStrategieEnum.ResolveEnum(LocalSearchStrategie);
         }
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
@@ -134,6 +139,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 PositionList = DistanceFunction.DistanceMatrix.PositionList;
             ResourceFunction = new ResourceFunctionSerializationObject();
             ResourceFunction.FillBySEQTokens(tokenizer);
+            LocalSearchStrategie = TokenConverter.GetStringByHeader("LocalSearchStrategie", tokenizer);
         }
     }
 }

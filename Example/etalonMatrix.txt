@@ -7,10 +7,10 @@ WeightMultiplier: Auto
 CyclicSequence: False
 StartDepot: 0
 TimeLimit: 10000
-ResourceDistanceFunction: Add
-ResourceSource: ConstantResource
-ResourceCostConstant: 0
-UseResources: False
+#ResourceDistanceFunction: Add
+ResourceSource: NoResource
+#ResourceCostConstant: 0
+#UseResources: False
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: True
 
@@ -100,4 +100,4 @@ PositionPrecedence:
 #+----------------------+--------------------+
 #| PredecessorProcessID | SuccessorProcessID |
 #+----------------------+--------------------+
-13;18
+#13;18
