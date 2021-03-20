@@ -63,6 +63,36 @@
     <None Update="Resources\Benchmark\Celta\Templates\CelticLaser_Fill.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser_Contour_10mp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser_Contour_10p.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser_Contour_15p.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser_Contour_1p.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser_Contour_30mp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser_Contour_5mp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser_Contour_5p.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser_Contour_Full.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Celta\Templates\Offline\CelticLaser_Fill.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Benchmark\CSOPA\Templates\CSOPA100.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -76,6 +106,21 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Benchmark\CSOPA\Templates\CSOPANOLIMIT.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\CSOPA\Templates\Offline\CSOPA100.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\CSOPA\Templates\Offline\CSOPA1k.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\CSOPA\Templates\Offline\CSOPA200.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\CSOPA\Templates\Offline\CSOPA500.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\CSOPA\Templates\Offline\CSOPANOLIMIT.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Benchmark\Kockapakolas\Templates\sequencer_img1_model3_problem.txt">
@@ -304,6 +349,210 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Benchmark\PickAndPlace\Out\.keep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test23.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test24.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test25.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test26.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test27.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test28.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test29.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test30.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test31.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test32.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test33.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test34.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test35.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test36.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test37.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test38.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test39.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test40.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test41.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test42.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test43.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test44.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test45.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test46.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test47.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test48.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test49.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test50.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test51.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test52.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test53.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test54.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test55.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test56.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test57.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test58.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test59.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test60.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test61.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test62.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test63.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test64.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test65.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test66.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test67.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test68.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test69.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test70.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test71.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test72.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test73.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test74.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test75.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test76.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test77.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test78.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test79.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test80.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test81.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test82.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test83.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test84.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test85.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test86.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test87.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test88.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test89.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\PickAndPlace\Templates\Offline\test90.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Benchmark\PickAndPlace\Templates\test1.txt">

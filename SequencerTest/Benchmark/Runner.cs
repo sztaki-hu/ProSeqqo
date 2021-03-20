@@ -42,13 +42,13 @@ namespace SequencerTest.Benchmark
                 }
             });
 
-            //benchmarkTasks.Add(new BenchmarkTask()
-            //{
-            //    TemplateDir = "Resources/Benchmark/CSOPA/Templates",
-            //    Dir = "Resources/Benchmark/CSOPA",
-            //    Parameters = new List<Dictionary<string, string>>() {
-            //    }
-            //});
+            benchmarkTasks.Add(new BenchmarkTask()
+            {
+                TemplateDir = "Resources/Benchmark/CSOPA/Templates",
+                Dir = "Resources/Benchmark/CSOPA",
+                Parameters = new List<Dictionary<string, string>>() {
+                }
+            });
 
             benchmarkTasks.Add(new BenchmarkTask()
             {
