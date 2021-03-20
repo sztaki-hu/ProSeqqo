@@ -249,6 +249,60 @@
     <None Update="Resources\Benchmark\Kubik\Templates\Kubik[5_5_5].seq">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[10_10_10].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[10_10_15].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[10_10_1].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[10_10_5].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[11_11_11].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[12_12_12].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[15_15_10].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[15_15_15].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[15_15_1].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[15_15_5].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[3_3_10].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[3_3_1].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[3_3_3].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[3_3_5].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[5_5_10].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[5_5_15].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[5_5_1].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[5_5_5].seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Benchmark\PickAndPlace\Out\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

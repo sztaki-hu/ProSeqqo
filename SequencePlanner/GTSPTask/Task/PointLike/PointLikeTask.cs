@@ -140,10 +140,10 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     }
                 }
             }
-            SeqLogger.Error(InitialSolurionUserIDs);
-            SeqLogger.Error("Initial solution validation started!");
+            SeqLogger.Trace("Initial solution UserIDs"+InitialSolurionUserIDs);
+            SeqLogger.Trace("Initial solution validation started!");
             pointTaskResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
-            SeqLogger.Error("Initial solution validation finished!");
+            SeqLogger.Trace("Initial solution validation finished!");
         }
 
         private List<GTSPPrecedenceConstraint> CreatePrecedenceConstraints(bool fullProcessPrecedence = false)

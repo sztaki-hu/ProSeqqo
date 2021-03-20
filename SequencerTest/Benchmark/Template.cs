@@ -192,9 +192,9 @@ namespace SequencerTest.Benchmark
                 tmp += Path.GetFileName(GeneretedTasks[i])+s;
                 tmp += TaskType.ToString()+s;
                 
-                if (TaskType == TaskType.LineLike)
+                if (TaskType == TaskType.LineLike && LineResults is not null && LineResults.Count<i)
                     tmp += LineResults[i].ToCSV();
-                if (TaskType == TaskType.PoitnLike)
+                if (TaskType == TaskType.PoitnLike && PointResults is not null && PointResults.Count < i)
                     tmp += PointResults[i].ToCSV();
                 
                 if(ParameterCombinatrions.Count>i)
