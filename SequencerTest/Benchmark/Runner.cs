@@ -30,33 +30,43 @@ namespace SequencerTest.Benchmark
                 }
             });
 
-            //benchmarkTasks.Add(new BenchmarkTask()
-            //{
-            //    TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
-            //    Dir = "Resources/Benchmark/PickAndPlace",
-            //    Parameters = new List<Dictionary<string, string>>() {
-            //        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
-            //        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
-            //        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "True", },
-            //        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "True", }
-            //    }
-            //});
+            benchmarkTasks.Add(new BenchmarkTask()
+            {
+                TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
+                Dir = "Resources/Benchmark/PickAndPlace",
+                Parameters = new List<Dictionary<string, string>>() {
+                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "True", },
+                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "True", }
+                }
+            });
 
-            //benchmarkTasks.Add(new BenchmarkTask()
-            //{
-            //    TemplateDir = "Resources/Benchmark/CSOPA/Templates",
-            //    Dir = "Resources/Benchmark/CSOPA",
-            //    Parameters = new List<Dictionary<string, string>>() {
-            //    }
-            //});
+            benchmarkTasks.Add(new BenchmarkTask()
+            {
+                TemplateDir = "Resources/Benchmark/CSOPA/Templates",
+                Dir = "Resources/Benchmark/CSOPA",
+                Parameters = new List<Dictionary<string, string>>() {
+                }
+            });
 
-            //benchmarkTasks.Add(new BenchmarkTask()
-            //{
-            //    TemplateDir = "Resources/Benchmark/Celta/Templates",
-            //    Dir = "Resources/Benchmark/Celta",
-            //    Parameters = new List<Dictionary<string, string>>() {
-            //    }
-            //});
+            benchmarkTasks.Add(new BenchmarkTask()
+            {
+                TemplateDir = "Resources/Benchmark/Celta/Templates",
+                Dir = "Resources/Benchmark/Celta",
+                Parameters = new List<Dictionary<string, string>>() {
+                }
+            });
+
+            benchmarkTasks.Add(new BenchmarkTask()
+            {
+                TemplateDir = "Resources/Benchmark/Kubik/Templates",
+                Dir = "Resources/Benchmark/Kubik",
+                Parameters = new List<Dictionary<string, string>>()
+                {
+                }
+            });
+
 
             //templateDirectories.Add("Resources/Benchmark/PickAndPlace/Templates");
             //templateDirectories.Add("Resources/Benchmark/CSOPA/Templates");
