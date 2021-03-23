@@ -87,7 +87,7 @@ namespace SequencePlanner.OR_Tools
                 SeqLogger.Info("No time limit!", nameof(ORToolsSequencerWrapper));
 
             // Setting first solution heuristic.
-            searchParameters.LocalSearchMetaheuristic = LocalSearchStrategieEnum.ResolveEnum(param.LocalSearchStrategie);
+            searchParameters.LocalSearchMetaheuristic = LocalSearchStrategyEnum.ResolveEnum(param.LocalSearchStrategy);
             SeqLogger.Info("First solution strategy: "+ searchParameters.FirstSolutionStrategy.ToString(), nameof(ORToolsSequencerWrapper));
             SeqLogger.Info("Use depth first search: "+ searchParameters.UseDepthFirstSearch.ToString(), nameof(ORToolsSequencerWrapper));
             SeqLogger.Info("Local search metahearustic "+ searchParameters.LocalSearchMetaheuristic.ToString(), nameof(ORToolsSequencerWrapper));

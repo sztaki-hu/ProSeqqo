@@ -55,7 +55,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 TimeLimit = TimeLimit,
                 GTSPRepresentation = GTSPRepresentation,
-                LocalSearchStrategie = LocalSearchStrategie
+                LocalSearchStrategy = LocalSearchStrategy
             };
             ToLog(LogLevel.Debug);
             var orTools = new ORToolsSequencerWrapper(orToolsParam);

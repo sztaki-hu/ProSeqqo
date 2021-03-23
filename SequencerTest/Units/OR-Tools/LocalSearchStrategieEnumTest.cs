@@ -10,92 +10,92 @@ using System.Threading.Tasks;
 namespace SequencerTest.Units.OR_Tools
 {
     [TestClass]
-    public class LocalSearchStrategieEnumTest
+    public class LocalSearchStrategyEnumTest
     {
         [TestMethod]
         public void TestResolveString()
         {
             //AUTOMATIC
-            LocalSearchStrategieEnum.Metaheuristics metaheuristics = LocalSearchStrategieEnum.ResolveEnum("Automatic");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.Automatic);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("AUTOMATIC");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.Automatic);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("automatic");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.Automatic);
+            LocalSearchStrategyEnum.Metaheuristics metaheuristics = LocalSearchStrategyEnum.ResolveEnum("Automatic");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.Automatic);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("AUTOMATIC");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.Automatic);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("automatic");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.Automatic);
 
             //GREEDYDESCENT
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("GreedyDescent");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.GreedyDescent);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("GREEDYDESCENT");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.GreedyDescent);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("greedydescent");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.GreedyDescent);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("GreedyDescent");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.GreedyDescent);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("GREEDYDESCENT");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.GreedyDescent);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("greedydescent");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.GreedyDescent);
 
             //GuidedLocalSearch
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("GuidedLocalSearch");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.GuidedLocalSearch);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("GUIDEDLOCALSEARCH");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.GuidedLocalSearch);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("guidedlocalsearch");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.GuidedLocalSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("GuidedLocalSearch");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.GuidedLocalSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("GUIDEDLOCALSEARCH");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.GuidedLocalSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("guidedlocalsearch");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.GuidedLocalSearch);
 
             //ObjectiveTabuSearch
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("ObjectiveTabuSearch");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.ObjectiveTabuSearch);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("OBJECTIVETABUSEARCH");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.ObjectiveTabuSearch);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("objectivetabusearch");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.ObjectiveTabuSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("ObjectiveTabuSearch");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.ObjectiveTabuSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("OBJECTIVETABUSEARCH");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.ObjectiveTabuSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("objectivetabusearch");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.ObjectiveTabuSearch);
 
             //SimulatedAnnealing
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("SimulatedAnnealing");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.SimulatedAnnealing);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("SIMULATEDANNEALING");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.SimulatedAnnealing);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("simulatedannealing");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.SimulatedAnnealing);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("SimulatedAnnealing");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.SimulatedAnnealing);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("SIMULATEDANNEALING");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.SimulatedAnnealing);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("simulatedannealing");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.SimulatedAnnealing);
 
             //TabuSearch
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("TabuSearch");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.TabuSearch);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("TABUSEARCH");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.TabuSearch);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("tabusearch");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.TabuSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("TabuSearch");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.TabuSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("TABUSEARCH");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.TabuSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("tabusearch");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.TabuSearch);
 
             //DEFAULT
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.Automatic);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum(null);
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.Automatic);
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum("ASDF");
-            Assert.AreEqual(metaheuristics, LocalSearchStrategieEnum.Metaheuristics.Automatic);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.Automatic);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum(null);
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.Automatic);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum("ASDF");
+            Assert.AreEqual(metaheuristics, LocalSearchStrategyEnum.Metaheuristics.Automatic);
         }
 
         public void TestResolvingEnum()
         {
             //AUTOMATIC
-            var metaheuristics = LocalSearchStrategieEnum.ResolveEnum(LocalSearchStrategieEnum.Metaheuristics.Automatic);
+            var metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategyEnum.Metaheuristics.Automatic);
             Assert.AreEqual(metaheuristics,LocalSearchMetaheuristic.Types.Value.Automatic);
 
             //GREEDYDESCENT
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum(LocalSearchStrategieEnum.Metaheuristics.GreedyDescent);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategyEnum.Metaheuristics.GreedyDescent);
             Assert.AreEqual(metaheuristics, LocalSearchMetaheuristic.Types.Value.Automatic);
 
             //GuidedLocalSearch
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum(LocalSearchStrategieEnum.Metaheuristics.GuidedLocalSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategyEnum.Metaheuristics.GuidedLocalSearch);
             Assert.AreEqual(metaheuristics, LocalSearchMetaheuristic.Types.Value.Automatic);
 
             //ObjectiveTabuSearch
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum(LocalSearchStrategieEnum.Metaheuristics.ObjectiveTabuSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategyEnum.Metaheuristics.ObjectiveTabuSearch);
             Assert.AreEqual(metaheuristics, LocalSearchMetaheuristic.Types.Value.Automatic);
 
             //SimulatedAnnealing
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum(LocalSearchStrategieEnum.Metaheuristics.SimulatedAnnealing);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategyEnum.Metaheuristics.SimulatedAnnealing);
             Assert.AreEqual(metaheuristics, LocalSearchMetaheuristic.Types.Value.Automatic);
 
             //TabuSearch
-            metaheuristics = LocalSearchStrategieEnum.ResolveEnum(LocalSearchStrategieEnum.Metaheuristics.TabuSearch);
+            metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategyEnum.Metaheuristics.TabuSearch);
             Assert.AreEqual(metaheuristics, LocalSearchMetaheuristic.Types.Value.Automatic);
 
         }

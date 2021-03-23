@@ -6,7 +6,7 @@ using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System.Collections.Generic;
-using static SequencePlanner.OR_Tools.LocalSearchStrategieEnum;
+using static SequencePlanner.OR_Tools.LocalSearchStrategyEnum;
 
 namespace CodeExample.PointLike
 {
@@ -20,7 +20,7 @@ namespace CodeExample.PointLike
             Task = new PointLikeTask() {
                 CyclicSequence = false,
                 Dimension = 1,
-                LocalSearchStrategie = Metaheuristics.Automatic,
+                LocalSearchStrategy = Metaheuristics.Automatic,
                 UseShortcutInAlternatives = true,
                 UseMIPprecedenceSolver = true,
                 WeightMultipier = -1,

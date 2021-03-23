@@ -8,7 +8,7 @@ DistanceFunction: TrapezoidTimeDistance
 ResourceSource: NoResource
 TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
 TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
-LocalSearchStrategie: <*LSS*>
+LocalSearchStrategy: <*LSS*>
 UseShortcutInAlternatives: <*USIA*>
 UseMIPprecedenceSolver: <*MIP*>
 

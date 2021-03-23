@@ -40,7 +40,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             {
                 TimeLimit = TimeLimit,
                 GTSPRepresentation = GTSPRepresentation,
-                LocalSearchStrategie = LocalSearchStrategie
+                LocalSearchStrategy = LocalSearchStrategy
                 
             };
             if (UseMIPprecedenceSolver)

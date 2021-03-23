@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SequencePlanner.OR_Tools
 {
-    public class LocalSearchStrategieEnum
+    public class LocalSearchStrategyEnum
     {
         public enum Metaheuristics
         {
@@ -37,7 +37,7 @@ namespace SequencePlanner.OR_Tools
                 case Metaheuristics.ObjectiveTabuSearch:
                     return LocalSearchMetaheuristic.Types.Value.GenericTabuSearch;
                 default:
-                    SeqLogger.Warning("Unknown Metaheuristics, changed for Automatic", nameof(LocalSearchStrategieEnum));
+                    SeqLogger.Warning("Unknown Metaheuristics, changed for Automatic", nameof(LocalSearchStrategyEnum));
                     return LocalSearchMetaheuristic.Types.Value.Automatic;
             }
         }
@@ -60,7 +60,7 @@ namespace SequencePlanner.OR_Tools
                 if (metaheuristics.Contains(Metaheuristics.TabuSearch.ToString().ToUpper()))
                     return Metaheuristics.TabuSearch;
             }
-            SeqLogger.Warning("Unknown Metaheuristics, changed for Automatic", nameof(LocalSearchStrategieEnum));
+            SeqLogger.Warning("Unknown Metaheuristics, changed for Automatic", nameof(LocalSearchStrategyEnum));
             return Metaheuristics.Automatic;
         }
     }
