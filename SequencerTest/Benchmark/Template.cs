@@ -99,7 +99,7 @@ namespace SequencerTest.Benchmark
                 {
                     try
                     {
-                        SeqLogger.LogLevel = LogLevel.Error;
+                        SeqLogger.LogLevel = LogLevel.Info;
                         serPL = new PointLikeTaskSerializer();
                         switch (FormatType)
                         {

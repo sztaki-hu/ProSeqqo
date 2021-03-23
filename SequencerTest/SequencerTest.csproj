@@ -825,6 +825,15 @@
     <None Update="Resources\Benchmark\PickAndPlace\Templates\test90.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Benchmark\SeqTest\Templates\seqtest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\SeqTest\Templates\seqtest2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\SeqTest\Templates\seqtest3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\CSOPA.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
