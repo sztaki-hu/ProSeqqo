@@ -55,7 +55,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             {
                 PositionList.Add(new PositionSerializationObject(item.Out)); ///TODO: Rapid FIX change it!
             }
-
             DistanceFunction = new DistanceFunctionSerializationObject(baseTask.PositionMatrix);
             ResourceFunction = new ResourceFunctionSerializationObject(baseTask.PositionMatrix);
             LocalSearchStrategy = baseTask.LocalSearchStrategy.ToString();
@@ -125,21 +124,21 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         }
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
-            TaskType = TokenConverter.GetStringByHeader("TaskType", tokenizer);
-            Dimension = TokenConverter.GetIntByHeader("Dimension", tokenizer);
-            CyclicSequence = TokenConverter.GetBoolByHeader("CyclicSequence", tokenizer);
-            StartDepot = TokenConverter.GetIntByHeader("StartDepot", tokenizer);
-            FinishDepot = TokenConverter.GetIntByHeader("FinishDepot", tokenizer);
-            TimeLimit = TokenConverter.GetIntByHeader("TimeLimit", tokenizer);
-            PositionList = TokenConverter.GetPositionListByHeader("PositionList", tokenizer);
-            UseMIPprecedenceSolver = TokenConverter.GetBoolByHeader("UseMIPprecedenceSolver", tokenizer);
+            TaskType = tokenizer.GetStringByHeader("TaskType");
+            Dimension = tokenizer.GetIntByHeader("Dimension");
+            CyclicSequence = tokenizer.GetBoolByHeader("CyclicSequence");
+            StartDepot = tokenizer.GetIntByHeader("StartDepot");
+            FinishDepot = tokenizer.GetIntByHeader("FinishDepot");
+            TimeLimit = tokenizer.GetIntByHeader("TimeLimit");
+            PositionList = tokenizer.GetPositionListByHeader("PositionList");
+            UseMIPprecedenceSolver = tokenizer.GetBoolByHeader("UseMIPprecedenceSolver");
             DistanceFunction = new DistanceFunctionSerializationObject();
             DistanceFunction.FillBySEQTokens(tokenizer);
             if ((PositionList == null || PositionList.Count == 0) & DistanceFunction.Function == "MatrixDistance")
                 PositionList = DistanceFunction.DistanceMatrix.PositionList;
             ResourceFunction = new ResourceFunctionSerializationObject();
             ResourceFunction.FillBySEQTokens(tokenizer);
-            LocalSearchStrategy = TokenConverter.GetStringByHeader("LocalSearchStrategy", tokenizer);
+            LocalSearchStrategy = tokenizer.GetStringByHeader("LocalSearchStrategy");
         }
     }
 }

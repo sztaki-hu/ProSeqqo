@@ -171,10 +171,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             base.FillBySEQTokens(tokenizer);
-            UseShortcutInAlternatives = TokenConverter.GetBoolByHeader("UseShortcutInAlternatives", tokenizer);
-            ProcessHierarchy = TokenConverter.GetProcessHierarchyByHeader("ProcessHierarchy", tokenizer);
-            PositionPrecedences = TokenConverter.GetPrecedenceListByHeader("PositionPrecedence", tokenizer);
-            ProcessPrecedences = TokenConverter.GetPrecedenceListByHeader("ProcessPrecedence", tokenizer);
+            UseShortcutInAlternatives = tokenizer.GetBoolByHeader("UseShortcutInAlternatives" );
+            ProcessHierarchy = tokenizer.GetProcessHierarchyByHeader("ProcessHierarchy" );
+            PositionPrecedences = tokenizer.GetPrecedenceListByHeader("PositionPrecedence" );
+            ProcessPrecedences = tokenizer.GetPrecedenceListByHeader("ProcessPrecedence");
         }
         public string ToSEQ()
         {
