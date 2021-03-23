@@ -128,8 +128,8 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         }
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
-            Function = TokenConverter.GetStringByHeader("DistanceFunction", tokenizer);
-            StrictUserEdgeWeights = TokenConverter.GetStrictEdgeWeightSet("StrictEdgeWeights", tokenizer);
+            Function = tokenizer.GetStringByHeader("DistanceFunction");
+            StrictUserEdgeWeights = tokenizer.GetStrictEdgeWeightSet("StrictEdgeWeights");
             if (Function != null)
             {
                 if (Function == "MatrixDistance")
@@ -139,8 +139,8 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 }
                 if (Function == "TrapezoidTimeDistance" || Function == "TrapezoidTimeDistanceWithTimeBreaker")
                 {
-                    TrapezoidAcceleration = TokenConverter.GetDoubleVectorByHeader("TrapezoidAcceleration", tokenizer);
-                    TrapezoidSpeed = TokenConverter.GetDoubleVectorByHeader("TrapezoidSpeed", tokenizer);
+                    TrapezoidAcceleration = tokenizer.GetDoubleVectorByHeader("TrapezoidAcceleration");
+                    TrapezoidSpeed = tokenizer.GetDoubleVectorByHeader("TrapezoidSpeed");
                 }
             }
         }   
