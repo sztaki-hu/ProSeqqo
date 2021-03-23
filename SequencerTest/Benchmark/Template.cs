@@ -59,6 +59,7 @@ namespace SequencerTest.Benchmark
                         text = text.Replace("<*"+item.Key+"*>", item.Value);
                         File.WriteAllText(newGeneration, text);
                     }
+                    SeqLogger.Info("Task created: " + newGeneration);
                     GeneretedTasks.Add(newGeneration);
                 }
             }
@@ -68,7 +69,6 @@ namespace SequencerTest.Benchmark
                 File.Copy(FilePath, newGeneration);
                 GeneretedTasks.Add(newGeneration);
             }
-            SeqLogger.Info("Task created: " + newGeneration);
         }
 
         public void RunTasks()
@@ -192,9 +192,9 @@ namespace SequencerTest.Benchmark
                 tmp += Path.GetFileName(GeneretedTasks[i])+s;
                 tmp += TaskType.ToString()+s;
                 
-                if (TaskType == TaskType.LineLike && LineResults is not null && LineResults.Count<i)
+                if (TaskType == TaskType.LineLike && LineResults is not null && LineResults.Count>i)
                     tmp += LineResults[i].ToCSV();
-                if (TaskType == TaskType.PoitnLike && PointResults is not null && PointResults.Count < i)
+                if (TaskType == TaskType.PoitnLike && PointResults is not null && PointResults.Count > i)
                     tmp += PointResults[i].ToCSV();
                 
                 if(ParameterCombinatrions.Count>i)
