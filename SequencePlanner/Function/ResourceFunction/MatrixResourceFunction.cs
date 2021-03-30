@@ -15,6 +15,10 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public double ComputeResourceCost(Position A, Position B, double distance)
         {
+            if (A.ResourceID == -1)
+                throw new SeqException("Position with UserID: " + A.UserID + " has no ResourceID: -1");
+            if (B.ResourceID == -1)
+                throw new SeqException("Position with UserID: " + B.UserID + " has no ResourceID: -1");
             var ida = -1;
             var idb = -1;
             for (int i = 0; i < CostMatrixIDHeader.Count; i++)
@@ -24,13 +28,13 @@ namespace SequencePlanner.Function.ResourceFunction
                 if (CostMatrixIDHeader[i] == B.ResourceID)
                     idb = i;
                 if(ida!=-1 && idb!=-1)
-                    return CostMatrix[ida][idb];
+                    return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
             }
             if (ida == -1)
                 throw new SeqException("Position with ResourceID: "+ A.ResourceID + " not contained by CostMatrixIDHeader");
             if (idb == -1)
                 throw new SeqException("Position with ResourceID: "+ B.ResourceID + " not contained by CostMatrixIDHeader");
-            return CostMatrix[ida][idb];
+            return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
         }
 
         public MatrixResourceFunction(List<List<double>> costMatrix, List<int> resourceIDList, IResourceDistanceLinkFunction link)
@@ -43,7 +47,7 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public void Validate()
         {
-            if(CostMatrixIDHeader.Count == CostMatrix.Count)
+            if(CostMatrixIDHeader.Count != CostMatrix.Count)
                 throw new SeqException("Resource cost matrix size not equal with the header.");
 
             foreach (var mx1 in CostMatrix)
