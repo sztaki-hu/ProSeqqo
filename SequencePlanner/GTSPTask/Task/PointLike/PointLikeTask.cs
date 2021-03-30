@@ -45,6 +45,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             Timer.Start();
             if (Validate)
                 ValidateModel();
+            DepotMapper.Map(this);
             if (UseShortcutInAlternatives)
             {
                 ShortestPathProcessor = new ShortestPathProcessor(this);
@@ -72,6 +73,9 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 pointResult = ShortestPathProcessor.ResolveSolution(pointResult, CalculateWeightFunction);
                 ShortestPathProcessor.ChangeBack();
             }
+            pointResult = (PointTaskResult)DepotMapper.ResolveSolution(pointResult);
+            DepotMapper.ReverseMap(this);
+
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
             Timer.Stop();

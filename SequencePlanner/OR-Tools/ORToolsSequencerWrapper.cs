@@ -31,7 +31,7 @@ namespace SequencePlanner.OR_Tools
             Timer = new Stopwatch();
             SeqLogger.Info("GTSP Matrix Dimension: " + param.GTSPRepresentation.RoundedMatrix.GetLength(0) + "x"+ param.GTSPRepresentation.RoundedMatrix.GetLength(1), nameof(ORToolsSequencerWrapper));
             SeqLogger.Info("GTSP Start Depot seqID: " + param.GTSPRepresentation.StartDepot, nameof(ORToolsSequencerWrapper));
-            manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedMatrix.GetLength(0), 1, param.GTSPRepresentation.StartDepot);
+            manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedMatrix.GetLength(0), 1, new int[] { param.GTSPRepresentation.StartDepot }, new int[] { param.GTSPRepresentation.StartDepot });
             routing = new RoutingModel(manager);
 
             //Edge weight callback
