@@ -33,10 +33,88 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             CheckPositionMatrix(pointLikeTask.PositionMatrix);
             CheckStrictEdgeWeights(pointLikeTask);
             CheckProcessHierarchy(pointLikeTask);
-
+            CheckProcessPrecedence(pointLikeTask);
+            CheckUseAlternativeShortcuts(pointLikeTask);
             CheckCycle(pointLikeTask.CyclicSequence, pointLikeTask.StartDepot, pointLikeTask.FinishDepot);
             SeqLogger.Indent--;
             SeqLogger.Info("Validation finished!", nameof(PointLikeTaskValidator));
+        }
+
+        //Q17
+        private void CheckUseAlternativeShortcuts(PointLikeTask task)
+        {
+            if(task.UseShortcutInAlternatives)
+                foreach (var process in task.Processes)
+                {
+                    foreach (var alternative in process.Alternatives)
+                    {
+                        for (int i = 0; i < alternative.Tasks.Count; i++)
+                        {
+                            if(i!=0 || i!=alternative.Tasks.Count-1) //Not the first or the last task of the alternative.
+                                foreach (var position in alternative.Tasks[i].Positions)
+                                {
+                                    foreach (var precedence in task.PositionPrecedence)
+                                    {
+                                        if (precedence.Before.GlobalID == position.Node.GlobalID || precedence.After.GlobalID == position.Node.GlobalID)
+                                            throw new SeqException("In case of alternative shortcuts, position precedences available only for the positions of the first and last task of alternatives. Position's userID: "+ position.Node.UserID);
+                                    }
+                                }
+                        }
+                    }
+                }
+        }
+
+        //Q16
+        private void CheckPositionPrecedence(PointLikeTask task)
+        {
+            if ((task.StartDepot is not null || task.FinishDepot is not null) && task.PositionPrecedence is not null && task.PositionPrecedence.Count > 0)
+                foreach (var position in task.PositionMatrix.Positions)
+                {
+                    foreach (var precedence in task.ProcessPrecedence)
+                    {
+                        if (task.StartDepot is not null && (precedence.Before.GlobalID == task.StartDepot.GlobalID || precedence.After.GlobalID != task.StartDepot.GlobalID))
+                            throw new SeqException("Position precedence should not contain StartDepo's position, UserID: " + task.StartDepot.GlobalID);
+                        if (task.FinishDepot is not null && (precedence.Before.GlobalID == task.FinishDepot.GlobalID || precedence.After.GlobalID != task.FinishDepot.GlobalID))
+                            throw new SeqException("Position precedence should not contain FinishDepo's position, UserID: " + task.FinishDepot.GlobalID);
+                    }
+                }
+            SeqLogger.Info("PositionPrecedence: " + task.ProcessPrecedence.Count+ " precedences", nameof(PointLikeTaskValidator));
+        }
+
+        //Q15
+        private void CheckProcessPrecedence(PointLikeTask task)
+        {
+            Process a = null;
+            Process b = null;
+            if((task.StartDepot is not null || task.FinishDepot is not null) && task.ProcessPrecedence is not null && task.ProcessPrecedence.Count>0)
+                foreach (var process in task.Processes)
+                {
+                    foreach (var alternative in process.Alternatives)
+                    {
+                        foreach (var t in alternative.Tasks)
+                        {
+                            foreach (var position in t.Positions)
+                            {
+
+                                if (task.StartDepot is not null && task.StartDepot.GlobalID == position.Node.GlobalID)
+                                    a = process;
+                                if(task.FinishDepot is not null && task.FinishDepot.GlobalID == position.Node.GlobalID)
+                                    b = process;
+                                if ((task.StartDepot != null || a is not null) && (task.FinishDepot != null || b is not null))
+                                    goto Finish;
+                            }
+                        }
+                    }
+                }
+            Finish:
+            foreach (var precedence in task.ProcessPrecedence)
+            {
+                if (a is not null && (precedence.Before.GlobalID == a.GlobalID || precedence.After.GlobalID == a.GlobalID))
+                    throw new SeqException("Process precedence should not contain StartDepo's process, UserID: "+a.UserID);
+                if (b is not null && (precedence.Before.GlobalID == b.GlobalID || precedence.After.GlobalID == b.UserID))
+                    throw new SeqException("Process precedence should not contain FinishDepo's process, UserID: " + a.GlobalID);
+            }
+            SeqLogger.Info("ProcessPrecedence: " + task.ProcessPrecedence.Count+" precedences", nameof(PointLikeTaskValidator));
         }
 
         //Q14
