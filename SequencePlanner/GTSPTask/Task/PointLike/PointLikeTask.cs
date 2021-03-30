@@ -43,6 +43,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         {
             Timer.Reset();
             Timer.Start();
+            if (Validate)
+                ValidateModel();
             if (UseShortcutInAlternatives)
             {
                 ShortestPathProcessor = new ShortestPathProcessor(this);
@@ -60,6 +62,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             ToLog(LogLevel.Debug);
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
+            if (Validate)
+                ValidateModel();
             PointTaskResult pointResult = new PointTaskResult(orTools.Solve());
             pointResult.CreateRawGeneralIDStruct();
             pointResult = ResolveSolution(pointResult);

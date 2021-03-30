@@ -18,6 +18,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
         public int TimeLimit { get; set; }
         public bool UseMIPprecedenceSolver { get; set; }
         protected TimeSpan MIPRunTime { get; set; }
+        public bool Validate { get; set; }
         public LocalSearchStrategyEnum.Metaheuristics LocalSearchStrategy { get; set; }
         public event IBaseTask.TaskCompleted SequencingTaskCompleted;
 
@@ -27,6 +28,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
             PositionMatrix = new PositionMatrix();
             LocalSearchStrategy = LocalSearchStrategyEnum.Metaheuristics.Automatic;
             WeightMultipier = 1000;
+            Validate = false;
         }
 
 

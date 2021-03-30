@@ -264,8 +264,6 @@ namespace SequencerConsole
                     default:
                         throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
                 }
-                if (validate)
-                    task.ValidateModel();
                 return task.RunModel();
             }
             return null;
@@ -292,8 +290,6 @@ namespace SequencerConsole
                     default:
                         throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
                 }
-                if (validate)
-                    task.ValidateModel();
                 return task.RunModel();
                 //var ct = new CancellationToken();
                 //WaitForSolution("Solver running!", ct);
