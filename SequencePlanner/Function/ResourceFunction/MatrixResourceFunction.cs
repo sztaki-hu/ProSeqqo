@@ -23,7 +23,13 @@ namespace SequencePlanner.Function.ResourceFunction
                     ida = i;
                 if (CostMatrixIDHeader[i] == B.ResourceID)
                     idb = i;
+                if(ida!=-1 && idb!=-1)
+                    return CostMatrix[ida][idb];
             }
+            if (ida == -1)
+                throw new SeqException("Position with ResourceID: "+ A.ResourceID + " not contained by CostMatrixIDHeader");
+            if (idb == -1)
+                throw new SeqException("Position with ResourceID: "+ B.ResourceID + " not contained by CostMatrixIDHeader");
             return CostMatrix[ida][idb];
         }
 
@@ -37,15 +43,30 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public void Validate()
         {
+            if(CostMatrixIDHeader.Count == CostMatrix.Count)
+                throw new SeqException("Resource cost matrix size not equal with the header.");
+
+            foreach (var mx1 in CostMatrix)
+            {
+                foreach (var mx2 in CostMatrix)
+                {
+                    if (mx1.Count != mx2.Count)
+                        throw new SeqException("Size of resource cost matrix should be n x n");
+                }
+            }
+
             if (LinkingFunction == null)
             {
-                throw new SeqException("ConstantResourceFunction.LinkingFunction not given - NULL.");
+                throw new SeqException("ConstantResourceFunction.LinkingFunction not initalized.");
             }
+            SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(MatrixResourceFunction));
+            SeqLogger.Info("MatrixResource: " + CostMatrix.Count+"x"+CostMatrix.Count, nameof(MatrixResourceFunction));
+            SeqLogger.Info("LinkingFunction: " + LinkingFunction.FunctionName, nameof(MatrixResourceFunction));
         }
         public void ToLog(LogLevel level)
         {
             SeqLogger.Indent++;
-            SeqLogger.WriteLog(level, "ResourceFunction: " + FunctionName, nameof(DistanceFunction));
+            SeqLogger.WriteLog(level, "ResourceFunction: " + FunctionName, nameof(MatrixResourceFunction));
             SeqLogger.Indent--;
         }
     }

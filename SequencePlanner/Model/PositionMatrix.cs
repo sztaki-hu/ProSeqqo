@@ -42,19 +42,15 @@ namespace SequencePlanner.Model
 
         public void Validate()
         {
-            if (DistanceFunction == null)
-                throw new SeqException("PositionMatrix.DistanceFunction not given.");
-            else
-            {
-                DistanceFunction.Validate();
-            }
+            //if (DistanceFunction == null)
+            //    throw new SeqException("PositionMatrix.DistanceFunction not given.");
+            //else
+            //    DistanceFunction.Validate();
 
-            if (ResourceFunction == null)
-                throw new SeqException("PositionMatrix.ResourceFunction not given.");
-            else
-            {
-                ResourceFunction.Validate();
-            }
+            //if (ResourceFunction == null)
+            //    throw new SeqException("PositionMatrix.ResourceFunction not given.");
+            //else
+            //    ResourceFunction.Validate();
 
             if (Positions == null)
                 throw new SeqException("PositionMatrix.Positions not given.");

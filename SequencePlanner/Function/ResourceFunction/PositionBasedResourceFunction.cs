@@ -23,6 +23,7 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public void Validate()
         {
+
         }
         public void ToLog(LogLevel level)
         {

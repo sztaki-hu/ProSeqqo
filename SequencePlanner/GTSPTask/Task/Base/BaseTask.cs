@@ -26,6 +26,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
             Timer = new Stopwatch();
             PositionMatrix = new PositionMatrix();
             LocalSearchStrategy = LocalSearchStrategyEnum.Metaheuristics.Automatic;
+            WeightMultipier = 1000;
         }
 
 
@@ -36,7 +37,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    roundedMatrix[i, j] = Convert.ToInt32(IGTSPRepresentation.WEIGHT_MULTIPLIER * matrix[i, j]);
+                    roundedMatrix[i, j] = Convert.ToInt32(WeightMultipier * matrix[i, j]);
                 }
             }
             return roundedMatrix;

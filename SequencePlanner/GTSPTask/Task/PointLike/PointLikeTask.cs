@@ -280,7 +280,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    matrix[i, j] = int.MaxValue / (IGTSPRepresentation.WEIGHT_MULTIPLIER * 2);
+                    matrix[i, j] = int.MaxValue / (WeightMultipier * 2);
                 }
             }
             matrix = ConnectProcesses(Processes, matrix);
