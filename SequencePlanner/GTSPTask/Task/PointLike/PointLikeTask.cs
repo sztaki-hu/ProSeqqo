@@ -43,6 +43,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         {
             Timer.Reset();
             Timer.Start();
+            if (Validate)
+                ValidateModel();
             if (UseShortcutInAlternatives)
             {
                 ShortestPathProcessor = new ShortestPathProcessor(this);
@@ -60,6 +62,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             ToLog(LogLevel.Debug);
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
+            if (Validate)
+                ValidateModel();
             PointTaskResult pointResult = new PointTaskResult(orTools.Solve());
             pointResult.CreateRawGeneralIDStruct();
             pointResult = ResolveSolution(pointResult);
@@ -280,7 +284,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    matrix[i, j] = int.MaxValue / (IGTSPRepresentation.WEIGHT_MULTIPLIER * 2);
+                    matrix[i, j] = int.MaxValue / (WeightMultipier * 2);
                 }
             }
             matrix = ConnectProcesses(Processes, matrix);

@@ -18,6 +18,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
         public int TimeLimit { get; set; }
         public bool UseMIPprecedenceSolver { get; set; }
         protected TimeSpan MIPRunTime { get; set; }
+        public bool Validate { get; set; }
         public LocalSearchStrategyEnum.Metaheuristics LocalSearchStrategy { get; set; }
         public event IBaseTask.TaskCompleted SequencingTaskCompleted;
 
@@ -26,6 +27,8 @@ namespace SequencePlanner.GTSPTask.Task.Base
             Timer = new Stopwatch();
             PositionMatrix = new PositionMatrix();
             LocalSearchStrategy = LocalSearchStrategyEnum.Metaheuristics.Automatic;
+            WeightMultipier = 1000;
+            Validate = false;
         }
 
 
@@ -36,7 +39,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    roundedMatrix[i, j] = Convert.ToInt32(IGTSPRepresentation.WEIGHT_MULTIPLIER * matrix[i, j]);
+                    roundedMatrix[i, j] = Convert.ToInt32(WeightMultipier * matrix[i, j]);
                 }
             }
             return roundedMatrix;

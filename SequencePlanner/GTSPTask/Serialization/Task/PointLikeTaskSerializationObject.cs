@@ -105,7 +105,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 var before = FindProcess(processPrec.BeforeID, pointLikeTask);
                 var after = FindProcess(processPrec.AfterID, pointLikeTask);
                 if (before == null || after == null)
-                    throw new SeqException("Phrase error contour precedence user id not found!");
+                    throw new SeqException("Phrase error process precedence user id not found!");
                 pointLikeTask.ProcessPrecedence.Add(new GTSP.GTSPPrecedenceConstraint()
                 {
                     Before = before,

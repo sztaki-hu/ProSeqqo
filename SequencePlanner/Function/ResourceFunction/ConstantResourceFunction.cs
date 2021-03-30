@@ -25,9 +25,12 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public void Validate()
         {
+            SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(ConstantResourceFunction));
+            SeqLogger.Info("ResourceCostConstant: " + Cost, nameof(ConstantResourceFunction));
+            SeqLogger.Info("LinkingFunction: " + LinkingFunction.FunctionName, nameof(ConstantResourceFunction));
             if(LinkingFunction == null)
             {
-                throw new SeqException("ConstantResourceFunction.LinkingFunction not given - NULL.");
+                throw new SeqException("ConstantResourceFunction.LinkingFunction not given.");
             }
         }
 

@@ -128,7 +128,7 @@ namespace SequencerTest.Units.Serialization
                 Assert.IsTrue(import.CyclicSequence);
                 Assert.AreEqual(A.Node.UserID, import.StartDepot.UserID);
                 Assert.AreEqual(B.Node.UserID, import.FinishDepot.UserID);
-                Assert.AreEqual(0, import.WeightMultipier);
+                Assert.AreEqual(1000, import.WeightMultipier);
                 Assert.AreEqual(1, import.ContourPenalty);
                 Assert.AreEqual(linePrecedences.Count, import.LinePrecedences.Count);
                 Assert.AreEqual(contourPrecedences.Count, import.ContourPrecedences.Count);

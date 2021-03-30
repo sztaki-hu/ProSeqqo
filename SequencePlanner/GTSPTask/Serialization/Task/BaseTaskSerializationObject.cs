@@ -25,6 +25,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         [JsonProperty(Order = 6)]
         public int TimeLimit { get; set; }
         public bool UseMIPprecedenceSolver { get; set; }
+        public bool Validate { get; set; }
         public List<PositionSerializationObject> PositionList { get; set; }
         public DistanceFunctionSerializationObject DistanceFunction {get;set;}
         public ResourceFunctionSerializationObject ResourceFunction {get;set;}
@@ -58,6 +59,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             DistanceFunction = new DistanceFunctionSerializationObject(baseTask.PositionMatrix);
             ResourceFunction = new ResourceFunctionSerializationObject(baseTask.PositionMatrix);
             LocalSearchStrategy = baseTask.LocalSearchStrategy.ToString();
+            Validate = baseTask.Validate;
         }
 
         public string ToSEQShort()
@@ -67,6 +69,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             string seq = "";
             seq += "#Export @ " + DateTime.UtcNow + newline;
             seq += "TaskType: "+ TaskType + newline;
+            seq += "Validate: "+ Validate + newline;
             seq += "Dimension: " + Dimension + newline;
             seq += "CyclicSequence: " + CyclicSequence + newline;
             if(StartDepot!=-1)
@@ -101,6 +104,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         {
             //TaskType
             task.Dimension = Dimension;
+            task.Validate = Validate;
             task.CyclicSequence = CyclicSequence;
             task.PositionMatrix = new PositionMatrix();
             foreach (var pos in PositionList)
@@ -125,6 +129,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             TaskType = tokenizer.GetStringByHeader("TaskType");
+            Validate = tokenizer.GetBoolByHeader("Validate");
             Dimension = tokenizer.GetIntByHeader("Dimension");
             CyclicSequence = tokenizer.GetBoolByHeader("CyclicSequence");
             StartDepot = tokenizer.GetIntByHeader("StartDepot");

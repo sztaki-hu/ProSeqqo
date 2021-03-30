@@ -1,4 +1,5 @@
 TaskType: PointLike
+Validate: True
 Dimension: 6
 DistanceFunction: TrapezoidTimeDistance
 TrapezoidSpeed: [0.266667;0.266667;0.266667;0.266667;0.266667;0.266667]
