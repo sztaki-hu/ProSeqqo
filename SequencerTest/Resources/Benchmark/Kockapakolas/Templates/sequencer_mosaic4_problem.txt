@@ -7,7 +7,7 @@ DistanceFunction: EuclidianDistance
 ResourceSource: NoResource
 TimeLimit: <*T*>
 UseMIPprecedenceSolver: <*MIP*>
-LocalSearchStrategie: <*LSS*>
+LocalSearchStrategy: <*LSS*>
 UseShortcutInAlternatives: <*USIA*>
 
 PositionList:

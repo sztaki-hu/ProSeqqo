@@ -25,10 +25,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         [JsonProperty(Order = 6)]
         public int TimeLimit { get; set; }
         public bool UseMIPprecedenceSolver { get; set; }
+        public bool Validate { get; set; }
         public List<PositionSerializationObject> PositionList { get; set; }
         public DistanceFunctionSerializationObject DistanceFunction {get;set;}
         public ResourceFunctionSerializationObject ResourceFunction {get;set;}
-        public string LocalSearchStrategie { get; set; }
+        public string LocalSearchStrategy { get; set; }
 
         public BaseTaskSerializationObject()
         {
@@ -55,10 +56,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             {
                 PositionList.Add(new PositionSerializationObject(item.Out)); ///TODO: Rapid FIX change it!
             }
-
             DistanceFunction = new DistanceFunctionSerializationObject(baseTask.PositionMatrix);
             ResourceFunction = new ResourceFunctionSerializationObject(baseTask.PositionMatrix);
-            LocalSearchStrategie = baseTask.LocalSearchStrategie.ToString();
+            LocalSearchStrategy = baseTask.LocalSearchStrategy.ToString();
+            Validate = baseTask.Validate;
         }
 
         public string ToSEQShort()
@@ -68,6 +69,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             string seq = "";
             seq += "#Export @ " + DateTime.UtcNow + newline;
             seq += "TaskType: "+ TaskType + newline;
+            seq += "Validate: "+ Validate + newline;
             seq += "Dimension: " + Dimension + newline;
             seq += "CyclicSequence: " + CyclicSequence + newline;
             if(StartDepot!=-1)
@@ -76,7 +78,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 seq += "FinishDepot: " + FinishDepot + newline;
             seq += "TimeLimit: " + TimeLimit + newline;
             seq += "TimeLimit: " + TimeLimit + newline;
-            seq += "LocalSearchStrategie: " + LocalSearchStrategie + newline;
+            seq += "LocalSearchStrategy: " + LocalSearchStrategy + newline;
             seq += DistanceFunction.ToSEQShort();
             seq += ResourceFunction.ToSEQ();
             return seq;
@@ -102,6 +104,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         {
             //TaskType
             task.Dimension = Dimension;
+            task.Validate = Validate;
             task.CyclicSequence = CyclicSequence;
             task.PositionMatrix = new PositionMatrix();
             foreach (var pos in PositionList)
@@ -121,25 +124,26 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             task.PositionMatrix.DistanceFunction = DistanceFunction.ToDistanceFunction(task.PositionMatrix.Positions);
             task.PositionMatrix.ResourceFunction = ResourceFunction.ToResourceFunction();
             task.UseMIPprecedenceSolver = UseMIPprecedenceSolver;
-            task.LocalSearchStrategie = LocalSearchStrategieEnum.ResolveEnum(LocalSearchStrategie);
+            task.LocalSearchStrategy = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategy);
         }
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
-            TaskType = TokenConverter.GetStringByHeader("TaskType", tokenizer);
-            Dimension = TokenConverter.GetIntByHeader("Dimension", tokenizer);
-            CyclicSequence = TokenConverter.GetBoolByHeader("CyclicSequence", tokenizer);
-            StartDepot = TokenConverter.GetIntByHeader("StartDepot", tokenizer);
-            FinishDepot = TokenConverter.GetIntByHeader("FinishDepot", tokenizer);
-            TimeLimit = TokenConverter.GetIntByHeader("TimeLimit", tokenizer);
-            PositionList = TokenConverter.GetPositionListByHeader("PositionList", tokenizer);
-            UseMIPprecedenceSolver = TokenConverter.GetBoolByHeader("UseMIPprecedenceSolver", tokenizer);
+            TaskType = tokenizer.GetStringByHeader("TaskType");
+            Validate = tokenizer.GetBoolByHeader("Validate");
+            Dimension = tokenizer.GetIntByHeader("Dimension");
+            CyclicSequence = tokenizer.GetBoolByHeader("CyclicSequence");
+            StartDepot = tokenizer.GetIntByHeader("StartDepot");
+            FinishDepot = tokenizer.GetIntByHeader("FinishDepot");
+            TimeLimit = tokenizer.GetIntByHeader("TimeLimit");
+            PositionList = tokenizer.GetPositionListByHeader("PositionList");
+            UseMIPprecedenceSolver = tokenizer.GetBoolByHeader("UseMIPprecedenceSolver");
             DistanceFunction = new DistanceFunctionSerializationObject();
             DistanceFunction.FillBySEQTokens(tokenizer);
             if ((PositionList == null || PositionList.Count == 0) & DistanceFunction.Function == "MatrixDistance")
                 PositionList = DistanceFunction.DistanceMatrix.PositionList;
             ResourceFunction = new ResourceFunctionSerializationObject();
             ResourceFunction.FillBySEQTokens(tokenizer);
-            LocalSearchStrategie = TokenConverter.GetStringByHeader("LocalSearchStrategie", tokenizer);
+            LocalSearchStrategy = tokenizer.GetStringByHeader("LocalSearchStrategy");
         }
     }
 }

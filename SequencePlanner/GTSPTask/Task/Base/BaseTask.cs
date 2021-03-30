@@ -18,14 +18,17 @@ namespace SequencePlanner.GTSPTask.Task.Base
         public int TimeLimit { get; set; }
         public bool UseMIPprecedenceSolver { get; set; }
         protected TimeSpan MIPRunTime { get; set; }
-        public LocalSearchStrategieEnum.Metaheuristics LocalSearchStrategie { get; set; }
+        public bool Validate { get; set; }
+        public LocalSearchStrategyEnum.Metaheuristics LocalSearchStrategy { get; set; }
         public event IBaseTask.TaskCompleted SequencingTaskCompleted;
 
         public BaseTask()
         {
             Timer = new Stopwatch();
             PositionMatrix = new PositionMatrix();
-            LocalSearchStrategie = LocalSearchStrategieEnum.Metaheuristics.Automatic;
+            LocalSearchStrategy = LocalSearchStrategyEnum.Metaheuristics.Automatic;
+            WeightMultipier = 1000;
+            Validate = false;
         }
 
 
@@ -36,7 +39,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    roundedMatrix[i, j] = Convert.ToInt32(IGTSPRepresentation.WEIGHT_MULTIPLIER * matrix[i, j]);
+                    roundedMatrix[i, j] = Convert.ToInt32(WeightMultipier * matrix[i, j]);
                 }
             }
             return roundedMatrix;
@@ -56,7 +59,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
             SeqLogger.WriteLog(level, "FinishDepot: " + FinishDepot, nameof(BaseTask));
             SeqLogger.WriteLog(level, "TimeLimit: " + TimeLimit, nameof(BaseTask));
             SeqLogger.WriteLog(level, "UseMIPprecedenceSolver: " + UseMIPprecedenceSolver, nameof(BaseTask));
-            SeqLogger.WriteLog(level, "LocalSearchStrategie: " + LocalSearchStrategie, nameof(BaseTask));
+            SeqLogger.WriteLog(level, "LocalSearchStrategy: " + LocalSearchStrategy, nameof(BaseTask));
             PositionMatrix.ToLog(level);
         }
     }

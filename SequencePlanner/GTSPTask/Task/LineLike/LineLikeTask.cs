@@ -33,6 +33,8 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         {
             Timer.Reset();
             Timer.Start();
+            if (Validate)
+                ValidateModel();
             SeqLogger.Info("RunModel started!", nameof(LineLikeTask));
             SeqLogger.Indent++;
             GenerateModel();
@@ -40,7 +42,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             {
                 TimeLimit = TimeLimit,
                 GTSPRepresentation = GTSPRepresentation,
-                LocalSearchStrategie = LocalSearchStrategie
+                LocalSearchStrategy = LocalSearchStrategy
                 
             };
             if (UseMIPprecedenceSolver)

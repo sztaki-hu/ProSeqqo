@@ -57,8 +57,9 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PointLike_PosProcPrecedences.txt", "-o", outdir + "\\PointLike_PosProcPrecedences_out.txt"   };
                     //args = new string[] { "-i", example + "\\PointLike_PosPrecedences.txt",     "-o", outdir + "\\PointLike_PosPrecedences_out.txt"       };
                     //args = new string[] { "-i", example + "\\LocalTests/DEV_LL.txt",            "-o", outdir + "\\LocalTests/DEV_LL_out.txt",             };
-                    //args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        };
+                    args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        };
                     //args = new string[] { "-i", example + "\\seqtest2.txt",                     "-o", outdir + "\\seqtest2_o.json",                       };
+                    //args = new string[] { "-i", example + "\\seqtest3.txt",                     "-o", outdir + "\\seqtest3_o.json",                       };
                     //args = new string[] { "-i", example + "\\etalon.txt",                       "-o", outdir + "\\etalon_o.json",                         };
                     //args = new string[] { "-i", example + "\\etalonMatrix.txt",                 "-o", outdir + "\\etalonMatrix_o.seq",                    };
                     //args = new string[] { "-i", example + "\\seqtest3.txt",                     "-o", outdir + "\\seqtest3_o.json",                       };
@@ -69,8 +70,8 @@ namespace SequencerConsole
                     //args = new string[] { "-i", local + "\\test11_1.txt",                       "-o", localOut + "\\test11_1.json"                        };
                     //args = new string[] { "-i", local + "\\test11_2.txt",                       "-o", localOut + "\\test11_2.json"                        };
                     //args = new string[] { "-i", local + "\\test11_3.txt",                       "-o", localOut + "\\test11_3.json"                        };
-                    args = new string[] { "-i", local + "\\test90_0.txt", "-o", localOut + "\\test90_0.json" };
-                    args = new string[] { "-i", local + "\\test90_1.txt", "-o", localOut + "\\test90_1.json" };
+                    //args = new string[] { "-i", local + "\\test90_0.txt", "-o", localOut + "\\test90_0.json" };
+                    //args = new string[] { "-i", local + "\\test90_1.txt", "-o", localOut + "\\test90_1.json" };
                     //args = new string[] { "-i", local + "\\test1_1.txt",                        "-o", localOut + "\\test1_1.json"                         };
                     //args = new string[] { "-i", local + "\\test1_1 copy.txt",                   "-o", localOut + "\\test1_1.json"                         };
                     //args = new string[] { "-i", local + "\\test1_3.txt",                        "-o", localOut + "\\test1_3.json"                         };
@@ -83,9 +84,9 @@ namespace SequencerConsole
                     //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt",    "-o", kockaOut + "\\sequencer_img2_model3_problem_1.json" };
                     //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_0.txt",    "-o", kockaOut + "\\sequencer_img3_model2_problem_0.json" };
                     //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt",    "-o", kockaOut + "\\sequencer_img3_model2_problem_1.json" };
-                    args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt", "-o", kockaOut + "\\sequencer_img3_model2_problem_1.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt", "-o", kockaOut + "\\sequencer_img3_model2_problem_1.json" };
                     //args = new string[] { "-i", kocka + "\\sequencer_mosaic1_problem_1.txt",    "-o", kockaOut + "\\sequencer_mosaic1_problem_1.json" };
-                    args = new string[] { "-i", kocka + "\\sequencer_img3_model4_problem_1.txt", "-o", kockaOut + "\\sequencer_img3_model4_problem_1.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model4_problem_1.txt", "-o", kockaOut + "\\sequencer_img3_model4_problem_1.json" };
 
                     Help(args);
                     Version(args);
@@ -263,8 +264,6 @@ namespace SequencerConsole
                     default:
                         throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
                 }
-                if (validate)
-                    task.ValidateModel();
                 return task.RunModel();
             }
             return null;
@@ -291,8 +290,6 @@ namespace SequencerConsole
                     default:
                         throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
                 }
-                if (validate)
-                    task.ValidateModel();
                 return task.RunModel();
                 //var ct = new CancellationToken();
                 //WaitForSolution("Solver running!", ct);

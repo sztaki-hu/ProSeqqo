@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static SequencePlanner.OR_Tools.LocalSearchStrategieEnum;
+using static SequencePlanner.OR_Tools.LocalSearchStrategyEnum;
 
 namespace CodeExample.LineLike
 {
@@ -26,7 +26,7 @@ namespace CodeExample.LineLike
             {
                 CyclicSequence = false,
                 Dimension = 1,
-                LocalSearchStrategie = Metaheuristics.Automatic,
+                LocalSearchStrategy = Metaheuristics.Automatic,
                 UseMIPprecedenceSolver = true,
                 WeightMultipier = -1,
                 TimeLimit = 100

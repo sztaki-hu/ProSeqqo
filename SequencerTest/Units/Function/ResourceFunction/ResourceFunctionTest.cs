@@ -20,11 +20,11 @@ namespace SequencerTest.Units
         [TestInitialize()]
         public void Initialize()
         {
-            A = new Position() { Vector = new double[] { 0, 0, 0 }, SequencingID = 50 };
-            B = new Position() { Vector = new double[] { 5, 0, 0 }, SequencingID = 60 };
-            C = new Position() { Vector = new double[] { 0, 5, 0 }, SequencingID = 70 };
-            D = new Position() { Vector = new double[] { 0, 0, 5 } };
-            E = new Position() { Vector = new double[] { 5, 5, 5 } };
+            A = new Position() { Vector = new double[] { 0, 0, 0 }, SequencingID = 50, ResourceID = 0 };
+            B = new Position() { Vector = new double[] { 5, 0, 0 }, SequencingID = 60, ResourceID = 1 };
+            C = new Position() { Vector = new double[] { 0, 5, 0 }, SequencingID = 70, ResourceID = 2 };
+            D = new Position() { Vector = new double[] { 0, 0, 5 }, ResourceID = 3};
+            E = new Position() { Vector = new double[] { 5, 5, 5 }, ResourceID = 4 };
         }
 
         [TestMethod]
@@ -51,19 +51,19 @@ namespace SequencerTest.Units
                                                                        new List<int> { A.ResourceID, B.ResourceID, C.ResourceID }, 
                                                                        new AddResourceDistanceLinkFunction());
             Assert.AreEqual(3, func.ComputeResourceCost(A, B, 1));
-            Assert.AreEqual(3, func.ComputeResourceCost(A, C, 2));
-            Assert.AreEqual(3, func.ComputeResourceCost(B, A, 1));
-            Assert.AreEqual(3, func.ComputeResourceCost(A, A, 1));
+            Assert.AreEqual(5, func.ComputeResourceCost(A, C, 2));
+            Assert.AreEqual(2, func.ComputeResourceCost(B, A, 1));
+            Assert.AreEqual(2, func.ComputeResourceCost(A, A, 1));
 
             func = new MatrixResourceFunction(new List<List<double>> { new List<double> { 1, 2, 3 },
                                                                        new List<double> { 1, 2, 3 },
                                                                        new List<double> { 1, 2, 3 } }, 
                                                                        new List<int> { A.ResourceID, B.ResourceID, C.ResourceID },
                                                                        new MaxResourceDistanceLinkFunction());
-            Assert.AreEqual(3, func.ComputeResourceCost(A, B, 1));
+            Assert.AreEqual(2, func.ComputeResourceCost(A, B, 1));
             Assert.AreEqual(3, func.ComputeResourceCost(A, C, 1));
             Assert.AreEqual(3, func.ComputeResourceCost(B, C, 1));
-            Assert.AreEqual(3, func.ComputeResourceCost(A, A, 1));
+            Assert.AreEqual(1, func.ComputeResourceCost(A, A, 1));
         }
 
         [TestMethod]

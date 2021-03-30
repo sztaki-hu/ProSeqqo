@@ -86,12 +86,12 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             base.FillBySEQTokens(tokenizer);
-            ContourPenalty = TokenConverter.GetDoubleByHeader("ContourPenalty", tokenizer);
-            BidirectionLineDefault = TokenConverter.GetBoolByHeader("BidirectionLineDefault", tokenizer);
+            ContourPenalty = tokenizer.GetDoubleByHeader("ContourPenalty");
+            BidirectionLineDefault = tokenizer.GetBoolByHeader("BidirectionLineDefault");
             Line.BIDIRECTIONAL_DEFAULT = BidirectionLineDefault;
-            LinePrecedences = TokenConverter.GetPrecedenceListByHeader("LinePrecedence", tokenizer);
-            ContourPrecedences = TokenConverter.GetPrecedenceListByHeader("ContourPrecedence", tokenizer);
-            LineList = TokenConverter.GetLineListByHeader("LineList", tokenizer);
+            LinePrecedences = tokenizer.GetPrecedenceListByHeader("LinePrecedence");
+            ContourPrecedences = tokenizer.GetPrecedenceListByHeader("ContourPrecedence");
+            LineList = tokenizer.GetLineListByHeader("LineList");
         }
         public string ToSEQ()
         {
