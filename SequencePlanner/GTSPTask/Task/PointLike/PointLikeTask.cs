@@ -95,7 +95,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 Matrix = CreateGTSPMatrix(),
                 DisjointConstraints = CreateDisjointConstraints(),
                 PrecedenceConstraints = CreatePrecedenceConstraints(),
-                StartDepot = StartDepot.SequencingID
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             };
             PositionMatrix.Matrix = GTSPRepresentation.Matrix;
             if (UseMIPprecedenceSolver)

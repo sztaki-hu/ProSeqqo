@@ -14,6 +14,9 @@ namespace SequencePlanner.Helper
         private Position StartDepot { get; set; }
         private Position FinishDepot { get; set; }
         public Position ORToolsStartDepot { get; set; }
+        public Position ORToolsFinishDepot { get; set; }
+        public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequencingID; else return -1; } }
+        public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequencingID; else return -1; } }
         private DepotChangeType DepotChangeType { get; set; }
         private BaseTask Task { get; set; }
         
@@ -75,19 +78,29 @@ namespace SequencePlanner.Helper
         private void CyclicStartDepot()
         {
             ORToolsStartDepot = StartDepot;
+            ORToolsFinishDepot = null;
         }
 
         private void NotCyclicNoDepot()
         {
+            ORToolsStartDepot = StartDepot;
+            ORToolsFinishDepot = null;
             //Create virual position, in a task, alternative, process.
+
+            //ORToolsStartDepot = VIRTUAL;
         }
         private void NotCyclicOnlyStartDepot()
         {
+            ORToolsStartDepot = StartDepot;
+            ORToolsFinishDepot = null;
             //Create virual position, in a task, alternative, process.
             //Set this virtual position as startup position
             //Set matrix edge weights to zero, from any last task's positions to virtual position
             //Set matrix edge weights to zero, from virtual position to any first task's positions 
             //Set other matrix edge weights to infinity
+
+            //ORToolsStartDepot = StartDepot;
+            //ORToolsFinishDepot = VIRTUAL;
         }
         private void NotCyclicOnlyFinishDepot()
         {
@@ -97,10 +110,13 @@ namespace SequencePlanner.Helper
             //Set matrix edge weights to zero, from virtual position to any first task's positions 
             //Set other matrix edge weights to infinity
 
+            //ORToolsStartDepot = VIRTUAL;
+            //ORToolsFinishDepot = FinishDepot;
         }
         private void NotCyclicStartFinishDepot()
         {
-
+            ORToolsStartDepot = StartDepot;
+            ORToolsFinishDepot = FinishDepot;
         }
 
         //REVERSE
@@ -147,7 +163,7 @@ namespace SequencePlanner.Helper
         private TaskResult NotCyclicStartFinishDepotResolve(TaskResult result)
         {
             return result;
-        }
+        } 
     }
 
     enum DepotChangeType

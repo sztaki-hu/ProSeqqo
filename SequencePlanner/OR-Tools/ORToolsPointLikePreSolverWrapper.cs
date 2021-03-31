@@ -84,6 +84,18 @@ namespace SequencePlanner.OR_Tools
             }
         }
 
+        private void AddFinishDepotConstraints(Solver solver)
+        {
+            if (parameters.FinishDepot > -1)                                                                                         //If Start depo exist, position = 0 and selected x = 1
+            {
+                solver.Add(position[parameters.FinishDepot] == 0.0);
+                constraints.Add((position[parameters.FinishDepot] == 0.0).ToString());
+                solver.Add(x[parameters.FinishDepot] == 1.0);
+                constraints.Add((x[parameters.FinishDepot] == parameters.DisjointConstraints.Count).ToString());
+            }
+        }
+
+
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
         {
             SeqLogger.Trace("Precedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
