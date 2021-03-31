@@ -35,6 +35,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             Timer.Start();
             if (Validate)
                 ValidateModel();
+            DepotMapper.Map(this);
             SeqLogger.Info("RunModel started!", nameof(LineLikeTask));
             SeqLogger.Indent++;
             GenerateModel();
@@ -43,13 +44,14 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 TimeLimit = TimeLimit,
                 GTSPRepresentation = GTSPRepresentation,
                 LocalSearchStrategy = LocalSearchStrategy
-                
             };
             if (UseMIPprecedenceSolver)
                 GTSPRepresentation.InitialRoutes = CreateInitialRout();
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
             var result = ResolveSolution(orTools.Solve());
+            result = (LineTaskResult)DepotMapper.ResolveSolution(result);
+            DepotMapper.ReverseMap(this);
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(LineLikeTask));
             Timer.Stop();
@@ -66,7 +68,8 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 NumberOfNodes = Lines.Count,
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
                 OrderPrecedenceConstraints = GTSPRepresentation.PrecedenceConstraints,
-                StartDepot = GTSPRepresentation.StartDepot
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             });
             var result = ORPreSolver.Solve();
             MIPRunTime = ORPreSolver.RunTime;
@@ -98,7 +101,8 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 DisjointConstraints = CreateDisjointConstraints(),
                 PrecedenceConstraints = CreatePrecedenceConstraints(),
                 Matrix = CreateGTSPMatrix(),
-                StartDepot = startSeqID
+                StartDepot = virtualStart.SequencingID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             };
             GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             SeqLogger.Indent--;
