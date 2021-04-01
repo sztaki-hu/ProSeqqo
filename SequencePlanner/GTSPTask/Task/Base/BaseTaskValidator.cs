@@ -96,8 +96,10 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                         //    throw new SeqException("PositionMatrix.Positions contains position multiple times times with SequencingID: " + posList[i].Node.SequencingID, "Remove duplicated positions.");
                     }
                 }
-                if(posList[i].In.Vector.Length != task.Dimension || posList[i].In.Vector.Length != posList[i].Out.Vector.Length)
-                    throw new SeqException("Position with UserID: " + posList[i].In.UserID + " has dimension mismatch.");
+                if(posList[i].In.Vector.Length != task.Dimension)
+                    throw new SeqException("Position with UserID: " + posList[i].In.UserID + " has dimension mismatch. Dimension != Position.Vector ("+ task.Dimension +"!="+ posList[i].In.Vector.Length+")");
+                if (posList[i].In.Vector.Length != posList[i].Out.Vector.Length)
+                    throw new SeqException("Position with UserID: " + posList[i].In.UserID + " has dimension mismatch. Dimension != Position.Vector ("+ task.Dimension + "!=" + posList[i].Out.Vector.Length+")");
             }
             SeqLogger.Info("PositionList: " + task.PositionMatrix.Positions.Count, nameof(BaseTaskValidator));
         }

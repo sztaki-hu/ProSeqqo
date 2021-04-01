@@ -58,7 +58,7 @@ namespace SequencePlanner.OR_Tools
                 if (set.DisjointSetSeq.Length > 1)
                 {
                     SeqLogger.Trace(set.ToString(), nameof(ORToolsSequencerWrapper));
-                    routing.AddDisjunction(set.DisjointSetSeq);
+                    routing.AddDisjunction(manager.NodesToIndices(set.DisjointSetSeqInt));
                 }
             }
 
