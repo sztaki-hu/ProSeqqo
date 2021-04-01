@@ -21,7 +21,7 @@ namespace SequencePlanner.Helper
 
         public TaskResult ResolveSolution(TaskResult result);
 
-        public void OverrideWeights(BaseTask task);
+        public void OverrideWeights(IGTSPRepresentation task);
     }
 
     enum DepotChangeType

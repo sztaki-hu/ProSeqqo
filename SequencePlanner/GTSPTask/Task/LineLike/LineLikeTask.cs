@@ -105,7 +105,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
                 FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             };
-            DepotMapper.OverrideWeights(this);
+            DepotMapper.OverrideWeights(GTSPRepresentation);
             GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             SeqLogger.Indent--;
             SeqLogger.Info("Generate model finished!", nameof(LineLikeTask));

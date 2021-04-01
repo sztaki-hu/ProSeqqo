@@ -210,7 +210,7 @@ namespace SequencePlanner.Helper
             task.PositionMatrix.Positions.Remove(GTSPNode);
         }
 
-        public void OverrideWeights(BaseTask task)
+        public void OverrideWeights(IGTSPRepresentation task)
         {
             throw new NotImplementedException();
         }

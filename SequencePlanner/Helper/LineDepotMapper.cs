@@ -244,29 +244,29 @@ namespace SequencePlanner.Helper
             task.PositionMatrix.Positions.Remove(GTSPNode);
         }
 
-        public void OverrideWeights(BaseTask task)
+        public void OverrideWeights(IGTSPRepresentation gtspRepr)
         {
-            Task = (LineLikeTask)task;
+            var gtsp = gtspRepr;
             switch (DepotChangeType)
             {
                 case DepotChangeType.CyclicStartDepot:break;
                 case DepotChangeType.NotCyclicNoDepot:
                     for (int i = 0; i < Task.Lines.Count; i++)
                     {
-                        Task.PositionMatrix.Matrix[i, ORToolsStartDepotSequenceID] = 0;
-                        Task.PositionMatrix.Matrix[ORToolsStartDepotSequenceID,i] = 0;
+                        gtsp.Matrix[i, ORToolsStartDepotSequenceID] = 0;
+                        gtsp.Matrix[ORToolsStartDepotSequenceID,i] = 0;
                     }
                     break;
                 case DepotChangeType.NotCyclicOnlyStartDepot:
                     for (int i = 0; i < Task.Lines.Count; i++)
                     {
-                        Task.PositionMatrix.Matrix[i, ORToolsStartDepotSequenceID] = 0;
+                        gtsp.Matrix[i, ORToolsStartDepotSequenceID] = 0;
                     }
                     break;
                 case DepotChangeType.NotCyclicOnlyFinishDepot:
                     for (int i = 0; i < Task.Lines.Count; i++)
                     {
-                        Task.PositionMatrix.Matrix[ORToolsStartDepotSequenceID,i] = 0;
+                        gtsp.Matrix[ORToolsFinishDepotSequenceID, i] = 0;
                     }
                     break;
                 case DepotChangeType.NotCyclicStartFinishDepot:
