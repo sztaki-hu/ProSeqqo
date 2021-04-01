@@ -91,7 +91,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         {
             SeqLogger.Info("Generate model started!", nameof(LineLikeTask));
             SeqLogger.Indent++;
-            AddVirtualStart(); //Handle Cyclic sequence with start/finish depots
+            //AddVirtualStart(); //Handle Cyclic sequence with start/finish depots
             foreach (var line in Lines)
             {
                 line.SequencingID = MAX_SEQUENCING_ID++;
@@ -102,9 +102,10 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 DisjointConstraints = CreateDisjointConstraints(),
                 PrecedenceConstraints = CreatePrecedenceConstraints(),
                 Matrix = CreateGTSPMatrix(),
-                StartDepot = virtualStart.SequencingID,
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
                 FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             };
+            DepotMapper.OverrideWeights(this);
             GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             SeqLogger.Indent--;
             SeqLogger.Info("Generate model finished!", nameof(LineLikeTask));
@@ -269,7 +270,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
 
         private void SetWeightsForVirtualStart(double[,] matrix)
         {
-                startSeqID = virtualStart.SequencingID;
+                startSeqID = DepotMapper.ORToolsStartDepotSequenceID;
                 for (int i = 0; i < Lines.Count; i++)
                 {
                     if (startSeqID != i)
@@ -281,12 +282,12 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                         }
                         if (StartDepot != null && FinishDepot == null && !CyclicSequence) // Only StartDepot and not cyclic
                         {
-                            matrix[i, virtualStart.SequencingID] = 0.0;
+                            matrix[i, startSeqID] = 0.0;
                             //matrix[virtualStart.SequencingID, i] = 0.0; //Calculated real value in createGTSPMatrix()
                         }
                         if (StartDepot == null && FinishDepot != null) //Only FinisDepot
                         {
-                            matrix[virtualStart.SequencingID, i] = 0.0;
+                            matrix[startSeqID, i] = 0.0;
                             //matrix[i, virtualStart.SequencingID] = 0.0; //Calculated real value in createGTSPMatrix()
                         }
                         if (StartDepot == null && FinishDepot == null) //No StartDepot and FinishDepotGiven
@@ -317,8 +318,8 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 {
                     if(line.SequencingID == raw)
                     {
-                        if (!line.Virtual)
-                        {
+                        //if (!line.Virtual)
+                        //{
                             line.Length = PositionMatrix.DistanceFunction.ComputeDistance(line.NodeA, line.NodeB);
                             line.Length = PositionMatrix.ResourceFunction.ComputeResourceCost(line.NodeA, line.NodeB, line.Length);
                             //if (weight > 0)
@@ -330,9 +331,9 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                             taskResult.LineResult.Add(line);
                             taskResult.PositionResult.Add(line.NodeA);
                             taskResult.PositionResult.Add(line.NodeB);
-                        }
+                        //}
                         find = true;
-                        break;
+                        //break;
                     }
                 }
                 

@@ -48,6 +48,16 @@ namespace SequencePlanner.GTSPTask.Result
 
         }
 
+        public virtual void DeleteFirst()
+        {
+            Delete(SolutionRaw.Count - 1);
+        }
+
+        public virtual void DeleteLast()
+        {
+            Delete(0);
+        }
+
         public static string ToCSVHeader()
         {
             var s = ";";

@@ -209,5 +209,10 @@ namespace SequencePlanner.Helper
             task.Tasks.Remove(TaskNode);
             task.PositionMatrix.Positions.Remove(GTSPNode);
         }
+
+        public void OverrideWeights(BaseTask task)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

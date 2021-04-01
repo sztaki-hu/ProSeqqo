@@ -14,16 +14,16 @@ namespace SequencePlanner.Helper
     {
         private Position StartDepot { get; set; }
         private Position FinishDepot { get; set; }
-        public Position ORToolsStartDepot { get; set; }
-        public Position ORToolsFinishDepot { get; set; }
+        public Line ORToolsStartDepot { get; set; }
+        public Line ORToolsFinishDepot { get; set; }
         public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequencingID; else return -1; } }
         public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequencingID; else return -1; } }
         private DepotChangeType DepotChangeType { get; set; }
-        private IBaseTask Task { get; set; }
+        private LineLikeTask Task { get; set; }
         
         public void Map(BaseTask task)
         {
-            Task = task;
+            Task = (LineLikeTask)task;
             StartDepot = task.StartDepot;
             FinishDepot = task.FinishDepot;
             if (task.CyclicSequence)
@@ -52,7 +52,7 @@ namespace SequencePlanner.Helper
 
         public void ReverseMap(BaseTask task)
         {
-            Task = task;
+            Task = (LineLikeTask)task;
             switch (DepotChangeType)
             {
                 case DepotChangeType.CyclicStartDepot: CyclicStartDepotReverse(); break;
@@ -65,101 +65,122 @@ namespace SequencePlanner.Helper
 
         public TaskResult ResolveSolution(TaskResult result)
         {
-            switch (DepotChangeType)
-            {
-                case DepotChangeType.CyclicStartDepot: return CyclicStartDepotResolve(result);
-                case DepotChangeType.NotCyclicNoDepot: return NotCyclicNoDepotResolve(result); 
-                case DepotChangeType.NotCyclicOnlyStartDepot: return NotCyclicOnlyStartDepotResolve(result); 
-                case DepotChangeType.NotCyclicOnlyFinishDepot: return NotCyclicOnlyFinishDepotResolve(result); 
-                case DepotChangeType.NotCyclicStartFinishDepot: return NotCyclicStartFinishDepotResolve(result); 
-            }
-            return null;
+            //switch (DepotChangeType)
+            //{
+            //    case DepotChangeType.CyclicStartDepot: return CyclicStartDepotResolve(result);
+            //    case DepotChangeType.NotCyclicNoDepot: return NotCyclicNoDepotResolve(result); 
+            //    case DepotChangeType.NotCyclicOnlyStartDepot: return NotCyclicOnlyStartDepotResolve(result); 
+            //    case DepotChangeType.NotCyclicOnlyFinishDepot: return NotCyclicOnlyFinishDepotResolve(result); 
+            //    case DepotChangeType.NotCyclicStartFinishDepot: return NotCyclicStartFinishDepotResolve(result); 
+            //}
+            //return null;
+            result.DeleteFirst();
+            result.DeleteLast();
+            return result;
         }
 
         private void CyclicStartDepot()
         {
-            ORToolsStartDepot = StartDepot;
+            StartLine = CreateVirtualLine(StartDepot, StartDepot, "VirtualStart");
+            Task.Lines.Add(StartLine);
+            ORToolsStartDepot = StartLine;
             ORToolsFinishDepot = null;
         }
 
         private void NotCyclicNoDepot()
         {
-            ORToolsStartDepot = CreateVirtualNode((LineLikeTask)Task, "VirtualStartAndFinish");
+            StartLine = CreateVirtualLine(StartDepot, StartDepot, "VirtualStartAndFinish");
+            Task.Lines.Add(StartLine);
+            ORToolsStartDepot = StartLine;
+            ORToolsFinishDepot = null;
         }
         private void NotCyclicOnlyStartDepot()
         {
-            ORToolsStartDepot = StartDepot;
-            ORToolsFinishDepot = CreateVirtualNode((LineLikeTask)Task, "VirtualFinish"); ;
+            StartLine = CreateVirtualLine(StartDepot, StartDepot, "VirtualStartAndFinish");
+            Task.Lines.Add(StartLine);
+            ORToolsStartDepot = StartLine;
+            ORToolsFinishDepot = null;
         }
         private void NotCyclicOnlyFinishDepot()
         {
-            ORToolsStartDepot = CreateVirtualNode((LineLikeTask)Task, "VirtualStart");
-            ORToolsFinishDepot = StartDepot;
+            FinishLine = CreateVirtualLine(FinishDepot, FinishDepot, "VirtualStartAndFinish");
+            Task.Lines.Add(FinishLine);
+            ORToolsStartDepot = null;
+            ORToolsFinishDepot = FinishLine;
         }
         private void NotCyclicStartFinishDepot()
         {
-            ORToolsStartDepot = StartDepot;
-            ORToolsFinishDepot = FinishDepot;
+            StartLine = CreateVirtualLine(StartDepot, FinishDepot, "VirtualStartAndFinish");
+            Task.Lines.Add(StartLine);
+            ORToolsStartDepot = StartLine;
+            ORToolsFinishDepot = null;
         }
 
         //REVERSE
         private void CyclicStartDepotReverse()
         {
+            Task.Lines.Remove(StartLine);
         }
-
         private void NotCyclicNoDepotReverse(LineLikeTask task)
         {
-            DeleteVirualNode(task);
+            Task.Lines.Remove(StartLine);
         }
         private void NotCyclicOnlyStartDepotReverse(LineLikeTask task)
         {
-            DeleteVirualNode(task);
+            Task.Lines.Remove(StartLine);
         }
         private void NotCyclicOnlyFinishDepotReverse(LineLikeTask task)
         {
-            DeleteVirualNode(task);
+            Task.Lines.Remove(FinishLine);
         }
         private void NotCyclicStartFinishDepotReverse()
         {
-
+            Task.Lines.Remove(StartLine);
         }
 
-        //RESOLVE
-        private TaskResult CyclicStartDepotResolve(TaskResult result)
-        {
+        ////RESOLVE
+        //private TaskResult CyclicStartDepotResolve(TaskResult result)
+        //{
+        //    result.DeleteFirst();
+        //    result.DeleteLast();
+        //    return result;
+        //}
 
-            return result;
-        }
+        //private TaskResult NotCyclicNoDepotResolve(TaskResult result)
+        //{
+        //    result.DeleteFirst();
+        //    result.DeleteLast();
+        //    return result;
+        //}
 
-        private TaskResult NotCyclicNoDepotResolve(TaskResult result)
-        {
-            result.Delete(result.SolutionRaw.Count - 1);
-            result.Delete(0);
-            return result;
-        }
+        //private TaskResult NotCyclicOnlyStartDepotResolve(TaskResult result)
+        //{
+        //    result.DeleteFirst();
+        //    result.DeleteLast();
+        //    return result;
+        //}
 
-        private TaskResult NotCyclicOnlyStartDepotResolve(TaskResult result)
-        {
-            result.Delete(result.SolutionRaw.Count - 1);
-            return result;
-        }
+        //private TaskResult NotCyclicOnlyFinishDepotResolve(TaskResult result)
+        //{
+        //    result.DeleteFirst();
+        //    result.DeleteLast();
+        //    return result;
+        //}
 
-        private TaskResult NotCyclicOnlyFinishDepotResolve(TaskResult result)
-        {
-            result.Delete(0);
-            return result;
-        }
-
-        private TaskResult NotCyclicStartFinishDepotResolve(TaskResult result)
-        {
-            return result;
-        }
+        //private TaskResult NotCyclicStartFinishDepotResolve(TaskResult result)
+        //{
+        //    result.DeleteFirst();
+        //    result.DeleteLast();
+        //    return result;
+        //}
 
         private Position Position;
         private GTSPNode GTSPNode;
         private Model.Task TaskNode;
         private Alternative Alternative;
         private Process Process;
+        private Line StartLine;
+        private Line FinishLine;
         
         private Position CreateVirtualNode(LineLikeTask task,string name)
         {
@@ -194,7 +215,6 @@ namespace SequencePlanner.Helper
                 Alternatives = new List<Alternative>() { Alternative }
             };
 
-
             //task.Processes.Add(Process);
             //task.Alternatives.Add(Alternative);
             //task.Tasks.Add(TaskNode);
@@ -203,12 +223,55 @@ namespace SequencePlanner.Helper
             return Position;
         }
 
+        private Line CreateVirtualLine(Position start, Position finish, string name)
+        {
+           return new Line()
+            {
+                UserID = 99999,
+                Name = name,
+                Bidirectional = false,
+                NodeA = start,
+                NodeB = finish,
+                ResourceID = start.ResourceID
+            };
+        }
+
         private void DeleteVirualNode(LineLikeTask task)
         {
             //task.Processes.Remove(Process);
             //task.Alternatives.Remove(Alternative);
             //task.Tasks.Remove(TaskNode);
             task.PositionMatrix.Positions.Remove(GTSPNode);
+        }
+
+        public void OverrideWeights(BaseTask task)
+        {
+            Task = (LineLikeTask)task;
+            switch (DepotChangeType)
+            {
+                case DepotChangeType.CyclicStartDepot:break;
+                case DepotChangeType.NotCyclicNoDepot:
+                    for (int i = 0; i < Task.Lines.Count; i++)
+                    {
+                        Task.PositionMatrix.Matrix[i, ORToolsStartDepotSequenceID] = 0;
+                        Task.PositionMatrix.Matrix[ORToolsStartDepotSequenceID,i] = 0;
+                    }
+                    break;
+                case DepotChangeType.NotCyclicOnlyStartDepot:
+                    for (int i = 0; i < Task.Lines.Count; i++)
+                    {
+                        Task.PositionMatrix.Matrix[i, ORToolsStartDepotSequenceID] = 0;
+                    }
+                    break;
+                case DepotChangeType.NotCyclicOnlyFinishDepot:
+                    for (int i = 0; i < Task.Lines.Count; i++)
+                    {
+                        Task.PositionMatrix.Matrix[ORToolsStartDepotSequenceID,i] = 0;
+                    }
+                    break;
+                case DepotChangeType.NotCyclicStartFinishDepot:
+                    break;
+            }
         }
     }
 }

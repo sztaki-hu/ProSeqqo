@@ -12,16 +12,16 @@ namespace SequencePlanner.Helper
 {
     public interface IDepotMapper
     {
-        public Position ORToolsStartDepot { get; set; }
-        public Position ORToolsFinishDepot { get; set; }
-        public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequencingID; else return -1; } }
-        public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequencingID; else return -1; } }
+        public int ORToolsStartDepotSequenceID { get; }
+        public int ORToolsFinishDepotSequenceID { get; }
 
         public void Map(BaseTask task);
 
         public void ReverseMap(BaseTask task);
 
         public TaskResult ResolveSolution(TaskResult result);
+
+        public void OverrideWeights(BaseTask task);
     }
 
     enum DepotChangeType
