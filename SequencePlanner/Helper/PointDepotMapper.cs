@@ -14,8 +14,8 @@ namespace SequencePlanner.Helper
     {
         private Position StartDepot { get; set; }
         private Position FinishDepot { get; set; }
-        public Position ORToolsStartDepot { get; set; }
-        public Position ORToolsFinishDepot { get; set; }
+        public BaseNode ORToolsStartDepot { get; set; }
+        public BaseNode ORToolsFinishDepot { get; set; }
         public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequencingID; else return -1; } }
         public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequencingID; else return -1; } }
         private DepotChangeType DepotChangeType { get; set; }

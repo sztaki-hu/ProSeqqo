@@ -189,11 +189,17 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                     disjointConstraints.Add(constraint);
                 }
             }
-            if (virtualStart != null)
+            if (DepotMapper.ORToolsStartDepotSequenceID != -1)
             {
                 var startContraint = new GTSPDisjointConstraint();
-                startContraint.Add(virtualStart);
+                startContraint.Add(DepotMapper.ORToolsStartDepot);
                 disjointConstraints.Add(startContraint);
+            }
+            if (DepotMapper.ORToolsFinishDepotSequenceID != -1)
+            {
+                var finishConstraint = new GTSPDisjointConstraint();
+                finishConstraint.Add(DepotMapper.ORToolsFinishDepot);
+                disjointConstraints.Add(finishConstraint);
             }
             SeqLogger.Info("Disjoint precedences created!", nameof(LineLikeTask));
             return disjointConstraints;
@@ -318,22 +324,31 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 {
                     if(line.SequencingID == raw)
                     {
-                        //if (!line.Virtual)
-                        //{
+                        if (!line.Virtual)
+                        {
+
                             line.Length = PositionMatrix.DistanceFunction.ComputeDistance(line.NodeA, line.NodeB);
                             line.Length = PositionMatrix.ResourceFunction.ComputeResourceCost(line.NodeA, line.NodeB, line.Length);
                             //if (weight > 0)
-                            //if (line.Length > PenaltyEpsilon)
-                            //{
-                            //    line.Length += ContourPenalty;
-                            //}
+                            //    if (line.Length > PenaltyEpsilon)
+                            //    {
+                            //        line.Length += ContourPenalty;
+                            //    }
                             taskResult.LineLength += line.Length;
                             taskResult.LineResult.Add(line);
                             taskResult.PositionResult.Add(line.NodeA);
                             taskResult.PositionResult.Add(line.NodeB);
-                        //}
+                        }
+                        else
+                        {
+                            line.Length = 0;
+                            taskResult.LineLength += line.Length;
+                            taskResult.LineResult.Add(line);
+                            taskResult.PositionResult.Add(line.NodeA);
+                            taskResult.PositionResult.Add(line.NodeB);
+                        }
                         find = true;
-                        //break;
+                        break;
                     }
                 }
                 

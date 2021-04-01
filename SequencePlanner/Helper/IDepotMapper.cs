@@ -14,6 +14,8 @@ namespace SequencePlanner.Helper
     {
         public int ORToolsStartDepotSequenceID { get; }
         public int ORToolsFinishDepotSequenceID { get; }
+        public BaseNode ORToolsStartDepot { get; set; }
+        public BaseNode ORToolsFinishDepot { get; set; }
 
         public void Map(BaseTask task);
 
