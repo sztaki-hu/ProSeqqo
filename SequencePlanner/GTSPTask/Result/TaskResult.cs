@@ -43,6 +43,11 @@ namespace SequencePlanner.GTSPTask.Result
             ErrorMessage = new List<string>();
         }
 
+        public virtual void Delete(int index)
+        {
+
+        }
+
         public static string ToCSVHeader()
         {
             var s = ";";

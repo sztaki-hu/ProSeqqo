@@ -177,9 +177,9 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                     if (task.StartDepot.GlobalID == task.FinishDepot.GlobalID)
                         throw new SeqException("Start and finish depot can not be the same.", "Select other positions or use cyclic sequence.");
                 //StartDepot needed
-                if (task.StartDepot is null)
+                if (task.CyclicSequence && task.StartDepot is null)
                     throw new SeqException("If task is cyclic start depot needed!");
-                SeqLogger.Info("StartDepot: " + task.StartDepot.UserID, nameof(BaseTaskValidator));
+                //SeqLogger.Info("StartDepot: " + task.StartDepot.UserID, nameof(BaseTaskValidator));
                 var findStart = false;
                 var findFinish = false;
                 //Positions must contain StartDepot

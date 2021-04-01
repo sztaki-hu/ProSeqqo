@@ -46,6 +46,7 @@ namespace SequencePlanner.OR_Tools
 
             // Precedences
             AddStartDepotConstraints(solver);
+            AddFinishDepotConstraints(solver);
             AddDisjointConstraints(solver, parameters.DisjointConstraints);                                                      //Add disjoint sets of alternative nodes
             AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                                 //Add order precedences, node1 should be before node2 in the solution if both are selected
             AddStrictPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                       //Add strct order precedences, node1 must be followed by node2 directly
@@ -88,10 +89,10 @@ namespace SequencePlanner.OR_Tools
         {
             if (parameters.FinishDepot > -1)                                                                                         //If Start depo exist, position = 0 and selected x = 1
             {
-                solver.Add(position[parameters.FinishDepot] == 0.0);
-                constraints.Add((position[parameters.FinishDepot] == 0.0).ToString());
+                solver.Add(position[parameters.FinishDepot] == parameters.DisjointConstraints.Count);
+                constraints.Add((position[parameters.FinishDepot] == parameters.DisjointConstraints.Count).ToString());
                 solver.Add(x[parameters.FinishDepot] == 1.0);
-                constraints.Add((x[parameters.FinishDepot] == parameters.DisjointConstraints.Count).ToString());
+                constraints.Add((x[parameters.FinishDepot] == 1.0).ToString());
             }
         }
 

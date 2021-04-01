@@ -12,7 +12,7 @@ ResourceDistanceFunction: Add
 ResourceSource: ConstantResource
 ResourceCostConstant: 0
 UseResources: False
-UseMIPprecedenceSolver: True
+UseMIPprecedenceSolver: False
 UseShortcutInAlternatives: False
 LocalSearchStrategy: GuidedLocalSearch
 

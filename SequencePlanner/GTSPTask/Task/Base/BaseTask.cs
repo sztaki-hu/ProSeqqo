@@ -47,10 +47,6 @@ namespace SequencePlanner.GTSPTask.Task.Base
             return roundedMatrix;
         }
 
-        //public abstract ITaskResult RunModel();
-
-        //public abstract Task<ITaskResult> RunModelAsync(int taskID, CancellationToken cancellationToken);
-
         public abstract void ValidateModel();
 
         public void ToLog(LogLevel level)
