@@ -27,6 +27,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             Contours = new List<Contour>();
             LinePrecedences = new List<GTSPPrecedenceConstraint>();
             ContourPrecedences = new List<GTSPPrecedenceConstraint>();
+            DepotMapper = new LineDepotMapper();
         }
 
         public LineTaskResult RunModel()

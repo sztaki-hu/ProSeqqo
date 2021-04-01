@@ -37,6 +37,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
             ShortestPathProcessor = null;
             CalculateWeightFunction = CalculateWeight;
+            DepotMapper = new PointDepotMapper();
     }
 
         public PointTaskResult RunModel()

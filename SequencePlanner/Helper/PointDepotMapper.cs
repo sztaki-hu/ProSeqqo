@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SequencePlanner.Helper
 {
-    public class DepotMapper
+    public class PointDepotMapper : IDepotMapper
     {
         private Position StartDepot { get; set; }
         private Position FinishDepot { get; set; }
@@ -209,14 +209,5 @@ namespace SequencePlanner.Helper
             task.Tasks.Remove(TaskNode);
             task.PositionMatrix.Positions.Remove(GTSPNode);
         }
-    }
-
-    enum DepotChangeType
-    {
-        CyclicStartDepot,
-        NotCyclicNoDepot,
-        NotCyclicOnlyStartDepot,
-        NotCyclicOnlyFinishDepot,
-        NotCyclicStartFinishDepot
     }
 }
