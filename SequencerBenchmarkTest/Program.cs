@@ -9,8 +9,8 @@ namespace SequencerBenchmarkTest
         static void Main(string[] args)
         {
             Runner runner = new Runner();
-            //runner.InitWithTasks(GetBenchmarkTasks());
-            runner.Init();
+            runner.InitWithTasks(GetBenchmarkTasks());
+            //runner.Init();
             runner.RunBenchmark();
         }
 
