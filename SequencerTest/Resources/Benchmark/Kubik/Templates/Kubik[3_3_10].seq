@@ -1,0 +1,1359 @@
+TaskType: PointLike
+Dimension: 3
+CyclicSequence: True
+StartDepot: 320
+TimeLimit: 0
+DistanceFunction: EuclidianDistance
+ResourceDistanceFunction: Add
+ResourceSource: ConstantResource
+ResourceCostConstant: 0
+UseMIPprecedenceSolver: True
+
+PositionList:
+#+-------+---------------------+------------------+
+#|   ID  |      Position       |  Name[optional]  |
+#+-------+---------------------+------------------+
+320;[-20;-20;-20];Init
+#Put down X
+0;[0;0;0];0A_0_Putdown_x
+1;[0;10;0];0A_1_Putdown_x
+2;[0;20;0];0A_2_Putdown_x
+3;[10;20;0];0B_0_Putdown_x
+4;[20;20;0];0B_1_Putdown_x
+5;[20;10;0];0C_0_Putdown_x
+6;[20;0;0];0C_1_Putdown_x
+7;[10;0;0];0D_0_Putdown_x
+8;[0;0;10];1A_0_Putdown_x
+9;[0;10;10];1A_1_Putdown_x
+10;[0;20;10];1A_2_Putdown_x
+11;[10;20;10];1B_0_Putdown_x
+12;[20;20;10];1B_1_Putdown_x
+13;[20;10;10];1C_0_Putdown_x
+14;[20;0;10];1C_1_Putdown_x
+15;[10;0;10];1D_0_Putdown_x
+16;[0;0;20];2A_0_Putdown_x
+17;[0;10;20];2A_1_Putdown_x
+18;[0;20;20];2A_2_Putdown_x
+19;[10;20;20];2B_0_Putdown_x
+20;[20;20;20];2B_1_Putdown_x
+21;[20;10;20];2C_0_Putdown_x
+22;[20;0;20];2C_1_Putdown_x
+23;[10;0;20];2D_0_Putdown_x
+24;[0;0;30];3A_0_Putdown_x
+25;[0;10;30];3A_1_Putdown_x
+26;[0;20;30];3A_2_Putdown_x
+27;[10;20;30];3B_0_Putdown_x
+28;[20;20;30];3B_1_Putdown_x
+29;[20;10;30];3C_0_Putdown_x
+30;[20;0;30];3C_1_Putdown_x
+31;[10;0;30];3D_0_Putdown_x
+32;[0;0;40];4A_0_Putdown_x
+33;[0;10;40];4A_1_Putdown_x
+34;[0;20;40];4A_2_Putdown_x
+35;[10;20;40];4B_0_Putdown_x
+36;[20;20;40];4B_1_Putdown_x
+37;[20;10;40];4C_0_Putdown_x
+38;[20;0;40];4C_1_Putdown_x
+39;[10;0;40];4D_0_Putdown_x
+40;[0;0;50];5A_0_Putdown_x
+41;[0;10;50];5A_1_Putdown_x
+42;[0;20;50];5A_2_Putdown_x
+43;[10;20;50];5B_0_Putdown_x
+44;[20;20;50];5B_1_Putdown_x
+45;[20;10;50];5C_0_Putdown_x
+46;[20;0;50];5C_1_Putdown_x
+47;[10;0;50];5D_0_Putdown_x
+48;[0;0;60];6A_0_Putdown_x
+49;[0;10;60];6A_1_Putdown_x
+50;[0;20;60];6A_2_Putdown_x
+51;[10;20;60];6B_0_Putdown_x
+52;[20;20;60];6B_1_Putdown_x
+53;[20;10;60];6C_0_Putdown_x
+54;[20;0;60];6C_1_Putdown_x
+55;[10;0;60];6D_0_Putdown_x
+56;[0;0;70];7A_0_Putdown_x
+57;[0;10;70];7A_1_Putdown_x
+58;[0;20;70];7A_2_Putdown_x
+59;[10;20;70];7B_0_Putdown_x
+60;[20;20;70];7B_1_Putdown_x
+61;[20;10;70];7C_0_Putdown_x
+62;[20;0;70];7C_1_Putdown_x
+63;[10;0;70];7D_0_Putdown_x
+64;[0;0;80];8A_0_Putdown_x
+65;[0;10;80];8A_1_Putdown_x
+66;[0;20;80];8A_2_Putdown_x
+67;[10;20;80];8B_0_Putdown_x
+68;[20;20;80];8B_1_Putdown_x
+69;[20;10;80];8C_0_Putdown_x
+70;[20;0;80];8C_1_Putdown_x
+71;[10;0;80];8D_0_Putdown_x
+72;[0;0;90];9A_0_Putdown_x
+73;[0;10;90];9A_1_Putdown_x
+74;[0;20;90];9A_2_Putdown_x
+75;[10;20;90];9B_0_Putdown_x
+76;[20;20;90];9B_1_Putdown_x
+77;[20;10;90];9C_0_Putdown_x
+78;[20;0;90];9C_1_Putdown_x
+79;[10;0;90];9D_0_Putdown_x
+#Put down Y
+80;[0;0;0];0A_0_Putdown_y
+81;[0;10;0];0A_1_Putdown_y
+82;[0;20;0];0A_2_Putdown_y
+83;[10;20;0];0B_0_Putdown_y
+84;[20;20;0];0B_1_Putdown_y
+85;[20;10;0];0C_0_Putdown_y
+86;[20;0;0];0C_1_Putdown_y
+87;[10;0;0];0D_0_Putdown_y
+88;[0;0;10];1A_0_Putdown_y
+89;[0;10;10];1A_1_Putdown_y
+90;[0;20;10];1A_2_Putdown_y
+91;[10;20;10];1B_0_Putdown_y
+92;[20;20;10];1B_1_Putdown_y
+93;[20;10;10];1C_0_Putdown_y
+94;[20;0;10];1C_1_Putdown_y
+95;[10;0;10];1D_0_Putdown_y
+96;[0;0;20];2A_0_Putdown_y
+97;[0;10;20];2A_1_Putdown_y
+98;[0;20;20];2A_2_Putdown_y
+99;[10;20;20];2B_0_Putdown_y
+100;[20;20;20];2B_1_Putdown_y
+101;[20;10;20];2C_0_Putdown_y
+102;[20;0;20];2C_1_Putdown_y
+103;[10;0;20];2D_0_Putdown_y
+104;[0;0;30];3A_0_Putdown_y
+105;[0;10;30];3A_1_Putdown_y
+106;[0;20;30];3A_2_Putdown_y
+107;[10;20;30];3B_0_Putdown_y
+108;[20;20;30];3B_1_Putdown_y
+109;[20;10;30];3C_0_Putdown_y
+110;[20;0;30];3C_1_Putdown_y
+111;[10;0;30];3D_0_Putdown_y
+112;[0;0;40];4A_0_Putdown_y
+113;[0;10;40];4A_1_Putdown_y
+114;[0;20;40];4A_2_Putdown_y
+115;[10;20;40];4B_0_Putdown_y
+116;[20;20;40];4B_1_Putdown_y
+117;[20;10;40];4C_0_Putdown_y
+118;[20;0;40];4C_1_Putdown_y
+119;[10;0;40];4D_0_Putdown_y
+120;[0;0;50];5A_0_Putdown_y
+121;[0;10;50];5A_1_Putdown_y
+122;[0;20;50];5A_2_Putdown_y
+123;[10;20;50];5B_0_Putdown_y
+124;[20;20;50];5B_1_Putdown_y
+125;[20;10;50];5C_0_Putdown_y
+126;[20;0;50];5C_1_Putdown_y
+127;[10;0;50];5D_0_Putdown_y
+128;[0;0;60];6A_0_Putdown_y
+129;[0;10;60];6A_1_Putdown_y
+130;[0;20;60];6A_2_Putdown_y
+131;[10;20;60];6B_0_Putdown_y
+132;[20;20;60];6B_1_Putdown_y
+133;[20;10;60];6C_0_Putdown_y
+134;[20;0;60];6C_1_Putdown_y
+135;[10;0;60];6D_0_Putdown_y
+136;[0;0;70];7A_0_Putdown_y
+137;[0;10;70];7A_1_Putdown_y
+138;[0;20;70];7A_2_Putdown_y
+139;[10;20;70];7B_0_Putdown_y
+140;[20;20;70];7B_1_Putdown_y
+141;[20;10;70];7C_0_Putdown_y
+142;[20;0;70];7C_1_Putdown_y
+143;[10;0;70];7D_0_Putdown_y
+144;[0;0;80];8A_0_Putdown_y
+145;[0;10;80];8A_1_Putdown_y
+146;[0;20;80];8A_2_Putdown_y
+147;[10;20;80];8B_0_Putdown_y
+148;[20;20;80];8B_1_Putdown_y
+149;[20;10;80];8C_0_Putdown_y
+150;[20;0;80];8C_1_Putdown_y
+151;[10;0;80];8D_0_Putdown_y
+152;[0;0;90];9A_0_Putdown_y
+153;[0;10;90];9A_1_Putdown_y
+154;[0;20;90];9A_2_Putdown_y
+155;[10;20;90];9B_0_Putdown_y
+156;[20;20;90];9B_1_Putdown_y
+157;[20;10;90];9C_0_Putdown_y
+158;[20;0;90];9C_1_Putdown_y
+159;[10;0;90];9D_0_Putdown_y
+#Pick up X
+160;[-20;-20;-20];0A_0_Pickup_X
+161;[-20;-20;-20];0A_1_Pickup_X
+162;[-20;-20;-20];0A_2_Pickup_X
+163;[-20;-20;-20];0B_0_Pickup_X
+164;[-20;-20;-20];0B_1_Pickup_X
+165;[-20;-20;-20];0C_0_Pickup_X
+166;[-20;-20;-20];0C_1_Pickup_X
+167;[-20;-20;-20];0D_0_Pickup_X
+168;[-20;-20;-20];1A_0_Pickup_X
+169;[-20;-20;-20];1A_1_Pickup_X
+170;[-20;-20;-20];1A_2_Pickup_X
+171;[-20;-20;-20];1B_0_Pickup_X
+172;[-20;-20;-20];1B_1_Pickup_X
+173;[-20;-20;-20];1C_0_Pickup_X
+174;[-20;-20;-20];1C_1_Pickup_X
+175;[-20;-20;-20];1D_0_Pickup_X
+176;[-20;-20;-20];2A_0_Pickup_X
+177;[-20;-20;-20];2A_1_Pickup_X
+178;[-20;-20;-20];2A_2_Pickup_X
+179;[-20;-20;-20];2B_0_Pickup_X
+180;[-20;-20;-20];2B_1_Pickup_X
+181;[-20;-20;-20];2C_0_Pickup_X
+182;[-20;-20;-20];2C_1_Pickup_X
+183;[-20;-20;-20];2D_0_Pickup_X
+184;[-20;-20;-20];3A_0_Pickup_X
+185;[-20;-20;-20];3A_1_Pickup_X
+186;[-20;-20;-20];3A_2_Pickup_X
+187;[-20;-20;-20];3B_0_Pickup_X
+188;[-20;-20;-20];3B_1_Pickup_X
+189;[-20;-20;-20];3C_0_Pickup_X
+190;[-20;-20;-20];3C_1_Pickup_X
+191;[-20;-20;-20];3D_0_Pickup_X
+192;[-20;-20;-20];4A_0_Pickup_X
+193;[-20;-20;-20];4A_1_Pickup_X
+194;[-20;-20;-20];4A_2_Pickup_X
+195;[-20;-20;-20];4B_0_Pickup_X
+196;[-20;-20;-20];4B_1_Pickup_X
+197;[-20;-20;-20];4C_0_Pickup_X
+198;[-20;-20;-20];4C_1_Pickup_X
+199;[-20;-20;-20];4D_0_Pickup_X
+200;[-20;-20;-20];5A_0_Pickup_X
+201;[-20;-20;-20];5A_1_Pickup_X
+202;[-20;-20;-20];5A_2_Pickup_X
+203;[-20;-20;-20];5B_0_Pickup_X
+204;[-20;-20;-20];5B_1_Pickup_X
+205;[-20;-20;-20];5C_0_Pickup_X
+206;[-20;-20;-20];5C_1_Pickup_X
+207;[-20;-20;-20];5D_0_Pickup_X
+208;[-20;-20;-20];6A_0_Pickup_X
+209;[-20;-20;-20];6A_1_Pickup_X
+210;[-20;-20;-20];6A_2_Pickup_X
+211;[-20;-20;-20];6B_0_Pickup_X
+212;[-20;-20;-20];6B_1_Pickup_X
+213;[-20;-20;-20];6C_0_Pickup_X
+214;[-20;-20;-20];6C_1_Pickup_X
+215;[-20;-20;-20];6D_0_Pickup_X
+216;[-20;-20;-20];7A_0_Pickup_X
+217;[-20;-20;-20];7A_1_Pickup_X
+218;[-20;-20;-20];7A_2_Pickup_X
+219;[-20;-20;-20];7B_0_Pickup_X
+220;[-20;-20;-20];7B_1_Pickup_X
+221;[-20;-20;-20];7C_0_Pickup_X
+222;[-20;-20;-20];7C_1_Pickup_X
+223;[-20;-20;-20];7D_0_Pickup_X
+224;[-20;-20;-20];8A_0_Pickup_X
+225;[-20;-20;-20];8A_1_Pickup_X
+226;[-20;-20;-20];8A_2_Pickup_X
+227;[-20;-20;-20];8B_0_Pickup_X
+228;[-20;-20;-20];8B_1_Pickup_X
+229;[-20;-20;-20];8C_0_Pickup_X
+230;[-20;-20;-20];8C_1_Pickup_X
+231;[-20;-20;-20];8D_0_Pickup_X
+232;[-20;-20;-20];9A_0_Pickup_X
+233;[-20;-20;-20];9A_1_Pickup_X
+234;[-20;-20;-20];9A_2_Pickup_X
+235;[-20;-20;-20];9B_0_Pickup_X
+236;[-20;-20;-20];9B_1_Pickup_X
+237;[-20;-20;-20];9C_0_Pickup_X
+238;[-20;-20;-20];9C_1_Pickup_X
+239;[-20;-20;-20];9D_0_Pickup_X
+#Pick up Y
+240;[-20;-20;-20];0A_0_Pickup_Y
+241;[-20;-20;-20];0A_1_Pickup_Y
+242;[-20;-20;-20];0A_2_Pickup_Y
+243;[-20;-20;-20];0B_0_Pickup_Y
+244;[-20;-20;-20];0B_1_Pickup_Y
+245;[-20;-20;-20];0C_0_Pickup_Y
+246;[-20;-20;-20];0C_1_Pickup_Y
+247;[-20;-20;-20];0D_0_Pickup_Y
+248;[-20;-20;-20];1A_0_Pickup_Y
+249;[-20;-20;-20];1A_1_Pickup_Y
+250;[-20;-20;-20];1A_2_Pickup_Y
+251;[-20;-20;-20];1B_0_Pickup_Y
+252;[-20;-20;-20];1B_1_Pickup_Y
+253;[-20;-20;-20];1C_0_Pickup_Y
+254;[-20;-20;-20];1C_1_Pickup_Y
+255;[-20;-20;-20];1D_0_Pickup_Y
+256;[-20;-20;-20];2A_0_Pickup_Y
+257;[-20;-20;-20];2A_1_Pickup_Y
+258;[-20;-20;-20];2A_2_Pickup_Y
+259;[-20;-20;-20];2B_0_Pickup_Y
+260;[-20;-20;-20];2B_1_Pickup_Y
+261;[-20;-20;-20];2C_0_Pickup_Y
+262;[-20;-20;-20];2C_1_Pickup_Y
+263;[-20;-20;-20];2D_0_Pickup_Y
+264;[-20;-20;-20];3A_0_Pickup_Y
+265;[-20;-20;-20];3A_1_Pickup_Y
+266;[-20;-20;-20];3A_2_Pickup_Y
+267;[-20;-20;-20];3B_0_Pickup_Y
+268;[-20;-20;-20];3B_1_Pickup_Y
+269;[-20;-20;-20];3C_0_Pickup_Y
+270;[-20;-20;-20];3C_1_Pickup_Y
+271;[-20;-20;-20];3D_0_Pickup_Y
+272;[-20;-20;-20];4A_0_Pickup_Y
+273;[-20;-20;-20];4A_1_Pickup_Y
+274;[-20;-20;-20];4A_2_Pickup_Y
+275;[-20;-20;-20];4B_0_Pickup_Y
+276;[-20;-20;-20];4B_1_Pickup_Y
+277;[-20;-20;-20];4C_0_Pickup_Y
+278;[-20;-20;-20];4C_1_Pickup_Y
+279;[-20;-20;-20];4D_0_Pickup_Y
+280;[-20;-20;-20];5A_0_Pickup_Y
+281;[-20;-20;-20];5A_1_Pickup_Y
+282;[-20;-20;-20];5A_2_Pickup_Y
+283;[-20;-20;-20];5B_0_Pickup_Y
+284;[-20;-20;-20];5B_1_Pickup_Y
+285;[-20;-20;-20];5C_0_Pickup_Y
+286;[-20;-20;-20];5C_1_Pickup_Y
+287;[-20;-20;-20];5D_0_Pickup_Y
+288;[-20;-20;-20];6A_0_Pickup_Y
+289;[-20;-20;-20];6A_1_Pickup_Y
+290;[-20;-20;-20];6A_2_Pickup_Y
+291;[-20;-20;-20];6B_0_Pickup_Y
+292;[-20;-20;-20];6B_1_Pickup_Y
+293;[-20;-20;-20];6C_0_Pickup_Y
+294;[-20;-20;-20];6C_1_Pickup_Y
+295;[-20;-20;-20];6D_0_Pickup_Y
+296;[-20;-20;-20];7A_0_Pickup_Y
+297;[-20;-20;-20];7A_1_Pickup_Y
+298;[-20;-20;-20];7A_2_Pickup_Y
+299;[-20;-20;-20];7B_0_Pickup_Y
+300;[-20;-20;-20];7B_1_Pickup_Y
+301;[-20;-20;-20];7C_0_Pickup_Y
+302;[-20;-20;-20];7C_1_Pickup_Y
+303;[-20;-20;-20];7D_0_Pickup_Y
+304;[-20;-20;-20];8A_0_Pickup_Y
+305;[-20;-20;-20];8A_1_Pickup_Y
+306;[-20;-20;-20];8A_2_Pickup_Y
+307;[-20;-20;-20];8B_0_Pickup_Y
+308;[-20;-20;-20];8B_1_Pickup_Y
+309;[-20;-20;-20];8C_0_Pickup_Y
+310;[-20;-20;-20];8C_1_Pickup_Y
+311;[-20;-20;-20];8D_0_Pickup_Y
+312;[-20;-20;-20];9A_0_Pickup_Y
+313;[-20;-20;-20];9A_1_Pickup_Y
+314;[-20;-20;-20];9A_2_Pickup_Y
+315;[-20;-20;-20];9B_0_Pickup_Y
+316;[-20;-20;-20];9B_1_Pickup_Y
+317;[-20;-20;-20];9C_0_Pickup_Y
+318;[-20;-20;-20];9C_1_Pickup_Y
+319;[-20;-20;-20];9D_0_Pickup_Y
+
+ProcessHierarchy:
+#+-------------+---------+----------------+------------+
+#| Position ID | Task ID | Alternative ID | Process ID |
+#+-------------+---------+----------------+------------+
+320 ;	0 ;	0 ;	320	#Init
+#Cube: 0A_0
+160 ;	0 ;	0 ;	0	#0A_0_Pickup_X
+0 ;	1 ;	0 ;	0	#0A_0_Putdown_X
+240 ;	0 ;	1 ;	0	#0A_0_Pickup_Y
+80 ;	1 ;	1 ;	0	#0A_0_Putdown_Y
+#Cube: 0A_1
+161 ;	0 ;	0 ;	1	#0A_1_Pickup_X
+1 ;	1 ;	0 ;	1	#0A_1_Putdown_X
+241 ;	0 ;	1 ;	1	#0A_1_Pickup_Y
+81 ;	1 ;	1 ;	1	#0A_1_Putdown_Y
+#Cube: 0A_2
+162 ;	0 ;	0 ;	2	#0A_2_Pickup_X
+2 ;	1 ;	0 ;	2	#0A_2_Putdown_X
+242 ;	0 ;	1 ;	2	#0A_2_Pickup_Y
+82 ;	1 ;	1 ;	2	#0A_2_Putdown_Y
+#Cube: 0B_0
+163 ;	0 ;	0 ;	3	#0B_0_Pickup_X
+3 ;	1 ;	0 ;	3	#0B_0_Putdown_X
+243 ;	0 ;	1 ;	3	#0B_0_Pickup_Y
+83 ;	1 ;	1 ;	3	#0B_0_Putdown_Y
+#Cube: 0B_1
+164 ;	0 ;	0 ;	4	#0B_1_Pickup_X
+4 ;	1 ;	0 ;	4	#0B_1_Putdown_X
+244 ;	0 ;	1 ;	4	#0B_1_Pickup_Y
+84 ;	1 ;	1 ;	4	#0B_1_Putdown_Y
+#Cube: 0C_0
+165 ;	0 ;	0 ;	5	#0C_0_Pickup_X
+5 ;	1 ;	0 ;	5	#0C_0_Putdown_X
+245 ;	0 ;	1 ;	5	#0C_0_Pickup_Y
+85 ;	1 ;	1 ;	5	#0C_0_Putdown_Y
+#Cube: 0C_1
+166 ;	0 ;	0 ;	6	#0C_1_Pickup_X
+6 ;	1 ;	0 ;	6	#0C_1_Putdown_X
+246 ;	0 ;	1 ;	6	#0C_1_Pickup_Y
+86 ;	1 ;	1 ;	6	#0C_1_Putdown_Y
+#Cube: 0D_0
+167 ;	0 ;	0 ;	7	#0D_0_Pickup_X
+7 ;	1 ;	0 ;	7	#0D_0_Putdown_X
+247 ;	0 ;	1 ;	7	#0D_0_Pickup_Y
+87 ;	1 ;	1 ;	7	#0D_0_Putdown_Y
+#Cube: 1A_0
+168 ;	0 ;	0 ;	8	#1A_0_Pickup_X
+8 ;	1 ;	0 ;	8	#1A_0_Putdown_X
+248 ;	0 ;	1 ;	8	#1A_0_Pickup_Y
+88 ;	1 ;	1 ;	8	#1A_0_Putdown_Y
+#Cube: 1A_1
+169 ;	0 ;	0 ;	9	#1A_1_Pickup_X
+9 ;	1 ;	0 ;	9	#1A_1_Putdown_X
+249 ;	0 ;	1 ;	9	#1A_1_Pickup_Y
+89 ;	1 ;	1 ;	9	#1A_1_Putdown_Y
+#Cube: 1A_2
+170 ;	0 ;	0 ;	10	#1A_2_Pickup_X
+10 ;	1 ;	0 ;	10	#1A_2_Putdown_X
+250 ;	0 ;	1 ;	10	#1A_2_Pickup_Y
+90 ;	1 ;	1 ;	10	#1A_2_Putdown_Y
+#Cube: 1B_0
+171 ;	0 ;	0 ;	11	#1B_0_Pickup_X
+11 ;	1 ;	0 ;	11	#1B_0_Putdown_X
+251 ;	0 ;	1 ;	11	#1B_0_Pickup_Y
+91 ;	1 ;	1 ;	11	#1B_0_Putdown_Y
+#Cube: 1B_1
+172 ;	0 ;	0 ;	12	#1B_1_Pickup_X
+12 ;	1 ;	0 ;	12	#1B_1_Putdown_X
+252 ;	0 ;	1 ;	12	#1B_1_Pickup_Y
+92 ;	1 ;	1 ;	12	#1B_1_Putdown_Y
+#Cube: 1C_0
+173 ;	0 ;	0 ;	13	#1C_0_Pickup_X
+13 ;	1 ;	0 ;	13	#1C_0_Putdown_X
+253 ;	0 ;	1 ;	13	#1C_0_Pickup_Y
+93 ;	1 ;	1 ;	13	#1C_0_Putdown_Y
+#Cube: 1C_1
+174 ;	0 ;	0 ;	14	#1C_1_Pickup_X
+14 ;	1 ;	0 ;	14	#1C_1_Putdown_X
+254 ;	0 ;	1 ;	14	#1C_1_Pickup_Y
+94 ;	1 ;	1 ;	14	#1C_1_Putdown_Y
+#Cube: 1D_0
+175 ;	0 ;	0 ;	15	#1D_0_Pickup_X
+15 ;	1 ;	0 ;	15	#1D_0_Putdown_X
+255 ;	0 ;	1 ;	15	#1D_0_Pickup_Y
+95 ;	1 ;	1 ;	15	#1D_0_Putdown_Y
+#Cube: 2A_0
+176 ;	0 ;	0 ;	16	#2A_0_Pickup_X
+16 ;	1 ;	0 ;	16	#2A_0_Putdown_X
+256 ;	0 ;	1 ;	16	#2A_0_Pickup_Y
+96 ;	1 ;	1 ;	16	#2A_0_Putdown_Y
+#Cube: 2A_1
+177 ;	0 ;	0 ;	17	#2A_1_Pickup_X
+17 ;	1 ;	0 ;	17	#2A_1_Putdown_X
+257 ;	0 ;	1 ;	17	#2A_1_Pickup_Y
+97 ;	1 ;	1 ;	17	#2A_1_Putdown_Y
+#Cube: 2A_2
+178 ;	0 ;	0 ;	18	#2A_2_Pickup_X
+18 ;	1 ;	0 ;	18	#2A_2_Putdown_X
+258 ;	0 ;	1 ;	18	#2A_2_Pickup_Y
+98 ;	1 ;	1 ;	18	#2A_2_Putdown_Y
+#Cube: 2B_0
+179 ;	0 ;	0 ;	19	#2B_0_Pickup_X
+19 ;	1 ;	0 ;	19	#2B_0_Putdown_X
+259 ;	0 ;	1 ;	19	#2B_0_Pickup_Y
+99 ;	1 ;	1 ;	19	#2B_0_Putdown_Y
+#Cube: 2B_1
+180 ;	0 ;	0 ;	20	#2B_1_Pickup_X
+20 ;	1 ;	0 ;	20	#2B_1_Putdown_X
+260 ;	0 ;	1 ;	20	#2B_1_Pickup_Y
+100 ;	1 ;	1 ;	20	#2B_1_Putdown_Y
+#Cube: 2C_0
+181 ;	0 ;	0 ;	21	#2C_0_Pickup_X
+21 ;	1 ;	0 ;	21	#2C_0_Putdown_X
+261 ;	0 ;	1 ;	21	#2C_0_Pickup_Y
+101 ;	1 ;	1 ;	21	#2C_0_Putdown_Y
+#Cube: 2C_1
+182 ;	0 ;	0 ;	22	#2C_1_Pickup_X
+22 ;	1 ;	0 ;	22	#2C_1_Putdown_X
+262 ;	0 ;	1 ;	22	#2C_1_Pickup_Y
+102 ;	1 ;	1 ;	22	#2C_1_Putdown_Y
+#Cube: 2D_0
+183 ;	0 ;	0 ;	23	#2D_0_Pickup_X
+23 ;	1 ;	0 ;	23	#2D_0_Putdown_X
+263 ;	0 ;	1 ;	23	#2D_0_Pickup_Y
+103 ;	1 ;	1 ;	23	#2D_0_Putdown_Y
+#Cube: 3A_0
+184 ;	0 ;	0 ;	24	#3A_0_Pickup_X
+24 ;	1 ;	0 ;	24	#3A_0_Putdown_X
+264 ;	0 ;	1 ;	24	#3A_0_Pickup_Y
+104 ;	1 ;	1 ;	24	#3A_0_Putdown_Y
+#Cube: 3A_1
+185 ;	0 ;	0 ;	25	#3A_1_Pickup_X
+25 ;	1 ;	0 ;	25	#3A_1_Putdown_X
+265 ;	0 ;	1 ;	25	#3A_1_Pickup_Y
+105 ;	1 ;	1 ;	25	#3A_1_Putdown_Y
+#Cube: 3A_2
+186 ;	0 ;	0 ;	26	#3A_2_Pickup_X
+26 ;	1 ;	0 ;	26	#3A_2_Putdown_X
+266 ;	0 ;	1 ;	26	#3A_2_Pickup_Y
+106 ;	1 ;	1 ;	26	#3A_2_Putdown_Y
+#Cube: 3B_0
+187 ;	0 ;	0 ;	27	#3B_0_Pickup_X
+27 ;	1 ;	0 ;	27	#3B_0_Putdown_X
+267 ;	0 ;	1 ;	27	#3B_0_Pickup_Y
+107 ;	1 ;	1 ;	27	#3B_0_Putdown_Y
+#Cube: 3B_1
+188 ;	0 ;	0 ;	28	#3B_1_Pickup_X
+28 ;	1 ;	0 ;	28	#3B_1_Putdown_X
+268 ;	0 ;	1 ;	28	#3B_1_Pickup_Y
+108 ;	1 ;	1 ;	28	#3B_1_Putdown_Y
+#Cube: 3C_0
+189 ;	0 ;	0 ;	29	#3C_0_Pickup_X
+29 ;	1 ;	0 ;	29	#3C_0_Putdown_X
+269 ;	0 ;	1 ;	29	#3C_0_Pickup_Y
+109 ;	1 ;	1 ;	29	#3C_0_Putdown_Y
+#Cube: 3C_1
+190 ;	0 ;	0 ;	30	#3C_1_Pickup_X
+30 ;	1 ;	0 ;	30	#3C_1_Putdown_X
+270 ;	0 ;	1 ;	30	#3C_1_Pickup_Y
+110 ;	1 ;	1 ;	30	#3C_1_Putdown_Y
+#Cube: 3D_0
+191 ;	0 ;	0 ;	31	#3D_0_Pickup_X
+31 ;	1 ;	0 ;	31	#3D_0_Putdown_X
+271 ;	0 ;	1 ;	31	#3D_0_Pickup_Y
+111 ;	1 ;	1 ;	31	#3D_0_Putdown_Y
+#Cube: 4A_0
+192 ;	0 ;	0 ;	32	#4A_0_Pickup_X
+32 ;	1 ;	0 ;	32	#4A_0_Putdown_X
+272 ;	0 ;	1 ;	32	#4A_0_Pickup_Y
+112 ;	1 ;	1 ;	32	#4A_0_Putdown_Y
+#Cube: 4A_1
+193 ;	0 ;	0 ;	33	#4A_1_Pickup_X
+33 ;	1 ;	0 ;	33	#4A_1_Putdown_X
+273 ;	0 ;	1 ;	33	#4A_1_Pickup_Y
+113 ;	1 ;	1 ;	33	#4A_1_Putdown_Y
+#Cube: 4A_2
+194 ;	0 ;	0 ;	34	#4A_2_Pickup_X
+34 ;	1 ;	0 ;	34	#4A_2_Putdown_X
+274 ;	0 ;	1 ;	34	#4A_2_Pickup_Y
+114 ;	1 ;	1 ;	34	#4A_2_Putdown_Y
+#Cube: 4B_0
+195 ;	0 ;	0 ;	35	#4B_0_Pickup_X
+35 ;	1 ;	0 ;	35	#4B_0_Putdown_X
+275 ;	0 ;	1 ;	35	#4B_0_Pickup_Y
+115 ;	1 ;	1 ;	35	#4B_0_Putdown_Y
+#Cube: 4B_1
+196 ;	0 ;	0 ;	36	#4B_1_Pickup_X
+36 ;	1 ;	0 ;	36	#4B_1_Putdown_X
+276 ;	0 ;	1 ;	36	#4B_1_Pickup_Y
+116 ;	1 ;	1 ;	36	#4B_1_Putdown_Y
+#Cube: 4C_0
+197 ;	0 ;	0 ;	37	#4C_0_Pickup_X
+37 ;	1 ;	0 ;	37	#4C_0_Putdown_X
+277 ;	0 ;	1 ;	37	#4C_0_Pickup_Y
+117 ;	1 ;	1 ;	37	#4C_0_Putdown_Y
+#Cube: 4C_1
+198 ;	0 ;	0 ;	38	#4C_1_Pickup_X
+38 ;	1 ;	0 ;	38	#4C_1_Putdown_X
+278 ;	0 ;	1 ;	38	#4C_1_Pickup_Y
+118 ;	1 ;	1 ;	38	#4C_1_Putdown_Y
+#Cube: 4D_0
+199 ;	0 ;	0 ;	39	#4D_0_Pickup_X
+39 ;	1 ;	0 ;	39	#4D_0_Putdown_X
+279 ;	0 ;	1 ;	39	#4D_0_Pickup_Y
+119 ;	1 ;	1 ;	39	#4D_0_Putdown_Y
+#Cube: 5A_0
+200 ;	0 ;	0 ;	40	#5A_0_Pickup_X
+40 ;	1 ;	0 ;	40	#5A_0_Putdown_X
+280 ;	0 ;	1 ;	40	#5A_0_Pickup_Y
+120 ;	1 ;	1 ;	40	#5A_0_Putdown_Y
+#Cube: 5A_1
+201 ;	0 ;	0 ;	41	#5A_1_Pickup_X
+41 ;	1 ;	0 ;	41	#5A_1_Putdown_X
+281 ;	0 ;	1 ;	41	#5A_1_Pickup_Y
+121 ;	1 ;	1 ;	41	#5A_1_Putdown_Y
+#Cube: 5A_2
+202 ;	0 ;	0 ;	42	#5A_2_Pickup_X
+42 ;	1 ;	0 ;	42	#5A_2_Putdown_X
+282 ;	0 ;	1 ;	42	#5A_2_Pickup_Y
+122 ;	1 ;	1 ;	42	#5A_2_Putdown_Y
+#Cube: 5B_0
+203 ;	0 ;	0 ;	43	#5B_0_Pickup_X
+43 ;	1 ;	0 ;	43	#5B_0_Putdown_X
+283 ;	0 ;	1 ;	43	#5B_0_Pickup_Y
+123 ;	1 ;	1 ;	43	#5B_0_Putdown_Y
+#Cube: 5B_1
+204 ;	0 ;	0 ;	44	#5B_1_Pickup_X
+44 ;	1 ;	0 ;	44	#5B_1_Putdown_X
+284 ;	0 ;	1 ;	44	#5B_1_Pickup_Y
+124 ;	1 ;	1 ;	44	#5B_1_Putdown_Y
+#Cube: 5C_0
+205 ;	0 ;	0 ;	45	#5C_0_Pickup_X
+45 ;	1 ;	0 ;	45	#5C_0_Putdown_X
+285 ;	0 ;	1 ;	45	#5C_0_Pickup_Y
+125 ;	1 ;	1 ;	45	#5C_0_Putdown_Y
+#Cube: 5C_1
+206 ;	0 ;	0 ;	46	#5C_1_Pickup_X
+46 ;	1 ;	0 ;	46	#5C_1_Putdown_X
+286 ;	0 ;	1 ;	46	#5C_1_Pickup_Y
+126 ;	1 ;	1 ;	46	#5C_1_Putdown_Y
+#Cube: 5D_0
+207 ;	0 ;	0 ;	47	#5D_0_Pickup_X
+47 ;	1 ;	0 ;	47	#5D_0_Putdown_X
+287 ;	0 ;	1 ;	47	#5D_0_Pickup_Y
+127 ;	1 ;	1 ;	47	#5D_0_Putdown_Y
+#Cube: 6A_0
+208 ;	0 ;	0 ;	48	#6A_0_Pickup_X
+48 ;	1 ;	0 ;	48	#6A_0_Putdown_X
+288 ;	0 ;	1 ;	48	#6A_0_Pickup_Y
+128 ;	1 ;	1 ;	48	#6A_0_Putdown_Y
+#Cube: 6A_1
+209 ;	0 ;	0 ;	49	#6A_1_Pickup_X
+49 ;	1 ;	0 ;	49	#6A_1_Putdown_X
+289 ;	0 ;	1 ;	49	#6A_1_Pickup_Y
+129 ;	1 ;	1 ;	49	#6A_1_Putdown_Y
+#Cube: 6A_2
+210 ;	0 ;	0 ;	50	#6A_2_Pickup_X
+50 ;	1 ;	0 ;	50	#6A_2_Putdown_X
+290 ;	0 ;	1 ;	50	#6A_2_Pickup_Y
+130 ;	1 ;	1 ;	50	#6A_2_Putdown_Y
+#Cube: 6B_0
+211 ;	0 ;	0 ;	51	#6B_0_Pickup_X
+51 ;	1 ;	0 ;	51	#6B_0_Putdown_X
+291 ;	0 ;	1 ;	51	#6B_0_Pickup_Y
+131 ;	1 ;	1 ;	51	#6B_0_Putdown_Y
+#Cube: 6B_1
+212 ;	0 ;	0 ;	52	#6B_1_Pickup_X
+52 ;	1 ;	0 ;	52	#6B_1_Putdown_X
+292 ;	0 ;	1 ;	52	#6B_1_Pickup_Y
+132 ;	1 ;	1 ;	52	#6B_1_Putdown_Y
+#Cube: 6C_0
+213 ;	0 ;	0 ;	53	#6C_0_Pickup_X
+53 ;	1 ;	0 ;	53	#6C_0_Putdown_X
+293 ;	0 ;	1 ;	53	#6C_0_Pickup_Y
+133 ;	1 ;	1 ;	53	#6C_0_Putdown_Y
+#Cube: 6C_1
+214 ;	0 ;	0 ;	54	#6C_1_Pickup_X
+54 ;	1 ;	0 ;	54	#6C_1_Putdown_X
+294 ;	0 ;	1 ;	54	#6C_1_Pickup_Y
+134 ;	1 ;	1 ;	54	#6C_1_Putdown_Y
+#Cube: 6D_0
+215 ;	0 ;	0 ;	55	#6D_0_Pickup_X
+55 ;	1 ;	0 ;	55	#6D_0_Putdown_X
+295 ;	0 ;	1 ;	55	#6D_0_Pickup_Y
+135 ;	1 ;	1 ;	55	#6D_0_Putdown_Y
+#Cube: 7A_0
+216 ;	0 ;	0 ;	56	#7A_0_Pickup_X
+56 ;	1 ;	0 ;	56	#7A_0_Putdown_X
+296 ;	0 ;	1 ;	56	#7A_0_Pickup_Y
+136 ;	1 ;	1 ;	56	#7A_0_Putdown_Y
+#Cube: 7A_1
+217 ;	0 ;	0 ;	57	#7A_1_Pickup_X
+57 ;	1 ;	0 ;	57	#7A_1_Putdown_X
+297 ;	0 ;	1 ;	57	#7A_1_Pickup_Y
+137 ;	1 ;	1 ;	57	#7A_1_Putdown_Y
+#Cube: 7A_2
+218 ;	0 ;	0 ;	58	#7A_2_Pickup_X
+58 ;	1 ;	0 ;	58	#7A_2_Putdown_X
+298 ;	0 ;	1 ;	58	#7A_2_Pickup_Y
+138 ;	1 ;	1 ;	58	#7A_2_Putdown_Y
+#Cube: 7B_0
+219 ;	0 ;	0 ;	59	#7B_0_Pickup_X
+59 ;	1 ;	0 ;	59	#7B_0_Putdown_X
+299 ;	0 ;	1 ;	59	#7B_0_Pickup_Y
+139 ;	1 ;	1 ;	59	#7B_0_Putdown_Y
+#Cube: 7B_1
+220 ;	0 ;	0 ;	60	#7B_1_Pickup_X
+60 ;	1 ;	0 ;	60	#7B_1_Putdown_X
+300 ;	0 ;	1 ;	60	#7B_1_Pickup_Y
+140 ;	1 ;	1 ;	60	#7B_1_Putdown_Y
+#Cube: 7C_0
+221 ;	0 ;	0 ;	61	#7C_0_Pickup_X
+61 ;	1 ;	0 ;	61	#7C_0_Putdown_X
+301 ;	0 ;	1 ;	61	#7C_0_Pickup_Y
+141 ;	1 ;	1 ;	61	#7C_0_Putdown_Y
+#Cube: 7C_1
+222 ;	0 ;	0 ;	62	#7C_1_Pickup_X
+62 ;	1 ;	0 ;	62	#7C_1_Putdown_X
+302 ;	0 ;	1 ;	62	#7C_1_Pickup_Y
+142 ;	1 ;	1 ;	62	#7C_1_Putdown_Y
+#Cube: 7D_0
+223 ;	0 ;	0 ;	63	#7D_0_Pickup_X
+63 ;	1 ;	0 ;	63	#7D_0_Putdown_X
+303 ;	0 ;	1 ;	63	#7D_0_Pickup_Y
+143 ;	1 ;	1 ;	63	#7D_0_Putdown_Y
+#Cube: 8A_0
+224 ;	0 ;	0 ;	64	#8A_0_Pickup_X
+64 ;	1 ;	0 ;	64	#8A_0_Putdown_X
+304 ;	0 ;	1 ;	64	#8A_0_Pickup_Y
+144 ;	1 ;	1 ;	64	#8A_0_Putdown_Y
+#Cube: 8A_1
+225 ;	0 ;	0 ;	65	#8A_1_Pickup_X
+65 ;	1 ;	0 ;	65	#8A_1_Putdown_X
+305 ;	0 ;	1 ;	65	#8A_1_Pickup_Y
+145 ;	1 ;	1 ;	65	#8A_1_Putdown_Y
+#Cube: 8A_2
+226 ;	0 ;	0 ;	66	#8A_2_Pickup_X
+66 ;	1 ;	0 ;	66	#8A_2_Putdown_X
+306 ;	0 ;	1 ;	66	#8A_2_Pickup_Y
+146 ;	1 ;	1 ;	66	#8A_2_Putdown_Y
+#Cube: 8B_0
+227 ;	0 ;	0 ;	67	#8B_0_Pickup_X
+67 ;	1 ;	0 ;	67	#8B_0_Putdown_X
+307 ;	0 ;	1 ;	67	#8B_0_Pickup_Y
+147 ;	1 ;	1 ;	67	#8B_0_Putdown_Y
+#Cube: 8B_1
+228 ;	0 ;	0 ;	68	#8B_1_Pickup_X
+68 ;	1 ;	0 ;	68	#8B_1_Putdown_X
+308 ;	0 ;	1 ;	68	#8B_1_Pickup_Y
+148 ;	1 ;	1 ;	68	#8B_1_Putdown_Y
+#Cube: 8C_0
+229 ;	0 ;	0 ;	69	#8C_0_Pickup_X
+69 ;	1 ;	0 ;	69	#8C_0_Putdown_X
+309 ;	0 ;	1 ;	69	#8C_0_Pickup_Y
+149 ;	1 ;	1 ;	69	#8C_0_Putdown_Y
+#Cube: 8C_1
+230 ;	0 ;	0 ;	70	#8C_1_Pickup_X
+70 ;	1 ;	0 ;	70	#8C_1_Putdown_X
+310 ;	0 ;	1 ;	70	#8C_1_Pickup_Y
+150 ;	1 ;	1 ;	70	#8C_1_Putdown_Y
+#Cube: 8D_0
+231 ;	0 ;	0 ;	71	#8D_0_Pickup_X
+71 ;	1 ;	0 ;	71	#8D_0_Putdown_X
+311 ;	0 ;	1 ;	71	#8D_0_Pickup_Y
+151 ;	1 ;	1 ;	71	#8D_0_Putdown_Y
+#Cube: 9A_0
+232 ;	0 ;	0 ;	72	#9A_0_Pickup_X
+72 ;	1 ;	0 ;	72	#9A_0_Putdown_X
+312 ;	0 ;	1 ;	72	#9A_0_Pickup_Y
+152 ;	1 ;	1 ;	72	#9A_0_Putdown_Y
+#Cube: 9A_1
+233 ;	0 ;	0 ;	73	#9A_1_Pickup_X
+73 ;	1 ;	0 ;	73	#9A_1_Putdown_X
+313 ;	0 ;	1 ;	73	#9A_1_Pickup_Y
+153 ;	1 ;	1 ;	73	#9A_1_Putdown_Y
+#Cube: 9A_2
+234 ;	0 ;	0 ;	74	#9A_2_Pickup_X
+74 ;	1 ;	0 ;	74	#9A_2_Putdown_X
+314 ;	0 ;	1 ;	74	#9A_2_Pickup_Y
+154 ;	1 ;	1 ;	74	#9A_2_Putdown_Y
+#Cube: 9B_0
+235 ;	0 ;	0 ;	75	#9B_0_Pickup_X
+75 ;	1 ;	0 ;	75	#9B_0_Putdown_X
+315 ;	0 ;	1 ;	75	#9B_0_Pickup_Y
+155 ;	1 ;	1 ;	75	#9B_0_Putdown_Y
+#Cube: 9B_1
+236 ;	0 ;	0 ;	76	#9B_1_Pickup_X
+76 ;	1 ;	0 ;	76	#9B_1_Putdown_X
+316 ;	0 ;	1 ;	76	#9B_1_Pickup_Y
+156 ;	1 ;	1 ;	76	#9B_1_Putdown_Y
+#Cube: 9C_0
+237 ;	0 ;	0 ;	77	#9C_0_Pickup_X
+77 ;	1 ;	0 ;	77	#9C_0_Putdown_X
+317 ;	0 ;	1 ;	77	#9C_0_Pickup_Y
+157 ;	1 ;	1 ;	77	#9C_0_Putdown_Y
+#Cube: 9C_1
+238 ;	0 ;	0 ;	78	#9C_1_Pickup_X
+78 ;	1 ;	0 ;	78	#9C_1_Putdown_X
+318 ;	0 ;	1 ;	78	#9C_1_Pickup_Y
+158 ;	1 ;	1 ;	78	#9C_1_Putdown_Y
+#Cube: 9D_0
+239 ;	0 ;	0 ;	79	#9D_0_Pickup_X
+79 ;	1 ;	0 ;	79	#9D_0_Putdown_X
+319 ;	0 ;	1 ;	79	#9D_0_Pickup_Y
+159 ;	1 ;	1 ;	79	#9D_0_Putdown_Y
+
+PositionPrecedence:
+#+----------------------+--------------------+
+#| PredecessorProcessID | SuccessorProcessID |
+#+----------------------+--------------------+
+80 ;	7	#0A_0 Yaxis ---Ahed---> 0D_0 Xaxis
+80 ;	87	#0A_0 Yaxis ---Ahed---> 0D_0 Yaxis
+0 ;	1	#0A_0 Xaxis ---Right---> 0A_1 Xaxis
+0 ;	81	#0A_0 Xaxis ---Right---> 0A_1 Yaxis
+0 ;	8	#0A_0 Xaxis ---Up---> 1A_0 Xaxis
+0 ;	88	#0A_0 Xaxis ---Up---> 1A_0 Yaxis
+80 ;	8	#0A_0 Yaxis ---Up---> 1A_0 Xaxis
+80 ;	88	#0A_0 Yaxis ---Up---> 1A_0 Yaxis
+1 ;	0	#0A_1 Xaxis ---Left---> 0A_0 Xaxis
+1 ;	80	#0A_1 Xaxis ---Left---> 0A_0 Yaxis
+1 ;	2	#0A_1 Xaxis ---Right---> 0A_2 Xaxis
+1 ;	82	#0A_1 Xaxis ---Right---> 0A_2 Yaxis
+1 ;	9	#0A_1 Xaxis ---Up---> 1A_1 Xaxis
+1 ;	89	#0A_1 Xaxis ---Up---> 1A_1 Yaxis
+81 ;	9	#0A_1 Yaxis ---Up---> 1A_1 Xaxis
+81 ;	89	#0A_1 Yaxis ---Up---> 1A_1 Yaxis
+82 ;	3	#0A_2 Yaxis ---Ahed---> 0B_0 Xaxis
+82 ;	83	#0A_2 Yaxis ---Ahed---> 0B_0 Yaxis
+2 ;	1	#0A_2 Xaxis ---Left---> 0A_1 Xaxis
+2 ;	81	#0A_2 Xaxis ---Left---> 0A_1 Yaxis
+2 ;	10	#0A_2 Xaxis ---Up---> 1A_2 Xaxis
+2 ;	90	#0A_2 Xaxis ---Up---> 1A_2 Yaxis
+82 ;	10	#0A_2 Yaxis ---Up---> 1A_2 Xaxis
+82 ;	90	#0A_2 Yaxis ---Up---> 1A_2 Yaxis
+83 ;	4	#0B_0 Yaxis ---Ahed---> 0B_1 Xaxis
+83 ;	84	#0B_0 Yaxis ---Ahed---> 0B_1 Yaxis
+83 ;	2	#0B_0 Yaxis ---Back---> 0A_2 Xaxis
+83 ;	82	#0B_0 Yaxis ---Back---> 0A_2 Yaxis
+3 ;	11	#0B_0 Xaxis ---Up---> 1B_0 Xaxis
+3 ;	91	#0B_0 Xaxis ---Up---> 1B_0 Yaxis
+83 ;	11	#0B_0 Yaxis ---Up---> 1B_0 Xaxis
+83 ;	91	#0B_0 Yaxis ---Up---> 1B_0 Yaxis
+84 ;	3	#0B_1 Yaxis ---Back---> 0B_0 Xaxis
+84 ;	83	#0B_1 Yaxis ---Back---> 0B_0 Yaxis
+4 ;	5	#0B_1 Xaxis ---Left---> 0C_0 Xaxis
+4 ;	85	#0B_1 Xaxis ---Left---> 0C_0 Yaxis
+4 ;	12	#0B_1 Xaxis ---Up---> 1B_1 Xaxis
+4 ;	92	#0B_1 Xaxis ---Up---> 1B_1 Yaxis
+84 ;	12	#0B_1 Yaxis ---Up---> 1B_1 Xaxis
+84 ;	92	#0B_1 Yaxis ---Up---> 1B_1 Yaxis
+5 ;	6	#0C_0 Xaxis ---Left---> 0C_1 Xaxis
+5 ;	86	#0C_0 Xaxis ---Left---> 0C_1 Yaxis
+5 ;	4	#0C_0 Xaxis ---Right---> 0B_1 Xaxis
+5 ;	84	#0C_0 Xaxis ---Right---> 0B_1 Yaxis
+5 ;	13	#0C_0 Xaxis ---Up---> 1C_0 Xaxis
+5 ;	93	#0C_0 Xaxis ---Up---> 1C_0 Yaxis
+85 ;	13	#0C_0 Yaxis ---Up---> 1C_0 Xaxis
+85 ;	93	#0C_0 Yaxis ---Up---> 1C_0 Yaxis
+86 ;	7	#0C_1 Yaxis ---Back---> 0D_0 Xaxis
+86 ;	87	#0C_1 Yaxis ---Back---> 0D_0 Yaxis
+6 ;	5	#0C_1 Xaxis ---Right---> 0C_0 Xaxis
+6 ;	85	#0C_1 Xaxis ---Right---> 0C_0 Yaxis
+6 ;	14	#0C_1 Xaxis ---Up---> 1C_1 Xaxis
+6 ;	94	#0C_1 Xaxis ---Up---> 1C_1 Yaxis
+86 ;	14	#0C_1 Yaxis ---Up---> 1C_1 Xaxis
+86 ;	94	#0C_1 Yaxis ---Up---> 1C_1 Yaxis
+87 ;	6	#0D_0 Yaxis ---Ahed---> 0C_1 Xaxis
+87 ;	86	#0D_0 Yaxis ---Ahed---> 0C_1 Yaxis
+87 ;	0	#0D_0 Yaxis ---Back---> 0A_0 Xaxis
+87 ;	80	#0D_0 Yaxis ---Back---> 0A_0 Yaxis
+7 ;	15	#0D_0 Xaxis ---Up---> 1D_0 Xaxis
+7 ;	95	#0D_0 Xaxis ---Up---> 1D_0 Yaxis
+87 ;	15	#0D_0 Yaxis ---Up---> 1D_0 Xaxis
+87 ;	95	#0D_0 Yaxis ---Up---> 1D_0 Yaxis
+88 ;	15	#1A_0 Yaxis ---Ahed---> 1D_0 Xaxis
+88 ;	95	#1A_0 Yaxis ---Ahed---> 1D_0 Yaxis
+8 ;	9	#1A_0 Xaxis ---Right---> 1A_1 Xaxis
+8 ;	89	#1A_0 Xaxis ---Right---> 1A_1 Yaxis
+8 ;	16	#1A_0 Xaxis ---Up---> 2A_0 Xaxis
+8 ;	96	#1A_0 Xaxis ---Up---> 2A_0 Yaxis
+88 ;	16	#1A_0 Yaxis ---Up---> 2A_0 Xaxis
+88 ;	96	#1A_0 Yaxis ---Up---> 2A_0 Yaxis
+9 ;	8	#1A_1 Xaxis ---Left---> 1A_0 Xaxis
+9 ;	88	#1A_1 Xaxis ---Left---> 1A_0 Yaxis
+9 ;	10	#1A_1 Xaxis ---Right---> 1A_2 Xaxis
+9 ;	90	#1A_1 Xaxis ---Right---> 1A_2 Yaxis
+9 ;	17	#1A_1 Xaxis ---Up---> 2A_1 Xaxis
+9 ;	97	#1A_1 Xaxis ---Up---> 2A_1 Yaxis
+89 ;	17	#1A_1 Yaxis ---Up---> 2A_1 Xaxis
+89 ;	97	#1A_1 Yaxis ---Up---> 2A_1 Yaxis
+90 ;	11	#1A_2 Yaxis ---Ahed---> 1B_0 Xaxis
+90 ;	91	#1A_2 Yaxis ---Ahed---> 1B_0 Yaxis
+10 ;	9	#1A_2 Xaxis ---Left---> 1A_1 Xaxis
+10 ;	89	#1A_2 Xaxis ---Left---> 1A_1 Yaxis
+10 ;	18	#1A_2 Xaxis ---Up---> 2A_2 Xaxis
+10 ;	98	#1A_2 Xaxis ---Up---> 2A_2 Yaxis
+90 ;	18	#1A_2 Yaxis ---Up---> 2A_2 Xaxis
+90 ;	98	#1A_2 Yaxis ---Up---> 2A_2 Yaxis
+91 ;	12	#1B_0 Yaxis ---Ahed---> 1B_1 Xaxis
+91 ;	92	#1B_0 Yaxis ---Ahed---> 1B_1 Yaxis
+91 ;	10	#1B_0 Yaxis ---Back---> 1A_2 Xaxis
+91 ;	90	#1B_0 Yaxis ---Back---> 1A_2 Yaxis
+11 ;	19	#1B_0 Xaxis ---Up---> 2B_0 Xaxis
+11 ;	99	#1B_0 Xaxis ---Up---> 2B_0 Yaxis
+91 ;	19	#1B_0 Yaxis ---Up---> 2B_0 Xaxis
+91 ;	99	#1B_0 Yaxis ---Up---> 2B_0 Yaxis
+92 ;	11	#1B_1 Yaxis ---Back---> 1B_0 Xaxis
+92 ;	91	#1B_1 Yaxis ---Back---> 1B_0 Yaxis
+12 ;	13	#1B_1 Xaxis ---Left---> 1C_0 Xaxis
+12 ;	93	#1B_1 Xaxis ---Left---> 1C_0 Yaxis
+12 ;	20	#1B_1 Xaxis ---Up---> 2B_1 Xaxis
+12 ;	100	#1B_1 Xaxis ---Up---> 2B_1 Yaxis
+92 ;	20	#1B_1 Yaxis ---Up---> 2B_1 Xaxis
+92 ;	100	#1B_1 Yaxis ---Up---> 2B_1 Yaxis
+13 ;	14	#1C_0 Xaxis ---Left---> 1C_1 Xaxis
+13 ;	94	#1C_0 Xaxis ---Left---> 1C_1 Yaxis
+13 ;	12	#1C_0 Xaxis ---Right---> 1B_1 Xaxis
+13 ;	92	#1C_0 Xaxis ---Right---> 1B_1 Yaxis
+13 ;	21	#1C_0 Xaxis ---Up---> 2C_0 Xaxis
+13 ;	101	#1C_0 Xaxis ---Up---> 2C_0 Yaxis
+93 ;	21	#1C_0 Yaxis ---Up---> 2C_0 Xaxis
+93 ;	101	#1C_0 Yaxis ---Up---> 2C_0 Yaxis
+94 ;	15	#1C_1 Yaxis ---Back---> 1D_0 Xaxis
+94 ;	95	#1C_1 Yaxis ---Back---> 1D_0 Yaxis
+14 ;	13	#1C_1 Xaxis ---Right---> 1C_0 Xaxis
+14 ;	93	#1C_1 Xaxis ---Right---> 1C_0 Yaxis
+14 ;	22	#1C_1 Xaxis ---Up---> 2C_1 Xaxis
+14 ;	102	#1C_1 Xaxis ---Up---> 2C_1 Yaxis
+94 ;	22	#1C_1 Yaxis ---Up---> 2C_1 Xaxis
+94 ;	102	#1C_1 Yaxis ---Up---> 2C_1 Yaxis
+95 ;	14	#1D_0 Yaxis ---Ahed---> 1C_1 Xaxis
+95 ;	94	#1D_0 Yaxis ---Ahed---> 1C_1 Yaxis
+95 ;	8	#1D_0 Yaxis ---Back---> 1A_0 Xaxis
+95 ;	88	#1D_0 Yaxis ---Back---> 1A_0 Yaxis
+15 ;	23	#1D_0 Xaxis ---Up---> 2D_0 Xaxis
+15 ;	103	#1D_0 Xaxis ---Up---> 2D_0 Yaxis
+95 ;	23	#1D_0 Yaxis ---Up---> 2D_0 Xaxis
+95 ;	103	#1D_0 Yaxis ---Up---> 2D_0 Yaxis
+96 ;	23	#2A_0 Yaxis ---Ahed---> 2D_0 Xaxis
+96 ;	103	#2A_0 Yaxis ---Ahed---> 2D_0 Yaxis
+16 ;	17	#2A_0 Xaxis ---Right---> 2A_1 Xaxis
+16 ;	97	#2A_0 Xaxis ---Right---> 2A_1 Yaxis
+16 ;	24	#2A_0 Xaxis ---Up---> 3A_0 Xaxis
+16 ;	104	#2A_0 Xaxis ---Up---> 3A_0 Yaxis
+96 ;	24	#2A_0 Yaxis ---Up---> 3A_0 Xaxis
+96 ;	104	#2A_0 Yaxis ---Up---> 3A_0 Yaxis
+17 ;	16	#2A_1 Xaxis ---Left---> 2A_0 Xaxis
+17 ;	96	#2A_1 Xaxis ---Left---> 2A_0 Yaxis
+17 ;	18	#2A_1 Xaxis ---Right---> 2A_2 Xaxis
+17 ;	98	#2A_1 Xaxis ---Right---> 2A_2 Yaxis
+17 ;	25	#2A_1 Xaxis ---Up---> 3A_1 Xaxis
+17 ;	105	#2A_1 Xaxis ---Up---> 3A_1 Yaxis
+97 ;	25	#2A_1 Yaxis ---Up---> 3A_1 Xaxis
+97 ;	105	#2A_1 Yaxis ---Up---> 3A_1 Yaxis
+98 ;	19	#2A_2 Yaxis ---Ahed---> 2B_0 Xaxis
+98 ;	99	#2A_2 Yaxis ---Ahed---> 2B_0 Yaxis
+18 ;	17	#2A_2 Xaxis ---Left---> 2A_1 Xaxis
+18 ;	97	#2A_2 Xaxis ---Left---> 2A_1 Yaxis
+18 ;	26	#2A_2 Xaxis ---Up---> 3A_2 Xaxis
+18 ;	106	#2A_2 Xaxis ---Up---> 3A_2 Yaxis
+98 ;	26	#2A_2 Yaxis ---Up---> 3A_2 Xaxis
+98 ;	106	#2A_2 Yaxis ---Up---> 3A_2 Yaxis
+99 ;	20	#2B_0 Yaxis ---Ahed---> 2B_1 Xaxis
+99 ;	100	#2B_0 Yaxis ---Ahed---> 2B_1 Yaxis
+99 ;	18	#2B_0 Yaxis ---Back---> 2A_2 Xaxis
+99 ;	98	#2B_0 Yaxis ---Back---> 2A_2 Yaxis
+19 ;	27	#2B_0 Xaxis ---Up---> 3B_0 Xaxis
+19 ;	107	#2B_0 Xaxis ---Up---> 3B_0 Yaxis
+99 ;	27	#2B_0 Yaxis ---Up---> 3B_0 Xaxis
+99 ;	107	#2B_0 Yaxis ---Up---> 3B_0 Yaxis
+100 ;	19	#2B_1 Yaxis ---Back---> 2B_0 Xaxis
+100 ;	99	#2B_1 Yaxis ---Back---> 2B_0 Yaxis
+20 ;	21	#2B_1 Xaxis ---Left---> 2C_0 Xaxis
+20 ;	101	#2B_1 Xaxis ---Left---> 2C_0 Yaxis
+20 ;	28	#2B_1 Xaxis ---Up---> 3B_1 Xaxis
+20 ;	108	#2B_1 Xaxis ---Up---> 3B_1 Yaxis
+100 ;	28	#2B_1 Yaxis ---Up---> 3B_1 Xaxis
+100 ;	108	#2B_1 Yaxis ---Up---> 3B_1 Yaxis
+21 ;	22	#2C_0 Xaxis ---Left---> 2C_1 Xaxis
+21 ;	102	#2C_0 Xaxis ---Left---> 2C_1 Yaxis
+21 ;	20	#2C_0 Xaxis ---Right---> 2B_1 Xaxis
+21 ;	100	#2C_0 Xaxis ---Right---> 2B_1 Yaxis
+21 ;	29	#2C_0 Xaxis ---Up---> 3C_0 Xaxis
+21 ;	109	#2C_0 Xaxis ---Up---> 3C_0 Yaxis
+101 ;	29	#2C_0 Yaxis ---Up---> 3C_0 Xaxis
+101 ;	109	#2C_0 Yaxis ---Up---> 3C_0 Yaxis
+102 ;	23	#2C_1 Yaxis ---Back---> 2D_0 Xaxis
+102 ;	103	#2C_1 Yaxis ---Back---> 2D_0 Yaxis
+22 ;	21	#2C_1 Xaxis ---Right---> 2C_0 Xaxis
+22 ;	101	#2C_1 Xaxis ---Right---> 2C_0 Yaxis
+22 ;	30	#2C_1 Xaxis ---Up---> 3C_1 Xaxis
+22 ;	110	#2C_1 Xaxis ---Up---> 3C_1 Yaxis
+102 ;	30	#2C_1 Yaxis ---Up---> 3C_1 Xaxis
+102 ;	110	#2C_1 Yaxis ---Up---> 3C_1 Yaxis
+103 ;	22	#2D_0 Yaxis ---Ahed---> 2C_1 Xaxis
+103 ;	102	#2D_0 Yaxis ---Ahed---> 2C_1 Yaxis
+103 ;	16	#2D_0 Yaxis ---Back---> 2A_0 Xaxis
+103 ;	96	#2D_0 Yaxis ---Back---> 2A_0 Yaxis
+23 ;	31	#2D_0 Xaxis ---Up---> 3D_0 Xaxis
+23 ;	111	#2D_0 Xaxis ---Up---> 3D_0 Yaxis
+103 ;	31	#2D_0 Yaxis ---Up---> 3D_0 Xaxis
+103 ;	111	#2D_0 Yaxis ---Up---> 3D_0 Yaxis
+104 ;	31	#3A_0 Yaxis ---Ahed---> 3D_0 Xaxis
+104 ;	111	#3A_0 Yaxis ---Ahed---> 3D_0 Yaxis
+24 ;	25	#3A_0 Xaxis ---Right---> 3A_1 Xaxis
+24 ;	105	#3A_0 Xaxis ---Right---> 3A_1 Yaxis
+24 ;	32	#3A_0 Xaxis ---Up---> 4A_0 Xaxis
+24 ;	112	#3A_0 Xaxis ---Up---> 4A_0 Yaxis
+104 ;	32	#3A_0 Yaxis ---Up---> 4A_0 Xaxis
+104 ;	112	#3A_0 Yaxis ---Up---> 4A_0 Yaxis
+25 ;	24	#3A_1 Xaxis ---Left---> 3A_0 Xaxis
+25 ;	104	#3A_1 Xaxis ---Left---> 3A_0 Yaxis
+25 ;	26	#3A_1 Xaxis ---Right---> 3A_2 Xaxis
+25 ;	106	#3A_1 Xaxis ---Right---> 3A_2 Yaxis
+25 ;	33	#3A_1 Xaxis ---Up---> 4A_1 Xaxis
+25 ;	113	#3A_1 Xaxis ---Up---> 4A_1 Yaxis
+105 ;	33	#3A_1 Yaxis ---Up---> 4A_1 Xaxis
+105 ;	113	#3A_1 Yaxis ---Up---> 4A_1 Yaxis
+106 ;	27	#3A_2 Yaxis ---Ahed---> 3B_0 Xaxis
+106 ;	107	#3A_2 Yaxis ---Ahed---> 3B_0 Yaxis
+26 ;	25	#3A_2 Xaxis ---Left---> 3A_1 Xaxis
+26 ;	105	#3A_2 Xaxis ---Left---> 3A_1 Yaxis
+26 ;	34	#3A_2 Xaxis ---Up---> 4A_2 Xaxis
+26 ;	114	#3A_2 Xaxis ---Up---> 4A_2 Yaxis
+106 ;	34	#3A_2 Yaxis ---Up---> 4A_2 Xaxis
+106 ;	114	#3A_2 Yaxis ---Up---> 4A_2 Yaxis
+107 ;	28	#3B_0 Yaxis ---Ahed---> 3B_1 Xaxis
+107 ;	108	#3B_0 Yaxis ---Ahed---> 3B_1 Yaxis
+107 ;	26	#3B_0 Yaxis ---Back---> 3A_2 Xaxis
+107 ;	106	#3B_0 Yaxis ---Back---> 3A_2 Yaxis
+27 ;	35	#3B_0 Xaxis ---Up---> 4B_0 Xaxis
+27 ;	115	#3B_0 Xaxis ---Up---> 4B_0 Yaxis
+107 ;	35	#3B_0 Yaxis ---Up---> 4B_0 Xaxis
+107 ;	115	#3B_0 Yaxis ---Up---> 4B_0 Yaxis
+108 ;	27	#3B_1 Yaxis ---Back---> 3B_0 Xaxis
+108 ;	107	#3B_1 Yaxis ---Back---> 3B_0 Yaxis
+28 ;	29	#3B_1 Xaxis ---Left---> 3C_0 Xaxis
+28 ;	109	#3B_1 Xaxis ---Left---> 3C_0 Yaxis
+28 ;	36	#3B_1 Xaxis ---Up---> 4B_1 Xaxis
+28 ;	116	#3B_1 Xaxis ---Up---> 4B_1 Yaxis
+108 ;	36	#3B_1 Yaxis ---Up---> 4B_1 Xaxis
+108 ;	116	#3B_1 Yaxis ---Up---> 4B_1 Yaxis
+29 ;	30	#3C_0 Xaxis ---Left---> 3C_1 Xaxis
+29 ;	110	#3C_0 Xaxis ---Left---> 3C_1 Yaxis
+29 ;	28	#3C_0 Xaxis ---Right---> 3B_1 Xaxis
+29 ;	108	#3C_0 Xaxis ---Right---> 3B_1 Yaxis
+29 ;	37	#3C_0 Xaxis ---Up---> 4C_0 Xaxis
+29 ;	117	#3C_0 Xaxis ---Up---> 4C_0 Yaxis
+109 ;	37	#3C_0 Yaxis ---Up---> 4C_0 Xaxis
+109 ;	117	#3C_0 Yaxis ---Up---> 4C_0 Yaxis
+110 ;	31	#3C_1 Yaxis ---Back---> 3D_0 Xaxis
+110 ;	111	#3C_1 Yaxis ---Back---> 3D_0 Yaxis
+30 ;	29	#3C_1 Xaxis ---Right---> 3C_0 Xaxis
+30 ;	109	#3C_1 Xaxis ---Right---> 3C_0 Yaxis
+30 ;	38	#3C_1 Xaxis ---Up---> 4C_1 Xaxis
+30 ;	118	#3C_1 Xaxis ---Up---> 4C_1 Yaxis
+110 ;	38	#3C_1 Yaxis ---Up---> 4C_1 Xaxis
+110 ;	118	#3C_1 Yaxis ---Up---> 4C_1 Yaxis
+111 ;	30	#3D_0 Yaxis ---Ahed---> 3C_1 Xaxis
+111 ;	110	#3D_0 Yaxis ---Ahed---> 3C_1 Yaxis
+111 ;	24	#3D_0 Yaxis ---Back---> 3A_0 Xaxis
+111 ;	104	#3D_0 Yaxis ---Back---> 3A_0 Yaxis
+31 ;	39	#3D_0 Xaxis ---Up---> 4D_0 Xaxis
+31 ;	119	#3D_0 Xaxis ---Up---> 4D_0 Yaxis
+111 ;	39	#3D_0 Yaxis ---Up---> 4D_0 Xaxis
+111 ;	119	#3D_0 Yaxis ---Up---> 4D_0 Yaxis
+112 ;	39	#4A_0 Yaxis ---Ahed---> 4D_0 Xaxis
+112 ;	119	#4A_0 Yaxis ---Ahed---> 4D_0 Yaxis
+32 ;	33	#4A_0 Xaxis ---Right---> 4A_1 Xaxis
+32 ;	113	#4A_0 Xaxis ---Right---> 4A_1 Yaxis
+32 ;	40	#4A_0 Xaxis ---Up---> 5A_0 Xaxis
+32 ;	120	#4A_0 Xaxis ---Up---> 5A_0 Yaxis
+112 ;	40	#4A_0 Yaxis ---Up---> 5A_0 Xaxis
+112 ;	120	#4A_0 Yaxis ---Up---> 5A_0 Yaxis
+33 ;	32	#4A_1 Xaxis ---Left---> 4A_0 Xaxis
+33 ;	112	#4A_1 Xaxis ---Left---> 4A_0 Yaxis
+33 ;	34	#4A_1 Xaxis ---Right---> 4A_2 Xaxis
+33 ;	114	#4A_1 Xaxis ---Right---> 4A_2 Yaxis
+33 ;	41	#4A_1 Xaxis ---Up---> 5A_1 Xaxis
+33 ;	121	#4A_1 Xaxis ---Up---> 5A_1 Yaxis
+113 ;	41	#4A_1 Yaxis ---Up---> 5A_1 Xaxis
+113 ;	121	#4A_1 Yaxis ---Up---> 5A_1 Yaxis
+114 ;	35	#4A_2 Yaxis ---Ahed---> 4B_0 Xaxis
+114 ;	115	#4A_2 Yaxis ---Ahed---> 4B_0 Yaxis
+34 ;	33	#4A_2 Xaxis ---Left---> 4A_1 Xaxis
+34 ;	113	#4A_2 Xaxis ---Left---> 4A_1 Yaxis
+34 ;	42	#4A_2 Xaxis ---Up---> 5A_2 Xaxis
+34 ;	122	#4A_2 Xaxis ---Up---> 5A_2 Yaxis
+114 ;	42	#4A_2 Yaxis ---Up---> 5A_2 Xaxis
+114 ;	122	#4A_2 Yaxis ---Up---> 5A_2 Yaxis
+115 ;	36	#4B_0 Yaxis ---Ahed---> 4B_1 Xaxis
+115 ;	116	#4B_0 Yaxis ---Ahed---> 4B_1 Yaxis
+115 ;	34	#4B_0 Yaxis ---Back---> 4A_2 Xaxis
+115 ;	114	#4B_0 Yaxis ---Back---> 4A_2 Yaxis
+35 ;	43	#4B_0 Xaxis ---Up---> 5B_0 Xaxis
+35 ;	123	#4B_0 Xaxis ---Up---> 5B_0 Yaxis
+115 ;	43	#4B_0 Yaxis ---Up---> 5B_0 Xaxis
+115 ;	123	#4B_0 Yaxis ---Up---> 5B_0 Yaxis
+116 ;	35	#4B_1 Yaxis ---Back---> 4B_0 Xaxis
+116 ;	115	#4B_1 Yaxis ---Back---> 4B_0 Yaxis
+36 ;	37	#4B_1 Xaxis ---Left---> 4C_0 Xaxis
+36 ;	117	#4B_1 Xaxis ---Left---> 4C_0 Yaxis
+36 ;	44	#4B_1 Xaxis ---Up---> 5B_1 Xaxis
+36 ;	124	#4B_1 Xaxis ---Up---> 5B_1 Yaxis
+116 ;	44	#4B_1 Yaxis ---Up---> 5B_1 Xaxis
+116 ;	124	#4B_1 Yaxis ---Up---> 5B_1 Yaxis
+37 ;	38	#4C_0 Xaxis ---Left---> 4C_1 Xaxis
+37 ;	118	#4C_0 Xaxis ---Left---> 4C_1 Yaxis
+37 ;	36	#4C_0 Xaxis ---Right---> 4B_1 Xaxis
+37 ;	116	#4C_0 Xaxis ---Right---> 4B_1 Yaxis
+37 ;	45	#4C_0 Xaxis ---Up---> 5C_0 Xaxis
+37 ;	125	#4C_0 Xaxis ---Up---> 5C_0 Yaxis
+117 ;	45	#4C_0 Yaxis ---Up---> 5C_0 Xaxis
+117 ;	125	#4C_0 Yaxis ---Up---> 5C_0 Yaxis
+118 ;	39	#4C_1 Yaxis ---Back---> 4D_0 Xaxis
+118 ;	119	#4C_1 Yaxis ---Back---> 4D_0 Yaxis
+38 ;	37	#4C_1 Xaxis ---Right---> 4C_0 Xaxis
+38 ;	117	#4C_1 Xaxis ---Right---> 4C_0 Yaxis
+38 ;	46	#4C_1 Xaxis ---Up---> 5C_1 Xaxis
+38 ;	126	#4C_1 Xaxis ---Up---> 5C_1 Yaxis
+118 ;	46	#4C_1 Yaxis ---Up---> 5C_1 Xaxis
+118 ;	126	#4C_1 Yaxis ---Up---> 5C_1 Yaxis
+119 ;	38	#4D_0 Yaxis ---Ahed---> 4C_1 Xaxis
+119 ;	118	#4D_0 Yaxis ---Ahed---> 4C_1 Yaxis
+119 ;	32	#4D_0 Yaxis ---Back---> 4A_0 Xaxis
+119 ;	112	#4D_0 Yaxis ---Back---> 4A_0 Yaxis
+39 ;	47	#4D_0 Xaxis ---Up---> 5D_0 Xaxis
+39 ;	127	#4D_0 Xaxis ---Up---> 5D_0 Yaxis
+119 ;	47	#4D_0 Yaxis ---Up---> 5D_0 Xaxis
+119 ;	127	#4D_0 Yaxis ---Up---> 5D_0 Yaxis
+120 ;	47	#5A_0 Yaxis ---Ahed---> 5D_0 Xaxis
+120 ;	127	#5A_0 Yaxis ---Ahed---> 5D_0 Yaxis
+40 ;	41	#5A_0 Xaxis ---Right---> 5A_1 Xaxis
+40 ;	121	#5A_0 Xaxis ---Right---> 5A_1 Yaxis
+40 ;	48	#5A_0 Xaxis ---Up---> 6A_0 Xaxis
+40 ;	128	#5A_0 Xaxis ---Up---> 6A_0 Yaxis
+120 ;	48	#5A_0 Yaxis ---Up---> 6A_0 Xaxis
+120 ;	128	#5A_0 Yaxis ---Up---> 6A_0 Yaxis
+41 ;	40	#5A_1 Xaxis ---Left---> 5A_0 Xaxis
+41 ;	120	#5A_1 Xaxis ---Left---> 5A_0 Yaxis
+41 ;	42	#5A_1 Xaxis ---Right---> 5A_2 Xaxis
+41 ;	122	#5A_1 Xaxis ---Right---> 5A_2 Yaxis
+41 ;	49	#5A_1 Xaxis ---Up---> 6A_1 Xaxis
+41 ;	129	#5A_1 Xaxis ---Up---> 6A_1 Yaxis
+121 ;	49	#5A_1 Yaxis ---Up---> 6A_1 Xaxis
+121 ;	129	#5A_1 Yaxis ---Up---> 6A_1 Yaxis
+122 ;	43	#5A_2 Yaxis ---Ahed---> 5B_0 Xaxis
+122 ;	123	#5A_2 Yaxis ---Ahed---> 5B_0 Yaxis
+42 ;	41	#5A_2 Xaxis ---Left---> 5A_1 Xaxis
+42 ;	121	#5A_2 Xaxis ---Left---> 5A_1 Yaxis
+42 ;	50	#5A_2 Xaxis ---Up---> 6A_2 Xaxis
+42 ;	130	#5A_2 Xaxis ---Up---> 6A_2 Yaxis
+122 ;	50	#5A_2 Yaxis ---Up---> 6A_2 Xaxis
+122 ;	130	#5A_2 Yaxis ---Up---> 6A_2 Yaxis
+123 ;	44	#5B_0 Yaxis ---Ahed---> 5B_1 Xaxis
+123 ;	124	#5B_0 Yaxis ---Ahed---> 5B_1 Yaxis
+123 ;	42	#5B_0 Yaxis ---Back---> 5A_2 Xaxis
+123 ;	122	#5B_0 Yaxis ---Back---> 5A_2 Yaxis
+43 ;	51	#5B_0 Xaxis ---Up---> 6B_0 Xaxis
+43 ;	131	#5B_0 Xaxis ---Up---> 6B_0 Yaxis
+123 ;	51	#5B_0 Yaxis ---Up---> 6B_0 Xaxis
+123 ;	131	#5B_0 Yaxis ---Up---> 6B_0 Yaxis
+124 ;	43	#5B_1 Yaxis ---Back---> 5B_0 Xaxis
+124 ;	123	#5B_1 Yaxis ---Back---> 5B_0 Yaxis
+44 ;	45	#5B_1 Xaxis ---Left---> 5C_0 Xaxis
+44 ;	125	#5B_1 Xaxis ---Left---> 5C_0 Yaxis
+44 ;	52	#5B_1 Xaxis ---Up---> 6B_1 Xaxis
+44 ;	132	#5B_1 Xaxis ---Up---> 6B_1 Yaxis
+124 ;	52	#5B_1 Yaxis ---Up---> 6B_1 Xaxis
+124 ;	132	#5B_1 Yaxis ---Up---> 6B_1 Yaxis
+45 ;	46	#5C_0 Xaxis ---Left---> 5C_1 Xaxis
+45 ;	126	#5C_0 Xaxis ---Left---> 5C_1 Yaxis
+45 ;	44	#5C_0 Xaxis ---Right---> 5B_1 Xaxis
+45 ;	124	#5C_0 Xaxis ---Right---> 5B_1 Yaxis
+45 ;	53	#5C_0 Xaxis ---Up---> 6C_0 Xaxis
+45 ;	133	#5C_0 Xaxis ---Up---> 6C_0 Yaxis
+125 ;	53	#5C_0 Yaxis ---Up---> 6C_0 Xaxis
+125 ;	133	#5C_0 Yaxis ---Up---> 6C_0 Yaxis
+126 ;	47	#5C_1 Yaxis ---Back---> 5D_0 Xaxis
+126 ;	127	#5C_1 Yaxis ---Back---> 5D_0 Yaxis
+46 ;	45	#5C_1 Xaxis ---Right---> 5C_0 Xaxis
+46 ;	125	#5C_1 Xaxis ---Right---> 5C_0 Yaxis
+46 ;	54	#5C_1 Xaxis ---Up---> 6C_1 Xaxis
+46 ;	134	#5C_1 Xaxis ---Up---> 6C_1 Yaxis
+126 ;	54	#5C_1 Yaxis ---Up---> 6C_1 Xaxis
+126 ;	134	#5C_1 Yaxis ---Up---> 6C_1 Yaxis
+127 ;	46	#5D_0 Yaxis ---Ahed---> 5C_1 Xaxis
+127 ;	126	#5D_0 Yaxis ---Ahed---> 5C_1 Yaxis
+127 ;	40	#5D_0 Yaxis ---Back---> 5A_0 Xaxis
+127 ;	120	#5D_0 Yaxis ---Back---> 5A_0 Yaxis
+47 ;	55	#5D_0 Xaxis ---Up---> 6D_0 Xaxis
+47 ;	135	#5D_0 Xaxis ---Up---> 6D_0 Yaxis
+127 ;	55	#5D_0 Yaxis ---Up---> 6D_0 Xaxis
+127 ;	135	#5D_0 Yaxis ---Up---> 6D_0 Yaxis
+128 ;	55	#6A_0 Yaxis ---Ahed---> 6D_0 Xaxis
+128 ;	135	#6A_0 Yaxis ---Ahed---> 6D_0 Yaxis
+48 ;	49	#6A_0 Xaxis ---Right---> 6A_1 Xaxis
+48 ;	129	#6A_0 Xaxis ---Right---> 6A_1 Yaxis
+48 ;	56	#6A_0 Xaxis ---Up---> 7A_0 Xaxis
+48 ;	136	#6A_0 Xaxis ---Up---> 7A_0 Yaxis
+128 ;	56	#6A_0 Yaxis ---Up---> 7A_0 Xaxis
+128 ;	136	#6A_0 Yaxis ---Up---> 7A_0 Yaxis
+49 ;	48	#6A_1 Xaxis ---Left---> 6A_0 Xaxis
+49 ;	128	#6A_1 Xaxis ---Left---> 6A_0 Yaxis
+49 ;	50	#6A_1 Xaxis ---Right---> 6A_2 Xaxis
+49 ;	130	#6A_1 Xaxis ---Right---> 6A_2 Yaxis
+49 ;	57	#6A_1 Xaxis ---Up---> 7A_1 Xaxis
+49 ;	137	#6A_1 Xaxis ---Up---> 7A_1 Yaxis
+129 ;	57	#6A_1 Yaxis ---Up---> 7A_1 Xaxis
+129 ;	137	#6A_1 Yaxis ---Up---> 7A_1 Yaxis
+130 ;	51	#6A_2 Yaxis ---Ahed---> 6B_0 Xaxis
+130 ;	131	#6A_2 Yaxis ---Ahed---> 6B_0 Yaxis
+50 ;	49	#6A_2 Xaxis ---Left---> 6A_1 Xaxis
+50 ;	129	#6A_2 Xaxis ---Left---> 6A_1 Yaxis
+50 ;	58	#6A_2 Xaxis ---Up---> 7A_2 Xaxis
+50 ;	138	#6A_2 Xaxis ---Up---> 7A_2 Yaxis
+130 ;	58	#6A_2 Yaxis ---Up---> 7A_2 Xaxis
+130 ;	138	#6A_2 Yaxis ---Up---> 7A_2 Yaxis
+131 ;	52	#6B_0 Yaxis ---Ahed---> 6B_1 Xaxis
+131 ;	132	#6B_0 Yaxis ---Ahed---> 6B_1 Yaxis
+131 ;	50	#6B_0 Yaxis ---Back---> 6A_2 Xaxis
+131 ;	130	#6B_0 Yaxis ---Back---> 6A_2 Yaxis
+51 ;	59	#6B_0 Xaxis ---Up---> 7B_0 Xaxis
+51 ;	139	#6B_0 Xaxis ---Up---> 7B_0 Yaxis
+131 ;	59	#6B_0 Yaxis ---Up---> 7B_0 Xaxis
+131 ;	139	#6B_0 Yaxis ---Up---> 7B_0 Yaxis
+132 ;	51	#6B_1 Yaxis ---Back---> 6B_0 Xaxis
+132 ;	131	#6B_1 Yaxis ---Back---> 6B_0 Yaxis
+52 ;	53	#6B_1 Xaxis ---Left---> 6C_0 Xaxis
+52 ;	133	#6B_1 Xaxis ---Left---> 6C_0 Yaxis
+52 ;	60	#6B_1 Xaxis ---Up---> 7B_1 Xaxis
+52 ;	140	#6B_1 Xaxis ---Up---> 7B_1 Yaxis
+132 ;	60	#6B_1 Yaxis ---Up---> 7B_1 Xaxis
+132 ;	140	#6B_1 Yaxis ---Up---> 7B_1 Yaxis
+53 ;	54	#6C_0 Xaxis ---Left---> 6C_1 Xaxis
+53 ;	134	#6C_0 Xaxis ---Left---> 6C_1 Yaxis
+53 ;	52	#6C_0 Xaxis ---Right---> 6B_1 Xaxis
+53 ;	132	#6C_0 Xaxis ---Right---> 6B_1 Yaxis
+53 ;	61	#6C_0 Xaxis ---Up---> 7C_0 Xaxis
+53 ;	141	#6C_0 Xaxis ---Up---> 7C_0 Yaxis
+133 ;	61	#6C_0 Yaxis ---Up---> 7C_0 Xaxis
+133 ;	141	#6C_0 Yaxis ---Up---> 7C_0 Yaxis
+134 ;	55	#6C_1 Yaxis ---Back---> 6D_0 Xaxis
+134 ;	135	#6C_1 Yaxis ---Back---> 6D_0 Yaxis
+54 ;	53	#6C_1 Xaxis ---Right---> 6C_0 Xaxis
+54 ;	133	#6C_1 Xaxis ---Right---> 6C_0 Yaxis
+54 ;	62	#6C_1 Xaxis ---Up---> 7C_1 Xaxis
+54 ;	142	#6C_1 Xaxis ---Up---> 7C_1 Yaxis
+134 ;	62	#6C_1 Yaxis ---Up---> 7C_1 Xaxis
+134 ;	142	#6C_1 Yaxis ---Up---> 7C_1 Yaxis
+135 ;	54	#6D_0 Yaxis ---Ahed---> 6C_1 Xaxis
+135 ;	134	#6D_0 Yaxis ---Ahed---> 6C_1 Yaxis
+135 ;	48	#6D_0 Yaxis ---Back---> 6A_0 Xaxis
+135 ;	128	#6D_0 Yaxis ---Back---> 6A_0 Yaxis
+55 ;	63	#6D_0 Xaxis ---Up---> 7D_0 Xaxis
+55 ;	143	#6D_0 Xaxis ---Up---> 7D_0 Yaxis
+135 ;	63	#6D_0 Yaxis ---Up---> 7D_0 Xaxis
+135 ;	143	#6D_0 Yaxis ---Up---> 7D_0 Yaxis
+136 ;	63	#7A_0 Yaxis ---Ahed---> 7D_0 Xaxis
+136 ;	143	#7A_0 Yaxis ---Ahed---> 7D_0 Yaxis
+56 ;	57	#7A_0 Xaxis ---Right---> 7A_1 Xaxis
+56 ;	137	#7A_0 Xaxis ---Right---> 7A_1 Yaxis
+56 ;	64	#7A_0 Xaxis ---Up---> 8A_0 Xaxis
+56 ;	144	#7A_0 Xaxis ---Up---> 8A_0 Yaxis
+136 ;	64	#7A_0 Yaxis ---Up---> 8A_0 Xaxis
+136 ;	144	#7A_0 Yaxis ---Up---> 8A_0 Yaxis
+57 ;	56	#7A_1 Xaxis ---Left---> 7A_0 Xaxis
+57 ;	136	#7A_1 Xaxis ---Left---> 7A_0 Yaxis
+57 ;	58	#7A_1 Xaxis ---Right---> 7A_2 Xaxis
+57 ;	138	#7A_1 Xaxis ---Right---> 7A_2 Yaxis
+57 ;	65	#7A_1 Xaxis ---Up---> 8A_1 Xaxis
+57 ;	145	#7A_1 Xaxis ---Up---> 8A_1 Yaxis
+137 ;	65	#7A_1 Yaxis ---Up---> 8A_1 Xaxis
+137 ;	145	#7A_1 Yaxis ---Up---> 8A_1 Yaxis
+138 ;	59	#7A_2 Yaxis ---Ahed---> 7B_0 Xaxis
+138 ;	139	#7A_2 Yaxis ---Ahed---> 7B_0 Yaxis
+58 ;	57	#7A_2 Xaxis ---Left---> 7A_1 Xaxis
+58 ;	137	#7A_2 Xaxis ---Left---> 7A_1 Yaxis
+58 ;	66	#7A_2 Xaxis ---Up---> 8A_2 Xaxis
+58 ;	146	#7A_2 Xaxis ---Up---> 8A_2 Yaxis
+138 ;	66	#7A_2 Yaxis ---Up---> 8A_2 Xaxis
+138 ;	146	#7A_2 Yaxis ---Up---> 8A_2 Yaxis
+139 ;	60	#7B_0 Yaxis ---Ahed---> 7B_1 Xaxis
+139 ;	140	#7B_0 Yaxis ---Ahed---> 7B_1 Yaxis
+139 ;	58	#7B_0 Yaxis ---Back---> 7A_2 Xaxis
+139 ;	138	#7B_0 Yaxis ---Back---> 7A_2 Yaxis
+59 ;	67	#7B_0 Xaxis ---Up---> 8B_0 Xaxis
+59 ;	147	#7B_0 Xaxis ---Up---> 8B_0 Yaxis
+139 ;	67	#7B_0 Yaxis ---Up---> 8B_0 Xaxis
+139 ;	147	#7B_0 Yaxis ---Up---> 8B_0 Yaxis
+140 ;	59	#7B_1 Yaxis ---Back---> 7B_0 Xaxis
+140 ;	139	#7B_1 Yaxis ---Back---> 7B_0 Yaxis
+60 ;	61	#7B_1 Xaxis ---Left---> 7C_0 Xaxis
+60 ;	141	#7B_1 Xaxis ---Left---> 7C_0 Yaxis
+60 ;	68	#7B_1 Xaxis ---Up---> 8B_1 Xaxis
+60 ;	148	#7B_1 Xaxis ---Up---> 8B_1 Yaxis
+140 ;	68	#7B_1 Yaxis ---Up---> 8B_1 Xaxis
+140 ;	148	#7B_1 Yaxis ---Up---> 8B_1 Yaxis
+61 ;	62	#7C_0 Xaxis ---Left---> 7C_1 Xaxis
+61 ;	142	#7C_0 Xaxis ---Left---> 7C_1 Yaxis
+61 ;	60	#7C_0 Xaxis ---Right---> 7B_1 Xaxis
+61 ;	140	#7C_0 Xaxis ---Right---> 7B_1 Yaxis
+61 ;	69	#7C_0 Xaxis ---Up---> 8C_0 Xaxis
+61 ;	149	#7C_0 Xaxis ---Up---> 8C_0 Yaxis
+141 ;	69	#7C_0 Yaxis ---Up---> 8C_0 Xaxis
+141 ;	149	#7C_0 Yaxis ---Up---> 8C_0 Yaxis
+142 ;	63	#7C_1 Yaxis ---Back---> 7D_0 Xaxis
+142 ;	143	#7C_1 Yaxis ---Back---> 7D_0 Yaxis
+62 ;	61	#7C_1 Xaxis ---Right---> 7C_0 Xaxis
+62 ;	141	#7C_1 Xaxis ---Right---> 7C_0 Yaxis
+62 ;	70	#7C_1 Xaxis ---Up---> 8C_1 Xaxis
+62 ;	150	#7C_1 Xaxis ---Up---> 8C_1 Yaxis
+142 ;	70	#7C_1 Yaxis ---Up---> 8C_1 Xaxis
+142 ;	150	#7C_1 Yaxis ---Up---> 8C_1 Yaxis
+143 ;	62	#7D_0 Yaxis ---Ahed---> 7C_1 Xaxis
+143 ;	142	#7D_0 Yaxis ---Ahed---> 7C_1 Yaxis
+143 ;	56	#7D_0 Yaxis ---Back---> 7A_0 Xaxis
+143 ;	136	#7D_0 Yaxis ---Back---> 7A_0 Yaxis
+63 ;	71	#7D_0 Xaxis ---Up---> 8D_0 Xaxis
+63 ;	151	#7D_0 Xaxis ---Up---> 8D_0 Yaxis
+143 ;	71	#7D_0 Yaxis ---Up---> 8D_0 Xaxis
+143 ;	151	#7D_0 Yaxis ---Up---> 8D_0 Yaxis
+144 ;	71	#8A_0 Yaxis ---Ahed---> 8D_0 Xaxis
+144 ;	151	#8A_0 Yaxis ---Ahed---> 8D_0 Yaxis
+64 ;	65	#8A_0 Xaxis ---Right---> 8A_1 Xaxis
+64 ;	145	#8A_0 Xaxis ---Right---> 8A_1 Yaxis
+64 ;	72	#8A_0 Xaxis ---Up---> 9A_0 Xaxis
+64 ;	152	#8A_0 Xaxis ---Up---> 9A_0 Yaxis
+144 ;	72	#8A_0 Yaxis ---Up---> 9A_0 Xaxis
+144 ;	152	#8A_0 Yaxis ---Up---> 9A_0 Yaxis
+65 ;	64	#8A_1 Xaxis ---Left---> 8A_0 Xaxis
+65 ;	144	#8A_1 Xaxis ---Left---> 8A_0 Yaxis
+65 ;	66	#8A_1 Xaxis ---Right---> 8A_2 Xaxis
+65 ;	146	#8A_1 Xaxis ---Right---> 8A_2 Yaxis
+65 ;	73	#8A_1 Xaxis ---Up---> 9A_1 Xaxis
+65 ;	153	#8A_1 Xaxis ---Up---> 9A_1 Yaxis
+145 ;	73	#8A_1 Yaxis ---Up---> 9A_1 Xaxis
+145 ;	153	#8A_1 Yaxis ---Up---> 9A_1 Yaxis
+146 ;	67	#8A_2 Yaxis ---Ahed---> 8B_0 Xaxis
+146 ;	147	#8A_2 Yaxis ---Ahed---> 8B_0 Yaxis
+66 ;	65	#8A_2 Xaxis ---Left---> 8A_1 Xaxis
+66 ;	145	#8A_2 Xaxis ---Left---> 8A_1 Yaxis
+66 ;	74	#8A_2 Xaxis ---Up---> 9A_2 Xaxis
+66 ;	154	#8A_2 Xaxis ---Up---> 9A_2 Yaxis
+146 ;	74	#8A_2 Yaxis ---Up---> 9A_2 Xaxis
+146 ;	154	#8A_2 Yaxis ---Up---> 9A_2 Yaxis
+147 ;	68	#8B_0 Yaxis ---Ahed---> 8B_1 Xaxis
+147 ;	148	#8B_0 Yaxis ---Ahed---> 8B_1 Yaxis
+147 ;	66	#8B_0 Yaxis ---Back---> 8A_2 Xaxis
+147 ;	146	#8B_0 Yaxis ---Back---> 8A_2 Yaxis
+67 ;	75	#8B_0 Xaxis ---Up---> 9B_0 Xaxis
+67 ;	155	#8B_0 Xaxis ---Up---> 9B_0 Yaxis
+147 ;	75	#8B_0 Yaxis ---Up---> 9B_0 Xaxis
+147 ;	155	#8B_0 Yaxis ---Up---> 9B_0 Yaxis
+148 ;	67	#8B_1 Yaxis ---Back---> 8B_0 Xaxis
+148 ;	147	#8B_1 Yaxis ---Back---> 8B_0 Yaxis
+68 ;	69	#8B_1 Xaxis ---Left---> 8C_0 Xaxis
+68 ;	149	#8B_1 Xaxis ---Left---> 8C_0 Yaxis
+68 ;	76	#8B_1 Xaxis ---Up---> 9B_1 Xaxis
+68 ;	156	#8B_1 Xaxis ---Up---> 9B_1 Yaxis
+148 ;	76	#8B_1 Yaxis ---Up---> 9B_1 Xaxis
+148 ;	156	#8B_1 Yaxis ---Up---> 9B_1 Yaxis
+69 ;	70	#8C_0 Xaxis ---Left---> 8C_1 Xaxis
+69 ;	150	#8C_0 Xaxis ---Left---> 8C_1 Yaxis
+69 ;	68	#8C_0 Xaxis ---Right---> 8B_1 Xaxis
+69 ;	148	#8C_0 Xaxis ---Right---> 8B_1 Yaxis
+69 ;	77	#8C_0 Xaxis ---Up---> 9C_0 Xaxis
+69 ;	157	#8C_0 Xaxis ---Up---> 9C_0 Yaxis
+149 ;	77	#8C_0 Yaxis ---Up---> 9C_0 Xaxis
+149 ;	157	#8C_0 Yaxis ---Up---> 9C_0 Yaxis
+150 ;	71	#8C_1 Yaxis ---Back---> 8D_0 Xaxis
+150 ;	151	#8C_1 Yaxis ---Back---> 8D_0 Yaxis
+70 ;	69	#8C_1 Xaxis ---Right---> 8C_0 Xaxis
+70 ;	149	#8C_1 Xaxis ---Right---> 8C_0 Yaxis
+70 ;	78	#8C_1 Xaxis ---Up---> 9C_1 Xaxis
+70 ;	158	#8C_1 Xaxis ---Up---> 9C_1 Yaxis
+150 ;	78	#8C_1 Yaxis ---Up---> 9C_1 Xaxis
+150 ;	158	#8C_1 Yaxis ---Up---> 9C_1 Yaxis
+151 ;	70	#8D_0 Yaxis ---Ahed---> 8C_1 Xaxis
+151 ;	150	#8D_0 Yaxis ---Ahed---> 8C_1 Yaxis
+151 ;	64	#8D_0 Yaxis ---Back---> 8A_0 Xaxis
+151 ;	144	#8D_0 Yaxis ---Back---> 8A_0 Yaxis
+71 ;	79	#8D_0 Xaxis ---Up---> 9D_0 Xaxis
+71 ;	159	#8D_0 Xaxis ---Up---> 9D_0 Yaxis
+151 ;	79	#8D_0 Yaxis ---Up---> 9D_0 Xaxis
+151 ;	159	#8D_0 Yaxis ---Up---> 9D_0 Yaxis
+152 ;	79	#9A_0 Yaxis ---Ahed---> 9D_0 Xaxis
+152 ;	159	#9A_0 Yaxis ---Ahed---> 9D_0 Yaxis
+72 ;	73	#9A_0 Xaxis ---Right---> 9A_1 Xaxis
+72 ;	153	#9A_0 Xaxis ---Right---> 9A_1 Yaxis
+73 ;	72	#9A_1 Xaxis ---Left---> 9A_0 Xaxis
+73 ;	152	#9A_1 Xaxis ---Left---> 9A_0 Yaxis
+73 ;	74	#9A_1 Xaxis ---Right---> 9A_2 Xaxis
+73 ;	154	#9A_1 Xaxis ---Right---> 9A_2 Yaxis
+154 ;	75	#9A_2 Yaxis ---Ahed---> 9B_0 Xaxis
+154 ;	155	#9A_2 Yaxis ---Ahed---> 9B_0 Yaxis
+74 ;	73	#9A_2 Xaxis ---Left---> 9A_1 Xaxis
+74 ;	153	#9A_2 Xaxis ---Left---> 9A_1 Yaxis
+155 ;	76	#9B_0 Yaxis ---Ahed---> 9B_1 Xaxis
+155 ;	156	#9B_0 Yaxis ---Ahed---> 9B_1 Yaxis
+155 ;	74	#9B_0 Yaxis ---Back---> 9A_2 Xaxis
+155 ;	154	#9B_0 Yaxis ---Back---> 9A_2 Yaxis
+156 ;	75	#9B_1 Yaxis ---Back---> 9B_0 Xaxis
+156 ;	155	#9B_1 Yaxis ---Back---> 9B_0 Yaxis
+76 ;	77	#9B_1 Xaxis ---Left---> 9C_0 Xaxis
+76 ;	157	#9B_1 Xaxis ---Left---> 9C_0 Yaxis
+77 ;	78	#9C_0 Xaxis ---Left---> 9C_1 Xaxis
+77 ;	158	#9C_0 Xaxis ---Left---> 9C_1 Yaxis
+77 ;	76	#9C_0 Xaxis ---Right---> 9B_1 Xaxis
+77 ;	156	#9C_0 Xaxis ---Right---> 9B_1 Yaxis
+158 ;	79	#9C_1 Yaxis ---Back---> 9D_0 Xaxis
+158 ;	159	#9C_1 Yaxis ---Back---> 9D_0 Yaxis
+78 ;	77	#9C_1 Xaxis ---Right---> 9C_0 Xaxis
+78 ;	157	#9C_1 Xaxis ---Right---> 9C_0 Yaxis
+159 ;	78	#9D_0 Yaxis ---Ahed---> 9C_1 Xaxis
+159 ;	158	#9D_0 Yaxis ---Ahed---> 9C_1 Yaxis
+159 ;	72	#9D_0 Yaxis ---Back---> 9A_0 Xaxis
+159 ;	152	#9D_0 Yaxis ---Back---> 9A_0 Yaxis

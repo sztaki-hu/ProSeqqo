@@ -3,7 +3,7 @@ Dimension: <int>
 DistanceFunction: EuclidianDistance/MaxDistance/TrapezoidTime/ManhattanDistance/MatrixDistance
 TrapezoidParams/Speed: <double[]>
 TrapezoidParams/Acceleration: <double[]>
-WeightMultiplier: Auto / <int>
+LocalSearchStrategie: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
 CyclicSequence: True/False
 StartDepot: <PositionID>
 FinishDepot: <PositionID>
@@ -22,11 +22,11 @@ UseMIPprecedenceSolver: True/False
 UseShortcutInAlternatives: True/False
 
 PositionList:
-#+-------+---------------------+------------------+
-#|   ID  |      Position       |  Name[optional]  |
-#+-------+---------------------+------------------+
-#| <int> | <double[Dimension]> |     <string>     |
-#+-------+---------------------+------------------+
+#+-------+---------------------+------------------+------------+
+#|   ID  |      Position       |  Name[optional]  | ResourceID |
+#+-------+---------------------+------------------+------------+
+#| <int> | <double[Dimension]> |     <string>     |   <int>    |
+#+-------+---------------------+------------------+------------+
 
 PositionMatrix:
 #+----------+----------+-----+------------------+
@@ -51,11 +51,11 @@ ProcessHierarchy:
 #+-------------+---------+----------------+------------+
 
 LineList:
-#+--------+-----------+-------------+-------------+-------------------+---------------------------+
-#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]   | Bidirectional [optional]  |
-#+--------+-----------+-------------+-------------+-------------------+---------------------------+
-#|  <int> |   <int>   |    <int>    |    <int>    |     <string>      |         True/False        |
-#+--------+-----------+-------------+-------------+-------------------+---------------------------+
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
+#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]  |  ResourceID [optional]  | Bidirectional [optional]  |
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
+#|  <int> |   <int>   |    <int>    |    <int>    |     <string>     |          <int>          |         True/False        |
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
 
 ProcessPrecedence:
 #+----------------------+--------------------+
@@ -86,4 +86,8 @@ ContourPrecedence:
 #+-------------------------+----------------------+
 
 StrictEdgeWeights:
-#PositionIDA;PositionIDB;Weight;Bidirectional[optional]
+#+-------------+-------------+-----------+------------------------+
+#| PositionAID | PositionAID |  Weight   | Bidirectional[optional]|
+#+-------------+-------------+-----------+------------------------+
+#|    <int>    |    <int>    | <double>  |         <bool>         |
+#+-------------+-------------+-----------+------------------------+

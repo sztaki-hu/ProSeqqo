@@ -49,7 +49,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                                 ProcessID = proc.UserID,
                                 AlternativeID = alternative.UserID,
                                 TaskID = lineTask.UserID,
-                                PositionID = position.UserID
+                                PositionID = position.Node.UserID
                             });
                         }
                     }
@@ -105,7 +105,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 var before = FindProcess(processPrec.BeforeID, pointLikeTask);
                 var after = FindProcess(processPrec.AfterID, pointLikeTask);
                 if (before == null || after == null)
-                    throw new SeqException("Phrase error contour precedence user id not found!");
+                    throw new SeqException("Phrase error process precedence user id not found!");
                 pointLikeTask.ProcessPrecedence.Add(new GTSP.GTSPPrecedenceConstraint()
                 {
                     Before = before,
@@ -161,20 +161,20 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     {
                         UserID = item.PositionID
                     };
-                    pointLikeTask.PositionMatrix.Positions.Add(position);
+                    pointLikeTask.PositionMatrix.Positions.Add(new GTSPNode(position));
                     Console.WriteLine("PointLike GTSP builder process hierarchy ID error, this error sholud be caught by validation!");
                 }
-                task.Positions.Add(position);
+                task.Positions.Add(new GTSPNode(position));
             }
         }
 
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             base.FillBySEQTokens(tokenizer);
-            UseShortcutInAlternatives = TokenConverter.GetBoolByHeader("UseShortcutInAlternatives", tokenizer);
-            ProcessHierarchy = TokenConverter.GetProcessHierarchyByHeader("ProcessHierarchy", tokenizer);
-            PositionPrecedences = TokenConverter.GetPrecedenceListByHeader("PositionPrecedence", tokenizer);
-            ProcessPrecedences = TokenConverter.GetPrecedenceListByHeader("ProcessPrecedence", tokenizer);
+            UseShortcutInAlternatives = tokenizer.GetBoolByHeader("UseShortcutInAlternatives" );
+            ProcessHierarchy = tokenizer.GetProcessHierarchyByHeader("ProcessHierarchy" );
+            PositionPrecedences = tokenizer.GetPrecedenceListByHeader("PositionPrecedence" );
+            ProcessPrecedences = tokenizer.GetPrecedenceListByHeader("ProcessPrecedence");
         }
         public string ToSEQ()
         {
@@ -245,9 +245,13 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         {
             foreach (var item in task.PositionMatrix.Positions)
             {
-                if (item.UserID == userID)
+                if (item.In.UserID == userID)
                 {
-                    return item;
+                    return item.In;
+                }
+                if (item.Out.UserID == userID)
+                {
+                    return item.Out;
                 }
             }
             return null;

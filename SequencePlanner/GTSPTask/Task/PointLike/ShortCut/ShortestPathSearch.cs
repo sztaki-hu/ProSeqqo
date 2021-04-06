@@ -1,15 +1,14 @@
 ﻿using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
+using SequencePlanner.Helper;
 using SequencePlanner.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SequencePlanner.Helper
+namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
 {
     public class ShortestPathSearch
     {
-        private int Level { get; set; }
+        private int Level { get; set; } 
         private Dictionary<int, double> Values { get; set; }
         private List<BaseNode> List { get; set; }
         private List<Edge> Edges { get; set; }
@@ -29,74 +28,75 @@ namespace SequencePlanner.Helper
             Build();
         }
 
-        public List<ShortestPath> CalculateCriticalRoute(Position openPos, List<Position> positions)
+        public List<ShortestPath> CalculateCriticalRoute(GTSPNode openPos, List<GTSPNode> positions)
         {
             foreach (var pos in Tasks[0].Positions)
             {
-                Values[pos.SequencingID] = 0;
+                Values[pos.Node.SequencingID] = 0;
             }
 
             foreach (var pos in Tasks[1].Positions)
             {
-                Values[pos.SequencingID] = FindEdge(openPos, pos);
+                Values[pos.Node.SequencingID] = FindEdge(openPos.Node, pos.Node);
             }
 
             for (int i = 1; i < Tasks.Count-1; i++)
             {
-                Position minPos = null;
+                GTSPNode minPos = null;
                 var min = double.MaxValue;
                 for (int j = 0; j < Tasks[i].Positions.Count; j++)
                 {
-                    if (Values[Tasks[i].Positions[j].SequencingID] < min)
+                    if (Values[Tasks[i].Positions[j].Node.SequencingID] < min)
                     {
-                        min = Values[Tasks[i].Positions[j].SequencingID];
+                        min = Values[Tasks[i].Positions[j].Node.SequencingID];
                         minPos = Tasks[i].Positions[j];
                     }
                 }
                 foreach (var posNext in Tasks[i+1].Positions)
                 {
-                    var cost = Values[minPos.SequencingID] + FindEdge(minPos, posNext);
-                    if (cost < Values[posNext.SequencingID])
-                        Values[posNext.SequencingID] = Values[minPos.SequencingID] + FindEdge(minPos, posNext);
+                    var cost = Values[minPos.Node.SequencingID] + FindEdge(minPos.Out, posNext.In);
+                    if (cost < Values[posNext.Node.SequencingID])
+                        Values[posNext.Node.SequencingID] = Values[minPos.Node.SequencingID] + FindEdge(minPos.Out, posNext.In);
                 }
+                System.Console.WriteLine(minPos);
             }
             //SeqLogger.Indent++;
             var tmp = new List<ShortestPath>();
             foreach (var pos in positions)
             {
                 tmp.Add(RollbackSolution(openPos, pos));
-                //SeqLogger.Trace("Shortcut between "+openPos+" and "+ pos+" wit cost: "+tmp[tmp.Count-1].Cost, nameof(CPM));
             }
-            //SeqLogger.Indent--;
             return tmp;
         }
 
-        private ShortestPath RollbackSolution(Position from, Position to)
+        private ShortestPath RollbackSolution(GTSPNode from, GTSPNode to)
         {
-            var path = new ShortestPath(from, to, Values.GetValueOrDefault(from.SequencingID));
-            var list = new List<BaseNode>();
-            BaseNode akt = to;
+            var path = new ShortestPath(from, to, Values.GetValueOrDefault(from.Node.SequencingID));
+            var list = new List<GTSPNode>();
+            GTSPNode akt = to;
             list.Add(akt);
-            for (int i = 0; i < Level-1; i++)
+            for (int i = 0; i < Level-2; i++)
             {
                 akt = PreviousNode(akt);
                 list.Add(akt);
             }
+            list.Add(from);
             list.Reverse();
             path.Cut = list;
-            path.Cost = Values[to.SequencingID];
+            path.Cost = Values[to.Node.SequencingID];
             for (int i = 0; i < path.Cut.Count-1; i++)
             {
-                path.Costs.Add(FindEdge(path.Cut[i], path.Cut[i+1]));
+                //path.Costs.Add(FindEdge(path.Cut[i].Out, path.Cut[i+1].In));
+                path.Costs.Add(CalculateWeight(path.Cut[i], path.Cut[i + 1]));
             }
             return path;
         }
 
-        private BaseNode PreviousNode(BaseNode B)
+        private GTSPNode PreviousNode(GTSPNode B)
         {
             foreach (var edge in Edges)
             {
-                if (edge.B.SequencingID == B.SequencingID)
+                if (edge.B.Node.SequencingID == B.Node.SequencingID)
                     return edge.A;
             }
             throw new SeqException("CPM error!");
@@ -109,9 +109,9 @@ namespace SequencePlanner.Helper
             {
                 foreach (var position in task.Positions)
                 {
-                    position.SequencingID = j++;
-                    List.Add(position);
-                    Values.Add(position.SequencingID, double.MaxValue);
+                    position.Node.SequencingID = j++;
+                    List.Add(position.Node);
+                    Values.Add(position.Node.SequencingID, double.MaxValue);
                 }
             }
             for (int i = 0; i < Tasks.Count-1; i++)
@@ -126,12 +126,20 @@ namespace SequencePlanner.Helper
             }
         }
 
-        private double CalculateWeight(Position A, Position B)
+        private double CalculateWeight(GTSPNode A, GTSPNode B)
         {
-            if (A.Virtual || B.Virtual)
+            if (A.Node.Virtual || B.Node.Virtual)
                 return 0.0;
-            double weight = DistanceFunction.ComputeDistance(A, B);
-            weight = ResourceFunction.ComputeResourceCost(A, B, weight);
+            if (A.OverrideWeightOut > 0)
+                return A.OverrideWeightOut;
+            if (B.OverrideWeightIn > 0)
+                return B.OverrideWeightIn;
+            double weight = DistanceFunction.ComputeDistance(A.Out, B.In);
+            weight = ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
+            if (A.AdditionalWeightOut > 0)
+                weight += A.AdditionalWeightOut;
+            if (B.AdditionalWeightIn > 0)
+                weight += B.AdditionalWeightIn;
             return weight;
         }
 
@@ -139,7 +147,7 @@ namespace SequencePlanner.Helper
         {
             foreach (var item in Edges)
             {
-                if (item.A.GlobalID == A.GlobalID && item.B.GlobalID == B.GlobalID)
+                if (item.A.Node.GlobalID == A.GlobalID && item.B.Node.GlobalID == B.GlobalID)
                     return item.Weight;
             }
             throw new SeqException("Edge not found in CPM!");
@@ -148,8 +156,8 @@ namespace SequencePlanner.Helper
 
     internal class Edge
     {
-        public BaseNode A { get; set; }
-        public BaseNode B { get; set; }
+        public GTSPNode A { get; set; }
+        public GTSPNode B { get; set; }
         public double Weight { get; set; }
     }
 }

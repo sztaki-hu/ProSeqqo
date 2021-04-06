@@ -7,7 +7,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
 {
     public static class TokenConverter
     {
-        public static bool GetBoolByHeader(string header, SEQTokenizer tokenizer)
+        public static bool GetBoolByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static double GetDoubleByHeader(string header, SEQTokenizer tokenizer)
+        public static double GetDoubleByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static double[] GetDoubleVectorByHeader(string header, SEQTokenizer tokenizer)
+        public static double[] GetDoubleVectorByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static int GetIntByHeader(string header, SEQTokenizer tokenizer)
+        public static int GetIntByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static List<ProcessHierarchySerializationObject> GetProcessHierarchyByHeader(string header, SEQTokenizer tokenizer)
+        public static List<ProcessHierarchySerializationObject> GetProcessHierarchyByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static StrictEdgeWeightSetSerializationObject GetStrictEdgeWeightSet(string header, SEQTokenizer tokenizer)
+        public static StrictEdgeWeightSetSerializationObject GetStrictEdgeWeightSet(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -179,7 +179,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static List<LineSerializationObject> GetLineListByHeader(string header, SEQTokenizer tokenizer)
+        public static List<LineSerializationObject> GetLineListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -220,7 +220,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static List<PositionSerializationObject> GetPositionListByHeader(string header, SEQTokenizer tokenizer)
+        public static List<PositionSerializationObject> GetPositionListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -265,7 +265,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static List<OrderConstraintSerializationObject> GetPrecedenceListByHeader(string header, SEQTokenizer tokenizer)
+        public static List<OrderConstraintSerializationObject> GetPrecedenceListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -295,7 +295,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static string GetStringByHeader(string header, SEQTokenizer tokenizer)
+        public static string GetStringByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {

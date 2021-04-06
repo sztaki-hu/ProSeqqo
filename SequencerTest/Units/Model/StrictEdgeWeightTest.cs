@@ -15,7 +15,7 @@ namespace SequencerTest.Units.Model
         [TestMethod()]
         public void ConnstructorTest()
         {
-            StrictEdgeWeight edge = new StrictEdgeWeight(TestObjects.GetPosA(), TestObjects.GetPosB(), 4, true);
+            StrictEdgeWeight edge = new StrictEdgeWeight(TestObjects.GetPosA().In, TestObjects.GetPosB().In, 4, true);
             Assert.IsTrue(TestObjects.CheckPosA((Position)edge.A));
             Assert.IsTrue(TestObjects.CheckPosB((Position)edge.B));
             Assert.AreEqual(edge.Weight, 4);
@@ -25,9 +25,9 @@ namespace SequencerTest.Units.Model
         [TestMethod()]
         public void GetterSetterTest()
         {
-            StrictEdgeWeight edge = new StrictEdgeWeight(TestObjects.GetPosA(),TestObjects.GetPosB(), 4, true);
-            edge.B = TestObjects.GetPosA();
-            edge.A = TestObjects.GetPosB();
+            StrictEdgeWeight edge = new StrictEdgeWeight(TestObjects.GetPosA().In,TestObjects.GetPosB().In, 4, true);
+            edge.B = TestObjects.GetPosA().In;
+            edge.A = TestObjects.GetPosB().In;
             edge.Bidirectional = false;
             edge.Weight = 1;
             Assert.IsTrue(TestObjects.CheckPosA((Position)edge.B));
@@ -39,8 +39,8 @@ namespace SequencerTest.Units.Model
         [TestMethod()]
         public void FitForTest()
         {
-            Position a = TestObjects.GetPosA();
-            Position b = TestObjects.GetPosB();
+            Position a = TestObjects.GetPosA().In;
+            Position b = TestObjects.GetPosB().In;
             StrictEdgeWeight edge = new StrictEdgeWeight(a, b, 4, true);
             Assert.IsTrue(edge.FitFor(a,b));
             Assert.IsTrue(edge.FitFor(b,a));
@@ -55,8 +55,8 @@ namespace SequencerTest.Units.Model
         [TestMethod()]
         public void ToStringTest()
         {
-            Position a = TestObjects.GetPosA();
-            Position b = TestObjects.GetPosB();
+            Position a = TestObjects.GetPosA().In;
+            Position b = TestObjects.GetPosB().In;
             StrictEdgeWeight edge = new StrictEdgeWeight(a, b, 4, true);
             var tmp = edge.ToString();
             Assert.IsTrue(tmp.Contains("4"));

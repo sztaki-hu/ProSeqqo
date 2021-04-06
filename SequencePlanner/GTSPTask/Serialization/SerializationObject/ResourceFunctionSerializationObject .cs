@@ -91,14 +91,14 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
 
-            ResourceDistanceFunction = TokenConverter.GetStringByHeader("ResourceDistanceFunction", tokenizer);
-            ResourceSource = TokenConverter.GetStringByHeader("ResourceSource", tokenizer);
+            ResourceDistanceFunction = tokenizer.GetStringByHeader("ResourceDistanceFunction");
+            ResourceSource = tokenizer.GetStringByHeader("ResourceSource");
             switch (ResourceSource)
             {
                 case "NoResource":
                     break;
                 case "ConstantResource":
-                    ResourceCostConstant = TokenConverter.GetDoubleByHeader("ResourceCostConstant", tokenizer);
+                    ResourceCostConstant = tokenizer.GetDoubleByHeader("ResourceCostConstant");
                     break;
                 case "MatrixResource":
                     ResourceCostMatrix2 = new ResourceMatrixSerializationObject();

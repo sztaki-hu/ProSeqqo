@@ -19,7 +19,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         public List<GTSPPrecedenceConstraint> ContourPrecedences { get; set; }
         private LineLikeGTSPRepresentation GTSPRepresentation { get; set; }
         private int MAX_SEQUENCING_ID = 0;
-        private readonly double PenaltyEpsilon = 1;
+        private readonly double PenaltyEpsilon = 0;
 
         public LineLikeTask():base()
         {
@@ -27,25 +27,32 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             Contours = new List<Contour>();
             LinePrecedences = new List<GTSPPrecedenceConstraint>();
             ContourPrecedences = new List<GTSPPrecedenceConstraint>();
+            DepotMapper = new LineDepotMapper();
         }
 
         public LineTaskResult RunModel()
         {
             Timer.Reset();
             Timer.Start();
+            if (Validate)
+                ValidateModel();
+            DepotMapper.Map(this);
             SeqLogger.Info("RunModel started!", nameof(LineLikeTask));
             SeqLogger.Indent++;
             GenerateModel();
             var orToolsParam = new ORToolsTask()
             {
                 TimeLimit = TimeLimit,
-                GTSPRepresentation = GTSPRepresentation
+                GTSPRepresentation = GTSPRepresentation,
+                LocalSearchStrategy = LocalSearchStrategy
             };
             if (UseMIPprecedenceSolver)
                 GTSPRepresentation.InitialRoutes = CreateInitialRout();
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
             var result = ResolveSolution(orTools.Solve());
+            result = (LineTaskResult)DepotMapper.ResolveSolution(result);
+            DepotMapper.ReverseMap(this);
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(LineLikeTask));
             Timer.Stop();
@@ -62,7 +69,8 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 NumberOfNodes = Lines.Count,
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
                 OrderPrecedenceConstraints = GTSPRepresentation.PrecedenceConstraints,
-                StartDepot = GTSPRepresentation.StartDepot
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             });
             var result = ORPreSolver.Solve();
             MIPRunTime = ORPreSolver.RunTime;
@@ -83,7 +91,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         {
             SeqLogger.Info("Generate model started!", nameof(LineLikeTask));
             SeqLogger.Indent++;
-            AddVirtualStart(); //Handle Cyclic sequence with start/finish depots
+            //AddVirtualStart(); //Handle Cyclic sequence with start/finish depots
             foreach (var line in Lines)
             {
                 line.SequencingID = MAX_SEQUENCING_ID++;
@@ -94,8 +102,10 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 DisjointConstraints = CreateDisjointConstraints(),
                 PrecedenceConstraints = CreatePrecedenceConstraints(),
                 Matrix = CreateGTSPMatrix(),
-                StartDepot = startSeqID
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             };
+            DepotMapper.OverrideWeights(GTSPRepresentation);
             GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             SeqLogger.Indent--;
             SeqLogger.Info("Generate model finished!", nameof(LineLikeTask));
@@ -179,11 +189,17 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                     disjointConstraints.Add(constraint);
                 }
             }
-            if (virtualStart != null)
+            if (DepotMapper.ORToolsStartDepotSequenceID != -1)
             {
                 var startContraint = new GTSPDisjointConstraint();
-                startContraint.Add(virtualStart);
+                startContraint.Add(DepotMapper.ORToolsStartDepot);
                 disjointConstraints.Add(startContraint);
+            }
+            if (DepotMapper.ORToolsFinishDepotSequenceID != -1)
+            {
+                var finishConstraint = new GTSPDisjointConstraint();
+                finishConstraint.Add(DepotMapper.ORToolsFinishDepot);
+                disjointConstraints.Add(finishConstraint);
             }
             SeqLogger.Info("Disjoint precedences created!", nameof(LineLikeTask));
             return disjointConstraints;
@@ -260,7 +276,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
 
         private void SetWeightsForVirtualStart(double[,] matrix)
         {
-                startSeqID = virtualStart.SequencingID;
+                startSeqID = DepotMapper.ORToolsStartDepotSequenceID;
                 for (int i = 0; i < Lines.Count; i++)
                 {
                     if (startSeqID != i)
@@ -272,12 +288,12 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                         }
                         if (StartDepot != null && FinishDepot == null && !CyclicSequence) // Only StartDepot and not cyclic
                         {
-                            matrix[i, virtualStart.SequencingID] = 0.0;
+                            matrix[i, startSeqID] = 0.0;
                             //matrix[virtualStart.SequencingID, i] = 0.0; //Calculated real value in createGTSPMatrix()
                         }
                         if (StartDepot == null && FinishDepot != null) //Only FinisDepot
                         {
-                            matrix[virtualStart.SequencingID, i] = 0.0;
+                            matrix[startSeqID, i] = 0.0;
                             //matrix[i, virtualStart.SequencingID] = 0.0; //Calculated real value in createGTSPMatrix()
                         }
                         if (StartDepot == null && FinishDepot == null) //No StartDepot and FinishDepotGiven
@@ -310,13 +326,22 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                     {
                         if (!line.Virtual)
                         {
+
                             line.Length = PositionMatrix.DistanceFunction.ComputeDistance(line.NodeA, line.NodeB);
                             line.Length = PositionMatrix.ResourceFunction.ComputeResourceCost(line.NodeA, line.NodeB, line.Length);
                             //if (weight > 0)
-                            //if (line.Length > PenaltyEpsilon)
-                            //{
-                            //    line.Length += ContourPenalty;
-                            //}
+                            //    if (line.Length > PenaltyEpsilon)
+                            //    {
+                            //        line.Length += ContourPenalty;
+                            //    }
+                            taskResult.LineLength += line.Length;
+                            taskResult.LineResult.Add(line);
+                            taskResult.PositionResult.Add(line.NodeA);
+                            taskResult.PositionResult.Add(line.NodeB);
+                        }
+                        else
+                        {
+                            line.Length = 0;
                             taskResult.LineLength += line.Length;
                             taskResult.LineResult.Add(line);
                             taskResult.PositionResult.Add(line.NodeA);

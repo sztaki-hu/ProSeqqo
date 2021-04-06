@@ -7,13 +7,13 @@
     <Copyright>SZTAKI</Copyright>
     <PackageProjectUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</PackageProjectUrl>
     <RepositoryUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</RepositoryUrl>
-    <Version>0.3.0.0</Version>
-    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <Version>0.3.2</Version>
+    <AssemblyVersion>0.3.2.0</AssemblyVersion>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.OrTools" Version="8.0.8283" />
+    <PackageReference Include="Google.OrTools" Version="8.2.8710" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 

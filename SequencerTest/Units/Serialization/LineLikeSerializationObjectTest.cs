@@ -13,15 +13,15 @@ namespace SequencerTest.Units.Serialization
     [TestClass]
     public class LineLikeSerializationObjectTest
     {
-        Position A;
-        Position B;
-        Position C;
-        Position D;
+        GTSPNode A;
+        GTSPNode B;
+        GTSPNode C;
+        GTSPNode D;
         Line line;
         Line line2;
         Contour contour;
         Contour contour2;
-        List<Position> positionList;
+        List<GTSPNode> positionList;
         PositionMatrix matrix;
         List<Line> lines;
         List<Contour> contours;
@@ -33,61 +33,61 @@ namespace SequencerTest.Units.Serialization
         [TestInitialize()]
         public void Initialize()
         {
-            A = new Position()
+            A = new GTSPNode(new Position()
             {
                 Name = "A",
                 UserID = 1,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            B = new Position()
+            B = new GTSPNode(new Position()
             {
                 Name = "B",
                 UserID = 2,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            C = new Position()
+            C = new GTSPNode(new Position()
             {
                 Name = "C",
                 UserID = 3,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
-            D = new Position()
+            D = new GTSPNode(new Position()
             {
                 Name = "D",
                 UserID = 4,
                 ResourceID = 1,
                 Virtual = false,
                 Vector = new double[] { 1, 2, 3 }
-            };
+            });
 
             contour = new Contour();
             contour2 = new Contour();
 
             line = new Line()
             {
-                NodeA = A,
-                NodeB = B
+                NodeA = A.In,
+                NodeB = B.Out
             };
 
             line2 = new Line()
             {
-                NodeA = C,
-                NodeB = D
+                NodeA = C.In,
+                NodeB = D.Out
             };
 
             contour.Lines.Add(line);
             contour2.Lines.Add(line2);
 
-            positionList = new List<Position>() { A, B, C, D };
+            positionList = new List<GTSPNode> () { A, B, C, D };
             matrix = new PositionMatrix()
             {
                 Positions = positionList,
@@ -105,8 +105,8 @@ namespace SequencerTest.Units.Serialization
                 Dimension = 3,
                 TimeLimit = 5,
                 CyclicSequence = true,
-                StartDepot = A,
-                FinishDepot = B,
+                StartDepot = A.In,
+                FinishDepot = B.Out,
                 WeightMultipier = 10,
                 ContourPenalty = 1,
                 LinePrecedences = linePrecedences,
@@ -141,15 +141,15 @@ namespace SequencerTest.Units.Serialization
                 var found = false;
                 foreach (var pos in LineLikeTask.PositionMatrix.Positions)
                 {
-                    if (serPos.ID == pos.UserID)
+                    if (serPos.ID == pos.Node.UserID)
                     {
                         found = true;
-                        Assert.AreEqual(pos.UserID, serPos.ID);
-                        Assert.AreEqual(pos.Name, serPos.Name);
-                        Assert.AreEqual(pos.ResourceID, serPos.ResourceID);
+                        Assert.AreEqual(pos.Node.UserID, serPos.ID);
+                        Assert.AreEqual(pos.Node.Name, serPos.Name);
+                        Assert.AreEqual(pos.Node.ResourceID, serPos.ResourceID);
                         for (int i = 0; i < serPos.Position.Length; i++)
                         {
-                            Assert.AreEqual(pos.Vector[i], serPos.Position[i]);
+                            Assert.AreEqual(pos.In.Vector[i], serPos.Position[i]);
                         }
 
                     }

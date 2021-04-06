@@ -32,11 +32,11 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 };
                 foreach (var position in positionMatrix.Positions)
                 {
-                    if (!position.Virtual)
+                    if (!position.Node.Virtual)
                     {
-                        DistanceMatrix.IDHeader.Add(position.UserID);
-                        DistanceMatrix.NameFooter.Add(position.Name);
-                        DistanceMatrix.ResourceFooter.Add(position.ResourceID);
+                        DistanceMatrix.IDHeader.Add(position.Node.UserID);
+                        DistanceMatrix.NameFooter.Add(position.Node.Name);
+                        DistanceMatrix.ResourceFooter.Add(position.Node.ResourceID);
                     }
                         
                 }
@@ -111,7 +111,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             return seq;
         }
 
-        public IDistanceFunction ToDistanceFunction(List<Position> positions)
+        public IDistanceFunction ToDistanceFunction(List<GTSPNode> positions)
         {
             IDistanceFunction newDistanceFunction = Function switch
             {
@@ -128,8 +128,8 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         }
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
-            Function = TokenConverter.GetStringByHeader("DistanceFunction", tokenizer);
-            StrictUserEdgeWeights = TokenConverter.GetStrictEdgeWeightSet("StrictEdgeWeights", tokenizer);
+            Function = tokenizer.GetStringByHeader("DistanceFunction");
+            StrictUserEdgeWeights = tokenizer.GetStrictEdgeWeightSet("StrictEdgeWeights");
             if (Function != null)
             {
                 if (Function == "MatrixDistance")
@@ -139,8 +139,8 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 }
                 if (Function == "TrapezoidTimeDistance" || Function == "TrapezoidTimeDistanceWithTimeBreaker")
                 {
-                    TrapezoidAcceleration = TokenConverter.GetDoubleVectorByHeader("TrapezoidAcceleration", tokenizer);
-                    TrapezoidSpeed = TokenConverter.GetDoubleVectorByHeader("TrapezoidSpeed", tokenizer);
+                    TrapezoidAcceleration = tokenizer.GetDoubleVectorByHeader("TrapezoidAcceleration");
+                    TrapezoidSpeed = tokenizer.GetDoubleVectorByHeader("TrapezoidSpeed");
                 }
             }
         }   

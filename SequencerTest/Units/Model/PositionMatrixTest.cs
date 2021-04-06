@@ -12,9 +12,9 @@ namespace SequencerTest.Units.Model
     [TestClass]
     public class PositionMatrixTest
     {
-        Position start;
-        Position finish;
-        List<Position> positionList;
+        GTSPNode start;
+        GTSPNode finish;
+        List<GTSPNode> positionList;
         double[,] matrix;
         IDistanceFunction distFunc;
         IResourceFunction resourceFunc;
@@ -22,10 +22,10 @@ namespace SequencerTest.Units.Model
         [TestInitialize()]
         public void Initialize()
         {
-            start = new Position(){ Vector = new double[]{1,1,1} };
-            finish = new Position(){ Vector = new double[] { 3, 3, 3 } };
+            start = new GTSPNode(new Position(){ Vector = new double[]{1,1,1} });
+            finish = new GTSPNode(new Position() { Vector = new double[] { 3, 3, 3 } });
             matrix = new double[,] { { 1, 2 }, { 2, 1 } };
-            positionList = new List<Position>() { start, finish };
+            positionList = new List<GTSPNode>() { start, finish };
             resourceFunc = new ConstantResourceFunction(1, new AddResourceDistanceLinkFunction());
             distFunc = new EuclidianDistanceFunction();
         }

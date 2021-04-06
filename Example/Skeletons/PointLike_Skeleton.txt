@@ -1,6 +1,7 @@
 TaskType: PointLike
 Dimension: <int>
 DistanceFunction: EuclidianDistance/MaxDistance/TrapezoidTime/ManhattanDistance/MatrixDistance
+LocalSearchStrategie: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
 TrapezoidParams/Speed: <double[]>
 TrapezoidParams/Acceleration: <double[]>
 CyclicSequence: True/False
@@ -21,11 +22,11 @@ UseShortcutInAlternatives: True/False
 
 
 PositionList:
-#+-------+---------------------+------------------+
-#|   ID  |      Position       |  Name[optional]  |
-#+-------+---------------------+------------------+
-#| <int> | <double[Dimension]> |     <string>     |
-#+-------+---------------------+------------------+
+#+-------+---------------------+------------------+-----------------------+
+#|   ID  |      Position       |  Name[optional]  | ResourceID[optional]  |
+#+-------+---------------------+------------------+-----------------------+
+#| <int> | <double[Dimension]> |     <string>     |         <int>         |
+#+-------+---------------------+------------------+-----------------------+
 
 PositionMatrix:
 #+----------+----------+-----+------------------+
@@ -40,6 +41,8 @@ PositionMatrix:
 #| <double> | <double> | ... |     <double>     |        (NumberOfPoints)
 #+----------+----------+-----+------------------+
 #| <string> | <string> | ... |     <string>     |        (Name[optional])   
+#+----------+----------+-----+------------------+
+#|   <int>  |   <int>  | ... |      <int>       |        (ResourceID[optional])   
 #+----------+----------+-----+------------------+
 
 ProcessHierarchy:
@@ -64,4 +67,8 @@ PositionPrecedence:
 #+----------------------+--------------------+
 
 StrictEdgeWeights:
-#PositionIDA;PositionIDB;Weight;Bidirectional[optional]
+#+-------------+-------------+-----------+------------------------+
+#| PositionAID | PositionAID |  Weight   | Bidirectional[optional]|
+#+-------------+-------------+-----------+------------------------+
+#|    <int>    |    <int>    | <double>  |         <bool>         |
+#+-------------+-------------+-----------+------------------------+

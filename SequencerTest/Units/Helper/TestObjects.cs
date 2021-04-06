@@ -9,8 +9,8 @@ namespace SequencerTest.Units.Helper
         {
             Line line = new Line()
             {
-                NodeA = GetLinePosA(),
-                NodeB = GetLinePosB(),
+                NodeA = GetLinePosA().In,
+                NodeB = GetLinePosB().Out,
                 Bidirectional = true,
                 Length = 5,
                 Name = "Line",
@@ -22,9 +22,9 @@ namespace SequencerTest.Units.Helper
             return line;
         }
 
-        public static Position GetLinePosA()
+        public static GTSPNode GetLinePosA()
         {
-            Position position = new Position()
+            GTSPNode position = new GTSPNode(new Position()
             {
                 Name = "PositionA",
                 UserID = 100,
@@ -32,13 +32,13 @@ namespace SequencerTest.Units.Helper
                 SequencingID = 2,
                 Virtual = false,
                 Vector = new double[] { 1, 2 }
-            };
+            });
             return position;
         }
 
-        public static Position GetLinePosB()
+        public static GTSPNode GetLinePosB()
         {
-            Position position = new Position()
+            GTSPNode position = new GTSPNode(new Position()
             {
                 Name = "PositionB",
                 UserID = 101,
@@ -46,7 +46,7 @@ namespace SequencerTest.Units.Helper
                 SequencingID = 1,
                 Virtual = false,
                 Vector = new double[] { 3, 4 }
-            };
+            });
             return position;
         }
 
@@ -114,12 +114,12 @@ namespace SequencerTest.Units.Helper
                 return false;
             return true;
         }
-        public  static Position GetPosA()
+        public  static GTSPNode GetPosA()
         {
             return GetLinePosA();
         }
 
-        public static Position GetPosB()
+        public static GTSPNode GetPosB()
         {
             return GetLinePosB();
         }
@@ -162,17 +162,17 @@ namespace SequencerTest.Units.Helper
 
         public static bool CheckAlternative(Alternative alternative)
         {
-            if (!CheckLinePosA(alternative.Tasks[0].Positions[0]))
+            if (!CheckLinePosA(alternative.Tasks[0].Positions[0].In))
                 return false;
-            if (!CheckLinePosB(alternative.Tasks[0].Positions[1]))
+            if (!CheckLinePosB(alternative.Tasks[0].Positions[1].Out))
                 return false;
-            if (!CheckLinePosA(alternative.Tasks[1].Positions[0]))
+            if (!CheckLinePosA(alternative.Tasks[1].Positions[0].In))
                 return false;
-            if (!CheckLinePosB(alternative.Tasks[1].Positions[1]))
+            if (!CheckLinePosB(alternative.Tasks[1].Positions[1].Out))
                 return false;
-            if (!CheckLinePosA(alternative.Tasks[2].Positions[0]))
+            if (!CheckLinePosA(alternative.Tasks[2].Positions[0].In))
                 return false;
-            if (!CheckLinePosB(alternative.Tasks[2].Positions[1]))
+            if (!CheckLinePosB(alternative.Tasks[2].Positions[1].Out))
                 return false;
             if(alternative.Name != "Alternative")
                 return false;

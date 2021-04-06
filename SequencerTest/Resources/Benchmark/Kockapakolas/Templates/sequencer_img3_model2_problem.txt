@@ -1,0 +1,84 @@
+TaskType: PointLike
+Dimension: 2
+CyclicSequence: False
+StartDepot: 0
+DistanceFunction: EuclidianDistance
+ResourceSource: NoResource
+TimeLimit: <*T*>
+UseMIPprecedenceSolver: <*MIP*>
+LocalSearchStrategy: <*LSS*>
+UseShortcutInAlternatives: <*USIA*>
+
+PositionList:
+#+-------+---------------------+------------------+
+#|   ID  |      Position       |  Name[optional]  |
+#+-------+---------------------+------------------+
+0;			[ 0;0 ];			Init
+1600;			[ 0.2219;0.035 ];			greencylin_16_Start_g0
+1601;			[ 0.2219;0.035 ];			greencylin_16_Start_g1
+1500;			[ 0.3169;0.0378 ];			redcube_15_Start_g0
+1501;			[ 0.3169;0.0378 ];			redcube_15_Start_g1
+1400;			[ 0.2866;0.1641 ];			redcylin_14_Start_g0
+1401;			[ 0.2866;0.1641 ];			redcylin_14_Start_g1
+1300;			[ 0.1987;0.1678 ];			bluecylin_13_Start_g0
+1301;			[ 0.1987;0.1678 ];			bluecylin_13_Start_g1
+700;			[ 0.15;0.02 ];			redcube_7_End_g0
+701;			[ 0.15;0.02 ];			redcube_7_End_g1
+600;			[ 0.15;0.02 ];			redcylin_6_End_g0
+601;			[ 0.15;0.02 ];			redcylin_6_End_g1
+500;			[ 0.11;0.02 ];			bluecylin_5_End_g0
+501;			[ 0.11;0.02 ];			bluecylin_5_End_g1
+400;			[ 0.19;0.02 ];			greencylin_4_End_g0
+401;			[ 0.19;0.02 ];			greencylin_4_End_g1
+
+
+ProcessHierarchy:
+#+-------------+---------+----------------+------------+
+#| Position ID | Task ID | Alternative ID | Process ID |
+#+-------------+---------+----------------+------------+
+0;			0;			0;			0;
+#
+1500;			701;			700;			7;
+1501;			701;			700;			7;
+700;			702;			700;			7;
+701;			702;			700;			7;
+#
+1400;			601;			600;			6;
+1401;			601;			600;			6;
+600;			602;			600;			6;
+601;			602;			600;			6;
+#
+1300;			501;			500;			5;
+1301;			501;			500;			5;
+500;			502;			500;			5;
+501;			502;			500;			5;
+#
+1600;			401;			400;			4;
+1601;			401;			400;			4;
+400;			402;			400;			4;
+401;			402;			400;			4;
+
+
+ProcessPrecedence:
+#+----------------------+--------------------+------------------+
+#| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
+#+----------------------+--------------------+------------------+
+
+
+PositionPrecedence:
+#+-----------------------+---------------------+------------------+
+#| PredecessorPositionID | SuccessorPositionID |  Name[optional]  |
+#+-----------------------+---------------------+------------------+
+700;			600
+700;			601
+701;			600
+701;			601
+700;			500
+700;			501
+500;			700
+500;			701
+700;			400
+700;			401
+400;			700
+400;			701
+

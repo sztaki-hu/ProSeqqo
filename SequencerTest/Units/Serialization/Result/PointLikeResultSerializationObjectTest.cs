@@ -39,8 +39,8 @@ namespace SequencerTest.Units.Serialization.Result
             Assert.AreEqual(result.StatusCode, 3);
             Assert.AreEqual(result.StatusMessage, "Status");
             Assert.AreEqual(result.Log[0], "FirstLog");
-            Assert.IsTrue(TestObjects.CheckPosA(result.PositionResult[0]));
-            Assert.IsTrue(TestObjects.CheckPosB(result.PositionResult[1]));
+            Assert.IsTrue(TestObjects.CheckPosA(result.PositionResult[0].In));
+            Assert.IsTrue(TestObjects.CheckPosB(result.PositionResult[1].In));
         }
 
 

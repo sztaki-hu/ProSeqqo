@@ -57,7 +57,7 @@ namespace SequencePlanner.Function.DistanceFunction
             if (A == null || B == null)
                 throw new SeqException("TrapezoidTimeDistanceFunction A/B position null!");
             if (A.Dimension != B.Dimension)
-                throw new SeqException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
+                throw new SeqException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of Positions with UserID:" + A.UserID + ", " + B.UserID);
             int Dimension = A.Dimension;
             if (B.Dimension == Dimension && MaxAcceleration.Length == Dimension && MaxSpeed.Length == Dimension)
             {

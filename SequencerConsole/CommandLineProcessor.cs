@@ -5,7 +5,6 @@ using SequencePlanner.GTSPTask.Task.LineLike;
 using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -14,8 +13,7 @@ namespace SequencerConsole
 {
     public class CommandLineProcessor
     {
-        private static readonly bool RUN_IN_VISUALSTUDIO = false;
-        private static readonly LogLevel LOG_LEVEL = LogLevel.Trace;
+        private static readonly LogLevel LOG_LEVEL = LogLevel.Info;
 
         private static string input;
         private static FormatType inputType = FormatType.Unknown;
@@ -31,22 +29,26 @@ namespace SequencerConsole
         {
             if (args.Length == 0)
             {
-                #if !DEBUG
+#if !DEBUG
                     Help(new string[] { "-h" });
-                #else
+#else
                 {
-                    SeqLogger.LogLevel = LOG_LEVEL;
                     //Debug in VS
+                    SeqLogger.LogLevel = LogLevel.Trace;
                     string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example";
+                    string local = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests";
+                    string localOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests\\Out";
+                    string kocka = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests\\Kockapakolas";
+                    string kockaOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests\\Kockapakolas\\Out";
                     string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\out";
                     string graph = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\graph";
 
                     //args = new string[] { "-i", example + "\\PickAndPlace_Original.txt",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
-                    //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          };
+                    args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          };
                     //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",           };
                     //args = new string[] { "-i", example + "\\LineLike_Original.txt",            "-o", outdir + "\\LineLike_Original_out.json",            };
                     //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",              };
-                    //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.seq",               };
+                    args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.seq",               };
                     //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        };
                     //args = new string[] { "-i", example + "\\CSOPA.txt",                        "-o", outdir + "\\CSOPA_out.json",                        };
                     //args = new string[] { "-i", example + "\\CelticLaser_Contour.txt",          "-o", outdir + "\\CelticLaser_Contour_out.txt",           };
@@ -55,14 +57,36 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PointLike_PosProcPrecedences.txt", "-o", outdir + "\\PointLike_PosProcPrecedences_out.txt"   };
                     //args = new string[] { "-i", example + "\\PointLike_PosPrecedences.txt",     "-o", outdir + "\\PointLike_PosPrecedences_out.txt"       };
                     //args = new string[] { "-i", example + "\\LocalTests/DEV_LL.txt",            "-o", outdir + "\\LocalTests/DEV_LL_out.txt",             };
-                    args = new string[] { "-i", example + "\\seqtest.txt",                        "-o", outdir + "\\seqtest_o.json",                        };
+                    //args = new string[] { "-i", example + "\\seqtest.txt",                      "-o", outdir + "\\seqtest_o.json",                        };
                     //args = new string[] { "-i", example + "\\seqtest2.txt",                     "-o", outdir + "\\seqtest2_o.json",                       };
+                    //args = new string[] { "-i", example + "\\seqtest3.txt",                     "-o", outdir + "\\seqtest3_o.json",                       };
                     //args = new string[] { "-i", example + "\\etalon.txt",                       "-o", outdir + "\\etalon_o.json",                         };
                     //args = new string[] { "-i", example + "\\etalonMatrix.txt",                 "-o", outdir + "\\etalonMatrix_o.seq",                    };
                     //args = new string[] { "-i", example + "\\seqtest3.txt",                     "-o", outdir + "\\seqtest3_o.json",                       };
                     //args = new string[] { "-i", example + "\\seq_fill_half.txt",                "-o", outdir + "\\seq_fill_half_o.json",                  };
                     //args = new string[] { "-i", example + "\\seq_contours_half.txt",            "-o", outdir + "\\seq_contours_half.json"                 };
-                    args = new string[] { "-i", example + "\\Frochliche.txt",            "-o", outdir + "\\Frochliche.json" };
+                    //args = new string[] { "-i", example + "\\Frochliche.txt",                   "-o", outdir + "\\Frochliche.json"                        };
+                    //args = new string[] { "-i", local + "\\test11_0.txt",                       "-o", localOut + "\\test11_0.json"                        };
+                    //args = new string[] { "-i", local + "\\test11_1.txt",                       "-o", localOut + "\\test11_1.json"                        };
+                    //args = new string[] { "-i", local + "\\test11_2.txt",                       "-o", localOut + "\\test11_2.json"                        };
+                    //args = new string[] { "-i", local + "\\test11_3.txt",                       "-o", localOut + "\\test11_3.json"                        };
+                    //args = new string[] { "-i", local + "\\test90_0.txt", "-o", localOut + "\\test90_0.json" };
+                    //args = new string[] { "-i", local + "\\test90_1.txt", "-o", localOut + "\\test90_1.json" };
+                    //args = new string[] { "-i", local + "\\test1_1.txt",                        "-o", localOut + "\\test1_1.json"                         };
+                    //args = new string[] { "-i", local + "\\test1_1 copy.txt",                   "-o", localOut + "\\test1_1.json"                         };
+                    //args = new string[] { "-i", local + "\\test1_3.txt",                        "-o", localOut + "\\test1_3.json"                         };
+                    //args = new string[] { "-i", local + "\\test1_1MX.txt",                      "-o", localOut + "\\test1_1MX.json"                       };
+                    //args = new string[] { "-i", local + "\\test1_3MX.txt",                      "-o", localOut + "\\test1_3MX.json"                       };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img2_model5_problem.txt",    "-o", kockaOut + "\\sequencer_img2_model5_problem.json"   };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img1_model3_problem.txt",    "-o", kockaOut + "\\sequencer_img1_model3_problem.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt",    "-o", kockaOut + "\\sequencer_img2_model3_problem_1.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_0.txt",    "-o", kockaOut + "\\sequencer_img3_model2_problem_0.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt",    "-o", kockaOut + "\\sequencer_img3_model2_problem_1.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model2_problem_1.txt", "-o", kockaOut + "\\sequencer_img3_model2_problem_1.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_mosaic1_problem_1.txt",    "-o", kockaOut + "\\sequencer_mosaic1_problem_1.json" };
+                    //args = new string[] { "-i", kocka + "\\sequencer_img3_model4_problem_1.txt", "-o", kockaOut + "\\sequencer_img3_model4_problem_1.json" };
 
                     Help(args);
                     Version(args);
@@ -70,10 +94,10 @@ namespace SequencerConsole
                     output = Output(args);
                     debug = Debug(args);
                     validate = Validate(args);
-                    log = LOG_LEVEL;
+                    log = LogLevel.Trace;
                     Run();
                 }
-                #endif
+#endif
             }
             else
             {
@@ -101,10 +125,10 @@ namespace SequencerConsole
                 {
                     if (taskType == TaskType.LineLike)
                         ConvertLineLike();
-                    
+
                     if (taskType == TaskType.PoitnLike)
                         ConvertPointLike();
-                    
+
                 }
             }
             catch (Exception e)
@@ -240,8 +264,6 @@ namespace SequencerConsole
                     default:
                         throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
                 }
-                if (validate)
-                    task.ValidateModel();
                 return task.RunModel();
             }
             return null;
@@ -268,8 +290,6 @@ namespace SequencerConsole
                     default:
                         throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
                 }
-                if (validate)
-                    task.ValidateModel();
                 return task.RunModel();
                 //var ct = new CancellationToken();
                 //WaitForSolution("Solver running!", ct);
@@ -285,7 +305,7 @@ namespace SequencerConsole
                 {
                     case FormatType.SEQ:
                     case FormatType.TXT:
-                        ser.ExportSEQ(result,output);
+                        ser.ExportSEQ(result, output);
                         break;
                     case FormatType.JSON:
                         ser.ExportJSON(result, output);
@@ -376,7 +396,7 @@ namespace SequencerConsole
             {
                 if (item.Equals("-version") || item.Equals("-v"))
                 {
-                    Console.WriteLine("SequencePlanner \u00a9 SZTAKI \nVersion: " + AssemblyName.GetAssemblyName("SequencePlanner.dll").Version+"\n");
+                    Console.WriteLine("SequencePlanner \u00a9 SZTAKI \nVersion: " + AssemblyName.GetAssemblyName("SequencePlanner.dll").Version + "\n");
                     System.Environment.Exit(0);
                 }
             }
@@ -420,7 +440,7 @@ namespace SequencerConsole
                 if (args[i].Equals("-output") || args[i].Equals("-o"))
                 {
                     var filename = args[i + 1].Split(".");
-                    if (filename!=null && filename.Length>1)
+                    if (filename != null && filename.Length > 1)
                     {
                         if (filename[1].ToUpper() == "SEQ")
                             outputType = FormatType.SEQ;
@@ -431,7 +451,7 @@ namespace SequencerConsole
                         if (filename[1].ToUpper() == "XML")
                             outputType = FormatType.XML;
                         if (outputType == FormatType.Unknown)
-                            throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml:"+args[i + 1]);
+                            throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml:" + args[i + 1]);
                     }
                     else
                     {
@@ -502,6 +522,8 @@ namespace SequencerConsole
 
         public static TaskType CheckTaskType(string input)
         {
+            if (!File.Exists(input))
+                SeqLogger.Critical("File not exists: " + input);
             foreach (var line in File.ReadAllLines(input))
             {
                 if (line.Contains("LineLike"))
@@ -514,16 +536,16 @@ namespace SequencerConsole
         public static void WaitForSolution(string text, CancellationToken token)
         {
             var counter = 0;
-            while(token.IsCancellationRequested)
+            while (token.IsCancellationRequested)
             {
                 switch (counter % 4)
                 {
                     case 0: Console.Write("/" + text); break;
                     case 1: Console.Write("-" + text); break;
-                    case 2: Console.Write("\\"+ text); break;
+                    case 2: Console.Write("\\" + text); break;
                     case 3: Console.Write("|" + text); break;
                 }
-                Console.SetCursorPosition(Console.CursorLeft - (1+text.Length), Console.CursorTop);
+                Console.SetCursorPosition(Console.CursorLeft - (1 + text.Length), Console.CursorTop);
                 counter++;
                 Thread.Sleep(100);
             }

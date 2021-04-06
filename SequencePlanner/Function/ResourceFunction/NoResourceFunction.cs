@@ -10,11 +10,13 @@ namespace SequencePlanner.Function.ResourceFunction
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
 
         public double ComputeResourceCost(Position A, Position B, double distance) => distance;
-        public void Validate(){}
+        public void Validate(){
+            SeqLogger.Info("ResourceFunction: " + FunctionName);
+        }
         public void ToLog(LogLevel level)
         {
             SeqLogger.Indent++;
-            SeqLogger.WriteLog(level, "ResourceFunction: " + FunctionName, nameof(DistanceFunction));
+            SeqLogger.WriteLog(level, "ResourceFunction: " + FunctionName, nameof(NoResourceFunction));
             SeqLogger.Indent--;
         }
     }

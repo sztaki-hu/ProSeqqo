@@ -9,11 +9,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 {
     public class PointLikeResultSerializationObject: TaskResultSerializationObject
     {
-        public List<Position> PositionResult { get; set; }
+        public List<GTSPNode> PositionResult { get; set; }
 
         public PointLikeResultSerializationObject() : base()
         {
-            PositionResult = new List<Position>();
+            PositionResult = new List<GTSPNode>();
         }
 
         public PointLikeResultSerializationObject(PointTaskResult result): base(result)
@@ -53,7 +53,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
                 seq += nameof(PositionResult) + ": " + newline;
                 foreach (var position in PositionResult)
                 {
-                    seq += position.UserID + d + "[" + SeqLogger.ToList(position.Vector) + "]" + d + position.Name + d + position.ResourceID + newline;
+                    seq += position.Node.UserID + d + "[" + SeqLogger.ToList(position.In.Vector) + "]" + d + position.Node.Name + d + position.Node.ResourceID + newline;
                 }
                 seq += nameof(Log) + ": " + newline;
                 foreach (var line in Log)

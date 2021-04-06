@@ -1,5 +1,6 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.Model;
+using SequencePlanner.OR_Tools;
 
 namespace SequencePlanner.GTSPTask.Task.Base
 {
@@ -12,6 +13,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
         public Position FinishDepot { get; set; }
         public PositionMatrix PositionMatrix { get; set; }
         public int TimeLimit { get; set; }
+        public LocalSearchStrategyEnum.Metaheuristics LocalSearchStrategy { get; set; }
 
         public delegate void TaskCompleted(int ID, ITaskResult result);
         public event TaskCompleted SequencingTaskCompleted;

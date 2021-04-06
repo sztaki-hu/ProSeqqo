@@ -2,6 +2,7 @@
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.LineLike;
+using SequencePlanner.GTSPTask.Task.PointLike.ShortCut;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using SequencePlanner.OR_Tools;
@@ -21,12 +22,11 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         public List<GTSPPrecedenceConstraint> ProcessPrecedence { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
         public PointLikeGTSPRepresentation GTSPRepresentation { get; set; }
-        //Alternative shortcut staff //TODO: Make it independent!
-        private List<Position> DeletedPositionsOfShortcuts { get; set; }
-        private List<GTSPPrecedenceConstraint> DeletedPositionPrecedencesOfShortcuts { get; set; }
-        private List<GTSPPrecedenceConstraint> PositionPrecedencesOfShortcuts { get; set; }
-        private List<AlternativeShortcut> AlternativeShortcuts { get; set; }
+        public ShortestPathProcessor ShortestPathProcessor { get; set; }
         public bool UseShortcutInAlternatives { get; set; }
+        public delegate double CalculateWeightDelegate(GTSPNode A, GTSPNode B);
+        public CalculateWeightDelegate CalculateWeightFunction { get; set; }
+
 
         public PointLikeTask() : base()
         {
@@ -35,42 +35,53 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             Processes = new List<Process>();
             PositionPrecedence = new List<GTSPPrecedenceConstraint>();
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
-            DeletedPositionsOfShortcuts = new List<Position>();
-            AlternativeShortcuts = new List<AlternativeShortcut>();
-            DeletedPositionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();
-            PositionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();
-        }
+            ShortestPathProcessor = null;
+            CalculateWeightFunction = CalculateWeight;
+            DepotMapper = new PointDepotMapper();
+    }
 
         public PointTaskResult RunModel()
         {
             Timer.Reset();
             Timer.Start();
+            if (Validate)
+                ValidateModel();
+            DepotMapper.Map(this);
             if (UseShortcutInAlternatives)
-                CreateAlternativeShortcuts();
+            {
+                ShortestPathProcessor = new ShortestPathProcessor(this);
+                ShortestPathProcessor.Change();
+            }
             SeqLogger.Info("RunModel started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
             GenerateModel();
             var orToolsParam = new ORToolsTask()
             {
                 TimeLimit = TimeLimit,
-                GTSPRepresentation = GTSPRepresentation
+                GTSPRepresentation = GTSPRepresentation,
+                LocalSearchStrategy = LocalSearchStrategy
             };
             ToLog(LogLevel.Debug);
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
             PointTaskResult pointResult = new PointTaskResult(orTools.Solve());
+            pointResult.CreateRawGeneralIDStruct();
             pointResult = ResolveSolution(pointResult);
             if (UseShortcutInAlternatives)
             {
-                pointResult = ResolveSolutionWithAlternativeShortcuts(pointResult);
-                ReverseAlternativeShortcuts();
+                pointResult = ShortestPathProcessor.ResolveSolution(pointResult, CalculateWeightFunction);
+                ShortestPathProcessor.ChangeBack();
             }
+            pointResult = (PointTaskResult)DepotMapper.ResolveSolution(pointResult);
+            DepotMapper.ReverseMap(this);
+
             SeqLogger.Indent--;
             SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
             Timer.Stop();
             pointResult.FullTime = Timer.Elapsed;
             pointResult.ToLog(LogLevel.Info);
             //ToLog(LogLevel.Warning);
+            pointResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
             return pointResult;
         }
 
@@ -83,7 +94,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 Matrix = CreateGTSPMatrix(),
                 DisjointConstraints = CreateDisjointConstraints(),
                 PrecedenceConstraints = CreatePrecedenceConstraints(),
-                StartDepot = StartDepot.SequencingID
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             };
             PositionMatrix.Matrix = GTSPRepresentation.Matrix;
             if (UseMIPprecedenceSolver)
@@ -91,71 +103,6 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             SeqLogger.Indent--;
             SeqLogger.Info("Model generation finished!", nameof(PointLikeTask));
-        }
-
-        private void CreateAlternativeShortcuts()
-        {
-            SeqLogger.Debug("Alternative shortcut creation started!", nameof(PointLikeTask));
-            SeqLogger.Indent++;
-            AlternativeShortcuts.Clear();
-            for (int i = 0; i < Alternatives.Count; i++)
-            {
-                if (Alternatives[i].Tasks.Count > 2)
-                {
-                    SeqLogger.Trace("Alternative " + Alternatives[i] + " in process!", nameof(PointLikeTask));
-                    SeqLogger.Indent++;
-                    var shortcut = new AlternativeShortcut();                                                           //Create alternative with shortcut for every alternative
-                    shortcut.Assimilate(Alternatives[i]);                                                               //Init with the original, it is saved inside the new one.
-                    shortcut.CreateShortcut(PositionMatrix.DistanceFunction, PositionMatrix.ResourceFunction);          //Create shortcuts between every position of first and last tasks.
-                    for (int j = 1; j < Alternatives[i].Tasks.Count - 1; j++)
-                    {
-                        foreach (var position in Alternatives[i].Tasks[j].Positions)
-                        {
-                            PositionMatrix.Positions.Remove(position);
-                            DeletedPositionsOfShortcuts.Add(position);
-                            SeqLogger.Trace("Deleted position:" + position, nameof(PointLikeTask));
-                        }
-                    }
-                    AlternativeShortcuts.Add(shortcut);
-                    Alternatives[i] = shortcut;                                                                         //Change the alternatives for the new ones
-                    foreach (var process in Processes)                                                                  //also in processes.
-                    {
-                        for (int j = 0; j < process.Alternatives.Count; j++)
-                        {
-                            if (process.Alternatives[j].GlobalID == shortcut.GlobalID)
-                            {
-                                process.Alternatives[j] = shortcut;
-                            }
-                        }
-                    }
-                    SeqLogger.Indent--;
-                }
-            }
-            foreach (var shortcut in AlternativeShortcuts)                             //Check position precedences, if one of the positions part of shortcut,
-            {                                                                              //it have to be override with the first position of the cut
-                for (int i = 0; i < PositionPrecedence.Count; i++)
-                {
-                    var newPrec = shortcut.FindPrecedenceHeaderOfPositions(PositionPrecedence[i]);
-                    if (newPrec != null && newPrec.Count > 0)
-                    {
-                        DeletedPositionPrecedencesOfShortcuts.Add(PositionPrecedence[i]);
-                        PositionPrecedencesOfShortcuts.AddRange(newPrec);
-                        //PositionPrecedence.RemoveAt(i);
-                        //PositionPrecedence.AddRange(newPrec);
-                    }
-                }
-            }
-            foreach (var item in DeletedPositionPrecedencesOfShortcuts)
-            {
-                PositionPrecedence.Remove(item);
-            }
-            foreach (var item in PositionPrecedencesOfShortcuts)
-            {
-                PositionPrecedence.Add(item);
-            }
-
-            SeqLogger.Indent--;
-            SeqLogger.Info("Alternative shortcut creation finished!", nameof(PointLikeTask));
         }
 
         protected long[][] CreateInitialRout()
@@ -166,7 +113,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
                 StrictOrderPrecedenceHierarchy = CreatePrecedenceHierarchiesForInitialSolution(),
                 OrderPrecedenceConstraints = CreatePrecedenceConstraints(true),
-                StartDepot = StartDepot.SequencingID,
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID,
                 Processes = Processes
             });
 
@@ -180,14 +128,31 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 {
                     initialSolution[0][i] = result[i];
                 }
+                ResolveInitialSolution(initialSolution);
                 return initialSolution;
             }
             return null;
         }
 
-        private void CreateHierarchy()
+        private void ResolveInitialSolution(long[][] initialSolution)
         {
-
+            var InitialSolurionUserIDs = "";
+            PointTaskResult pointTaskResult = new PointTaskResult();
+            foreach (var solutionItem in initialSolution[0])
+            {
+                foreach (var pos in PositionMatrix.Positions)
+                {
+                    if (((int)solutionItem) == pos.Node.SequencingID)
+                    {
+                        InitialSolurionUserIDs += pos.Node.UserID + ", ";
+                        pointTaskResult.PositionResult.Add(pos);
+                    }
+                }
+            }
+            SeqLogger.Trace("Initial solution UserIDs"+InitialSolurionUserIDs);
+            SeqLogger.Trace("Initial solution validation started!");
+            pointTaskResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
+            SeqLogger.Trace("Initial solution validation finished!");
         }
 
         private List<GTSPPrecedenceConstraint> CreatePrecedenceConstraints(bool fullProcessPrecedence = false)
@@ -233,7 +198,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                         {
                             foreach (var posAfter in alterAfter.Tasks[0].Positions)
                             {
-                                positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore, posAfter));
+                                positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore.In, posAfter.In));
                             }
                         }
                     }
@@ -259,7 +224,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                                 {
                                     foreach (var posAfter in alterAfter.Tasks[j].Positions)
                                     {
-                                        positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore, posAfter));
+                                        positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore.In, posAfter.In));
                                     }
                                 }
                             }
@@ -299,11 +264,11 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                             if (taskNumberOfAlternatives[j] <= i)
                                 //Add positions of positions of j. alternative last layer
                                 foreach (var position in process.Alternatives[j].Tasks[taskNumberOfAlternatives[j] - 1].Positions)
-                                    constraint.Add(position);
+                                    constraint.Add(position.Node);
                             else
                                 //Add positions of positions of j. alternative i.layer
                                 foreach (var position in process.Alternatives[j].Tasks[i].Positions)
-                                    constraint.Add(position);
+                                    constraint.Add(position.Node);
 
                         }
                         DisjointConstraints.Add(constraint);
@@ -317,14 +282,14 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         {
             foreach (var position in PositionMatrix.Positions)
             {
-                position.SequencingID = MAX_SEQUENCING_ID++;
+                position.Node.SequencingID = MAX_SEQUENCING_ID++;
             }
             double[,] matrix = new double[MAX_SEQUENCING_ID, MAX_SEQUENCING_ID];
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    matrix[i, j] = int.MaxValue / (IGTSPRepresentation.WEIGHT_MULTIPLIER * 2);
+                    matrix[i, j] = int.MaxValue / (WeightMultipier * 2);
                 }
             }
             matrix = ConnectProcesses(Processes, matrix);
@@ -377,18 +342,33 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             {
                 foreach (var posB in b.Positions)
                 {
-                    matrix[posA.SequencingID, posB.SequencingID] = CalculateWeight(posA, posB);
+                    matrix[posA.Node.SequencingID, posB.Node.SequencingID] = CalculateWeight(posA, posB);
                 }
             }
             return matrix;
         }
 
-        private double CalculateWeight(Position A, Position B)
+        
+        private double CalculateWeight(GTSPNode A, GTSPNode B)
         {
-            if (A.Virtual || B.Virtual)
-                return 0.0;
-            double weight = PositionMatrix.DistanceFunction.ComputeDistance(A, B);
-            weight = PositionMatrix.ResourceFunction.ComputeResourceCost(A, B, weight);
+            //if (A.Node.Virtual || B.Node.Virtual)
+            //    return 0.0;
+            if (A.OverrideWeightOut > 0)
+                return A.OverrideWeightOut;
+            if (B.OverrideWeightIn > 0)
+                return B.OverrideWeightIn;
+            double weight = 0;
+            if (A.Node.Virtual || B.Node.Virtual)
+                weight = 0;
+            else
+            {
+                weight = PositionMatrix.DistanceFunction.ComputeDistance(A.Out, B.In);
+                weight = PositionMatrix.ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
+            }
+            if (A.AdditionalWeightOut > 0)
+                weight += A.AdditionalWeightOut;
+            if (B.AdditionalWeightIn > 0)
+                weight += B.AdditionalWeightIn;
             return weight;
         }
 
@@ -405,6 +385,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         private PointTaskResult ResolveSolution(PointTaskResult result)
         {
+            //result.ToLog(LogLevel.Error);
             result.Log = SeqLogger.Backlog;
             result.PreSolverTime = MIPRunTime;
             var ORoutputRaw = result.SolutionRaw;
@@ -414,17 +395,10 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 var find = false;
                 foreach (var position in PositionMatrix.Positions)
                 {
-                    if (position.SequencingID == raw)
+                    if (position.Node.SequencingID == raw)
                     {
-                        if (!position.Virtual)
-                        {
-                            result.SolutionRaw.Add(position.UserID);
-                            result.PositionResult.Add(position);
-                        }
-                        else
-                        {
-                            //taskResult.ResultWithVirtual.Add(position.UserID);
-                        }
+                        result.SolutionRaw.Add(position.Node.UserID);
+                        result.PositionResult.Add(position);
                         find = true;
                         break;
                     }
@@ -432,72 +406,20 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 if (!find)
                     throw new SeqException("Result of OR-Tools can not be resolved, no line found with the SequenceID: " + raw);
             }
-
-            for (int i = 1; i < result.PositionResult.Count; i++)
+            for (int i = 0; i < result.ResolveHelper.Count; i++)
             {
-                result.CostsRaw.Add(GTSPRepresentation.Matrix[result.PositionResult[i - 1].SequencingID, result.PositionResult[i].SequencingID]);
-                result.CostSum += result.CostsRaw[i - 1];
+                result.ResolveHelper[i].Node = result.PositionResult[i];
+                result.ResolveHelper[i].GID = result.PositionResult[i].Node.GlobalID;
+            }
+
+            for (int i = 0; i < result.PositionResult.Count-1; i++)
+            {
+                result.CostsRaw.Add(GTSPRepresentation.Matrix[result.PositionResult[i].Node.SequencingID, result.PositionResult[i+1].Node.SequencingID]);
+                result.ResolveHelper[i].Cost = GTSPRepresentation.Matrix[result.PositionResult[i].Node.SequencingID, result.PositionResult[i+1].Node.SequencingID];
+                result.CostSum += result.CostsRaw[i];
             }
             SeqLogger.Info("Solution resolved!", nameof(PointLikeTask));
             return result;
-        }
-
-        private PointTaskResult ResolveSolutionWithAlternativeShortcuts(PointTaskResult taskResult)
-        {
-            SeqLogger.Debug("Solution update by alternative shortcuts started!", nameof(PointLikeTask));
-            SeqLogger.Indent++;
-            foreach (var alternative in AlternativeShortcuts)
-            {
-                taskResult = alternative.ResolveSolution(taskResult);
-            }
-            SeqLogger.Indent--;
-            SeqLogger.Info("Solution update by alternative shortcuts finished!", nameof(PointLikeTask));
-            return taskResult;
-        }
-
-        private void ReverseAlternativeShortcuts()
-        {
-            foreach (var shortcut in AlternativeShortcuts)
-            {
-                for (int i = 0; i < Alternatives.Count; i++)                    //Change back alternatives in Alternatives collection to original.
-                {
-                    if (Alternatives[i].GlobalID == shortcut.GlobalID)
-                        Alternatives[i] = shortcut.Original;
-                }
-                foreach (var process in Processes)                              //Change back alternatives in Processes collection to original.
-                {
-                    for (int i = 0; i < process.Alternatives.Count; i++)
-                    {
-                        if (process.Alternatives[i].GlobalID == shortcut.GlobalID)
-                            process.Alternatives[i] = shortcut.Original;
-                    }
-                }
-            }
-
-            if (PositionMatrix != null && PositionMatrix.Positions != null)         //Add deleted positions of original alternatives to Positions collection.
-                foreach (var position in DeletedPositionsOfShortcuts)
-                {
-                    PositionMatrix.Positions.Add(position);
-                }
-            PositionMatrix.DistanceFunction.StrictSystemEdgeWeights.DeleteAll();//Delete the edge weight ovverides of shortcuts.
-
-            for (int i = 0; i < PositionPrecedence.Count; i++)                  //Remove precedences of shortcuts
-            {
-                for (int j = 0; j < PositionPrecedencesOfShortcuts.Count; j++)
-                {
-                    if (PositionPrecedence[i].Before.GlobalID == PositionPrecedencesOfShortcuts[j].Before.GlobalID && PositionPrecedence[i].After.GlobalID == PositionPrecedencesOfShortcuts[j].After.GlobalID)
-                        PositionPrecedence.RemoveAt(i);
-                }
-            }
-            foreach (var posPrec in DeletedPositionPrecedencesOfShortcuts)      //Add original precedences
-            {
-                PositionPrecedence.Add(posPrec);
-            }
-
-            AlternativeShortcuts.Clear();
-            DeletedPositionsOfShortcuts.Clear();
-            DeletedPositionPrecedencesOfShortcuts.Clear();
-            PositionPrecedencesOfShortcuts.Clear();
         }
 
         public List<GTSPPrecedenceConstraintList> CreatePrecedenceHierarchiesForInitialSolution()
@@ -511,8 +433,14 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     for (int i = 0; i < alternative.Tasks.Count - 1; i++)
                     {
                         tmp = new GTSPPrecedenceConstraintList();
-                        tmp.Before.AddRange(alternative.Tasks[i].Positions);
-                        tmp.After.AddRange(alternative.Tasks[i + 1].Positions);
+                        foreach (var item in alternative.Tasks[i].Positions)
+                        {
+                            tmp.Before.Add(item.Node);
+                        }
+                        foreach (var item in alternative.Tasks[i + 1].Positions)
+                        {
+                            tmp.After.Add(item.Node);
+                        }
                         prec.Add(tmp);
                     }
                 }
@@ -535,7 +463,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                             //foreach (var p2 in alternative.Tasks[j].Positions)
                             foreach (var p2 in alternative.Tasks[i + 1].Positions)
                             {
-                                prec.Add(new GTSPPrecedenceConstraint(p, p2));
+                                prec.Add(new GTSPPrecedenceConstraint(p.Node, p2.Node));
                             }
                         }
                         // }
@@ -575,28 +503,37 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             SeqLogger.Indent--;
 
             SeqLogger.WriteLog(level, "ProcessPrecedences:");
-            SeqLogger.Indent++;
-            foreach (var prec in ProcessPrecedence)
+            if(ProcessPrecedence is not null)
             {
-                SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                SeqLogger.Indent++;
+                foreach (var prec in ProcessPrecedence)
+                {
+                    SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                }
+                SeqLogger.Indent--;
             }
-            SeqLogger.Indent--;
 
             SeqLogger.WriteLog(level, "PositionPrecedences:");
-            SeqLogger.Indent++;
-            foreach (var prec in PositionPrecedence)
+            if(PositionPrecedence is not null)
             {
-                SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                SeqLogger.Indent++;
+                foreach (var prec in PositionPrecedence)
+                {
+                    SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                }
+                SeqLogger.Indent--;
             }
-            SeqLogger.Indent--;
 
             SeqLogger.WriteLog(level, "DisjointSets:");
-            SeqLogger.Indent++;
-            foreach (var prec in DisjointConstraints)
+            if(DisjointConstraints is not null)
             {
-                SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                SeqLogger.Indent++;
+                foreach (var prec in DisjointConstraints)
+                {
+                    SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                }
+                SeqLogger.Indent--;
             }
-            SeqLogger.Indent--;
         }
     }
 }

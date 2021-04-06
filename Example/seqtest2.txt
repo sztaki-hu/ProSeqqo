@@ -6,13 +6,13 @@ TrapezoidAcceleration: [0.666667;0.666667;0.666667;0.666667;0.666667;0.666667]
 WeightMultiplier: Auto
 CyclicSequence: False
 StartDepot: 0
-TimeLimit: 10000
+TimeLimit: 0
 ResourceDistanceFunction: Add
 ResourceSource: ConstantResource
 ResourceCostConstant: 0
 UseResources: False
-UseMIPprecedenceSolver: True
-UseShortcutInAlternatives: True
+UseMIPprecedenceSolver: False
+UseShortcutInAlternatives: False
 
 PositionList:
 #+-------+---------------------+------------------+
@@ -114,16 +114,16 @@ ProcessPrecedence:
 62;63
 63;64
 65;66
-66;67
+#66;67
 67;68
 68;69
 69;70
 
-#68;64
-#64;66
-#67;70
-#67;65
-#65;68
+68;64
+64;66
+67;70
+67;65
+65;68
 
 60;75
 61;75
@@ -137,5 +137,5 @@ ProcessPrecedence:
 69;75
 70;75
 
-StrictEdgeWeights:
-1;2;999;True
+#StrictEdgeWeights:
+#	1;2;999;True

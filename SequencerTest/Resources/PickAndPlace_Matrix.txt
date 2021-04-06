@@ -3,13 +3,14 @@ Dimension: 0
 WeightMultiplier: 10
 CyclicSequence: False
 StartDepot: 1
-FinishDepot: 6
+#FinishDepot: 6
 TimeLimit: 20
 DistanceFunction: MatrixDistance
 ResourceDistanceFunction: Max
 ResourceSource: MatrixResource
 ResourceCostConstant: 5
 UseMIPprecedenceSolver: True
+Validate: True
 
 MatrixResource:
 1;5
@@ -45,7 +46,7 @@ ProcessPrecedence:
 #| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
 #+----------------------+--------------------+------------------+
 104;102
-101;102
+#101;102
 102;105
 #105;104
 	
@@ -57,5 +58,5 @@ PositionPrecedence:
 1;2
 #2;4
 #3;4
-#4;5
-5;6
+4;5
+#5;6
