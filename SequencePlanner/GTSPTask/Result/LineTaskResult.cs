@@ -26,6 +26,39 @@ namespace SequencePlanner.GTSPTask.Result
             PositionResult = new List<Position>();
         }
 
+        public override void Delete(int index)
+        {
+            if (SolutionRaw.Count <= index)
+                throw new SeqException("Result delete failed: index > Solution.Length" + index + ">" + SolutionRaw.Count);
+            if (SolutionRaw.Count > 0)
+            {
+                if (index != 0)
+                {
+                    CostSum -= CostsRaw[index - 1];
+                    CostsRaw.RemoveAt(index - 1);
+                }
+                else
+                {
+                    CostSum -= CostsRaw[index];
+                    CostsRaw.RemoveAt(index);
+                }
+                SolutionRaw.RemoveAt(index);
+                LineResult.RemoveAt(index);
+                PositionResult.RemoveAt(2*index);
+                PositionResult.RemoveAt(2*index);
+            }
+        }
+
+        //public override void DeleteFirst()
+        //{
+        //    Delete(SolutionRaw.Count - 1);
+        //}
+
+        //public override void DeleteLast()
+        //{
+        //    Delete(0);
+        //}
+
         public void ToLog(LogLevel lvl)
         {
             SeqLogger.Info("Result: ");

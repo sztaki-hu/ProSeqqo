@@ -12,6 +12,7 @@ ResourceSource: ConstantResource
 ResourceDistanceFunction: Add
 ResourceCostConstant: 0
 UseMIPprecedenceSolver: True
+Validate: True
 
 PositionList:
 #+-------+---------------------+------------------+

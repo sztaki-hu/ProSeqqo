@@ -21,12 +21,11 @@ namespace SequencePlanner.GTSPTask.Task.Base
         public bool Validate { get; set; }
         public LocalSearchStrategyEnum.Metaheuristics LocalSearchStrategy { get; set; }
         public event IBaseTask.TaskCompleted SequencingTaskCompleted;
-        protected DepotMapper DepotMapper { get; set; }
+        protected IDepotMapper DepotMapper { get; set; }
 
         public BaseTask()
         {
             Timer = new Stopwatch();
-            DepotMapper = new DepotMapper();
             PositionMatrix = new PositionMatrix();
             LocalSearchStrategy = LocalSearchStrategyEnum.Metaheuristics.Automatic;
             WeightMultipier = 1000;
@@ -46,10 +45,6 @@ namespace SequencePlanner.GTSPTask.Task.Base
             }
             return roundedMatrix;
         }
-
-        //public abstract ITaskResult RunModel();
-
-        //public abstract Task<ITaskResult> RunModelAsync(int taskID, CancellationToken cancellationToken);
 
         public abstract void ValidateModel();
 

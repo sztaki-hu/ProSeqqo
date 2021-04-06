@@ -93,6 +93,29 @@ namespace SequencePlanner.GTSPTask.Result
             }
             SeqLogger.Indent--;
         }
+
+        public override void Delete(int index)
+        {
+            base.Delete(index);
+            if (SolutionRaw.Count <= index)
+                throw new SeqException("Result delete failed: index > Solution.Length" + index + ">" + SolutionRaw.Count);
+            if (SolutionRaw.Count > 0)
+            {
+                if (index != 0)
+                {
+                    CostSum -= CostsRaw[index-1];
+                    CostsRaw.RemoveAt(index-1);
+                }
+                else
+                {
+                    CostSum -= CostsRaw[index];
+                    CostsRaw.RemoveAt(index);
+                }
+                SolutionRaw.RemoveAt(index);
+                PositionResult.RemoveAt(index);
+            }
+        }
+
         public void Validate(List<GTSPDisjointConstraint> disjointConstraints, List<GTSPPrecedenceConstraint> positionPrecedence, List<GTSPPrecedenceConstraint> processPrecedence)
         {
             ValidateDisjoint(disjointConstraints);

@@ -37,6 +37,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
             ShortestPathProcessor = null;
             CalculateWeightFunction = CalculateWeight;
+            DepotMapper = new PointDepotMapper();
     }
 
         public PointTaskResult RunModel()
@@ -63,8 +64,6 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             ToLog(LogLevel.Debug);
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
-            if (Validate)
-                ValidateModel();
             PointTaskResult pointResult = new PointTaskResult(orTools.Solve());
             pointResult.CreateRawGeneralIDStruct();
             pointResult = ResolveSolution(pointResult);
@@ -95,7 +94,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 Matrix = CreateGTSPMatrix(),
                 DisjointConstraints = CreateDisjointConstraints(),
                 PrecedenceConstraints = CreatePrecedenceConstraints(),
-                StartDepot = StartDepot.SequencingID
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             };
             PositionMatrix.Matrix = GTSPRepresentation.Matrix;
             if (UseMIPprecedenceSolver)
@@ -113,7 +113,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
                 StrictOrderPrecedenceHierarchy = CreatePrecedenceHierarchiesForInitialSolution(),
                 OrderPrecedenceConstraints = CreatePrecedenceConstraints(true),
-                StartDepot = StartDepot.SequencingID,
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID,
                 Processes = Processes
             });
 
@@ -356,8 +357,14 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 return A.OverrideWeightOut;
             if (B.OverrideWeightIn > 0)
                 return B.OverrideWeightIn;
-            double weight = PositionMatrix.DistanceFunction.ComputeDistance(A.Out, B.In);
-            weight = PositionMatrix.ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
+            double weight = 0;
+            if (A.Node.Virtual || B.Node.Virtual)
+                weight = 0;
+            else
+            {
+                weight = PositionMatrix.DistanceFunction.ComputeDistance(A.Out, B.In);
+                weight = PositionMatrix.ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
+            }
             if (A.AdditionalWeightOut > 0)
                 weight += A.AdditionalWeightOut;
             if (B.AdditionalWeightIn > 0)
