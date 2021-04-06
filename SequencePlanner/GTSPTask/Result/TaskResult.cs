@@ -43,6 +43,21 @@ namespace SequencePlanner.GTSPTask.Result
             ErrorMessage = new List<string>();
         }
 
+        public virtual void Delete(int index)
+        {
+
+        }
+
+        public virtual void DeleteFirst()
+        {
+            Delete(0);
+        }
+
+        public virtual void DeleteLast()
+        {
+            Delete(SolutionRaw.Count - 1);
+        }
+
         public static string ToCSVHeader()
         {
             var s = ";";

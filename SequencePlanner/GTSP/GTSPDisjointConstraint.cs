@@ -6,13 +6,16 @@ namespace SequencePlanner.GTSP
     public class GTSPDisjointConstraint
     {
         public long[] DisjointSetSeq { get { GetSeqIDs(); return NodeListID.ToArray(); } private set { } }
+        public int[] DisjointSetSeqInt { get { GetSeqIDs(); return NodeListIDint.ToArray(); } private set { } }
         public List<int> DisjointSetUser { get => GetUserIDs(); private set { } }
         private List<long> NodeListID;
+        private List<int> NodeListIDint;
         private readonly List<BaseNode> NodeList;
 
         public GTSPDisjointConstraint()
         {
             NodeListID = new List<long>();
+            NodeListIDint = new List<int>();
             NodeList = new List<BaseNode>();
         }
 
@@ -33,9 +36,11 @@ namespace SequencePlanner.GTSP
         private void GetSeqIDs()
         {
             NodeListID = new List<long>();
+            NodeListIDint = new List<int>();
             foreach (var item in NodeList)
             {
                 NodeListID.Add(item.SequencingID);
+                NodeListIDint.Add(item.SequencingID);
             }
         }
 

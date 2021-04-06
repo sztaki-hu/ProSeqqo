@@ -1,4 +1,5 @@
 ﻿using SequencePlanner.GTSP;
+using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System.Collections.Generic;
@@ -16,12 +17,14 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         {
             SeqLogger.Debug("Validation started!", nameof(LineLikeTaskValidator));
             SeqLogger.Indent++;
+            
             if (lineLikeTask.PositionMatrix.DistanceFunction.FunctionName!="MatrixDistance")
                 CheckDimension(lineLikeTask.Dimension);
             CheckCycle(lineLikeTask.CyclicSequence, lineLikeTask.StartDepot, lineLikeTask.FinishDepot);
             CheckTimeLimit(lineLikeTask.TimeLimit);
             CheckPositionMatrix(lineLikeTask.PositionMatrix);
-            //---BaseTask
+            BaseTaskValidator baseTaskValidator = new BaseTaskValidator();
+            baseTaskValidator.Validate((BaseTask)lineLikeTask);
             CheckContourPenalty(lineLikeTask.ContourPenalty);
             CheckLines(lineLikeTask.Lines);
             CheckContours(lineLikeTask.Contours);

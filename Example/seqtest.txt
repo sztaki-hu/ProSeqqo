@@ -12,7 +12,7 @@ ResourceDistanceFunction: Add
 ResourceSource: ConstantResource
 ResourceCostConstant: 0
 UseResources: False
-UseMIPprecedenceSolver: True
+UseMIPprecedenceSolver: False
 UseShortcutInAlternatives: False
 LocalSearchStrategy: GuidedLocalSearch
 
@@ -118,7 +118,7 @@ ProcessPrecedence:
 64;66
 65;68
 67;70
-60;75
+#60;75
 61;75
 62;75
 63;75

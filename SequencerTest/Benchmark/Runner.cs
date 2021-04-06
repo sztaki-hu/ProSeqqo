@@ -14,20 +14,20 @@ namespace SequencerTest.Benchmark
         string generationDir;
         int firstNTemplate = -1;
 
-        [TestInitialize]
-        public void Init()
+        public void Run()
         {
-            benchmarkTasks = GetCICDBenchmarks();
+            //benchmarkTasks = GetCICDBenchmarks();
             var t = DateTime.Now;
             var d = "_";
             generationDir = "Benchmark_" + t.Year + d + t.Month + d + t.Day + d + t.Hour + d + t.Minute + d + t.Second;
             GenerateInstances();
+            RunBenchmark();
         }
 
         public void InitWithTasks(List<BenchmarkTask> benchmarks = null)
         {
             if (benchmarks is null)
-                benchmarkTasks = GetCICDBenchmarks();
+                throw new SeqException("No benchmars!");
             else
                 benchmarkTasks = benchmarks;
             var t = DateTime.Now;
@@ -53,7 +53,6 @@ namespace SequencerTest.Benchmark
             }
         }
 
-        [TestMethod]
         public void RunBenchmark()
         {
             SeqLogger.LogLevel = LogLevel.Info;
@@ -90,23 +89,30 @@ namespace SequencerTest.Benchmark
             }
         }
 
-        public List<BenchmarkTask> GetCICDBenchmarks()
+        [TestMethod]
+        public void RunCubePickAndPlace()
         {
             //KOCKAPAKOLAS
-            var benchmarkTasks = new List<BenchmarkTask>();
+            benchmarkTasks = new List<BenchmarkTask>();
             benchmarkTasks.Add(new BenchmarkTask()
             {
                 TemplateDir = "Resources/Benchmark/Kockapakolas/Templates",
                 Dir = "Resources/Benchmark/Kockapakolas",
                 Parameters = new List<Dictionary<string, string>>() {
-                    new Dictionary<string, string>() { ["T"] = "1000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "True", },
+                    new Dictionary<string, string>() { ["T"] = "1000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "False", },
                     //new Dictionary<string, string>() { ["T"] = "0", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "False", },
                     new Dictionary<string, string>() { ["T"] = "5000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "False", },
                     //new Dictionary<string, string>() { ["T"] = "1000", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "True", },
                 }
             });
+            Run();
+        }
 
+        [TestMethod]
+        public void RunPickAndPlace()
+        {
             //PickAndPlace
+            benchmarkTasks = new List<BenchmarkTask>();
             benchmarkTasks.Add(new BenchmarkTask()
             {
                 TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
@@ -119,7 +125,14 @@ namespace SequencerTest.Benchmark
                 }
             });
 
+            Run();
+        }
+
+        [TestMethod]
+        public void RunCSOPA()
+        {
             //CSOPA
+            benchmarkTasks = new List<BenchmarkTask>();
             benchmarkTasks.Add(new BenchmarkTask()
             {
                 TemplateDir = "Resources/Benchmark/CSOPA/Templates",
@@ -129,7 +142,14 @@ namespace SequencerTest.Benchmark
                 }
             });
 
+            Run();
+        }
+
+        [TestMethod]
+        public void RunCelta()
+        {
             //CELTA
+            benchmarkTasks = new List<BenchmarkTask>();
             benchmarkTasks.Add(new BenchmarkTask()
             {
                 TemplateDir = "Resources/Benchmark/Celta/Templates",
@@ -139,7 +159,14 @@ namespace SequencerTest.Benchmark
                 }
             });
 
+            Run();
+        }
+
+        [TestMethod]
+        public void RunKubik()
+        {
             //KUBIK
+            benchmarkTasks = new List<BenchmarkTask>();
             benchmarkTasks.Add(new BenchmarkTask()
             {
                 TemplateDir = "Resources/Benchmark/Kubik/Templates",
@@ -149,7 +176,14 @@ namespace SequencerTest.Benchmark
                 }
             });
 
+            Run();
+        }
+
+        [TestMethod]
+        public void RunSeqTest()
+        {
             //SEQTEST
+            benchmarkTasks = new List<BenchmarkTask>();
             benchmarkTasks.Add(new BenchmarkTask()
             {
                 TemplateDir = "Resources/Benchmark/SeqTest/Templates",
@@ -173,7 +207,8 @@ namespace SequencerTest.Benchmark
                     new Dictionary<string, string>() { ["T"] = "750",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
                 }
             });
-            return benchmarkTasks;
+
+            Run();
         }
     }
 }

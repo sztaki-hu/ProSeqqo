@@ -5,6 +5,7 @@
     <IsPackable>false</IsPackable>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <StartupObject></StartupObject>
+    <Version>0.3.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

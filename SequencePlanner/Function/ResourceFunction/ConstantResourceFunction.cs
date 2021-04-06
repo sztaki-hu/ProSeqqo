@@ -27,11 +27,11 @@ namespace SequencePlanner.Function.ResourceFunction
         {
             SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(ConstantResourceFunction));
             SeqLogger.Info("ResourceCostConstant: " + Cost, nameof(ConstantResourceFunction));
-            SeqLogger.Info("LinkingFunction: " + LinkingFunction.FunctionName, nameof(ConstantResourceFunction));
             if(LinkingFunction == null)
             {
                 throw new SeqException("ConstantResourceFunction.LinkingFunction not given.");
             }
+            SeqLogger.Info("LinkingFunction: " + LinkingFunction.FunctionName, nameof(ConstantResourceFunction));
         }
 
         public void ToLog(LogLevel level)

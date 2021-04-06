@@ -6,6 +6,7 @@ namespace SequencePlanner.GTSPTask.Task.Base
     public interface IGTSPRepresentation
     {
         public int StartDepot { get; set; }
+        public int FinishDepot { get; set; }
         public List<GTSPPrecedenceConstraint> PrecedenceConstraints { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
         public int[,] RoundedMatrix { get; set; }

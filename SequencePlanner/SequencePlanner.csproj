@@ -7,8 +7,8 @@
     <Copyright>SZTAKI</Copyright>
     <PackageProjectUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</PackageProjectUrl>
     <RepositoryUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</RepositoryUrl>
-    <Version>0.3.1.0</Version>
-    <AssemblyVersion>0.3.1.0</AssemblyVersion>
+    <Version>0.3.2</Version>
+    <AssemblyVersion>0.3.2.0</AssemblyVersion>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 

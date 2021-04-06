@@ -30,8 +30,14 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent++;
             Timer = new Stopwatch();
             SeqLogger.Info("GTSP Matrix Dimension: " + param.GTSPRepresentation.RoundedMatrix.GetLength(0) + "x"+ param.GTSPRepresentation.RoundedMatrix.GetLength(1), nameof(ORToolsSequencerWrapper));
-            SeqLogger.Info("GTSP Start Depot seqID: " + param.GTSPRepresentation.StartDepot, nameof(ORToolsSequencerWrapper));
-            manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedMatrix.GetLength(0), 1, param.GTSPRepresentation.StartDepot);
+            SeqLogger.Info("GTSP Start Depot SeqID: " + param.GTSPRepresentation.StartDepot, nameof(ORToolsSequencerWrapper));
+            if(param.GTSPRepresentation.FinishDepot == -1)
+                manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedMatrix.GetLength(0), 1, param.GTSPRepresentation.StartDepot );
+            else
+            {
+                manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedMatrix.GetLength(0), 1, new int[] { param.GTSPRepresentation.StartDepot }, new int[] { param.GTSPRepresentation.FinishDepot });
+                SeqLogger.Info("GTSP Finish Depot SeqID: " + param.GTSPRepresentation.FinishDepot, nameof(ORToolsSequencerWrapper));
+            }
             routing = new RoutingModel(manager);
 
             //Edge weight callback
@@ -49,8 +55,11 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Info("GTSP Disjoint constraint number: " + param.GTSPRepresentation.DisjointConstraints.Count, nameof(ORToolsSequencerWrapper));
             foreach (var set in param.GTSPRepresentation.DisjointConstraints)
             {
-                SeqLogger.Trace(set.ToString(), nameof(ORToolsSequencerWrapper));
-                routing.AddDisjunction(set.DisjointSetSeq);
+                if (set.DisjointSetSeq.Length > 1)
+                {
+                    SeqLogger.Trace(set.ToString(), nameof(ORToolsSequencerWrapper));
+                    routing.AddDisjunction(manager.NodesToIndices(set.DisjointSetSeqInt));
+                }
             }
 
             SeqLogger.Info("GTSP Order constraint number: " + param.GTSPRepresentation.PrecedenceConstraints.Count, nameof(ORToolsSequencerWrapper));
@@ -67,9 +76,6 @@ namespace SequencePlanner.OR_Tools
                     SeqLogger.Trace(param.GTSPRepresentation.PrecedenceConstraints[i].ToString(), nameof(ORToolsSequencerWrapper));
                     long beforeIndex = manager.NodeToIndex(param.GTSPRepresentation.PrecedenceConstraints[i].Before.SequencingID);
                     long afterIndex = manager.NodeToIndex(param.GTSPRepresentation.PrecedenceConstraints[i].After.SequencingID);
-                    //solver.Add(solver.MakeLessOrEqual(
-                    //      distanceDimension.CumulVar(beforeIndex),
-                    //      distanceDimension.CumulVar(afterIndex)));
                     solver.Add(routing.ActiveVar(beforeIndex) * routing.ActiveVar(afterIndex) * distanceDimension.CumulVar(beforeIndex) <= distanceDimension.CumulVar(afterIndex));
                 }
             }
