@@ -100,7 +100,6 @@ namespace SequencerTest.Benchmark
                     Assert.AreEqual(1, item.StatusCode);
                 }
             }
-
         }
 
         [TestMethod]
