@@ -54,7 +54,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             result = (LineTaskResult)DepotMapper.ResolveSolution(result);
             DepotMapper.ReverseMap(this);
             SeqLogger.Indent--;
-            SeqLogger.Info("RunModel finished!", nameof(LineLikeTask));
+            SeqLogger.Debug("RunModel finished!", nameof(LineLikeTask));
             Timer.Stop();
             result.FullTime = Timer.Elapsed;
             result.ToLog(LogLevel.Info);
@@ -377,7 +377,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 }
             }
             taskResult.FullLength = taskResult.TravelLength + taskResult.LineLength;
-            SeqLogger.Info("Solution resolved!", nameof(LineLikeTask));
+            SeqLogger.Debug("Solution resolved!", nameof(LineLikeTask));
             return taskResult;
         }
 

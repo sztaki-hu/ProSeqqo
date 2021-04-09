@@ -63,9 +63,9 @@ namespace SequencePlanner.Function.ResourceFunction
             {
                 throw new SeqException("ConstantResourceFunction.LinkingFunction not initalized.");
             }
-            SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(MatrixResourceFunction));
-            SeqLogger.Info("MatrixResource: " + CostMatrix.Count+"x"+CostMatrix.Count, nameof(MatrixResourceFunction));
-            SeqLogger.Info("LinkingFunction: " + LinkingFunction.FunctionName, nameof(MatrixResourceFunction));
+            SeqLogger.Debug("ResourceFunction: " + FunctionName, nameof(MatrixResourceFunction));
+            SeqLogger.Debug("MatrixResource: " + CostMatrix.Count+"x"+CostMatrix.Count, nameof(MatrixResourceFunction));
+            SeqLogger.Debug("LinkingFunction: " + LinkingFunction.FunctionName, nameof(MatrixResourceFunction));
         }
         public void ToLog(LogLevel level)
         {

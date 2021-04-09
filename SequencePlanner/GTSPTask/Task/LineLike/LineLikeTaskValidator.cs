@@ -31,7 +31,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             CheckLinePrecedences(lineLikeTask.LinePrecedences, lineLikeTask.Lines);
             CheckContourPrecedences(lineLikeTask.ContourPrecedences, lineLikeTask.Contours);
             SeqLogger.Indent--;
-            SeqLogger.Info("Validation finished!", nameof(LineLikeTaskValidator));
+            SeqLogger.Debug("Validation finished!", nameof(LineLikeTaskValidator));
         }
 
         private void CheckCycle(bool cyclicSequence, Position startDepot, Position finishDepot)

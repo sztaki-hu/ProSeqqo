@@ -33,7 +33,7 @@ namespace SequencePlanner.OR_Tools
             // Init
             timer.Reset();
             timer.Start();
-            SeqLogger.Info("ORTools building started!", nameof(ORToolsSequencerWrapper));
+            SeqLogger.Debug("ORTools building started!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent++;
             Solver solver = Solver.CreateSolver("CBC_MIXED_INTEGER_PROGRAMMING");
             x = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 1.0, "x");                                                    // Boolean, indicates if node is selected
@@ -56,8 +56,8 @@ namespace SequencePlanner.OR_Tools
             //{
             //    SeqLogger.Critical(item);
             //}
-            SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPointLikePreSolverWrapper));
-            SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("Number of variables = " + solver.NumVariables(), nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPointLikePreSolverWrapper));
 
             // Solve
             Solver.ResultStatus resultStatus = RunSolver(solver);
@@ -70,7 +70,7 @@ namespace SequencePlanner.OR_Tools
             //Solve            
             SeqLogger.Info("Solver running!", nameof(ORToolsPointLikePreSolverWrapper));
             Solver.ResultStatus resultStatus = solver.Solve();
-            SeqLogger.Info("Solver finished!", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("Solver finished!", nameof(ORToolsPointLikePreSolverWrapper));
             return resultStatus;
         }
         
@@ -221,15 +221,15 @@ namespace SequencePlanner.OR_Tools
             }
             else
             {
-                SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPointLikePreSolverWrapper));
+                SeqLogger.Debug("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPointLikePreSolverWrapper));
                 SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsPointLikePreSolverWrapper));
                 throw new SeqException("Can not find optimal initial solution with MIP solver!");
             }
-            SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPointLikePreSolverWrapper));
-            SeqLogger.Info("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsPointLikePreSolverWrapper));
-            SeqLogger.Info("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsPointLikePreSolverWrapper));
             SeqLogger.Indent--;
-            SeqLogger.Info("ORTools building finished!", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("ORTools building finished!", nameof(ORToolsPointLikePreSolverWrapper));
             return solution;
         }
         private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint)

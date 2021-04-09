@@ -27,7 +27,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             lines = SeperateByDoubleDot(lines);
             Tokenize(lines);
             SeqLogger.Indent--;
-            SeqLogger.Info("Tokenization finished!", nameof(SEQTokenizer));
+            SeqLogger.Debug("Tokenization finished!", nameof(SEQTokenizer));
         }
 
         private List<TokenLineDeserializationObject> DeleteWhiteSpace(List<TokenLineDeserializationObject> lines)

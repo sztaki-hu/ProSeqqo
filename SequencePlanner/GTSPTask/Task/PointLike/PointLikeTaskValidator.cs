@@ -18,7 +18,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
 
         public void Validate(PointLikeTask pointLikeTask)
         {
-            SeqLogger.Info("Validation started!", nameof(PointLikeTaskValidator));
+            SeqLogger.Debug("Validation started!", nameof(PointLikeTaskValidator));
             SeqLogger.Indent++;
             BaseTaskValidator baseTaskValidator = new BaseTaskValidator();
             baseTaskValidator.Validate((BaseTask)pointLikeTask);
@@ -28,7 +28,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             CheckProcessPrecedence(pointLikeTask);
             CheckUseAlternativeShortcuts(pointLikeTask);
             SeqLogger.Indent--;
-            SeqLogger.Info("Validation finished!", nameof(PointLikeTaskValidator));
+            SeqLogger.Debug("Validation finished!", nameof(PointLikeTaskValidator));
         }
 
         //Q17
@@ -69,7 +69,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                             throw new SeqException("Position precedence should not contain FinishDepo's position, UserID: " + task.FinishDepot.GlobalID);
                     }
                 }
-            SeqLogger.Info("PositionPrecedence: " + task.ProcessPrecedence.Count+ " precedences", nameof(PointLikeTaskValidator));
+            SeqLogger.Debug("PositionPrecedence: " + task.ProcessPrecedence.Count+ " precedences", nameof(PointLikeTaskValidator));
         }
 
         //Q15
@@ -105,7 +105,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 if (b is not null && (precedence.Before.GlobalID == b.GlobalID || precedence.After.GlobalID == b.UserID))
                     throw new SeqException("Process precedence should not contain FinishDepo's process, UserID: " + a.GlobalID);
             }
-            SeqLogger.Info("ProcessPrecedence: " + task.ProcessPrecedence.Count+" precedences", nameof(PointLikeTaskValidator));
+            SeqLogger.Debug("ProcessPrecedence: " + task.ProcessPrecedence.Count+" precedences", nameof(PointLikeTaskValidator));
         }
 
         //Q14
@@ -155,7 +155,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 if (task.StartDepot is not null)
                 {
                     checkStartDepot = true;
-                    SeqLogger.Info("StartDepot: "+ task.StartDepot.UserID, nameof(PointLikeTaskValidator));
+                    SeqLogger.Debug("StartDepot: "+ task.StartDepot.UserID, nameof(PointLikeTaskValidator));
                 }
 
                 if (task.FinishDepot is  not null)
@@ -172,7 +172,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 //StartDepot needed
                 if (task.CyclicSequence && task.StartDepot is null)
                     throw new SeqException("If task is cyclic start depot needed!");
-                //SeqLogger.Info("StartDepot: " + task.StartDepot.UserID, nameof(PointLikeTaskValidator));
+                //SeqLogger.Debug("StartDepot: " + task.StartDepot.UserID, nameof(PointLikeTaskValidator));
                 var findStart = false;
                 var findFinish = false;
                 //Positions must contain StartDepot
@@ -255,14 +255,14 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             if (task.ProcessPrecedence is null)
                 throw new SeqException("ProcessPrecedence is null.", "Please construct it.");
             if (task.PositionPrecedence.Count < 1)
-                SeqLogger.Info("No position precedence found.", nameof(PointLikeTaskValidator));
+                SeqLogger.Warning("No position precedence found.", nameof(PointLikeTaskValidator));
             else
-                SeqLogger.Info(task.PositionPrecedence.Count + " position precedence found.", nameof(PointLikeTaskValidator));
+                SeqLogger.Debug(task.PositionPrecedence.Count + " position precedence found.", nameof(PointLikeTaskValidator));
 
             if (task.ProcessPrecedence.Count < 1)
-                SeqLogger.Info("No process precedence found.", nameof(PointLikeTaskValidator));
+                SeqLogger.Warning("No process precedence found.", nameof(PointLikeTaskValidator));
             else
-                SeqLogger.Info(task.ProcessPrecedence.Count + " process precedence found.", nameof(PointLikeTaskValidator));
+                SeqLogger.Debug(task.ProcessPrecedence.Count + " process precedence found.", nameof(PointLikeTaskValidator));
         }
 
         private void ListContainsPrecedenceItems(GTSPPrecedenceConstraint precedence, IEnumerable<BaseNode> nodes)

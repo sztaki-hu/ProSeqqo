@@ -49,6 +49,7 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\LineLike_Original.txt",            "-o", outdir + "\\LineLike_Original_out.json",            };
                     //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",              };
                     args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.seq",               };
+                    args = new string[] { "-i", example + "\\Hybrid_Matrix.txt",              "-o", outdir + "\\Hybrid_Matrix_out.seq",               };
                     //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        };
                     //args = new string[] { "-i", example + "\\CSOPA.txt",                        "-o", outdir + "\\CSOPA_out.json",                        };
                     //args = new string[] { "-i", example + "\\CelticLaser_Contour.txt",          "-o", outdir + "\\CelticLaser_Contour_out.txt",           };
@@ -94,7 +95,8 @@ namespace SequencerConsole
                     output = Output(args);
                     debug = Debug(args);
                     validate = Validate(args);
-                    log = LogLevel.Trace;
+                    log = LogLevel.Info;
+                    SeqLogger.UseIndent = true;
                     Run();
                 }
 #endif

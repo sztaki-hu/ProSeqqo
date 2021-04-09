@@ -52,7 +52,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 ShortestPathProcessor = new ShortestPathProcessor(this);
                 ShortestPathProcessor.Change();
             }
-            SeqLogger.Info("RunModel started!", nameof(PointLikeTask));
+            SeqLogger.Debug("RunModel started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
             GenerateModel();
             var orToolsParam = new ORToolsTask()
@@ -76,7 +76,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             DepotMapper.ReverseMap(this);
 
             SeqLogger.Indent--;
-            SeqLogger.Info("RunModel finished!", nameof(PointLikeTask));
+            SeqLogger.Debug("RunModel finished!", nameof(PointLikeTask));
             Timer.Stop();
             pointResult.FullTime = Timer.Elapsed;
             pointResult.ToLog(LogLevel.Info);
@@ -87,7 +87,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         private void GenerateModel()
         {
-            SeqLogger.Info("Model generation started!", nameof(PointLikeTask));
+            SeqLogger.Debug("Model generation started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
             GTSPRepresentation = new PointLikeGTSPRepresentation()
             {
@@ -102,7 +102,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 GTSPRepresentation.InitialRoutes = CreateInitialRout();
             GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             SeqLogger.Indent--;
-            SeqLogger.Info("Model generation finished!", nameof(PointLikeTask));
+            SeqLogger.Debug("Model generation finished!", nameof(PointLikeTask));
         }
 
         protected long[][] CreateInitialRout()
@@ -123,11 +123,24 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             if (result.Count > 0)
             {
                 long[][] initialSolution = new long[1][];
-                initialSolution[0] = new long[result.Count];
-                for (int i = 0; i < result.Count; i++)
+                if (DepotMapper.ORToolsFinishDepot == null)
                 {
-                    initialSolution[0][i] = result[i];
+                    initialSolution[0] = new long[result.Count];
+                    for (int i = 0; i < result.Count; i++)
+                    {
+                        initialSolution[0][i] = result[i];
+                    }
                 }
+                else
+                {
+                    initialSolution[0] = new long[result.Count-1];
+                    for (int i = 0; i < result.Count-1; i++)
+                    {
+                        initialSolution[0][i] = result[i];
+                    }
+                }
+
+                
                 ResolveInitialSolution(initialSolution);
                 return initialSolution;
             }
@@ -418,7 +431,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 result.ResolveHelper[i].Cost = GTSPRepresentation.Matrix[result.PositionResult[i].Node.SequencingID, result.PositionResult[i+1].Node.SequencingID];
                 result.CostSum += result.CostsRaw[i];
             }
-            SeqLogger.Info("Solution resolved!", nameof(PointLikeTask));
+            SeqLogger.Debug("Solution resolved!", nameof(PointLikeTask));
             return result;
         }
 

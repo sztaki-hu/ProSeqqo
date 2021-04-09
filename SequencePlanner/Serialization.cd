@@ -33,7 +33,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAgAggAIgCAAAAAAAAAACIEAAEAAAAAABIAAAAgAA=</HashCode>
+      <HashCode>AAAAgAggAIgCAAAAAAAAAACIECAEAAAAAABIAAAAgAA=</HashCode>
       <FileName>GTSPTask\Serialization\Task\PointLikeTaskSerializationObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -98,15 +98,8 @@
         <Point X="8" Y="6.312" />
       </Path>
     </AssociationLine>
-    <AssociationLine Name="ResourceFunction" Type="SequencePlanner.GTSPTask.Serialization.SerializationObject.ResourceFunctionSerializationObject" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="10.438" Y="6.728" />
-        <Point X="10.438" Y="9.625" />
-        <Point X="8" Y="9.625" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAQAAAAAJIGAAAAAgAAAAAAAACAQAAAAAAAEAACCAQ=</HashCode>
+      <HashCode>AAAQAAAAAJKGAAAAAoAAAAAAAACAQAAAAAAAEAACCAQ=</HashCode>
       <FileName>GTSPTask\Serialization\Task\BaseTaskSerializationObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -219,7 +212,7 @@
   <Class Name="SequencePlanner.GTSPTask.Serialization.Result.TaskResultSerializationObject">
     <Position X="2.5" Y="15.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAACAAAAAAACAAAAABAAAAAAIAAAAIAAAQA=</HashCode>
+      <HashCode>AAABAAAAAAgCAAACgIAAAAAAABiAAAQAIAAAAIAAAAA=</HashCode>
       <FileName>GTSPTask\Serialization\Result\TaskResultSerializationObject.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -241,7 +234,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgCIAAAAAAAAAAAAAAAAIAAAAAIAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAgCAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAA=</HashCode>
       <FileName>GTSPTask\Serialization\Result\PointLikeResultSerializationObject.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -263,7 +256,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAKQAAAACAgCAQAAAAAAAAQAQCAAAAAAAAAAACAABAA=</HashCode>
+      <HashCode>AACAACAAAAgCIQAAAAABAAQAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>GTSPTask\Serialization\Result\LineLikeResultSerializationObject.cs</FileName>
     </TypeIdentifier>
   </Class>

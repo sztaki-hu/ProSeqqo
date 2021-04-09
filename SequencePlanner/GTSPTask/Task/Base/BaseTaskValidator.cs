@@ -16,7 +16,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
 
         public void Validate(BaseTask baseTask)
         {
-            SeqLogger.Info("Validation started!", nameof(BaseTaskValidator));
+            SeqLogger.Debug("Validation started!", nameof(BaseTaskValidator));
             SeqLogger.Indent++;
             CheckTaskType(baseTask);
             if (baseTask.PositionMatrix.DistanceFunction.FunctionName!="MatrixDistance")
@@ -33,7 +33,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             CheckStrictEdgeWeights(baseTask);
             CheckCycle(baseTask);
             SeqLogger.Indent--;
-            SeqLogger.Info("Validation finished!", nameof(BaseTaskValidator));
+            SeqLogger.Debug("Validation finished!", nameof(BaseTaskValidator));
         }
 
         //Q13
@@ -101,13 +101,13 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 if (posList[i].In.Vector.Length != posList[i].Out.Vector.Length)
                     throw new SeqException("Position with UserID: " + posList[i].In.UserID + " has dimension mismatch. Dimension != Position.Vector ("+ task.Dimension + "!=" + posList[i].Out.Vector.Length+")");
             }
-            SeqLogger.Info("PositionList: " + task.PositionMatrix.Positions.Count, nameof(BaseTaskValidator));
+            SeqLogger.Debug("PositionList: " + task.PositionMatrix.Positions.Count, nameof(BaseTaskValidator));
         }
 
         //Q10
         private void CheckLocalSearchStrategy(BaseTask task)
         {
-            SeqLogger.Info("LocalSearchStrategy: " + task.LocalSearchStrategy.ToString(), nameof(BaseTaskValidator));
+            SeqLogger.Debug("LocalSearchStrategy: " + task.LocalSearchStrategy.ToString(), nameof(BaseTaskValidator));
         }
 
         //O9
@@ -121,7 +121,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         //O8
         private void CheckMIPpresolver(BaseTask task)
         {
-            SeqLogger.Info("UseMIPPrecedenceSolver: "+ task.UseMIPprecedenceSolver, nameof(BaseTaskValidator));
+            SeqLogger.Debug("UseMIPPrecedenceSolver: "+ task.UseMIPprecedenceSolver, nameof(BaseTaskValidator));
         }
 
         //O7
@@ -129,12 +129,12 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         {
             if (task.TimeLimit <= 0)
             {
-                SeqLogger.Info("TimeLimit: 0 - Automatic based on solver", nameof(BaseTaskValidator));
+                SeqLogger.Debug("TimeLimit: 0 - Automatic based on solver", nameof(BaseTaskValidator));
                 SeqLogger.Warning("Time limit not given, running can take a long time", nameof(BaseTaskValidator));
             }
 
             if (task.TimeLimit > 0)
-                SeqLogger.Info("TimeLimit: "+task.TimeLimit+"ms - "+ System.TimeSpan.FromMilliseconds(task.TimeLimit).ToString(), nameof(BaseTaskValidator));
+                SeqLogger.Debug("TimeLimit: "+task.TimeLimit+"ms - "+ System.TimeSpan.FromMilliseconds(task.TimeLimit).ToString(), nameof(BaseTaskValidator));
             if(task.LocalSearchStrategy == OR_Tools.LocalSearchStrategyEnum.Metaheuristics.GuidedLocalSearch && task.TimeLimit<=0)
                 throw new SeqException("TimeLimit needed in case of "+ OR_Tools.LocalSearchStrategyEnum.Metaheuristics.GuidedLocalSearch.ToString() + " metaheuristic.");
         }
@@ -154,21 +154,21 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             {
                 if (task.StartDepot is null)
                 {
-                    SeqLogger.Info("StartDepot: -", nameof(BaseTaskValidator));
+                    SeqLogger.Debug("StartDepot: -", nameof(BaseTaskValidator));
                 }
                 else
                 {
                     checkStartDepot = true;
-                    SeqLogger.Info("StartDepot: "+ task.StartDepot.UserID, nameof(BaseTaskValidator));
+                    SeqLogger.Debug("StartDepot: "+ task.StartDepot.UserID, nameof(BaseTaskValidator));
                 }
 
                 if (task.FinishDepot is null)
                 {
-                    SeqLogger.Info("FinshDepot: -", nameof(BaseTaskValidator));
+                    SeqLogger.Debug("FinshDepot: -", nameof(BaseTaskValidator));
                 }
                 else
                 {
-                    SeqLogger.Info("FinshDepot: "+ task.FinishDepot.UserID, nameof(BaseTaskValidator));
+                    SeqLogger.Debug("FinshDepot: "+ task.FinishDepot.UserID, nameof(BaseTaskValidator));
                     checkFinishDepot = true;
                 }
             }
@@ -181,7 +181,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 //StartDepot needed
                 if (task.CyclicSequence && task.StartDepot is null)
                     throw new SeqException("If task is cyclic start depot needed!");
-                //SeqLogger.Info("StartDepot: " + task.StartDepot.UserID, nameof(BaseTaskValidator));
+                //SeqLogger.Debug("StartDepot: " + task.StartDepot.UserID, nameof(BaseTaskValidator));
                 var findStart = false;
                 var findFinish = false;
                 //Positions must contain StartDepot
@@ -204,7 +204,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         {
             if (task.WeightMultipier == 0)
                 throw new SeqException("WeightMultipier should be greater then 0.");
-            SeqLogger.Info("WeightMultipier: " + task.WeightMultipier, nameof(BaseTaskValidator));
+            SeqLogger.Debug("WeightMultipier: " + task.WeightMultipier, nameof(BaseTaskValidator));
         }
 
         //Q4
@@ -225,7 +225,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         {
             if(task.PositionMatrix.DistanceFunction is null)
                 throw new SeqException("Distance function is null.", "Please construct it.");
-            SeqLogger.Info("DistanceFunction:"+ task.PositionMatrix.DistanceFunction.FunctionName, nameof(BaseTaskValidator));
+            SeqLogger.Debug("DistanceFunction:"+ task.PositionMatrix.DistanceFunction.FunctionName, nameof(BaseTaskValidator));
             task.PositionMatrix.DistanceFunction.Validate();
         }
 

@@ -11,7 +11,7 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public double ComputeResourceCost(Position A, Position B, double distance) => distance;
         public void Validate(){
-            SeqLogger.Info("ResourceFunction: " + FunctionName);
+            SeqLogger.Debug("ResourceFunction: " + FunctionName);
         }
         public void ToLog(LogLevel level)
         {

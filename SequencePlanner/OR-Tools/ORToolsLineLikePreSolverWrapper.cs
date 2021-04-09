@@ -117,7 +117,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Info("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsLineLikePreSolverWrapper));
             SeqLogger.Info("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsLineLikePreSolverWrapper));
             SeqLogger.Indent--;
-            SeqLogger.Info("ORTools building finished!", nameof(ORToolsLineLikePreSolverWrapper));
+            SeqLogger.Debug("ORTools building finished!", nameof(ORToolsLineLikePreSolverWrapper));
             return solution;
         }
 

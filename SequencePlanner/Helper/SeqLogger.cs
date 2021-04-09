@@ -10,6 +10,7 @@ namespace SequencePlanner.Helper
         public static int Indent=0;
         private static List<string> backlog = new List<string>();
         public static List<string> Backlog { get { return backlog; } set { backlog = value; } }
+        public static bool UseIndent { get; set; }
 
         public static void Trace(string message, string nameOfClass = null)
         {
@@ -60,10 +61,11 @@ namespace SequencePlanner.Helper
                     case LogLevel.Critical: Console.ForegroundColor = ConsoleColor.DarkRed; break;
                 }
                 var indent = "";
-                for (int i = 0; i < Indent; i++)
-                {
-                    indent += "   ";
-                }
+                if(UseIndent)
+                    for (int i = 0; i < Indent; i++)
+                    {
+                        indent += "   ";
+                    }
                 var log = level.ToString()+":  " + indent;
                 Console.Write(level.ToString()+ ":  " + indent);
                 Console.ForegroundColor = ConsoleColor.White;

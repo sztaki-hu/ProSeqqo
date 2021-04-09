@@ -12,23 +12,23 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
 {
     public class PointLikeTaskSerializationObject : BaseTaskSerializationObject
     {
-        [JsonProperty(Order = 11)]
         public List<ProcessHierarchySerializationObject> ProcessHierarchy { get; set; }
-        [JsonProperty(Order = 12)]
         public List<OrderConstraintSerializationObject> PositionPrecedences { get; set; }
-        [JsonProperty(Order = 13)]
         public List<OrderConstraintSerializationObject> ProcessPrecedences { get; set; }
+        public List<HybridLineSerializationObject> LineList { get; set; }
         public bool UseShortcutInAlternatives { get; set; }
 
         public PointLikeTaskSerializationObject() : base()
         {
         }
+
         public PointLikeTaskSerializationObject(List<string> seqString):base(seqString)
         {
             var tokenizer = new SEQTokenizer();
             tokenizer.Tokenize(seqString);
             FillBySEQTokens(tokenizer);
         }
+
         public PointLikeTaskSerializationObject(PointLikeTask task):base(task)
         {
             TaskType = "PointLike";
@@ -79,24 +79,41 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         {
             var PointLikeTask = new PointLikeTask();
             base.ToBaseTask((BaseTask)PointLikeTask);
+            AddLinesToPositionList(PointLikeTask);
             CreateProcessHierarchy(PointLikeTask);
             CreatePrecedences(PointLikeTask);
             PointLikeTask.UseShortcutInAlternatives = UseShortcutInAlternatives;
             return PointLikeTask;
         }
 
+        private void AddLinesToPositionList(PointLikeTask task)
+        {
+            foreach (var line in LineList)
+            {
+                var l = new Line()
+                {
+                    NodeA = FindPosition(line.PositionIDA, task),
+                    NodeB = FindPosition(line.PositionIDB, task),
+                    UserID = line.LineID,
+                    Name = line.Name,
+                    Bidirectional = line.Bidirectional
+                };
+                task.PositionMatrix.Positions.Add(new GTSPNode(l));
+            }
+        }
+
         private void CreatePrecedences(PointLikeTask pointLikeTask)
         {
             foreach (var posPrec in PositionPrecedences)
             {
-                var before = FindPosition(posPrec.BeforeID, pointLikeTask);
-                var after = FindPosition(posPrec.AfterID, pointLikeTask);
+                var before = FindNode(posPrec.BeforeID, pointLikeTask);
+                var after = FindNode(posPrec.AfterID, pointLikeTask);
                 if (before == null || after == null)
                     throw new SeqException("Phrase error line precedence user id not found!");
                 pointLikeTask.PositionPrecedence.Add(new GTSP.GTSPPrecedenceConstraint()
                 {
-                    Before = before,
-                    After = after
+                    Before = before.Node,
+                    After = after.Node
                 });
             }
 
@@ -153,18 +170,18 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     alter.Tasks.Add(task);
                 }
            
-                Position position = FindPosition(item.PositionID, pointLikeTask);
+                var position = FindNode(item.PositionID, pointLikeTask);
 
                 if (position == null)
                 {
-                    position = new Position()
-                    {
-                        UserID = item.PositionID
-                    };
-                    pointLikeTask.PositionMatrix.Positions.Add(new GTSPNode(position));
+                    //position = new Position()
+                    //{
+                    //    UserID = item.PositionID
+                    //};
+                    //pointLikeTask.PositionMatrix.Positions.Add(new GTSPNode(position));
                     Console.WriteLine("PointLike GTSP builder process hierarchy ID error, this error sholud be caught by validation!");
                 }
-                task.Positions.Add(new GTSPNode(position));
+                task.Positions.Add(position);
             }
         }
 
@@ -175,7 +192,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             ProcessHierarchy = tokenizer.GetProcessHierarchyByHeader("ProcessHierarchy" );
             PositionPrecedences = tokenizer.GetPrecedenceListByHeader("PositionPrecedence" );
             ProcessPrecedences = tokenizer.GetPrecedenceListByHeader("ProcessPrecedence");
+            LineList = tokenizer.GetHybridLineListByHeader("LineList");
         }
+
         public string ToSEQ()
         {
             string seq = "";
@@ -183,6 +202,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             seq+=base.ToSEQShort();
             seq += "UseShortcutInAlternatives: " + UseShortcutInAlternatives + newline;
             seq +=base.ToSEQLong();
+            seq += "LineList:" + newline;
+            foreach (var line in LineList)
+            {
+                seq += line.ToSEQ();
+            }
             seq += "ProcessHierarchy:" + newline;
             foreach (var line in ProcessHierarchy)
             {
@@ -199,7 +223,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             {
                 seq += prec.ToSEQ();
             }
-
             return seq;
         }
 
@@ -252,6 +275,18 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 if (item.Out.UserID == userID)
                 {
                     return item.Out;
+                }
+            }
+            return null;
+        }
+
+        public GTSPNode FindNode(int userID, PointLikeTask task)
+        {
+            foreach (var item in task.PositionMatrix.Positions)
+            {
+                if (item.Node.UserID == userID)
+                {
+                    return item;
                 }
             }
             return null;

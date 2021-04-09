@@ -220,6 +220,46 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
+        public static List<HybridLineSerializationObject> GetHybridLineListByHeader(this SEQTokenizer tokenizer, string header)
+        {
+            try
+            {
+                var lines = new List<HybridLineSerializationObject>();
+                foreach (var token in tokenizer.Tokens)
+                {
+                    if (token.Header.ToUpper().Equals(header.ToUpper()))
+                    {
+                        for (int i = 0; i < token.Lines.Count; i++)
+                        {
+                            string[] line = token.Lines[i].Line.Split(";");
+                            HybridLineSerializationObject lineObj = new HybridLineSerializationObject
+                            {
+                                LineID = Int32.Parse(line[0]),
+                                PositionIDA = Int32.Parse(line[1]),
+                                PositionIDB = Int32.Parse(line[2])
+                            };
+                            if (line.Length >= 4)
+                                lineObj.Name = line[3];
+
+                            if (line.Length >= 5)
+                                lineObj.ResourceID = Int32.Parse(line[4]);
+
+                            if (line.Length >= 6)
+                                lineObj.Bidirectional = Boolean.Parse(line[5]);
+                            lines.Add(lineObj);
+                        }
+                        SeqLogger.Debug(token.Header + ": " + lines.Count + " lines found", nameof(TokenConverter));
+                        return lines;
+                    }
+                }
+                return lines;
+            }
+            catch (Exception e)
+            {
+                throw new SeqException("Can not phrase header " + header, e);
+            }
+        }
+
         public static List<PositionSerializationObject> GetPositionListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
