@@ -6,15 +6,13 @@ using SequencePlanner.GTSPTask.Task.PointLike.ShortCut;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using SequencePlanner.OR_Tools;
-using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace SequencePlanner.GTSPTask.Task.PointLike
 {
     public class PointLikeTask : BaseTask
     {
-        private int MAX_SEQUENCING_ID = 0;
+
         public List<Model.Task> Tasks { get; set; }
         public List<Alternative> Alternatives { get; set; }
         public List<Process> Processes { get; set; }
@@ -36,12 +34,13 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             PositionPrecedence = new List<GTSPPrecedenceConstraint>();
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
             ShortestPathProcessor = null;
-            CalculateWeightFunction = CalculateWeight;
+            CalculateWeightFunction = PositionMatrix.CalculateWeight;
             DepotMapper = new PointDepotMapper();
     }
 
         public PointTaskResult RunModel()
         {
+            SeqLogger.Debug("RunModel started!", nameof(PointLikeTask));
             Timer.Reset();
             Timer.Start();
             if (Validate)
@@ -52,9 +51,20 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 ShortestPathProcessor = new ShortestPathProcessor(this);
                 ShortestPathProcessor.Change();
             }
-            SeqLogger.Debug("RunModel started!", nameof(PointLikeTask));
             SeqLogger.Indent++;
-            GenerateModel();
+            CreateGTSPMatrix();
+            GTSPRepresentation = new PointLikeGTSPRepresentation()
+            {
+                Matrix = PositionMatrix.Matrix,
+                DisjointConstraints = CreateDisjointConstraints(),
+                PrecedenceConstraints = CreatePrecedenceConstraints(),
+                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
+                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
+            };
+            
+            if (UseMIPprecedenceSolver)
+                GTSPRepresentation.InitialRoutes = CreateInitialRout();
+            GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             var orToolsParam = new ORToolsTask()
             {
                 TimeLimit = TimeLimit,
@@ -83,26 +93,6 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             //ToLog(LogLevel.Warning);
             pointResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
             return pointResult;
-        }
-
-        private void GenerateModel()
-        {
-            SeqLogger.Debug("Model generation started!", nameof(PointLikeTask));
-            SeqLogger.Indent++;
-            GTSPRepresentation = new PointLikeGTSPRepresentation()
-            {
-                Matrix = CreateGTSPMatrix(),
-                DisjointConstraints = CreateDisjointConstraints(),
-                PrecedenceConstraints = CreatePrecedenceConstraints(),
-                StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
-                FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
-            };
-            PositionMatrix.Matrix = GTSPRepresentation.Matrix;
-            if (UseMIPprecedenceSolver)
-                GTSPRepresentation.InitialRoutes = CreateInitialRout();
-            GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
-            SeqLogger.Indent--;
-            SeqLogger.Debug("Model generation finished!", nameof(PointLikeTask));
         }
 
         protected long[][] CreateInitialRout()
@@ -139,8 +129,6 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                         initialSolution[0][i] = result[i];
                     }
                 }
-
-                
                 ResolveInitialSolution(initialSolution);
                 return initialSolution;
             }
@@ -291,26 +279,15 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             return DisjointConstraints;
         }
 
-        private double[,] CreateGTSPMatrix()
+        private void CreateGTSPMatrix()
         {
-            foreach (var position in PositionMatrix.Positions)
-            {
-                position.Node.SequencingID = MAX_SEQUENCING_ID++;
-            }
-            double[,] matrix = new double[MAX_SEQUENCING_ID, MAX_SEQUENCING_ID];
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    matrix[i, j] = int.MaxValue / (WeightMultipier * 2);
-                }
-            }
-            matrix = ConnectProcesses(Processes, matrix);
-            matrix = ConnectInAlternatives(matrix);
-            return matrix;
+            PositionMatrix.Init();
+            CalculateWeightFunction = PositionMatrix.CalculateWeight;
+            ConnectProcesses(Processes);
+            ConnectInAlternatives();
         }
 
-        private double[,] ConnectProcesses(List<Process> processes, double[,] matrix)
+        private void ConnectProcesses(List<Process> processes)
         {
             foreach (var proc in Processes)
             {
@@ -326,7 +303,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                                 {
                                     if (alternative.GlobalID != alternative2.GlobalID && alternative2.Tasks.Count > 0)
                                     {
-                                        matrix = ConnectTasks(alternative.Tasks[alternative.Tasks.Count - 1], alternative2.Tasks[0], matrix);
+                                        ConnectTasks(alternative.Tasks[alternative.Tasks.Count - 1], alternative2.Tasks[0]);
                                     }
                                 }
                             }
@@ -334,60 +311,28 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                     }
                 }
             }
-            return matrix;
         }
 
-        private double[,] ConnectInAlternatives(double[,] matrix)
+        private void ConnectInAlternatives()
         {
             foreach (var alternative in Alternatives)
             {
                 for (int i = 0; i < alternative.Tasks.Count - 1; i++)
                 {
-                    ConnectTasks(alternative.Tasks[i], alternative.Tasks[i + 1], matrix);
+                    ConnectTasks(alternative.Tasks[i], alternative.Tasks[i + 1]);
                 }
             }
-            return matrix;
         }
 
-        private double[,] ConnectTasks(Model.Task a, Model.Task b, double[,] matrix)
+        private void ConnectTasks(Model.Task a, Model.Task b)
         {
             foreach (var posA in a.Positions)
             {
                 foreach (var posB in b.Positions)
                 {
-                    matrix[posA.Node.SequencingID, posB.Node.SequencingID] = CalculateWeight(posA, posB);
+                    PositionMatrix.CalculateWeight(posA, posB);
                 }
             }
-            return matrix;
-        }
-
-        
-        private double CalculateWeight(GTSPNode A, GTSPNode B)
-        {
-            //if (A.Node.Virtual || B.Node.Virtual)
-            //    return 0.0;
-            if (A.OverrideWeightOut > 0)
-                return A.OverrideWeightOut;
-            if (B.OverrideWeightIn > 0)
-                return B.OverrideWeightIn;
-            double weight = 0;
-            if (A.Node.Virtual || B.Node.Virtual)
-                weight = 0;
-            else
-            {
-                weight = PositionMatrix.DistanceFunction.ComputeDistance(A.Out, B.In);
-                weight = PositionMatrix.ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
-            }
-            if (A.AdditionalWeightOut > 0)
-                weight += A.AdditionalWeightOut;
-            if (B.AdditionalWeightIn > 0)
-                weight += B.AdditionalWeightIn;
-            return weight;
-        }
-
-        public System.Threading.Tasks.Task<PointTaskResult> RunModelAsync(int taskID, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
         }
 
         public override void ValidateModel()

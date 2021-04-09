@@ -8,6 +8,7 @@ namespace SequencePlanner.Model
 {
     public class PositionMatrix
     {
+        private int MAX_SEQUENCING_ID = 0;
         public List<GTSPNode> Positions { get; set; }
         public double[,] Matrix { get; set; }
         public IDistanceFunction DistanceFunction { get; set; }
@@ -19,7 +20,7 @@ namespace SequencePlanner.Model
             DistanceFunction = distanceFunction;
             ResourceFunction = resourceFunction;
             Validate();
-            UpdateMatrixFromPositions();
+            Init();
         }
 
         public PositionMatrix()
@@ -27,17 +28,50 @@ namespace SequencePlanner.Model
             Positions = new List<GTSPNode>();
         }
 
-        public void UpdateMatrixFromPositions()
-        { 
-            Matrix = new double[Positions.Count, Positions.Count];
-            for (int i = 0; i < Positions.Count; i++)
+        public void Init()
+        {
+            foreach (var position in Positions)
             {
-                for (int j = 0; j < Positions.Count; j++)
+                position.Node.SequencingID = MAX_SEQUENCING_ID++;
+            }
+            Matrix = new double[MAX_SEQUENCING_ID, MAX_SEQUENCING_ID];
+            for (int i = 0; i < Matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < Matrix.GetLength(1); j++)
                 {
-                    Matrix[i, j] = DistanceFunction.ComputeDistance(Positions[i].Out, Positions[j].In);
-                    Matrix[i, j] = ResourceFunction.ComputeResourceCost(Positions[i].Out, Positions[j].In, Matrix[i, j]);
+                    Matrix[i, j] = int.MaxValue / 1000;
                 }
             }
+        }
+
+        public double CalculateWeight(GTSPNode A, GTSPNode B)
+        {
+            //if (A.Node.Virtual || B.Node.Virtual)
+            //    return 0.0;
+            if (A.OverrideWeightOut > 0)
+            {
+                Matrix[A.Node.SequencingID, B.Node.SequencingID] = A.OverrideWeightOut;
+                return A.OverrideWeightOut;
+            }
+            if (B.OverrideWeightIn > 0)
+            {
+                Matrix[A.Node.SequencingID, B.Node.SequencingID] = B.OverrideWeightOut;
+                return B.OverrideWeightOut;
+            }
+            double weight = 0;
+            if (A.Node.Virtual || B.Node.Virtual)
+                weight = 0;
+            else
+            {
+                weight = DistanceFunction.ComputeDistance(A.Out, B.In);
+                weight = ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
+            }
+            if (A.AdditionalWeightOut > 0)
+                weight += A.AdditionalWeightOut;
+            if (B.AdditionalWeightIn > 0)
+                weight += B.AdditionalWeightIn;
+            Matrix[A.Node.SequencingID, B.Node.SequencingID] = weight;
+            return weight;
         }
 
         public void Validate()
