@@ -36,6 +36,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             ProcessHierarchy = new List<ProcessHierarchySerializationObject>();
             PositionPrecedences = new List<OrderConstraintSerializationObject>();
             ProcessPrecedences = new List<OrderConstraintSerializationObject>();
+            LineList = new List<HybridLineSerializationObject>();
             foreach (var proc in task.Processes)
             {
                 foreach (var alternative in proc.Alternatives)
