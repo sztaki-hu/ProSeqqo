@@ -7,21 +7,21 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
-    public class PointLikeResultSerializationObject: TaskResultSerializationObject
+    public class GeneralResultSerializationObject: TaskResultSerializationObject
     {
         public List<GTSPNode> PositionResult { get; set; }
 
-        public PointLikeResultSerializationObject() : base()
+        public GeneralResultSerializationObject() : base()
         {
             PositionResult = new List<GTSPNode>();
         }
 
-        public PointLikeResultSerializationObject(PointTaskResult result): base(result)
+        public GeneralResultSerializationObject(GeneralTaskResult result): base(result)
         {
             PositionResult = result.PositionResult;
         }
 
-        public PointLikeResultSerializationObject(List<string> seqString) : base(seqString)
+        public GeneralResultSerializationObject(List<string> seqString) : base(seqString)
         {
             var tokenizer = new SEQTokenizer();
             tokenizer.Tokenize(seqString);
@@ -33,10 +33,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             throw new NotImplementedException();
         }
 
-        public PointTaskResult ToPointLikeResult()
+        public GeneralTaskResult ToGeneralResult()
         {
-            var result = new PointTaskResult();
-            result = (PointTaskResult)base.ToTaskResult(result);
+            var result = new GeneralTaskResult();
+            result = (GeneralTaskResult)base.ToTaskResult(result);
             result.PositionResult = PositionResult;
             return result;
         }

@@ -59,7 +59,7 @@ namespace SequencerTest.Units.Model
             var alternative = new AlternativeShortcut();
             alternative.CreateShortcut(distanceFunction, noResource);
             alternative.FindPrecedenceHeaderOfPositions(new SequencePlanner.GTSP.GTSPPrecedenceConstraint(TestObjects.GetPosA().In, TestObjects.GetPosB().In));
-            PointTaskResult pointTaskResult = new PointTaskResult();
+            GeneralTaskResult pointTaskResult = new GeneralTaskResult();
             alternative.ResolveSolution(pointTaskResult);
             alternative.Assimilate(new Alternative());
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Task.PointLike
 {
-    public class PointLikeGTSPRepresentation : IGTSPRepresentation
+    public class GeneralGTSPRepresentation : IGTSPRepresentation
     {
         public List<GTSPPrecedenceConstraint> PrecedenceConstraints  { get;  set; }
         public List<GTSPDisjointConstraint> DisjointConstraints  { get;  set; }

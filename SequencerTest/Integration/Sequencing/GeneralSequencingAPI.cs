@@ -7,7 +7,7 @@ using System.Text;
 namespace SequencerTest.Integration.Sequencing
 {
     [TestClass]
-    public class PointLikeSequencingAPI
+    public class GeneralSequencingAPI
     {
         [TestInitialize()]
         public void Initialize()

@@ -6,14 +6,14 @@ using System;
 namespace SequencerTest.Units.Serialization.Result
 {
     [TestClass]
-    public class PointLikeResultSerializationObjectTest
+    public class GeneralResultSerializationObjectTest
     {
-        private PointLikeResultSerializationObject result;
+        private GeneralResultSerializationObject result;
 
         [TestInitialize()]
         public void Initialize()
         {
-            result = new PointLikeResultSerializationObject();
+            result = new GeneralResultSerializationObject();
             result.SolutionRaw.Add(0);
             result.CostsRaw.Add(1);
             result.CostSum = 2;
@@ -47,8 +47,8 @@ namespace SequencerTest.Units.Serialization.Result
         [TestMethod]
         public void EmptyCalls()
         {
-            var result = new PointLikeResultSerializationObject();
-            result.ToPointLikeResult();
+            var result = new GeneralResultSerializationObject();
+            result.ToGeneralResult();
             result.ToSEQ();
             result.ToString();
         }
@@ -56,7 +56,7 @@ namespace SequencerTest.Units.Serialization.Result
         [TestMethod]
         public void FilledCalls()
         {
-            result.ToPointLikeResult();
+            result.ToGeneralResult();
             result.ToSEQ();
             result.ToString();
         }

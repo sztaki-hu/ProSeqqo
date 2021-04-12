@@ -1,4 +1,4 @@
-TaskType: PointLike
+TaskType: General
 Dimension: 2
 CyclicSequence: True
 StartDepot: 0

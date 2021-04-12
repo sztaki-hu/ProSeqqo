@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SequencePlanner.Helper
 {
-    public class PointDepotMapper : IDepotMapper
+    public class GeneralDepotMapper : IDepotMapper
     {
         private Position StartDepot { get; set; }
         private Position FinishDepot { get; set; }
@@ -56,9 +56,9 @@ namespace SequencePlanner.Helper
             switch (DepotChangeType)
             {
                 case DepotChangeType.CyclicStartDepot: CyclicStartDepotReverse(); break;
-                case DepotChangeType.NotCyclicNoDepot: NotCyclicNoDepotReverse((PointLikeTask)task); break;
-                case DepotChangeType.NotCyclicOnlyStartDepot: NotCyclicOnlyStartDepotReverse((PointLikeTask)task); break;
-                case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepotReverse((PointLikeTask)task); break;
+                case DepotChangeType.NotCyclicNoDepot: NotCyclicNoDepotReverse((GeneralTask)task); break;
+                case DepotChangeType.NotCyclicOnlyStartDepot: NotCyclicOnlyStartDepotReverse((GeneralTask)task); break;
+                case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepotReverse((GeneralTask)task); break;
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepotReverse(); break;
             }
         }
@@ -84,16 +84,16 @@ namespace SequencePlanner.Helper
 
         private void NotCyclicNoDepot()
         {
-            ORToolsStartDepot = CreateVirtualNode((PointLikeTask)Task, "VirtualStartAndFinish");
+            ORToolsStartDepot = CreateVirtualNode((GeneralTask)Task, "VirtualStartAndFinish");
         }
         private void NotCyclicOnlyStartDepot()
         {
             ORToolsStartDepot = StartDepot;
-            ORToolsFinishDepot = CreateVirtualNode((PointLikeTask)Task, "VirtualFinish"); ;
+            ORToolsFinishDepot = CreateVirtualNode((GeneralTask)Task, "VirtualFinish"); ;
         }
         private void NotCyclicOnlyFinishDepot()
         {
-            ORToolsStartDepot = CreateVirtualNode((PointLikeTask)Task, "VirtualStart");
+            ORToolsStartDepot = CreateVirtualNode((GeneralTask)Task, "VirtualStart");
             ORToolsFinishDepot = StartDepot;
         }
         private void NotCyclicStartFinishDepot()
@@ -107,15 +107,15 @@ namespace SequencePlanner.Helper
         {
         }
 
-        private void NotCyclicNoDepotReverse(PointLikeTask task)
+        private void NotCyclicNoDepotReverse(GeneralTask task)
         {
             DeleteVirualNode(task);
         }
-        private void NotCyclicOnlyStartDepotReverse(PointLikeTask task)
+        private void NotCyclicOnlyStartDepotReverse(GeneralTask task)
         {
             DeleteVirualNode(task);
         }
-        private void NotCyclicOnlyFinishDepotReverse(PointLikeTask task)
+        private void NotCyclicOnlyFinishDepotReverse(GeneralTask task)
         {
             DeleteVirualNode(task);
         }
@@ -161,7 +161,7 @@ namespace SequencePlanner.Helper
         private Alternative Alternative;
         private Process Process;
         
-        private Position CreateVirtualNode(PointLikeTask task,string name)
+        private Position CreateVirtualNode(GeneralTask task,string name)
         {
             Position = new Position()
             {
@@ -202,7 +202,7 @@ namespace SequencePlanner.Helper
             return Position;
         }
 
-        private void DeleteVirualNode(PointLikeTask task)
+        private void DeleteVirualNode(GeneralTask task)
         {
             task.Processes.Remove(Process);
             task.Alternatives.Remove(Alternative);

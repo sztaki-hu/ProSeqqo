@@ -6,7 +6,7 @@ using System;
 namespace SequencerTest.Integration.Sequencing
 {
     [TestClass]
-    public class PointLikeSequencingSEQ
+    public class GeneralSequencingSEQ
     {
         [TestInitialize()]
         public void Initialize()
@@ -17,11 +17,11 @@ namespace SequencerTest.Integration.Sequencing
         [TestMethod]
         public void Test1()
         {
-            PointLikeTaskSerializer seq = new PointLikeTaskSerializer();
-            PointLikeTask task = seq.ImportSEQ("Resources/PickAndPlace_Matrix.txt");
+            GeneralTaskSerializer seq = new GeneralTaskSerializer();
+            GeneralTask task = seq.ImportSEQ("Resources/PickAndPlace_Matrix.txt");
             task.ValidateModel();
             var result = task.RunModel();
-            seq = new PointLikeTaskSerializer();
+            seq = new GeneralTaskSerializer();
             seq.ExportSEQ(task, "Resources/Export/PickAndPlace_Matrix.txt");
             Console.WriteLine(result);
 
@@ -30,10 +30,10 @@ namespace SequencerTest.Integration.Sequencing
         [TestMethod]
         public void Test2()
         {
-            PointLikeTaskSerializer seq = new PointLikeTaskSerializer();
-            PointLikeTask task = seq.ImportSEQ("Resources/Kocka.txt");
+            GeneralTaskSerializer seq = new GeneralTaskSerializer();
+            GeneralTask task = seq.ImportSEQ("Resources/Kocka.txt");
             var result = task.RunModel();
-            seq = new PointLikeTaskSerializer();
+            seq = new GeneralTaskSerializer();
             seq.ExportSEQ(task, "Resources/Export/Kocka.txt");
             Console.WriteLine(result);
         }

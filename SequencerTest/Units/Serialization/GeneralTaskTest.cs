@@ -11,7 +11,7 @@ using SequencePlanner.GTSPTask.Serialization.Task;
 namespace SequencerTest.Units
 {
     [TestClass]
-    public class PointLikeTaskTest
+    public class GeneralTaskTest
     {
         GTSPNode A;
         GTSPNode B;
@@ -101,7 +101,7 @@ namespace SequencerTest.Units
         [TestMethod]
         public void GetterSetter()
         {
-            PointLikeTask task = new PointLikeTask()
+            GeneralTask task = new GeneralTask()
             {
                 Dimension = 3,
                 TimeLimit =5,
@@ -134,7 +134,7 @@ namespace SequencerTest.Units
         [TestMethod]
         private void ImportExportJSONTest()
         {
-            PointLikeTask task = new PointLikeTask()
+            GeneralTask task = new GeneralTask()
             {
                 Dimension = 3,
                 TimeLimit = 5,
@@ -150,9 +150,9 @@ namespace SequencerTest.Units
                 ProcessPrecedence = processPrecedences,
             };
 
-            var serializer = new PointLikeTaskSerializer();
+            var serializer = new GeneralTaskSerializer();
             serializer.ExportJSON(task, "Resources/Example/Export/exportPL.json");
-            serializer = new PointLikeTaskSerializer();
+            serializer = new GeneralTaskSerializer();
             serializer.ImportJSON("Resources/Example/Export/exportPL.json");
 
             Assert.AreEqual(3, task.Dimension);
@@ -172,7 +172,7 @@ namespace SequencerTest.Units
         [TestMethod]
         private void ImportExportXMLTest()
         {
-            PointLikeTask task = new PointLikeTask()
+            GeneralTask task = new GeneralTask()
             {
                 Dimension = 3,
                 TimeLimit = 5,
@@ -188,9 +188,9 @@ namespace SequencerTest.Units
                 ProcessPrecedence = processPrecedences,
             };
 
-            var serializer = new PointLikeTaskSerializer();
+            var serializer = new GeneralTaskSerializer();
             serializer.ExportXML(task, "Resources/Example/Export/exportPL.xml");
-            serializer = new PointLikeTaskSerializer();
+            serializer = new GeneralTaskSerializer();
             serializer.ImportXML("Resources/Example/Export/exportPL.xml");
 
             Assert.AreEqual(3, task.Dimension);
@@ -210,7 +210,7 @@ namespace SequencerTest.Units
         [TestMethod]
         private void ImportExportSEQTest()
         {
-            PointLikeTask task = new PointLikeTask()
+            GeneralTask task = new GeneralTask()
             {
                 Dimension = 3,
                 TimeLimit = 5,
@@ -226,9 +226,9 @@ namespace SequencerTest.Units
                 ProcessPrecedence = processPrecedences,
             };
 
-            var serializer = new PointLikeTaskSerializer();
+            var serializer = new GeneralTaskSerializer();
             serializer.ExportSEQ(task, "Resources/Example/Export/exportPL.seq");
-            serializer = new PointLikeTaskSerializer();
+            serializer = new GeneralTaskSerializer();
             serializer.ImportSEQ("Resources/Example/Export/exportPL.seq");
 
             Assert.AreEqual(3, task.Dimension);

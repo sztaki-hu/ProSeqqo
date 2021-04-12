@@ -7,7 +7,7 @@ using System.Text;
 namespace SequencerTest.Integration.Sequencing
 {
     [TestClass]
-    public class PointLikeSequencingJSON
+    public class GeneralSequencingXML
     {
         [TestInitialize()]
         public void Initialize()

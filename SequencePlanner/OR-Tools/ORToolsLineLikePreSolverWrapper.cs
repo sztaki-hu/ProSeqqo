@@ -42,8 +42,8 @@ namespace SequencePlanner.OR_Tools
             }
             AddDisjointConstraints(solver, parameters.DisjointConstraints)    ;                                                      //Add disjoint sets of alternative nodes
             AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                                 //Add order precedences, node1 should be before node2 in the solution if both are selected
-            SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsPointLikePreSolverWrapper));
-            SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Info("Number of variables = " + solver.NumVariables(), nameof(ORToolsGeneralPreSolverWrapper));
+            SeqLogger.Info("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsGeneralPreSolverWrapper));
 
             // Solve
             Solver.ResultStatus resultStatus = RunSolver(solver);
@@ -55,30 +55,30 @@ namespace SequencePlanner.OR_Tools
         private Solver.ResultStatus RunSolver(Solver solver)
         {
             //Solve            
-            SeqLogger.Info("Solver running!", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Info("Solver running!", nameof(ORToolsGeneralPreSolverWrapper));
             Solver.ResultStatus resultStatus = solver.Solve();
-            SeqLogger.Info("Solver finished!", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Info("Solver finished!", nameof(ORToolsGeneralPreSolverWrapper));
             return resultStatus;
         }
 
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
         {
-            SeqLogger.Trace("Precedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            SeqLogger.Trace("Precedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.OrderPrecedenceConstraints)
             {
                 solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID] );
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsGeneralPreSolverWrapper));
             }
             SeqLogger.Indent--;
         }
 
         private void AddDisjointConstraints(Solver solver, List<GTSPDisjointConstraint> disjointConstraints)
         {
-            SeqLogger.Trace("DisjointSets: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            SeqLogger.Trace("DisjointSets: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.DisjointConstraints)
             {
                 solver.Add(CreateDisjointConstraint(item, x));
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsGeneralPreSolverWrapper));
             }
             SeqLogger.Indent--;
         }

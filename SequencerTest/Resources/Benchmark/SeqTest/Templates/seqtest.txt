@@ -1,4 +1,4 @@
-TaskType: PointLike
+TaskType: General
 Dimension: 6
 DistanceFunction: TrapezoidTime
 TrapezoidSpeed: [0.266667;0.266667;0.266667;0.266667;0.266667;0.266667]

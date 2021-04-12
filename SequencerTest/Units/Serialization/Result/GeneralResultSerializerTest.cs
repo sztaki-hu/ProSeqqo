@@ -10,16 +10,16 @@ namespace SequencerTest.Units.Serialization.Result
 {
 
     [TestClass]
-    public class PointLikeResultSerializerTest
+    public class GeneralResultSerializerTest
     {
-        PointLikeResultSerializer serializer;
-        PointTaskResult result;
+        GeneralResultSerializer serializer;
+        GeneralTaskResult result;
 
         [TestInitialize()]
         public void Initialize()
         {
-            serializer = new PointLikeResultSerializer();
-            result = new PointTaskResult();
+            serializer = new GeneralResultSerializer();
+            result = new GeneralTaskResult();
         }
 
         [TestMethod]

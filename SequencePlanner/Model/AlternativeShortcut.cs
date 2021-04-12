@@ -114,7 +114,7 @@ namespace SequencePlanner.Model
             return newPrecedences;
         }
 
-        public PointTaskResult ResolveSolution(PointTaskResult taskResult)
+        public GeneralTaskResult ResolveSolution(GeneralTaskResult taskResult)
         {
             foreach (var path in CriticalPaths)
             {

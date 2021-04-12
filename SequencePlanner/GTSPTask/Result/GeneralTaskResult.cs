@@ -6,18 +6,18 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Result
 {
-    public class PointTaskResult : TaskResult
+    public class GeneralTaskResult : TaskResult
     {
         public List<GTSPNode> PositionResult { get; set; }
         public List<ResolveStruct> ResolveHelper { get; set; }
 
-        public PointTaskResult(TaskResult baseTask) : base(baseTask)
+        public GeneralTaskResult(TaskResult baseTask) : base(baseTask)
         {
             PositionResult = new List<GTSPNode>();
             ResolveHelper = new List<ResolveStruct>();
         }
 
-        public PointTaskResult()
+        public GeneralTaskResult()
         {
             PositionResult = new List<GTSPNode>();
             ResolveHelper = new List<ResolveStruct>();
@@ -60,7 +60,7 @@ namespace SequencePlanner.GTSPTask.Result
             }
         }
 
-        public void ResolveCosts(PointLikeTask.CalculateWeightDelegate calculateWeightFunction)
+        public void ResolveCosts(GeneralTask.CalculateWeightDelegate calculateWeightFunction)
         {
             CostsRaw = new List<double>();
             CostSum = 0;

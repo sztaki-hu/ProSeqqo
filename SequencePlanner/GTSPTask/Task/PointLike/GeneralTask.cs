@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Task.PointLike
 {
-    public class PointLikeTask : BaseTask
+    public class GeneralTask : BaseTask
     {
 
         public List<Model.Task> Tasks { get; set; }
@@ -19,14 +19,14 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         public List<GTSPPrecedenceConstraint> PositionPrecedence { get; set; }
         public List<GTSPPrecedenceConstraint> ProcessPrecedence { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
-        public PointLikeGTSPRepresentation GTSPRepresentation { get; set; }
+        public GeneralGTSPRepresentation GTSPRepresentation { get; set; }
         public ShortestPathProcessor ShortestPathProcessor { get; set; }
         public bool UseShortcutInAlternatives { get; set; }
         public delegate double CalculateWeightDelegate(GTSPNode A, GTSPNode B);
         public CalculateWeightDelegate CalculateWeightFunction { get; set; }
 
 
-        public PointLikeTask() : base()
+        public GeneralTask() : base()
         {
             Tasks = new List<Model.Task>();
             Alternatives = new List<Alternative>();
@@ -35,12 +35,12 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
             ShortestPathProcessor = null;
             CalculateWeightFunction = PositionMatrix.CalculateWeight;
-            DepotMapper = new PointDepotMapper();
+            DepotMapper = new GeneralDepotMapper();
     }
 
-        public PointTaskResult RunModel()
+        public GeneralTaskResult RunModel()
         {
-            SeqLogger.Debug("RunModel started!", nameof(PointLikeTask));
+            SeqLogger.Debug("RunModel started!", nameof(GeneralTask));
             Timer.Reset();
             Timer.Start();
             AddBidirectionals();
@@ -54,7 +54,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             }
             SeqLogger.Indent++;
             CreateGTSPMatrix();
-            GTSPRepresentation = new PointLikeGTSPRepresentation()
+            GTSPRepresentation = new GeneralGTSPRepresentation()
             {
                 Matrix = PositionMatrix.Matrix,
                 DisjointConstraints = CreateDisjointConstraints(),
@@ -75,7 +75,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             ToLog(LogLevel.Debug);
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
-            PointTaskResult pointResult = new PointTaskResult(orTools.Solve());
+            GeneralTaskResult pointResult = new GeneralTaskResult(orTools.Solve());
             pointResult.CreateRawGeneralIDStruct();
             pointResult = ResolveSolution(pointResult);
             if (UseShortcutInAlternatives)
@@ -83,11 +83,11 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 pointResult = ShortestPathProcessor.ResolveSolution(pointResult, CalculateWeightFunction);
                 ShortestPathProcessor.ChangeBack();
             }
-            pointResult = (PointTaskResult)DepotMapper.ResolveSolution(pointResult);
+            pointResult = (GeneralTaskResult)DepotMapper.ResolveSolution(pointResult);
             DepotMapper.ReverseMap(this);
 
             SeqLogger.Indent--;
-            SeqLogger.Debug("RunModel finished!", nameof(PointLikeTask));
+            SeqLogger.Debug("RunModel finished!", nameof(GeneralTask));
             Timer.Stop();
             pointResult.FullTime = Timer.Elapsed;
             pointResult.ToLog(LogLevel.Info);
@@ -98,7 +98,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         protected long[][] CreateInitialRout()
         {
-            var ORPreSolver = new ORToolsPointLikePreSolverWrapper(new ORToolsPointLikePreSolverTask()
+            var ORPreSolver = new ORToolsGeneralPreSolverWrapper(new ORToolsGeneralPreSolverTask()
             {
                 NumberOfNodes = PositionMatrix.Positions.Count,
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
@@ -139,7 +139,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
         private void ResolveInitialSolution(long[][] initialSolution)
         {
             var InitialSolurionUserIDs = "";
-            PointTaskResult pointTaskResult = new PointTaskResult();
+            GeneralTaskResult pointTaskResult = new GeneralTaskResult();
             foreach (var solutionItem in initialSolution[0])
             {
                 foreach (var pos in PositionMatrix.Positions)
@@ -361,11 +361,11 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
 
         public override void ValidateModel()
         {
-            var validator = new PointLikeTaskValidator();
+            var validator = new GeneralTaskValidator();
             validator.Validate(this);
         }
 
-        private PointTaskResult ResolveSolution(PointTaskResult result)
+        private GeneralTaskResult ResolveSolution(GeneralTaskResult result)
         {
             //result.ToLog(LogLevel.Error);
             result.Log = SeqLogger.Backlog;
@@ -400,7 +400,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 result.ResolveHelper[i].Cost = GTSPRepresentation.Matrix[result.PositionResult[i].Node.SequencingID, result.PositionResult[i+1].Node.SequencingID];
                 result.CostSum += result.CostsRaw[i];
             }
-            SeqLogger.Debug("Solution resolved!", nameof(PointLikeTask));
+            SeqLogger.Debug("Solution resolved!", nameof(GeneralTask));
             return result;
         }
 
@@ -461,19 +461,19 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             SeqLogger.Indent++;
             foreach (var process in Processes)
             {
-                SeqLogger.WriteLog(level, process.ToString(), nameof(PointLikeTask));
+                SeqLogger.WriteLog(level, process.ToString(), nameof(GeneralTask));
                 SeqLogger.Indent++;
                 foreach (var alternative in process.Alternatives)
                 {
-                    SeqLogger.WriteLog(level, alternative.ToString(), nameof(PointLikeTask));
+                    SeqLogger.WriteLog(level, alternative.ToString(), nameof(GeneralTask));
                     SeqLogger.Indent++;
                     foreach (var task in alternative.Tasks)
                     {
-                        SeqLogger.WriteLog(level, task.ToString(), nameof(PointLikeTask));
+                        SeqLogger.WriteLog(level, task.ToString(), nameof(GeneralTask));
                         SeqLogger.Indent++;
                         foreach (var position in task.Positions)
                         {
-                            SeqLogger.WriteLog(level, position.ToString(), nameof(PointLikeTask));
+                            SeqLogger.WriteLog(level, position.ToString(), nameof(GeneralTask));
 
                         }
                         SeqLogger.Indent--;
@@ -490,7 +490,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 SeqLogger.Indent++;
                 foreach (var prec in ProcessPrecedence)
                 {
-                    SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                    SeqLogger.WriteLog(level, prec.ToString(), nameof(GeneralTask));
                 }
                 SeqLogger.Indent--;
             }
@@ -501,7 +501,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 SeqLogger.Indent++;
                 foreach (var prec in PositionPrecedence)
                 {
-                    SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                    SeqLogger.WriteLog(level, prec.ToString(), nameof(GeneralTask));
                 }
                 SeqLogger.Indent--;
             }
@@ -512,7 +512,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
                 SeqLogger.Indent++;
                 foreach (var prec in DisjointConstraints)
                 {
-                    SeqLogger.WriteLog(level, prec.ToString(), nameof(PointLikeTask));
+                    SeqLogger.WriteLog(level, prec.ToString(), nameof(GeneralTask));
                 }
                 SeqLogger.Indent--;
             }

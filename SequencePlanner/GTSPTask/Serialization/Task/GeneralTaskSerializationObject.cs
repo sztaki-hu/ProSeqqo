@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {
-    public class PointLikeTaskSerializationObject : BaseTaskSerializationObject
+    public class GeneralTaskSerializationObject : BaseTaskSerializationObject
     {
         public List<ProcessHierarchySerializationObject> ProcessHierarchy { get; set; }
         public List<OrderConstraintSerializationObject> PositionPrecedences { get; set; }
@@ -18,20 +18,20 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public List<HybridLineSerializationObject> LineList { get; set; }
         public bool UseShortcutInAlternatives { get; set; }
 
-        public PointLikeTaskSerializationObject() : base()
+        public GeneralTaskSerializationObject() : base()
         {
         }
 
-        public PointLikeTaskSerializationObject(List<string> seqString):base(seqString)
+        public GeneralTaskSerializationObject(List<string> seqString):base(seqString)
         {
             var tokenizer = new SEQTokenizer();
             tokenizer.Tokenize(seqString);
             FillBySEQTokens(tokenizer);
         }
 
-        public PointLikeTaskSerializationObject(PointLikeTask task):base(task)
+        public GeneralTaskSerializationObject(GeneralTask task):base(task)
         {
-            TaskType = "PointLike";
+            TaskType = "General";
             UseShortcutInAlternatives = task.UseShortcutInAlternatives;
             ProcessHierarchy = new List<ProcessHierarchySerializationObject>();
             PositionPrecedences = new List<OrderConstraintSerializationObject>();
@@ -76,9 +76,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
         }
 
-        public PointLikeTask ToPointLikeTask()
+        public GeneralTask ToGeneralTask()
         {
-            var PointLikeTask = new PointLikeTask();
+            var PointLikeTask = new GeneralTask();
             base.ToBaseTask((BaseTask)PointLikeTask);
             AddLinesToPositionList(PointLikeTask);
             CreateProcessHierarchy(PointLikeTask);
@@ -87,7 +87,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             return PointLikeTask;
         }
 
-        private void AddLinesToPositionList(PointLikeTask task)
+        private void AddLinesToPositionList(GeneralTask task)
         {
             foreach (var line in LineList)
             {
@@ -103,7 +103,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
         }
 
-        private void CreatePrecedences(PointLikeTask pointLikeTask)
+        private void CreatePrecedences(GeneralTask pointLikeTask)
         {
             foreach (var posPrec in PositionPrecedences)
             {
@@ -132,7 +132,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
         }
 
-        private void CreateProcessHierarchy(PointLikeTask pointLikeTask)
+        private void CreateProcessHierarchy(GeneralTask pointLikeTask)
         {
             foreach (var item in ProcessHierarchy)
             {
@@ -227,7 +227,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             return seq;
         }
 
-        public Process FindProcess(int userID, PointLikeTask task)
+        public Process FindProcess(int userID, GeneralTask task)
         {
             foreach (var item in task.Processes)
             {
@@ -239,7 +239,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             return null;
         }
 
-        public Alternative FindAlternative(int userID, PointLikeTask task, Process process)
+        public Alternative FindAlternative(int userID, GeneralTask task, Process process)
         {
             if (process != null)
             {
@@ -252,7 +252,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             return null;
         }
 
-        public Model.Task FindTask(int userID, PointLikeTask task, Alternative alternative)
+        public Model.Task FindTask(int userID, GeneralTask task, Alternative alternative)
         {
             if (alternative != null)
             {
@@ -265,7 +265,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             return null;
         }
 
-        public Position FindPosition(int userID, PointLikeTask task)
+        public Position FindPosition(int userID, GeneralTask task)
         {
             foreach (var item in task.PositionMatrix.Positions)
             {
@@ -281,7 +281,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             return null;
         }
 
-        public GTSPNode FindNode(int userID, PointLikeTask task)
+        public GTSPNode FindNode(int userID, GeneralTask task)
         {
             foreach (var item in task.PositionMatrix.Positions)
             {

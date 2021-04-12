@@ -8,10 +8,10 @@ using System.Linq;
 
 namespace SequencePlanner.OR_Tools
 {
-    public class ORToolsPointLikePreSolverWrapper
+    public class ORToolsGeneralPreSolverWrapper
     {
         public TimeSpan RunTime { get; private set; }
-        private readonly ORToolsPointLikePreSolverTask parameters;
+        private readonly ORToolsGeneralPreSolverTask parameters;
         private Stopwatch timer;
         private Variable[] x;                 
         private Variable[] position; 
@@ -20,7 +20,7 @@ namespace SequencePlanner.OR_Tools
 
         private List<string> constraints =  new List<string>(); //DEBUG
 
-        public ORToolsPointLikePreSolverWrapper(ORToolsPointLikePreSolverTask parameters)
+        public ORToolsGeneralPreSolverWrapper(ORToolsGeneralPreSolverTask parameters)
         {
             this.parameters = parameters;
             timer = new Stopwatch();
@@ -56,8 +56,8 @@ namespace SequencePlanner.OR_Tools
             //{
             //    SeqLogger.Critical(item);
             //}
-            SeqLogger.Debug("Number of variables = " + solver.NumVariables(), nameof(ORToolsPointLikePreSolverWrapper));
-            SeqLogger.Debug("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("Number of variables = " + solver.NumVariables(), nameof(ORToolsGeneralPreSolverWrapper));
+            SeqLogger.Debug("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsGeneralPreSolverWrapper));
 
             // Solve
             Solver.ResultStatus resultStatus = RunSolver(solver);
@@ -68,9 +68,9 @@ namespace SequencePlanner.OR_Tools
         private Solver.ResultStatus RunSolver(Solver solver)
         {
             //Solve            
-            SeqLogger.Info("Solver running!", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Info("Solver running!", nameof(ORToolsGeneralPreSolverWrapper));
             Solver.ResultStatus resultStatus = solver.Solve();
-            SeqLogger.Debug("Solver finished!", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("Solver finished!", nameof(ORToolsGeneralPreSolverWrapper));
             return resultStatus;
         }
         
@@ -99,29 +99,29 @@ namespace SequencePlanner.OR_Tools
 
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
         {
-            SeqLogger.Trace("Precedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            SeqLogger.Trace("Precedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.OrderPrecedenceConstraints)
             {
                 solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID]+parameters.DisjointConstraints.Count*(2-x[item.Before.SequencingID]-x[item.After.SequencingID]));
                 //solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID]+9*(2-x[item.Before.SequencingID]-x[item.After.SequencingID]));
                 constraints.Add((position[item.Before.SequencingID] + 1 <= position[item.After.SequencingID] + parameters.DisjointConstraints.Count * (2 - x[item.Before.SequencingID] - x[item.After.SequencingID])).ToString());
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsGeneralPreSolverWrapper));
             }
             SeqLogger.Indent--;
         }        
         private void AddStrictPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraintList> precedenceHierarchy)
         {
-            SeqLogger.Trace("StrictPrecedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            SeqLogger.Trace("StrictPrecedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in precedenceHierarchy)
             {
                 solver.Add(CreateStrictOrderPrecedence(item.Before, item.After));
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsGeneralPreSolverWrapper));
             }
             SeqLogger.Indent--;
         }
         private void AddStrictOrderPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraintList> strictOrderPrecedenceHierarchy)
         {
-            SeqLogger.Trace("StrictOrderPrecedences: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            SeqLogger.Trace("StrictOrderPrecedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in strictOrderPrecedenceHierarchy)
             {
                 foreach (var b in item.Before)
@@ -130,7 +130,7 @@ namespace SequencePlanner.OR_Tools
                     {
                         solver.Add(position[b.SequencingID]+1 == position[a.SequencingID]);
                         constraints.Add((position[b.SequencingID] + 1 == position[a.SequencingID]).ToString());
-                        SeqLogger.Trace(new GTSPPrecedenceConstraint(b,a).ToString(), nameof(ORToolsPointLikePreSolverWrapper));
+                        SeqLogger.Trace(new GTSPPrecedenceConstraint(b,a).ToString(), nameof(ORToolsGeneralPreSolverWrapper));
                     }
                 }     
             }
@@ -138,11 +138,11 @@ namespace SequencePlanner.OR_Tools
         }
         private void AddDisjointConstraints(Solver solver, List<GTSPDisjointConstraint> disjointConstraints)
         {
-            SeqLogger.Trace("DisjointSets: ", nameof(ORToolsPointLikePreSolverWrapper)); SeqLogger.Indent++;
+            SeqLogger.Trace("DisjointSets: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.DisjointConstraints)
             {
                 solver.Add(CreateDisjointConstraint(item));
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsPointLikePreSolverWrapper));
+                SeqLogger.Trace(item.ToString(), nameof(ORToolsGeneralPreSolverWrapper));
             }
             SeqLogger.Indent--;
         }
@@ -215,21 +215,21 @@ namespace SequencePlanner.OR_Tools
                 for (int p = 0; p < parameters.NumberOfNodes; p++)                                           //Trace the selected nodes
                 {
                     if (x[p].SolutionValue() == 1)
-                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + this.position[p].SolutionValue() + ", Alternative = " + this.alternativeID[p] + ", Process = " + this.processID[p], nameof(OR_Tools.ORToolsPointLikePreSolverWrapper));
+                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + this.position[p].SolutionValue() + ", Alternative = " + this.alternativeID[p] + ", Process = " + this.processID[p], nameof(OR_Tools.ORToolsGeneralPreSolverWrapper));
                 }   
-                SeqLogger.Info(solutionString, nameof(ORToolsPointLikePreSolverWrapper));
+                SeqLogger.Info(solutionString, nameof(ORToolsGeneralPreSolverWrapper));
             }
             else
             {
-                SeqLogger.Debug("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPointLikePreSolverWrapper));
-                SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsPointLikePreSolverWrapper));
+                SeqLogger.Debug("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsGeneralPreSolverWrapper));
+                SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsGeneralPreSolverWrapper));
                 throw new SeqException("Can not find optimal initial solution with MIP solver!");
             }
-            SeqLogger.Debug("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPointLikePreSolverWrapper));
-            SeqLogger.Debug("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsPointLikePreSolverWrapper));
-            SeqLogger.Debug("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsGeneralPreSolverWrapper));
+            SeqLogger.Debug("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsGeneralPreSolverWrapper));
+            SeqLogger.Debug("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsGeneralPreSolverWrapper));
             SeqLogger.Indent--;
-            SeqLogger.Debug("ORTools building finished!", nameof(ORToolsPointLikePreSolverWrapper));
+            SeqLogger.Debug("ORTools building finished!", nameof(ORToolsGeneralPreSolverWrapper));
             return solution;
         }
         private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint)

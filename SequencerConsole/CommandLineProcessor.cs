@@ -129,7 +129,7 @@ namespace SequencerConsole
                         ConvertLineLike();
 
                     if (taskType == TaskType.PoitnLike)
-                        ConvertPointLike();
+                        ConvertGeneral();
 
                 }
             }
@@ -139,12 +139,12 @@ namespace SequencerConsole
             }
         }
 
-        private static void ConvertPointLike()
+        private static void ConvertGeneral()
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                PointLikeTaskSerializer ser = new PointLikeTaskSerializer();
-                PointLikeTask task;
+                GeneralTaskSerializer ser = new GeneralTaskSerializer();
+                GeneralTask task;
                 switch (inputType)
                 {
                     case FormatType.SEQ:
@@ -233,7 +233,7 @@ namespace SequencerConsole
                     {
                         var result = RunPointLike();
                         //result.ToLog(LogLevel.Info);
-                        OutPointLine(result);
+                        OutGeneral(result);
                     }
                 }
                 else
@@ -271,12 +271,12 @@ namespace SequencerConsole
             return null;
         }
 
-        private static PointTaskResult RunPointLike()
+        private static GeneralTaskResult RunPointLike()
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                PointLikeTaskSerializer ser = new PointLikeTaskSerializer();
-                PointLikeTask task;
+                GeneralTaskSerializer ser = new GeneralTaskSerializer();
+                GeneralTask task;
                 switch (inputType)
                 {
                     case FormatType.SEQ:
@@ -298,11 +298,11 @@ namespace SequencerConsole
             }
             return null;
         }
-        private static void OutPointLine(PointTaskResult result)
+        private static void OutGeneral(GeneralTaskResult result)
         {
             if (output != null && outputType != FormatType.Unknown)
             {
-                PointLikeResultSerializer ser = new PointLikeResultSerializer();
+                GeneralResultSerializer ser = new GeneralResultSerializer();
                 switch (outputType)
                 {
                     case FormatType.SEQ:
@@ -530,7 +530,7 @@ namespace SequencerConsole
             {
                 if (line.Contains("LineLike"))
                     return TaskType.LineLike;
-                if (line.Contains("PointLike"))
+                if (line.Contains("General"))
                     return TaskType.PoitnLike;
             }
             return TaskType.Unknown;

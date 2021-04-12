@@ -1,14 +1,12 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
 using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.LineLike;
 using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace SequencerTest.Benchmark
 {
@@ -23,7 +21,7 @@ namespace SequencerTest.Benchmark
         public List<Dictionary<string, string>> ParameterCombinatrions  { get; set; }
         public List<string> GeneretedTasks { get; set; }
         public List<LineTaskResult> LineResults { get; set; }
-        public List<PointTaskResult> PointResults { get; set; }
+        public List<GeneralTaskResult> PointResults { get; set; }
 
         public Template(string path, string generatePath,  string outPath, List<Dictionary<string, string>> parameterCombinatrions)
         {
@@ -36,7 +34,7 @@ namespace SequencerTest.Benchmark
             GeneratePath = generatePath;
             GeneretedTasks = new List<string>();
             LineResults = new List<LineTaskResult>();
-            PointResults = new List<PointTaskResult>();
+            PointResults = new List<GeneralTaskResult>();
             TaskType = TaskType.Unknown;
             FormatType = FormatType.Unknown;
             TaskType = CheckTaskType(FilePath);
@@ -86,9 +84,9 @@ namespace SequencerTest.Benchmark
         {
             TaskType = CheckTaskType(FilePath);
             FormatType = CheckFormat(FilePath);
-            PointLikeTaskSerializer serPL;
-            PointLikeTask pointLikeTask;
-            PointTaskResult pointTaskResult;
+            GeneralTaskSerializer serPL;
+            GeneralTask pointLikeTask;
+            GeneralTaskResult pointTaskResult;
             LineLikeTask lineLikeTask;
             LineLikeTaskSerializer serLL;
             LineTaskResult lineTaskResult;
@@ -100,7 +98,7 @@ namespace SequencerTest.Benchmark
                     try
                     {
                         SeqLogger.LogLevel = LogLevel.Info;
-                        serPL = new PointLikeTaskSerializer();
+                        serPL = new GeneralTaskSerializer();
                         switch (FormatType)
                         {
                             case FormatType.SEQ:
@@ -117,7 +115,7 @@ namespace SequencerTest.Benchmark
                                 throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
                         }
                         pointTaskResult = pointLikeTask.RunModel();
-                        PointLikeResultSerializer serRes = new PointLikeResultSerializer();
+                        GeneralResultSerializer serRes = new GeneralResultSerializer();
                         serRes.ExportJSON(pointTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
                         SeqLogger.LogLevel = LogLevel.Info;
                         SeqLogger.Info(pointTaskResult.StatusMessage+" Solver Time:"+ pointTaskResult.SolverTime+" Cost:"+ pointTaskResult.CostSum);
@@ -126,7 +124,7 @@ namespace SequencerTest.Benchmark
                     }catch(Exception e)
                     {
                         SeqLogger.Indent = 0;
-                        PointResults.Add(new PointTaskResult() { 
+                        PointResults.Add(new GeneralTaskResult() { 
                             StatusMessage = "Stop with error",    
                             ErrorMessage = new List<string>() { e.ToString() } 
                         });
@@ -164,7 +162,7 @@ namespace SequencerTest.Benchmark
                 }catch (Exception e)
                 {
                         SeqLogger.Indent = 0;
-                    PointResults.Add(new PointTaskResult()
+                    PointResults.Add(new GeneralTaskResult()
                     {
                         StatusMessage = "Stop with error",
                         ErrorMessage = new List<string>() { e.ToString() }
@@ -217,7 +215,7 @@ namespace SequencerTest.Benchmark
             {
                 if (line.Contains("LineLike"))
                     return TaskType.LineLike;
-                if (line.Contains("PointLike"))
+                if (line.Contains("General"))
                     return TaskType.PoitnLike;
             }
             return TaskType.Unknown;

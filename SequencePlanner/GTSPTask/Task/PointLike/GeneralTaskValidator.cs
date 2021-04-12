@@ -7,18 +7,18 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Task.LineLike
 {
-    internal class PointLikeTaskValidator
+    internal class GeneralTaskValidator
     {
-        public PointLikeTaskValidator()
+        public GeneralTaskValidator()
         {
 
         }
 
         //TODO: PositionPrecedence only between processes, no inside alternatives and between alternatives in one process.
 
-        public void Validate(PointLikeTask pointLikeTask)
+        public void Validate(GeneralTask pointLikeTask)
         {
-            SeqLogger.Debug("Validation started!", nameof(PointLikeTaskValidator));
+            SeqLogger.Debug("Validation started!", nameof(GeneralTaskValidator));
             SeqLogger.Indent++;
             BaseTaskValidator baseTaskValidator = new BaseTaskValidator();
             baseTaskValidator.Validate((BaseTask)pointLikeTask);
@@ -28,11 +28,11 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             CheckProcessPrecedence(pointLikeTask);
             CheckUseAlternativeShortcuts(pointLikeTask);
             SeqLogger.Indent--;
-            SeqLogger.Debug("Validation finished!", nameof(PointLikeTaskValidator));
+            SeqLogger.Debug("Validation finished!", nameof(GeneralTaskValidator));
         }
 
         //Q17
-        private void CheckUseAlternativeShortcuts(PointLikeTask task)
+        private void CheckUseAlternativeShortcuts(GeneralTask task)
         {
             if(task.UseShortcutInAlternatives)
                 foreach (var process in task.Processes)
@@ -56,7 +56,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         }
 
         //Q16
-        private void CheckPositionPrecedence(PointLikeTask task)
+        private void CheckPositionPrecedence(GeneralTask task)
         {
             if ((task.StartDepot is not null || task.FinishDepot is not null) && task.PositionPrecedence is not null && task.PositionPrecedence.Count > 0)
                 foreach (var position in task.PositionMatrix.Positions)
@@ -69,11 +69,11 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                             throw new SeqException("Position precedence should not contain FinishDepo's position, UserID: " + task.FinishDepot.GlobalID);
                     }
                 }
-            SeqLogger.Debug("PositionPrecedence: " + task.ProcessPrecedence.Count+ " precedences", nameof(PointLikeTaskValidator));
+            SeqLogger.Debug("PositionPrecedence: " + task.ProcessPrecedence.Count+ " precedences", nameof(GeneralTaskValidator));
         }
 
         //Q15
-        private void CheckProcessPrecedence(PointLikeTask task)
+        private void CheckProcessPrecedence(GeneralTask task)
         {
             Process a = null;
             Process b = null;
@@ -105,11 +105,11 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 if (b is not null && (precedence.Before.GlobalID == b.GlobalID || precedence.After.GlobalID == b.UserID))
                     throw new SeqException("Process precedence should not contain FinishDepo's process, UserID: " + a.GlobalID);
             }
-            SeqLogger.Debug("ProcessPrecedence: " + task.ProcessPrecedence.Count+" precedences", nameof(PointLikeTaskValidator));
+            SeqLogger.Debug("ProcessPrecedence: " + task.ProcessPrecedence.Count+" precedences", nameof(GeneralTaskValidator));
         }
 
         //Q14
-        private void CheckProcessHierarchy(PointLikeTask task)
+        private void CheckProcessHierarchy(GeneralTask task)
         {
             for (int i = 0; i < task.Processes.Count; i++)
             {
@@ -140,7 +140,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         }
 
         //O6
-        private void CheckStartFinsihDepot(PointLikeTask task)
+        private void CheckStartFinsihDepot(GeneralTask task)
         {
             var checkStartDepot =false;
             var checkFinishDepot =false;
@@ -155,7 +155,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 if (task.StartDepot is not null)
                 {
                     checkStartDepot = true;
-                    SeqLogger.Debug("StartDepot: "+ task.StartDepot.UserID, nameof(PointLikeTaskValidator));
+                    SeqLogger.Debug("StartDepot: "+ task.StartDepot.UserID, nameof(GeneralTaskValidator));
                 }
 
                 if (task.FinishDepot is  not null)
@@ -242,7 +242,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         }
 
         //O1
-        private void CheckTaskType(PointLikeTask task)
+        private void CheckTaskType(GeneralTask task)
         {
             if (task.PositionMatrix is null)
                 throw new SeqException("Position hierarchy, PositionMatrix is null.", "Please construct it.");
@@ -255,14 +255,14 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             if (task.ProcessPrecedence is null)
                 throw new SeqException("ProcessPrecedence is null.", "Please construct it.");
             if (task.PositionPrecedence.Count < 1)
-                SeqLogger.Warning("No position precedence found.", nameof(PointLikeTaskValidator));
+                SeqLogger.Warning("No position precedence found.", nameof(GeneralTaskValidator));
             else
-                SeqLogger.Debug(task.PositionPrecedence.Count + " position precedence found.", nameof(PointLikeTaskValidator));
+                SeqLogger.Debug(task.PositionPrecedence.Count + " position precedence found.", nameof(GeneralTaskValidator));
 
             if (task.ProcessPrecedence.Count < 1)
-                SeqLogger.Warning("No process precedence found.", nameof(PointLikeTaskValidator));
+                SeqLogger.Warning("No process precedence found.", nameof(GeneralTaskValidator));
             else
-                SeqLogger.Debug(task.ProcessPrecedence.Count + " process precedence found.", nameof(PointLikeTaskValidator));
+                SeqLogger.Debug(task.ProcessPrecedence.Count + " process precedence found.", nameof(GeneralTaskValidator));
         }
 
         private void ListContainsPrecedenceItems(GTSPPrecedenceConstraint precedence, IEnumerable<BaseNode> nodes)
