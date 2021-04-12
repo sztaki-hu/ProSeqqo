@@ -223,5 +223,23 @@ namespace SequencerTest.Benchmark
 
             Run();
         }
+
+        [TestMethod]
+        public void RunExamplesTest()
+        {
+            ////EXAMPLES
+            //benchmarkTasks = new List<BenchmarkTask>();
+            //benchmarkTasks.Add(new BenchmarkTask()
+            //{
+            //    TemplateDir = "Resources/Example/",
+            //    Dir = "Resources/Example/",
+            //    Parameters = new List<Dictionary<string, string>>()
+            //    {
+            //        new Dictionary<string, string>() { },
+            //    }
+            //});
+
+            //Run();
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace SequencerTest.Integration.Sequencing
         public void Test1()
         {
             LineTaskSerializer seq = new LineTaskSerializer();
-            LineTask task = seq.ImportSEQ("Resources/Line_Matrix.txt");
+            LineTask task = seq.ImportSEQ("Resources/Example/Line_Matrix.txt");
             task.ValidateModel();
             var result = task.RunModel();
             seq = new LineTaskSerializer();
@@ -31,7 +31,7 @@ namespace SequencerTest.Integration.Sequencing
         public void Test2()
         {
             LineTaskSerializer seq = new LineTaskSerializer();
-            LineTask task = seq.ImportSEQ("Resources/Line_Original.txt");
+            LineTask task = seq.ImportSEQ("Resources/Example/Line_Original.txt");
             var result = task.RunModel();
             seq = new LineTaskSerializer();
             seq.ExportSEQ(task, "Resources/Export/Line_Original.txt");
@@ -42,7 +42,7 @@ namespace SequencerTest.Integration.Sequencing
         public void Test3()
         {
             LineTaskSerializer seq = new LineTaskSerializer();
-            LineTask task = seq.ImportSEQ("Resources/CSOPA.txt");
+            LineTask task = seq.ImportSEQ("Resources/Example/CSOPA.txt");
             var result = task.RunModel();
             seq = new LineTaskSerializer();
             seq.ExportSEQ(task, "Resources/Export/CSOPA.txt");

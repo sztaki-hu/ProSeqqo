@@ -10,9 +10,7 @@ TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
 TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
 ResourceDistanceFunction: Add
 ResourceSource: Constant
-ResourceCostConstant: 0
-UseShortcutInAlternatives: True
-UseMIPprecedenceSolver: True
+ResourceConstant: 0
 
 PositionList:
 #+-------+---------------------+------------------+
@@ -65,8 +63,8 @@ ProcessHierarchy:
 	#InterSet1
 		2;			31;			50;			  100;
 		3;			31;			50;			  100;
-		4;			39;			50;			  100;
-		5;			39;			50;			  100;	
+		4;			31;			50;			  100;
+		5;			31;			50;			  100;	
 	#Grasp2
 		11;			32;			52;			  101;		
 		12;			32;		    52;			  101;		
@@ -108,5 +106,5 @@ PositionPrecedence:
 		1;					8
 		1;					9
 		1;					10
-	#	10;1
+		10;1
 

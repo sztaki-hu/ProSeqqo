@@ -18,7 +18,7 @@ namespace SequencerTest.Integration.Sequencing
         public void Test1()
         {
             GeneralTaskSerializer seq = new GeneralTaskSerializer();
-            GeneralTask task = seq.ImportSEQ("Resources/PickAndPlace_Matrix.txt");
+            GeneralTask task = seq.ImportSEQ("Resources/Example/PickAndPlace_Matrix.txt");
             task.ValidateModel();
             var result = task.RunModel();
             seq = new GeneralTaskSerializer();
@@ -31,7 +31,7 @@ namespace SequencerTest.Integration.Sequencing
         public void Test2()
         {
             GeneralTaskSerializer seq = new GeneralTaskSerializer();
-            GeneralTask task = seq.ImportSEQ("Resources/Kocka.txt");
+            GeneralTask task = seq.ImportSEQ("Resources/Example/Kocka.txt");
             var result = task.RunModel();
             seq = new GeneralTaskSerializer();
             seq.ExportSEQ(task, "Resources/Export/Kocka.txt");
@@ -41,10 +41,10 @@ namespace SequencerTest.Integration.Sequencing
         [TestMethod]
         public void Test3()
         {
-            //PointLikeTaskSerializer seq = new PointLikeTaskSerializer();
-            //PointLikeTask task = seq.ImportSEQ("Resources/PickAndPlace_Original.txt");
+            //GeneralTaskSerializer seq = new GeneralTaskSerializer();
+            //GeneralTask task = seq.ImportSEQ("Resources/Example/PickAndPlace_Original.txt");
             //var result = task.RunModel();
-            //seq = new PointLikeTaskSerializer();
+            //seq = new GeneralTaskSerializer();
             //seq.ExportSEQ(task, "Resources/Export/PickAndPlace_Original.txt");
             //Console.WriteLine(result);
         }

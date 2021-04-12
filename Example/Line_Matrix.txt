@@ -1,6 +1,6 @@
 TaskType: Line
-DistanceFunction: MatrixDistance
-Dimension: 2
+DistanceFunction: Matrix
+Dimension: 0
 TimeLimit: 20
 WeightMultiplier: Auto
 CyclicSequence: True

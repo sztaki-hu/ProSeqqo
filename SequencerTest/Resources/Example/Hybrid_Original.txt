@@ -10,9 +10,8 @@ ContourPenalty: 2
 BidirectionLineDefault: False
 ResourceSource: Constant
 ResourceDistanceFunction: Add
-ResourceCostConstant: 0
+ResourceConstant: 0
 UseMIPprecedenceSolver: True
-Validate: True
 
 PositionList:
 #+-------+---------------------+------------------+
@@ -31,12 +30,14 @@ PositionList:
 9; [0,0000; 0,0000];   I
 10;[4,0000;  4,0000];  J
 
+
+
 LineList:
-#+--------+-----------+-------------+-------------+-------------------+
-#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]   |
-#+--------+-----------+-------------+-------------+-------------------+
-#|  <int> |   <int>   |    <int>    |    <int>    |     <string>      |
-#+--------+-----------+-------------+-------------+-------------------+
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
+#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]  |  ResourceID [optional]  | Bidirectional [optional]  |
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
+#|  <int> |   <int>   |    <int>    |    <int>    |     <string>     |          <int>          |         True/False        |
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
 10;2;1;2; LineAB
 11;2;2;3; LineBC
 12;2;3;4; LineCD

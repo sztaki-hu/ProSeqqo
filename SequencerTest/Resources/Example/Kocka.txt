@@ -6,7 +6,7 @@ TimeLimit: 20
 DistanceFunction: Euclidian
 ResourceDistanceFunction: Add
 ResourceSource: Constant
-ResourceCostConstant: 0
+ResourceConstant: 0
 UseMIPprecedenceSolver: True
 
 PositionList:
