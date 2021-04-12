@@ -5,52 +5,52 @@ using SequencePlanner.GTSPTask.Serialization.Result;
 namespace SequencerTest.Units.Serialization.Result
 {
     [TestClass]
-    public class LineLikeResultSerializerTest
+    public class LineResultSerializerTest
     {
-        LineLikeResultSerializer serializer;
+        LineResultSerializer serializer;
         LineTaskResult result;
 
         [TestInitialize()]
         public void Initialize()
         {
-            serializer = new LineLikeResultSerializer();
+            serializer = new LineResultSerializer();
             result = new LineTaskResult();
         }
 
         [TestMethod]
         public void ExportSEQ()
         {
-            serializer.ExportSEQ(result, "Resources/Out/LineLikeResultSerializerTest_ExportSEQ.seq");
+            serializer.ExportSEQ(result, "Resources/Out/LineResultSerializerTest_ExportSEQ.seq");
         }
 
         [TestMethod]
         public void ExportJSON()
         {
-            serializer.ExportJSON(result, "Resources/Out/LineLikeResultSerializerTest_ExportJSON.json");
+            serializer.ExportJSON(result, "Resources/Out/LineResultSerializerTest_ExportJSON.json");
         }
 
         [TestMethod]
         public void ExportXML()
         {
-            serializer.ExportXML(result, "Resources/Out/LineLikeResultSerializerTest_ExportXML.xml");
+            serializer.ExportXML(result, "Resources/Out/LineResultSerializerTest_ExportXML.xml");
         }
 
         //[TestMethod]
         //public void ImportSEQTest()
         //{
-        //    serializer.ImportSEQ("Resources/Out/LineLikeResultSerializerTest_ExportSEQ.seq");
+        //    serializer.ImportSEQ("Resources/Out/LineResultSerializerTest_ExportSEQ.seq");
         //}
 
         //[TestMethod]
         //public void ImportXMLTest()
         //{
-        //    serializer.ImportXML("Resources/Out/LineLikeResultSerializerTest_ExportXML.xml");
+        //    serializer.ImportXML("Resources/Out/LineResultSerializerTest_ExportXML.xml");
         //}
 
         [TestMethod]
         public void ImportJSONTest()
         {
-            serializer.ImportJSON("Resources/Out/LineLikeResultSerializerTest_ExportJSON.json");
+            serializer.ImportJSON("Resources/Out/LineResultSerializerTest_ExportJSON.json");
         }
     }
 }

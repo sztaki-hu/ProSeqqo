@@ -1,4 +1,4 @@
-TaskType: LineLike
+TaskType: Line
 DistanceFunction: Euclidian
 Dimension: 2
 TimeLimit: 0

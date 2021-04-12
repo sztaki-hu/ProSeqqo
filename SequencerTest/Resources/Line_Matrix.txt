@@ -1,4 +1,4 @@
-TaskType: LineLike
+TaskType: Line
 DistanceFunction: Matrix
 Dimension: 0
 TimeLimit: 20

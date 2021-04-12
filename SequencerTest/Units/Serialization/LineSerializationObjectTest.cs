@@ -4,14 +4,14 @@ using SequencePlanner.Model;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using System.Collections.Generic;
-using SequencePlanner.GTSPTask.Task.LineLike;
+using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.GTSPTask.Serialization.Task;
 using SequencePlanner.Function.DistanceFunction;
 
 namespace SequencerTest.Units.Serialization
 {
     [TestClass]
-    public class LineLikeSerializationObjectTest
+    public class LineSerializationObjectTest
     {
         GTSPNode A;
         GTSPNode B;
@@ -27,8 +27,8 @@ namespace SequencerTest.Units.Serialization
         List<Contour> contours;
         List<GTSPPrecedenceConstraint> linePrecedences;
         List<GTSPPrecedenceConstraint> contourPrecedences;
-        LineLikeTask LineLikeTask;
-        LineLikeTaskSerializationObject SerObj;
+        LineTask LineTask;
+        LineTaskSerializationObject SerObj;
 
         [TestInitialize()]
         public void Initialize()
@@ -100,7 +100,7 @@ namespace SequencerTest.Units.Serialization
             linePrecedences = new List<GTSPPrecedenceConstraint>() { new GTSPPrecedenceConstraint(line, line2) };
             contourPrecedences = new List<GTSPPrecedenceConstraint>() { new GTSPPrecedenceConstraint(contour, contour2) };
 
-            LineLikeTask = new LineLikeTask()
+            LineTask = new LineTask()
             {
                 Dimension = 3,
                 TimeLimit = 5,
@@ -115,23 +115,23 @@ namespace SequencerTest.Units.Serialization
                 Lines = lines,
                 PositionMatrix = matrix,
             };
-            SerObj = new LineLikeTaskSerializationObject(LineLikeTask);
+            SerObj = new LineTaskSerializationObject(LineTask);
 
         }
 
         [TestMethod]
         public void BaseObjectTest()
         {
-            Assert.AreEqual(LineLikeTask.Dimension, SerObj.Dimension);
-            Assert.AreEqual("LineLike", SerObj.TaskType);
-            Assert.AreEqual(LineLikeTask.StartDepot.UserID, SerObj.StartDepot);
-            Assert.AreEqual(LineLikeTask.FinishDepot.UserID, SerObj.FinishDepot);
-            Assert.AreEqual(LineLikeTask.CyclicSequence, SerObj.CyclicSequence);
-            Assert.AreEqual(LineLikeTask.PositionMatrix.DistanceFunction.FunctionName, SerObj.DistanceFunction.Function);
+            Assert.AreEqual(LineTask.Dimension, SerObj.Dimension);
+            Assert.AreEqual("Line", SerObj.TaskType);
+            Assert.AreEqual(LineTask.StartDepot.UserID, SerObj.StartDepot);
+            Assert.AreEqual(LineTask.FinishDepot.UserID, SerObj.FinishDepot);
+            Assert.AreEqual(LineTask.CyclicSequence, SerObj.CyclicSequence);
+            Assert.AreEqual(LineTask.PositionMatrix.DistanceFunction.FunctionName, SerObj.DistanceFunction.Function);
             Assert.AreEqual(null, SerObj.DistanceFunction.TrapezoidSpeed);
             Assert.AreEqual(null, SerObj.DistanceFunction.TrapezoidAcceleration);
             Assert.AreEqual(null, SerObj.DistanceFunction.DistanceMatrix);
-            Assert.AreEqual(LineLikeTask.PositionMatrix.ResourceFunction.FunctionName, SerObj.ResourceFunction.ResourceSource);
+            Assert.AreEqual(LineTask.PositionMatrix.ResourceFunction.FunctionName, SerObj.ResourceFunction.ResourceSource);
             Assert.AreEqual(1, SerObj.ResourceFunction.ResourceCostConstant);
             Assert.IsNull(SerObj.ResourceFunction.ResourceCostMatrix2);
             Assert.AreEqual("Add", SerObj.ResourceFunction.ResourceDistanceFunction);
@@ -139,7 +139,7 @@ namespace SequencerTest.Units.Serialization
             foreach (var serPos in SerObj.PositionList)
             {
                 var found = false;
-                foreach (var pos in LineLikeTask.PositionMatrix.Positions)
+                foreach (var pos in LineTask.PositionMatrix.Positions)
                 {
                     if (serPos.ID == pos.Node.UserID)
                     {
@@ -161,15 +161,15 @@ namespace SequencerTest.Units.Serialization
             }
 
         [TestMethod]
-        public void LineLikeObjectTest()
+        public void LineObjectTest()
         {
             Assert.AreEqual(Line.BIDIRECTIONAL_DEFAULT, SerObj.BidirectionLineDefault);
-            Assert.AreEqual(LineLikeTask.ContourPenalty, SerObj.ContourPenalty);
+            Assert.AreEqual(LineTask.ContourPenalty, SerObj.ContourPenalty);
             bool found;
             foreach (var serLine in SerObj.LineList)
             {
                 found = false;
-                foreach (var contour in LineLikeTask.Contours)
+                foreach (var contour in LineTask.Contours)
                 {
                     foreach (var line in contour.Lines)
                     {
@@ -192,7 +192,7 @@ namespace SequencerTest.Units.Serialization
             foreach (var serPrec in SerObj.LinePrecedences)
             {
                 found = false;
-                foreach (var prec in LineLikeTask.LinePrecedences)
+                foreach (var prec in LineTask.LinePrecedences)
                 {
                     if (prec.Before.UserID == serPrec.BeforeID && prec.After.UserID == serPrec.AfterID)
                     {
@@ -207,7 +207,7 @@ namespace SequencerTest.Units.Serialization
             foreach (var serPrec in SerObj.ContourPrecedences)
             {
                 found = false;
-                foreach (var prec in LineLikeTask.ContourPrecedences)
+                foreach (var prec in LineTask.ContourPrecedences)
                 {
                     if (prec.Before.UserID == serPrec.BeforeID && prec.After.UserID == serPrec.AfterID)
                     {

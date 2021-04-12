@@ -1,8 +1,8 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
 using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.GTSPTask.Task.LineLike;
-using SequencePlanner.GTSPTask.Task.PointLike;
+using SequencePlanner.GTSPTask.Task.LineTask;
+using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using System;
 using System.Collections.Generic;
@@ -87,8 +87,8 @@ namespace SequencerTest.Benchmark
             GeneralTaskSerializer serPL;
             GeneralTask pointLikeTask;
             GeneralTaskResult pointTaskResult;
-            LineLikeTask lineLikeTask;
-            LineLikeTaskSerializer serLL;
+            LineTask lineTask;
+            LineTaskSerializer serLL;
             LineTaskResult lineTaskResult;
 
             if (TaskType != TaskType.Unknown && FormatType != FormatType.Unknown)
@@ -131,29 +131,29 @@ namespace SequencerTest.Benchmark
                     }
                 }
 
-                if (TaskType == TaskType.LineLike)
+                if (TaskType == TaskType.Line)
                 {
                     try { 
                     SeqLogger.LogLevel = LogLevel.Error;
-                    serLL = new LineLikeTaskSerializer();
+                    serLL = new LineTaskSerializer();
                     switch (FormatType)
                     {
                         case FormatType.SEQ:
                         case FormatType.TXT:
-                            lineLikeTask = serLL.ImportSEQ(path);
+                            lineTask = serLL.ImportSEQ(path);
                             break;
                         case FormatType.JSON:
-                            lineLikeTask = serLL.ImportJSON(path);
+                            lineTask = serLL.ImportJSON(path);
                             break;
                         case FormatType.XML:
-                            lineLikeTask = serLL.ImportXML(path);
+                            lineTask = serLL.ImportXML(path);
                             break;
                         default:
                             throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
                     }
 
-                    lineTaskResult = lineLikeTask.RunModel();
-                    LineLikeResultSerializer serRes = new LineLikeResultSerializer();
+                    lineTaskResult = lineTask.RunModel();
+                    LineResultSerializer serRes = new LineResultSerializer();
                     serRes.ExportJSON(lineTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
                     SeqLogger.LogLevel = LogLevel.Info;
                     SeqLogger.Info(lineTaskResult.StatusMessage+" Solver Time:"+lineTaskResult.SolverTime+" Cost:"+lineTaskResult.CostSum);
@@ -190,7 +190,7 @@ namespace SequencerTest.Benchmark
                 tmp += Path.GetFileName(GeneretedTasks[i])+s;
                 tmp += TaskType.ToString()+s;
                 
-                if (TaskType == TaskType.LineLike && LineResults is not null && LineResults.Count>i)
+                if (TaskType == TaskType.Line && LineResults is not null && LineResults.Count>i)
                     tmp += LineResults[i].ToCSV();
                 if (TaskType == TaskType.PoitnLike && PointResults is not null && PointResults.Count > i)
                     tmp += PointResults[i].ToCSV();
@@ -213,8 +213,8 @@ namespace SequencerTest.Benchmark
         {
             foreach (var line in File.ReadAllLines(input))
             {
-                if (line.Contains("LineLike"))
-                    return TaskType.LineLike;
+                if (line.Contains("Line"))
+                    return TaskType.Line;
                 if (line.Contains("General"))
                     return TaskType.PoitnLike;
             }

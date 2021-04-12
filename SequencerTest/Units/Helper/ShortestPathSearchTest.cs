@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
-using SequencePlanner.GTSPTask.Task.PointLike.ShortCut;
+using SequencePlanner.GTSPTask.Task.General.ShortCut;
 using SequencePlanner.Model;
 using System.Collections.Generic;
 

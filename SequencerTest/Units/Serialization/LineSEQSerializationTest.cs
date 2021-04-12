@@ -5,13 +5,13 @@ using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using System.Collections.Generic;
 using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.GTSPTask.Task.LineLike;
+using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.GTSPTask.Serialization.Task;
 
 namespace SequencerTest.Units.Serialization
 {
     [TestClass]
-    public class LineLikeSEQSerializationTest
+    public class LineSEQSerializationTest
     {
         GTSPNode A;
         GTSPNode B;
@@ -102,7 +102,7 @@ namespace SequencerTest.Units.Serialization
             [TestMethod]
             public void GetterSetter()
             {
-                LineLikeTask task = new LineLikeTask()
+                LineTask task = new LineTask()
                 {
                     Dimension = 3,
                     TimeLimit = 5,
@@ -118,10 +118,10 @@ namespace SequencerTest.Units.Serialization
                     PositionMatrix = matrix
                 };
 
-            LineLikeTaskSerializer ser = new LineLikeTaskSerializer();
+            LineTaskSerializer ser = new LineTaskSerializer();
             ser.ExportSEQ(task,"LLTest.SEQ");
-            ser = new LineLikeTaskSerializer();
-            LineLikeTask import = ser.ImportSEQ("LLTest.SEQ");
+            ser = new LineTaskSerializer();
+            LineTask import = ser.ImportSEQ("LLTest.SEQ");
 
                 Assert.AreEqual(3, import.Dimension);
                 Assert.AreEqual(5, import.TimeLimit);

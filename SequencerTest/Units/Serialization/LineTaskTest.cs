@@ -6,13 +6,14 @@ using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using SequencerTest.Helper;
 using System.Collections.Generic;
-using SequencePlanner.GTSPTask.Task.LineLike;
+using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.GTSPTask.Serialization.Task;
+using SequencePlanner.GTSPTask.Task.LineTask;
 
 namespace SequencerTest.Units
 {
     [TestClass]
-    public class LineLikeTaskTest
+    public class LineTaskTest
     {
         GTSPNode A;
         GTSPNode B;
@@ -103,7 +104,7 @@ namespace SequencerTest.Units
         [TestMethod]
         public void GetterSetter()
         {
-            LineLikeTask task = new LineLikeTask()
+            LineTask task = new LineTask()
             {
                 Dimension = 3,
                 TimeLimit = 5,
@@ -136,7 +137,7 @@ namespace SequencerTest.Units
         [TestMethod]
         public void Example()
         {
-            //LineLikeTask task = new LineLikeTask()
+            //LineTask task = new LineTask()
             //{
             //    Dimension = 3,
             //    TimeLimit = 200,
@@ -159,7 +160,7 @@ namespace SequencerTest.Units
         [TestMethod]
         public void ImportExportJSONTest()
         {
-            LineLikeTask task = new LineLikeTask()
+            LineTask task = new LineTask()
             {
                 Dimension = 3,
                 TimeLimit = 5000,
@@ -174,9 +175,9 @@ namespace SequencerTest.Units
                 Lines = lines,
                 PositionMatrix = matrix
             };
-            var serializer = new LineLikeTaskSerializer();
+            var serializer = new LineTaskSerializer();
             serializer.ExportJSON(task, "exportLL.json");
-            serializer = new LineLikeTaskSerializer();
+            serializer = new LineTaskSerializer();
             task = serializer.ImportJSON("exportLL.json");
 
             Assert.AreEqual(3, task.Dimension);
@@ -192,14 +193,14 @@ namespace SequencerTest.Units
             Assert.AreEqual(lines.Count, task.Lines.Count);
             //Assert.AreSame(matrix, task.PositionMatrix);
 
-            serializer = new LineLikeTaskSerializer();
+            serializer = new LineTaskSerializer();
             serializer.ExportJSON(task, "exportLLDual.json");
         }
 
         [TestMethod]
         public void ImportExportXMLTest()
         {
-            LineLikeTask task = new LineLikeTask()
+            LineTask task = new LineTask()
             {
                 Dimension = 3,
                 TimeLimit = 5000,
@@ -215,9 +216,9 @@ namespace SequencerTest.Units
                 PositionMatrix = matrix
             };
 
-            var serializer = new LineLikeTaskSerializer();
+            var serializer = new LineTaskSerializer();
             serializer.ExportXML(task, "exportLL.xml");
-            serializer = new LineLikeTaskSerializer();
+            serializer = new LineTaskSerializer();
             task = serializer.ImportXML("exportLL.xml");
 
             Assert.AreEqual(3, task.Dimension);
@@ -233,7 +234,7 @@ namespace SequencerTest.Units
             Assert.AreEqual(lines.Count, task.Lines.Count);
             //Assert.AreSame(matrix, task.PositionMatrix);
 
-            serializer = new LineLikeTaskSerializer();
+            serializer = new LineTaskSerializer();
             serializer.ExportXML(task, "exportLLDual.xml");
 
             
@@ -242,7 +243,7 @@ namespace SequencerTest.Units
         [TestMethod]
         public void ImportExportSEQTest()
         {
-            LineLikeTask task = new LineLikeTask()
+            LineTask task = new LineTask()
             {
                 Dimension = 3,
                 TimeLimit = 5000,
@@ -258,11 +259,11 @@ namespace SequencerTest.Units
                 PositionMatrix = matrix
             };
 
-            var serializer = new LineLikeTaskSerializer();
+            var serializer = new LineTaskSerializer();
             serializer.ExportSEQ(task, "exportLL.seq");
-            serializer = new LineLikeTaskSerializer();
+            serializer = new LineTaskSerializer();
             task = serializer.ImportSEQ("exportLL.seq");
-            serializer = new LineLikeTaskSerializer();
+            serializer = new LineTaskSerializer();
             serializer.ExportSEQ(task, "exportLLDual.seq");
 
             Assert.AreEqual(3, task.Dimension);

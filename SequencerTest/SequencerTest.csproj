@@ -853,10 +853,10 @@
     <None Update="Resources\Kocka.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\LineLike_Matrix.txt">
+    <None Update="Resources\Line_Matrix.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\LineLike_Original.txt">
+    <None Update="Resources\Line_Original.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Out\.keep">

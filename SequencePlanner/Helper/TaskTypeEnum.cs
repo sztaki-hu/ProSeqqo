@@ -8,7 +8,7 @@ namespace SequencePlanner.Helper
 {
     public enum TaskType
     {
-        LineLike,
+        Line,
         PoitnLike,
         Unknown
     }

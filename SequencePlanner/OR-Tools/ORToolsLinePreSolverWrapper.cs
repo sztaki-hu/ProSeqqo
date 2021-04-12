@@ -8,15 +8,15 @@ using System.Linq;
 
 namespace SequencePlanner.OR_Tools
 {
-    public class ORToolsLineLikePreSolverWrapper
+    public class ORToolsLinePreSolverWrapper
     {
         public TimeSpan RunTime { get; private set; }
-        private readonly ORToolsLineLikePreSolverTask parameters;
+        private readonly ORToolsLinePreSolverTask parameters;
         private Stopwatch timer;
         private Variable[] x;                 
         private Variable[] position; 
 
-        public ORToolsLineLikePreSolverWrapper(ORToolsLineLikePreSolverTask parameters)
+        public ORToolsLinePreSolverWrapper(ORToolsLinePreSolverTask parameters)
         {
             this.parameters = parameters;
             timer = new Stopwatch();
@@ -103,21 +103,21 @@ namespace SequencePlanner.OR_Tools
                         }
                     }
                     if (x[p].SolutionValue() == 1)
-                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + position[p].SolutionValue(), nameof(ORToolsLineLikePreSolverWrapper));
+                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + position[p].SolutionValue(), nameof(ORToolsLinePreSolverWrapper));
                 }
-                SeqLogger.Info(tmpStringSolution.Remove(tmpStringSolution.Length - 1), nameof(ORToolsLineLikePreSolverWrapper));
+                SeqLogger.Info(tmpStringSolution.Remove(tmpStringSolution.Length - 1), nameof(ORToolsLinePreSolverWrapper));
             }
             else
             {
-                SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsLineLikePreSolverWrapper));
-                SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsLineLikePreSolverWrapper));
+                SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsLinePreSolverWrapper));
+                SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsLinePreSolverWrapper));
                 throw new SeqException("Can not find optimal initial solution with MIP solver!");
             }
-            SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsLineLikePreSolverWrapper));
-            SeqLogger.Info("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsLineLikePreSolverWrapper));
-            SeqLogger.Info("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsLineLikePreSolverWrapper));
+            SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsLinePreSolverWrapper));
+            SeqLogger.Info("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsLinePreSolverWrapper));
+            SeqLogger.Info("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsLinePreSolverWrapper));
             SeqLogger.Indent--;
-            SeqLogger.Debug("ORTools building finished!", nameof(ORToolsLineLikePreSolverWrapper));
+            SeqLogger.Debug("ORTools building finished!", nameof(ORToolsLinePreSolverWrapper));
             return solution;
         }
 

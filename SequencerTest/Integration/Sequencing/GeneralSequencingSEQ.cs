@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.GTSPTask.Task.PointLike;
+using SequencePlanner.GTSPTask.Task.General;
 using System;
 
 namespace SequencerTest.Integration.Sequencing

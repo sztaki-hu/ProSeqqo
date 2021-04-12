@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
-    public class LineLikeResultSerializationObject: TaskResultSerializationObject
+    public class LineResultSerializationObject: TaskResultSerializationObject
     {
         public List<Line> LineResult { get; set; }
         public List<Position> PositionResult { get; set; }
@@ -16,13 +16,13 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         public double Penalty { get; set; }
         public double LineLength { get; set; }
 
-        public LineLikeResultSerializationObject() : base()
+        public LineResultSerializationObject() : base()
         {
             LineResult = new List<Line>();
             PositionResult = new List<Position>();
         }
 
-        public LineLikeResultSerializationObject(LineTaskResult result): base(result)
+        public LineResultSerializationObject(LineTaskResult result): base(result)
         {
             LineResult = result.LineResult;
             PositionResult = result.PositionResult;
@@ -32,7 +32,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             Penalty = result.Penalty;
         }
 
-        public LineLikeResultSerializationObject(List<string> seqString): base(seqString)
+        public LineResultSerializationObject(List<string> seqString): base(seqString)
         {
             var tokenizer = new SEQTokenizer();
             tokenizer.Tokenize(seqString);
@@ -44,7 +44,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             throw new NotImplementedException();
         }
 
-        public LineTaskResult ToLineLikeResult()
+        public LineTaskResult ToLineResult()
         {
             var result = new LineTaskResult();
             result = (LineTaskResult)base.ToTaskResult(result);

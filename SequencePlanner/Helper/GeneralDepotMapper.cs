@@ -1,6 +1,6 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.GTSPTask.Task.PointLike;
+using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Model;
 using System;
 using System.Collections.Generic;

@@ -2,7 +2,7 @@
 using SequencePlanner.GTSPTask.Task.Base;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GTSPTask.Task.PointLike
+namespace SequencePlanner.GTSPTask.Task.General
 {
     public class GeneralGTSPRepresentation : IGTSPRepresentation
     {

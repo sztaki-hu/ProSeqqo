@@ -2,7 +2,7 @@
 using SequencePlanner.GTSPTask.Serialization.SerializationObject;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.GTSPTask.Task.PointLike;
+using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System;

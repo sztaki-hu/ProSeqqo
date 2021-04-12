@@ -1,8 +1,8 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
 using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.GTSPTask.Task.LineLike;
-using SequencePlanner.GTSPTask.Task.PointLike;
+using SequencePlanner.GTSPTask.Task.LineTask;
+using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using System;
 using System.IO;
@@ -46,9 +46,9 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PickAndPlace_Original.txt",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
                     args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          };
                     //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",           };
-                    //args = new string[] { "-i", example + "\\LineLike_Original.txt",            "-o", outdir + "\\LineLike_Original_out.json",            };
-                    //args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.json",              };
-                    args = new string[] { "-i", example + "\\LineLike_Matrix.txt",              "-o", outdir + "\\LineLike_Matrix_out.seq",               };
+                    //args = new string[] { "-i", example + "\\Line_Original.txt",            "-o", outdir + "\\Line_Original_out.json",            };
+                    //args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.json",              };
+                    args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.seq",               };
                     args = new string[] { "-i", example + "\\Hybrid_Matrix.txt",              "-o", outdir + "\\Hybrid_Matrix_out.seq",               };
                     //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        };
                     //args = new string[] { "-i", example + "\\CSOPA.txt",                        "-o", outdir + "\\CSOPA_out.json",                        };
@@ -125,8 +125,8 @@ namespace SequencerConsole
                 SeqLogger.LogLevel = log;
                 if (taskType != TaskType.Unknown)
                 {
-                    if (taskType == TaskType.LineLike)
-                        ConvertLineLike();
+                    if (taskType == TaskType.Line)
+                        ConvertLine();
 
                     if (taskType == TaskType.PoitnLike)
                         ConvertGeneral();
@@ -178,12 +178,12 @@ namespace SequencerConsole
             }
         }
 
-        private static void ConvertLineLike()
+        private static void ConvertLine()
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                LineLikeTaskSerializer ser = new LineLikeTaskSerializer();
-                LineLikeTask task;
+                LineTaskSerializer ser = new LineTaskSerializer();
+                LineTask task;
                 switch (inputType)
                 {
                     case FormatType.SEQ:
@@ -224,10 +224,10 @@ namespace SequencerConsole
                 SeqLogger.LogLevel = log;
                 if (taskType != TaskType.Unknown)
                 {
-                    if (taskType == TaskType.LineLike)
+                    if (taskType == TaskType.Line)
                     {
-                        var result = RunLineLike();
-                        OutLineLike(result);
+                        var result = RunLine();
+                        OutLine(result);
                     }
                     if (taskType == TaskType.PoitnLike)
                     {
@@ -237,7 +237,7 @@ namespace SequencerConsole
                     }
                 }
                 else
-                    throw new SeqException("Unknown task type!", "It should be TaskType: LineLike or PointLike");
+                    throw new SeqException("Unknown task type!", "It should be TaskType: Line or PointLike");
             }
             catch (Exception e)
             {
@@ -245,12 +245,12 @@ namespace SequencerConsole
             }
         }
 
-        private static LineTaskResult RunLineLike()
+        private static LineTaskResult RunLine()
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                LineLikeTaskSerializer ser = new LineLikeTaskSerializer();
-                LineLikeTask task;
+                LineTaskSerializer ser = new LineTaskSerializer();
+                LineTask task;
                 switch (inputType)
                 {
                     case FormatType.SEQ:
@@ -321,11 +321,11 @@ namespace SequencerConsole
                 //System.Diagnostics.Process.Start(@output);
             }
         }
-        private static void OutLineLike(LineTaskResult result)
+        private static void OutLine(LineTaskResult result)
         {
             if (output != null && outputType != FormatType.Unknown)
             {
-                LineLikeResultSerializer ser = new LineLikeResultSerializer();
+                LineResultSerializer ser = new LineResultSerializer();
                 switch (outputType)
                 {
                     case FormatType.SEQ:
@@ -528,8 +528,8 @@ namespace SequencerConsole
                 SeqLogger.Critical("File not exists: " + input);
             foreach (var line in File.ReadAllLines(input))
             {
-                if (line.Contains("LineLike"))
-                    return TaskType.LineLike;
+                if (line.Contains("Line"))
+                    return TaskType.Line;
                 if (line.Contains("General"))
                     return TaskType.PoitnLike;
             }
@@ -564,7 +564,7 @@ namespace SequencerConsole
     }
     public enum TaskType
     {
-        LineLike,
+        Line,
         PoitnLike,
         Unknown
     }

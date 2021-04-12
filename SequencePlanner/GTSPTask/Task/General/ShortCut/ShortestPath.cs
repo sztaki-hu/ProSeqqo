@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GTSPTask.Task.PointLike.ShortCut
+namespace SequencePlanner.GTSPTask.Task.General.ShortCut
 {
     public class ShortestPath
     {

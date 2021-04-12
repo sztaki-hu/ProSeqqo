@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SequencePlanner.GTSPTask.Task.PointLike;
+using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using System.IO;
 using System.Linq;

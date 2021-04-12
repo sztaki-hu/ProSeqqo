@@ -1,14 +1,13 @@
 ﻿using SequencePlanner.GTSP;
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.GTSPTask.Task.LineLike;
-using SequencePlanner.GTSPTask.Task.PointLike.ShortCut;
+using SequencePlanner.GTSPTask.Task.General.ShortCut;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using SequencePlanner.OR_Tools;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GTSPTask.Task.PointLike
+namespace SequencePlanner.GTSPTask.Task.General
 {
     public class GeneralTask : BaseTask
     {

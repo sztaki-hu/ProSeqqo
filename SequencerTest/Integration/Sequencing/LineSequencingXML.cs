@@ -6,8 +6,9 @@ using System.Text;
 namespace SequencerTest.Integration.Sequencing
 {
     [TestClass]
-    public class LineLikeSequencingAPI
+    public class LineSequencingXML
     {
+
         [TestInitialize()]
         public void Initialize()
         {

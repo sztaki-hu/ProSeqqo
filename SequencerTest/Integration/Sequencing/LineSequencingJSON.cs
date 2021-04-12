@@ -6,7 +6,7 @@ using System.Text;
 namespace SequencerTest.Integration.Sequencing
 {
     [TestClass]
-    public class LineLikeSequencingJSON
+    public class LineSequencingJSON
     {
         [TestInitialize()]
         public void Initialize()

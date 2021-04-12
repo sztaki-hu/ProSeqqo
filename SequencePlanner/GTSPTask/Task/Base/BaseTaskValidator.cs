@@ -1,11 +1,11 @@
 ﻿using SequencePlanner.GTSP;
 using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.GTSPTask.Task.PointLike;
+using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GTSPTask.Task.LineLike
+namespace SequencePlanner.GTSPTask.Task.LineTask
 {
     internal class BaseTaskValidator
     {

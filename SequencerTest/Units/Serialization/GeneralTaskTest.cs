@@ -5,7 +5,7 @@ using SequencePlanner.Model;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using System.Collections.Generic;
-using SequencePlanner.GTSPTask.Task.PointLike;
+using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.GTSPTask.Serialization.Task;
 
 namespace SequencerTest.Units

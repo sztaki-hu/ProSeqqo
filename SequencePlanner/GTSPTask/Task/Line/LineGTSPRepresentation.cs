@@ -2,9 +2,9 @@
 using SequencePlanner.GTSPTask.Task.Base;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GTSPTask.Task.LineLike
+namespace SequencePlanner.GTSPTask.Task.LineTask
 {
-    public class LineLikeGTSPRepresentation : IGTSPRepresentation
+    public class LineGTSPRepresentation : IGTSPRepresentation
     {
         public List<GTSPPrecedenceConstraint> PrecedenceConstraints { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }

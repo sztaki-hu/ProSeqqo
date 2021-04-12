@@ -2,14 +2,14 @@
 using SequencePlanner.GTSPTask.Serialization.SerializationObject;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.GTSPTask.Task.LineLike;
+using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {
-    public class LineLikeTaskSerializationObject: BaseTaskSerializationObject
+    public class LineTaskSerializationObject: BaseTaskSerializationObject
     {
         [JsonProperty(Order = 12)]
         public List<LineSerializationObject> LineList { get; set; }
@@ -21,18 +21,18 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public double ContourPenalty { get; set; }
 
 
-        public LineLikeTaskSerializationObject() : base()
+        public LineTaskSerializationObject() : base()
         {
         }
-        public LineLikeTaskSerializationObject(List<string> seqString): base(seqString)
+        public LineTaskSerializationObject(List<string> seqString): base(seqString)
         {
             var tokenizer = new SEQTokenizer();
             tokenizer.Tokenize(seqString);
             FillBySEQTokens(tokenizer);
         }
-        public LineLikeTaskSerializationObject(LineLikeTask task):base(task)
+        public LineTaskSerializationObject(LineTask task):base(task)
         {
-            TaskType = "LineLike";
+            TaskType = "Line";
             LineList = new List<LineSerializationObject>();
             LinePrecedences = new List<OrderConstraintSerializationObject>();
             ContourPrecedences = new List<OrderConstraintSerializationObject>();
@@ -71,14 +71,14 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
         }
 
-        public LineLikeTask ToLineLikeTask()
+        public LineTask ToLineTask()
         {
-            var LineLikeTask = new LineLikeTask();
-            base.ToBaseTask((BaseTask) LineLikeTask);
-            LineLikeTask.ContourPenalty = ContourPenalty;
-            CreateLinesAndContours(LineLikeTask);
-            CreatePrecedences(LineLikeTask);
-            return LineLikeTask;
+            var LineTask = new LineTask();
+            base.ToBaseTask((BaseTask) LineTask);
+            LineTask.ContourPenalty = ContourPenalty;
+            CreateLinesAndContours(LineTask);
+            CreatePrecedences(LineTask);
+            return LineTask;
         }
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
@@ -112,7 +112,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return seq;
         }
-        private void CreateLinesAndContours(LineLikeTask lineLikeTask)
+        private void CreateLinesAndContours(LineTask lineTask)
         {
             foreach (var line in LineList)
             {
@@ -120,34 +120,34 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 {
                     UserID = line.LineID,
                     Name = line.Name,
-                    NodeA = FindPosition(line.PositionIDA, lineLikeTask.PositionMatrix.Positions),
-                    NodeB = FindPosition(line.PositionIDB, lineLikeTask.PositionMatrix.Positions),
+                    NodeA = FindPosition(line.PositionIDA, lineTask.PositionMatrix.Positions),
+                    NodeB = FindPosition(line.PositionIDB, lineTask.PositionMatrix.Positions),
                     Bidirectional = line.Bidirectional,
                     ResourceID = line.ResourceID
                 };
-                lineLikeTask.Lines.Add(lineObj);
+                lineTask.Lines.Add(lineObj);
             
-                Contour contourObj = FindContour(line.ContourID, lineLikeTask.Contours);
+                Contour contourObj = FindContour(line.ContourID, lineTask.Contours);
                 if(contourObj == null)
                 {
                     contourObj = new Contour()
                     {
                         UserID = line.ContourID
                     };
-                    lineLikeTask.Contours.Add(contourObj);
+                    lineTask.Contours.Add(contourObj);
                 }
                 contourObj.Lines.Add(lineObj);
             }
         }
-        private void CreatePrecedences(LineLikeTask lineLikeTask)
+        private void CreatePrecedences(LineTask lineTask)
         {
             foreach (var linePrec in LinePrecedences)
             {
-                var before = FindLine(linePrec.BeforeID, lineLikeTask.Lines);
-                var after = FindLine(linePrec.AfterID, lineLikeTask.Lines);
+                var before = FindLine(linePrec.BeforeID, lineTask.Lines);
+                var after = FindLine(linePrec.AfterID, lineTask.Lines);
                 if (before == null || after == null)
                     throw new SeqException("Phrase error line precedence user id not found!");
-                lineLikeTask.LinePrecedences.Add(new GTSP.GTSPPrecedenceConstraint()
+                lineTask.LinePrecedences.Add(new GTSP.GTSPPrecedenceConstraint()
                 {
                     Before = before,
                     After = after
@@ -156,11 +156,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
 
             foreach (var contourPrec in ContourPrecedences)
             {
-                var before = FindContour(contourPrec.BeforeID, lineLikeTask.Contours);
-                var after = FindContour(contourPrec.AfterID, lineLikeTask.Contours);
+                var before = FindContour(contourPrec.BeforeID, lineTask.Contours);
+                var after = FindContour(contourPrec.AfterID, lineTask.Contours);
                 if (before == null || after == null)
                     throw new SeqException("Phrase error contour precedence user id not found!");
-                lineLikeTask.ContourPrecedences.Add(new GTSP.GTSPPrecedenceConstraint()
+                lineTask.ContourPrecedences.Add(new GTSP.GTSPPrecedenceConstraint()
                 {
                     Before = before,
                     After = after

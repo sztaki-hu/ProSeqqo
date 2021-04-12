@@ -8,20 +8,20 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SequencePlanner.GTSPTask.Task.LineLike
+namespace SequencePlanner.GTSPTask.Task.LineTask
 {
-    public class LineLikeTask: BaseTask
+    public class LineTask: BaseTask
     {
         public List<Line> Lines { get; set; }
         public List<Contour> Contours { get; set; }
         public double ContourPenalty { get; set; }
         public List<GTSPPrecedenceConstraint> LinePrecedences { get; set; }
         public List<GTSPPrecedenceConstraint> ContourPrecedences { get; set; }
-        private LineLikeGTSPRepresentation GTSPRepresentation { get; set; }
+        private LineGTSPRepresentation GTSPRepresentation { get; set; }
         private int MAX_SEQUENCING_ID = 0;
         private readonly double PenaltyEpsilon = 0;
 
-        public LineLikeTask():base()
+        public LineTask():base()
         {
             Lines = new List<Line>();
             Contours = new List<Contour>();
@@ -37,7 +37,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             if (Validate)
                 ValidateModel();
             DepotMapper.Map(this);
-            SeqLogger.Info("RunModel started!", nameof(LineLikeTask));
+            SeqLogger.Info("RunModel started!", nameof(LineTask));
             SeqLogger.Indent++;
             GenerateModel();
             var orToolsParam = new ORToolsTask()
@@ -54,7 +54,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             result = (LineTaskResult)DepotMapper.ResolveSolution(result);
             DepotMapper.ReverseMap(this);
             SeqLogger.Indent--;
-            SeqLogger.Debug("RunModel finished!", nameof(LineLikeTask));
+            SeqLogger.Debug("RunModel finished!", nameof(LineTask));
             Timer.Stop();
             result.FullTime = Timer.Elapsed;
             result.ToLog(LogLevel.Info);
@@ -64,7 +64,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
         protected long[][] CreateInitialRout()
         {
 
-            var ORPreSolver = new ORToolsLineLikePreSolverWrapper(new ORToolsLineLikePreSolverTask()
+            var ORPreSolver = new ORToolsLinePreSolverWrapper(new ORToolsLinePreSolverTask()
             {
                 NumberOfNodes = Lines.Count,
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
@@ -89,7 +89,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
 
         private void GenerateModel()
         {
-            SeqLogger.Info("Generate model started!", nameof(LineLikeTask));
+            SeqLogger.Info("Generate model started!", nameof(LineTask));
             SeqLogger.Indent++;
             //AddVirtualStart(); //Handle Cyclic sequence with start/finish depots
             foreach (var line in Lines)
@@ -97,7 +97,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 line.SequencingID = MAX_SEQUENCING_ID++;
             }
 
-            GTSPRepresentation = new LineLikeGTSPRepresentation()
+            GTSPRepresentation = new LineGTSPRepresentation()
             {
                 DisjointConstraints = CreateDisjointConstraints(),
                 PrecedenceConstraints = CreatePrecedenceConstraints(),
@@ -108,12 +108,12 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             DepotMapper.OverrideWeights(GTSPRepresentation);
             GTSPRepresentation.RoundedMatrix = ScaleUpWeights(GTSPRepresentation.Matrix);
             SeqLogger.Indent--;
-            SeqLogger.Info("Generate model finished!", nameof(LineLikeTask));
+            SeqLogger.Info("Generate model finished!", nameof(LineTask));
         }
 
         public override void ValidateModel()
         {
-            var validator = new LineLikeTaskValidator();
+            var validator = new LineTaskValidator();
             validator.Validate(this);
         }
 
@@ -159,7 +159,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                     }
                 }
             }
-            SeqLogger.Info("Order precedences created!", nameof(LineLikeTask));
+            SeqLogger.Info("Order precedences created!", nameof(LineTask));
             return precedenceConstraints;
         }
 
@@ -201,7 +201,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 finishConstraint.Add(DepotMapper.ORToolsFinishDepot);
                 disjointConstraints.Add(finishConstraint);
             }
-            SeqLogger.Info("Disjoint precedences created!", nameof(LineLikeTask));
+            SeqLogger.Info("Disjoint precedences created!", nameof(LineTask));
             return disjointConstraints;
         }
 
@@ -226,7 +226,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 }
             }
             SetWeightsForVirtualStart(matrix); //Handle Cyclic sequence with start/finish depots with override of matrix
-            SeqLogger.Info("GTSP matrix created!", nameof(LineLikeTask));
+            SeqLogger.Info("GTSP matrix created!", nameof(LineTask));
             return matrix;
         }
 
@@ -271,7 +271,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             }
             Lines.Add(line);
             virtualStart = line;
-            SeqLogger.Info("Virtual start and finish handled!", nameof(LineLikeTask));
+            SeqLogger.Info("Virtual start and finish handled!", nameof(LineTask));
         }
 
         private void SetWeightsForVirtualStart(double[,] matrix)
@@ -377,7 +377,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                 }
             }
             taskResult.FullLength = taskResult.TravelLength + taskResult.LineLength;
-            SeqLogger.Debug("Solution resolved!", nameof(LineLikeTask));
+            SeqLogger.Debug("Solution resolved!", nameof(LineTask));
             return taskResult;
         }
 

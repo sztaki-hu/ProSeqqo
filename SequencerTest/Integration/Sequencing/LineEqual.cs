@@ -3,7 +3,7 @@ using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using SequencePlanner.GTSP;
-using SequencePlanner.GTSPTask.Task.LineLike;
+using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.Model;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace SequencerTest.Integration.Sequencing
 {
     [TestClass]
-    public class LineLikeEqual
+    public class LineEqual
     {
         GTSPNode A;
         GTSPNode B;
@@ -102,7 +102,7 @@ namespace SequencerTest.Integration.Sequencing
         [TestMethod]
         public void Running()
         {
-            LineLikeTask task = new LineLikeTask()
+            LineTask task = new LineTask()
             {
                 Dimension = 3,
                 TimeLimit = 5000,

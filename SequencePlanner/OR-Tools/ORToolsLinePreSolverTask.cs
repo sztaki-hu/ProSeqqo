@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.OR_Tools
 {
-    public class ORToolsLineLikePreSolverTask: IORToolsPreSolverTask
+    public class ORToolsLinePreSolverTask: IORToolsPreSolverTask
     {
         public int NumberOfNodes { get; set; }
         public int StartDepot { get; set; }

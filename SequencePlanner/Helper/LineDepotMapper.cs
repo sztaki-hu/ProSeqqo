@@ -1,6 +1,6 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.GTSPTask.Task.LineLike;
+using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.Model;
 using System;
 using System.Collections.Generic;
@@ -19,11 +19,11 @@ namespace SequencePlanner.Helper
         public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequencingID; else return -1; } }
         public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequencingID; else return -1; } }
         private DepotChangeType DepotChangeType { get; set; }
-        private LineLikeTask Task { get; set; }
+        private LineTask Task { get; set; }
         
         public void Map(BaseTask task)
         {
-            Task = (LineLikeTask)task;
+            Task = (LineTask)task;
             StartDepot = task.StartDepot;
             FinishDepot = task.FinishDepot;
             if (task.CyclicSequence)
@@ -52,13 +52,13 @@ namespace SequencePlanner.Helper
 
         public void ReverseMap(BaseTask task)
         {
-            Task = (LineLikeTask)task;
+            Task = (LineTask)task;
             switch (DepotChangeType)
             {
                 case DepotChangeType.CyclicStartDepot: CyclicStartDepotReverse(); break;
-                case DepotChangeType.NotCyclicNoDepot: NotCyclicNoDepotReverse((LineLikeTask)task); break;
-                case DepotChangeType.NotCyclicOnlyStartDepot: NotCyclicOnlyStartDepotReverse((LineLikeTask)task); break;
-                case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepotReverse((LineLikeTask)task); break;
+                case DepotChangeType.NotCyclicNoDepot: NotCyclicNoDepotReverse((LineTask)task); break;
+                case DepotChangeType.NotCyclicOnlyStartDepot: NotCyclicOnlyStartDepotReverse((LineTask)task); break;
+                case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepotReverse((LineTask)task); break;
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepotReverse(); break;
             }
         }
@@ -136,15 +136,15 @@ namespace SequencePlanner.Helper
         {
             Task.Lines.Remove(StartLine);
         }
-        private void NotCyclicNoDepotReverse(LineLikeTask task)
+        private void NotCyclicNoDepotReverse(LineTask task)
         {
             Task.Lines.Remove(StartLine);
         }
-        private void NotCyclicOnlyStartDepotReverse(LineLikeTask task)
+        private void NotCyclicOnlyStartDepotReverse(LineTask task)
         {
             Task.Lines.Remove(StartLine);
         }
-        private void NotCyclicOnlyFinishDepotReverse(LineLikeTask task)
+        private void NotCyclicOnlyFinishDepotReverse(LineTask task)
         {
             Task.Lines.Remove(FinishLine);
         }
@@ -198,7 +198,7 @@ namespace SequencePlanner.Helper
         private Line StartLine;
         private Line FinishLine;
         
-        private Position CreateVirtualNode(LineLikeTask task,string name)
+        private Position CreateVirtualNode(LineTask task,string name)
         {
             Position = new Position()
             {
@@ -253,7 +253,7 @@ namespace SequencePlanner.Helper
             };
         }
 
-        private void DeleteVirualNode(LineLikeTask task)
+        private void DeleteVirualNode(LineTask task)
         {
             //task.Processes.Remove(Process);
             //task.Alternatives.Remove(Alternative);

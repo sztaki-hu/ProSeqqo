@@ -249,7 +249,7 @@ namespace LineAnimation
 
         public void OpenFile(string file)
         {
-            LineLikeResultSerializer serializer = new LineLikeResultSerializer();
+            LineResultSerializer serializer = new LineResultSerializer();
             LineTaskResult result = null;
             if(file.Contains(".json"))
                 result = serializer.ImportJSON(file);
