@@ -1,7 +1,6 @@
 ﻿using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System;
-using System.Collections.Generic;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
@@ -18,29 +17,23 @@ namespace SequencePlanner.Function.DistanceFunction
                 throw new SeqException("MaxDistanceFunction A/B position null!");
             if (A.Dimension != B.Dimension)
                 throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
-            var givenDistance = GetStrictEdgeWeight(A, B);
-            if (givenDistance != null)
-                return givenDistance.Weight;
+
+            if (A.Vector.Length == B.Vector.Length)
+            {
+                double max = 0;
+                for (int i = 0; i < A.Vector.Length; i++)
+                {
+                    if (Math.Abs(A.Vector[i] - B.Vector[i]) > max)
+                    {
+                        max = Math.Abs(A.Vector[i] - B.Vector[i]);
+                    }
+                }
+                return max;
+            }
             else
             {
-                if (A.Vector.Length == B.Vector.Length)
-                {
-                    double max = 0;
-                    for (int i = 0; i < A.Vector.Length; i++)
-                    {
-                        if (Math.Abs(A.Vector[i] - B.Vector[i]) > max)
-                        {
-                            max = Math.Abs(A.Vector[i] - B.Vector[i]);
-                        }
-                    }
-                    return max;
-                }
-                else
-                {
-                    SeqLogger.Error("MaxDistanceFunction find dimension mismatch position userids: " + A.UserID + "-" + B.UserID);
-                    return 0;
-                }
-
+                SeqLogger.Error("MaxDistanceFunction find dimension mismatch position userids: " + A.UserID + "-" + B.UserID);
+                return 0;
             }
         }
 

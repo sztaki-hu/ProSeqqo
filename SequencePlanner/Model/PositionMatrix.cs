@@ -12,6 +12,8 @@ namespace SequencePlanner.Model
         public double[,] Matrix { get; set; }
         public IDistanceFunction DistanceFunction { get; set; }
         public IResourceFunction ResourceFunction { get; set; }
+        public StrictEdgeWeightSet StrictUserEdgeWeights { get; set; }
+        public StrictEdgeWeightSet StrictSystemEdgeWeights { get; set; }
         public bool UseLineLengthInWeight { get; set; }
         public bool UseResourceInLineLength { get; set; }
 
@@ -21,6 +23,8 @@ namespace SequencePlanner.Model
             Positions = positions;
             DistanceFunction = distanceFunction;
             ResourceFunction = resourceFunction;
+            StrictUserEdgeWeights = new StrictEdgeWeightSet();
+            StrictSystemEdgeWeights = new StrictEdgeWeightSet();
             Validate();
             Init();
         }
@@ -28,6 +32,8 @@ namespace SequencePlanner.Model
         public PositionMatrix()
         {
             Positions = new List<GTSPNode>();
+            StrictUserEdgeWeights = new StrictEdgeWeightSet();
+            StrictSystemEdgeWeights = new StrictEdgeWeightSet();
         }
 
 
@@ -72,7 +78,11 @@ namespace SequencePlanner.Model
                 weight = 0;
             else
             {
-                weight = DistanceFunction.ComputeDistance(A.Out, B.In);
+                var strict = GetStrictEdgeWeight(A.Out, B.In);
+                if (strict is not null)
+                    weight = strict.Weight;
+                else
+                    weight = DistanceFunction.ComputeDistance(A.Out, B.In);
                 weight = ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
             }
             if (A.AdditionalWeightOut > 0)
@@ -97,6 +107,23 @@ namespace SequencePlanner.Model
             return weight;
         }
 
+        public StrictEdgeWeight GetStrictEdgeWeight(Position A, Position B)
+        {
+            var user = StrictUserEdgeWeights.Get(A, B);
+            var system = StrictSystemEdgeWeights.Get(A, B);
+            if (system != null)
+            {
+                if (user != null)
+                    SeqLogger.Warning("System generated edge weight ovveride user given, between positions with " + A.UserID + ", " + B.UserID + " user id.", nameof(DistanceFunction));
+                return system;
+            }
+            if (user != null)
+            {
+                return user;
+            }
+            return null;
+        }
+
         public void Validate()
         {
             if (DistanceFunction == null)
@@ -113,6 +140,10 @@ namespace SequencePlanner.Model
         {
             DistanceFunction.ToLog(level);
             ResourceFunction.ToLog(level);
+            SeqLogger.WriteLog(level, "User defined strict edge weights: ", nameof(DistanceFunction));
+            StrictUserEdgeWeights.ToLog(level);
+            SeqLogger.WriteLog(level, "System defined strict edge weights: ", nameof(DistanceFunction));
+            StrictSystemEdgeWeights.ToLog(level);
             SeqLogger.WriteLog(level, "Positions:", nameof(PositionMatrix));
             SeqLogger.Indent++;
             foreach (var position in Positions)

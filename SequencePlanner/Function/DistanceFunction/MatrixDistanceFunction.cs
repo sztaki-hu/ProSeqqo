@@ -25,26 +25,21 @@ namespace SequencePlanner.Function.DistanceFunction
             if (A.Dimension != B.Dimension)
                 throw new SeqException("MatrixDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
 
-            var givenDistance = GetStrictEdgeWeight(A, B);
-            if (givenDistance != null)
-                return givenDistance.Weight;
-            else
+            var aid = -1;
+            var bid = -1;
+            for (int i = 0; i < IDList.Count; i++)
             {
-                var aid = -1;
-                var bid = -1;
-                for (int i = 0; i < IDList.Count; i++)
-                {
-                    if (IDList[i] == A.UserID)
-                        aid = i;
-                    if (IDList[i] == B.UserID)
-                        bid = i;
-                }
-                if (aid == -1)
-                    throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + A.UserID + "] " + A.Name);
-                if (bid == -1)
-                    throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + B.UserID + "] " + B.Name);
-                return CostMatrix[aid][bid];
+                if (IDList[i] == A.UserID)
+                    aid = i;
+                if (IDList[i] == B.UserID)
+                    bid = i;
             }
+            if (aid == -1)
+                throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + A.UserID + "] " + A.Name);
+            if (bid == -1)
+                throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + B.UserID + "] " + B.Name);
+            return CostMatrix[aid][bid];
+           
         }
 
         public override void Validate()

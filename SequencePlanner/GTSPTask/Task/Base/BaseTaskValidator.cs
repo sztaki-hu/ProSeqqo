@@ -39,9 +39,9 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
         //Q13
         private void CheckStrictEdgeWeights(BaseTask task)
         {
-            if (task.PositionMatrix.DistanceFunction.StrictUserEdgeWeights is null)
+            if (task.PositionMatrix.StrictUserEdgeWeights is null)
                 throw new SeqException("PositionMatrix.DistanceFunction.StrictUserEdgeWeights are not initialized.");
-            foreach (var weights in task.PositionMatrix.DistanceFunction.StrictUserEdgeWeights.GetAll())
+            foreach (var weights in task.PositionMatrix.StrictUserEdgeWeights.GetAll())
             {
                 var findA = false;
                 var findB = false;

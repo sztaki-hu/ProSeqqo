@@ -29,6 +29,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public List<PositionSerializationObject> PositionList { get; set; }
         public DistanceFunctionSerializationObject DistanceFunction {get;set;}
         public ResourceFunctionSerializationObject ResourceFunction {get;set;}
+        public StrictEdgeWeightSetSerializationObject StrictUserEdgeWeights { get; set; }
         public string LocalSearchStrategy { get; set; }
         public bool BidirectionLineDefault { get; set; }
         public bool UseLineLengthInWeight { get; set; }
@@ -62,6 +63,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             DistanceFunction = new DistanceFunctionSerializationObject(baseTask.PositionMatrix);
             ResourceFunction = new ResourceFunctionSerializationObject(baseTask.PositionMatrix);
+            StrictUserEdgeWeights = new StrictEdgeWeightSetSerializationObject(baseTask.PositionMatrix.StrictUserEdgeWeights);
             UseResourceInLineLength = false;
             UseLineLengthInWeight = false;
             LocalSearchStrategy = baseTask.LocalSearchStrategy.ToString();
@@ -106,6 +108,12 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     seq += item.ToSEQ();
                 }
             }
+            if (StrictUserEdgeWeights != null && StrictUserEdgeWeights.Weights.Count > 0)
+            {
+                seq += "StrictEdgeWeights: " + newline;
+                seq += StrictUserEdgeWeights.ToSEQ();
+
+            }
             return seq;
         }
 
@@ -133,7 +141,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             if ((FinishDepot != null && FinishDepot != -1) && task.FinishDepot == null)
                 SeqLogger.Error("FinishDepot not exist as position!", nameof(BaseTaskSerializationObject));
             task.TimeLimit = TimeLimit;
-            task.PositionMatrix.DistanceFunction = DistanceFunction.ToDistanceFunction(task.PositionMatrix.Positions);
+            task.PositionMatrix.StrictUserEdgeWeights = StrictUserEdgeWeights.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);
+
+            task.PositionMatrix.DistanceFunction = DistanceFunction.ToDistanceFunction();
             task.PositionMatrix.ResourceFunction = ResourceFunction.ToResourceFunction();
             task.UseMIPprecedenceSolver = UseMIPprecedenceSolver;
             task.LocalSearchStrategy = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategy);
@@ -160,6 +170,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             ResourceFunction = new ResourceFunctionSerializationObject();
             ResourceFunction.FillBySEQTokens(tokenizer);
             LocalSearchStrategy = tokenizer.GetStringByHeader("LocalSearchStrategy");
+            StrictUserEdgeWeights = tokenizer.GetStrictEdgeWeightSet("StrictEdgeWeights");
         }
     }
 }

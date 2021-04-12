@@ -1,7 +1,6 @@
 ﻿using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System;
-using System.Collections.Generic;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
@@ -11,7 +10,6 @@ namespace SequencePlanner.Function.DistanceFunction
         public double[] MaxSpeed;
         protected double[] JointThresholdTime;
         protected double[] JointThresholdDist;
-
 
         public TrapezoidTimeDistanceFunction(double[] maxAcceleration, double[] maxSpeed) : base()
         {
@@ -24,11 +22,7 @@ namespace SequencePlanner.Function.DistanceFunction
 
         public override double ComputeDistance(Position A, Position B)
         {
-            var givenDistance = GetStrictEdgeWeight(A, B);
-            if (givenDistance != null)
-                return givenDistance.Weight;
-            else
-                return TrapezoidTimeCalculation(A, B, false);
+            return TrapezoidTimeCalculation(A, B, false);
         }
 
         public override void Validate()

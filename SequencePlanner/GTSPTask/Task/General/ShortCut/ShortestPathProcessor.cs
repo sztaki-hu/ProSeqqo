@@ -148,7 +148,7 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
                 {
                     GeneralTask.PositionMatrix.Positions.Add(position);
                 }
-                GeneralTask.PositionMatrix.DistanceFunction.StrictSystemEdgeWeights.DeleteAll();              //Delete the edge weight ovverides of shortcuts.
+                GeneralTask.PositionMatrix.StrictSystemEdgeWeights.DeleteAll();              //Delete the edge weight ovverides of shortcuts.
             }         
 
             for (int i = 0; i < GeneralTask.PositionPrecedence.Count; i++)                                    //Remove precedences of shortcuts
