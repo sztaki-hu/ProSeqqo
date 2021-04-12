@@ -1,5 +1,5 @@
-TaskType: LineLike
-DistanceFunction: EuclidianDistance
+TaskType: Line
+DistanceFunction: Euclidian
 Dimension: 2
 TimeLimit: 60000
 WeightMultiplier: Auto
@@ -8,7 +8,7 @@ CyclicSequence: False
 #FinishDepot: 218
 ContourPenalty: 100
 BidirectionLineDefault: True
-ResourceSource: NoResource
+ResourceSource: Off
 #LocalSearchStrategie: GuidedLocalSearch
 
 

@@ -1,5 +1,5 @@
-TaskType: LineLike
-DistanceFunction: EuclidianDistance
+TaskType: Line
+DistanceFunction: Euclidian
 Dimension: 2
 TimeLimit: 4000
 CyclicSequence: False
@@ -7,9 +7,9 @@ StartDepot: 1
 #FinishDepot: 218
 ContourPenalty: 1
 BidirectionLineDefault: True
-ResourceSource: ConstantResource
+ResourceSource: Constant
 ResourceDistanceFunction: Add
-ResourceCostConstant: 1
+ResourceConstant: 1
 UseMIPprecedenceSolver: True
 
 PositionList:

@@ -1,6 +1,6 @@
-TaskType: PointLike/LineLike
+TaskType: General/LineLike
 Dimension: <int> 
-DistanceFunction: EuclidianDistance/MaxDistance/TrapezoidTime/ManhattanDistance/MatrixDistance
+DistanceFunction: Euclidian/Max/TrapezoidTime/Manhattan/MatrixDistance
 TrapezoidParams/Speed: <double[]>
 TrapezoidParams/Acceleration: <double[]>
 LocalSearchStrategie: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
@@ -9,11 +9,11 @@ StartDepot: <PositionID>
 FinishDepot: <PositionID>
 TimeLimit: <int> 
 ContourPenalty: <int>
-ResourceSource: NoResource/ConstantResource/MatrixResource
+ResourceSource: Off/ConstantResource/MatrixResource
 BidirectionLineDefault: True/False
 ResourceDistanceFunction: Add/Max
-ResourceCostConstant: <double>
-MatrixResource:
+ResourceConstant: <double>
+ResourceMatrix:
 1;2;3 #ResourceIDHeader
 5;5;5 #CostMatrix
 8;8;8

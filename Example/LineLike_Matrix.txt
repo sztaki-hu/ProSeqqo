@@ -1,4 +1,4 @@
-TaskType: LineLike
+TaskType: Line
 DistanceFunction: MatrixDistance
 Dimension: 2
 TimeLimit: 20
@@ -7,9 +7,9 @@ CyclicSequence: True
 StartDepot: 5
 #FinishDepot: 8
 ContourPenalty: 0
-ResourceSource: NoResource
+ResourceSource: Off
 #ResourceDistanceFunction: Add
-#ResourceCostConstant: 2
+#ResourceConstant: 2
 UseMIPprecedenceSolver: True
 BidirectionLineDefault: True
 

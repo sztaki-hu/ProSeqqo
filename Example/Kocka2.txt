@@ -1,11 +1,11 @@
-TaskType: PointLike
+TaskType: General
 Dimension: 2
 WeightMultiplier: Auto
 CyclicSequence: True
 StartDepot: 0
 TimeLimit: 10000
-DistanceFunction: EuclidianDistance
-ResourceSource: NoResource
+DistanceFunction: Euclidian
+ResourceSource: Off
 
 PositionList:
 #+-------+---------------------+------------------+

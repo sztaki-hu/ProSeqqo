@@ -1,6 +1,6 @@
-TaskType: PointLike
+TaskType: General
 Dimension: <int>
-DistanceFunction: EuclidianDistance/MaxDistance/TrapezoidTime/ManhattanDistance/MatrixDistance
+DistanceFunction: Euclidian/Max/TrapezoidTime/Manhattan/MatrixDistance
 LocalSearchStrategie: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
 TrapezoidParams/Speed: <double[]>
 TrapezoidParams/Acceleration: <double[]>
@@ -8,11 +8,11 @@ CyclicSequence: True/False
 StartDepot: <PositionID>
 FinishDepot: <PositionID>
 TimeLimit: <int> 
-ResourceSource: NoResource/ConstantResource/MatrixResource
+ResourceSource: Off/ConstantResource/MatrixResource
 BidirectionLineDefault: True/False
 ResourceDistanceFunction: Add/Max
-ResourceCostConstant: <double>
-MatrixResource:
+ResourceConstant: <double>
+ResourceMatrix:
 1;2;3 #ResourceIDHeader
 5;5;5 #CostMatrix
 8;8;8

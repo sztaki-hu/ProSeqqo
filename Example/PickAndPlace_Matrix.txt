@@ -1,4 +1,4 @@
-TaskType: PointLike
+TaskType: General
 Validate: True
 Dimension: 0
 WeightMultiplier: 10
@@ -8,11 +8,11 @@ FinishDepot: 6
 TimeLimit: 20
 DistanceFunction: MatrixDistance
 ResourceDistanceFunction: Max
-ResourceSource: MatrixResource
-ResourceCostConstant: 5
+ResourceSource: Matrix
+ResourceConstant: 5
 UseMIPprecedenceSolver: False
 
-MatrixResource:
+ResourceMatrix:
 1;5
 99;88
 77;66

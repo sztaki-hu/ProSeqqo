@@ -1,6 +1,6 @@
-TaskType: PointLike
+TaskType: General
 Dimension: 6
-DistanceFunction: TrapezoidTimeDistance
+DistanceFunction: TrapezoidTime
 TrapezoidSpeed: [0.266667;0.266667;0.266667;0.266667;0.266667;0.266667]
 TrapezoidAcceleration: [0.666667;0.666667;0.666667;0.666667;0.666667;0.666667]
 WeightMultiplier: Auto
@@ -8,8 +8,8 @@ CyclicSequence: False
 StartDepot: 0
 TimeLimit: 10000
 ResourceDistanceFunction: Add
-ResourceSource: ConstantResource
-ResourceCostConstant: 5
+ResourceSource: Constant
+ResourceConstant: 5
 UseResources: False
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: False

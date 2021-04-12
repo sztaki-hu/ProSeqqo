@@ -1,4 +1,4 @@
-TaskType: PointLike
+TaskType: General
 Validate: True
 Dimension: 0
 CyclicSequence: True
@@ -6,8 +6,8 @@ StartDepot: 1
 #FinishDepot: 6
 TimeLimit: 2000
 DistanceFunction: MatrixDistance
-#ResourceSource: NoResource
-ResourceSource: MatrixResource
+#ResourceSource: Off
+ResourceSource: Matrix
 ResourceDistanceFunction: Max
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: False
@@ -16,7 +16,7 @@ BidirectionLineDefault: True
 UseLineLengthInWeight: True
 UseResourceInLineLength: True
 
-MatrixResource:
+ResourceMatrix:
 1;5
 99;88
 77;66
