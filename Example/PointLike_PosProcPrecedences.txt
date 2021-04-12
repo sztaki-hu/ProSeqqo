@@ -3,7 +3,7 @@ Dimensions: 0
 WeightMultiplier: Auto
 CyclicSequence: True
 StartDepot: 1
-DistanceFunction: MatrixDistance
+DistanceFunction: Matrix
 ResourceSource: Off
 TimeLimit: 20
 

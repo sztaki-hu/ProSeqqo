@@ -1,6 +1,6 @@
 TaskType: General
 Dimension: 6
-DistanceFunction: MatrixDistance
+DistanceFunction: Matrix
 TrapezoidSpeed: [0.266667;0.266667;0.266667;0.266667;0.266667;0.266667]
 TrapezoidAcceleration: [0.666667;0.666667;0.666667;0.666667;0.666667;0.666667]
 WeightMultiplier: Auto
