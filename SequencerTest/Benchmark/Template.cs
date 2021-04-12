@@ -93,7 +93,7 @@ namespace SequencerTest.Benchmark
 
             if (TaskType != TaskType.Unknown && FormatType != FormatType.Unknown)
             {
-                if (TaskType == TaskType.PoitnLike)
+                if (TaskType == TaskType.General)
                 {
                     try
                     {
@@ -192,7 +192,7 @@ namespace SequencerTest.Benchmark
                 
                 if (TaskType == TaskType.Line && LineResults is not null && LineResults.Count>i)
                     tmp += LineResults[i].ToCSV();
-                if (TaskType == TaskType.PoitnLike && PointResults is not null && PointResults.Count > i)
+                if (TaskType == TaskType.General && PointResults is not null && PointResults.Count > i)
                     tmp += PointResults[i].ToCSV();
                 
                 if(ParameterCombinatrions.Count>i)
@@ -216,7 +216,7 @@ namespace SequencerTest.Benchmark
                 if (line.Contains("Line"))
                     return TaskType.Line;
                 if (line.Contains("General"))
-                    return TaskType.PoitnLike;
+                    return TaskType.General;
             }
             return TaskType.Unknown;
         }

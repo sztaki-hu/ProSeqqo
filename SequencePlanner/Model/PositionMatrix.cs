@@ -1,7 +1,6 @@
 ﻿using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Helper;
-using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Model
@@ -16,6 +15,7 @@ namespace SequencePlanner.Model
         public bool UseLineLengthInWeight { get; set; }
         public bool UseResourceInLineLength { get; set; }
 
+
         public PositionMatrix(List<GTSPNode> positions, IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
         {
             Positions = positions;
@@ -29,6 +29,7 @@ namespace SequencePlanner.Model
         {
             Positions = new List<GTSPNode>();
         }
+
 
         public void Init()
         {
@@ -95,7 +96,6 @@ namespace SequencePlanner.Model
             }
             return weight;
         }
-
 
         public void Validate()
         {

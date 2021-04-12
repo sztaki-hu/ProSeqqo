@@ -62,11 +62,34 @@ namespace SequencePlanner.Model
 
         public override string ToString()
         {
-            var str = Name;
-            str += " [Global:" + GlobalID;
-            str += "|UserID:" + UserID;
-            str += "|SeqID:" + SequencingID + "]";
-            return str;
+            return base.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Line node = (Line)obj;
+                base.Equals((BaseNode)node);
+                if (!node.NodeA.Equals(NodeA))
+                    return false;
+                if (node.NodeB.Equals(NodeB))
+                    return false;
+                if (node.Bidirectional != Bidirectional)
+                    return false;
+                if (node.Length != Length)
+                    return false;
+                return true;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode() & NodeA.GetHashCode() & NodeB.GetHashCode() & Bidirectional.GetHashCode() & Length.GetHashCode();
         }
     }
 }

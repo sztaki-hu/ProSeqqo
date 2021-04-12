@@ -1,5 +1,4 @@
 ﻿using SequencePlanner.Model;
-using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Task.General.ShortCut

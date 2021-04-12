@@ -2,7 +2,6 @@
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
-using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Task.General.ShortCut

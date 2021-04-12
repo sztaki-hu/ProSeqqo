@@ -1,7 +1,5 @@
 ﻿using SequencePlanner.Helper;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SequencePlanner.Model
 {
@@ -65,7 +63,6 @@ namespace SequencePlanner.Model
             if (anyDirection)
                 List.Remove(Get(B, A));
         }
-
 
         public void DeleteAll()
         {
