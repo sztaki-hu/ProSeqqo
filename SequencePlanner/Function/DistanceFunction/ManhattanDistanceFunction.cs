@@ -9,7 +9,7 @@ namespace SequencePlanner.Function.DistanceFunction
     {
         public ManhattanDistanceFunction(): base()
         {
-            FunctionName = "ManhattanDistance";
+            FunctionName = "Manhattan";
         }
 
         public override double ComputeDistance(Position A, Position B)

@@ -3,7 +3,7 @@ Dimensions: 2
 WeightMultiplier: Auto
 CyclicSequence: False
 StartDepot: 0
-DistanceFunction: EuclidianDistance
+DistanceFunction: Euclidian
 ResourceSource: Off
 TimeLimit: <*T*>
 UseMIPprecedenceSolver: <*MIP*>

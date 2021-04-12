@@ -24,7 +24,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             Function = positionMatrix.DistanceFunction.FunctionName;
             StrictUserEdgeWeights = new StrictEdgeWeightSetSerializationObject(positionMatrix.DistanceFunction.StrictUserEdgeWeights);
 
-            if (Function == "MatrixDistance")
+            if (Function == "Matrix")
             {
                 DistanceMatrix = new DistanceMatrixSerializationObject
                 {
@@ -115,12 +115,12 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         {
             IDistanceFunction newDistanceFunction = Function switch
             {
-                "EuclidianDistance" => new EuclidianDistanceFunction(),
-                "ManhattanDistance" => new ManhattanDistanceFunction(),
-                "MaxDistance" => new MaxDistanceFunction(),
-                "TrapezoidTimeDistance" => new TrapezoidTimeDistanceFunction(TrapezoidAcceleration, TrapezoidSpeed),
+                "Euclidian" => new EuclidianDistanceFunction(),
+                "Manhattan" => new ManhattanDistanceFunction(),
+                "Max" => new MaxDistanceFunction(),
+                "TrapezoidTime" => new TrapezoidTimeDistanceFunction(TrapezoidAcceleration, TrapezoidSpeed),
                 "TrapezoidTimeDistanceWithTimeBreaker" => new TrapezoidTimeWithTimeBreakerDistanceFunction(TrapezoidAcceleration, TrapezoidSpeed),
-                "MatrixDistance" => new MatrixDistanceFunction(DistanceMatrix.DistanceMatrix, DistanceMatrix.IDHeader),
+                "Matrix" => new MatrixDistanceFunction(DistanceMatrix.DistanceMatrix, DistanceMatrix.IDHeader),
                 _ => throw new SeqException("DistanceFunction is unknown!"),
             };
             newDistanceFunction.StrictUserEdgeWeights = StrictUserEdgeWeights.ToStrictEdgeWeightSet(positions);
@@ -132,12 +132,12 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             StrictUserEdgeWeights = tokenizer.GetStrictEdgeWeightSet("StrictEdgeWeights");
             if (Function != null)
             {
-                if (Function == "MatrixDistance")
+                if (Function == "Matrix")
                 {
                     DistanceMatrix = new DistanceMatrixSerializationObject();
                     DistanceMatrix.FillBySEQTokens(tokenizer);
                 }
-                if (Function == "TrapezoidTimeDistance" || Function == "TrapezoidTimeDistanceWithTimeBreaker")
+                if (Function == "TrapezoidTime" || Function == "TrapezoidTimeDistanceWithTimeBreaker")
                 {
                     TrapezoidAcceleration = tokenizer.GetDoubleVectorByHeader("TrapezoidAcceleration");
                     TrapezoidSpeed = tokenizer.GetDoubleVectorByHeader("TrapezoidSpeed");

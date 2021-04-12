@@ -12,7 +12,7 @@ namespace SequencePlanner.Function.DistanceFunction
 
         public MatrixDistanceFunction(List<List<double>> costMatrix, List<int> resourceIDList) : base()
         {
-            FunctionName = "MatrixDistance";
+            FunctionName = "Matrix";
             CostMatrix = costMatrix;
             IDList = resourceIDList;
             Validate();

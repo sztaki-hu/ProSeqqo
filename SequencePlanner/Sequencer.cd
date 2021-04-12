@@ -390,7 +390,7 @@
       <FileName>Function\DistanceFunction\MaxDistanceFunction.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Function.DistanceFunction.MatrixDistanceFunction">
+  <Class Name="SequencePlanner.Function.DistanceFunction.MatrixFunction">
     <Position X="16.5" Y="5.5" Width="2.25" />
     <InheritanceLine Type="SequencePlanner.Function.DistanceFunction.DistanceFunction" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
@@ -402,7 +402,7 @@
     </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAgAAAACAAAAAAABAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
-      <FileName>Function\DistanceFunction\MatrixDistanceFunction.cs</FileName>
+      <FileName>Function\DistanceFunction\MatrixFunction.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Function.DistanceFunction.ManhattanDistanceFunction">

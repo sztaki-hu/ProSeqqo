@@ -2,7 +2,7 @@ TaskType: PointLike
 Dimension: 2
 CyclicSequence: False
 StartDepot: 0
-DistanceFunction: EuclidianDistance
+DistanceFunction: Euclidian
 ResourceSource: Off
 TimeLimit: <*T*>
 UseMIPprecedenceSolver: <*MIP*>

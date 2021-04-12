@@ -19,7 +19,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             SeqLogger.Debug("Validation started!", nameof(BaseTaskValidator));
             SeqLogger.Indent++;
             CheckTaskType(baseTask);
-            if (baseTask.PositionMatrix.DistanceFunction.FunctionName!="MatrixDistance")
+            if (baseTask.PositionMatrix.DistanceFunction.FunctionName!="Matrix")
                 CheckDimension(baseTask.Dimension);
             CheckDistaceFunction(baseTask);
             CheckWeightMultiplier(baseTask);

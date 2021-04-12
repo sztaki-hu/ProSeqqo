@@ -3,7 +3,7 @@ Dimension: 3
 CyclicSequence: True
 StartDepot: 160
 TimeLimit: 0
-DistanceFunction: EuclidianDistance
+DistanceFunction: Euclidian
 ResourceDistanceFunction: Add
 ResourceSource: Constant
 ResourceCostConstant: 0

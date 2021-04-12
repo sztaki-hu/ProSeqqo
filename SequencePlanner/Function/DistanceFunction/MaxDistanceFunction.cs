@@ -9,7 +9,7 @@ namespace SequencePlanner.Function.DistanceFunction
     {
         public MaxDistanceFunction() : base()
         {
-            FunctionName = "MaxDistance";
+            FunctionName = "Max";
         }
 
         public override double ComputeDistance(Position A, Position B)
@@ -37,7 +37,7 @@ namespace SequencePlanner.Function.DistanceFunction
                 }
                 else
                 {
-                    SeqLogger.Error("ManhattanDistanceFunction find dimension mismatch position userids: " + A.UserID + "-" + B.UserID);
+                    SeqLogger.Error("MaxDistanceFunction find dimension mismatch position userids: " + A.UserID + "-" + B.UserID);
                     return 0;
                 }
 

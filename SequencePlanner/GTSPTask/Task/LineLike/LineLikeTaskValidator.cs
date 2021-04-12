@@ -18,7 +18,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             SeqLogger.Debug("Validation started!", nameof(LineLikeTaskValidator));
             SeqLogger.Indent++;
             
-            if (lineLikeTask.PositionMatrix.DistanceFunction.FunctionName!="MatrixDistance")
+            if (lineLikeTask.PositionMatrix.DistanceFunction.FunctionName!="Matrix")
                 CheckDimension(lineLikeTask.Dimension);
             CheckCycle(lineLikeTask.CyclicSequence, lineLikeTask.StartDepot, lineLikeTask.FinishDepot);
             CheckTimeLimit(lineLikeTask.TimeLimit);

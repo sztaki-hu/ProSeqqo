@@ -1,5 +1,5 @@
 TaskType: LineLike
-DistanceFunction: EuclidianDistance
+DistanceFunction: Euclidian
 Dimension: 2
 TimeLimit: 0
 WeightMultiplier: Auto

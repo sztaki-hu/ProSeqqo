@@ -5,7 +5,7 @@ CyclicSequence: False
 StartDepot: 1
 #FinishDepot: 6
 TimeLimit: 20
-DistanceFunction: MatrixDistance
+DistanceFunction: Matrix
 ResourceDistanceFunction: Max
 ResourceSource: Matrix
 ResourceCostConstant: 5

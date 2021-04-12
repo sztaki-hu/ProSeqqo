@@ -9,7 +9,7 @@ namespace SequencePlanner.Function.DistanceFunction
     {
         public EuclidianDistanceFunction(): base()
         {
-            FunctionName = "EuclidianDistance";
+            FunctionName = "Euclidian";
         }
 
         public override double ComputeDistance(Position A, Position B)

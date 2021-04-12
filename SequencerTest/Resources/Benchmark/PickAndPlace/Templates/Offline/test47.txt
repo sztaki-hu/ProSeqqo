@@ -4,7 +4,7 @@ WeightMultiplier: Auto
 CyclicSequence: True
 StartDepot: 1
 TimeLimit: <*T*>
-DistanceFunction: TrapezoidTimeDistance
+DistanceFunction: TrapezoidTime
 ResourceSource: Off
 TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
 TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]

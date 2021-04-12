@@ -1,5 +1,5 @@
 TaskType: LineLike
-DistanceFunction: MatrixDistance
+DistanceFunction: Matrix
 Dimension: 0
 TimeLimit: 20
 WeightMultiplier: Auto

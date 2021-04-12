@@ -98,7 +98,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             string newline = "\n";
             string seq = "";
             seq += DistanceFunction.ToSEQLong();
-            if (DistanceFunction.Function != "MatrixDistance")
+            if (DistanceFunction.Function != "Matrix")
             {
                 seq += "PositionList:" + newline;
                 foreach (var item in PositionList)
@@ -155,7 +155,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             Line.BIDIRECTIONAL_DEFAULT = BidirectionLineDefault;
             DistanceFunction = new DistanceFunctionSerializationObject();
             DistanceFunction.FillBySEQTokens(tokenizer);
-            if ((PositionList == null || PositionList.Count == 0) & DistanceFunction.Function == "MatrixDistance")
+            if ((PositionList == null || PositionList.Count == 0) & DistanceFunction.Function == "Matrix")
                 PositionList = DistanceFunction.DistanceMatrix.PositionList;
             ResourceFunction = new ResourceFunctionSerializationObject();
             ResourceFunction.FillBySEQTokens(tokenizer);

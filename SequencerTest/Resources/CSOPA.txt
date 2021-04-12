@@ -1,5 +1,5 @@
 TaskType: LineLike
-DistanceFunction: EuclidianDistance
+DistanceFunction: Euclidian
 Dimension: 2
 TimeLimit: 4000
 CyclicSequence: False

@@ -1,6 +1,6 @@
 TaskType: PointLike
 Dimension: 6
-DistanceFunction: TrapezoidTimeDistance
+DistanceFunction: TrapezoidTime
 TrapezoidSpeed: [0.266667;0.266667;0.266667;0.266667;0.266667;0.266667]
 TrapezoidAcceleration: [0.666667;0.666667;0.666667;0.666667;0.666667;0.666667]
 WeightMultiplier: Auto
