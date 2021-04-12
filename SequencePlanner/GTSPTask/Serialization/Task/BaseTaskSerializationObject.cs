@@ -30,6 +30,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public DistanceFunctionSerializationObject DistanceFunction {get;set;}
         public ResourceFunctionSerializationObject ResourceFunction {get;set;}
         public string LocalSearchStrategy { get; set; }
+        public bool BidirectionLineDefault { get; set; }
+        public bool UseLineLengthInWeight { get; set; }
+        public bool UseResourceInLineLength { get; set; }
 
         public BaseTaskSerializationObject()
         {
@@ -41,6 +44,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         {
             Dimension = baseTask.Dimension;
             CyclicSequence = baseTask.CyclicSequence;
+            BidirectionLineDefault = Line.BIDIRECTIONAL_DEFAULT;
             //WeightMultipier = baseTask.WeightMultipier;
             if (baseTask.StartDepot != null)
                 StartDepot = baseTask.StartDepot.UserID;
@@ -58,6 +62,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             DistanceFunction = new DistanceFunctionSerializationObject(baseTask.PositionMatrix);
             ResourceFunction = new ResourceFunctionSerializationObject(baseTask.PositionMatrix);
+            UseResourceInLineLength = false;
+            UseLineLengthInWeight = false;
             LocalSearchStrategy = baseTask.LocalSearchStrategy.ToString();
             Validate = baseTask.Validate;
         }
@@ -79,6 +85,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             seq += "TimeLimit: " + TimeLimit + newline;
             seq += "TimeLimit: " + TimeLimit + newline;
             seq += "LocalSearchStrategy: " + LocalSearchStrategy + newline;
+            seq += "BidirectionLineDefault: " + BidirectionLineDefault + newline;
+            seq += "UseResourceInLineLength: " + UseResourceInLineLength + newline;
+            seq += "UseLineLengthInWeight: " + UseLineLengthInWeight + newline;
             seq += DistanceFunction.ToSEQShort();
             seq += ResourceFunction.ToSEQ();
             return seq;
@@ -107,6 +116,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             task.Validate = Validate;
             task.CyclicSequence = CyclicSequence;
             task.PositionMatrix = new PositionMatrix();
+            Line.BIDIRECTIONAL_DEFAULT = BidirectionLineDefault;
+            task.PositionMatrix.UseResourceInLineLength = UseResourceInLineLength;
+            task.PositionMatrix.UseLineLengthInWeight = UseLineLengthInWeight;
             foreach (var pos in PositionList)
             {
                 var newPosition = pos.ToPosition();
@@ -137,6 +149,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             TimeLimit = tokenizer.GetIntByHeader("TimeLimit");
             PositionList = tokenizer.GetPositionListByHeader("PositionList");
             UseMIPprecedenceSolver = tokenizer.GetBoolByHeader("UseMIPprecedenceSolver");
+            BidirectionLineDefault = tokenizer.GetBoolByHeader("BidirectionLineDefault");
+            UseResourceInLineLength = tokenizer.GetBoolByHeader("UseResourceInLineLength");
+            UseLineLengthInWeight = tokenizer.GetBoolByHeader("UseLineLengthInWeight");
+            Line.BIDIRECTIONAL_DEFAULT = BidirectionLineDefault;
             DistanceFunction = new DistanceFunctionSerializationObject();
             DistanceFunction.FillBySEQTokens(tokenizer);
             if ((PositionList == null || PositionList.Count == 0) & DistanceFunction.Function == "MatrixDistance")

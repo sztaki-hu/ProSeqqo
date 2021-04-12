@@ -6,12 +6,14 @@ StartDepot: 1
 #FinishDepot: 6
 TimeLimit: 20
 DistanceFunction: MatrixDistance
-ResourceSource: NoResource
+#ResourceSource: NoResource
+ResourceSource: MatrixResource
 ResourceDistanceFunction: Max
 UseMIPprecedenceSolver: True
-UseLineLengths: True
 ResourceChangeInLine: True
-
+BidirectionLineDefault: True
+UseLineLengthInWeight: True
+UseResourceInLineLength: True
 
 MatrixResource:
 1;5
@@ -37,9 +39,9 @@ LineList:
 #+--------+-------------+-------------+------------------+---------------------------+
 #|  <int> |    <int>    |    <int>    |     <string>     |         True/False        |
 #+--------+-------------+-------------+------------------+---------------------------+
-7;3;4; LineP3P4;True
-8;4;5; LineP4P5;True
-9;5;6; LineP5P6;True
+7;3;4; LineP3P4
+8;4;5; LineP4P5
+9;5;6; LineP5P6; False
 
 ProcessHierarchy:
 #+-------------+---------+----------------+------------+

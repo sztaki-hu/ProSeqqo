@@ -13,6 +13,8 @@ namespace SequencePlanner.Model
         public double[,] Matrix { get; set; }
         public IDistanceFunction DistanceFunction { get; set; }
         public IResourceFunction ResourceFunction { get; set; }
+        public bool UseLineLengthInWeight { get; set; }
+        public bool UseResourceInLineLength { get; set; }
 
         public PositionMatrix(List<GTSPNode> positions, IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
         {
@@ -33,6 +35,12 @@ namespace SequencePlanner.Model
             foreach (var position in Positions)
             {
                 position.Node.SequencingID = MAX_SEQUENCING_ID++;
+
+                if (UseLineLengthInWeight)
+                {
+                    position.Weight = CalculateWeight(position.In, position.Out);
+                    position.AdditionalWeightIn += position.Weight;
+                }
             }
             Matrix = new double[MAX_SEQUENCING_ID, MAX_SEQUENCING_ID];
             for (int i = 0; i < Matrix.GetLength(0); i++)
@@ -73,6 +81,21 @@ namespace SequencePlanner.Model
             Matrix[A.Node.SequencingID, B.Node.SequencingID] = weight;
             return weight;
         }
+
+        public double CalculateWeight(Position A, Position B)
+        {
+            double weight = 0;
+            if (A.Virtual || B.Virtual)
+                weight = 0;
+            else
+            {
+                weight = DistanceFunction.ComputeDistance(A, B);
+                if(UseResourceInLineLength)
+                    weight = ResourceFunction.ComputeResourceCost(A, B, weight);
+            }
+            return weight;
+        }
+
 
         public void Validate()
         {

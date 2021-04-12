@@ -19,8 +19,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public List<OrderConstraintSerializationObject> ContourPrecedences { get; set; }
         [JsonProperty(Order = 10)]
         public double ContourPenalty { get; set; }
-        [JsonProperty(Order = 11)]
-        public bool BidirectionLineDefault { get; set; }
+
 
         public LineLikeTaskSerializationObject() : base()
         {
@@ -38,7 +37,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             LinePrecedences = new List<OrderConstraintSerializationObject>();
             ContourPrecedences = new List<OrderConstraintSerializationObject>();
             ContourPenalty = task.ContourPenalty;
-            BidirectionLineDefault = Line.BIDIRECTIONAL_DEFAULT;
             foreach (var contour in task.Contours)
             {
                 foreach (var line in contour.Lines)
@@ -78,7 +76,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             var LineLikeTask = new LineLikeTask();
             base.ToBaseTask((BaseTask) LineLikeTask);
             LineLikeTask.ContourPenalty = ContourPenalty;
-            Line.BIDIRECTIONAL_DEFAULT = BidirectionLineDefault;
             CreateLinesAndContours(LineLikeTask);
             CreatePrecedences(LineLikeTask);
             return LineLikeTask;
@@ -87,8 +84,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         {
             base.FillBySEQTokens(tokenizer);
             ContourPenalty = tokenizer.GetDoubleByHeader("ContourPenalty");
-            BidirectionLineDefault = tokenizer.GetBoolByHeader("BidirectionLineDefault");
-            Line.BIDIRECTIONAL_DEFAULT = BidirectionLineDefault;
             LinePrecedences = tokenizer.GetPrecedenceListByHeader("LinePrecedence");
             ContourPrecedences = tokenizer.GetPrecedenceListByHeader("ContourPrecedence");
             LineList = tokenizer.GetLineListByHeader("LineList");
@@ -99,7 +94,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             string newline = "\n";
             seq+=base.ToSEQShort();
             seq += "ContourPenalty: " + ContourPenalty + newline;
-            seq += "BidirectionLineDefault: " + BidirectionLineDefault + newline;
             seq += newline + "LinePrecedence:" + newline;
             foreach (var prec in LinePrecedences)
             {
