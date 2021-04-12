@@ -7,7 +7,7 @@ namespace SequencePlanner.Function.ResourceFunction
 {
     public class MatrixResourceFunction : IResourceFunction
     {
-        public string FunctionName { get { return "MatrixResource"; } }
+        public string FunctionName { get { return "ResourceMatrix"; } }
         //Header of the cost matrix with the ResourceIDs
         public List<int> CostMatrixIDHeader { get; set; }
         public List<List<double>> CostMatrix { get;}
@@ -64,7 +64,7 @@ namespace SequencePlanner.Function.ResourceFunction
                 throw new SeqException("ConstantResourceFunction.LinkingFunction not initalized.");
             }
             SeqLogger.Debug("ResourceFunction: " + FunctionName, nameof(MatrixResourceFunction));
-            SeqLogger.Debug("MatrixResource: " + CostMatrix.Count+"x"+CostMatrix.Count, nameof(MatrixResourceFunction));
+            SeqLogger.Debug("ResourceMatrix: " + CostMatrix.Count+"x"+CostMatrix.Count, nameof(MatrixResourceFunction));
             SeqLogger.Debug("LinkingFunction: " + LinkingFunction.FunctionName, nameof(MatrixResourceFunction));
         }
         public void ToLog(LogLevel level)

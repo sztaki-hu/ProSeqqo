@@ -3,7 +3,7 @@ Dimensions: 2
 CyclicSequence: False
 StartDepot: 0
 DistanceFunction: EuclidianDistance
-ResourceSource: NoResource
+ResourceSource: Off
 TimeLimit: <*T*>
 UseMIPprecedenceSolver: <*MIP*>
 LocalSearchStrategy: <*LSS*>

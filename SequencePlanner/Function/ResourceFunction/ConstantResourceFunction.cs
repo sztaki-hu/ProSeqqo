@@ -6,7 +6,7 @@ namespace SequencePlanner.Function.ResourceFunction
 {
     public class ConstantResourceFunction : IResourceFunction
     {
-        public string FunctionName { get { return "ConstantResource"; } }
+        public string FunctionName { get { return "Constant"; } }
         public double Cost { get; }
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
 
@@ -26,7 +26,7 @@ namespace SequencePlanner.Function.ResourceFunction
         public void Validate()
         {
             SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(ConstantResourceFunction));
-            SeqLogger.Info("ResourceCostConstant: " + Cost, nameof(ConstantResourceFunction));
+            SeqLogger.Info("ResourceConstant: " + Cost, nameof(ConstantResourceFunction));
             if(LinkingFunction == null)
             {
                 throw new SeqException("ConstantResourceFunction.LinkingFunction not given.");

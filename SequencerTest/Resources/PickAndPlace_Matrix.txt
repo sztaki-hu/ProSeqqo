@@ -7,12 +7,12 @@ StartDepot: 1
 TimeLimit: 20
 DistanceFunction: MatrixDistance
 ResourceDistanceFunction: Max
-ResourceSource: MatrixResource
+ResourceSource: Matrix
 ResourceCostConstant: 5
 UseMIPprecedenceSolver: True
 Validate: True
 
-MatrixResource:
+ResourceMatrix:
 1;5
 99;88
 77;66

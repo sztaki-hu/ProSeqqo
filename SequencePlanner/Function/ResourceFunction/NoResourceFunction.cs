@@ -4,9 +4,9 @@ using SequencePlanner.Helper;
 
 namespace SequencePlanner.Function.ResourceFunction
 {
-    public class NoResourceFunction : IResourceFunction
+    public class  NoResourceFunction : IResourceFunction
     {
-        public string FunctionName { get { return "NoResource"; } }
+        public string FunctionName { get { return "Off"; } }
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
 
         public double ComputeResourceCost(Position A, Position B, double distance) => distance;

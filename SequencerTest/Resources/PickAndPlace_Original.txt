@@ -9,7 +9,7 @@ DistanceFunction: TrapezoidTimeDistance
 TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
 TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
 ResourceDistanceFunction: Add
-ResourceSource: ConstantResource
+ResourceSource: Constant
 ResourceCostConstant: 0
 UseShortcutInAlternatives: True
 UseMIPprecedenceSolver: True

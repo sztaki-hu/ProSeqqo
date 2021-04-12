@@ -5,7 +5,7 @@ CyclicSequence: True
 StartDepot: 1
 TimeLimit: <*T*>
 DistanceFunction: TrapezoidTimeDistance
-ResourceSource: NoResource
+ResourceSource: Off
 TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
 TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
 LocalSearchStrategy: <*LSS*>

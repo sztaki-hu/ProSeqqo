@@ -7,7 +7,7 @@ WeightMultiplier: Auto
 CyclicSequence: False
 StartDepot: 1
 TimeLimit: <*T*>
-ResourceSource: NoResource
+ResourceSource: Off
 UseMIPprecedenceSolver: <*MIP*>
 UseShortcutInAlternatives: False
 LocalSearchStrategy: <*Strategy*>

@@ -7,7 +7,7 @@ StartDepot: 1
 #FinishDepot: 218
 ContourPenalty: 1
 BidirectionLineDefault: True
-ResourceSource: ConstantResource
+ResourceSource: Constant
 ResourceDistanceFunction: Add
 ResourceCostConstant: 1
 UseMIPprecedenceSolver: True

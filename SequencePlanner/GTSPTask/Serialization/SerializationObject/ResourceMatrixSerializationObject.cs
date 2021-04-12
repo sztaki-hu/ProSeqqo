@@ -61,7 +61,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             NameFooter = new List<string>();
             ResourceCostMatrix = new List<List<double>>();
             double[,] resourceMatrix;
-            var matrix = tokenizer.FindTokenByHeader("MatrixResource");
+            var matrix = tokenizer.FindTokenByHeader("ResourceMatrix");
             string[] tmp = matrix.Lines[0].Line.Split(';');     //1;2;3;4--->[1][2][3][4]
             foreach (var item in tmp)
             {

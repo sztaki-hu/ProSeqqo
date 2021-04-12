@@ -7,7 +7,7 @@ StartDepot: 1
 #FinishDepot: 218
 ContourPenalty: 1
 BidirectionLineDefault: True
-ResourceSource: NoResource
+ResourceSource: Off
 
 PositionList:
 #+-------+---------------------+------------------+

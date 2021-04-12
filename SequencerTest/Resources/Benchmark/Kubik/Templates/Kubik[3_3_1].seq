@@ -5,7 +5,7 @@ StartDepot: 32
 TimeLimit: 0
 DistanceFunction: EuclidianDistance
 ResourceDistanceFunction: Add
-ResourceSource: ConstantResource
+ResourceSource: Constant
 ResourceCostConstant: 0
 UseMIPprecedenceSolver: True
 
