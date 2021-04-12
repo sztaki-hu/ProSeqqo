@@ -1,5 +1,5 @@
 ﻿using Google.OrTools.LinearSolver;
-using SequencePlanner.GTSP;
+using SequencePlanner.Model;
 using SequencePlanner.Helper;
 using System;
 using System.Collections.Generic;

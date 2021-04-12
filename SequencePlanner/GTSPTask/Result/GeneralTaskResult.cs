@@ -1,5 +1,4 @@
-﻿using SequencePlanner.GTSP;
-using SequencePlanner.GTSPTask.Task.General;
+﻿using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System.Collections.Generic;

@@ -1,9 +1,7 @@
 ﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GTSP
+namespace SequencePlanner.Model
 {
     public class GTSPPrecedenceConstraint
     {

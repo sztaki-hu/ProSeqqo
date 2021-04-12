@@ -1,7 +1,6 @@
-﻿using SequencePlanner.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SequencePlanner.GTSP
+namespace SequencePlanner.Model
 {
     public class GTSPDisjointConstraint
     {

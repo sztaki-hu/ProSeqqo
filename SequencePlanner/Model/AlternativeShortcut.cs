@@ -1,6 +1,6 @@
 ﻿using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
-using SequencePlanner.GTSP;
+using SequencePlanner.Model;
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.General.ShortCut;
 using SequencePlanner.Helper;

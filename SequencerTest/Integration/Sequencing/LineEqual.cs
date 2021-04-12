@@ -2,7 +2,7 @@
 using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using SequencePlanner.GTSP;
+using SequencePlanner.Model;
 using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.Model;
 using System;

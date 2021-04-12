@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject;
+﻿using SequencePlanner.GTSPTask.Serialization.SerializationObject;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.General;
@@ -111,7 +110,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 var after = FindNode(posPrec.AfterID, pointLikeTask);
                 if (before == null || after == null)
                     throw new SeqException("Phrase error line precedence user id not found!");
-                pointLikeTask.PositionPrecedence.Add(new GTSP.GTSPPrecedenceConstraint()
+                pointLikeTask.PositionPrecedence.Add(new GTSPPrecedenceConstraint()
                 {
                     Before = before.Node,
                     After = after.Node
@@ -124,7 +123,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 var after = FindProcess(processPrec.AfterID, pointLikeTask);
                 if (before == null || after == null)
                     throw new SeqException("Phrase error process precedence user id not found!");
-                pointLikeTask.ProcessPrecedence.Add(new GTSP.GTSPPrecedenceConstraint()
+                pointLikeTask.ProcessPrecedence.Add(new GTSPPrecedenceConstraint()
                 {
                     Before = before,
                     After = after

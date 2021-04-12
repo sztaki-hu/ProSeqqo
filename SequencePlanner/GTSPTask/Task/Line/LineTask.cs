@@ -1,4 +1,4 @@
-﻿using SequencePlanner.GTSP;
+﻿using SequencePlanner.Model;
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.Helper;

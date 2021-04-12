@@ -1,4 +1,4 @@
-﻿using SequencePlanner.GTSP;
+﻿using SequencePlanner.Model;
 using SequencePlanner.Model;
 using System.Collections.Generic;
 
