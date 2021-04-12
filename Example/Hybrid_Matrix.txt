@@ -4,12 +4,13 @@ Dimension: 0
 CyclicSequence: True
 StartDepot: 1
 #FinishDepot: 6
-TimeLimit: 20
+TimeLimit: 2000
 DistanceFunction: MatrixDistance
 #ResourceSource: NoResource
 ResourceSource: MatrixResource
 ResourceDistanceFunction: Max
 UseMIPprecedenceSolver: True
+UseShortcutInAlternatives: False
 ResourceChangeInLine: True
 BidirectionLineDefault: True
 UseLineLengthInWeight: True
@@ -77,3 +78,5 @@ PositionPrecedence:
 #3;4
 #4;5
 #5;6
+7;2
+9;3

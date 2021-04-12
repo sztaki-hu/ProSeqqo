@@ -96,8 +96,6 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             return pointResult;
         }
 
-
-
         protected long[][] CreateInitialRout()
         {
             var ORPreSolver = new ORToolsPointLikePreSolverWrapper(new ORToolsPointLikePreSolverTask()

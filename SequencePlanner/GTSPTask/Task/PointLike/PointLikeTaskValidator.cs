@@ -41,7 +41,7 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
                     {
                         for (int i = 0; i < alternative.Tasks.Count; i++)
                         {
-                            if(i!=0 || i!=alternative.Tasks.Count-1) //Not the first or the last task of the alternative.
+                            if(i!=0 && i!=alternative.Tasks.Count-1) //Not the first or the last task of the alternative.
                                 foreach (var position in alternative.Tasks[i].Positions)
                                 {
                                     foreach (var precedence in task.PositionPrecedence)
