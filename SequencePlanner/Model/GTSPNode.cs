@@ -15,6 +15,7 @@ namespace SequencePlanner.Model
         public double AdditionalWeightOut { get; set; }
         public double OverrideWeightIn { get; set; }
         public double OverrideWeightOut { get; set; }
+        public bool Bidirectional { get; set; }
         public BaseNode Node { get; set; }
 
         public GTSPNode()
@@ -26,6 +27,7 @@ namespace SequencePlanner.Model
             Node = position;
             In = position;
             Out = position;
+            Bidirectional = false;
         }
 
         public GTSPNode(Line line)
@@ -33,6 +35,7 @@ namespace SequencePlanner.Model
             Node = line;
             In = line.NodeA;
             Out = line.NodeB;
+            Bidirectional = line.Bidirectional;
         }
 
         public override string ToString()
@@ -43,6 +46,22 @@ namespace SequencePlanner.Model
                 tmp += " --To--> " + Out.ToString();
             tmp += " Weight: " + Weight;
             return tmp;
+        }
+
+        public GTSPNode GetBidirectional()
+        {
+            return new GTSPNode()
+            {
+                Node = this.Node.GetReverse(),
+                In = this.Out,
+                Out = this.In,
+                OverrideWeightIn = this.OverrideWeightOut,
+                OverrideWeightOut = this.OverrideWeightIn,
+                AdditionalWeightIn = this.AdditionalWeightOut,
+                AdditionalWeightOut = this.AdditionalWeightIn,
+                Bidirectional = true,
+                Weight = this.Weight
+            };
         }
     }
 }

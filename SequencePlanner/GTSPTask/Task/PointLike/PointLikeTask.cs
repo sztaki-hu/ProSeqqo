@@ -43,6 +43,7 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             SeqLogger.Debug("RunModel started!", nameof(PointLikeTask));
             Timer.Reset();
             Timer.Start();
+            AddBidirectionals();
             if (Validate)
                 ValidateModel();
             DepotMapper.Map(this);
@@ -94,6 +95,8 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             pointResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
             return pointResult;
         }
+
+
 
         protected long[][] CreateInitialRout()
         {
@@ -154,6 +157,29 @@ namespace SequencePlanner.GTSPTask.Task.PointLike
             SeqLogger.Trace("Initial solution validation started!");
             pointTaskResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
             SeqLogger.Trace("Initial solution validation finished!");
+        }
+
+        private void AddBidirectionals()
+        {
+            var addToTask = new List<Model.Task>();
+            var nodeToAdd = new List<GTSPNode>();
+            foreach (var t in Tasks)
+            {
+                foreach (var p in t.Positions)
+                {
+                    if (p.Bidirectional)
+                    {
+                        var reverse = p.GetBidirectional();
+                        addToTask.Add(t);
+                        nodeToAdd.Add(reverse);
+                    }
+                }
+            }
+            for (int  i = 0;  i < nodeToAdd.Count;  i++)
+            {
+                addToTask[i].Positions.Add(nodeToAdd[i]);
+                PositionMatrix.Positions.Add(nodeToAdd[i]);
+            }
         }
 
         private List<GTSPPrecedenceConstraint> CreatePrecedenceConstraints(bool fullProcessPrecedence = false)

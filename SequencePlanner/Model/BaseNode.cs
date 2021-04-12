@@ -23,6 +23,18 @@ namespace SequencePlanner.Model
             Name = UserID + "_BaseNode_" + GlobalID;
         }
 
+        public virtual BaseNode GetReverse()
+        {
+            return new BaseNode()
+            {
+                UserID = this.UserID,
+                SequencingID = this.SequencingID,
+                ResourceID = this.ResourceID,
+                Virtual = this.Virtual,
+                Name = Name+"_Reverse"
+            };
+        }
+
         public override string ToString()
         {
             var str = Name;

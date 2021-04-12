@@ -36,6 +36,22 @@ namespace SequencePlanner.Model
             };
         }
 
+        public override BaseNode GetReverse()
+        {
+            return new Line()
+            {
+                UserID = this.UserID,
+                SequencingID = this.SequencingID,
+                ResourceID = this.ResourceID,
+                Virtual = this.Virtual,
+                Name = Name + "_Reverse",
+                NodeA = NodeB,
+                NodeB = NodeA,
+                Bidirectional = this.Bidirectional,
+                Length = Length
+            };
+        }
+
         public void Validate()
         {
             if (NodeA == null)

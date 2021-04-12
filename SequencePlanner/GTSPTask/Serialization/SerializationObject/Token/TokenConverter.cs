@@ -242,10 +242,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                                 lineObj.Name = line[3];
 
                             if (line.Length >= 5)
-                                lineObj.ResourceID = Int32.Parse(line[4]);
-
-                            if (line.Length >= 6)
-                                lineObj.Bidirectional = Boolean.Parse(line[5]);
+                                lineObj.Bidirectional = Boolean.Parse(line[4]);
                             lines.Add(lineObj);
                         }
                         SeqLogger.Debug(token.Header + ": " + lines.Count + " lines found", nameof(TokenConverter));

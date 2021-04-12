@@ -86,11 +86,12 @@ namespace SequencePlanner.GTSPTask.Task.LineLike
             {
                 for (int j = 0; j < posList.Count; j++)
                 {
+                    //if (i != j && !posList[i].Bidirectional && !posList[i].Bidirectional)
                     if (i != j)
                     {
                         if (posList[i].Node.GlobalID == posList[j].Node.GlobalID)
                             throw new SeqException("PositionMatrix.Positions contains position multiple times with GlobalID: " + posList[i].Node.GlobalID, "Remove duplicated positions.");
-                        if (posList[i].Node.UserID == posList[j].Node.UserID)
+                        if (posList[i].Node.UserID == posList[j].Node.UserID && !posList[i].Bidirectional && !posList[i].Bidirectional)
                             throw new SeqException("PositionMatrix.Positions contains position multiple times with UserID: " + posList[i].Node.UserID, "Remove duplicated positions.");
                         //if (posList[i].Node.SequencingID == posList[j].Node.SequencingID)
                         //    throw new SeqException("PositionMatrix.Positions contains position multiple times times with SequencingID: " + posList[i].Node.SequencingID, "Remove duplicated positions.");
