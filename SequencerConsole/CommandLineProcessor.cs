@@ -13,16 +13,12 @@ namespace SequencerConsole
 {
     public class CommandLineProcessor
     {
-        private static readonly LogLevel LOG_LEVEL = LogLevel.Info;
-
         private static string input;
         private static FormatType inputType = FormatType.Unknown;
         private static string output;
         private static FormatType outputType = FormatType.Unknown;
         private static TaskType taskType = TaskType.Unknown;
-        private static bool debug;
         private static bool convert;
-        private static bool validate;
         private static LogLevel log = LogLevel.Info;
 
         public static void CLI(string[] args)
@@ -93,8 +89,6 @@ namespace SequencerConsole
                     Version(args);
                     input = Input(args);
                     output = Output(args);
-                    debug = Debug(args);
-                    validate = Validate(args);
                     log = LogLevel.Debug;
                     SeqLogger.UseIndent = true;
                     Run();
@@ -107,7 +101,6 @@ namespace SequencerConsole
                 Version(args);
                 input = Input(args);
                 output = Output(args);
-                validate = Validate(args);
                 convert = Convert(args);
                 log = Log(args);
                 if (convert)
@@ -144,22 +137,13 @@ namespace SequencerConsole
             if (inputType != FormatType.Unknown && input != null)
             {
                 GeneralTaskSerializer ser = new GeneralTaskSerializer();
-                GeneralTask task;
-                switch (inputType)
+                GeneralTask task = inputType switch
                 {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        task = ser.ImportSEQ(input);
-                        break;
-                    case FormatType.JSON:
-                        task = ser.ImportJSON(input);
-                        break;
-                    case FormatType.XML:
-                        task = ser.ImportXML(input);
-                        break;
-                    default:
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                }
+                    FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
+                    FormatType.JSON => ser.ImportJSON(input),
+                    FormatType.XML => ser.ImportXML(input),
+                    _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
+                };
                 switch (outputType)
                 {
                     case FormatType.SEQ:
@@ -183,22 +167,13 @@ namespace SequencerConsole
             if (inputType != FormatType.Unknown && input != null)
             {
                 LineTaskSerializer ser = new LineTaskSerializer();
-                LineTask task;
-                switch (inputType)
+                LineTask task = inputType switch
                 {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        task = ser.ImportSEQ(input);
-                        break;
-                    case FormatType.JSON:
-                        task = ser.ImportJSON(input);
-                        break;
-                    case FormatType.XML:
-                        task = ser.ImportXML(input);
-                        break;
-                    default:
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                }
+                    FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
+                    FormatType.JSON => ser.ImportJSON(input),
+                    FormatType.XML => ser.ImportXML(input),
+                    _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
+                };
                 switch (outputType)
                 {
                     case FormatType.SEQ:
@@ -250,22 +225,13 @@ namespace SequencerConsole
             if (inputType != FormatType.Unknown && input != null)
             {
                 LineTaskSerializer ser = new LineTaskSerializer();
-                LineTask task;
-                switch (inputType)
+                LineTask task = inputType switch
                 {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        task = ser.ImportSEQ(input);
-                        break;
-                    case FormatType.JSON:
-                        task = ser.ImportJSON(input);
-                        break;
-                    case FormatType.XML:
-                        task = ser.ImportXML(input);
-                        break;
-                    default:
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                }
+                    FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
+                    FormatType.JSON => ser.ImportJSON(input),
+                    FormatType.XML => ser.ImportXML(input),
+                    _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
+                };
                 return task.RunModel();
             }
             return null;
@@ -276,22 +242,13 @@ namespace SequencerConsole
             if (inputType != FormatType.Unknown && input != null)
             {
                 GeneralTaskSerializer ser = new GeneralTaskSerializer();
-                GeneralTask task;
-                switch (inputType)
+                GeneralTask task = inputType switch
                 {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        task = ser.ImportSEQ(input);
-                        break;
-                    case FormatType.JSON:
-                        task = ser.ImportJSON(input);
-                        break;
-                    case FormatType.XML:
-                        task = ser.ImportXML(input);
-                        break;
-                    default:
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                }
+                    FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
+                    FormatType.JSON => ser.ImportJSON(input),
+                    FormatType.XML => ser.ImportXML(input),
+                    _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
+                };
                 return task.RunModel();
                 //var ct = new CancellationToken();
                 //WaitForSolution("Solver running!", ct);

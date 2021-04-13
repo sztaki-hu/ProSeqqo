@@ -8,10 +8,19 @@ namespace SequencePlanner.Function.ResourceFunction
     public class MatrixResourceFunction : IResourceFunction
     {
         public string FunctionName { get { return "ResourceMatrix"; } }
-        //Header of the cost matrix with the ResourceIDs
         public List<int> CostMatrixIDHeader { get; set; }
         public List<List<double>> CostMatrix { get;}
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
+
+
+        public MatrixResourceFunction(List<List<double>> costMatrix, List<int> resourceIDList, IResourceDistanceLinkFunction link)
+        {
+            CostMatrix = costMatrix;
+            CostMatrixIDHeader = resourceIDList;
+            LinkingFunction = link;
+            Validate();
+        }
+
 
         public double ComputeResourceCost(Position A, Position B, double distance)
         {
@@ -35,14 +44,6 @@ namespace SequencePlanner.Function.ResourceFunction
             if (idb == -1)
                 throw new SeqException("Position with ResourceID: "+ B.ResourceID + " not contained by CostMatrixIDHeader");
             return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
-        }
-
-        public MatrixResourceFunction(List<List<double>> costMatrix, List<int> resourceIDList, IResourceDistanceLinkFunction link)
-        {
-            CostMatrix = costMatrix;
-            CostMatrixIDHeader = resourceIDList;
-            LinkingFunction = link;
-            Validate();
         }
 
         public void Validate()

@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using SequencePlanner.OR_Tools;
+using SequencePlanner.Model;
+using SequencePlanner.Helper;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.OR_Tools;
-using System;
-using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {
@@ -35,12 +35,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public bool UseLineLengthInWeight { get; set; }
         public bool UseResourceInLineLength { get; set; }
 
-        public BaseTaskSerializationObject()
-        {
-        }
-        public BaseTaskSerializationObject(List<string> seqString)
-        {
-        }
+
+        public BaseTaskSerializationObject() { }
         public BaseTaskSerializationObject(BaseTask baseTask)
         {
             Dimension = baseTask.Dimension;
@@ -94,7 +90,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             seq += ResourceFunction.ToSEQ();
             return seq;
         }
-
         public string ToSEQLong()
         {
             string newline = "\n";
@@ -112,11 +107,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             {
                 seq += "StrictEdgeWeights: " + newline;
                 seq += StrictUserEdgeWeights.ToSEQ();
-
             }
             return seq;
         }
-
         public void ToBaseTask(BaseTask task)
         {
             //TaskType
@@ -136,9 +129,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 if (newPosition.UserID == FinishDepot)
                     task.FinishDepot = newPosition;
             }
-            if ((StartDepot != null && StartDepot != -1) && task.StartDepot == null)
+            if (StartDepot != -1 && task.StartDepot == null)
                 SeqLogger.Error("StartDepot not exist position!", nameof(BaseTaskSerializationObject));
-            if ((FinishDepot != null && FinishDepot != -1) && task.FinishDepot == null)
+            if (FinishDepot != -1 && task.FinishDepot == null)
                 SeqLogger.Error("FinishDepot not exist as position!", nameof(BaseTaskSerializationObject));
             task.TimeLimit = TimeLimit;
             task.PositionMatrix.StrictUserEdgeWeights = StrictUserEdgeWeights.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);

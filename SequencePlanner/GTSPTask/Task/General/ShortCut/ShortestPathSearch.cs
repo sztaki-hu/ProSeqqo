@@ -1,8 +1,8 @@
-﻿using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.Function.ResourceFunction;
-using SequencePlanner.Helper;
+﻿using System.Collections.Generic;
 using SequencePlanner.Model;
-using System.Collections.Generic;
+using SequencePlanner.Helper;
+using SequencePlanner.Function.DistanceFunction;
+using SequencePlanner.Function.ResourceFunction;
 
 namespace SequencePlanner.GTSPTask.Task.General.ShortCut
 {
@@ -16,6 +16,7 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
         private IResourceFunction ResourceFunction { get; set; }
         private List<Model.Task> Tasks { get; set; }
 
+
         public ShortestPathSearch(List<Model.Task> tasks, IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
         {
             Level = tasks.Count;
@@ -27,6 +28,7 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
             Tasks = tasks;
             Build();
         }
+
 
         public List<ShortestPath> CalculateCriticalRoute(GTSPNode openPos, List<GTSPNode> positions)
         {
@@ -68,7 +70,39 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
             }
             return tmp;
         }
+        public double FindEdge(BaseNode A, BaseNode B)
+        {
+            foreach (var item in Edges)
+            {
+                if (item.A.Node.GlobalID == A.GlobalID && item.B.Node.GlobalID == B.GlobalID)
+                    return item.Weight;
+            }
+            throw new SeqException("Edge not found in CPM!");
+        }
 
+        private void Build()
+        {
+            int j = 0;
+            foreach (var task in Tasks)
+            {
+                foreach (var position in task.Positions)
+                {
+                    position.Node.SequencingID = j++;
+                    List.Add(position.Node);
+                    Values.Add(position.Node.SequencingID, double.MaxValue);
+                }
+            }
+            for (int i = 0; i < Tasks.Count - 1; i++)
+            {
+                foreach (var posPrev in Tasks[i].Positions)
+                {
+                    foreach (var posNext in Tasks[i + 1].Positions)
+                    {
+                        Edges.Add(new Edge() { A = posPrev, B = posNext, Weight = CalculateWeight(posPrev, posNext) });
+                    }
+                }
+            }
+        }
         private ShortestPath RollbackSolution(GTSPNode from, GTSPNode to)
         {
             var path = new ShortestPath(from, to, Values.GetValueOrDefault(from.Node.SequencingID));
@@ -91,7 +125,6 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
             }
             return path;
         }
-
         private GTSPNode PreviousNode(GTSPNode B)
         {
             foreach (var edge in Edges)
@@ -101,31 +134,6 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
             }
             throw new SeqException("CPM error!");
         }
-
-        private void Build()
-        {
-            int j = 0;
-            foreach (var task in Tasks)
-            {
-                foreach (var position in task.Positions)
-                {
-                    position.Node.SequencingID = j++;
-                    List.Add(position.Node);
-                    Values.Add(position.Node.SequencingID, double.MaxValue);
-                }
-            }
-            for (int i = 0; i < Tasks.Count-1; i++)
-            {
-                foreach (var posPrev in Tasks[i].Positions)
-                {
-                    foreach (var posNext in Tasks[i + 1].Positions)
-                    {
-                        Edges.Add(new Edge() { A = posPrev, B = posNext, Weight = CalculateWeight(posPrev, posNext) });
-                    }
-                }
-            }
-        }
-
         private double CalculateWeight(GTSPNode A, GTSPNode B)
         {
             if (A.Node.Virtual || B.Node.Virtual)
@@ -142,22 +150,5 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
                 weight += B.AdditionalWeightIn;
             return weight;
         }
-
-        public double FindEdge(BaseNode A, BaseNode B)
-        {
-            foreach (var item in Edges)
-            {
-                if (item.A.Node.GlobalID == A.GlobalID && item.B.Node.GlobalID == B.GlobalID)
-                    return item.Weight;
-            }
-            throw new SeqException("Edge not found in CPM!");
-        }
-    }
-
-    internal class Edge
-    {
-        public GTSPNode A { get; set; }
-        public GTSPNode B { get; set; }
-        public double Weight { get; set; }
     }
 }

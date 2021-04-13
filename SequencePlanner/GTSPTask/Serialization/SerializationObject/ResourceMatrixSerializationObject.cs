@@ -1,5 +1,5 @@
-﻿using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 {
@@ -8,6 +8,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public List<int> IDHeader { get; set; }
         public List<string> NameFooter { get; set; }
         public List<List<double>> ResourceCostMatrix { get; set; }
+
 
         public string ToSEQ()
         {

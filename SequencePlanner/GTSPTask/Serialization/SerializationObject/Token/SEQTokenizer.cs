@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Helper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Threading;
+using System.Collections.Generic;
+using SequencePlanner.Helper;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
 {
@@ -18,7 +18,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             var lines = new List<TokenLineDeserializationObject>();
             for (int i = 0; i < seqString.Count; i++)
             {
-                lines.Add(new TokenLineDeserializationObject() { LineNumber = i+1, Line = seqString[i] });
+                lines.Add(new TokenLineDeserializationObject() { LineNumber = i + 1, Line = seqString[i] });
             }
 
             lines = DeleteComments(lines);
@@ -28,6 +28,32 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             Tokenize(lines);
             SeqLogger.Indent--;
             SeqLogger.Debug("Tokenization finished!", nameof(SEQTokenizer));
+        }
+        private void Tokenize(List<TokenLineDeserializationObject> lines)
+        {
+            Token lastToken = new Token();
+            foreach (var item in lines)
+            {
+                if (item.KeyWord)
+                {
+                    lastToken = new Token() { Header = item.Line };
+                    Tokens.Add(lastToken);
+                }
+                else
+                {
+                    lastToken.Lines.Add(item);
+                }
+            }
+            SeqLogger.Trace("Tokenization: Tokenized!", nameof(SEQTokenizer));
+        }
+        public Token FindTokenByHeader(string header)
+        {
+            foreach (var item in Tokens)
+            {
+                if (item.Header == header)
+                    return item;
+            }
+            return null;
         }
 
         private List<TokenLineDeserializationObject> DeleteWhiteSpace(List<TokenLineDeserializationObject> lines)
@@ -46,7 +72,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             SeqLogger.Trace("Tokenization: White spaces deleted!", nameof(SEQTokenizer));
             return cleanLines;
         }
-
         private List<TokenLineDeserializationObject> DeleteComments(List<TokenLineDeserializationObject> lines)
         {
             List<TokenLineDeserializationObject> noComments = new List<TokenLineDeserializationObject>();
@@ -62,7 +87,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             SeqLogger.Trace("Tokenization: Comments deleted!", nameof(SEQTokenizer));
             return noComments;
         }
-
         private List<TokenLineDeserializationObject> SeperateByDoubleDot(List<TokenLineDeserializationObject> lines)
         {
             List<TokenLineDeserializationObject> sepByComma = new List<TokenLineDeserializationObject>();
@@ -84,7 +108,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             SeqLogger.Trace("Tokenization: Seperated by double dots!", nameof(SEQTokenizer));
             return sepByComma;
         }
-
         private List<TokenLineDeserializationObject> ChangeDotToComma(List<TokenLineDeserializationObject> lines)
         {
             if (Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",")
@@ -114,34 +137,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 SeqLogger.Trace("Tokenization: Dots to commas!", nameof(SEQTokenizer));
             }
             return lines;
-        }
-
-        private void Tokenize(List<TokenLineDeserializationObject> lines)
-        {
-            Token lastToken = new Token();
-            foreach (var item in lines)
-            {
-                if (item.KeyWord)
-                {
-                    lastToken = new Token() { Header = item.Line };
-                    Tokens.Add(lastToken);
-                }
-                else
-                {
-                    lastToken.Lines.Add(item);
-                }
-            }
-            SeqLogger.Trace("Tokenization: Tokenized!", nameof(SEQTokenizer));
-        }
-
-        public Token FindTokenByHeader(string header)
-        {
-            foreach (var item in Tokens)
-            {
-                if (item.Header == header)
-                    return item;
-            }
-            return null;
         }
     }
 }

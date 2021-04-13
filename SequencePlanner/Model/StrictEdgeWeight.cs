@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SequencePlanner.Model
+﻿namespace SequencePlanner.Model
 {
     public class StrictEdgeWeight
     {
@@ -11,6 +7,7 @@ namespace SequencePlanner.Model
         public double Weight { get; set; }
         public bool Bidirectional { get; set; }
 
+
         public StrictEdgeWeight(BaseNode a, BaseNode b, double weight, bool bidirectional = false)
         {
             A = a;
@@ -18,6 +15,7 @@ namespace SequencePlanner.Model
             Weight = weight;
             Bidirectional = bidirectional;
         }
+
 
         public bool FitFor(BaseNode a, BaseNode b)
         {

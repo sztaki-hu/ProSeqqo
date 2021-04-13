@@ -1,9 +1,8 @@
-﻿using SequencePlanner.Function.ResourceFunction;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Model;
+using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 {
@@ -13,6 +12,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public string ResourceSource { get; set; }
         public double ResourceCostConstant { get; set; }
         public ResourceMatrixSerializationObject ResourceCostMatrix2 { get; set; }
+
 
         public ResourceFunctionSerializationObject() { }
         public ResourceFunctionSerializationObject(PositionMatrix positionMatrix)
@@ -36,6 +36,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 ResourceCostMatrix2.IDHeader = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrixIDHeader;
             }
         }
+
 
         public string ToSEQ()
         {

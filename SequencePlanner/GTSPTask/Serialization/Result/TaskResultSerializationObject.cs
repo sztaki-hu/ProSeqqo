@@ -1,8 +1,8 @@
-﻿using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
-using SequencePlanner.Helper;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SequencePlanner.Helper;
+using SequencePlanner.GTSPTask.Result;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
@@ -19,13 +19,19 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         public string StatusMessage { get; set; }
         public List<string> Log { get; set; }
 
+
         public TaskResultSerializationObject()
         {
             SolutionRaw = new List<long>();
             CostsRaw = new List<double>();
             Log = new List<string>();
         }
-
+        public TaskResultSerializationObject(List<string> seqString)
+        {
+            var tokenizer = new SEQTokenizer();
+            tokenizer.Tokenize(seqString);
+            FillBySEQTokens(tokenizer);
+        }
         public TaskResultSerializationObject(TaskResult result)
         {
             FullTime = result.FullTime.ToString();
@@ -38,6 +44,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             StatusMessage = result.StatusMessage;
             Log = result.Log;
         }
+
 
         public TaskResult ToTaskResult(TaskResult result)
         {
@@ -55,7 +62,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             result.Log = Log;
             return result;
         }
-
+        private void FillBySEQTokens(SEQTokenizer tokenizer)
+        {
+            throw new NotImplementedException();
+        }
         public  string ToSEQ()
         {
             var seq = "";
@@ -67,21 +77,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             seq += nameof(SolverTime) + ": " + SolverTime + newline;
             seq += nameof(PreSolverTime) + ": " + PreSolverTime + newline;
             seq += nameof(CostSum) + ": " + CostSum + newline;
-            seq += nameof(SolutionRaw) + ": " + SeqLogger.ToList(SolutionRaw) + newline;
-            seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
+            seq += nameof(SolutionRaw) + ": " + SolutionRaw.ToListString() + newline;
+            seq += nameof(CostsRaw) + ": " + CostsRaw.ToListString() + newline;
             return seq;
-        }
-
-        public TaskResultSerializationObject(List<string> seqString)
-        {
-            var tokenizer = new SEQTokenizer();
-            tokenizer.Tokenize(seqString);
-            FillBySEQTokens(tokenizer);
-        }
-
-        private void FillBySEQTokens(SEQTokenizer tokenizer)
-        {
-            throw new NotImplementedException();
         }
     }
 }

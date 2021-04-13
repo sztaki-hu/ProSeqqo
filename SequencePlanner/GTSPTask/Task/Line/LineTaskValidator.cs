@@ -1,19 +1,13 @@
-﻿using SequencePlanner.Model;
-using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.Helper;
+﻿using System.Collections.Generic;
 using SequencePlanner.Model;
-using System.Collections.Generic;
+using SequencePlanner.Helper;
+using SequencePlanner.GTSPTask.Task.Base;
 
 namespace SequencePlanner.GTSPTask.Task.LineTask
 {
-    internal class LineTaskValidator
+    public class LineTaskValidator
     {
-        public LineTaskValidator()
-        {
-
-        }
-
-        public void Validate(LineTask lineTask)
+        public static void Validate(LineTask lineTask)
         {
             SeqLogger.Debug("Validation started!", nameof(LineTaskValidator));
             SeqLogger.Indent++;
@@ -23,8 +17,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             CheckCycle(lineTask.CyclicSequence, lineTask.StartDepot, lineTask.FinishDepot);
             CheckTimeLimit(lineTask.TimeLimit);
             CheckPositionMatrix(lineTask.PositionMatrix);
-            BaseTaskValidator baseTaskValidator = new BaseTaskValidator();
-            baseTaskValidator.Validate((BaseTask)lineTask);
+            BaseTaskValidator.Validate((BaseTask)lineTask);
             CheckContourPenalty(lineTask.ContourPenalty);
             CheckLines(lineTask.Lines);
             CheckContours(lineTask.Contours);
@@ -34,7 +27,8 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Debug("Validation finished!", nameof(LineTaskValidator));
         }
 
-        private void CheckCycle(bool cyclicSequence, Position startDepot, Position finishDepot)
+
+        private static void CheckCycle(bool cyclicSequence, Position startDepot, Position finishDepot)
         {
             if (cyclicSequence)
             {
@@ -46,21 +40,21 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Trace("CheckCycle validated!", nameof(LineTaskValidator));
         }
 
-        private void CheckDimension(int dimension)
+        private static void CheckDimension(int dimension)
         {
             if (dimension <= 0)
                 throw new SeqException("Dimension should be > 0!");
             SeqLogger.Trace("CheckDimension validated!", nameof(LineTaskValidator));
         }
 
-        private void CheckTimeLimit(int timelimit)
+        private static void CheckTimeLimit(int timelimit)
         {
             if (timelimit < 0)
                 throw new SeqException("Timelimit should be positive, 0 - NO LIMIT");
             SeqLogger.Trace("CheckTimeLimit validated!", nameof(LineTaskValidator));
         }
 
-        private void CheckPositionMatrix(PositionMatrix positionMatrix)
+        private static void CheckPositionMatrix(PositionMatrix positionMatrix)
         {
             if (positionMatrix == null)
                 throw new SeqException("PositionMatrix.PositionMatrix not given.");
@@ -72,7 +66,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Trace("CheckPositionMatrix validated!", nameof(LineTaskValidator));
         }
 
-        private void CheckContourPenalty(double contourPenalty)
+        private static void CheckContourPenalty(double contourPenalty)
         {
             if (contourPenalty < 0)
                 throw new SeqException("LineTask.ContourPenalty should be >=0");
@@ -80,7 +74,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Trace("CheckContourPenalty validated!", nameof(LineTaskValidator));
         }
 
-        private void CheckLines(List<Line> lines)
+        private static void CheckLines(List<Line> lines)
         {
             foreach (var line in lines)
             {
@@ -89,7 +83,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Trace("CheckLines validated!", nameof(LineTaskValidator));
         }
 
-        private void CheckContours(List<Contour> contours)
+        private static void CheckContours(List<Contour> contours)
         {
             foreach (var contour in contours)
             {
@@ -98,7 +92,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Trace("CheckContours validated!", nameof(LineTaskValidator));
         }
 
-        private void CheckLinePrecedences(List<GTSPPrecedenceConstraint> linePrecedences, List<Line> lines)
+        private static void CheckLinePrecedences(List<GTSPPrecedenceConstraint> linePrecedences, List<Line> lines)
         {
             foreach (var precedence in linePrecedences)
             {
@@ -109,7 +103,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Trace("CheckLinePrecedences validated!", nameof(LineTaskValidator));
         }
 
-        private void CheckContourPrecedences(List<GTSPPrecedenceConstraint> contourPrecedences, List<Contour> contours)
+        private static void CheckContourPrecedences(List<GTSPPrecedenceConstraint> contourPrecedences, List<Contour> contours)
         {
             foreach (var precedence in contourPrecedences)
             {
@@ -120,7 +114,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Trace("CheckContourPrecedences validated!", nameof(LineTaskValidator));
         }
 
-        private void ListContainsPrecedenceItems(GTSPPrecedenceConstraint precedence, IEnumerable<BaseNode> nodes)
+        private static void ListContainsPrecedenceItems(GTSPPrecedenceConstraint precedence, IEnumerable<BaseNode> nodes)
         {
             var findAfter = false;
             var findBefore = false;

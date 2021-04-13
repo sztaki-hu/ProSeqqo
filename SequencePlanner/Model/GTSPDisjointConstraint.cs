@@ -4,12 +4,14 @@ namespace SequencePlanner.Model
 {
     public class GTSPDisjointConstraint
     {
-        public long[] DisjointSetSeq { get { GetSeqIDs(); return NodeListID.ToArray(); } private set { } }
-        public int[] DisjointSetSeqInt { get { GetSeqIDs(); return NodeListIDint.ToArray(); } private set { } }
-        public List<int> DisjointSetUser { get => GetUserIDs(); private set { } }
         private List<long> NodeListID;
         private List<int> NodeListIDint;
         private readonly List<BaseNode> NodeList;
+
+        public long[] DisjointSetSeq { get { GetSeqIDs(); return NodeListID.ToArray(); } private set { } }
+        public int[] DisjointSetSeqInt { get { GetSeqIDs(); return NodeListIDint.ToArray(); } private set { } }
+        public List<int> DisjointSetUser { get => GetUserIDs(); private set { } }
+
 
         public GTSPDisjointConstraint()
         {
@@ -18,12 +20,12 @@ namespace SequencePlanner.Model
             NodeList = new List<BaseNode>();
         }
 
+
         public void Add(BaseNode node)
         {
             NodeList.Add(node);
             NodeListID.Add(node.SequencingID);
         }
-
         public void Add(List<BaseNode> lines)
         {
             foreach (var line in lines)
@@ -42,7 +44,6 @@ namespace SequencePlanner.Model
                 NodeListIDint.Add(item.SequencingID);
             }
         }
-
         private List<int> GetUserIDs()
         {
             List<int> userIDs = new List<int>();

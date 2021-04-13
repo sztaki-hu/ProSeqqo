@@ -1,20 +1,14 @@
-﻿using SequencePlanner.Model;
-using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.GTSPTask.Task.General;
-using SequencePlanner.Helper;
+﻿using System.Collections.Generic;
 using SequencePlanner.Model;
-using System.Collections.Generic;
+using SequencePlanner.Helper;
+using SequencePlanner.GTSPTask.Task.Base;
 
 namespace SequencePlanner.GTSPTask.Task.LineTask
 {
-    internal class BaseTaskValidator
+    public class BaseTaskValidator
     {
-        public BaseTaskValidator()
-        {
 
-        }
-
-        public void Validate(BaseTask baseTask)
+        public static void Validate(BaseTask baseTask)
         {
             SeqLogger.Debug("Validation started!", nameof(BaseTaskValidator));
             SeqLogger.Indent++;
@@ -37,7 +31,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
         }
 
         //Q13
-        private void CheckStrictEdgeWeights(BaseTask task)
+        private static void CheckStrictEdgeWeights(BaseTask task)
         {
             if (task.PositionMatrix.StrictUserEdgeWeights is null)
                 throw new SeqException("PositionMatrix.DistanceFunction.StrictUserEdgeWeights are not initialized.");
@@ -61,7 +55,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
         }
 
         //Q12
-        private void CheckPositionMatrix(PositionMatrix positionMatrix)
+        private static void CheckPositionMatrix(PositionMatrix positionMatrix)
         {
             if (positionMatrix == null)
                 throw new SeqException("PositionMatrix.PositionMatrix not given.");
@@ -73,7 +67,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
         }
 
         //Q11
-        private void CheckPositionList(BaseTask task)
+        private static void CheckPositionList(BaseTask task)
         {
             if (task.PositionMatrix is null)
                 throw new SeqException("Position hierarchy, PositionMatrix is null.", "Please construct it.");
@@ -106,27 +100,27 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
         }
 
         //Q10
-        private void CheckLocalSearchStrategy(BaseTask task)
+        private static void CheckLocalSearchStrategy(BaseTask task)
         {
             SeqLogger.Debug("LocalSearchStrategy: " + task.LocalSearchStrategy.ToString(), nameof(BaseTaskValidator));
         }
 
-        //O9
-        private void CheckResourceFunction(BaseTask task)
+        //Q9
+        private static void CheckResourceFunction(BaseTask task)
         {
             if (task.PositionMatrix.ResourceFunction is null)
                 throw new SeqException("Resource function is null.", "Please construct it.");
             task.PositionMatrix.ResourceFunction.Validate();
         }
 
-        //O8
-        private void CheckMIPpresolver(BaseTask task)
+        //Q8
+        private static void CheckMIPpresolver(BaseTask task)
         {
             SeqLogger.Debug("UseMIPPrecedenceSolver: "+ task.UseMIPprecedenceSolver, nameof(BaseTaskValidator));
         }
 
-        //O7
-        private void CheckTimeLimit(BaseTask task)
+        //Q7
+        private static void CheckTimeLimit(BaseTask task)
         {
             if (task.TimeLimit <= 0)
             {
@@ -140,8 +134,8 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
                 throw new SeqException("TimeLimit needed in case of "+ OR_Tools.LocalSearchStrategyEnum.Metaheuristics.GuidedLocalSearch.ToString() + " metaheuristic.");
         }
 
-        //O6
-        private void CheckStartFinsihDepot(BaseTask task)
+        //Q6
+        private static void CheckStartFinsihDepot(BaseTask task)
         {
             var checkStartDepot =false;
             var checkFinishDepot =false;
@@ -200,8 +194,8 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             }
         }
 
-        //O5
-        private void CheckWeightMultiplier(BaseTask task)
+        //Q5
+        private static void CheckWeightMultiplier(BaseTask task)
         {
             if (task.WeightMultipier == 0)
                 throw new SeqException("WeightMultipier should be greater then 0.");
@@ -209,7 +203,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
         }
 
         //Q4
-        private void CheckCycle(BaseTask task)
+        private static void CheckCycle(BaseTask task)
         {
             if (task.CyclicSequence)
             {
@@ -221,8 +215,8 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Trace("CheckCycle validated!", nameof(BaseTaskValidator));
         }
 
-        //O3
-        private void CheckDistaceFunction(BaseTask task)
+        //Q3
+        private static void CheckDistaceFunction(BaseTask task)
         {
             if(task.PositionMatrix.DistanceFunction is null)
                 throw new SeqException("Distance function is null.", "Please construct it.");
@@ -231,14 +225,14 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
         }
 
         //O2
-        private void CheckDimension(int dimension)
+        private static void CheckDimension(int dimension)
         {
             if (dimension <= 0)
                 throw new SeqException("Dimension should be > 0!");
         }
 
-        //O1
-        private void CheckTaskType(BaseTask task)
+        //Q1
+        private static void CheckTaskType(BaseTask task)
         {
             if (task.PositionMatrix is null)
                 throw new SeqException("Position hierarchy, PositionMatrix is null.", "Please construct it.");
@@ -248,7 +242,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
                 throw new SeqException("PositionMatrix.Positions not contain positions.", "Please add them.");
         }
 
-        private void ListContainsPrecedenceItems(GTSPPrecedenceConstraint precedence, IEnumerable<BaseNode> nodes)
+        private static void ListContainsPrecedenceItems(GTSPPrecedenceConstraint precedence, IEnumerable<BaseNode> nodes)
         {
             var findAfter = false;
             var findBefore = false;

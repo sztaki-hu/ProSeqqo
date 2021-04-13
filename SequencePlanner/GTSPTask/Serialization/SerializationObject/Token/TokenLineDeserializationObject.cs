@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Helper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+using SequencePlanner.Helper;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
 {
@@ -10,6 +10,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
         public int LineNumber { get;set; }
         public string Line { get;set; }
         public bool KeyWord { get;set; }
+
 
         public int ToInt()
         {

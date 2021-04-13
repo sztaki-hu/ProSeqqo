@@ -1,10 +1,10 @@
-﻿using Google.OrTools.ConstraintSolver;
-using Google.Protobuf.WellKnownTypes;
-using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.Helper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
+using System.Collections.Generic;
+using Google.OrTools.ConstraintSolver;
+using Google.Protobuf.WellKnownTypes;
+using SequencePlanner.Helper;
+using SequencePlanner.GTSPTask.Result;
 
 namespace SequencePlanner.OR_Tools
 {
@@ -15,13 +15,14 @@ namespace SequencePlanner.OR_Tools
         private RoutingModel routing;
         private RoutingSearchParameters searchParameters;
         private Assignment InitialSolution;
-
         private Stopwatch Timer;
+
 
         public ORToolsSequencerWrapper(ORToolsTask parameters)
         {
             param = parameters;
         }
+
 
         //Create OR-Tools Representation from SequencerTask
         public void Build()
@@ -105,7 +106,7 @@ namespace SequencePlanner.OR_Tools
 
             if (param.GTSPRepresentation.InitialRoutes!=null && param.GTSPRepresentation.InitialRoutes.Length > 0)
             {
-                SeqLogger.Debug("Initial route: "+SeqLogger.ToList(param.GTSPRepresentation.InitialRoutes[0]), nameof(ORToolsSequencerWrapper));
+                SeqLogger.Debug("Initial route: "+ param.GTSPRepresentation.InitialRoutes[0].ToListString(), nameof(ORToolsSequencerWrapper));
                 InitialSolution = routing.ReadAssignmentFromRoutes(param.GTSPRepresentation.InitialRoutes, true);
                 if (InitialSolution == null)
                     SeqLogger.Error("Initial solution given, but not accepted!", nameof(ORToolsSequencerWrapper));
@@ -116,8 +117,6 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent--;
             SeqLogger.Debug("ORTools building finished!", nameof(ORToolsSequencerWrapper));
         }
-
-        //Run VRP Solver
         public TaskResult Solve()
         {
             SeqLogger.Info("Solver running!", nameof(ORToolsSequencerWrapper));
@@ -162,7 +161,6 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("Solution processed!", nameof(ORToolsSequencerWrapper));
             return result;
         }
-
         private string DecodeStatusCode(int status)
         {
             return status switch

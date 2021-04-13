@@ -1,21 +1,29 @@
-﻿using SequencePlanner.GTSPTask.Result;
+﻿using System.Collections.Generic;
+using SequencePlanner.Model;
+using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.LineTask;
-using SequencePlanner.Model;
-using System.Collections.Generic;
 
 namespace SequencePlanner.Helper
 {
     public class LineDepotMapper: IDepotMapper
     {
+        private Position Position;
+        private GTSPNode GTSPNode;
+        private Model.Task TaskNode;
+        private Alternative Alternative;
+        private Line StartLine;
+        private Line FinishLine;
+
+        private LineTask Task { get; set; }
+        private DepotChangeType DepotChangeType { get; set; }
+
         private Position StartDepot { get; set; }
         private Position FinishDepot { get; set; }
         public BaseNode ORToolsStartDepot { get; set; }
         public BaseNode ORToolsFinishDepot { get; set; }
         public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequencingID; else return -1; } }
         public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequencingID; else return -1; } }
-        private DepotChangeType DepotChangeType { get; set; }
-        private LineTask Task { get; set; }
         
         public void Map(BaseTask task)
         {
@@ -45,20 +53,18 @@ namespace SequencePlanner.Helper
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepot(); break;
             }
         }
-
         public void ReverseMap(BaseTask task)
         {
             Task = (LineTask)task;
             switch (DepotChangeType)
             {
                 case DepotChangeType.CyclicStartDepot: CyclicStartDepotReverse(); break;
-                case DepotChangeType.NotCyclicNoDepot: NotCyclicNoDepotReverse((LineTask)task); break;
-                case DepotChangeType.NotCyclicOnlyStartDepot: NotCyclicOnlyStartDepotReverse((LineTask)task); break;
-                case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepotReverse((LineTask)task); break;
+                case DepotChangeType.NotCyclicNoDepot: NotCyclicNoDepotReverse(); break;
+                case DepotChangeType.NotCyclicOnlyStartDepot: NotCyclicOnlyStartDepotReverse(); break;
+                case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepotReverse(); break;
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepotReverse(); break;
             }
         }
-
         public TaskResult ResolveSolution(TaskResult result)
         {
             switch (DepotChangeType)
@@ -81,6 +87,7 @@ namespace SequencePlanner.Helper
             return result;
         }
 
+        //MAP
         private void CyclicStartDepot()
         {
             StartLine = CreateVirtualLine(StartDepot, StartDepot, "VirtualStart");
@@ -88,7 +95,6 @@ namespace SequencePlanner.Helper
             ORToolsStartDepot = StartLine;
             ORToolsFinishDepot = null;
         }
-
         private void NotCyclicNoDepot()
         {
             Position pos = new Position()
@@ -132,15 +138,15 @@ namespace SequencePlanner.Helper
         {
             Task.Lines.Remove(StartLine);
         }
-        private void NotCyclicNoDepotReverse(LineTask task)
+        private void NotCyclicNoDepotReverse()
         {
             Task.Lines.Remove(StartLine);
         }
-        private void NotCyclicOnlyStartDepotReverse(LineTask task)
+        private void NotCyclicOnlyStartDepotReverse()
         {
             Task.Lines.Remove(StartLine);
         }
-        private void NotCyclicOnlyFinishDepotReverse(LineTask task)
+        private void NotCyclicOnlyFinishDepotReverse()
         {
             Task.Lines.Remove(FinishLine);
         }
@@ -149,93 +155,8 @@ namespace SequencePlanner.Helper
             Task.Lines.Remove(StartLine);
             Task.Lines.Remove(FinishLine);
         }
-
-        ////RESOLVE
-        //private TaskResult CyclicStartDepotResolve(TaskResult result)
-        //{
-        //    result.DeleteFirst();
-        //    result.DeleteLast();
-        //    return result;
-        //}
-
-        //private TaskResult NotCyclicNoDepotResolve(TaskResult result)
-        //{
-        //    result.DeleteFirst();
-        //    result.DeleteLast();
-        //    return result;
-        //}
-
-        //private TaskResult NotCyclicOnlyStartDepotResolve(TaskResult result)
-        //{
-        //    result.DeleteFirst();
-        //    result.DeleteLast();
-        //    return result;
-        //}
-
-        //private TaskResult NotCyclicOnlyFinishDepotResolve(TaskResult result)
-        //{
-        //    result.DeleteFirst();
-        //    result.DeleteLast();
-        //    return result;
-        //}
-
-        //private TaskResult NotCyclicStartFinishDepotResolve(TaskResult result)
-        //{
-        //    result.DeleteFirst();
-        //    result.DeleteLast();
-        //    return result;
-        //}
-
-        private Position Position;
-        private GTSPNode GTSPNode;
-        private Model.Task TaskNode;
-        private Alternative Alternative;
-        private Process Process;
-        private Line StartLine;
-        private Line FinishLine;
         
-        private Position CreateVirtualNode(LineTask task,string name)
-        {
-            Position = new Position()
-            {
-                UserID = 999999,
-                Name = name,
-                Virtual = true,
-            };
-            GTSPNode = new GTSPNode(Position);
-            GTSPNode.OverrideWeightIn = 0;
-            GTSPNode.OverrideWeightOut = 0;
-
-            TaskNode = new Model.Task()
-            {
-                Name = name,
-                Virtual = true,
-                Positions = new List<GTSPNode>() { GTSPNode }
-            };
-
-            Alternative = new Alternative()
-            {
-                Name = name,
-                Virtual = true,
-                Tasks = new List<Model.Task>() { TaskNode }
-            };
-
-            Process = new Process()
-            {
-                Name = name,
-                Virtual = true,
-                Alternatives = new List<Alternative>() { Alternative }
-            };
-
-            //task.Processes.Add(Process);
-            //task.Alternatives.Add(Alternative);
-            //task.Tasks.Add(TaskNode);
-            task.PositionMatrix.Positions.Add(GTSPNode);
-
-            return Position;
-        }
-
-        private Line CreateVirtualLine(Position start, Position finish, string name)
+        private static Line CreateVirtualLine(Position start, Position finish, string name)
         {
            return new Line()
             {
@@ -248,15 +169,6 @@ namespace SequencePlanner.Helper
                 Virtual = true
             };
         }
-
-        private void DeleteVirualNode(LineTask task)
-        {
-            //task.Processes.Remove(Process);
-            //task.Alternatives.Remove(Alternative);
-            //task.Tasks.Remove(TaskNode);
-            task.PositionMatrix.Positions.Remove(GTSPNode);
-        }
-
         public void OverrideWeights(IGTSPRepresentation gtspRepr)
         {
             var gtsp = gtspRepr;

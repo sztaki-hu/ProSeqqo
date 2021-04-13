@@ -1,5 +1,5 @@
-﻿using SequencePlanner.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using SequencePlanner.Model;
 
 namespace SequencePlanner.GTSPTask.Task.Base
 {

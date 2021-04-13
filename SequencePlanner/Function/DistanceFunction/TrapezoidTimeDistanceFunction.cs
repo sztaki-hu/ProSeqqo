@@ -6,19 +6,21 @@ namespace SequencePlanner.Function.DistanceFunction
 {
     public class TrapezoidTimeDistanceFunction : DistanceFunction
     {
-        public double[] MaxAcceleration;
-        public double[] MaxSpeed;
+        public override string FunctionName { get { return "TrapezoidTime"; } }
+        public double[] MaxAcceleration { get; set; }
+        public double[] MaxSpeed { get; set; }
         protected double[] JointThresholdTime;
         protected double[] JointThresholdDist;
 
+
         public TrapezoidTimeDistanceFunction(double[] maxAcceleration, double[] maxSpeed) : base()
         {
-            FunctionName = "TrapezoidTime";
             MaxAcceleration = maxAcceleration;
             MaxSpeed = maxSpeed;
             InitParameters();
             Validate();
         }
+
 
         public override double ComputeDistance(Position A, Position B)
         {
@@ -85,7 +87,6 @@ namespace SequencePlanner.Function.DistanceFunction
                 return 0.0;
             }
         }
-
 
         private void InitParameters()
         {

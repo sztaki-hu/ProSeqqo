@@ -1,6 +1,6 @@
-﻿using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.Model;
+﻿using SequencePlanner.Model;
 using SequencePlanner.OR_Tools;
+using SequencePlanner.GTSPTask.Result;
 
 namespace SequencePlanner.GTSPTask.Task.Base
 {
@@ -15,12 +15,9 @@ namespace SequencePlanner.GTSPTask.Task.Base
         public int TimeLimit { get; set; }
         public LocalSearchStrategyEnum.Metaheuristics LocalSearchStrategy { get; set; }
 
-        public delegate void TaskCompleted(int ID, ITaskResult result);
         public event TaskCompleted SequencingTaskCompleted;
+        public delegate void TaskCompleted(int ID, ITaskResult result);
 
-        //public void GenerateModel();
         public void ValidateModel();
-        //public ITaskResult RunModel();
-        //public Task<ITaskResult> RunModelAsync(int taskID, CancellationToken cancellationToken);
     }
 }

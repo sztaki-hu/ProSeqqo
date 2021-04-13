@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="SequencePlanner.GTSPTask.Serialization.Task.PointLikeTaskSerializer">
+  <Class Name="SequencePlanner.GTSPTask.Serialization.Task.GeneralTaskSerializer">
     <Position X="12.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAUAAAAEAAAAAIAAAAAIAAAAAAAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Serialization\Task\PointLikeTaskSerializer.cs</FileName>
+      <FileName>GTSPTask\Serialization\Task\GeneralTaskSerializer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.GTSPTask.Serialization.Task.PointLikeTaskSerializationObject">
+  <Class Name="SequencePlanner.GTSPTask.Serialization.Task.GeneralTaskSerializationObject">
     <Position X="12.5" Y="3.25" Width="2.5" />
     <InheritanceLine Type="SequencePlanner.GTSPTask.Serialization.Task.BaseTaskSerializationObject" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
@@ -33,8 +33,8 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAgAggAIgCAAAAAAAAAACIECAEAAAAAABIAAAAgAA=</HashCode>
-      <FileName>GTSPTask\Serialization\Task\PointLikeTaskSerializationObject.cs</FileName>
+      <HashCode>ACAAgAAgAIgCAAAAAAAAAACIECAEABAAQABIAAAAgAA=</HashCode>
+      <FileName>GTSPTask\Serialization\Task\GeneralTaskSerializationObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="ProcessHierarchy" />
@@ -42,14 +42,14 @@
       <Property Name="ProcessPrecedences" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="SequencePlanner.GTSPTask.Serialization.Task.LineLikeTaskSerializer">
+  <Class Name="SequencePlanner.GTSPTask.Serialization.Task.LineTaskSerializer">
     <Position X="15.25" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAUAAAAEAAAAAIAAAAAIAAAAAAAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Serialization\Task\LineLikeTaskSerializer.cs</FileName>
+      <FileName>GTSPTask\Serialization\Task\LineTaskSerializer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.GTSPTask.Serialization.Task.LineLikeTaskSerializationObject">
+  <Class Name="SequencePlanner.GTSPTask.Serialization.Task.LineTaskSerializationObject">
     <Position X="15.25" Y="3.25" Width="2.5" />
     <InheritanceLine Type="SequencePlanner.GTSPTask.Serialization.Task.BaseTaskSerializationObject" ManuallyRouted="true" FixedToPoint="true">
       <Path>
@@ -75,8 +75,8 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAIAgAAAgIgGAAAAAAABAAAAACAAgAAIAAAAABAAABA=</HashCode>
-      <FileName>GTSPTask\Serialization\Task\LineLikeTaskSerializationObject.cs</FileName>
+      <HashCode>AAIAgAAAgIgHAAAAAAABAAAAACAAgAAIAAAAAAAAAAA=</HashCode>
+      <FileName>GTSPTask\Serialization\Task\LineTaskSerializationObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="LineList" />
@@ -99,7 +99,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAQAAAAAJKGAAAAAoAAAAAAAACAQAAAAAAAEAACCAQ=</HashCode>
+      <HashCode>AgAQAAAAAJKGAAAAAoAAAAAAAACkQAAAAAAAEBACCAQ=</HashCode>
       <FileName>GTSPTask\Serialization\Task\BaseTaskSerializationObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -175,7 +175,7 @@
   <Class Name="SequencePlanner.GTSPTask.Serialization.SerializationObject.DistanceFunctionSerializationObject">
     <Position X="5.25" Y="6" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAABACAAAAAAAAAAIABAAEIAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAQAAAAABACAAAAAAAAAAIABAAAIAAACAAAAAAAAAA=</HashCode>
       <FileName>GTSPTask\Serialization\SerializationObject\DistanceFunctionSerializationObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -193,7 +193,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.GTSPTask.Serialization.SerializationObject.Token.Token">
-    <Position X="13" Y="15.75" Width="2.5" />
+    <Position X="13" Y="16.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>GTSPTask\Serialization\SerializationObject\Token\Token.cs</FileName>
@@ -203,7 +203,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.GTSPTask.Serialization.SerializationObject.Token.TokenLineDeserializationObject">
-    <Position X="16.25" Y="15.75" Width="2.5" />
+    <Position X="16.25" Y="16.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAIAABBAAAAAgAAAAgAAAABAAA=</HashCode>
       <FileName>GTSPTask\Serialization\SerializationObject\Token\TokenLineDeserializationObject.cs</FileName>
@@ -216,36 +216,21 @@
       <FileName>GTSPTask\Serialization\Result\TaskResultSerializationObject.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.GTSPTask.Serialization.Result.PointLikeResultSerializer">
+  <Class Name="SequencePlanner.GTSPTask.Serialization.Result.GeneralResultSerializer">
     <Position X="8.25" Y="12.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAUAAAAEAAAAAIAAAAAIAAAAAAAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Serialization\Result\PointLikeResultSerializer.cs</FileName>
+      <FileName>GTSPTask\Serialization\Result\GeneralResultSerializer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.GTSPTask.Serialization.Result.PointLikeResultSerializationObject">
-    <Position X="8.25" Y="15.5" Width="2.5" />
-    <InheritanceLine Type="SequencePlanner.GTSPTask.Serialization.Result.TaskResultSerializationObject" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="3.5" Y="15.5" />
-        <Point X="3.5" Y="15.117" />
-        <Point X="9.438" Y="15.117" />
-        <Point X="9.438" Y="15.5" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgCAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Serialization\Result\PointLikeResultSerializationObject.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.GTSPTask.Serialization.Result.LineLikeResultSerializer">
+  <Class Name="SequencePlanner.GTSPTask.Serialization.Result.LineResultSerializer">
     <Position X="5.25" Y="12.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAUAAAAEAAAAAIAAAAAIAAAAAAAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Serialization\Result\LineLikeResultSerializer.cs</FileName>
+      <FileName>GTSPTask\Serialization\Result\LineResultSerializer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.GTSPTask.Serialization.Result.LineLikeResultSerializationObject">
+  <Class Name="SequencePlanner.GTSPTask.Serialization.Result.LineResultSerializationObject">
     <Position X="5.25" Y="15.5" Width="2.5" />
     <InheritanceLine Type="SequencePlanner.GTSPTask.Serialization.Result.TaskResultSerializationObject" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
@@ -256,14 +241,14 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AACAACAAAAgCIQAAAAABAAQAAAAAAAAAAAAIAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Serialization\Result\LineLikeResultSerializationObject.cs</FileName>
+      <HashCode>AQCAACAAAAgCIAAAAAABAAQAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>GTSPTask\Serialization\Result\LineResultSerializationObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSPTask.Serialization.SerializationObject.Token.TokenConverter">
     <Position X="16.25" Y="12.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAIAKAIgAAAAAAAAAAQIAAAAAAAIAAAAEgAAAAAAAAA=</HashCode>
+      <HashCode>AAIAKAIgAAAAAAAAAAQIAAAAAAAIAAAAEgIAAAAAAAA=</HashCode>
       <FileName>GTSPTask\Serialization\SerializationObject\Token\TokenConverter.cs</FileName>
     </TypeIdentifier>
   </Class>

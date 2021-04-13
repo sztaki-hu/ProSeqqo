@@ -1,13 +1,11 @@
-﻿using SequencePlanner.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SequencePlanner.Model
 {
     public class Alternative: BaseNode
     {
         public List<Task> Tasks { get; set; }
+
 
         public Alternative():base()
         {
@@ -23,12 +21,10 @@ namespace SequencePlanner.Model
             copy.Tasks = Tasks;
             return copy;
         }
-
         public override string ToString()
         {
             return base.ToString();
         }
-
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -44,7 +40,6 @@ namespace SequencePlanner.Model
                 return true;
             }
         }
-
         public override int GetHashCode()
         {
             return base.GetHashCode() & Tasks.GetHashCode();

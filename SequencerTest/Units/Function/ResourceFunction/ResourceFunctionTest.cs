@@ -65,21 +65,5 @@ namespace SequencerTest.Units
             Assert.AreEqual(3, func.ComputeResourceCost(B, C, 1));
             Assert.AreEqual(1, func.ComputeResourceCost(A, A, 1));
         }
-
-        [TestMethod]
-        public void PositionBasedResourceFunction()
-        {
-            func = new PositionBasedResourceFunction(new EuclidianDistanceFunction(), new AddResourceDistanceLinkFunction());
-            Assert.AreEqual(0, func.ComputeResourceCost(A, B, 1));
-            Assert.AreEqual(0, func.ComputeResourceCost(A, C, 1));
-            Assert.AreEqual(0, func.ComputeResourceCost(B, A, 1));
-            Assert.AreEqual(0, func.ComputeResourceCost(A, A, 1));
-
-            func = new PositionBasedResourceFunction(new EuclidianDistanceFunction(), new MaxResourceDistanceLinkFunction());
-            Assert.AreEqual(0, func.ComputeResourceCost(A, B, 1));
-            Assert.AreEqual(0, func.ComputeResourceCost(A, C, 1));
-            Assert.AreEqual(0, func.ComputeResourceCost(B, A, 1));
-            Assert.AreEqual(0, func.ComputeResourceCost(A, A, 1));
-        }
     }
 }

@@ -7,6 +7,11 @@
         public int AlternativeID { get; set; }
         public int ProcessID { get; set; }
 
+
+        public override string ToString()
+        {
+            return "PositionID: " + PositionID + " TaskID: " + TaskID + " AlternativeID: " + AlternativeID + " ProcessID: " + ProcessID;
+        }
         public string ToSEQ()
         {
             string separator = ";";
@@ -17,11 +22,6 @@
             seq += AlternativeID + separator;
             seq += ProcessID + separator+ newline;
             return seq;
-        }
-
-        public override string ToString()
-        {
-            return "PositionID: " + PositionID + " TaskID: " + TaskID + " AlternativeID: " + AlternativeID + " ProcessID: " + ProcessID;
         }
     }
 }

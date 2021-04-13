@@ -1,50 +1,19 @@
-﻿using SequencePlanner.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Helper
 {
     public static class SeqLogger
     {
-        public static LogLevel LogLevel = LogLevel.Trace;
-        public static int Indent=0;
+        private static LogLevel logLevel = LogLevel.Trace;
+        private static int indent = 0;
         private static List<string> backlog = new List<string>();
-        public static List<string> Backlog { get { return backlog; } set { backlog = value; } }
+
+        public static LogLevel LogLevel { get => logLevel; set => logLevel = value; }
         public static bool UseIndent { get; set; }
+        public static int Indent { get => indent; set => indent = value; }
+        public static List<string> Backlog { get { return backlog; } set { backlog = value; } }
 
-        public static void Trace(string message, string nameOfClass = null)
-        {
-            WriteLog(LogLevel.Trace, message, nameOfClass);
-        }
-
-        public static void Debug(string message, string nameOfClass = null)
-        {
-            WriteLog(LogLevel.Debug, message, nameOfClass);
-        }
-
-        public static void Info(string message, string nameOfClass = null)
-        {
-            WriteLog(LogLevel.Info, message, nameOfClass);
-        }
-
-        public static void Warning(string message, string nameOfClass = null)
-        {
-            WriteLog(LogLevel.Warning, message, nameOfClass);
-        }
-        public static void Error(string message, string nameOfClass = null)
-        {
-            WriteLog(LogLevel.Error, message, nameOfClass);
-        }
-
-        public static void Critical(string message, string nameOfClass = null)
-        {
-            WriteLog(LogLevel.Critical, message, nameOfClass);
-        }
-
-        public static void InitBacklog()
-        {
-            Backlog.Clear();
-        }
 
         public static void WriteLog(LogLevel level, string message, string nameOfClass = null)
         {
@@ -82,116 +51,33 @@ namespace SequencePlanner.Helper
                     Backlog.Add(log);
             }
         }
-
-        internal static string ToList(double[] list)
+        public static void Trace(string message, string nameOfClass = null)
         {
-            if (list.Length > 1)
-            {
-                string tmp = "";
-                for (int i = 0; i < list.Length-1; i++)
-                {
-                    tmp += list[i].ToString("0.#####") + "/ ";
-                }
-                tmp += list[list.Length - 1].ToString("0.#####");
-                return tmp;
-            }
-            return "";
+            WriteLog(LogLevel.Trace, message, nameOfClass);
         }
-
-        internal static string ToList(List<double> list)
+        public static void Debug(string message, string nameOfClass = null)
         {
-            string tmp = "";
-            if (list.Count > 0 && list != null)
-            {
-                for (int i = 0; i < list.Count - 1; i++)
-                {
-                    tmp += list[i].ToString("0.##") + "/ ";
-                }
-                tmp += list[list.Count - 1];
-            }
-            return tmp;
+            WriteLog(LogLevel.Debug, message, nameOfClass);
         }
-
-        public  static string ToList(List<long> list)
+        public static void Info(string message, string nameOfClass = null)
         {
-            string tmp = "";
-            if (list.Count > 0 && list != null)
-            {
-                for (int i = 0; i < list.Count - 1; i++)
-                {
-                    tmp += list[i] + ", ";
-                }
-                tmp += list[list.Count - 1];
-            }
-            return tmp;
+            WriteLog(LogLevel.Info, message, nameOfClass);
         }
-
-        public static string ToList(List<int> list)
+        public static void Warning(string message, string nameOfClass = null)
         {
-            string tmp = "";
-            if (list.Count > 0 && list != null)
-            {
-                for (int i = 0; i < list.Count - 1; i++)
-                {
-                    tmp += list[i] + ", ";
-                }
-                tmp += list[list.Count - 1];
-
-            }
-            return tmp;
+            WriteLog(LogLevel.Warning, message, nameOfClass);
         }
-
-        public static string ToList(List<BaseNode> list)
+        public static void Error(string message, string nameOfClass = null)
         {
-            string tmp = "";
-            if (list.Count > 0 && list != null)
-            {
-                for (int i = 0; i < list.Count - 1; i++)
-                {
-                    tmp += list[i].UserID + ", ";
-                }
-                tmp += list[list.Count - 1].UserID;
-            }
-            return tmp;
+            WriteLog(LogLevel.Error, message, nameOfClass);
         }
-
-        public static string ToList(List<GTSPNode> list)
+        public static void Critical(string message, string nameOfClass = null)
         {
-            string tmp = "";
-            if (list.Count > 0 && list != null)
-            {
-                for (int i = 0; i < list.Count - 1; i++)
-                {
-                    tmp += list[i].Node.UserID + ", ";
-                }
-                tmp += list[list.Count - 1].Node.UserID;
-            }
-            return tmp;
+            WriteLog(LogLevel.Critical, message, nameOfClass);
         }
-
-        internal static string ToList(long[] list)
+        public static void InitBacklog()
         {
-            string tmp = "";
-            if (list.Length > 0 && list != null)
-            {
-                for (int i = 0; i < list.Length - 1; i++)
-                {
-                    tmp += list[i] + ", ";
-                }
-                tmp += list[list.Length - 1];
-            }
-            return tmp;
+            Backlog.Clear();
         }
-    }
-
-    public enum LogLevel
-    {
-        Trace =    0,
-        Debug =    1,
-        Info =     2,
-        Warning =  3,
-        Error =    4,
-        Critical = 5,
-        Off = 6
     }
 }

@@ -99,21 +99,13 @@ namespace SequencerTest.Benchmark
                     {
                         SeqLogger.LogLevel = LogLevel.Info;
                         serPL = new GeneralTaskSerializer();
-                        switch (FormatType)
+                        pointLikeTask = FormatType switch
                         {
-                            case FormatType.SEQ:
-                            case FormatType.TXT:
-                                pointLikeTask = serPL.ImportSEQ(path);
-                                break;
-                            case FormatType.JSON:
-                                pointLikeTask = serPL.ImportJSON(path);
-                                break;
-                            case FormatType.XML:
-                                pointLikeTask = serPL.ImportXML(path);
-                                break;
-                            default:
-                                throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                        }
+                            FormatType.SEQ or FormatType.TXT => serPL.ImportSEQ(path),
+                            FormatType.JSON => serPL.ImportJSON(path),
+                            FormatType.XML => serPL.ImportXML(path),
+                            _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
+                        };
                         pointTaskResult = pointLikeTask.RunModel();
                         GeneralResultSerializer serRes = new GeneralResultSerializer();
                         serRes.ExportJSON(pointTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
@@ -124,6 +116,7 @@ namespace SequencerTest.Benchmark
                     }catch(Exception e)
                     {
                         SeqLogger.Indent = 0;
+                        SeqLogger.Critical(e.ToString());
                         PointResults.Add(new GeneralTaskResult() { 
                             StatusMessage = "Stop with error",    
                             ErrorMessage = new List<string>() { e.ToString() } 
@@ -136,23 +129,14 @@ namespace SequencerTest.Benchmark
                     try { 
                     SeqLogger.LogLevel = LogLevel.Error;
                     serLL = new LineTaskSerializer();
-                    switch (FormatType)
-                    {
-                        case FormatType.SEQ:
-                        case FormatType.TXT:
-                            lineTask = serLL.ImportSEQ(path);
-                            break;
-                        case FormatType.JSON:
-                            lineTask = serLL.ImportJSON(path);
-                            break;
-                        case FormatType.XML:
-                            lineTask = serLL.ImportXML(path);
-                            break;
-                        default:
-                            throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                    }
-
-                    lineTaskResult = lineTask.RunModel();
+                        lineTask = FormatType switch
+                        {
+                            FormatType.SEQ or FormatType.TXT => serLL.ImportSEQ(path),
+                            FormatType.JSON => serLL.ImportJSON(path),
+                            FormatType.XML => serLL.ImportXML(path),
+                            _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
+                        };
+                        lineTaskResult = lineTask.RunModel();
                     LineResultSerializer serRes = new LineResultSerializer();
                     serRes.ExportJSON(lineTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
                     SeqLogger.LogLevel = LogLevel.Info;

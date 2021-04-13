@@ -10,25 +10,22 @@ namespace SequencePlanner.GTSPTask.Result
         public List<GTSPNode> PositionResult { get; set; }
         public List<ResolveStruct> ResolveHelper { get; set; }
 
-        public GeneralTaskResult(TaskResult baseTask) : base(baseTask)
-        {
-            PositionResult = new List<GTSPNode>();
-            ResolveHelper = new List<ResolveStruct>();
-        }
 
         public GeneralTaskResult()
         {
             PositionResult = new List<GTSPNode>();
             ResolveHelper = new List<ResolveStruct>();
         }
-
-        public void CreateRawGeneralIDStruct()
+        public GeneralTaskResult(TaskResult baseTask) : base(baseTask)
         {
+            PositionResult = new List<GTSPNode>();
+            ResolveHelper = new List<ResolveStruct>();
             foreach (var item in SolutionRaw)
             {
-                ResolveHelper.Add(new ResolveStruct() { SeqID = (int)item }) ;
+                ResolveHelper.Add(new ResolveStruct() { SeqID = (int)item });
             }
         }
+
 
         public void ResolveHelperStruct()
         {
@@ -58,7 +55,6 @@ namespace SequencePlanner.GTSPTask.Result
                 }
             }
         }
-
         public void ResolveCosts(GeneralTask.CalculateWeightDelegate calculateWeightFunction)
         {
             CostsRaw = new List<double>();
@@ -69,30 +65,6 @@ namespace SequencePlanner.GTSPTask.Result
                 CostSum += CostsRaw[i];
             }
         }
-
-        public void ToLog(LogLevel lvl)
-        {
-            SeqLogger.Info("Result: ");
-            SeqLogger.Indent++;
-            base.ToLog(lvl);
-            if (StatusCode == 1)
-            {
-                SeqLogger.Info("Solution: ");
-                SeqLogger.Indent++;
-                if(PositionResult!=null && PositionResult.Count > 0)
-                {
-                    for (int i = 0; i < PositionResult.Count - 1; i++)
-                    {
-                        SeqLogger.Info(PositionResult[i].ToString());
-                        SeqLogger.Info("--" + CostsRaw[i].ToString());
-                    }
-                    SeqLogger.Info(PositionResult[PositionResult.Count - 1].ToString());
-                }
-                SeqLogger.Indent--;
-            }
-            SeqLogger.Indent--;
-        }
-
         public override void Delete(int index)
         {
             base.Delete(index);
@@ -114,41 +86,38 @@ namespace SequencePlanner.GTSPTask.Result
                 PositionResult.RemoveAt(index);
             }
         }
+        
+        public static new string ToCSVHeader() => TaskResult.ToCSVHeader();
+        public new string ToCSV() => base.ToCSV();
+        public new void ToLog(LogLevel lvl)
+        {
+            SeqLogger.Info("Result: ");
+            SeqLogger.Indent++;
+            base.ToLog(lvl);
+            if (StatusCode == 1)
+            {
+                SeqLogger.Info("Solution: ");
+                SeqLogger.Indent++;
+                if (PositionResult != null && PositionResult.Count > 0)
+                {
+                    for (int i = 0; i < PositionResult.Count - 1; i++)
+                    {
+                        SeqLogger.Info(PositionResult[i].ToString());
+                        SeqLogger.Info("--" + CostsRaw[i].ToString());
+                    }
+                    SeqLogger.Info(PositionResult[^1].ToString());
+                }
+                SeqLogger.Indent--;
+            }
+            SeqLogger.Indent--;
+        }
 
         public void Validate(List<GTSPDisjointConstraint> disjointConstraints, List<GTSPPrecedenceConstraint> positionPrecedence, List<GTSPPrecedenceConstraint> processPrecedence)
         {
             ValidateDisjoint(disjointConstraints);
             ValidatePositionPrec(positionPrecedence);
-            ValidateProcessPrec(processPrecedence);
+            //ValidateProcessPrec(processPrecedence);
         }
-
-        private void ValidateProcessPrec(List<GTSPPrecedenceConstraint> processPrecedence)
-        {
-            //foreach (var prec in processPrecedence)
-            //{
-            //    var findFirst = false;
-            //    var first = -1;
-
-            //    var findSecond = false;
-            //    var second = -1;
-            //    for (int i = 0; i < PositionResult.Count; i++)
-            //    {
-            //        if (PositionResult[i].Node.UserID == prec.Before.UserID)
-            //        {
-            //            findFirst = true;
-            //            first = i;
-            //        }
-            //        if (PositionResult[i].Node.UserID == prec.After.UserID)
-            //        {
-            //            findSecond = true;
-            //            second = i;
-            //        }
-            //    }
-            //    if (findSecond && findFirst && first > second)
-            //        throw new SeqException("Result violates position precedence: " + prec);
-            //}
-        }
-
         private void ValidatePositionPrec(List<GTSPPrecedenceConstraint> positionPrecedence)
         {
             if(positionPrecedence is not null &&  PositionResult is not null && PositionResult.Count > 0 && positionPrecedence.Count > 0)
@@ -181,18 +150,18 @@ namespace SequencePlanner.GTSPTask.Result
                             throw new SeqException("Result violates position precedence: " + prec);
                 
                     //Check last result item, if not equal with the start depot
-                    if (PositionResult[0].Node.GlobalID != PositionResult[PositionResult.Count-1].Node.GlobalID)
+                    if (PositionResult[0].Node.GlobalID != PositionResult[^1].Node.GlobalID)
                     {
                         findFirst = false;
                         first = -1;
                         findSecond = false;
                         second = -1;
-                        if (PositionResult[PositionResult.Count-1].Node.UserID == prec.Before.UserID)
+                        if (PositionResult[^1].Node.UserID == prec.Before.UserID)
                         {
                             findFirst = true;
                             first = PositionResult.Count;
                         }
-                        if (PositionResult[PositionResult.Count-1].Node.UserID == prec.After.UserID)
+                        if (PositionResult[^1].Node.UserID == prec.After.UserID)
                         {
                             findSecond = true;
                             second = PositionResult.Count;
@@ -204,7 +173,6 @@ namespace SequencePlanner.GTSPTask.Result
                 }
             }
         }
-
         private void ValidateDisjoint(List<GTSPDisjointConstraint> disjointConstraints)
         {
             foreach (var disj in disjointConstraints)
@@ -223,27 +191,31 @@ namespace SequencePlanner.GTSPTask.Result
                 }
             };
         }
+        //private void ValidateProcessPrec(List<GTSPPrecedenceConstraint> processPrecedence)
+        //{
+        //    foreach (var prec in processPrecedence)
+        //    {
+        //    var findFirst = false;
+        //    var first = -1;
 
-        public static string ToCSVHeader() => TaskResult.ToCSVHeader();
-
-
-        public string ToCSV() => base.ToCSV();
-    }
-
-    public class ResolveStruct
-    {
-        public int SeqID { get; set; }
-        public int GID { get; set; }
-        public GTSPNode Node { get; set; }
-        public double Cost { get; set; }
-        public List<GTSPNode> Resolve { get; set; }
-        public List<double> ResolveCost { get; set; }
-        public bool Resolved { get; set; }
-
-        public ResolveStruct()
-        {
-            Resolve = new List<GTSPNode>();
-            ResolveCost = new List<double>();
-        }
+        //    var findSecond = false;
+        //    var second = -1;
+        //    for (int i = 0; i < PositionResult.Count; i++)
+        //    {
+        //        if (PositionResult[i].Node.UserID == prec.Before.UserID)
+        //        {
+        //            findFirst = true;
+        //            first = i;
+        //        }
+        //        if (PositionResult[i].Node.UserID == prec.After.UserID)
+        //        {
+        //            findSecond = true;
+        //            second = i;
+        //        }
+        //    }
+        //    if (findSecond && findFirst && first > second)
+        //        throw new SeqException("Result violates position precedence: " + prec);
+        // }
+        //}
     }
 }

@@ -1,9 +1,9 @@
-﻿using SequencePlanner.GTSPTask.Task.LineTask;
-using SequencePlanner.Helper;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Xml.Serialization;
+using SequencePlanner.Helper;
+using SequencePlanner.GTSPTask.Task.LineTask;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {

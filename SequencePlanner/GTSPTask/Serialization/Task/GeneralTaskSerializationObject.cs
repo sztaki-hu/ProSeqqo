@@ -1,11 +1,11 @@
-﻿using SequencePlanner.GTSPTask.Serialization.SerializationObject;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
+﻿using System;
+using System.Collections.Generic;
+using SequencePlanner.Model;
+using SequencePlanner.Helper;
 using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.General;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System;
-using System.Collections.Generic;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {
@@ -17,17 +17,14 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public List<HybridLineSerializationObject> LineList { get; set; }
         public bool UseShortcutInAlternatives { get; set; }
 
-        public GeneralTaskSerializationObject() : base()
-        {
-        }
 
-        public GeneralTaskSerializationObject(List<string> seqString):base(seqString)
+        public GeneralTaskSerializationObject() : base() { }
+        public GeneralTaskSerializationObject(List<string> seqString):base()
         {
             var tokenizer = new SEQTokenizer();
             tokenizer.Tokenize(seqString);
             FillBySEQTokens(tokenizer);
         }
-
         public GeneralTaskSerializationObject(GeneralTask task):base(task)
         {
             TaskType = "General";
@@ -75,6 +72,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
         }
 
+
         public GeneralTask ToGeneralTask()
         {
             var PointLikeTask = new GeneralTask();
@@ -85,7 +83,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             PointLikeTask.UseShortcutInAlternatives = UseShortcutInAlternatives;
             return PointLikeTask;
         }
-
         private void AddLinesToPositionList(GeneralTask task)
         {
             foreach (var line in LineList)
@@ -101,7 +98,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 task.PositionMatrix.Positions.Add(new GTSPNode(l));
             }
         }
-
         private void CreatePrecedences(GeneralTask pointLikeTask)
         {
             foreach (var posPrec in PositionPrecedences)
@@ -130,7 +126,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 });
             }
         }
-
         private void CreateProcessHierarchy(GeneralTask pointLikeTask)
         {
             foreach (var item in ProcessHierarchy)
@@ -146,7 +141,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     pointLikeTask.Processes.Add(proc);
                 }
 
-                Alternative alter = FindAlternative(item.AlternativeID, pointLikeTask, proc);
+                Alternative alter = FindAlternative(item.AlternativeID, proc);
                 
                 if (alter == null)
                 {
@@ -158,7 +153,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     proc.Alternatives.Add(alter);
                 }
 
-                Model.Task task = FindTask(item.TaskID, pointLikeTask, alter);
+                Model.Task task = FindTask(item.TaskID, alter);
                 
                 if (task == null)
                 {
@@ -184,8 +179,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 task.Positions.Add(position);
             }
         }
-
-        public void FillBySEQTokens(SEQTokenizer tokenizer)
+        public new void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             base.FillBySEQTokens(tokenizer);
             UseShortcutInAlternatives = tokenizer.GetBoolByHeader("UseShortcutInAlternatives" );
@@ -194,14 +188,13 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             ProcessPrecedences = tokenizer.GetPrecedenceListByHeader("ProcessPrecedence");
             LineList = tokenizer.GetHybridLineListByHeader("LineList");
         }
-
         public string ToSEQ()
         {
             string seq = "";
             string newline = "\n";
-            seq+=base.ToSEQShort();
+            seq += base.ToSEQShort();
             seq += "UseShortcutInAlternatives: " + UseShortcutInAlternatives + newline;
-            seq +=base.ToSEQLong();
+            seq += base.ToSEQLong();
             seq += "LineList:" + newline;
             foreach (var line in LineList)
             {
@@ -226,7 +219,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             return seq;
         }
 
-        public Process FindProcess(int userID, GeneralTask task)
+        public static Process FindProcess(int userID, GeneralTask task)
         {
             foreach (var item in task.Processes)
             {
@@ -237,8 +230,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return null;
         }
-
-        public Alternative FindAlternative(int userID, GeneralTask task, Process process)
+        public static Alternative FindAlternative(int userID, Process process)
         {
             if (process != null)
             {
@@ -250,8 +242,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return null;
         }
-
-        public Model.Task FindTask(int userID, GeneralTask task, Alternative alternative)
+        public static Model.Task FindTask(int userID, Alternative alternative)
         {
             if (alternative != null)
             {
@@ -263,8 +254,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return null;
         }
-
-        public Position FindPosition(int userID, GeneralTask task)
+        public static Position FindPosition(int userID, GeneralTask task)
         {
             foreach (var item in task.PositionMatrix.Positions)
             {
@@ -279,8 +269,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return null;
         }
-
-        public GTSPNode FindNode(int userID, GeneralTask task)
+        public static GTSPNode FindNode(int userID, GeneralTask task)
         {
             foreach (var item in task.PositionMatrix.Positions)
             {

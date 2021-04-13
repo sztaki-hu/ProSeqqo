@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
+﻿using SequencePlanner.Model;
 using SequencePlanner.Helper;
-using SequencePlanner.Model;
+using SequencePlanner.Function.DistanceFunction;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 {
@@ -47,6 +47,21 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             }
         }
 
+
+        public IDistanceFunction ToDistanceFunction()
+        {
+            IDistanceFunction newDistanceFunction = Function switch
+            {
+                "Euclidian" => new EuclidianDistanceFunction(),
+                "Manhattan" => new ManhattanDistanceFunction(),
+                "Max" => new MaxDistanceFunction(),
+                "TrapezoidTime" => new TrapezoidTimeDistanceFunction(TrapezoidAcceleration, TrapezoidSpeed),
+                "TrapezoidTimeDistanceWithTimeBreaker" => new TrapezoidTimeWithTimeBreakerDistanceFunction(TrapezoidAcceleration, TrapezoidSpeed),
+                "Matrix" => new MatrixDistanceFunction(DistanceMatrix.DistanceMatrix, DistanceMatrix.IDHeader),
+                _ => throw new SeqException("DistanceFunction is unknown!"),
+            };
+            return newDistanceFunction;
+        }
 
         public string ToSEQShort()
         {
@@ -94,21 +109,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 seq += DistanceMatrix.ToSEQ();
             }
             return seq;
-        }
-
-        public IDistanceFunction ToDistanceFunction()
-        {
-            IDistanceFunction newDistanceFunction = Function switch
-            {
-                "Euclidian" => new EuclidianDistanceFunction(),
-                "Manhattan" => new ManhattanDistanceFunction(),
-                "Max" => new MaxDistanceFunction(),
-                "TrapezoidTime" => new TrapezoidTimeDistanceFunction(TrapezoidAcceleration, TrapezoidSpeed),
-                "TrapezoidTimeDistanceWithTimeBreaker" => new TrapezoidTimeWithTimeBreakerDistanceFunction(TrapezoidAcceleration, TrapezoidSpeed),
-                "Matrix" => new MatrixDistanceFunction(DistanceMatrix.DistanceMatrix, DistanceMatrix.IDHeader),
-                _ => throw new SeqException("DistanceFunction is unknown!"),
-            };
-            return newDistanceFunction;
         }
 
         public void FillBySEQTokens(SEQTokenizer tokenizer)

@@ -1,12 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using SequencePlanner.Model;
 using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using SequencePlanner.Model;
 using SequencePlanner.GTSPTask.Task.LineTask;
-using SequencePlanner.Model;
-using System;
-using System.Collections.Generic;
 
 namespace SequencerTest.Integration.Sequencing
 {

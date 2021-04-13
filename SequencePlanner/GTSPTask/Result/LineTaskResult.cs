@@ -1,7 +1,6 @@
-﻿using SequencePlanner.Helper;
+﻿using System.Collections.Generic;
+using SequencePlanner.Helper;
 using SequencePlanner.Model;
-using System;
-using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Result
 {
@@ -14,17 +13,18 @@ namespace SequencePlanner.GTSPTask.Result
         public double Penalty { get; internal set; }
         public double LineLength { get; internal set; }
 
-        public LineTaskResult(TaskResult baseTask) : base(baseTask)
-        {
-            LineResult = new List<Line>();
-            PositionResult = new List<Position>();
-        }
 
         public LineTaskResult()
         {
             LineResult = new List<Line>();
             PositionResult = new List<Position>();
         }
+        public LineTaskResult(TaskResult baseTask) : base(baseTask)
+        {
+            LineResult = new List<Line>();
+            PositionResult = new List<Position>();
+        }
+
 
         public override void Delete(int index)
         {
@@ -48,18 +48,14 @@ namespace SequencePlanner.GTSPTask.Result
                 PositionResult.RemoveAt(2*index);
             }
         }
-
-        //public override void DeleteFirst()
-        //{
-        //    Delete(SolutionRaw.Count - 1);
-        //}
-
-        //public override void DeleteLast()
-        //{
-        //    Delete(0);
-        //}
-
-        public void ToLog(LogLevel lvl)
+        public static void PositionToSeq(Position position)
+        {
+            SeqLogger.Info("["+position.UserID + "] " + position.Name + " " + position.Vector.ToListString() + " ResID:" + position.ResourceID);
+        }
+        
+        public static new string ToCSVHeader() => TaskResult.ToCSVHeader();
+        public new string ToCSV() => base.ToCSV();
+        public new void ToLog(LogLevel lvl)
         {
             SeqLogger.Info("Result: ");
             SeqLogger.Indent++;
@@ -79,7 +75,7 @@ namespace SequencePlanner.GTSPTask.Result
                         SeqLogger.Info(LineResult[i].ToString());
                         SeqLogger.Info("--" + CostsRaw[i].ToString());
                     }
-                    SeqLogger.Info(LineResult[LineResult.Count - 1].ToString());
+                    SeqLogger.Info(LineResult[^1].ToString());
                 }
                 SeqLogger.Indent--;
 
@@ -91,20 +87,11 @@ namespace SequencePlanner.GTSPTask.Result
                     {
                         PositionToSeq(PositionResult[i]);
                     }
-                    PositionToSeq(PositionResult[PositionResult.Count - 1]);
+                    PositionToSeq(PositionResult[^1]);
                 }
                 SeqLogger.Indent--;
             }
             SeqLogger.Indent--;
         }
-
-        public void PositionToSeq(Position position)
-        {
-            SeqLogger.Info("["+position.UserID + "] " + position.Name + " " + SeqLogger.ToList(position.Vector) + " ResID:" + position.ResourceID);
-        }
-
-        public string ToCSV() => base.ToCSV();
-
-        public static string ToCSVHeader() => TaskResult.ToCSVHeader();
     }
 }

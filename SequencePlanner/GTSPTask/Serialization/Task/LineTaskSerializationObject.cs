@@ -1,30 +1,23 @@
-﻿using Newtonsoft.Json;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
+﻿using System.Collections.Generic;
+using SequencePlanner.Model;
+using SequencePlanner.Helper;
 using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.LineTask;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System.Collections.Generic;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {
     public class LineTaskSerializationObject: BaseTaskSerializationObject
     {
-        [JsonProperty(Order = 12)]
         public List<LineSerializationObject> LineList { get; set; }
-        [JsonProperty(Order = 13)]
         public List<OrderConstraintSerializationObject> LinePrecedences { get; set; }
-        [JsonProperty(Order = 14)]
         public List<OrderConstraintSerializationObject> ContourPrecedences { get; set; }
-        [JsonProperty(Order = 10)]
         public double ContourPenalty { get; set; }
 
 
-        public LineTaskSerializationObject() : base()
-        {
-        }
-        public LineTaskSerializationObject(List<string> seqString): base(seqString)
+        public LineTaskSerializationObject() : base() { }
+        public LineTaskSerializationObject(List<string> seqString): base()
         {
             var tokenizer = new SEQTokenizer();
             tokenizer.Tokenize(seqString);
@@ -71,6 +64,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
         }
 
+
         public LineTask ToLineTask()
         {
             var LineTask = new LineTask();
@@ -80,7 +74,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             CreatePrecedences(LineTask);
             return LineTask;
         }
-        public void FillBySEQTokens(SEQTokenizer tokenizer)
+        public new void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             base.FillBySEQTokens(tokenizer);
             ContourPenalty = tokenizer.GetDoubleByHeader("ContourPenalty");
@@ -112,6 +106,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return seq;
         }
+      
+        
         private void CreateLinesAndContours(LineTask lineTask)
         {
             foreach (var line in LineList)
@@ -167,7 +163,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 });
             }
         }
-        private Position FindPosition(int ID, List<GTSPNode> posList)
+        private static Position FindPosition(int ID, List<GTSPNode> posList)
         {
             foreach (var pos in posList)
             {
@@ -178,7 +174,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return null;
         }
-        private Line FindLine(int ID, List<Line> lineList)
+        private static Line FindLine(int ID, List<Line> lineList)
         {
             foreach (var line in lineList)
             {
@@ -187,7 +183,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             return null;
         }
-        private Contour FindContour(int ID, List<Contour> contourList)
+        private static Contour FindContour(int ID, List<Contour> contourList)
         {
             foreach (var contour in contourList)
             {

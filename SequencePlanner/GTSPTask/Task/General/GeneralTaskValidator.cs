@@ -1,27 +1,19 @@
-﻿using SequencePlanner.Model;
+﻿using System.Collections.Generic;
+using SequencePlanner.Model;
+using SequencePlanner.Helper;
 using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.LineTask;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System.Collections.Generic;
 
+//TODO: PositionPrecedence only between processes, no inside alternatives and between alternatives in one process.
 namespace SequencePlanner.GTSPTask.Task.General
 {
-    internal class GeneralTaskValidator
+    public class GeneralTaskValidator
     {
-        public GeneralTaskValidator()
-        {
-
-        }
-
-        //TODO: PositionPrecedence only between processes, no inside alternatives and between alternatives in one process.
-
-        public void Validate(GeneralTask pointLikeTask)
+        public static void Validate(GeneralTask pointLikeTask)
         {
             SeqLogger.Debug("Validation started!", nameof(GeneralTaskValidator));
             SeqLogger.Indent++;
-            BaseTaskValidator baseTaskValidator = new BaseTaskValidator();
-            baseTaskValidator.Validate((BaseTask)pointLikeTask);
+            BaseTaskValidator.Validate((BaseTask)pointLikeTask);
             CheckTaskType(pointLikeTask);
             CheckStartFinsihDepot(pointLikeTask);
             CheckProcessHierarchy(pointLikeTask);
@@ -31,8 +23,9 @@ namespace SequencePlanner.GTSPTask.Task.General
             SeqLogger.Debug("Validation finished!", nameof(GeneralTaskValidator));
         }
 
+
         //Q17
-        private void CheckUseAlternativeShortcuts(GeneralTask task)
+        private static void CheckUseAlternativeShortcuts(GeneralTask task)
         {
             if(task.UseShortcutInAlternatives)
                 foreach (var process in task.Processes)
@@ -56,7 +49,7 @@ namespace SequencePlanner.GTSPTask.Task.General
         }
 
         //Q16
-        private void CheckPositionPrecedence(GeneralTask task)
+        private static void CheckPositionPrecedence(GeneralTask task)
         {
             if ((task.StartDepot is not null || task.FinishDepot is not null) && task.PositionPrecedence is not null && task.PositionPrecedence.Count > 0)
                 foreach (var position in task.PositionMatrix.Positions)
@@ -73,7 +66,7 @@ namespace SequencePlanner.GTSPTask.Task.General
         }
 
         //Q15
-        private void CheckProcessPrecedence(GeneralTask task)
+        private static void CheckProcessPrecedence(GeneralTask task)
         {
             Process a = null;
             Process b = null;
@@ -109,7 +102,7 @@ namespace SequencePlanner.GTSPTask.Task.General
         }
 
         //Q14
-        private void CheckProcessHierarchy(GeneralTask task)
+        private static void CheckProcessHierarchy(GeneralTask task)
         {
             for (int i = 0; i < task.Processes.Count; i++)
             {
@@ -140,7 +133,7 @@ namespace SequencePlanner.GTSPTask.Task.General
         }
 
         //O6
-        private void CheckStartFinsihDepot(GeneralTask task)
+        private static void CheckStartFinsihDepot(GeneralTask task)
         {
             var checkStartDepot =false;
             var checkFinishDepot =false;
@@ -242,7 +235,7 @@ namespace SequencePlanner.GTSPTask.Task.General
         }
 
         //O1
-        private void CheckTaskType(GeneralTask task)
+        private static void CheckTaskType(GeneralTask task)
         {
             if (task.PositionMatrix is null)
                 throw new SeqException("Position hierarchy, PositionMatrix is null.", "Please construct it.");
@@ -265,7 +258,7 @@ namespace SequencePlanner.GTSPTask.Task.General
                 SeqLogger.Debug(task.ProcessPrecedence.Count + " process precedence found.", nameof(GeneralTaskValidator));
         }
 
-        private void ListContainsPrecedenceItems(GTSPPrecedenceConstraint precedence, IEnumerable<BaseNode> nodes)
+        private static void ListContainsPrecedenceItems(GTSPPrecedenceConstraint precedence, IEnumerable<BaseNode> nodes)
         {
             var findAfter = false;
             var findBefore = false;

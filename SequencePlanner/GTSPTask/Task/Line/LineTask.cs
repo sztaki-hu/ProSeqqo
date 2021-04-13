@@ -1,26 +1,27 @@
-﻿using SequencePlanner.Model;
+﻿using System.Collections.Generic;
+using SequencePlanner.Model;
+using SequencePlanner.Helper;
+using SequencePlanner.OR_Tools;
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.Base;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.OR_Tools;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SequencePlanner.GTSPTask.Task.LineTask
 {
     public class LineTask: BaseTask
     {
+        private Line virtualStart;
+        private int startSeqID;
+        private readonly double PenaltyEpsilon = 0;
+        private int MAX_SEQUENCING_ID = 0;
+
         public List<Line> Lines { get; set; }
         public List<Contour> Contours { get; set; }
         public double ContourPenalty { get; set; }
         public List<GTSPPrecedenceConstraint> LinePrecedences { get; set; }
         public List<GTSPPrecedenceConstraint> ContourPrecedences { get; set; }
         private LineGTSPRepresentation GTSPRepresentation { get; set; }
-        private int MAX_SEQUENCING_ID = 0;
-        private readonly double PenaltyEpsilon = 0;
 
+        
         public LineTask():base()
         {
             Lines = new List<Line>();
@@ -29,6 +30,7 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             ContourPrecedences = new List<GTSPPrecedenceConstraint>();
             DepotMapper = new LineDepotMapper();
         }
+
 
         public LineTaskResult RunModel()
         {
@@ -60,7 +62,6 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             result.ToLog(LogLevel.Info);
             return result;
         }
-
         protected long[][] CreateInitialRout()
         {
 
@@ -86,6 +87,10 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             }
             return null;
         }
+        public override void ValidateModel()
+        {
+           LineTaskValidator.Validate(this);
+        }
 
         private void GenerateModel()
         {
@@ -110,17 +115,29 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Indent--;
             SeqLogger.Info("Generate model finished!", nameof(LineTask));
         }
-
-        public override void ValidateModel()
+        private double[,] CreateGTSPMatrix()
         {
-            var validator = new LineTaskValidator();
-            validator.Validate(this);
-        }
+            double[,] matrix = new double[Lines.Count,Lines.Count];
 
-        public async Task<LineTaskResult> RunModelAsync(int taskID, CancellationToken cancellationToken)
-        {
-            System.Console.WriteLine(taskID);
-            return RunModel();
+            foreach (var lineFrom in Lines)
+            {
+                foreach (var lineTo in Lines)
+                {
+                    double weight;
+                    if (lineFrom.GlobalID != lineTo.GlobalID)
+                    {
+                        weight = CalculateWeight(lineFrom, lineTo);
+                    }
+                    else
+                    {
+                        weight = 0.0;
+                    }
+                    matrix[lineFrom.SequencingID, lineTo.SequencingID] = weight;
+                }
+            }
+            SetWeightsForVirtualStart(matrix); //Handle Cyclic sequence with start/finish depots with override of matrix
+            SeqLogger.Info("GTSP matrix created!", nameof(LineTask));
+            return matrix;
         }
 
         private List<GTSPPrecedenceConstraint> CreatePrecedenceConstraints()
@@ -162,7 +179,6 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Info("Order precedences created!", nameof(LineTask));
             return precedenceConstraints;
         }
-
         private List<GTSPDisjointConstraint> CreateDisjointConstraints()
         {
             List<GTSPDisjointConstraint> disjointConstraints = new List<GTSPDisjointConstraint>();
@@ -205,33 +221,6 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             return disjointConstraints;
         }
 
-        private double[,] CreateGTSPMatrix()
-        {
-            double[,] matrix = new double[Lines.Count,Lines.Count];
-
-            foreach (var lineFrom in Lines)
-            {
-                foreach (var lineTo in Lines)
-                {
-                    double weight;
-                    if (lineFrom.GlobalID != lineTo.GlobalID)
-                    {
-                        weight = CalculateWeight(lineFrom, lineTo);
-                    }
-                    else
-                    {
-                        weight = 0.0;
-                    }
-                    matrix[lineFrom.SequencingID, lineTo.SequencingID] = weight;
-                }
-            }
-            SetWeightsForVirtualStart(matrix); //Handle Cyclic sequence with start/finish depots with override of matrix
-            SeqLogger.Info("GTSP matrix created!", nameof(LineTask));
-            return matrix;
-        }
-
-        private Line virtualStart;
-        private int startSeqID;
         private void AddVirtualStart()
         {
             Line line = new Line()
@@ -273,7 +262,6 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             virtualStart = line;
             SeqLogger.Info("Virtual start and finish handled!", nameof(LineTask));
         }
-
         private void SetWeightsForVirtualStart(double[,] matrix)
         {
                 startSeqID = DepotMapper.ORToolsStartDepotSequenceID;
@@ -311,7 +299,6 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
                     }
                 }
         }
-
         private LineTaskResult ResolveSolution(TaskResult result)
         {
             LineTaskResult taskResult = new LineTaskResult(result);
@@ -380,7 +367,6 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             SeqLogger.Debug("Solution resolved!", nameof(LineTask));
             return taskResult;
         }
-
         private double CalculateWeight(Line lineFrom, Line lineTo)
         {
             if (lineFrom.NodeB.Virtual || lineTo.NodeA.Virtual)
@@ -396,7 +382,6 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
             //    weight += ContourPenalty;
             return weight;
         }
-
         private List<Line> FindLineByUserID(int UserID)
         {
             List<Line> tmp = new List<Line>(); ;

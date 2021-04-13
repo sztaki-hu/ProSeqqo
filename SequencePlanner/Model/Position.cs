@@ -20,12 +20,10 @@
             copy.Vector = (double[]) Vector.Clone();
             return copy;
         }
-
         public override string ToString()
         {
             return base.ToString();
         }
-
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -43,7 +41,6 @@
                 return true;
             }
         }
-
         public override int GetHashCode()
         {
             return base.GetHashCode() & Vector.GetHashCode() & Dimension.GetHashCode();

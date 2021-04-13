@@ -6,10 +6,8 @@ namespace SequencePlanner.Function.DistanceFunction
 {
     public class EuclidianDistanceFunction : DistanceFunction
     {
-        public EuclidianDistanceFunction() : base()
-        {
-            FunctionName = "Euclidian";
-        }
+        public override string FunctionName { get { return "Euclidian"; } }
+
 
         public override double ComputeDistance(Position A, Position B)
         {
@@ -24,11 +22,6 @@ namespace SequencePlanner.Function.DistanceFunction
                 tmp += (A.Vector[i] - B.Vector[i]) * (A.Vector[i] - B.Vector[i]);
             }
             return Math.Sqrt(tmp);
-        }
-
-        public override void Validate()
-        {
-            //Nothing to validate
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SequencePlanner.Model;
+using SequencePlanner.Helper;
+using SequencePlanner.GTSPTask.Result;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
@@ -15,6 +15,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         public double TravelLength { get; set; }
         public double Penalty { get; set; }
         public double LineLength { get; set; }
+
 
         public LineResultSerializationObject() : base()
         {
@@ -31,6 +32,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             LineLength = result.LineLength;
             Penalty = result.Penalty;
         }
+
 
         public LineResultSerializationObject(List<string> seqString): base(seqString)
         {
@@ -53,7 +55,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             return result;
         }
 
-        public string ToSEQ()
+        public new string ToSEQ()
         {
             string seq = "";
             string newline = "\n";
@@ -72,7 +74,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             seq += nameof(PositionResult) + ": " + newline;
             foreach (var postition in PositionResult)
             {
-                seq += postition.UserID + d + SeqLogger.ToList(postition.Vector) + d + postition.Name + d + postition.ResourceID + newline;
+                seq += postition.UserID + d + postition.Vector.ToListString() + d + postition.Name + d + postition.ResourceID + newline;
             }
             seq += nameof(Log) + ": " + newline;
             foreach (var line in Log)

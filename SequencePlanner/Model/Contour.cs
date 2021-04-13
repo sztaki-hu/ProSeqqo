@@ -7,11 +7,13 @@ namespace SequencePlanner.Model
     {
         public List<Line> Lines { get; set; }
 
+
         public Contour(): base()
         {
             Name = UserID + "_Contour_" + GlobalID;
             Lines = new List<Line>();
         }
+
 
         public void Validate()
         {
@@ -28,12 +30,10 @@ namespace SequencePlanner.Model
             copy.Lines = Lines;
             return copy;
         }
-
         public override string ToString()
         {
             return base.ToString();
         }
-
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -49,7 +49,6 @@ namespace SequencePlanner.Model
                 return true;
             }
         }
-
         public override int GetHashCode()
         {
             return base.GetHashCode() & Lines.GetHashCode();

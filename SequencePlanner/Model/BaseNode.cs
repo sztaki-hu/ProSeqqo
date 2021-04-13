@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SequencePlanner.Model
+﻿namespace SequencePlanner.Model
 {
     public class BaseNode
     {
@@ -23,6 +21,7 @@ namespace SequencePlanner.Model
             Name = UserID + "_BaseNode_" + GlobalID;
         }
 
+
         public virtual BaseNode GetReverse()
         {
             return new BaseNode()
@@ -34,7 +33,6 @@ namespace SequencePlanner.Model
                 Name = Name+"_Reverse"
             };
         }
-
 
         //REVERSE
         public BaseNode GetCopy(BaseNode node = null)
@@ -58,7 +56,6 @@ namespace SequencePlanner.Model
                 return node;
             }
         }
-
         public override string ToString()
         {
             var str = Name;
@@ -68,7 +65,6 @@ namespace SequencePlanner.Model
             str += "|RID:" + ResourceID +"]";
             return str;
         }
-
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -93,7 +89,6 @@ namespace SequencePlanner.Model
                 return true;
             }
         }
-
         public override int GetHashCode()
         {
             return UserID.GetHashCode() & ResourceID.GetHashCode() & GlobalID.GetHashCode() & SequencingID.GetHashCode() & Virtual.GetHashCode() & Name.GetHashCode();

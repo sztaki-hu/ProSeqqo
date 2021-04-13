@@ -1,12 +1,56 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SequencePlanner.Helper;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
 {
     public static class TokenConverter
     {
+        public static string GetStringByHeader(this SEQTokenizer tokenizer, string header)
+        {
+            try
+            {
+                string result = null;
+                bool find = false;
+                foreach (var token in tokenizer.Tokens)
+                {
+                    if (token.Header.ToUpper().Equals(header.ToUpper()))
+                    {
+                        find = true;
+                        result = token.Lines[0].Line;
+                    }
+                }
+                if (find == false)
+                    SeqLogger.Warning("Can not find header with: " + header, nameof(TokenConverter));
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new SeqException("Can not phrase header " + header, e);
+            }
+        }
+        
+        public static int GetIntByHeader(this SEQTokenizer tokenizer, string header)
+        {
+            try
+            {
+                foreach (var token in tokenizer.Tokens)
+                {
+                    if (token.Header.ToUpper().Equals(header.ToUpper()))
+                    {
+                        int result = Int32.Parse(token.Lines[0].Line);
+                        SeqLogger.Debug(token.Header + ": " + result, nameof(TokenConverter));
+                        return result;
+                    }
+                }
+                return -1;
+            }
+            catch (Exception e)
+            {
+                throw new SeqException("Can not phrase header " + header, e);
+            }
+        }
+
         public static bool GetBoolByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
@@ -91,27 +135,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static int GetIntByHeader(this SEQTokenizer tokenizer, string header)
-        {
-            try
-            {
-                foreach (var token in tokenizer.Tokens)
-                {
-                    if (token.Header.ToUpper().Equals(header.ToUpper()))
-                    {
-                        int result = Int32.Parse(token.Lines[0].Line);
-                        SeqLogger.Debug(token.Header + ": " + result, nameof(TokenConverter));
-                        return result;
-                    }
-                }
-                return -1;
-            }
-            catch (Exception e)
-            {
-                throw new SeqException("Can not phrase header " + header, e);
-            }
-        }
-
         public static List<ProcessHierarchySerializationObject> GetProcessHierarchyByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
@@ -145,33 +168,45 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 throw new SeqException("Can not phrase header " + header, e);
             }
         }
-
-        public static StrictEdgeWeightSetSerializationObject GetStrictEdgeWeightSet(this SEQTokenizer tokenizer, string header)
+        
+        public static List<PositionSerializationObject> GetPositionListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
-                var edgeSet = new StrictEdgeWeightSetSerializationObject();
+                var positions = new List<PositionSerializationObject>();
                 foreach (var token in tokenizer.Tokens)
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
-                        for (int i = 0; i < token.Lines.Count; i++)
+                        for (int j = 0; j < token.Lines.Count; j++)
                         {
-                            string[] line = token.Lines[i].Line.Split(";");
-                            StrictEdgeWeightSerializationObject edge = new StrictEdgeWeightSerializationObject
+
+                            PositionSerializationObject posObj = new PositionSerializationObject();
+                            List<double> config = new List<double>();
+                            string[] line = token.Lines[j].Line.Split(';', '[', ']');     //1;[x;y;z;];Name--->[1][][x][y][z][][Name]
+                            posObj.ID = int.Parse(line[0]);
+                            int i = 2;
+                            while (!line[i].Equals(""))
                             {
-                                A = Int32.Parse(line[0]),
-                                B = Int32.Parse(line[1]),
-                                Weight = Double.Parse(line[2])
-                            };
-                            if (line.Length > 3)
-                                edge.Bidirectional = Boolean.Parse(line[3]);
-                            edgeSet.Weights.Add(edge);
+                                config.Add(Convert.ToDouble(line[i]));
+                                i++;
+                            }
+                            posObj.Position = config.ToArray();
+                            i++;
+                            if (line.Length != i)
+                            {
+                                posObj.Name = line[i];
+                            }
+                            i++;
+                            if (line.Length > i)
+                            {
+                                posObj.ResourceID = Convert.ToInt32(line[i]);
+                            }
+                            positions.Add(posObj);
                         }
-                        SeqLogger.Trace(token.Header + ": " + edgeSet.Weights.Count + "weights found", nameof(TokenConverter));
                     }
                 }
-                return edgeSet;
+                return positions;
             }
             catch (Exception e)
             {
@@ -257,51 +292,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static List<PositionSerializationObject> GetPositionListByHeader(this SEQTokenizer tokenizer, string header)
-        {
-            try
-            {
-                var positions = new List<PositionSerializationObject>();
-                foreach (var token in tokenizer.Tokens)
-                {
-                    if (token.Header.ToUpper().Equals(header.ToUpper()))
-                    {
-                        for (int j = 0; j < token.Lines.Count; j++)
-                        {
-
-                            PositionSerializationObject posObj = new PositionSerializationObject();
-                            List<double> config = new List<double>();
-                            string[] line = token.Lines[j].Line.Split(';', '[', ']');     //1;[x;y;z;];Name--->[1][][x][y][z][][Name]
-                            posObj.ID = int.Parse(line[0]);
-                            int i = 2;
-                            while (!line[i].Equals(""))
-                            {
-                                config.Add(Convert.ToDouble(line[i]));
-                                i++;
-                            }
-                            posObj.Position = config.ToArray();
-                            i++;
-                            if (line.Length != i)
-                            {
-                                posObj.Name = line[i];
-                            }
-                            i++;
-                            if (line.Length > i)
-                            {
-                                posObj.ResourceID = Convert.ToInt32(line[i]);
-                            }
-                            positions.Add(posObj);
-                        }
-                    }
-                }
-                return positions;
-            }
-            catch (Exception e)
-            {
-                throw new SeqException("Can not phrase header " + header, e);
-            }
-        }
-
         public static List<OrderConstraintSerializationObject> GetPrecedenceListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
@@ -332,23 +322,32 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static string GetStringByHeader(this SEQTokenizer tokenizer, string header)
+        public static StrictEdgeWeightSetSerializationObject GetStrictEdgeWeightSet(this SEQTokenizer tokenizer, string header)
         {
             try
             {
-                string result = null;
-                bool find = false;
+                var edgeSet = new StrictEdgeWeightSetSerializationObject();
                 foreach (var token in tokenizer.Tokens)
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
-                        find = true;
-                        result = token.Lines[0].Line;
+                        for (int i = 0; i < token.Lines.Count; i++)
+                        {
+                            string[] line = token.Lines[i].Line.Split(";");
+                            StrictEdgeWeightSerializationObject edge = new StrictEdgeWeightSerializationObject
+                            {
+                                A = Int32.Parse(line[0]),
+                                B = Int32.Parse(line[1]),
+                                Weight = Double.Parse(line[2])
+                            };
+                            if (line.Length > 3)
+                                edge.Bidirectional = Boolean.Parse(line[3]);
+                            edgeSet.Weights.Add(edge);
+                        }
+                        SeqLogger.Trace(token.Header + ": " + edgeSet.Weights.Count + "weights found", nameof(TokenConverter));
                     }
                 }
-                if (find == false)
-                    SeqLogger.Warning("Can not find header with: " + header, nameof(TokenConverter));
-                return result;
+                return edgeSet;
             }
             catch (Exception e)
             {

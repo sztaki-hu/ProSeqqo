@@ -12,6 +12,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public int ResourceID { get; set; }
         public bool Bidirectional { get; set; }
 
+
         public LineSerializationObject()
         {
             Bidirectional = Line.BIDIRECTIONAL_DEFAULT;
@@ -27,6 +28,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             ResourceID = line.ResourceID;
             Bidirectional = line.Bidirectional;
         }
+
 
         public string ToSEQ()
         {

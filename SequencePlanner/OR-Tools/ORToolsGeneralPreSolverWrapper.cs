@@ -1,10 +1,10 @@
-﻿using Google.OrTools.LinearSolver;
+﻿using System;
+using System.Linq;
+using System.Diagnostics;
+using System.Collections.Generic;
+using Google.OrTools.LinearSolver;
 using SequencePlanner.Model;
 using SequencePlanner.Helper;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace SequencePlanner.OR_Tools
 {
@@ -17,8 +17,7 @@ namespace SequencePlanner.OR_Tools
         private Variable[] position; 
         private int[] alternativeID;
         private int[] processID;
-
-        private List<string> constraints =  new List<string>(); //DEBUG
+        private List<string> constraints =  new List<string>(); 
 
         public ORToolsGeneralPreSolverWrapper(ORToolsGeneralPreSolverTask parameters)
         {
@@ -29,7 +28,6 @@ namespace SequencePlanner.OR_Tools
 
         public List<int> Solve()
         {
-
             // Init
             timer.Reset();
             timer.Start();
@@ -63,7 +61,7 @@ namespace SequencePlanner.OR_Tools
             Solver.ResultStatus resultStatus = RunSolver(solver);
             timer.Stop();
             RunTime = timer.Elapsed;
-            return ProcessSolution1(solver, resultStatus);
+            return ProcessSolution(solver, resultStatus);
         }
         private Solver.ResultStatus RunSolver(Solver solver)
         {
@@ -84,7 +82,6 @@ namespace SequencePlanner.OR_Tools
                 constraints.Add((x[parameters.StartDepot] == 1.0).ToString());
             }
         }
-
         private void AddFinishDepotConstraints(Solver solver)
         {
             if (parameters.FinishDepot > -1)                                                                                         //If Start depo exist, position = 0 and selected x = 1
@@ -95,8 +92,6 @@ namespace SequencePlanner.OR_Tools
                 constraints.Add((x[parameters.FinishDepot] == 1.0).ToString());
             }
         }
-
-
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
         {
             SeqLogger.Trace("Precedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
@@ -147,21 +142,6 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent--;
         }
 
-        private LinearConstraint CreateStrictOrderPrecedence(List<Model.BaseNode> before, List<Model.BaseNode> after)
-        {
-            LinearExpr beforExpr = new LinearExpr();
-            foreach (var item in before)
-            {
-                beforExpr += x[item.SequencingID];
-            }
-            LinearExpr afterExpr = new LinearExpr();
-            foreach (var item in after)
-            {
-                afterExpr += x[item.SequencingID];
-            }
-            constraints.Add((beforExpr == afterExpr).ToString());
-            return beforExpr == afterExpr;
-        }
         private void FillAlternativesAndProcesses(Solver solver, List<Model.Process> processes)
         {
             for (int i = 0; i < processes.Count; i++)
@@ -179,7 +159,33 @@ namespace SequencePlanner.OR_Tools
                 }
             }
         }
-        private List<int> ProcessSolution1(Solver solver, Solver.ResultStatus resultStatus)
+        private LinearConstraint CreateStrictOrderPrecedence(List<Model.BaseNode> before, List<Model.BaseNode> after)
+        {
+            LinearExpr beforExpr = new LinearExpr();
+            foreach (var item in before)
+            {
+                beforExpr += x[item.SequencingID];
+            }
+            LinearExpr afterExpr = new LinearExpr();
+            foreach (var item in after)
+            {
+                afterExpr += x[item.SequencingID];
+            }
+            constraints.Add((beforExpr == afterExpr).ToString());
+            return beforExpr == afterExpr;
+        }
+        private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint)
+        {
+            LinearExpr constraintExpr = new LinearExpr();
+            foreach (var item in disjoint.DisjointSetSeq)
+            {
+                constraintExpr += x[item];
+            }
+            LinearConstraint contraint = constraintExpr == 1.0;
+            constraints.Add(contraint.ToString());
+            return contraint;
+        }
+        private List<int> ProcessSolution(Solver solver, Solver.ResultStatus resultStatus)
         {
             List<Process> processes = new List<Process>();
             var solution = new List<int>();
@@ -232,17 +238,6 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("ORTools building finished!", nameof(ORToolsGeneralPreSolverWrapper));
             return solution;
         }
-        private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint)
-        {
-            LinearExpr constraintExpr = new LinearExpr();
-            foreach (var item in disjoint.DisjointSetSeq)
-            {
-                constraintExpr += x[item];
-            }
-            LinearConstraint contraint = constraintExpr == 1.0;
-            constraints.Add(contraint.ToString());
-            return contraint;
-        }
         private string DecodeStatusCode(Solver.ResultStatus status)
         {
             return status switch
@@ -291,41 +286,3 @@ namespace SequencePlanner.OR_Tools
         }
     }
 }
-
-//private List<int> ProcessSolution(Solver solver, Solver.ResultStatus resultStatus)
-//{
-//    var solution = new List<int>();
-//    if (resultStatus == Solver.ResultStatus.OPTIMAL)
-//    {
-//        var tmpStringSolution = "Initial solution found: ";
-//        for (int p = 0; p < param.NumberOfNodes; p++)
-//        {
-//            for (int i = 0; i < param.NumberOfNodes; i++)
-//            {
-//                if (x[i].SolutionValue() == 1.0 && position[i].SolutionValue() == p)
-//                {
-//                    if (i != param.StartDepot)
-//                    {
-//                        tmpStringSolution += i.ToString() + ",";
-//                        solution.Add(i);
-//                    }
-//                }
-//            }
-//            if (x[p].SolutionValue() == 1)
-//                SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + position[p].SolutionValue() + ", Alternative = " + alternativeID[p] + ", Process = " + processID[p], nameof(ORToolsPreSolverWrapper));
-//        }
-//        SeqLogger.Info(tmpStringSolution.Remove(tmpStringSolution.Length - 1), nameof(ORToolsPreSolverWrapper));
-//    }
-//    else
-//    {
-//        SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPreSolverWrapper));
-//        SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsPreSolverWrapper));
-//        throw new SequencerException("Can not find optimal initial solution with MIP solver!");
-//    }
-//    SeqLogger.Info("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsPreSolverWrapper));
-//    SeqLogger.Info("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsPreSolverWrapper));
-//    SeqLogger.Info("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsPreSolverWrapper));
-//    SeqLogger.Indent--;
-//    SeqLogger.Info("ORTools building finished!", nameof(ORToolsPreSolverWrapper));
-//    return solution;
-//}

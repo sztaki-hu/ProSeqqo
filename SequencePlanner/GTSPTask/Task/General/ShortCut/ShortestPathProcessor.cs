@@ -1,7 +1,7 @@
-﻿using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.Helper;
+﻿using System.Collections.Generic;
 using SequencePlanner.Model;
-using System.Collections.Generic;
+using SequencePlanner.Helper;
+using SequencePlanner.GTSPTask.Result;
 
 namespace SequencePlanner.GTSPTask.Task.General.ShortCut
 {
@@ -27,6 +27,7 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
             DeletedPositionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();
             PositionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();
         }
+
 
         public void Change()
         {
@@ -122,7 +123,6 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
             SeqLogger.Indent--;
             SeqLogger.Info("Alternative shortcut creation finished!", nameof(GeneralTask));
         }
-
         public void ChangeBack()
         {
 
@@ -170,7 +170,6 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
             DeletedPositionPrecedencesOfShortcuts.Clear();
             PositionPrecedencesOfShortcuts.Clear();
         }
-
         public GeneralTaskResult ResolveSolution(GeneralTaskResult taskResult, GeneralTask.CalculateWeightDelegate calculateWeightFunction)
         {
             SeqLogger.Debug("Solution update by alternative shortcuts started!", nameof(GeneralTask));

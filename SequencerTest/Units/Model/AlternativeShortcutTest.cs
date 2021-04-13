@@ -15,15 +15,13 @@ namespace SequencerTest.Units.Model
     [TestClass]
     public class AlternativeShortcutTest
     {
-        Alternative alternative = new Alternative();
-        EuclidianDistanceFunction distanceFunction = new EuclidianDistanceFunction();
+        readonly EuclidianDistanceFunction distanceFunction = new EuclidianDistanceFunction();
         NoResourceFunction noResource = new NoResourceFunction();
         AlternativeShortcut shotcut = new AlternativeShortcut();
 
         [TestInitialize()]
         public void Initialize()
         {
-            alternative = TestObjects.GetAlternative();
         }
 
         [TestMethod]

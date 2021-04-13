@@ -6,6 +6,7 @@ namespace SequencePlanner.Model
     {
         public List<GTSPNode> Positions { get; set; }
 
+
         public Task():base()
         {
             Name = UserID + "_Task_" + GlobalID;

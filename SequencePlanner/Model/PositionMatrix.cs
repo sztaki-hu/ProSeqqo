@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.Function.ResourceFunction;
+﻿using System.Collections.Generic;
 using SequencePlanner.Helper;
-using System.Collections.Generic;
+using SequencePlanner.Function.DistanceFunction;
+using SequencePlanner.Function.ResourceFunction;
 
 namespace SequencePlanner.Model
 {
@@ -18,6 +18,12 @@ namespace SequencePlanner.Model
         public bool UseResourceInLineLength { get; set; }
 
 
+        public PositionMatrix()
+        {
+            Positions = new List<GTSPNode>();
+            StrictUserEdgeWeights = new StrictEdgeWeightSet();
+            StrictSystemEdgeWeights = new StrictEdgeWeightSet();
+        }
         public PositionMatrix(List<GTSPNode> positions, IDistanceFunction distanceFunction, IResourceFunction resourceFunction)
         {
             Positions = positions;
@@ -27,13 +33,6 @@ namespace SequencePlanner.Model
             StrictSystemEdgeWeights = new StrictEdgeWeightSet();
             Validate();
             Init();
-        }
-
-        public PositionMatrix()
-        {
-            Positions = new List<GTSPNode>();
-            StrictUserEdgeWeights = new StrictEdgeWeightSet();
-            StrictSystemEdgeWeights = new StrictEdgeWeightSet();
         }
 
 
@@ -58,6 +57,17 @@ namespace SequencePlanner.Model
                 }
             }
         }
+        public void Validate()
+        {
+            if (DistanceFunction == null)
+                throw new SeqException("PositionMatrix.DistanceFunction not given.");
+            
+            if (ResourceFunction == null)
+                throw new SeqException("PositionMatrix.ResourceFunction not given.");
+            
+            if (Positions == null)
+                throw new SeqException("PositionMatrix.Positions not given.");
+        }
 
         public double CalculateWeight(GTSPNode A, GTSPNode B)
         {
@@ -73,7 +83,7 @@ namespace SequencePlanner.Model
                 Matrix[A.Node.SequencingID, B.Node.SequencingID] = B.OverrideWeightOut;
                 return B.OverrideWeightOut;
             }
-            double weight = 0;
+            double weight;
             if (A.Node.Virtual || B.Node.Virtual)
                 weight = 0;
             else
@@ -95,7 +105,7 @@ namespace SequencePlanner.Model
 
         public double CalculateWeight(Position A, Position B)
         {
-            double weight = 0;
+            double weight;
             if (A.Virtual || B.Virtual)
                 weight = 0;
             else
@@ -122,18 +132,6 @@ namespace SequencePlanner.Model
                 return user;
             }
             return null;
-        }
-
-        public void Validate()
-        {
-            if (DistanceFunction == null)
-                throw new SeqException("PositionMatrix.DistanceFunction not given.");
-            
-            if (ResourceFunction == null)
-                throw new SeqException("PositionMatrix.ResourceFunction not given.");
-            
-            if (Positions == null)
-                throw new SeqException("PositionMatrix.Positions not given.");
         }
 
         public void ToLog(LogLevel level)
@@ -169,11 +167,5 @@ namespace SequencePlanner.Model
                 SeqLogger.WriteLog(level, position.ToString(), nameof(PositionMatrix));
             }
         }
-
-        //private void CheckMatrix(double[,] matrix)
-        //{
-        //    if (matrix.GetLength(0) != matrix.GetLength(1))
-        //        throw new SequencerException("Matrix dimension mismatch, it should be n x n.", "Check input parameters of PositionMatrix!");
-        //}
     }
 }

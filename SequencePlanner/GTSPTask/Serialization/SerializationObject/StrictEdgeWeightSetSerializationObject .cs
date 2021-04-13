@@ -1,14 +1,13 @@
-﻿using SequencePlanner.Helper;
+﻿using System.Collections.Generic;
+using SequencePlanner.Helper;
 using SequencePlanner.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 {
     public class StrictEdgeWeightSetSerializationObject
     {
         public List<StrictEdgeWeightSerializationObject> Weights {get;set;}
+
 
         public StrictEdgeWeightSetSerializationObject()
         {
@@ -28,6 +27,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 });
             }
         }
+
 
         public StrictEdgeWeightSet ToStrictEdgeWeightSet(List<GTSPNode> positions)
         {
@@ -52,7 +52,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             }
             return tmp;
         }
-
         public string ToSEQ()
         {
             string seq = "";

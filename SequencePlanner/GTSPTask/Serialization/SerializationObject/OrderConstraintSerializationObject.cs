@@ -5,6 +5,7 @@
         public int BeforeID { get; set; }
         public int AfterID { get; set; }
 
+
         public string ToSEQ()
         {
             string separator = ";";

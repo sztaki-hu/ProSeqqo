@@ -1,8 +1,8 @@
-﻿using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using System.Xml.Serialization;
+using System.Text.Json.Serialization;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 {
@@ -16,12 +16,14 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         [JsonIgnore]
         public List<PositionSerializationObject> PositionList { get; set; }
 
+
         public DistanceMatrixSerializationObject()
         {
             IDHeader = new List<int>();
             NameFooter = new List<string>();
             ResourceFooter = new List<int>();
         }
+
 
         public string ToSEQ()
         {
@@ -128,7 +130,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             }
             CreatePositionList();
         }
-
         private void CreatePositionList()
         {
             PositionList = new List<PositionSerializationObject>();

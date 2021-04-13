@@ -1,9 +1,9 @@
-﻿using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SequencePlanner.Model;
+using SequencePlanner.Helper;
+using SequencePlanner.GTSPTask.Result;
+using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
@@ -11,16 +11,15 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
     {
         public List<GTSPNode> PositionResult { get; set; }
 
+
         public GeneralResultSerializationObject() : base()
         {
             PositionResult = new List<GTSPNode>();
         }
-
         public GeneralResultSerializationObject(GeneralTaskResult result): base(result)
         {
             PositionResult = result.PositionResult;
         }
-
         public GeneralResultSerializationObject(List<string> seqString) : base(seqString)
         {
             var tokenizer = new SEQTokenizer();
@@ -28,11 +27,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             FillBySEQTokens(tokenizer);
         }
 
+
         private void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             throw new NotImplementedException();
         }
-
         public GeneralTaskResult ToGeneralResult()
         {
             var result = new GeneralTaskResult();
@@ -40,8 +39,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             result.PositionResult = PositionResult;
             return result;
         }
-
-        public string ToSEQ()
+        public new string ToSEQ()
         {
             string seq ="";
             string newline ="\n";
@@ -53,7 +51,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
                 seq += nameof(PositionResult) + ": " + newline;
                 foreach (var position in PositionResult)
                 {
-                    seq += position.Node.UserID + d + "[" + SeqLogger.ToList(position.In.Vector) + "]" + d + position.Node.Name + d + position.Node.ResourceID + newline;
+                    seq += position.Node.UserID + d + "[" + position.In.Vector.ToListString() + "]" + d + position.Node.Name + d + position.Node.ResourceID + newline;
                 }
                 seq += nameof(Log) + ": " + newline;
                 foreach (var line in Log)

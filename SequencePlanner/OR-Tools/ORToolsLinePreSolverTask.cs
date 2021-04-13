@@ -1,5 +1,4 @@
 ﻿using SequencePlanner.Model;
-using SequencePlanner.Model;
 using System.Collections.Generic;
 
 namespace SequencePlanner.OR_Tools

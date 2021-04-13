@@ -1,14 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using SequencePlanner.Model;
 using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.Model;
-using SequencePlanner.Model;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using SequencerTest.Helper;
-using System.Collections.Generic;
-using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.GTSPTask.Serialization.Task;
 using SequencePlanner.GTSPTask.Task.LineTask;
+using SequencerTest.Helper;
 
 namespace SequencerTest.Units
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SequencePlanner.Model
+﻿namespace SequencePlanner.Model
 {
     public class GTSPNode
     {
@@ -18,10 +12,10 @@ namespace SequencePlanner.Model
         public double OverrideWeightOut { get; set; }
         public bool Bidirectional { get; set; }
 
+
         public GTSPNode()
         {
         }
-
         public GTSPNode(Position position)
         {
             Node = position;
@@ -29,7 +23,6 @@ namespace SequencePlanner.Model
             Out = position;
             Bidirectional = false;
         }
-
         public GTSPNode(Line line)
         {
             Node = line;
@@ -37,7 +30,6 @@ namespace SequencePlanner.Model
             Out = line.NodeB;
             Bidirectional = line.Bidirectional;
         }
-
 
 
         public GTSPNode GetBidirectional()
@@ -56,7 +48,6 @@ namespace SequencePlanner.Model
             };
         }
 
-
         //DEFAULT
         public GTSPNode GetCopy()
         {
@@ -74,7 +65,6 @@ namespace SequencePlanner.Model
             };
             return node;
         }
-
         public override string ToString()
         {
             var tmp = Node.ToString() + ":  ";
@@ -85,7 +75,6 @@ namespace SequencePlanner.Model
             return tmp;
             //return Node.ToString() + "In: " + In.ToString() + "Out: " + Out.ToString();
         }
-
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -117,7 +106,6 @@ namespace SequencePlanner.Model
                 return true;
             }
         }
-
         public override int GetHashCode()
         {
             return Node.GetHashCode() + In.GetHashCode() + Out.GetHashCode() + Weight.GetHashCode() + AdditionalWeightIn.GetHashCode() + AdditionalWeightOut.GetHashCode() + OverrideWeightIn.GetHashCode() + OverrideWeightOut.GetHashCode() + Bidirectional.GetHashCode();

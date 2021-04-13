@@ -1,10 +1,9 @@
-﻿using Google.OrTools.LinearSolver;
+﻿using System;
+using System.Diagnostics;
 using SequencePlanner.Model;
 using SequencePlanner.Helper;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using Google.OrTools.LinearSolver;
 
 namespace SequencePlanner.OR_Tools
 {
@@ -51,7 +50,6 @@ namespace SequencePlanner.OR_Tools
             RunTime = timer.Elapsed;
             return ProcessSolution(solver, resultStatus);
         }
-
         private Solver.ResultStatus RunSolver(Solver solver)
         {
             //Solve            
@@ -61,6 +59,16 @@ namespace SequencePlanner.OR_Tools
             return resultStatus;
         }
 
+        private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint, Variable[] x)
+        {
+            LinearExpr constraintExpr = new LinearExpr();
+            foreach (var item in disjoint.DisjointSetSeq)
+            {
+                constraintExpr += x[item];
+            }
+            LinearConstraint contraint = constraintExpr == 1.0;
+            return contraint;
+        }
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
         {
             SeqLogger.Trace("Precedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
@@ -71,7 +79,6 @@ namespace SequencePlanner.OR_Tools
             }
             SeqLogger.Indent--;
         }
-
         private void AddDisjointConstraints(Solver solver, List<GTSPDisjointConstraint> disjointConstraints)
         {
             SeqLogger.Trace("DisjointSets: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
@@ -82,7 +89,6 @@ namespace SequencePlanner.OR_Tools
             }
             SeqLogger.Indent--;
         }
-
         private List<int> ProcessSolution(Solver solver, Solver.ResultStatus resultStatus)
         {
             var solution = new List<int>();
@@ -120,18 +126,6 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("ORTools building finished!", nameof(ORToolsLinePreSolverWrapper));
             return solution;
         }
-
-        private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint, Variable[] x)
-        {
-            LinearExpr constraintExpr = new LinearExpr();
-            foreach (var item in disjoint.DisjointSetSeq)
-            {
-                constraintExpr += x[item];
-            }
-            LinearConstraint contraint = constraintExpr == 1.0;
-            return contraint;
-        }
-
         private string DecodeStatusCode(Solver.ResultStatus status)
         {
             return status switch
