@@ -8,10 +8,6 @@ namespace SequencePlanner.Helper
 {
     public class LineDepotMapper: IDepotMapper
     {
-        private Position Position;
-        private GTSPNode GTSPNode;
-        private Model.Task TaskNode;
-        private Alternative Alternative;
         private Line StartLine;
         private Line FinishLine;
 

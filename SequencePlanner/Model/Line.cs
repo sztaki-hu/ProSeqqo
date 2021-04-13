@@ -4,7 +4,7 @@ namespace SequencePlanner.Model
 {
     public class Line: BaseNode
     {
-        public static bool BIDIRECTIONAL_DEFAULT = false;
+        public static bool BIDIRECTIONAL_DEFAULT;
         //Normal line NodeA->NodeB, reverse NodeB->NodeA
         public Position NodeA { get; set; }
         public Position NodeB { get; set; }

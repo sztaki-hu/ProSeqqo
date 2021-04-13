@@ -12,12 +12,12 @@ namespace SequencePlanner.OR_Tools
     {
         public TimeSpan RunTime { get; private set; }
         private readonly ORToolsGeneralPreSolverTask parameters;
-        private Stopwatch timer;
+        private readonly Stopwatch timer;
         private Variable[] x;                 
         private Variable[] position; 
         private int[] alternativeID;
         private int[] processID;
-        private List<string> constraints =  new List<string>(); 
+        private readonly List<string> constraints =  new List<string>(); 
 
         public ORToolsGeneralPreSolverWrapper(ORToolsGeneralPreSolverTask parameters)
         {
@@ -40,7 +40,7 @@ namespace SequencePlanner.OR_Tools
             //position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 9.0, "pos");      // Int, indicates order of nodes
             alternativeID = new int[parameters.NumberOfNodes];                                                                      // Alternative ID of Node
             processID = new int[parameters.NumberOfNodes];                                                                          // Process ID of Node
-            FillAlternativesAndProcesses(solver, parameters.Processes);                                                             // Fill ProcessID and AlternativeID
+            FillAlternativesAndProcesses(parameters.Processes);                                                             // Fill ProcessID and AlternativeID
 
             // Precedences
             AddStartDepotConstraints(solver);
@@ -63,7 +63,7 @@ namespace SequencePlanner.OR_Tools
             RunTime = timer.Elapsed;
             return ProcessSolution(solver, resultStatus);
         }
-        private Solver.ResultStatus RunSolver(Solver solver)
+        private static Solver.ResultStatus RunSolver(Solver solver)
         {
             //Solve            
             SeqLogger.Info("Solver running!", nameof(ORToolsGeneralPreSolverWrapper));
@@ -142,7 +142,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent--;
         }
 
-        private void FillAlternativesAndProcesses(Solver solver, List<Model.Process> processes)
+        private void FillAlternativesAndProcesses(List<Model.Process> processes)
         {
             for (int i = 0; i < processes.Count; i++)
             {
@@ -202,16 +202,16 @@ namespace SequencePlanner.OR_Tools
                 {
                     if (x[i].SolutionValue() == 1) {                                                    //If node selected
                         int aktProcessID = (int)processID[i];
-                        processes[aktProcessID].posKey.Add(i);                                          //Add node index to process
-                        processes[aktProcessID].posOrder.Add((int)position[i].SolutionValue());         //Add node position to process
-                        if (position[i].SolutionValue() < processes[aktProcessID].min)                  
-                            processes[aktProcessID].min = position[i].SolutionValue();                  //Find the first position in process
-                        if (position[i].SolutionValue() > processes[aktProcessID].max)
-                            processes[aktProcessID].max = position[i].SolutionValue();                  //Find the last position in process
+                        processes[aktProcessID].PosKey.Add(i);                                          //Add node index to process
+                        processes[aktProcessID].PosOrder.Add((int)position[i].SolutionValue());         //Add node position to process
+                        if (position[i].SolutionValue() < processes[aktProcessID].Min)                  
+                            processes[aktProcessID].Min = position[i].SolutionValue();                  //Find the first position in process
+                        if (position[i].SolutionValue() > processes[aktProcessID].Max)
+                            processes[aktProcessID].Max = position[i].SolutionValue();                  //Find the last position in process
                     }
                 }
 
-                List<Process> SortedList = processes.OrderBy(o => o.min).ToList();                      //Order the processes by the minimum
+                List<Process> SortedList = processes.OrderBy(o => o.Min).ToList();                      //Order the processes by the minimum
                 foreach (var item in SortedList)
                     solution.AddRange(item.GetResult());                                                //Add the nodes of the process
                 solution.Remove(parameters.StartDepot);                                                      //Remove the first "start depot" because OR-Tools routing requires the initial solution without depot.
@@ -238,7 +238,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("ORTools building finished!", nameof(ORToolsGeneralPreSolverWrapper));
             return solution;
         }
-        private string DecodeStatusCode(Solver.ResultStatus status)
+        private static string DecodeStatusCode(Solver.ResultStatus status)
         {
             return status switch
             {
@@ -254,30 +254,29 @@ namespace SequencePlanner.OR_Tools
     
         private class Process
         {
-            public double min { get; set; }
-            public double max { get; set; }
-            public List<int> posKey { get; set; }
-            public List<int> posOrder { get; set; }
-            public int akt { get; set; }
+            public double Min { get; set; }
+            public double Max { get; set; }
+            public List<int> PosKey { get; set; }
+            public List<int> PosOrder { get; set; }
+            public int Akt { get; set; }
 
             public Process()
             {
-                akt = -1;
-                min = double.MaxValue;
-                max = -1;
-                posKey = new List<int>();
-                posOrder = new List<int>();
+                Akt = -1;
+                Min = double.MaxValue;
+                Max = -1;
+                PosKey = new List<int>();
+                PosOrder = new List<int>();
             }
             public List<int> GetResult()
             {
                 var result = new List<int>();
-                var akt = min;
-                for (int i = (int)min; i <= max; i++)
+                for (int i = (int)Min; i <= Max; i++)
                 {
-                    for (int j = 0; j < posOrder.Count; j++)
+                    for (int j = 0; j < PosOrder.Count; j++)
                     {
-                        if (posOrder[j] == i)
-                            result.Add(posKey[j]);
+                        if (PosOrder[j] == i)
+                            result.Add(PosKey[j]);
 
                     }
                 }

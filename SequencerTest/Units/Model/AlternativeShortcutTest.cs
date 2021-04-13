@@ -16,7 +16,7 @@ namespace SequencerTest.Units.Model
     public class AlternativeShortcutTest
     {
         readonly EuclidianDistanceFunction distanceFunction = new EuclidianDistanceFunction();
-        NoResourceFunction noResource = new NoResourceFunction();
+        readonly NoResourceFunction noResource = new NoResourceFunction();
         AlternativeShortcut shotcut = new AlternativeShortcut();
 
         [TestInitialize()]

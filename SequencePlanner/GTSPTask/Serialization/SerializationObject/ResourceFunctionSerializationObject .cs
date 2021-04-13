@@ -31,9 +31,11 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             }
             if (ResourceSource == "Matrix")
             {
-                ResourceCostMatrix2 = new ResourceMatrixSerializationObject();
-                ResourceCostMatrix2.ResourceCostMatrix = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrix;
-                ResourceCostMatrix2.IDHeader = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrixIDHeader;
+                ResourceCostMatrix2 = new ResourceMatrixSerializationObject
+                {
+                    ResourceCostMatrix = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrix,
+                    IDHeader = ((MatrixResourceFunction)positionMatrix.ResourceFunction).CostMatrixIDHeader
+                };
             }
         }
 

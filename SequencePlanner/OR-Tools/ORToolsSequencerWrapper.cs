@@ -137,7 +137,7 @@ namespace SequencePlanner.OR_Tools
             return ProcessSolution(routing, manager, solution, Timer.Elapsed);
         }
 
-        private TaskResult ProcessSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
+        private static TaskResult ProcessSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
         {
             List<long> rawSolution = new List<long>();
             if (routing.GetStatus() == 1)
@@ -161,7 +161,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("Solution processed!", nameof(ORToolsSequencerWrapper));
             return result;
         }
-        private string DecodeStatusCode(int status)
+        private static string DecodeStatusCode(int status)
         {
             return status switch
             {

@@ -43,7 +43,7 @@ namespace SequencerTest.Benchmark
 
         public void CreateTasks()
         {
-            string newGeneration = "";
+            string newGeneration;
             if (ParameterCombinatrions.Count > 0)
             {
                 var i = 0;

@@ -301,9 +301,11 @@ namespace SequencePlanner.GTSPTask.Task.LineTask
         }
         private LineTaskResult ResolveSolution(TaskResult result)
         {
-            LineTaskResult taskResult = new LineTaskResult(result);
-            taskResult.Log = SeqLogger.Backlog;
-            taskResult.PreSolverTime = MIPRunTime;
+            LineTaskResult taskResult = new LineTaskResult(result)
+            {
+                Log = SeqLogger.Backlog,
+                PreSolverTime = MIPRunTime
+            };
             foreach (var raw in taskResult.SolutionRaw)
             {
                 var find = false;

@@ -455,30 +455,6 @@ namespace SequencerConsole
             return false;
         }
 
-        private static bool Debug(string[] args)
-        {
-            for (int i = 0; i < args.Length; i++)
-            {
-                if (args[i].Equals("-debug") || args[i].Equals("-d"))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private static bool Validate(string[] args)
-        {
-            for (int i = 0; i < args.Length; i++)
-            {
-                if (args[i].Equals("-notvalidate") || args[i].Equals("-nv"))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public static TaskType CheckTaskType(string input)
         {
             if (!File.Exists(input))

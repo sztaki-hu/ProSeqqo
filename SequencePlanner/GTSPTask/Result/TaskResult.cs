@@ -76,35 +76,35 @@ namespace SequencePlanner.GTSPTask.Result
         {
             if(StatusCode == 1)
             {
-                SeqLogger.Info("StatusCode: " + StatusCode);
-                SeqLogger.Info("StatusMessage: " + StatusMessage);
-                SeqLogger.Info("FullTime: "+ FullTime);
-                SeqLogger.Info("SolverTime: " + SolverTime);
-                SeqLogger.Info("PreSolverTime: " + PreSolverTime);
-                SeqLogger.Info("SolutionRaw: " + SolutionRaw.ToListString());
-                SeqLogger.Info("CostsRaw: " + CostsRaw.ToListString());
-                SeqLogger.Info("CostSum: " + CostSum);
-                SeqLogger.Info("Log size: " + Log.Count+" lines");
+                SeqLogger.WriteLog(lvl, "StatusCode: " + StatusCode);
+                SeqLogger.WriteLog(lvl, "StatusMessage: " + StatusMessage);
+                SeqLogger.WriteLog(lvl, "FullTime: "+ FullTime);
+                SeqLogger.WriteLog(lvl, "SolverTime: " + SolverTime);
+                SeqLogger.WriteLog(lvl, "PreSolverTime: " + PreSolverTime);
+                SeqLogger.WriteLog(lvl, "SolutionRaw: " + SolutionRaw.ToListString());
+                SeqLogger.WriteLog(lvl, "CostsRaw: " + CostsRaw.ToListString());
+                SeqLogger.WriteLog(lvl, "CostSum: " + CostSum);
+                SeqLogger.WriteLog(lvl, "Log size: " + Log.Count+" lines");
                 var error = "";
                 foreach (var item in ErrorMessage)
                 {
                     error = item + "\n";
                 }
-                SeqLogger.Info("Error messages: " + error);
+                SeqLogger.WriteLog(lvl, "Error messages: " + error);
             }
             else
             {
-                SeqLogger.Info("StatusCode: " + StatusCode);
-                SeqLogger.Info("StatusMessage: " + StatusMessage);
-                SeqLogger.Info("FullTime: "+ FullTime);
-                SeqLogger.Info("SolverTime: " + SolverTime);
-                SeqLogger.Info("Log size: " + Log.Count+" lines");
+                SeqLogger.WriteLog(lvl, "StatusCode: " + StatusCode);
+                SeqLogger.WriteLog(lvl, "StatusMessage: " + StatusMessage);
+                SeqLogger.WriteLog(lvl, "FullTime: "+ FullTime);
+                SeqLogger.WriteLog(lvl, "SolverTime: " + SolverTime);
+                SeqLogger.WriteLog(lvl, "Log size: " + Log.Count+" lines");
                 var error = "";
                 foreach (var item in ErrorMessage)
                 {
                     error = item + "\n";
                 }
-                SeqLogger.Info("Error messages: " + error);
+                SeqLogger.WriteLog(lvl, "Error messages: " + error);
             }
         }
     }

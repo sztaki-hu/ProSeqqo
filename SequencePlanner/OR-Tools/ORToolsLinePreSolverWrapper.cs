@@ -9,9 +9,9 @@ namespace SequencePlanner.OR_Tools
 {
     public class ORToolsLinePreSolverWrapper
     {
-        public TimeSpan RunTime { get; private set; }
         private readonly ORToolsLinePreSolverTask parameters;
-        private Stopwatch timer;
+        private readonly Stopwatch timer;
+        public TimeSpan RunTime { get; private set; }
         private Variable[] x;                 
         private Variable[] position; 
 
@@ -50,7 +50,7 @@ namespace SequencePlanner.OR_Tools
             RunTime = timer.Elapsed;
             return ProcessSolution(solver, resultStatus);
         }
-        private Solver.ResultStatus RunSolver(Solver solver)
+        private static Solver.ResultStatus RunSolver(Solver solver)
         {
             //Solve            
             SeqLogger.Info("Solver running!", nameof(ORToolsGeneralPreSolverWrapper));
@@ -59,16 +59,6 @@ namespace SequencePlanner.OR_Tools
             return resultStatus;
         }
 
-        private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint, Variable[] x)
-        {
-            LinearExpr constraintExpr = new LinearExpr();
-            foreach (var item in disjoint.DisjointSetSeq)
-            {
-                constraintExpr += x[item];
-            }
-            LinearConstraint contraint = constraintExpr == 1.0;
-            return contraint;
-        }
         private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
         {
             SeqLogger.Trace("Precedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
@@ -126,7 +116,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("ORTools building finished!", nameof(ORToolsLinePreSolverWrapper));
             return solution;
         }
-        private string DecodeStatusCode(Solver.ResultStatus status)
+        private static string DecodeStatusCode(Solver.ResultStatus status)
         {
             return status switch
             {
@@ -138,6 +128,16 @@ namespace SequencePlanner.OR_Tools
                 Solver.ResultStatus.NOT_SOLVED => "6 - NOT_SOLVED: Model, model parameters, or flags are not valid.",
                 _ => "NO_STATUS: Something went wrong. :(",
             };
+        }
+        private static LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint, Variable[] x)
+        {
+            LinearExpr constraintExpr = new LinearExpr();
+            foreach (var item in disjoint.DisjointSetSeq)
+            {
+                constraintExpr += x[item];
+            }
+            LinearConstraint contraint = constraintExpr == 1.0;
+            return contraint;
         }
     }
 }

@@ -89,7 +89,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             pointResult.FullTime = Timer.Elapsed;
             pointResult.ToLog(LogLevel.Info);
             //ToLog(LogLevel.Warning);
-            pointResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
+            pointResult.Validate(DisjointConstraints, PositionPrecedence);
             return pointResult;
         }
         public override void ValidateModel()
@@ -333,10 +333,9 @@ namespace SequencePlanner.GTSPTask.Task.General
             {
                 if (alternative.Tasks.Count >= 2)
                 {
-                    GTSPPrecedenceConstraintList tmp = null;
                     for (int i = 0; i < alternative.Tasks.Count - 1; i++)
                     {
-                        tmp = new GTSPPrecedenceConstraintList();
+                        GTSPPrecedenceConstraintList tmp = new GTSPPrecedenceConstraintList();
                         foreach (var item in alternative.Tasks[i].Positions)
                         {
                             tmp.Before.Add(item.Node);
@@ -391,7 +390,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             }
             SeqLogger.Trace("Initial solution UserIDs" + InitialSolurionUserIDs);
             SeqLogger.Trace("Initial solution validation started!");
-            pointTaskResult.Validate(DisjointConstraints, PositionPrecedence, ProcessPrecedence);
+            pointTaskResult.Validate(DisjointConstraints, PositionPrecedence);
             SeqLogger.Trace("Initial solution validation finished!");
         }
         private GeneralTaskResult ResolveSolution(GeneralTaskResult result)

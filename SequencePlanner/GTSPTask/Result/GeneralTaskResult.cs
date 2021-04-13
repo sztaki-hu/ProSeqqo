@@ -112,7 +112,7 @@ namespace SequencePlanner.GTSPTask.Result
             SeqLogger.Indent--;
         }
 
-        public void Validate(List<GTSPDisjointConstraint> disjointConstraints, List<GTSPPrecedenceConstraint> positionPrecedence, List<GTSPPrecedenceConstraint> processPrecedence)
+        public void Validate(List<GTSPDisjointConstraint> disjointConstraints, List<GTSPPrecedenceConstraint> positionPrecedence)
         {
             ValidateDisjoint(disjointConstraints);
             ValidatePositionPrec(positionPrecedence);

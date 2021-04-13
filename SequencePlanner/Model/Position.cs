@@ -9,7 +9,7 @@
         public Position():base()
         {
             Name = UserID + "_Position_" + GlobalID;
-            Vector = new double[]{ };
+            Vector = System.Array.Empty<double>();
         }
 
 
