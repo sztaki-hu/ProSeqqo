@@ -1,0 +1,135 @@
+Task: General/Line
+Validate: True/False
+Dimension: <int> 
+Cyclic: True/False
+StartDepot: <ConfigID/MotionID>
+FinishDepot: <ConfigID/MotionID>
+
+#Solver-------------------------------
+LocalSearchStrategie: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
+TimeLimit: <int>
+UseMIPprecedenceSolver: True/False
+UseShortcutInAlternatives: True/False
+
+#Cost----------------------------------
+DistanceFunction: Euclidian/Max/TrapezoidTime/Manhattan/Matrix
+TrapezoidSpeed: <double[Dimension]>
+Trapezoid: <double[Dimension]>
+IdlePenalty: <int>
+BidirectionMotionDefault: True/False
+AddMotionLengthToCost: True/False
+AddInMotionChangeoverToCost: True/False
+
+#Resource------------------------------
+ResourceChangeover: Off/Constant/Matrix
+ResourceChangeoverFunction: Add/Max
+ChangeoverConstant: <double>
+ChangeoverMatrix:
+#+--------+---+-------------------+
+#|    1   |...|[NumberOfResources]|    (ResourceID Header) 
+#+--------+---+-------------------+
+#|<double>|...|      <double>     |    (1) 
+#+--------+---+-------------------+
+#|   ...  |...|         ...       |    (...) 
+#+--------+---+-------------------+
+#|<double>|...|      <double>     |    (NumberOfResources)
+#+--------+---+-------------------+
+
+#Hierarchy------------------------------
+ConfigList:
+#+----------+---------------------+------------------+----------------------+
+#| ConfigID |       Config        |  Name[optional]  | ResourceID[optional] |
+#+----------+---------------------+------------------+----------------------+
+#|  <int>   | <double[Dimension]> |     <string>     |         <int>        |
+#+----------+---------------------+------------------+----------------------+
+
+ConfigMatrix:
+#+----------+----------+-----+------------------+
+#|     1    |     2    | ... |[NumberOfConfigs] |        (ConfigID) 
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (1) 
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (2) 
+#+----------+----------+-----+------------------+
+#|    ...   |    ...   | ... |        ...       |        (...) 
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (NumberOfPoints)
+#+----------+----------+-----+------------------+
+#| <string> | <string> | ... |     <string>     |        (Name[optional])   
+#+----------+----------+-----+------------------+
+#| <double> | <double> | ... |     <double>     |        (ResourceID[optional])
+#+----------+----------+-----+------------------+
+
+#MotionList:
+##+----------+-------------+-------------+------------------+---------------------------+
+##| MotionID |  ConfigIDA  | ConfigIDB   |  Name[optional]  | Bidirectional [optional]  |
+#+----------+-------------+-------------+------------------+---------------------------+
+#|  <int>   |    <int>    |    <int>    |     <string>     |         True/False        |
+#+----------+-------------+-------------+------------------+---------------------------+
+
+ProcessHierarchy:
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+# ProcessID | AlternativeID  |  TaskID |       MotionID      |    ConfigID      |Bidirectional [optional]|    MotionName[optional]   | 
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+#   <int>   |      <int>     |  <int>  |         <int>       |      [1;2;4]     |       True/False       |         True/False        |
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+#   <int>   |      <int>     |  <int>  |          1          |        [1]       |        <string>        |         True/False        |
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+
+
+
+ProcessPrecedence:
+#+-------------------------+----------------------+
+#| Predecessor (ProcessID) | Successor(ProcessID) |
+#+-------------------------+----------------------+
+#|          <int>          |         <int>        |
+#+-------------------------+----------------------+
+
+MotionPrecedence:
+#+-----------------------+----------------------+
+#| Predecessor(MotionID) | Successor (MotionID) |
+#+-----------------------+----------------------+
+#|             <int>     |       <int>          |
+#+-----------------------+----------------------+
+
+OverrideCost:
+#+------------------------+----------------------+----------+-----------------------+
+#|From (ConfigID)         |To (ConfigID)         |   Cost   |Bidirectional[optional]|
+#+------------------------+----------------------+----------+-----------------------+
+#|          <int>         |         <int>        | <double> |        <bool>         |
+#+------------------------+----------------------+----------+-----------------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MotionPrecedence:
+#+-------------------------+----------------------+
+#|  PredecessorLineID      |  SuccessorLineID     |
+#+-------------------------+----------------------+
+#|          <int>          |         <int>        |
+#+-------------------------+----------------------+
+
+ContourPrecedence:
+#+-------------------------+----------------------+
+#|  PredecessorContourID   |  SuccessorContourID  |
+#+-------------------------+----------------------+
+#|          <int>          |         <int>        |
+#+-------------------------+----------------------+
+
+LineList:
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
+#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]  |  ResourceID [optional]  | Bidirectional [optional]  |
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
+#|  <int> |   <int>   |    <int>    |    <int>    |     <string>     |          <int>          |         True/False        |
+#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
