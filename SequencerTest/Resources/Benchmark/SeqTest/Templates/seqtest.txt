@@ -4,7 +4,7 @@ DistanceFunction: TrapezoidTime
 TrapezoidSpeed: [0.266667;0.266667;0.266667;0.266667;0.266667;0.266667]
 TrapezoidAcceleration: [0.666667;0.666667;0.666667;0.666667;0.666667;0.666667]
 WeightMultiplier: Auto
-CyclicSequence: False
+Cyclic: False
 StartDepot: 1
 TimeLimit: <*T*>
 ResourceSource: Off
@@ -12,7 +12,7 @@ UseMIPprecedenceSolver: <*MIP*>
 UseShortcutInAlternatives: False
 LocalSearchStrategy: <*Strategy*>
 
-PositionList:
+ConfigList:
 #+-------+---------------------+------------------+
 #|   ID  |      Position       |  Name[optional]  |
 #+-------+---------------------+------------------+

@@ -2,13 +2,13 @@ TaskType: Line
 DistanceFunction: Euclidian
 Dimensions: 2
 TimeLimit: 1200
-CyclicSequence: False
+Cyclic: False
 StartDepot: 1
 #FinishDepot: 3
 ContourPenalty: 2
 #BidirectionLineDefault: True
 
-PositionList:
+ConfigList:
 #+-------+---------------------+------------------+
 #|   ID  |      Position       |  Name[optional]  |
 #+-------+---------------------+------------------+
@@ -1423,7 +1423,7 @@ PositionList:
 
 
 
-LineList:
+MotionList:
 #+--------+-----------+-------------+-------------+-------------------+
 #| LineID | ContourID | PositionAID | PositionBID |  Name[optional]   |
 #+--------+-----------+-------------+-------------+-------------------+

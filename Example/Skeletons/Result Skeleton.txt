@@ -1,20 +1,21 @@
-Task: General
+Task: General/Line
 Validate: True/False
+Dimension: <int> 
 Cyclic: True/False
 StartDepot: <ConfigID/MotionID>
 FinishDepot: <ConfigID/MotionID>
 
 #Solver-------------------------------
-LocalSearchStrategy: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
+LocalSearchStrategie: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
 TimeLimit: <int>
 UseMIPprecedenceSolver: True/False
 UseShortcutInAlternatives: True/False
 
 #Cost----------------------------------
 DistanceFunction: Euclidian/Max/TrapezoidTime/Manhattan/Matrix
-TrapezoidSpeed: <double[]>
-Trapezoid: <double[]>
-IdlePenalty: <double>
+TrapezoidSpeed: <double[Dimension]>
+Trapezoid: <double[Dimension]>
+IdlePenalty: <int>
 BidirectionMotionDefault: True/False
 AddMotionLengthToCost: True/False
 AddInMotionChangeoverToCost: True/False
@@ -34,7 +35,6 @@ ChangeoverMatrix:
 #|<double>|...|      <double>     |    (NumberOfResources)
 #+--------+---+-------------------+
 
-#Hierarchy-----------------------------
 ConfigList:
 #+----------+---------------------+------------------+----------------------+
 #| ConfigID |       Config        |  Name[optional]  | ResourceID[optional] |
@@ -59,37 +59,40 @@ ConfigMatrix:
 #| <double> | <double> | ... |     <double>     |        (ResourceID[optional])
 #+----------+----------+-----+------------------+
 
+MotionList:
+#+----------+-------------+-------------+------------------+---------------------------+
+#| MotionID |  ConfigIDA  | ConfigIDB   |  Name[optional]  | Bidirectional [optional]  |
+#+----------+-------------+-------------+------------------+---------------------------+
+#|  <int>   |    <int>    |    <int>    |     <string>     |         True/False        |
+#+----------+-------------+-------------+------------------+---------------------------+
+
 ProcessHierarchy:
-#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
-# ProcessID | AlternativeID  |  TaskID |       MotionID      |    ConfigID      |Bidirectional [optional]|    MotionName[optional]   | 
-#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
-#   <int>   |      <int>     |  <int>  |         <int>       |      int[]       |       True/False       |         True/False        |
-#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+#-----------+----------------+---------+---------------------+
+# ProcessID | AlternativeID  |  TaskID | PositionID/MotionID |
+#-----------+----------------+---------+---------------------+
+#   <int>   |      <int>     |  <int>  |         <int>       | 
+#-----------+----------------+---------+---------------------+
 
 ProcessPrecedence:
-#+-------------------------+----------------------+
-#| Predecessor (ProcessID) | Successor(ProcessID) |
-#+-------------------------+----------------------+
-#|          <int>          |         <int>        |
-#+-------------------------+----------------------+
+#+----------------------+--------------------+
+#| PredecessorProcessID | SuccessorProcessID |
+#+----------------------+--------------------+
+#|         <int>        |        <int>       |
+#+----------------------+--------------------+
 
-MotionPrecedence:
-#+-----------------------+----------------------+
-#| Predecessor(MotionID) | Successor (MotionID) |
-#+-----------------------+----------------------+
-#|         <int>         |       <int>          |
-#+-----------------------+----------------------+
+ConfigPrecedence:
+#+----------------------+--------------------+
+#|  PredecessorNodeID   |  SuccessorNodeID   |
+#+----------------------+--------------------+
+#|         <int>        |        <int>       |
+#+----------------------+--------------------+
 
 OverrideCost:
-#+-----------------+---------------+----------+-----------------------+
-#| From (ConfigID) | To (ConfigID) |   Cost   |Bidirectional[optional]|
-#+-----------------+---------------+----------+-----------------------+
-#|      <int>      |     <int>     | <double> |        <bool>         |
-#+-----------------+---------------+----------+-----------------------+
-
-
-
-
+#+----------------------- +-------------------+-----------+------------------------+
+#| ConfigID/MotionID From | ConfigID/MotionID |   Cost    | Bidirectional[optional]|
+#+------------------------+-------------------+-----------+------------------------+
+#|           <int>        |        <int>      | <double>  |         <bool>         |
+#+------------------------+-------------------+-----------+------------------------+
 
 
 
@@ -114,36 +117,3 @@ LineList:
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
 #|  <int> |   <int>   |    <int>    |    <int>    |     <string>     |          <int>          |         True/False        |
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
-
-#MotionList:
-##+----------+-------------+-------------+------------------+---------------------------+
-##| MotionID |  ConfigIDA  | ConfigIDB   |  Name[optional]  | Bidirectional [optional]  |
-#+----------+-------------+-------------+------------------+---------------------------+
-#|  <int>   |    <int>    |    <int>    |     <string>     |         True/False        |
-#+----------+-------------+-------------+------------------+---------------------------+
-
-|*[`Dimension`](#dimension)|Int| ?TODO: Not necessary? Dimension of configurations. Dimension = 0 if `DistanceFunction` = Matrix, else it have to be fit for configurations of `ConfigurationList`. |
-#### *Dimension
-?Not necessary?
-Dimension of used configurations, Dimension = 0 if `DistanceFunction` = Matrix, else it have to be fit for configurations of `ConfigurationList`.
-
-| Param  | Rule   |
-| ------ | ------ |
-| Int    | >=0 |
-
-<details>
-<summary>Usage</summary>
-
-```
-//SEQ
-Dimension: 0
-Dimension: 3
-
-//JSON
-//XML
-//C#
-```
-</details>
-
-Dimension: <int> 
-|[`MotionList`](#motionlist) | `MotionID` ; `ConfigID` ; `ConfigID` ; ~`Name` ; ~`Bidirectional` | List of records that needs a globally unique identifier (scope: `ConfigList`/`ConfigMatrix`) and two configurations. Configs can be used multiple times for motion definition.  |

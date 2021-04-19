@@ -1,7 +1,6 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
 using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using System;
@@ -20,7 +19,6 @@ namespace SequencerTest.Benchmark
         public FormatType FormatType { get; set; }
         public List<Dictionary<string, string>> ParameterCombinatrions  { get; set; }
         public List<string> GeneretedTasks { get; set; }
-        public List<LineTaskResult> LineResults { get; set; }
         public List<GeneralTaskResult> PointResults { get; set; }
 
         public Template(string path, string generatePath,  string outPath, List<Dictionary<string, string>> parameterCombinatrions)
@@ -33,7 +31,6 @@ namespace SequencerTest.Benchmark
             OutPath = outPath;
             GeneratePath = generatePath;
             GeneretedTasks = new List<string>();
-            LineResults = new List<LineTaskResult>();
             PointResults = new List<GeneralTaskResult>();
             TaskType = TaskType.Unknown;
             FormatType = FormatType.Unknown;
@@ -87,9 +84,6 @@ namespace SequencerTest.Benchmark
             GeneralTaskSerializer serPL;
             GeneralTask pointLikeTask;
             GeneralTaskResult pointTaskResult;
-            LineTask lineTask;
-            LineTaskSerializer serLL;
-            LineTaskResult lineTaskResult;
 
             if (TaskType != TaskType.Unknown && FormatType != FormatType.Unknown)
             {
@@ -110,60 +104,30 @@ namespace SequencerTest.Benchmark
                         GeneralResultSerializer serRes = new GeneralResultSerializer();
                         serRes.ExportJSON(pointTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
                         SeqLogger.LogLevel = LogLevel.Info;
-                        SeqLogger.Info(pointTaskResult.StatusMessage+" Solver Time:"+ pointTaskResult.SolverTime+" Cost:"+ pointTaskResult.CostSum);
+                        SeqLogger.Info(pointTaskResult.StatusMessage + " Solver Time:" + pointTaskResult.SolverTime + " Cost:" + pointTaskResult.CostSum);
                         pointTaskResult.Log.Clear();
-                        PointResults.Add(pointTaskResult);    
-                    }catch(Exception e)
+                        PointResults.Add(pointTaskResult);
+                    }
+                    catch (Exception e)
                     {
                         SeqLogger.Indent = 0;
                         SeqLogger.Critical(e.ToString());
-                        PointResults.Add(new GeneralTaskResult() { 
-                            StatusMessage = "Stop with error",    
-                            ErrorMessage = new List<string>() { e.ToString() } 
+                        PointResults.Add(new GeneralTaskResult()
+                        {
+                            StatusMessage = "Stop with error",
+                            ErrorMessage = new List<string>() { e.ToString() }
                         });
                     }
                 }
-
-                if (TaskType == TaskType.Line)
-                {
-                    try { 
-                    SeqLogger.LogLevel = LogLevel.Error;
-                    serLL = new LineTaskSerializer();
-                        lineTask = FormatType switch
-                        {
-                            FormatType.SEQ or FormatType.TXT => serLL.ImportSEQ(path),
-                            FormatType.JSON => serLL.ImportJSON(path),
-                            FormatType.XML => serLL.ImportXML(path),
-                            _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
-                        };
-                        lineTaskResult = lineTask.RunModel();
-                    LineResultSerializer serRes = new LineResultSerializer();
-                    serRes.ExportJSON(lineTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
-                    SeqLogger.LogLevel = LogLevel.Info;
-                    SeqLogger.Info(lineTaskResult.StatusMessage+" Solver Time:"+lineTaskResult.SolverTime+" Cost:"+lineTaskResult.CostSum);
-                    lineTaskResult.Log.Clear();
-                    LineResults.Add(lineTaskResult);
-                }catch (Exception e)
-                {
-                        SeqLogger.Indent = 0;
-                    PointResults.Add(new GeneralTaskResult()
-                    {
-                        StatusMessage = "Stop with error",
-                        ErrorMessage = new List<string>() { e.ToString() }
-                    });
-                }
             }
-
-            }
-            else
-                SeqLogger.Error("Task type or file format error: " + path);
         }
 
         public static string ToCSVHeader()
         {
             var s = ";";
-            return "TemplateName" + s + nameof(GeneretedTasks) + s + nameof(TaskType) + s + TaskResult.ToCSVHeader() + s+ nameof(ParameterCombinatrions);
+            return "TemplateName" + s + nameof(GeneretedTasks) + s + nameof(TaskType) + s + GeneralTaskResult.ToCSVHeader() + s+ nameof(ParameterCombinatrions);
         }
+
         public string ToCSV()
         {
             var tmp = "";
@@ -173,9 +137,7 @@ namespace SequencerTest.Benchmark
                 tmp += FileName+s;
                 tmp += Path.GetFileName(GeneretedTasks[i])+s;
                 tmp += TaskType.ToString()+s;
-                
-                if (TaskType == TaskType.Line && LineResults is not null && LineResults.Count>i)
-                    tmp += LineResults[i].ToCSV();
+
                 if (TaskType == TaskType.General && PointResults is not null && PointResults.Count > i)
                     tmp += PointResults[i].ToCSV();
                 

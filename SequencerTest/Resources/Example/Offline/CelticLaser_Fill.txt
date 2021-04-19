@@ -3,16 +3,16 @@ DistanceFunction: Euclidian
 Dimension: 2
 TimeLimit: 1200
 WeightMultiplier: Auto
-CyclicSequence: False
+Cyclic: False
 StartDepot: 1
 #FinishDepot: 3
 ContourPenalty: 2
 ResourceSource: Constant
-ResourceDistanceFunction: Add
-ResourceConstant: 1
+ResourceChangeover: Add
+ChangeoverConstant: 1
 #BidirectionLineDefault: True
 
-PositionList:
+ConfigList:
 #+-------+---------------------+------------------+
 #|   ID  |      Position       |  Name[optional]  |
 #+-------+---------------------+------------------+
@@ -1427,7 +1427,7 @@ PositionList:
 
 
 
-LineList:
+MotionList:
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
 #| LineID | ContourID | PositionAID | PositionBID |  Name[optional]  |  ResourceID [optional]  | Bidirectional [optional]  |
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+

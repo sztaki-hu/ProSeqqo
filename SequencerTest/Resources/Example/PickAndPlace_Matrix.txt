@@ -2,22 +2,22 @@ TaskType: General
 Validate: True
 Dimension: 0
 WeightMultiplier: 10
-CyclicSequence: False
+Cyclic: False
 StartDepot: 1
 FinishDepot: 6
 TimeLimit: 20
 DistanceFunction: Matrix
-ResourceDistanceFunction: Max
-ResourceSource: Matrix
-ResourceConstant: 5
+ResourceChangeoverFunction: Max
+ResourceChangeover: Matrix
+ChangeoverConstant: 5
 UseMIPprecedenceSolver: False
 
-ResourceMatrix:
+ChangeoverMatrix:
 1;5
 99;88
 77;66
 
-PositionMatrix:
+ConfigMatrix:
 1;2;3;4;5;6
 #--------
 0;2;3;4;5;6
@@ -50,7 +50,7 @@ ProcessPrecedence:
 #102;105
 #105;104
 	
-PositionPrecedence:
+MotionPrecedence:
 #+----------------------+--------------------+------------------+
 #| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
 #+----------------------+--------------------+------------------+

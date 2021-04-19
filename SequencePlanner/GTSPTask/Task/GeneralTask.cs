@@ -3,18 +3,31 @@ using SequencePlanner.Model;
 using SequencePlanner.Helper;
 using SequencePlanner.OR_Tools;
 using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.General.ShortCut;
+using System;
 
 namespace SequencePlanner.GTSPTask.Task.General
 {
-    public class GeneralTask : BaseTask
+    public class GeneralTask
     {
+        public bool Cyclic { get; set; }
+        public int WeightMultipier { get; set; }
+        public Position StartDepot { get; set; }
+        public Position FinishDepot { get; set; }
+        public PositionMatrix PositionMatrix { get; set; }
+        public int TimeLimit { get; set; }
+        public bool UseMIPprecedenceSolver { get; set; }
+        public bool Validate { get; set; }
+        public double IdlePenalty { get; set; }
+        public LocalSearchStrategyEnum.Metaheuristics LocalSearchStrategy { get; set; }
+        protected System.Diagnostics.Stopwatch Timer { get; set; }
+        protected TimeSpan MIPRunTime { get; set; }
+        protected IDepotMapper DepotMapper { get; set; }
         public List<Process> Processes { get; set; }
         public List<Alternative> Alternatives { get; set; }
         public List<Model.Task> Tasks { get; set; }
         public GeneralGTSPRepresentation GTSPRepresentation { get; set; }
-        public List<GTSPPrecedenceConstraint> PositionPrecedence { get; set; }
+        public List<GTSPPrecedenceConstraint> MotionPrecedence { get; set; }
         public List<GTSPPrecedenceConstraint> ProcessPrecedence { get; set; }
         public List<GTSPDisjointConstraint> DisjointConstraints { get; set; }
         public ShortestPathProcessor ShortestPathProcessor { get; set; }
@@ -22,13 +35,17 @@ namespace SequencePlanner.GTSPTask.Task.General
         public CalculateWeightDelegate CalculateWeightFunction { get; set; }
         public delegate double CalculateWeightDelegate(GTSPNode A, GTSPNode B);
 
-
-        public GeneralTask() : base()
+        public GeneralTask()
         {
+            Timer = new System.Diagnostics.Stopwatch();
+            PositionMatrix = new PositionMatrix();
+            LocalSearchStrategy = LocalSearchStrategyEnum.Metaheuristics.Automatic;
+            WeightMultipier = 1000;
+            Validate = false;
             Tasks = new List<Model.Task>();
             Alternatives = new List<Alternative>();
             Processes = new List<Process>();
-            PositionPrecedence = new List<GTSPPrecedenceConstraint>();
+            MotionPrecedence = new List<GTSPPrecedenceConstraint>();
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
             ShortestPathProcessor = null;
             CalculateWeightFunction = PositionMatrix.CalculateWeight;
@@ -89,10 +106,10 @@ namespace SequencePlanner.GTSPTask.Task.General
             pointResult.FullTime = Timer.Elapsed;
             pointResult.ToLog(LogLevel.Info);
             //ToLog(LogLevel.Warning);
-            pointResult.Validate(DisjointConstraints, PositionPrecedence);
+            pointResult.Validate(DisjointConstraints, MotionPrecedence);
             return pointResult;
         }
-        public override void ValidateModel()
+        public void ValidateModel()
         {
             GeneralTaskValidator.Validate(this);
         }
@@ -138,7 +155,13 @@ namespace SequencePlanner.GTSPTask.Task.General
 
         public new void ToLog(LogLevel level)
         {
-            base.ToLog(level);
+            SeqLogger.WriteLog(level, "Cyclic: " + Cyclic, nameof(GeneralTask));
+            SeqLogger.WriteLog(level, "StartDepot: " + StartDepot, nameof(GeneralTask));
+            SeqLogger.WriteLog(level, "FinishDepot: " + FinishDepot, nameof(GeneralTask));
+            SeqLogger.WriteLog(level, "TimeLimit: " + TimeLimit, nameof(GeneralTask));
+            SeqLogger.WriteLog(level, "UseMIPprecedenceSolver: " + UseMIPprecedenceSolver, nameof(GeneralTask));
+            SeqLogger.WriteLog(level, "LocalSearchStrategy: " + LocalSearchStrategy, nameof(GeneralTask));
+            PositionMatrix.ToLog(level);
             SeqLogger.WriteLog(level, "Hierarchy:");
             SeqLogger.Indent++;
             foreach (var process in Processes)
@@ -177,11 +200,11 @@ namespace SequencePlanner.GTSPTask.Task.General
                 SeqLogger.Indent--;
             }
 
-            SeqLogger.WriteLog(level, "PositionPrecedences:");
-            if(PositionPrecedence is not null)
+            SeqLogger.WriteLog(level, "MotionPrecedences:");
+            if(MotionPrecedence is not null)
             {
                 SeqLogger.Indent++;
-                foreach (var prec in PositionPrecedence)
+                foreach (var prec in MotionPrecedence)
                 {
                     SeqLogger.WriteLog(level, prec.ToString(), nameof(GeneralTask));
                 }
@@ -200,6 +223,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             }
         }
 
+
         private void CreateGTSPMatrix()
         {
             PositionMatrix.Init();
@@ -215,9 +239,9 @@ namespace SequencePlanner.GTSPTask.Task.General
             if (GTSPPrecedenceConstraint.IsCyclic(ProcessPrecedence))
                 throw new SeqException("Process precedences are cyclic.");
 
-            if (PositionPrecedence != null)
+            if (MotionPrecedence != null)
             {
-                foreach (var item in PositionPrecedence)
+                foreach (var item in MotionPrecedence)
                 {
                     if (item.Before != null && item.After != null)
                         precedences.Add(new GTSPPrecedenceConstraint(item.Before, item.After));
@@ -238,7 +262,7 @@ namespace SequencePlanner.GTSPTask.Task.General
         }
         private static IEnumerable<GTSPPrecedenceConstraint> CreateProcessPrecedence(GTSPPrecedenceConstraint precedence)
         {
-            List<GTSPPrecedenceConstraint> positionPrecedences = new List<GTSPPrecedenceConstraint>();
+            List<GTSPPrecedenceConstraint> motionPrecedences = new List<GTSPPrecedenceConstraint>();
             foreach (var alterBefore in ((Process)precedence.Before).Alternatives)
             {
                 foreach (var alterAfter in ((Process)precedence.After).Alternatives)
@@ -249,17 +273,17 @@ namespace SequencePlanner.GTSPTask.Task.General
                         {
                             foreach (var posAfter in alterAfter.Tasks[0].Positions)
                             {
-                                positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore.In, posAfter.In));
+                                motionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore.In, posAfter.In));
                             }
                         }
                     }
                 }
             }
-            return positionPrecedences;
+            return motionPrecedences;
         }
         private static IEnumerable<GTSPPrecedenceConstraint> CreateProcessPrecedenceFull(GTSPPrecedenceConstraint precedence)
         {
-            List<GTSPPrecedenceConstraint> positionPrecedences = new List<GTSPPrecedenceConstraint>();
+            List<GTSPPrecedenceConstraint> motionPrecedences = new List<GTSPPrecedenceConstraint>();
             foreach (var alterBefore in ((Process)precedence.Before).Alternatives)
             {
                 foreach (var alterAfter in ((Process)precedence.After).Alternatives)
@@ -274,7 +298,7 @@ namespace SequencePlanner.GTSPTask.Task.General
                                 {
                                     foreach (var posAfter in alterAfter.Tasks[j].Positions)
                                     {
-                                        positionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore.In, posAfter.In));
+                                        motionPrecedences.Add(new GTSPPrecedenceConstraint(posBefore.In, posAfter.In));
                                     }
                                 }
                             }
@@ -282,7 +306,7 @@ namespace SequencePlanner.GTSPTask.Task.General
                     }
                 }
             }
-            return positionPrecedences;
+            return motionPrecedences;
         }
         private List<GTSPDisjointConstraint> CreateDisjointConstraints()
         {
@@ -390,7 +414,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             }
             SeqLogger.Trace("Initial solution UserIDs" + InitialSolurionUserIDs);
             SeqLogger.Trace("Initial solution validation started!");
-            pointTaskResult.Validate(DisjointConstraints, PositionPrecedence);
+            pointTaskResult.Validate(DisjointConstraints, MotionPrecedence);
             SeqLogger.Trace("Initial solution validation finished!");
         }
         private GeneralTaskResult ResolveSolution(GeneralTaskResult result)
@@ -497,6 +521,18 @@ namespace SequencePlanner.GTSPTask.Task.General
                 addToTask[i].Positions.Add(nodeToAdd[i]);
                 PositionMatrix.Positions.Add(nodeToAdd[i]);
             }
+        }
+        protected int[,] ScaleUpWeights(double[,] matrix)
+        {
+            int[,] roundedMatrix = new int[matrix.GetLength(0), matrix.GetLength(1)];
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    roundedMatrix[i, j] = Convert.ToInt32(WeightMultipier * matrix[i, j]);
+                }
+            }
+            return roundedMatrix;
         }
     }
 }

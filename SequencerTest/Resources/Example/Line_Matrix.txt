@@ -3,17 +3,17 @@ DistanceFunction: Matrix
 Dimension: 0
 TimeLimit: 20
 WeightMultiplier: Auto
-CyclicSequence: True
+Cyclic: True
 StartDepot: 5
 #FinishDepot: 8
 ContourPenalty: 0
 ResourceSource: Off
-#ResourceDistanceFunction: Add
-#ResourceConstant: 2
+#ResourceChangeover: Add
+#ChangeoverConstant: 2
 UseMIPprecedenceSolver: True
 BidirectionLineDefault: True
 
-PositionMatrix:
+ConfigMatrix:
 1;2;3;4;5;6;7;8;9;10
 0;2;3;4;5;6;7;8;9;10
 1;0;3;4;5;6;7;8;9;10
@@ -29,7 +29,7 @@ A;B;C;D;E;F;G;H;I;J
 1;2;3;1;2;3;1;2;3;4
 
 
-LineList:
+MotionList:
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
 #| LineID | ContourID | PositionAID | PositionBID |  Name[optional]  |  ResourceID [optional]  | Bidirectional [optional]  |
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+

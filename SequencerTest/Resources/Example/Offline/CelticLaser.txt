@@ -2,7 +2,7 @@ TaskType: Line
 DistanceFunction: Euclidian
 Dimension: 2
 TimeLimit: 6000
-CyclicSequence: False
+Cyclic: False
 StartDepot: 5
 #FinishDepot: 3
 ContourPenalty: 0
@@ -10,7 +10,7 @@ BidirectionLineDefault: True
 ResourceSource: Off
 UseMIPprecedenceSolver: True
 
-PositionList:
+ConfigList:
 #+-------+---------------------+------------------+
 #|   ID  |      Position       |  Name[optional]  |
 #+-------+---------------------+------------------+
@@ -5476,7 +5476,7 @@ PositionList:
 5454;[12.1278407833315;-7.45452289867246];Point_5454
 
 
-LineList:
+MotionList:
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
 #| LineID | ContourID | PositionAID | PositionBID |  Name[optional]  |  ResourceID [optional]  | Bidirectional [optional]  |
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+

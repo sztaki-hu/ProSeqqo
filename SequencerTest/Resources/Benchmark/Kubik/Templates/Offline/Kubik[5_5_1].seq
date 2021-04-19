@@ -1,15 +1,15 @@
 TaskType: General
 Dimension: 3
-CyclicSequence: True
+Cyclic: True
 StartDepot: 64
 TimeLimit: 0
 DistanceFunction: Euclidian
-ResourceDistanceFunction: Add
+ResourceChangeover: Add
 ResourceSource: Constant
 ResourceCostConstant: 0
 UseMIPprecedenceSolver: True
 
-PositionList:
+ConfigList:
 #+-------+---------------------+------------------+
 #|   ID  |      Position       |  Name[optional]  |
 #+-------+---------------------+------------------+
@@ -169,7 +169,7 @@ ProcessHierarchy:
 63 ;	0 ;	1 ;	15	#0D_2_Pickup_Y
 31 ;	1 ;	1 ;	15	#0D_2_Putdown_Y
 
-PositionPrecedence:
+MotionPrecedence:
 #+----------------------+--------------------+
 #| PredecessorProcessID | SuccessorProcessID |
 #+----------------------+--------------------+

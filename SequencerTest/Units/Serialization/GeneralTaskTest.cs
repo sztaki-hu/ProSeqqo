@@ -24,12 +24,12 @@ namespace SequencerTest.Units
         Alternative A3;
         Process P1;
         Process P2;
-        List<GTSPNode> positionList;
+        List<GTSPNode> ConfigList;
         PositionMatrix matrix;
         List<Task> tasks;
         List<Alternative> alternatives;
         List<Process> processes;
-        List<GTSPPrecedenceConstraint> positionPrecedences;
+        List<GTSPPrecedenceConstraint> motionPrecedences;
         List<GTSPPrecedenceConstraint> processPrecedences;
 
         [TestInitialize()]
@@ -81,10 +81,10 @@ namespace SequencerTest.Units
             P2 = new Process() { Alternatives = new List<Alternative>() { A2,A3 } };
             
 
-            positionList = new List<GTSPNode>() { A, B, C, D };
+            ConfigList = new List<GTSPNode>() { A, B, C, D };
             matrix = new PositionMatrix()
             {
-                Positions = positionList,
+                Positions = ConfigList,
                 Matrix = new double[,] { { 1, 2, 3, 4 }, { 1,2,3,4 }, { 1, 2, 3, 4 }, { 1, 2, 3, 4 } },
                 DistanceFunction = new EuclidianDistanceFunction(),
                 ResourceFunction = new ConstantResourceFunction(1, new AddResourceDistanceLinkFunction())
@@ -93,7 +93,7 @@ namespace SequencerTest.Units
             tasks = new List<Task>() { T1, T2, T3 };
             alternatives = new List<Alternative>() {A1,A2, A3};
             processes = new List<Process>() {P1, P2 };
-            positionPrecedences = new List<GTSPPrecedenceConstraint>() { new GTSPPrecedenceConstraint() { Before = A.In, After = B.In} };
+            motionPrecedences = new List<GTSPPrecedenceConstraint>() { new GTSPPrecedenceConstraint() { Before = A.In, After = B.In} };
             processPrecedences = new List<GTSPPrecedenceConstraint>() { new GTSPPrecedenceConstraint() { Before = P1, After = P2} };
         }
 
@@ -102,9 +102,8 @@ namespace SequencerTest.Units
         {
             GeneralTask task = new GeneralTask()
             {
-                Dimension = 3,
                 TimeLimit =5,
-                CyclicSequence = false,
+                Cyclic = false,
                 StartDepot = A.In,
                 FinishDepot = B.Out,
                 WeightMultipier = 10,
@@ -112,13 +111,12 @@ namespace SequencerTest.Units
                 Tasks = tasks,
                 Alternatives = alternatives,
                 Processes = processes, 
-                PositionPrecedence = positionPrecedences,
+                MotionPrecedence = motionPrecedences,
                 ProcessPrecedence = processPrecedences,
             };
 
-            Assert.AreEqual(3, task.Dimension);
             Assert.AreEqual(5, task.TimeLimit);
-            Assert.IsFalse(task.CyclicSequence);
+            Assert.IsFalse(task.Cyclic);
             Assert.AreSame(A.In, task.StartDepot);
             Assert.AreSame(B.In, task.FinishDepot);
             Assert.AreEqual(10, task.WeightMultipier);
@@ -126,7 +124,7 @@ namespace SequencerTest.Units
             Assert.AreSame(tasks, task.Tasks);
             Assert.AreSame(alternatives, task.Alternatives);
             Assert.AreSame(processes, task.Processes);
-            Assert.AreSame(positionPrecedences, task.PositionPrecedence);
+            Assert.AreSame(motionPrecedences, task.MotionPrecedence);
             Assert.AreSame(processPrecedences, task.ProcessPrecedence);
         }
 
@@ -135,9 +133,8 @@ namespace SequencerTest.Units
         {
             GeneralTask task = new GeneralTask()
             {
-                Dimension = 3,
                 TimeLimit = 5,
-                CyclicSequence = true,
+                Cyclic = true,
                 StartDepot = A.Out,
                 FinishDepot = B.Out,
                 WeightMultipier = 10,
@@ -145,7 +142,7 @@ namespace SequencerTest.Units
                 Tasks = tasks,
                 Alternatives = alternatives,
                 Processes = processes,
-                PositionPrecedence = positionPrecedences,
+                MotionPrecedence = motionPrecedences,
                 ProcessPrecedence = processPrecedences,
             };
 
@@ -154,9 +151,8 @@ namespace SequencerTest.Units
             serializer = new GeneralTaskSerializer();
             serializer.ImportJSON("Resources/Example/Export/exportPL.json");
 
-            Assert.AreEqual(3, task.Dimension);
             Assert.AreEqual(5, task.TimeLimit);
-            Assert.IsTrue(task.CyclicSequence);
+            Assert.IsTrue(task.Cyclic);
             Assert.AreSame(A, task.StartDepot);
             Assert.AreSame(B, task.FinishDepot);
             Assert.AreEqual(10, task.WeightMultipier);
@@ -164,7 +160,7 @@ namespace SequencerTest.Units
             Assert.AreSame(tasks, task.Tasks);
             Assert.AreSame(alternatives, task.Alternatives);
             Assert.AreSame(processes, task.Processes);
-            Assert.AreSame(positionPrecedences, task.PositionPrecedence);
+            Assert.AreSame(motionPrecedences, task.MotionPrecedence);
             Assert.AreSame(processPrecedences, task.ProcessPrecedence);
         }
 
@@ -173,9 +169,8 @@ namespace SequencerTest.Units
         {
             GeneralTask task = new GeneralTask()
             {
-                Dimension = 3,
                 TimeLimit = 5,
-                CyclicSequence = true,
+                Cyclic = true,
                 StartDepot = A.Out,
                 FinishDepot = B.Out,
                 WeightMultipier = 10,
@@ -183,7 +178,7 @@ namespace SequencerTest.Units
                 Tasks = tasks,
                 Alternatives = alternatives,
                 Processes = processes,
-                PositionPrecedence = positionPrecedences,
+                MotionPrecedence = motionPrecedences,
                 ProcessPrecedence = processPrecedences,
             };
 
@@ -192,9 +187,8 @@ namespace SequencerTest.Units
             serializer = new GeneralTaskSerializer();
             serializer.ImportXML("Resources/Example/Export/exportPL.xml");
 
-            Assert.AreEqual(3, task.Dimension);
             Assert.AreEqual(5, task.TimeLimit);
-            Assert.IsTrue(task.CyclicSequence);
+            Assert.IsTrue(task.Cyclic);
             Assert.AreSame(A, task.StartDepot);
             Assert.AreSame(B, task.FinishDepot);
             Assert.AreEqual(10, task.WeightMultipier);
@@ -202,7 +196,7 @@ namespace SequencerTest.Units
             Assert.AreSame(tasks, task.Tasks);
             Assert.AreSame(alternatives, task.Alternatives);
             Assert.AreSame(processes, task.Processes);
-            Assert.AreSame(positionPrecedences, task.PositionPrecedence);
+            Assert.AreSame(motionPrecedences, task.MotionPrecedence);
             Assert.AreSame(processPrecedences, task.ProcessPrecedence);
         }
 
@@ -211,9 +205,8 @@ namespace SequencerTest.Units
         {
             GeneralTask task = new GeneralTask()
             {
-                Dimension = 3,
                 TimeLimit = 5,
-                CyclicSequence = true,
+                Cyclic = true,
                 StartDepot = A.In,
                 FinishDepot = B.Out,
                 WeightMultipier = 10,
@@ -221,7 +214,7 @@ namespace SequencerTest.Units
                 Tasks = tasks,
                 Alternatives = alternatives,
                 Processes = processes,
-                PositionPrecedence = positionPrecedences,
+                MotionPrecedence = motionPrecedences,
                 ProcessPrecedence = processPrecedences,
             };
 
@@ -230,9 +223,8 @@ namespace SequencerTest.Units
             serializer = new GeneralTaskSerializer();
             serializer.ImportSEQ("Resources/Example/Export/exportPL.seq");
 
-            Assert.AreEqual(3, task.Dimension);
             Assert.AreEqual(5, task.TimeLimit);
-            Assert.IsTrue(task.CyclicSequence);
+            Assert.IsTrue(task.Cyclic);
             Assert.AreSame(A, task.StartDepot);
             Assert.AreSame(B, task.FinishDepot);
             Assert.AreEqual(10, task.WeightMultipier);
@@ -240,7 +232,7 @@ namespace SequencerTest.Units
             Assert.AreSame(tasks, task.Tasks);
             Assert.AreSame(alternatives, task.Alternatives);
             Assert.AreSame(processes, task.Processes);
-            Assert.AreSame(positionPrecedences, task.PositionPrecedence);
+            Assert.AreSame(motionPrecedences, task.MotionPrecedence);
             Assert.AreSame(processPrecedences, task.ProcessPrecedence);
         }
     }

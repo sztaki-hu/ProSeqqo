@@ -8,14 +8,12 @@ namespace SequencerTest.Units.Model
     {
         Position A;
         Position B;
-        Contour C;
 
         [TestInitialize()]
         public void Initialize()
         {
             A = new Position();
             B = new Position();
-            C = new Contour();
         }
 
         [TestMethod()]

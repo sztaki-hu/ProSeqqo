@@ -88,18 +88,6 @@ namespace SequencerTest.Benchmark
                 }
                 SeqLogger.Info("Resources/Benchmark/" + generationDir + ".csv created!", "BenchmarkRunner");
             }
-
-            for (int i = 0; i < firstNTemplate; i++)
-            {
-                foreach (var item in templates[i].PointResults)
-                {
-                    Assert.AreEqual(1, item.StatusCode);
-                }
-                foreach (var item in templates[i].LineResults)
-                {
-                    Assert.AreEqual(1, item.StatusCode);
-                }
-            }
         }
 
         [TestMethod]

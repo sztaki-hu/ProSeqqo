@@ -12,10 +12,9 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
         private List<GTSPNode> PositionOfShortcuts { get; set; } 
         private List<Model.Task> DeletedTasks { get; set; }
         private List<Model.Task> TasksOfShortcuts { get; set; } 
-        private List<GTSPPrecedenceConstraint> DeletedPositionPrecedencesOfShortcuts { get; set; }
-        private List<GTSPPrecedenceConstraint> PositionPrecedencesOfShortcuts { get; set; }
+        private List<GTSPPrecedenceConstraint> DeletedMotionPrecedencesOfShortcuts { get; set; }
+        private List<GTSPPrecedenceConstraint> MotionPrecedencesOfShortcuts { get; set; }
         private List<AlternativeShortcut> AlternativeShortcuts { get; set; }
-
 
         public ShortestPathProcessor(GeneralTask pointTask) {
             GeneralTask = pointTask;
@@ -24,10 +23,9 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
             DeletedTasks = new List<Model.Task>();
             TasksOfShortcuts = new List<Model.Task>();
             AlternativeShortcuts = new List<AlternativeShortcut>();
-            DeletedPositionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();
-            PositionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();
+            DeletedMotionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();
+            MotionPrecedencesOfShortcuts = new List<GTSPPrecedenceConstraint>();
         }
-
 
         public void Change()
         {
@@ -87,25 +85,25 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
 
             foreach (var shortcut in AlternativeShortcuts)                                                                                  //Check position precedences, if one of the positions part of shortcut,
             {                                                                                                                               //it have to be override with the first position of the cut
-                for (int i = 0; i < GeneralTask.PositionPrecedence.Count; i++)
+                for (int i = 0; i < GeneralTask.MotionPrecedence.Count; i++)
                 {
-                    var newPrec = shortcut.FindPrecedenceHeaderOfPositions(GeneralTask.PositionPrecedence[i]);
+                    var newPrec = shortcut.FindPrecedenceHeaderOfPositions(GeneralTask.MotionPrecedence[i]);
                     if (newPrec != null && newPrec.Count > 0)
                     {
-                        DeletedPositionPrecedencesOfShortcuts.Add(GeneralTask.PositionPrecedence[i]);
-                        PositionPrecedencesOfShortcuts.AddRange(newPrec);
+                        DeletedMotionPrecedencesOfShortcuts.Add(GeneralTask.MotionPrecedence[i]);
+                        MotionPrecedencesOfShortcuts.AddRange(newPrec);
                     }
                 }
             }
 
-            foreach (var item in DeletedPositionPrecedencesOfShortcuts)
+            foreach (var item in DeletedMotionPrecedencesOfShortcuts)
             {
-                GeneralTask.PositionPrecedence.Remove(item);
+                GeneralTask.MotionPrecedence.Remove(item);
             }
 
-            foreach (var item in PositionPrecedencesOfShortcuts)
+            foreach (var item in MotionPrecedencesOfShortcuts)
             {
-                GeneralTask.PositionPrecedence.Add(item);
+                GeneralTask.MotionPrecedence.Add(item);
             }
 
             for (int i = 0; i < GeneralTask.Processes.Count; i++)
@@ -151,24 +149,24 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
                 GeneralTask.PositionMatrix.StrictSystemEdgeWeights.DeleteAll();              //Delete the edge weight ovverides of shortcuts.
             }         
 
-            for (int i = 0; i < GeneralTask.PositionPrecedence.Count; i++)                                    //Remove precedences of shortcuts
+            for (int i = 0; i < GeneralTask.MotionPrecedence.Count; i++)                                    //Remove precedences of shortcuts
             {
-                for (int j = 0; j < PositionPrecedencesOfShortcuts.Count; j++)
+                for (int j = 0; j < MotionPrecedencesOfShortcuts.Count; j++)
                 {
-                    if (GeneralTask.PositionPrecedence[i].Before.GlobalID == PositionPrecedencesOfShortcuts[j].Before.GlobalID && GeneralTask.PositionPrecedence[i].After.GlobalID == PositionPrecedencesOfShortcuts[j].After.GlobalID)
-                        GeneralTask.PositionPrecedence.RemoveAt(i);
+                    if (GeneralTask.MotionPrecedence[i].Before.GlobalID == MotionPrecedencesOfShortcuts[j].Before.GlobalID && GeneralTask.MotionPrecedence[i].After.GlobalID == MotionPrecedencesOfShortcuts[j].After.GlobalID)
+                        GeneralTask.MotionPrecedence.RemoveAt(i);
                 }
             }
 
-            foreach (var posPrec in DeletedPositionPrecedencesOfShortcuts)                                      //Add original precedences
+            foreach (var posPrec in DeletedMotionPrecedencesOfShortcuts)                                      //Add original precedences
             {
-                GeneralTask.PositionPrecedence.Add(posPrec);
+                GeneralTask.MotionPrecedence.Add(posPrec);
             }
 
             AlternativeShortcuts.Clear();
             DeletedPositions.Clear();
-            DeletedPositionPrecedencesOfShortcuts.Clear();
-            PositionPrecedencesOfShortcuts.Clear();
+            DeletedMotionPrecedencesOfShortcuts.Clear();
+            MotionPrecedencesOfShortcuts.Clear();
         }
         public GeneralTaskResult ResolveSolution(GeneralTaskResult taskResult, GeneralTask.CalculateWeightDelegate calculateWeightFunction)
         {

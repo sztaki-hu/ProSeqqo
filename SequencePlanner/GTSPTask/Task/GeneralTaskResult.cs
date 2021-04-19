@@ -1,23 +1,61 @@
 ﻿using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Result
 {
-    public class GeneralTaskResult : TaskResult
+    public class GeneralTaskResult
     {
+        public TimeSpan FullTime { get; set; }          //Run time of build and execute task
+        public TimeSpan SolverTime { get; set; }        //Run time of OR-Tools VRP solver
+        public TimeSpan PreSolverTime { get; set; }     //Run time of MIP presolver
+        public List<long> SolutionRaw { get; set; }     //Solution of 
+        public List<double> CostsRaw { get; set; }      //Costs of solution between the steps
+        public double CostSum { get; set; }             //Sum of solution costs (CostsRaw)
+        public int StatusCode { get; set; }             //OR-Tools exit status code
+        public string StatusMessage { get; set; }       //OR-Tools exit message
+        public List<string> Log { get; set; }           //Console log of task running
+        public List<string> ErrorMessage { get; set; }  //Console log of task running
         public List<GTSPNode> PositionResult { get; set; }
         public List<ResolveStruct> ResolveHelper { get; set; }
 
+        public virtual void Calculate()
+        {
+            CostSum = 0;
+            foreach (var cost in CostsRaw)
+            {
+                CostSum += cost;
+            }
+        }
 
         public GeneralTaskResult()
         {
+            FullTime = new TimeSpan();
+            SolverTime = new TimeSpan();
+            SolutionRaw = new List<long>();
+            CostsRaw = new List<double>();
+            CostSum = 0;
+            StatusCode = -1;
+            StatusMessage = "Not filled yet!";
+            Log = new List<string>();
+            ErrorMessage = new List<string>();
             PositionResult = new List<GTSPNode>();
             ResolveHelper = new List<ResolveStruct>();
         }
-        public GeneralTaskResult(TaskResult baseTask) : base(baseTask)
+
+        public GeneralTaskResult(GeneralTaskResult task)
         {
+            FullTime = task.FullTime;
+            SolverTime = task.SolverTime;
+            SolutionRaw = task.SolutionRaw;
+            CostsRaw = task.CostsRaw;
+            CostSum = task.CostSum;
+            StatusCode = task.StatusCode;
+            StatusMessage = task.StatusMessage;
+            Log = task.Log;
+            ErrorMessage = task.ErrorMessage;
             PositionResult = new List<GTSPNode>();
             ResolveHelper = new List<ResolveStruct>();
             foreach (var item in SolutionRaw)
@@ -55,6 +93,7 @@ namespace SequencePlanner.GTSPTask.Result
                 }
             }
         }
+
         public void ResolveCosts(GeneralTask.CalculateWeightDelegate calculateWeightFunction)
         {
             CostsRaw = new List<double>();
@@ -65,9 +104,9 @@ namespace SequencePlanner.GTSPTask.Result
                 CostSum += CostsRaw[i];
             }
         }
-        public override void Delete(int index)
+
+        public void Delete(int index)
         {
-            base.Delete(index);
             if (SolutionRaw.Count <= index)
                 throw new SeqException("Result delete failed: index > Solution.Length" + index + ">" + SolutionRaw.Count);
             if (SolutionRaw.Count > 0)
@@ -86,14 +125,64 @@ namespace SequencePlanner.GTSPTask.Result
                 PositionResult.RemoveAt(index);
             }
         }
-        
-        public static new string ToCSVHeader() => TaskResult.ToCSVHeader();
-        public new string ToCSV() => base.ToCSV();
-        public new void ToLog(LogLevel lvl)
+
+        public virtual void DeleteFirst()
+        {
+            Delete(0);
+        }
+        public virtual void DeleteLast()
+        {
+            Delete(SolutionRaw.Count - 1);
+        }
+
+        public static string ToCSVHeader()
+        {
+            var s = ";";
+            return nameof(FullTime) + "[ms]" + s + nameof(SolverTime) + "[ms]" + s + nameof(PreSolverTime) + "[ms]" + s + nameof(StatusCode) + s + nameof(StatusMessage) + s + nameof(CostSum) + s + nameof(CostsRaw) + s + nameof(SolutionRaw);
+        }
+
+        public string ToCSV()
+        {
+            var s = ";";
+            return FullTime.TotalMilliseconds.ToString() + s + SolverTime.TotalMilliseconds.ToString() + s + PreSolverTime.TotalMilliseconds.ToString() + s + StatusCode + s + StatusMessage + s + CostSum + s + CostsRaw.ToListString() + s + SolutionRaw.ToListString();
+        }
+
+        public void ToLog(LogLevel lvl)
         {
             SeqLogger.Info("Result: ");
             SeqLogger.Indent++;
-            base.ToLog(lvl);
+            if (StatusCode == 1)
+            {
+                SeqLogger.WriteLog(lvl, "StatusCode: " + StatusCode);
+                SeqLogger.WriteLog(lvl, "StatusMessage: " + StatusMessage);
+                SeqLogger.WriteLog(lvl, "FullTime: " + FullTime);
+                SeqLogger.WriteLog(lvl, "SolverTime: " + SolverTime);
+                SeqLogger.WriteLog(lvl, "PreSolverTime: " + PreSolverTime);
+                SeqLogger.WriteLog(lvl, "SolutionRaw: " + SolutionRaw.ToListString());
+                SeqLogger.WriteLog(lvl, "CostsRaw: " + CostsRaw.ToListString());
+                SeqLogger.WriteLog(lvl, "CostSum: " + CostSum);
+                SeqLogger.WriteLog(lvl, "Log size: " + Log.Count + " lines");
+                var error = "";
+                foreach (var item in ErrorMessage)
+                {
+                    error = item + "\n";
+                }
+                SeqLogger.WriteLog(lvl, "Error messages: " + error);
+            }
+            else
+            {
+                SeqLogger.WriteLog(lvl, "StatusCode: " + StatusCode);
+                SeqLogger.WriteLog(lvl, "StatusMessage: " + StatusMessage);
+                SeqLogger.WriteLog(lvl, "FullTime: " + FullTime);
+                SeqLogger.WriteLog(lvl, "SolverTime: " + SolverTime);
+                SeqLogger.WriteLog(lvl, "Log size: " + Log.Count + " lines");
+                var error = "";
+                foreach (var item in ErrorMessage)
+                {
+                    error = item + "\n";
+                }
+                SeqLogger.WriteLog(lvl, "Error messages: " + error);
+            }
             if (StatusCode == 1)
             {
                 SeqLogger.Info("Solution: ");
@@ -112,21 +201,22 @@ namespace SequencePlanner.GTSPTask.Result
             SeqLogger.Indent--;
         }
 
-        public void Validate(List<GTSPDisjointConstraint> disjointConstraints, List<GTSPPrecedenceConstraint> positionPrecedence)
+        public void Validate(List<GTSPDisjointConstraint> disjointConstraints, List<GTSPPrecedenceConstraint> motionPrecedence)
         {
             ValidateDisjoint(disjointConstraints);
-            ValidatePositionPrec(positionPrecedence);
+            ValidateMotionPrec(motionPrecedence);
             //ValidateProcessPrec(processPrecedence);
         }
-        private void ValidatePositionPrec(List<GTSPPrecedenceConstraint> positionPrecedence)
+
+        private void ValidateMotionPrec(List<GTSPPrecedenceConstraint> motionPrecedence)
         {
-            if(positionPrecedence is not null &&  PositionResult is not null && PositionResult.Count > 0 && positionPrecedence.Count > 0)
+            if(motionPrecedence is not null &&  PositionResult is not null && PositionResult.Count > 0 && motionPrecedence.Count > 0)
             {
                 var findFirst = false;
                 var first = -1;
                 var findSecond = false;
                 var second = -1;
-                foreach (var prec in positionPrecedence)
+                foreach (var prec in motionPrecedence)
                 {
                     findFirst = false;
                     first = -1;
@@ -173,6 +263,7 @@ namespace SequencePlanner.GTSPTask.Result
                 }
             }
         }
+
         private void ValidateDisjoint(List<GTSPDisjointConstraint> disjointConstraints)
         {
             foreach (var disj in disjointConstraints)
@@ -191,6 +282,7 @@ namespace SequencePlanner.GTSPTask.Result
                 }
             };
         }
+
         //private void ValidateProcessPrec(List<GTSPPrecedenceConstraint> processPrecedence)
         //{
         //    foreach (var prec in processPrecedence)

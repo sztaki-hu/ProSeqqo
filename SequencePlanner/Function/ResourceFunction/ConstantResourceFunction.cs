@@ -26,7 +26,7 @@ namespace SequencePlanner.Function.ResourceFunction
         public void Validate()
         {
             SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(ConstantResourceFunction));
-            SeqLogger.Info("ResourceConstant: " + Cost, nameof(ConstantResourceFunction));
+            SeqLogger.Info("ChangeoverConstant: " + Cost, nameof(ConstantResourceFunction));
             if(LinkingFunction == null)
             {
                 throw new SeqException("ConstantResourceFunction.LinkingFunction not given.");

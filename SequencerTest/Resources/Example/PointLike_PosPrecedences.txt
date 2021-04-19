@@ -1,13 +1,13 @@
 TaskType: General
 Dimensions: 0
 WeightMultiplier: Auto
-CyclicSequence: True
+Cyclic: True
 StartDepot: 1
 DistanceFunction: MatrixDistance
 ResourceSource: Off
 TimeLimit: 20
 
-PositionMatrix:
+ConfigMatrix:
 1;2;3;4;5;6
 #----------
 0;2;3;4;5;6
@@ -30,7 +30,7 @@ ProcessHierarchy:
 		5;			24;			54;			  105;	
 		6;			25;			55;			  106;	
 
-PositionPrecedence:
+MotionPrecedence:
 #+----------------------+--------------------+------------------+
 #| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
 #+----------------------+--------------------+------------------+

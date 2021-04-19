@@ -1,7 +1,6 @@
 ﻿using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
 using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.GTSPTask.Task.LineTask;
 using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using System;
@@ -118,12 +117,8 @@ namespace SequencerConsole
                 SeqLogger.LogLevel = log;
                 if (taskType != TaskType.Unknown)
                 {
-                    if (taskType == TaskType.Line)
-                        ConvertLine();
-
-                    if (taskType == TaskType.PoitnLike)
+                    if (taskType == TaskType.General)
                         ConvertGeneral();
-
                 }
             }
             catch (Exception e)
@@ -162,36 +157,7 @@ namespace SequencerConsole
             }
         }
 
-        private static void ConvertLine()
-        {
-            if (inputType != FormatType.Unknown && input != null)
-            {
-                LineTaskSerializer ser = new LineTaskSerializer();
-                LineTask task = inputType switch
-                {
-                    FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
-                    FormatType.JSON => ser.ImportJSON(input),
-                    FormatType.XML => ser.ImportXML(input),
-                    _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
-                };
-                switch (outputType)
-                {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        ser.ExportSEQ(task, output);
-                        break;
-                    case FormatType.JSON:
-                        ser.ExportJSON(task, output);
-                        break;
-                    case FormatType.XML:
-                        ser.ExportXML(task, output);
-                        break;
-                    default:
-                        throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml!");
-                }
-            }
-        }
-
+        
         private static void Run()
         {
             try
@@ -199,12 +165,7 @@ namespace SequencerConsole
                 SeqLogger.LogLevel = log;
                 if (taskType != TaskType.Unknown)
                 {
-                    if (taskType == TaskType.Line)
-                    {
-                        var result = RunLine();
-                        OutLine(result);
-                    }
-                    if (taskType == TaskType.PoitnLike)
+                    if (taskType == TaskType.General)
                     {
                         var result = RunPointLike();
                         //result.ToLog(LogLevel.Info);
@@ -212,29 +173,12 @@ namespace SequencerConsole
                     }
                 }
                 else
-                    throw new SeqException("Unknown task type!", "It should be TaskType: Line or PointLike");
+                    throw new SeqException("Unknown task type!", "It should be TaskType: General");
             }
             catch (Exception e)
             {
                 SeqLogger.Critical(e.ToString());
             }
-        }
-
-        private static LineTaskResult RunLine()
-        {
-            if (inputType != FormatType.Unknown && input != null)
-            {
-                LineTaskSerializer ser = new LineTaskSerializer();
-                LineTask task = inputType switch
-                {
-                    FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
-                    FormatType.JSON => ser.ImportJSON(input),
-                    FormatType.XML => ser.ImportXML(input),
-                    _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
-                };
-                return task.RunModel();
-            }
-            return null;
         }
 
         private static GeneralTaskResult RunPointLike()
@@ -260,29 +204,6 @@ namespace SequencerConsole
             if (output != null && outputType != FormatType.Unknown)
             {
                 GeneralResultSerializer ser = new GeneralResultSerializer();
-                switch (outputType)
-                {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        ser.ExportSEQ(result, output);
-                        break;
-                    case FormatType.JSON:
-                        ser.ExportJSON(result, output);
-                        break;
-                    case FormatType.XML:
-                        ser.ExportXML(result, output);
-                        break;
-                    default:
-                        throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml!");
-                }
-                //System.Diagnostics.Process.Start(@output);
-            }
-        }
-        private static void OutLine(LineTaskResult result)
-        {
-            if (output != null && outputType != FormatType.Unknown)
-            {
-                LineResultSerializer ser = new LineResultSerializer();
                 switch (outputType)
                 {
                     case FormatType.SEQ:
@@ -461,13 +382,12 @@ namespace SequencerConsole
                 SeqLogger.Critical("File not exists: " + input);
             foreach (var line in File.ReadAllLines(input))
             {
-                if (line.Contains("Line"))
-                    return TaskType.Line;
-                if (line.Contains("General"))
-                    return TaskType.PoitnLike;
+                if (line.ToUpper().Contains("General".ToUpper()))
+                    return TaskType.General;
             }
             return TaskType.Unknown;
         }
+
         public static void WaitForSolution(string text, CancellationToken token)
         {
             var counter = 0;
@@ -498,7 +418,7 @@ namespace SequencerConsole
     public enum TaskType
     {
         Line,
-        PoitnLike,
+        General,
         Unknown
     }
 }

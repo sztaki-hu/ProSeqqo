@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
-using SequencerTest.Units.Helper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SequencerTest.Units.Serialization.Result
 {

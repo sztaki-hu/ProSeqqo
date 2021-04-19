@@ -1,6 +1,7 @@
 ﻿using SequencePlanner.Model;
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Task.Base;
+using SequencePlanner.GTSPTask.Task.General;
 
 namespace SequencePlanner.Helper
 {
@@ -12,9 +13,9 @@ namespace SequencePlanner.Helper
         public int ORToolsFinishDepotSequenceID { get; }
 
 
-        public void Map(BaseTask task);
-        public void ReverseMap(BaseTask task);
-        public TaskResult ResolveSolution(TaskResult result);
+        public void Map(GeneralTask task);
+        public void ReverseMap(GeneralTask task);
+        public GeneralTaskResult ResolveSolution(GeneralTaskResult result);
         public void OverrideWeights(IGTSPRepresentation task);
     }
 }

@@ -117,7 +117,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent--;
             SeqLogger.Debug("ORTools building finished!", nameof(ORToolsSequencerWrapper));
         }
-        public TaskResult Solve()
+        public GeneralTaskResult Solve()
         {
             SeqLogger.Info("Solver running!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent++;
@@ -137,7 +137,7 @@ namespace SequencePlanner.OR_Tools
             return ProcessSolution(routing, manager, solution, Timer.Elapsed);
         }
 
-        private static TaskResult ProcessSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
+        private static GeneralTaskResult ProcessSolution(in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution, TimeSpan time)
         {
             List<long> rawSolution = new List<long>();
             if (routing.GetStatus() == 1)
@@ -151,7 +151,7 @@ namespace SequencePlanner.OR_Tools
                 rawSolution.Add(manager.IndexToNode(index));
             }
 
-            TaskResult result = new TaskResult()
+            GeneralTaskResult result = new GeneralTaskResult()
             {
                 SolverTime = time,
                 SolutionRaw = rawSolution,

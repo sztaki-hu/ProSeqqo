@@ -169,7 +169,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
         
-        public static List<PositionSerializationObject> GetPositionListByHeader(this SEQTokenizer tokenizer, string header)
+        public static List<PositionSerializationObject> GetConfigListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
@@ -255,7 +255,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
 
-        public static List<HybridLineSerializationObject> GetHybridLineListByHeader(this SEQTokenizer tokenizer, string header)
+        public static List<HybridLineSerializationObject> GetHybridMotionListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {

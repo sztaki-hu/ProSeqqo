@@ -3,7 +3,7 @@ DistanceFunction: Euclidian
 Dimension: 2
 TimeLimit: 60000
 WeightMultiplier: Auto
-CyclicSequence: False
+Cyclic: False
 #StartDepot: 1
 #FinishDepot: 218
 ContourPenalty: 100
@@ -12,7 +12,7 @@ ResourceSource: Off
 #LocalSearchStrategie: GuidedLocalSearch
 
 
-PositionList:
+ConfigList:
 #+-------+---------------------+------------------+
 #|   ID  |      Position       |  Name[optional]  |
 #+-------+---------------------+------------------+
@@ -370,7 +370,7 @@ PositionList:
 350;[198.5137864;110.4570874]
 351;[198.9;110.4570874]
 
-LineList:
+MotionList:
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
 #| LineID | ContourID | PositionAID | PositionBID |  Name[optional]  |  ResourceID [optional]  | Bidirectional [optional]  |
 #+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+

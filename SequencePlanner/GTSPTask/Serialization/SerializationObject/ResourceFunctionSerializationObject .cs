@@ -47,7 +47,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             string separator = ";";
             string newline = "\n";
             string seq = "";
-            seq += "ResourceDistanceFunction: " + ResourceDistanceFunction + newline;
+            seq += "ResourceChangeover: " + ResourceDistanceFunction + newline;
             if(ResourceSource != "Off")
                 seq += "ResourceSource: " + ResourceSource + newline;
             if(ResourceSource == "Constant")
@@ -94,14 +94,14 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
 
-            ResourceDistanceFunction = tokenizer.GetStringByHeader("ResourceDistanceFunction");
-            ResourceSource = tokenizer.GetStringByHeader("ResourceSource");
+            ResourceDistanceFunction = tokenizer.GetStringByHeader("ResourceChangeoverFunction");
+            ResourceSource = tokenizer.GetStringByHeader("ResourceChangeover");
             switch (ResourceSource)
             {
                 case "Off":
                     break;
                 case "Constant":
-                    ResourceCostConstant = tokenizer.GetDoubleByHeader("ResourceCostConstant");
+                    ResourceCostConstant = tokenizer.GetDoubleByHeader("ChangeoverConstant");
                     break;
                 case "Matrix":
                     ResourceCostMatrix2 = new ResourceMatrixSerializationObject();

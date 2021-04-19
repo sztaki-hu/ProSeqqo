@@ -12,9 +12,8 @@ namespace SequencePlanner.Function.DistanceFunction
         public virtual void Validate() { }
         public void ToLog(LogLevel level)
         {
-            SeqLogger.WriteLog(level, "DistanceFunction: "+FunctionName, nameof(DistanceFunction));
             SeqLogger.Indent++;
-            SeqLogger.WriteLog(level, "FunctionName: "+FunctionName, nameof(DistanceFunction));
+            SeqLogger.WriteLog(level, "DistanceFunction: "+FunctionName, nameof(DistanceFunction));
             SeqLogger.Indent--;
         }
     }

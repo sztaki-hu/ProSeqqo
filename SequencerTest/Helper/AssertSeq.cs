@@ -25,18 +25,6 @@ namespace SequencerTest.Helper
                 Assert.AreEqual(excepted.Virtual, actual.Virtual);
                 Assert.AreEqual(excepted.Dimension, actual.Dimension);
             }
-            
         }
-
-        public static void AssertLine(Line expected, Line actual)
-        {
-            
-        }
-
-        public static void AssertContour(Contour expected, Contour actual)
-        {
-
-        }
-
     }
 }

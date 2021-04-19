@@ -1,7 +1,7 @@
 TaskType: General
 Dimension: 6
 WeightMultiplier: Auto
-CyclicSequence: True
+Cyclic: True
 StartDepot: 1
 TimeLimit: <*T*>
 DistanceFunction: TrapezoidTime
@@ -12,7 +12,7 @@ LocalSearchStrategy: <*LSS*>
 UseShortcutInAlternatives: <*USIA*>
 UseMIPprecedenceSolver: <*MIP*>
 
-PositionList:
+ConfigList:
  1; [-1.86855;-1.44418;1.69802;-1.99163;-1.51983;-0.293486]; Camera
  2; [0.989846;5.23625;1.9497;-2.50708;-0.698604;-1.52703]; Grasp1_1
  3; [-1.75995;4.09757;-1.93195;-0.142534;2.34547;-0.963685]; Grasp1_2
@@ -554,4 +554,4 @@ ProcessHierarchy:
  248;2020;3020;4020;
  249;2020;3020;4020;
 ProcessPrecedence:
-PositionPrecedence:
+MotionPrecedence:

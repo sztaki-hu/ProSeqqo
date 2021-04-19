@@ -1,18 +1,18 @@
 TaskType: General
 Dimension: 6
 WeightMultiplier: Auto
-CyclicSequence: False
+Cyclic: False
 StartDepot: 1
 FinishDepot: 5
 TimeLimit: 20
 DistanceFunction: TrapezoidTime
 TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
 TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
-ResourceDistanceFunction: Add
+ResourceChangeover: Add
 ResourceSource: Constant
-ResourceConstant: 0
+ChangeoverConstant: 0
 
-PositionList:
+ConfigList:
 #+-------+---------------------+------------------+
 #|   ID  |      Position       |  Name[optional]  |
 #+-------+---------------------+------------------+
@@ -96,7 +96,7 @@ ProcessPrecedence:
 101;102
 
 		
-PositionPrecedence:
+MotionPrecedence:
 #+----------------------+--------------------+------------------+
 #| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
 #+----------------------+--------------------+------------------+

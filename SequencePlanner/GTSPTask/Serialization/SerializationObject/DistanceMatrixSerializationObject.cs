@@ -14,7 +14,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public List<int> ResourceFooter { get; set; }
         [XmlIgnore]
         [JsonIgnore]
-        public List<PositionSerializationObject> PositionList { get; set; }
+        public List<PositionSerializationObject> ConfigList { get; set; }
 
 
         public DistanceMatrixSerializationObject()
@@ -88,7 +88,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             ResourceFooter = new List<int>();
             DistanceMatrix = new List<List<double>>();
             double[,] distanceMatrix;
-            var matrix = tokenizer.FindTokenByHeader("PositionMatrix");
+            var matrix = tokenizer.FindTokenByHeader("ConfigMatrix");
             string[] tmp = matrix.Lines[0].Line.Split(';');     //1;2;3;4--->[1][2][3][4]
             foreach (var item in tmp)
             {
@@ -128,11 +128,11 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                     DistanceMatrix[i].Add(distanceMatrix[i, j]);
                 }
             }
-            CreatePositionList();
+            CreateConfigList();
         }
-        private void CreatePositionList()
+        private void CreateConfigList()
         {
-            PositionList = new List<PositionSerializationObject>();
+            ConfigList = new List<PositionSerializationObject>();
             for (int i = 0; i < IDHeader.Count; i++)
             {
                 var position = new PositionSerializationObject
@@ -144,7 +144,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 if (ResourceFooter != null && ResourceFooter.Count != 0)
                     position.ResourceID = ResourceFooter[i];
                 position.Position = new double[0];
-                PositionList.Add(position);
+                ConfigList.Add(position);
             }
         }
     }

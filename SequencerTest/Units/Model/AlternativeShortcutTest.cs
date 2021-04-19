@@ -4,11 +4,6 @@ using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.Model;
 using SequencerTest.Units.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SequencerTest.Units.Model
 {
@@ -47,8 +42,6 @@ namespace SequencerTest.Units.Model
             Assert.IsNull(shotcut.Original);
             Assert.IsNotNull(shotcut.CriticalPaths);
             Assert.IsNotNull(shotcut.StrictSystemEdgeWeightSet);
-
-
         }
 
         [TestMethod]

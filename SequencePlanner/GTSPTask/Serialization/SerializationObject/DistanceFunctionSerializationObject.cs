@@ -105,7 +105,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             string seq = "";
             if (DistanceMatrix != null)
             {
-                seq += "PositionMatrix: " + newline;
+                seq += "ConfigMatrix: " + newline;
                 seq += DistanceMatrix.ToSEQ();
             }
             return seq;

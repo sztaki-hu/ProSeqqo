@@ -14,7 +14,7 @@ namespace SequencerTest.Units.Model
     {
         GTSPNode start;
         GTSPNode finish;
-        List<GTSPNode> positionList;
+        List<GTSPNode> ConfigList;
         double[,] matrix;
         IDistanceFunction distFunc;
         IResourceFunction resourceFunc;
@@ -25,7 +25,7 @@ namespace SequencerTest.Units.Model
             start = new GTSPNode(new Position(){ Vector = new double[]{1,1,1} });
             finish = new GTSPNode(new Position() { Vector = new double[] { 3, 3, 3 } });
             matrix = new double[,] { { 1, 2 }, { 2, 1 } };
-            positionList = new List<GTSPNode>() { start, finish };
+            ConfigList = new List<GTSPNode>() { start, finish };
             resourceFunc = new ConstantResourceFunction(1, new AddResourceDistanceLinkFunction());
             distFunc = new EuclidianDistanceFunction();
         }
@@ -33,8 +33,8 @@ namespace SequencerTest.Units.Model
         [TestMethod]
         public void ConstructorTest()
         {
-            PositionMatrix posMatrix = new PositionMatrix(positionList, distFunc, resourceFunc);
-            Assert.AreSame(positionList, posMatrix.Positions);
+            PositionMatrix posMatrix = new PositionMatrix(ConfigList, distFunc, resourceFunc);
+            Assert.AreSame(ConfigList, posMatrix.Positions);
             Assert.AreEqual(2, posMatrix.Matrix.GetLength(0));
             Assert.AreEqual(2, posMatrix.Matrix.GetLength(1));
             //Assert.AreEqual(1, posMatrix.Matrix[0,0]);
@@ -64,7 +64,7 @@ namespace SequencerTest.Units.Model
             //B
             try
             {
-                PositionMatrix posMatrix = new PositionMatrix(positionList, null, resourceFunc);
+                PositionMatrix posMatrix = new PositionMatrix(ConfigList, null, resourceFunc);
                 Assert.Fail();
             }
             catch (SeqException e)
@@ -77,7 +77,7 @@ namespace SequencerTest.Units.Model
             //C
             try
             {
-                PositionMatrix posMatrix = new PositionMatrix(positionList, distFunc, null);
+                PositionMatrix posMatrix = new PositionMatrix(ConfigList, distFunc, null);
                 Assert.Fail();
             }
             catch (SeqException e)
@@ -93,12 +93,12 @@ namespace SequencerTest.Units.Model
         {
             PositionMatrix posMatrix = new PositionMatrix()
             {
-                Positions = positionList,
+                Positions = ConfigList,
                 Matrix = matrix,
                 DistanceFunction = distFunc,
                 ResourceFunction = resourceFunc
             };
-            Assert.AreSame(positionList,  posMatrix.Positions);
+            Assert.AreSame(ConfigList,  posMatrix.Positions);
             Assert.AreSame(matrix, posMatrix.Matrix);
             Assert.AreSame(distFunc, posMatrix.DistanceFunction);
             Assert.AreSame(resourceFunc, posMatrix.ResourceFunction);

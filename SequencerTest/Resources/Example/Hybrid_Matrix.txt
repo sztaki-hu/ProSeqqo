@@ -1,14 +1,14 @@
 TaskType: General
 Validate: True
 Dimension: 0
-CyclicSequence: True
+Cyclic: True
 StartDepot: 1
 #FinishDepot: 6
 TimeLimit: 2000
 DistanceFunction: MatrixDistance
 #ResourceSource: Off
 ResourceSource: Matrix
-ResourceDistanceFunction: Max
+ResourceChangeover: Max
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: False
 ResourceChangeInLine: True
@@ -16,12 +16,12 @@ BidirectionLineDefault: True
 UseLineLengthInWeight: True
 UseResourceInLineLength: True
 
-ResourceMatrix:
+ChangeoverMatrix:
 1;5
 99;88
 77;66
 
-PositionMatrix:
+ConfigMatrix:
 1;2;3;4;5;6
 #--------
 0;2;3;4;5;6
@@ -34,7 +34,7 @@ PositionMatrix:
 Cam;P2;P3;P4;P5;P6
 1;  5; 5; 5; 5; 1
 
-LineList:
+MotionList:
 #+--------+-------------+-------------+------------------+---------------------------+
 #| LineID | PositionAID | PositionBID |  Name[optional]  | Bidirectional [optional]  |
 #+--------+-------------+-------------+------------------+---------------------------+
@@ -67,7 +67,7 @@ ProcessPrecedence:
 #102;105
 #105;104
 	
-PositionPrecedence:
+MotionPrecedence:
 #+----------------------+--------------------+------------------+
 #| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
 #+----------------------+--------------------+------------------+

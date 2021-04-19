@@ -228,7 +228,7 @@
       <FileName>Helper\DoubleMatrixConverter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.GTSPTask.Task.Base.BaseTask">
+  <Class Name="SequencePlanner.GTSPTask.Task.Base.GeneralTask">
     <Position X="4.5" Y="5" Width="2.25" />
     <AssociationLine Name="PositionMatrix" Type="SequencePlanner.Model.PositionMatrix" FixedToPoint="true">
       <Path>
@@ -241,7 +241,7 @@
     </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAIAAAAAAIKEAAAAIsAAAAIAAAAAYAAAQAAAAAAFAAY=</HashCode>
-      <FileName>GTSPTask\Task\Base\BaseTask.cs</FileName>
+      <FileName>GTSPTask\Task\Base\GeneralTask.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="PositionMatrix" />
@@ -408,18 +408,18 @@
       <FileName>GTSPTask\Task\Base\IGTSPRepresentation.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="SequencePlanner.GTSPTask.Task.Base.IBaseTask">
+  <Interface Name="SequencePlanner.GTSPTask.Task.Base.IGeneralTask">
     <Position X="2.25" Y="5" Width="2" />
     <NestedTypes>
-      <Delegate Name="SequencePlanner.GTSPTask.Task.Base.IBaseTask.TaskCompleted" Collapsed="true">
+      <Delegate Name="SequencePlanner.GTSPTask.Task.Base.IGeneralTask.TaskCompleted" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>GTSPTask\Task\Base\IBaseTask.cs</NewMemberFileName>
+          <NewMemberFileName>GTSPTask\Task\Base\IGeneralTask.cs</NewMemberFileName>
         </TypeIdentifier>
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIIEAAAAAMAAAAAAAAAAYAAAQAAAAAAAAAY=</HashCode>
-      <FileName>GTSPTask\Task\Base\IBaseTask.cs</FileName>
+      <FileName>GTSPTask\Task\Base\IGeneralTask.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="SequencePlanner.Function.DistanceFunction.IDistanceFunction">

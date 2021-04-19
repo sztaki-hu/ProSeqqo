@@ -16,7 +16,7 @@ namespace SequencePlanner.Helper
         private Process Process;
   
         private GeneralTask Task { get; set; }
-        private TaskResult Result { get; set; }
+        private GeneralTaskResult Result { get; set; }
         private DepotChangeType DepotChangeType { get; set; }
         private Position StartDepot { get; set; }
         private Position FinishDepot { get; set; }
@@ -27,12 +27,12 @@ namespace SequencePlanner.Helper
         public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequencingID; else return -1; } }
         
 
-        public void Map(BaseTask task)
+        public void Map(GeneralTask task)
         {
             Task = (GeneralTask)task;
             StartDepot = task.StartDepot;
             FinishDepot = task.FinishDepot;
-            if (task.CyclicSequence)
+            if (task.Cyclic)
                 DepotChangeType = DepotChangeType.CyclicStartDepot;
             else
             {
@@ -55,7 +55,7 @@ namespace SequencePlanner.Helper
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepot(); break;
             }
         }
-        public void ReverseMap(BaseTask task)
+        public void ReverseMap(GeneralTask task)
         {
             Task = (GeneralTask)task;
             switch (DepotChangeType)
@@ -67,7 +67,7 @@ namespace SequencePlanner.Helper
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepotReverse(); break;
             }
         }
-        public TaskResult ResolveSolution(TaskResult result)
+        public GeneralTaskResult ResolveSolution(GeneralTaskResult result)
         {
             Result = result;
             switch (DepotChangeType)
