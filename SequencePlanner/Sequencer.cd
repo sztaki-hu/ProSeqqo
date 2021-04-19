@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="SequencePlanner.Model.Position">
-    <Position X="8.5" Y="28" Width="1.5" />
+    <Position X="7" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAAAAEgAAAAAAAAAAAQIAAAEAAAAAAAAA=</HashCode>
       <FileName>Model\Position.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Model.Line">
-    <Position X="5.5" Y="28" Width="2" />
+    <Position X="3.75" Y="14.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAQACACAAAAEgAAAAAhAQgAAAIAAIAAAAAAAAAA=</HashCode>
       <FileName>Model\Line.cs</FileName>
@@ -18,25 +18,15 @@
       <Property Name="NodeB" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="SequencePlanner.Model.Contour">
-    <Position X="3.25" Y="28" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>CAAAAAAAAACAAAAEgAAAAAAAAAAAAIACAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Contour.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Lines" />
-    </ShowAsCollectionAssociation>
-  </Class>
   <Class Name="SequencePlanner.Model.BaseNode">
-    <Position X="3.25" Y="24" Width="1.5" />
+    <Position X="4" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAQAAAAAAAAAEgIAAAC0AAAAAAIAAAAAAEAAAAAA=</HashCode>
       <FileName>Model\BaseNode.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Model.Process">
-    <Position X="15.75" Y="28" Width="1.5" />
+    <Position X="15" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAABAAAAAAAEgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Process.cs</FileName>
@@ -46,14 +36,14 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.Model.Task">
-    <Position X="10.75" Y="28" Width="1.5" />
+    <Position X="9.5" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAAAAkgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Task.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Model.Alternative">
-    <Position X="13" Y="28" Width="1.5" />
+    <Position X="12.25" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAAAAEgAAAAAAAAAAAAIAAAAAIAAAAAAA=</HashCode>
       <FileName>Model\Alternative.cs</FileName>
@@ -63,7 +53,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.Function.ResourceFunction.ResourceDistanceLink.AddResourceDistanceLinkFunction">
-    <Position X="14.25" Y="0.5" Width="2.5" />
+    <Position X="6.75" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\ResourceFunction\ResourceDistanceLink\AddResourceDistanceLinkFunction.cs</FileName>
@@ -71,7 +61,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SequencePlanner.Function.ResourceFunction.ConstantResourceFunction">
-    <Position X="14" Y="2.5" Width="2.25" />
+    <Position X="6.5" Y="2.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAIAAAAAgCABIAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\ResourceFunction\ConstantResourceFunction.cs</FileName>
@@ -79,7 +69,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SequencePlanner.Function.ResourceFunction.MatrixResourceFunction">
-    <Position X="16.5" Y="2.5" Width="2.25" />
+    <Position X="9" Y="2.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAACAIAAAAAgCAAYAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\ResourceFunction\MatrixResourceFunction.cs</FileName>
@@ -87,23 +77,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SequencePlanner.Function.ResourceFunction.ResourceDistanceLink.MaxResourceDistanceLinkFunction">
-    <Position X="17" Y="0.5" Width="2.5" />
+    <Position X="9.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\ResourceFunction\ResourceDistanceLink\MaxResourceDistanceLinkFunction.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="SequencePlanner.Function.ResourceFunction.PositionBasedResourceFunction">
-    <Position X="19" Y="2.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAIAAAAAgCAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Function\ResourceFunction\PositionBasedResourceFunction.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="SequencePlanner.Model.PositionMatrix">
-    <Position X="8" Y="3.75" Width="2" />
+    <Position X="0.5" Y="3.75" Width="2" />
     <AssociationLine Name="ResourceFunction" Type="SequencePlanner.Function.ResourceFunction.IResourceFunction">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.11" Y="-0.214" />
@@ -119,7 +101,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="SequencePlanner.OR_Tools.ORToolsSequencerWrapper">
-    <Position X="15.75" Y="18" Width="2.5" />
+    <Position X="24.25" Y="4.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAACAAAAAAAAgAAMAAAAoAACAAAAAAAEABA=</HashCode>
       <FileName>OR-Tools\ORToolsSequencerWrapper.cs</FileName>
@@ -129,10 +111,10 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="SequencePlanner.OR_Tools.ORToolsTask">
-    <Position X="12.5" Y="18" Width="2.5" />
+    <Position X="20.75" Y="4.75" Width="2.5" />
     <AssociationLine Name="GTSPRepresentation" Type="SequencePlanner.GTSPTask.Task.Base.IGTSPRepresentation">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.027" Y="0.05" />
+        <Position X="0.05" Y="0.027" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -143,31 +125,8 @@
       <Property Name="GTSPRepresentation" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="SequencePlanner.OR_Tools.ORToolsLinePreSolverTask">
-    <Position X="23.75" Y="15.5" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAgAAIEAAAAAAAAAACAAAAAAAAgAAAAAAAAAAA=</HashCode>
-      <FileName>OR-Tools\ORToolsLinePreSolverTask.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.1" />
-  </Class>
-  <Class Name="SequencePlanner.OR_Tools.ORToolsLinePreSolverWrapper">
-    <Position X="23.75" Y="9.25" Width="2.5" />
-    <AssociationLine Name="parameters" Type="SequencePlanner.OR_Tools.ORToolsLinePreSolverTask">
-      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="0.056" Y="1.977" Height="0.182" Width="0.961" />
-      </MemberNameLabel>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAQAAAAEAAAQAAAAAAAAoAgIAAAAAAACAABAAACQAAA=</HashCode>
-      <FileName>OR-Tools\ORToolsLinePreSolverWrapper.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="parameters" />
-    </ShowAsAssociation>
-  </Class>
   <Class Name="SequencePlanner.OR_Tools.ORToolsGeneralPreSolverTask">
-    <Position X="20.75" Y="15.5" Width="2.75" />
+    <Position X="28.75" Y="12.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAIEAAAAIAAAAACAAAAAAAAhAAAAAAAAAAA=</HashCode>
       <FileName>OR-Tools\ORToolsGeneralPreSolverTask.cs</FileName>
@@ -175,7 +134,7 @@
     <Lollipop Position="0.34" />
   </Class>
   <Class Name="SequencePlanner.OR_Tools.ORToolsGeneralPreSolverWrapper">
-    <Position X="20.75" Y="9.25" Width="2.75" />
+    <Position X="28.75" Y="6.5" Width="2.75" />
     <NestedTypes>
       <Class Name="SequencePlanner.OR_Tools.ORToolsGeneralPreSolverWrapper.Process" Collapsed="true">
         <TypeIdentifier>
@@ -197,10 +156,10 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="SequencePlanner.Model.AlternativeShortcut">
-    <Position X="13" Y="30" Width="2.5" />
+    <Position X="11.75" Y="17.5" Width="2.5" />
     <AssociationLine Name="Original" Type="SequencePlanner.Model.Alternative">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.1" Y="0.345" />
+        <Position X="0.345" Y="0.1" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -212,7 +171,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="SequencePlanner.Helper.SeqLogger">
-    <Position X="19.75" Y="24.75" Width="1.5" />
+    <Position X="27.5" Y="17.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAKAAAAAAAEAYAABEAAABAAAAAAABIAAAAAAEAECAA=</HashCode>
       <FileName>Helper\SeqLogger.cs</FileName>
@@ -221,35 +180,8 @@
       <Property Name="LogLevel" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="SequencePlanner.Helper.DoubleMatrixConverter">
-    <Position X="24.25" Y="24.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAA=</HashCode>
-      <FileName>Helper\DoubleMatrixConverter.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.GTSPTask.Task.Base.GeneralTask">
-    <Position X="4.5" Y="5" Width="2.25" />
-    <AssociationLine Name="PositionMatrix" Type="SequencePlanner.Model.PositionMatrix" FixedToPoint="true">
-      <Path>
-        <Point X="6.75" Y="5.5" />
-        <Point X="8" Y="5.5" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="0.048" Y="-0.299" Height="0.182" Width="1.152" />
-      </MemberNameLabel>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAIKEAAAAIsAAAAIAAAAAYAAAQAAAAAAFAAY=</HashCode>
-      <FileName>GTSPTask\Task\Base\GeneralTask.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="PositionMatrix" />
-    </ShowAsAssociation>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="SequencePlanner.Function.ResourceFunction.NoResourceFunction">
-    <Position X="21.5" Y="2.5" Width="2.25" />
+    <Position X="11.5" Y="2.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAIAAAAAgCAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\ResourceFunction\NoResourceFunction.cs</FileName>
@@ -257,64 +189,49 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SequencePlanner.Function.DistanceFunction.TrapezoidTimeWithTimeBreakerDistanceFunction">
-    <Position X="26.75" Y="9" Width="2.25" />
+    <Position X="19.75" Y="8" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAABCAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\DistanceFunction\TrapezoidTimeWithTimeBreakerDistanceFunction.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Function.DistanceFunction.TrapezoidTimeDistanceFunction">
-    <Position X="26.75" Y="5.5" Width="2.25" />
+    <Position X="17" Y="8" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAACAAAAAAABGAAAAAEAEAAAAAAAAAABAAQA=</HashCode>
       <FileName>Function\DistanceFunction\TrapezoidTimeDistanceFunction.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Function.DistanceFunction.MaxDistanceFunction">
-    <Position X="21.5" Y="5.5" Width="2.25" />
+    <Position X="9.25" Y="8" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAABCAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\DistanceFunction\MaxDistanceFunction.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.Function.DistanceFunction.MatrixFunction">
-    <Position X="16.5" Y="5.5" Width="2.25" />
-    <InheritanceLine Type="SequencePlanner.Function.DistanceFunction.DistanceFunction" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="15.5" Y="7.824" />
-        <Point X="15.5" Y="8.183" />
-        <Point X="17.688" Y="8.183" />
-        <Point X="17.688" Y="7.761" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAgAAAACAAAAAAABAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
-      <FileName>Function\DistanceFunction\MatrixFunction.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="SequencePlanner.Function.DistanceFunction.ManhattanDistanceFunction">
-    <Position X="24.25" Y="5.5" Width="2.25" />
+    <Position X="12" Y="8" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAABCAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\DistanceFunction\ManhattanDistanceFunction.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Function.DistanceFunction.EuclidianDistanceFunction">
-    <Position X="19" Y="5.5" Width="2.25" />
+    <Position X="6.5" Y="8" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAABCAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\DistanceFunction\EuclidianDistanceFunction.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Model.StrictEdgeWeight">
-    <Position X="28" Y="1.25" Width="1.5" />
+    <Position X="17.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAQQAAAAAAAEAAAAAAAAACAAAAAAAAAAIAEAAAA=</HashCode>
       <FileName>Model\StrictEdgeWeight.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Model.StrictEdgeWeightSet">
-    <Position X="24.75" Y="1.25" Width="2.5" />
+    <Position X="14.5" Y="2.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAABgAAAAAAIAAAEAAAAAAgAAAAAAAAI=</HashCode>
       <FileName>Model\StrictEdgeWeightSet.cs</FileName>
@@ -324,42 +241,27 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.Function.DistanceFunction.DistanceFunction">
-    <Position X="14" Y="5.5" Width="2.25" />
+    <Position X="6.5" Y="5.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAABCAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\DistanceFunction\DistanceFunction.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="SequencePlanner.GTSPTask.Result.TaskResult">
-    <Position X="26.25" Y="27.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQABAAAgAAgAAAACAIAAAAJAAHmAAAAAIAAAAIAAAAA=</HashCode>
-      <FileName>GTSPTask\Result\TaskResult.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="SequencePlanner.GTSPTask.Result.GeneralTaskResult">
-    <Position X="27.25" Y="33.25" Width="1.75" />
+    <Position X="32" Y="6.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>QAAAAAIgAACAACACAAAAAAJCAAEAAAAAAAAIAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Result\GeneralTaskResult.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SequencePlanner.GTSPTask.Result.LineTaskResult">
-    <Position X="24.75" Y="33.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AACAACAgAAAAIAAAAAABAAZAAAEAAAAAAAAIABAAAAA=</HashCode>
-      <FileName>GTSPTask\Result\LineTaskResult.cs</FileName>
+      <HashCode>AQABAAIgAAiAACACAIAAAAJCAHmAAAAAIAAIAIQAAAA=</HashCode>
+      <FileName>GTSPTask\Task\GeneralTaskResult.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.Model.GTSPNode">
-    <Position X="1" Y="29.75" Width="2" />
+    <Position X="0.75" Y="16.5" Width="2" />
     <AssociationLine Name="Node" Type="SequencePlanner.Model.BaseNode" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2" Y="29.75" />
-        <Point X="2" Y="25.125" />
-        <Point X="3.25" Y="25.125" />
+        <Point X="1.75" Y="16.5" />
+        <Point X="1.75" Y="10.375" />
+        <Point X="4" Y="10.375" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -372,8 +274,44 @@
       <Property Name="Out" />
     </ShowAsAssociation>
   </Class>
+  <Class Name="SequencePlanner.Function.DistanceFunction.MatrixDistanceFunction">
+    <Position X="14.5" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAACAAAAAQABCAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Function\DistanceFunction\MatrixDistanceFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GTSPTask.Task.General.GeneralGTSPRepresentation">
+    <Position X="23.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAIIEAAAAAAAABAAAAAAgAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>GTSPTask\Task\GeneralGTSPRepresentation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SequencePlanner.GTSPTask.Task.General.GeneralTask">
+    <Position X="19.25" Y="15" Width="2.5" />
+    <NestedTypes>
+      <Delegate Name="SequencePlanner.GTSPTask.Task.General.GeneralTask.CalculateWeightDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GTSPTask\Task\GeneralTask.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EEIAAIIBIAKEIQAII8AAAAYIEEQAwAAhQAAIWAAlCAY=</HashCode>
+      <FileName>GTSPTask\Task\GeneralTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GTSPTask.Task.General.GeneralTaskValidator">
+    <Position X="22" Y="15" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>sAAAAAAIAQCACAACAAAQAAAhBAAAAEAAAAAIAEDCAQA=</HashCode>
+      <FileName>GTSPTask\Task\GeneralTaskValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="SequencePlanner.Function.ResourceFunction.IResourceFunction">
-    <Position X="11.5" Y="2.5" Width="2.25" />
+    <Position X="4" Y="2.5" Width="2.25" />
     <AssociationLine Name="LinkingFunction" Type="SequencePlanner.Function.ResourceFunction.ResourceDistanceLink.IResourceDistanceLinkFunction">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.038" Y="0.156" />
@@ -388,56 +326,35 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="SequencePlanner.Function.ResourceFunction.ResourceDistanceLink.IResourceDistanceLinkFunction">
-    <Position X="11.5" Y="0.5" Width="2.5" />
+    <Position X="4" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\ResourceFunction\ResourceDistanceLink\IResourceDistanceLinkFunction.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="SequencePlanner.OR_Tools.IORToolsPreSolverTask">
-    <Position X="18" Y="15.5" Width="2.5" />
+    <Position X="26" Y="12.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAEAAAAAAAAAACAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>OR-Tools\IORToolsPreSolverTask.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="SequencePlanner.GTSPTask.Task.Base.IGTSPRepresentation">
-    <Position X="9" Y="17.75" Width="2" />
+    <Position X="21" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAIIEAAAAAAAABAAAAAAgAAAgAAAAAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Task\Base\IGTSPRepresentation.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="SequencePlanner.GTSPTask.Task.Base.IGeneralTask">
-    <Position X="2.25" Y="5" Width="2" />
-    <NestedTypes>
-      <Delegate Name="SequencePlanner.GTSPTask.Task.Base.IGeneralTask.TaskCompleted" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>GTSPTask\Task\Base\IGeneralTask.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAIIEAAAAAMAAAAAAAAAAYAAAQAAAAAAAAAY=</HashCode>
-      <FileName>GTSPTask\Task\Base\IGeneralTask.cs</FileName>
+      <FileName>GTSPTask\Task\IGTSPRepresentation.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="SequencePlanner.Function.DistanceFunction.IDistanceFunction">
-    <Position X="11.5" Y="5.5" Width="2.25" />
+    <Position X="4" Y="5.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAABCAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Function\DistanceFunction\IDistanceFunction.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="SequencePlanner.GTSPTask.Result.ITaskResult">
-    <Position X="24.5" Y="27.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAACAIAAAAAAABCAAAAAIAAAAIAAAAA=</HashCode>
-      <FileName>GTSPTask\Result\ITaskResult.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Enum Name="SequencePlanner.Helper.LogLevel">
-    <Position X="22.25" Y="24.75" Width="1.5" />
+    <Position X="30" Y="17.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAIAAAAAAAYAAAAAAABAAAAAAABAAAAAAAEAAAAA=</HashCode>
       <FileName>Helper\LogLevel.cs</FileName>

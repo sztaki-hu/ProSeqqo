@@ -4,12 +4,6 @@ Cyclic: True/False
 StartDepot: <ConfigID/MotionID>
 FinishDepot: <ConfigID/MotionID>
 
-#Solver-------------------------------
-LocalSearchStrategy: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
-TimeLimit: <int>
-UseMIPprecedenceSolver: True/False
-UseShortcutInAlternatives: True/False
-
 #Cost----------------------------------
 DistanceFunction: Euclidian/Max/TrapezoidTime/Manhattan/Matrix
 TrapezoidSpeed: <double[]>
@@ -18,6 +12,12 @@ IdlePenalty: <double>
 BidirectionMotionDefault: True/False
 AddMotionLengthToCost: True/False
 AddInMotionChangeoverToCost: True/False
+
+#Solver-------------------------------
+LocalSearchStrategy: Automatic/GreedyDescent/GuidedLocalSearch/SimulatedAnnealing/TabuSearch/ObjectiveTabuSearch
+TimeLimit: <int>
+UseMIPprecedenceSolver: True/False
+UseShortcutInAlternatives: True/False
 
 #Resource------------------------------
 ResourceChangeover: Off/Constant/Matrix

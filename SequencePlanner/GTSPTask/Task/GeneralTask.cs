@@ -10,6 +10,7 @@ namespace SequencePlanner.GTSPTask.Task.General
 {
     public class GeneralTask
     {
+        public TaskType TaskType { get { return TaskType.General; } }
         public bool Cyclic { get; set; }
         public int WeightMultipier { get; set; }
         public Position StartDepot { get; set; }
