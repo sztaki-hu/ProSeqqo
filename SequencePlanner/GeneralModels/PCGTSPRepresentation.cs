@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using SequencePlanner.GTSPTask.Task.General;
+using SequencePlanner.Model;
+using System;
+using System.Collections.Generic;
 
 namespace SequencePlanner.GeneralModels
 {
@@ -6,11 +9,120 @@ namespace SequencePlanner.GeneralModels
     {
         public Motion StartDepot { get; set; }
         public Motion FinishDepot { get; set; }
-        public double[][] CostMatrix { get;set;}
-        public double[][] RoundedCostMatrix { get; set; }
+        public double[,] CostMatrix { get; set; }
+        public int[,] RoundedCostMatrix { get; set; }
         public int CostMultiplier { get; set; }
         public List<MotionPrecedence> MotionPrecedences { get; set; }
         public List<MotionDisjointSet> DisjointSets { get; set; }
         public List<Motion> InitialSolution { get; set; }
+
+        public PCGTSPRepresentation()
+        {
+            CostMultiplier = 1000;
+            DisjointSets = new List<MotionDisjointSet>();
+            MotionPrecedences = new List<MotionPrecedence>();
+            InitialSolution = new List<Motion>();
+        }
+
+        public void Build(Hierarchy hierarchy, CostManager costManager, List<Motion> motions)
+        {
+            CostMatrix = new double[motions.Count, motions.Count];
+            RoundedCostMatrix = new int[motions.Count, motions.Count];
+
+            for (int i = 0; i < motions.Count; i++)
+            {
+                motions[i].SequenceMatrixID = i;
+            }
+
+            for (int i = 0; i < motions.Count; i++)
+            {
+                for (int j = 0; j < motions.Count; j++)
+                {
+                    CostMatrix[i, j] = Int32.MaxValue / 10000;
+                    RoundedCostMatrix[i, j] = Convert.ToInt32(CostMatrix[i, j] * CostMultiplier);
+                }
+            }
+            ConnectProcesses(hierarchy, costManager);
+            ConnectInAlternatives(hierarchy, costManager);
+        }
+
+        public GeneralGTSPRepresentation ToOldGTSPRepresentation()
+        {
+            return new GeneralGTSPRepresentation()
+            {
+                StartDepot = StartDepot.SequenceMatrixID,
+                FinishDepot = FinishDepot.SequenceMatrixID,
+                Matrix = CostMatrix,
+                RoundedMatrix = RoundedCostMatrix,
+                DisjointConstraints = ToOldDisjointset(DisjointSets),
+                InitialRoutes = ToInitialRoute(InitialSolution),
+                PrecedenceConstraints = ToPrecedenceConstraints(MotionPrecedences)
+            };
+        }
+
+        private List<Model.GTSPPrecedenceConstraint> ToPrecedenceConstraints(List<MotionPrecedence> motionPrecedences)
+        {
+            var list = new List<GTSPPrecedenceConstraint>();
+            return list;
+        }
+
+        private long[][] ToInitialRoute(List<Motion> initialSolution)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<Model.GTSPDisjointConstraint> ToOldDisjointset(List<MotionDisjointSet> disjointSets)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ConnectProcesses(Hierarchy hierarchy, CostManager costManager)
+        {
+            foreach (var proc in hierarchy.GetProcesses())
+            {
+                foreach (var proc2 in hierarchy.GetProcesses())
+                {
+                    if (proc.GlobalID != proc2.GlobalID)
+                    {
+                        foreach (var alternative in hierarchy.GetAlternativesOf(proc))
+                        {
+                            if (hierarchy.GetTasksOf(alternative).Count > 0)
+                            {
+                                foreach (var alternative2 in hierarchy.GetAlternativesOf(proc2))
+                                {
+                                    if (alternative.GlobalID != alternative2.GlobalID && hierarchy.GetTasksOf(alternative2).Count > 0)
+                                    {
+                                        ConnectTasks(hierarchy.GetTasksOf(alternative)[^1], hierarchy.GetTasksOf(alternative2)[0], hierarchy, costManager);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ConnectInAlternatives(Hierarchy hierarchy, CostManager costManager)
+        {
+            foreach (var alternative in hierarchy.GetAlternatives())
+            {
+                for (int i = 0; i < hierarchy.GetTasksOf(alternative).Count - 1; i++)
+                {
+                    ConnectTasks(hierarchy.GetTasksOf(alternative)[i], hierarchy.GetTasksOf(alternative)[i + 1], hierarchy, costManager);
+                }
+            }
+        }
+
+        private void ConnectTasks(Task a, Task b, Hierarchy hierarchy, CostManager costManager)
+        {
+            foreach (var from in hierarchy.GetMotionsOf(a))
+            {
+                foreach (var to in hierarchy.GetMotionsOf(b))
+                {
+                    CostMatrix[from.SequenceMatrixID, to.SequenceMatrixID] = costManager.ComputeCost(from, to);
+                    RoundedCostMatrix[from.SequenceMatrixID, to.SequenceMatrixID] = Convert.ToInt32(CostMatrix[from.SequenceMatrixID, to.SequenceMatrixID] * CostMultiplier);
+                }
+            }
+        }
     }
 }
