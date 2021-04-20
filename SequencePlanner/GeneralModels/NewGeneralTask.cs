@@ -78,7 +78,7 @@ namespace SequencePlanner.GeneralModels
             var orToolsParam = new ORToolsTask()
             {
                 TimeLimit = SolverSettings.TimeLimit,
-                GTSPRepresentation = PCGTSPRepresentation.ToOldGTSPRepresentation(),
+                GTSPRepresentation = PCGTSPRepresentation,
                 LocalSearchStrategy = SolverSettings.Metaheuristics
             };
             var orTools = new ORToolsSequencerWrapper(orToolsParam);

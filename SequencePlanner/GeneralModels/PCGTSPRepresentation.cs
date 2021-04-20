@@ -1,6 +1,4 @@
-﻿using SequencePlanner.GTSPTask.Task.General;
-using SequencePlanner.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GeneralModels
@@ -15,6 +13,7 @@ namespace SequencePlanner.GeneralModels
         public List<MotionPrecedence> MotionPrecedences { get; set; }
         public List<MotionDisjointSet> DisjointSets { get; set; }
         public List<Motion> InitialSolution { get; set; }
+        public long[][] InitialRoutes { get { return ToInitialRoute(); } }
 
         public PCGTSPRepresentation()
         {
@@ -45,35 +44,16 @@ namespace SequencePlanner.GeneralModels
             ConnectProcesses(hierarchy, costManager);
             ConnectInAlternatives(hierarchy, costManager);
         }
-
-        public GeneralGTSPRepresentation ToOldGTSPRepresentation()
+       
+        private long[][] ToInitialRoute()
         {
-            return new GeneralGTSPRepresentation()
+            long[][] rout = new long[1][];
+            rout[0] = new long[InitialSolution.Count];
+            for (int i = 0; i < InitialSolution.Count; i++)
             {
-                StartDepot = StartDepot.SequenceMatrixID,
-                FinishDepot = FinishDepot.SequenceMatrixID,
-                Matrix = CostMatrix,
-                RoundedMatrix = RoundedCostMatrix,
-                DisjointConstraints = ToOldDisjointset(DisjointSets),
-                InitialRoutes = ToInitialRoute(InitialSolution),
-                PrecedenceConstraints = ToPrecedenceConstraints(MotionPrecedences)
-            };
-        }
-
-        private List<Model.GTSPPrecedenceConstraint> ToPrecedenceConstraints(List<MotionPrecedence> motionPrecedences)
-        {
-            var list = new List<GTSPPrecedenceConstraint>();
-            return list;
-        }
-
-        private long[][] ToInitialRoute(List<Motion> initialSolution)
-        {
-            throw new NotImplementedException();
-        }
-
-        private List<Model.GTSPDisjointConstraint> ToOldDisjointset(List<MotionDisjointSet> disjointSets)
-        {
-            throw new NotImplementedException();
+                rout[0][i] = InitialSolution[i].SequenceMatrixID;
+            }
+            return rout;
         }
 
         private void ConnectProcesses(Hierarchy hierarchy, CostManager costManager)
