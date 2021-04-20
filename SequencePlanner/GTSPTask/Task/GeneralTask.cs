@@ -73,8 +73,8 @@ namespace SequencePlanner.GTSPTask.Task.General
             GTSPRepresentation = new GeneralGTSPRepresentation()
             {
                 Matrix = PositionMatrix.Matrix,
-                DisjointConstraints = CreateDisjointConstraints(),
-                PrecedenceConstraints = CreatePrecedenceConstraints(),
+                //DisjointConstraints = CreateDisjointConstraints(),
+                //PrecedenceConstraints = CreatePrecedenceConstraints(),
                 StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
                 FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID
             };
@@ -85,7 +85,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             var orToolsParam = new ORToolsTask()
             {
                 TimeLimit = TimeLimit,
-                GTSPRepresentation = GTSPRepresentation,
+                //GTSPRepresentation = GTSPRepresentation,
                 LocalSearchStrategy = LocalSearchStrategy
             };
             ToLog(LogLevel.Debug);
@@ -120,8 +120,8 @@ namespace SequencePlanner.GTSPTask.Task.General
             {
                 NumberOfNodes = PositionMatrix.Positions.Count,
                 DisjointConstraints = GTSPRepresentation.DisjointConstraints,
-                StrictOrderPrecedenceHierarchy = CreatePrecedenceHierarchiesForInitialSolution(),
-                OrderPrecedenceConstraints = CreatePrecedenceConstraints(true),
+                //StrictOrderPrecedenceHierarchy = CreatePrecedenceHierarchiesForInitialSolution(),
+                //OrderPrecedenceConstraints = CreatePrecedenceConstraints(true),
                 StartDepot = DepotMapper.ORToolsStartDepotSequenceID,
                 FinishDepot = DepotMapper.ORToolsFinishDepotSequenceID,
                 Processes = Processes

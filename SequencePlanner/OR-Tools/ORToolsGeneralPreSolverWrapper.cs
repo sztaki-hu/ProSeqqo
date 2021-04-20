@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Google.OrTools.LinearSolver;
 using SequencePlanner.Model;
 using SequencePlanner.Helper;
+using SequencePlanner.GeneralModels;
 
 namespace SequencePlanner.OR_Tools
 {
@@ -92,19 +93,19 @@ namespace SequencePlanner.OR_Tools
                 constraints.Add((x[parameters.FinishDepot] == 1.0).ToString());
             }
         }
-        private void AddPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraint> precedenceConstraints)
+        private void AddPrecedenceConstraints(Solver solver, List<MotionPrecedence> precedenceConstraints)
         {
             SeqLogger.Trace("Precedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.OrderPrecedenceConstraints)
             {
-                solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID]+parameters.DisjointConstraints.Count*(2-x[item.Before.SequencingID]-x[item.After.SequencingID]));
+                solver.Add(position[item.Before.SequenceMatrixID] +1 <= position[item.After.SequenceMatrixID] +parameters.DisjointConstraints.Count*(2-x[item.Before.SequenceMatrixID] -x[item.After.SequenceMatrixID]));
                 //solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID]+9*(2-x[item.Before.SequencingID]-x[item.After.SequencingID]));
-                constraints.Add((position[item.Before.SequencingID] + 1 <= position[item.After.SequencingID] + parameters.DisjointConstraints.Count * (2 - x[item.Before.SequencingID] - x[item.After.SequencingID])).ToString());
+                constraints.Add((position[item.Before.SequenceMatrixID] + 1 <= position[item.After.SequenceMatrixID] + parameters.DisjointConstraints.Count * (2 - x[item.Before.SequenceMatrixID] - x[item.After.SequenceMatrixID])).ToString());
                 SeqLogger.Trace(item.ToString(), nameof(ORToolsGeneralPreSolverWrapper));
             }
             SeqLogger.Indent--;
         }        
-        private void AddStrictPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraintList> precedenceHierarchy)
+        private void AddStrictPrecedenceConstraints(Solver solver, List<MotionPrecedenceList> precedenceHierarchy)
         {
             SeqLogger.Trace("StrictPrecedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in precedenceHierarchy)
@@ -114,7 +115,7 @@ namespace SequencePlanner.OR_Tools
             }
             SeqLogger.Indent--;
         }
-        private void AddStrictOrderPrecedenceConstraints(Solver solver, List<GTSPPrecedenceConstraintList> strictOrderPrecedenceHierarchy)
+        private void AddStrictOrderPrecedenceConstraints(Solver solver, List<MotionPrecedenceList> strictOrderPrecedenceHierarchy)
         {
             SeqLogger.Trace("StrictOrderPrecedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in strictOrderPrecedenceHierarchy)
@@ -123,15 +124,15 @@ namespace SequencePlanner.OR_Tools
                 {
                     foreach (var a in item.After)
                     {
-                        solver.Add(position[b.SequencingID]+1 == position[a.SequencingID]);
-                        constraints.Add((position[b.SequencingID] + 1 == position[a.SequencingID]).ToString());
-                        SeqLogger.Trace(new GTSPPrecedenceConstraint(b,a).ToString(), nameof(ORToolsGeneralPreSolverWrapper));
+                        solver.Add(position[b.SequenceMatrixID]+1 == position[a.SequenceMatrixID]);
+                        constraints.Add((position[b.SequenceMatrixID] + 1 == position[a.SequenceMatrixID]).ToString());
+                        SeqLogger.Trace(new MotionPrecedence(b,a).ToString(), nameof(ORToolsGeneralPreSolverWrapper));
                     }
                 }     
             }
             SeqLogger.Indent--;
         }
-        private void AddDisjointConstraints(Solver solver, List<GTSPDisjointConstraint> disjointConstraints)
+        private void AddDisjointConstraints(Solver solver, List<MotionDisjointSet> disjointConstraints)
         {
             SeqLogger.Trace("DisjointSets: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.DisjointConstraints)
@@ -159,25 +160,25 @@ namespace SequencePlanner.OR_Tools
                 }
             }
         }
-        private LinearConstraint CreateStrictOrderPrecedence(List<Model.BaseNode> before, List<Model.BaseNode> after)
+        private LinearConstraint CreateStrictOrderPrecedence(List<Motion> before, List<Motion> after)
         {
             LinearExpr beforExpr = new LinearExpr();
             foreach (var item in before)
             {
-                beforExpr += x[item.SequencingID];
+                beforExpr += x[item.SequenceMatrixID];
             }
             LinearExpr afterExpr = new LinearExpr();
             foreach (var item in after)
             {
-                afterExpr += x[item.SequencingID];
+                afterExpr += x[item.SequenceMatrixID];
             }
             constraints.Add((beforExpr == afterExpr).ToString());
             return beforExpr == afterExpr;
         }
-        private LinearConstraint CreateDisjointConstraint(GTSPDisjointConstraint disjoint)
+        private LinearConstraint CreateDisjointConstraint(MotionDisjointSet disjoint)
         {
             LinearExpr constraintExpr = new LinearExpr();
-            foreach (var item in disjoint.DisjointSetSeq)
+            foreach (var item in disjoint.SequencMatrixcIDs)
             {
                 constraintExpr += x[item];
             }

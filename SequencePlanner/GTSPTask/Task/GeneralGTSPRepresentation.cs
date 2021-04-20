@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SequencePlanner.GeneralModels;
 using SequencePlanner.Model;
 
 namespace SequencePlanner.GTSPTask.Task.General
@@ -10,7 +11,7 @@ namespace SequencePlanner.GTSPTask.Task.General
         public long[][] InitialRoutes { get; set; }
         public double[,] Matrix  { get;  set; }
         public int[,] RoundedMatrix  { get;  set; }
-        public List<GTSPDisjointConstraint> DisjointConstraints  { get;  set; }
-        public List<GTSPPrecedenceConstraint> PrecedenceConstraints  { get;  set; }
+        public List<MotionDisjointSet> DisjointConstraints  { get;  set; }
+        public List<MotionPrecedence> PrecedenceConstraints  { get;  set; }
     }
 }

@@ -30,13 +30,13 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("ORTools building started!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent++;
             Timer = new Stopwatch();
-            SeqLogger.Debug("GTSP Matrix Dimension: " + param.GTSPRepresentation.RoundedMatrix.GetLength(0) + "x"+ param.GTSPRepresentation.RoundedMatrix.GetLength(1), nameof(ORToolsSequencerWrapper));
+            SeqLogger.Debug("GTSP Matrix Dimension: " + param.GTSPRepresentation.RoundedCostMatrix.GetLength(0) + "x"+ param.GTSPRepresentation.RoundedCostMatrix.GetLength(1), nameof(ORToolsSequencerWrapper));
             SeqLogger.Debug("GTSP Start Depot SeqID: " + param.GTSPRepresentation.StartDepot, nameof(ORToolsSequencerWrapper));
-            if(param.GTSPRepresentation.FinishDepot == -1)
-                manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedMatrix.GetLength(0), 1, param.GTSPRepresentation.StartDepot );
+            if(param.GTSPRepresentation.FinishDepot == null)
+                manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedCostMatrix.GetLength(0), 1, param.GTSPRepresentation.StartDepot.SequenceMatrixID );
             else
             {
-                manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedMatrix.GetLength(0), 1, new int[] { param.GTSPRepresentation.StartDepot }, new int[] { param.GTSPRepresentation.FinishDepot });
+                manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedCostMatrix.GetLength(0), 1, new int[] { param.GTSPRepresentation.StartDepot.SequenceMatrixID }, new int[] { param.GTSPRepresentation.FinishDepot.SequenceMatrixID });
                 SeqLogger.Debug("GTSP Finish Depot SeqID: " + param.GTSPRepresentation.FinishDepot, nameof(ORToolsSequencerWrapper));
             }
             routing = new RoutingModel(manager);
@@ -47,24 +47,24 @@ namespace SequencePlanner.OR_Tools
                   // Convert from routing variable Index to distance matrix NodeIndex.
                   var fromNode = Convert.ToInt32(manager.IndexToNode(fromIndex));
                   var toNode = Convert.ToInt32(manager.IndexToNode(toIndex));
-                  return param.GTSPRepresentation.RoundedMatrix[fromNode, toNode];
+                  return param.GTSPRepresentation.RoundedCostMatrix[fromNode, toNode];
               }
             );
             routing.SetArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
 
             //Add disjuction constraints
-            SeqLogger.Debug("GTSP Disjoint constraint number: " + param.GTSPRepresentation.DisjointConstraints.Count, nameof(ORToolsSequencerWrapper));
-            foreach (var set in param.GTSPRepresentation.DisjointConstraints)
+            SeqLogger.Debug("GTSP Disjoint constraint number: " + param.GTSPRepresentation.DisjointSets.Count, nameof(ORToolsSequencerWrapper));
+            foreach (var set in param.GTSPRepresentation.DisjointSets)
             {
-                if (set.DisjointSetSeq.Length > 1)
+                if (set.Elements.Count > 1)
                 {
                     SeqLogger.Trace(set.ToString(), nameof(ORToolsSequencerWrapper));
-                    routing.AddDisjunction(manager.NodesToIndices(set.DisjointSetSeqInt));
+                    routing.AddDisjunction(manager.NodesToIndices(set.SequencMatrixcIDs));
                 }
             }
 
-            SeqLogger.Debug("GTSP Order constraint number: " + param.GTSPRepresentation.PrecedenceConstraints.Count, nameof(ORToolsSequencerWrapper));
-            if (param.GTSPRepresentation.PrecedenceConstraints.Count > 0)
+            SeqLogger.Debug("GTSP Order constraint number: " + param.GTSPRepresentation.MotionPrecedences.Count, nameof(ORToolsSequencerWrapper));
+            if (param.GTSPRepresentation.MotionPrecedences.Count > 0)
             {
                 //Add distance dimension
                 routing.AddDimension(transitCallbackIndex,0, int.MaxValue - 100, true, "Distance");
@@ -72,11 +72,11 @@ namespace SequencePlanner.OR_Tools
 
                 //Add order constraints
                 Solver solver = routing.solver();
-                for (int i = 0; i < param.GTSPRepresentation.PrecedenceConstraints.Count; i++)
+                for (int i = 0; i < param.GTSPRepresentation.MotionPrecedences.Count; i++)
                 {
-                    SeqLogger.Trace(param.GTSPRepresentation.PrecedenceConstraints[i].ToString(), nameof(ORToolsSequencerWrapper));
-                    long beforeIndex = manager.NodeToIndex(param.GTSPRepresentation.PrecedenceConstraints[i].Before.SequencingID);
-                    long afterIndex = manager.NodeToIndex(param.GTSPRepresentation.PrecedenceConstraints[i].After.SequencingID);
+                    SeqLogger.Trace(param.GTSPRepresentation.MotionPrecedences[i].ToString(), nameof(ORToolsSequencerWrapper));
+                    long beforeIndex = manager.NodeToIndex(param.GTSPRepresentation.MotionPrecedences[i].Before.SequenceMatrixID);
+                    long afterIndex = manager.NodeToIndex(param.GTSPRepresentation.MotionPrecedences[i].After.SequenceMatrixID);
                     solver.Add(routing.ActiveVar(beforeIndex) * routing.ActiveVar(afterIndex) * distanceDimension.CumulVar(beforeIndex) <= distanceDimension.CumulVar(afterIndex));
                 }
             }
