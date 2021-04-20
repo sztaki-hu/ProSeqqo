@@ -11,6 +11,9 @@ namespace SequencePlanner.GeneralModels
         public IResourceFunction ResourceFunction { get; set; }
         public List<ConfigCost> OverrideCost { get; set; }
         public double IdlePenalty{ get; set; }
+        public bool AddMotionLengthToCost { get; set; }
+        public bool AddInMotionChangeoverToCost { get; set; }
+
 
         public CostManager()
         {

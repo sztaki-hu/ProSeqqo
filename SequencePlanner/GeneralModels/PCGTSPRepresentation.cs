@@ -23,19 +23,19 @@ namespace SequencePlanner.GeneralModels
             InitialSolution = new List<Motion>();
         }
 
-        public void Build(Hierarchy hierarchy, CostManager costManager, List<Motion> motions)
+        public void Build(Hierarchy hierarchy, CostManager costManager)
         {
-            CostMatrix = new double[motions.Count, motions.Count];
-            RoundedCostMatrix = new int[motions.Count, motions.Count];
+            CostMatrix = new double[hierarchy.Motions.Count, hierarchy.Motions.Count];
+            RoundedCostMatrix = new int[hierarchy.Motions.Count, hierarchy.Motions.Count];
 
-            for (int i = 0; i < motions.Count; i++)
+            for (int i = 0; i < hierarchy.Motions.Count; i++)
             {
-                motions[i].SequenceMatrixID = i;
+                hierarchy.Motions[i].SequenceMatrixID = i;
             }
 
-            for (int i = 0; i < motions.Count; i++)
+            for (int i = 0; i < hierarchy.Motions.Count; i++)
             {
-                for (int j = 0; j < motions.Count; j++)
+                for (int j = 0; j < hierarchy.Motions.Count; j++)
                 {
                     CostMatrix[i, j] = Int32.MaxValue / 10000;
                     RoundedCostMatrix[i, j] = Convert.ToInt32(CostMatrix[i, j] * CostMultiplier);

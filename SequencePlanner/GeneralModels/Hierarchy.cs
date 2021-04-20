@@ -5,11 +5,15 @@ namespace SequencePlanner.GeneralModels
 {
     public class Hierarchy
     {
+        public List<Motion> Motions { get; set; }
+        public List<Config> Configs { get; set; }
         public List<HierarchyRecord> HierarchyRecords { get; set; }
         public bool BidirectionalMotionDefault { get; set; }
 
         public Hierarchy()
         {
+            Motions = new List<Motion>();
+            Configs = new List<Config>();
             HierarchyRecords = new List<HierarchyRecord>();
             BidirectionalMotionDefault = false;
         }
@@ -18,6 +22,11 @@ namespace SequencePlanner.GeneralModels
         public List<Process> GetProcesses()
         {
             return HierarchyRecords.Select(r => r.Process).Distinct().ToList();
+        }
+
+        public Process GetProcessByID(int id)
+        {
+            return HierarchyRecords.Where(r => r.Process.ID==id).Select(r => r.Process).FirstOrDefault();
         }
 
         public List<Alternative> GetAlternativesOf(Process process)
@@ -63,6 +72,11 @@ namespace SequencePlanner.GeneralModels
             return HierarchyRecords.Select(r => r.Alternative).Distinct().ToList();
         }
 
+        public Alternative GetAlternativeByID(int id)
+        {
+            return HierarchyRecords.Where(r => r.Alternative.ID == id).Select(r => r.Alternative).FirstOrDefault();
+        }
+
         public Process GetProcessOf(Alternative alternative)
         {
             return HierarchyRecords.Where(r => r.Alternative.GlobalID == alternative.GlobalID)
@@ -106,6 +120,11 @@ namespace SequencePlanner.GeneralModels
             return HierarchyRecords.Select(r => r.Task).Distinct().ToList();
         }
 
+        public Task GetTaskByID(int id)
+        {
+            return HierarchyRecords.Where(r => r.Task.ID == id).Select(r => r.Task).FirstOrDefault();
+        }
+
         public Process GetProcessOf(Task task)
         {
             return HierarchyRecords.Where(r => r.Task.GlobalID == task.GlobalID)
@@ -143,6 +162,11 @@ namespace SequencePlanner.GeneralModels
             return HierarchyRecords.Select(r => r.Motion).Distinct().ToList();
         }
 
+        public Motion GetMotionByID(int id)
+        {
+            return HierarchyRecords.Where(r => r.Motion.ID == id).Select(r => r.Motion).FirstOrDefault();
+        }
+
         public Process GetProcessOf(Motion motion)
         {
             return HierarchyRecords.Where(r => r.Motion.GlobalID == motion.GlobalID)
@@ -174,6 +198,11 @@ namespace SequencePlanner.GeneralModels
             return HierarchyRecords.Where(r => r.Motion.GlobalID == motion.GlobalID)
                                    .Select(r => r.Motion)
                                    .ToList();
+        }
+
+        public Config GetConfigByID(int id)
+        {
+            return Configs.Where(r => r.ID == id).FirstOrDefault();
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using SequencePlanner.GTSPTask.Result;
+﻿using System;
+using System.Collections.Generic;
+using SequencePlanner.GeneralModels.Result;
 using SequencePlanner.Helper;
 using SequencePlanner.OR_Tools;
-using System;
-using System.Collections.Generic;
 
 namespace SequencePlanner.GeneralModels
 {
@@ -13,14 +13,17 @@ namespace SequencePlanner.GeneralModels
         public Motion StartDepot { get; set; }
         public Motion FinishDepot { get; set; }
 
-        public List<Motion> Motions { get; set; }
-        public List<Config> Configs { get; set; }
+
         public CostManager CostManager { get; set; }
         public Hierarchy Hierarchy { get; set; }
         public SolverSettings SolverSettings { get; set; }
-        public List<ProcessPrecedence> Processrecedences { get; set; }
+        public List<ProcessPrecedence> ProcessPrecedences { get; set; }
         public List<MotionPrecedence> MotionPrecedences { get; set; }
         public PCGTSPRepresentation PCGTSPRepresentation { get; set; }
+
+        private NewGeneraDepotMapper DepotMapper { get; set; }
+        private GeneralShortcutMapper ShortcutMapper { get; set; }
+        private InitialSolver InitialSolver { get; set; }
 
         public NewGeneralTask()
         {
@@ -28,42 +31,32 @@ namespace SequencePlanner.GeneralModels
             Cyclic = true;
             StartDepot = null;
             FinishDepot = null;
-            Motions = new List<Motion>();
-            Configs = new List<Config>();
             CostManager = new CostManager();
             Hierarchy = new Hierarchy();
             SolverSettings = new SolverSettings();
-            Processrecedences    = new List<ProcessPrecedence>();
+            ProcessPrecedences    = new List<ProcessPrecedence>();
             MotionPrecedences    = new List<MotionPrecedence>();
             PCGTSPRepresentation = new PCGTSPRepresentation();
+            DepotMapper = new NewGeneraDepotMapper(this);
+            ShortcutMapper = new GeneralShortcutMapper(this);
+            InitialSolver = new InitialSolver(this);
         }
 
 
-        public void Run()
+        public Result.TaskResult Run()
         {
             ValidateTask();
-            ChangeDepots();
-            if (SolverSettings.UseMIPprecedenceSolver)
-                CreateInitialSolution();
-
-            if (SolverSettings.UseShortcutInAlternatives)
-                CreateShortcuts();
-
-            PCGTSPRepresentation.Build(Hierarchy, CostManager, Motions);
-            GeneralTaskResult result = RunTask();
-            result = ResolveSolution(result);
-
-            if (SolverSettings.UseShortcutInAlternatives)
-                ReverseShortcutsInSolution();
-
-            if (SolverSettings.UseShortcutInAlternatives)
-                result = ReverseShortcuts(result);
-
-            result = ResolveDepots(result);
-            ChangeBackDepots();
+            DepotMapper.Change();
+            ShortcutMapper.Change();
+            PCGTSPRepresentation.Build(Hierarchy, CostManager);
+            InitialSolver.CreateInitialSolution();
+            var result = RunTask();
+            result = DepotMapper.ResolveSolution(result);
+            result = ShortcutMapper.ResolveSolution(result);  
+            DepotMapper.ChangeBack();
+            ShortcutMapper.ChangeBack();
+            return result;
         }
-
-
 
         private void ValidateTask()
         {
@@ -73,7 +66,7 @@ namespace SequencePlanner.GeneralModels
                 SeqLogger.Warning("Task validation turned off.");
         }
 
-        private GeneralTaskResult RunTask()
+        private TaskResult RunTask()
         {
             var orToolsParam = new ORToolsTask()
             {
@@ -83,40 +76,15 @@ namespace SequencePlanner.GeneralModels
             };
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
-            return orTools.Solve();
+            return null;
+            //var orToolsResult = orTools.Solve();
+            //var result = ResolveSolution(orToolsResult);
+            //return result;
         }
 
-        private void CreateInitialSolution()
+        private TaskResult ResolveSolution(TaskResult result)
         {
             throw new NotImplementedException();
-        }
-
-        private void CreateShortcuts()
-        {
-            throw new NotImplementedException();
-        }
-
-        private GeneralTaskResult ReverseShortcuts(GeneralTaskResult result)
-        {
-            return result;
-            throw new NotImplementedException();
-        }
-
-        private GeneralTaskResult ResolveSolution(GeneralTaskResult result)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ReverseShortcutsInSolution()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ChangeDepots() { }
-        private void ChangeBackDepots() { }
-        private GeneralTaskResult ResolveDepots(GeneralTaskResult result)
-        {
-            return result;
         }
     }
 }
