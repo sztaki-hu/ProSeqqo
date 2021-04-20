@@ -36,7 +36,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GeneralModels.ProcessPrecedence">
-    <Position X="4.5" Y="17.75" Width="2" />
+    <Position X="4.5" Y="18.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GeneralModels\ProcessPrecedence.cs</FileName>
@@ -58,7 +58,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GeneralModels.Precedence&lt;Base&gt;">
-    <Position X="7.25" Y="16.75" Width="1.5" />
+    <Position X="8.25" Y="17.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAA=</HashCode>
       <FileName>GeneralModels\Precedence.cs</FileName>
@@ -73,7 +73,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GeneralModels.MotionPrecedence">
-    <Position X="4.5" Y="16.25" Width="2" />
+    <Position X="4.5" Y="17" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GeneralModels\MotionPrecedence.cs</FileName>
@@ -134,7 +134,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.GeneralModels.SolverSettings">
-    <Position X="4.5" Y="14.25" Width="1.5" />
+    <Position X="4.5" Y="14.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAAAAgAAAAAIAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>GeneralModels\SolverSettings.cs</FileName>
@@ -144,16 +144,16 @@
     <Position X="1" Y="7.5" Width="2.5" />
     <AssociationLine Name="Hierarchy" Type="SequencePlanner.GeneralModels.Hierarchy" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.625" Y="9.181" />
-        <Point X="2.625" Y="11.848" />
-        <Point X="4.5" Y="11.848" />
+        <Point X="2.625" Y="9.632" />
+        <Point X="2.625" Y="11.952" />
+        <Point X="4.5" Y="11.952" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="SolverSettings" Type="SequencePlanner.GeneralModels.SolverSettings" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.375" Y="9.181" />
-        <Point X="2.375" Y="15.09" />
-        <Point X="4.5" Y="15.09" />
+        <Point X="2.375" Y="9.632" />
+        <Point X="2.375" Y="15.566" />
+        <Point X="4.5" Y="15.566" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="Motions" Type="SequencePlanner.GeneralModels.Motion" FixedFromPoint="true" FixedToPoint="true">
@@ -170,23 +170,23 @@
     </AssociationLine>
     <AssociationLine Name="Processrecedences" Type="SequencePlanner.GeneralModels.ProcessPrecedence" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="1.875" Y="9.181" />
-        <Point X="1.875" Y="18.366" />
-        <Point X="4.5" Y="18.366" />
+        <Point X="1.875" Y="9.632" />
+        <Point X="1.875" Y="19.116" />
+        <Point X="4.5" Y="19.116" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="MotionPrecedences" Type="SequencePlanner.GeneralModels.MotionPrecedence" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.125" Y="9.181" />
-        <Point X="2.125" Y="16.866" />
-        <Point X="4.5" Y="16.866" />
+        <Point X="2.125" Y="9.632" />
+        <Point X="2.125" Y="17.616" />
+        <Point X="4.5" Y="17.616" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="PCGTSPRepresentation" Type="SequencePlanner.GeneralModels.PCGTSPRepresentation" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="1.625" Y="9.181" />
-        <Point X="1.625" Y="20.282" />
-        <Point X="4.5" Y="20.282" />
+        <Point X="1.625" Y="9.632" />
+        <Point X="1.625" Y="21.354" />
+        <Point X="4.5" Y="21.354" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -221,9 +221,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GeneralModels.PCGTSPRepresentation">
-    <Position X="4.5" Y="19.25" Width="2.5" />
+    <Position X="4.5" Y="20" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIgABAAIEAAIAAIAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIgABAAIEAAIAAIAAAAAAAAAAgBAAAAAAAAAAAAA=</HashCode>
       <FileName>GeneralModels\PCGTSPRepresentation.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -232,14 +232,14 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SequencePlanner.GeneralModels.MotionDisjointSet">
-    <Position X="8.25" Y="19.5" Width="1.5" />
+    <Position X="8.25" Y="20.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GeneralModels\MotionDisjointSet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GeneralModels.DisjointSet&lt;Base&gt;">
-    <Position X="10.5" Y="19.5" Width="1.75" />
+    <Position X="10.5" Y="20.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAQAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>GeneralModels\DisjointSet.cs</FileName>
@@ -249,8 +249,8 @@
     <Position X="4.5" Y="7.25" Width="2.5" />
     <AssociationLine Name="ResourceFunction" Type="SequencePlanner.Function.ResourceFunction.IResourceFunction" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7" Y="7.75" />
-        <Point X="7.656" Y="7.75" />
+        <Point X="7" Y="7.805" />
+        <Point X="7.656" Y="7.805" />
         <Point X="7.656" Y="10.316" />
         <Point X="8.75" Y="10.316" />
       </Path>

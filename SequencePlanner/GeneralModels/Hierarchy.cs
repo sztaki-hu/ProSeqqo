@@ -8,6 +8,11 @@ namespace SequencePlanner.GeneralModels
         public List<HierarchyRecord> HierarchyRecords { get; set; }
         public bool BidirectionalMotionDefault { get; set; }
 
+        public Hierarchy()
+        {
+            HierarchyRecords = new List<HierarchyRecord>();
+            BidirectionalMotionDefault = false;
+        }
 
         //Process
         public List<Process> GetProcesses()
