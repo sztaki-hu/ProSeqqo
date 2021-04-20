@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using SequencePlanner.Model;
 using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.GTSPTask.Task.Base;
 using SequencePlanner.GTSPTask.Task.General;
 
 namespace SequencePlanner.Helper
@@ -190,7 +189,7 @@ namespace SequencePlanner.Helper
             task.Tasks.Remove(TaskNode);
             task.PositionMatrix.Positions.Remove(GTSPNode);
         }
-        public void OverrideWeights(IGTSPRepresentation task)
+        public void OverrideWeights(GeneralGTSPRepresentation task)
         {
             throw new NotImplementedException();
         }

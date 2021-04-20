@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using SequencePlanner.Model;
-using SequencePlanner.GTSPTask.Task.Base;
 
 namespace SequencePlanner.GTSPTask.Task.General
 {
-    public class GeneralGTSPRepresentation : IGTSPRepresentation
+    public class GeneralGTSPRepresentation
     {
         public int StartDepot  { get;  set; }
         public int FinishDepot  { get;  set; }
