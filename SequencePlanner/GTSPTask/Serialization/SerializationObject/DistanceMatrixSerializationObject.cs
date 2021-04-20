@@ -14,7 +14,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public List<int> ResourceFooter { get; set; }
         [XmlIgnore]
         [JsonIgnore]
-        public List<PositionSerializationObject> ConfigList { get; set; }
+        public List<ConfigSerializationObject> ConfigList { get; set; }
 
 
         public DistanceMatrixSerializationObject()
@@ -132,10 +132,10 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         }
         private void CreateConfigList()
         {
-            ConfigList = new List<PositionSerializationObject>();
+            ConfigList = new List<ConfigSerializationObject>();
             for (int i = 0; i < IDHeader.Count; i++)
             {
-                var position = new PositionSerializationObject
+                var position = new ConfigSerializationObject
                 {
                     ID = IDHeader[i]
                 };
@@ -143,7 +143,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                     position.Name = NameFooter[i];
                 if (ResourceFooter != null && ResourceFooter.Count != 0)
                     position.ResourceID = ResourceFooter[i];
-                position.Position = new double[0];
+                position.Config = new double[0];
                 ConfigList.Add(position);
             }
         }

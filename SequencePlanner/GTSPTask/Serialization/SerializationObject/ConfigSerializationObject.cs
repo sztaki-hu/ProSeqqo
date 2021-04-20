@@ -1,29 +1,31 @@
-﻿using SequencePlanner.Model;
+﻿using SequencePlanner.GeneralModels;
+using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 {
-    public class PositionSerializationObject
+    public class ConfigSerializationObject
     {
         public int ID { get; set; }
-        public double[] Position { get; set; }
+        public double[] Config { get; set; }
         public string Name { get; set; }
         public int ResourceID { get; set; }
 
 
-        public PositionSerializationObject() { }
-        public PositionSerializationObject(Position position)
+        public ConfigSerializationObject() { }
+        public ConfigSerializationObject(Config config)
         {
-            ID = position.UserID;
-            Position = position.Vector;
-            Name = position.Name;
-            ResourceID = position.ResourceID;
+            ID = config.ID;
+            Config = config.Configuration.ToArray();
+            Name = config.Name;
+            ResourceID = config.Resource.ID;
         }
 
         
-        public Position ToPosition()
+        public Config ToConfig()
         {
-           return new Position() { UserID = ID, Name = Name, Vector = Position, ResourceID = ResourceID };
+            return new Config(ID, new List<double>(Config), Name, new Resource(ResourceID, Name));
         }
+
         public string ToSEQ()
         {
             string separator = ";";
@@ -33,10 +35,10 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             string seq = "";
             seq += ID + separator;
             seq += open;
-            for (int i = 0; i < Position.Length; i++)
+            for (int i = 0; i < Config.Length; i++)
             {
-                seq += Position[i].ToString("0.####");
-                if (i < Position.Length - 1)
+                seq += Config[i].ToString("0.####");
+                if (i < Config.Length - 1)
                     seq += separator;
             }
             seq += close + separator;

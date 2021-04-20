@@ -34,7 +34,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public ResourceFunctionSerializationObject ResourceFunction { get; set; }
 
         //Hierarchy
-        public List<PositionSerializationObject> ConfigList { get; set; }
+        public List<ConfigSerializationObject> ConfigList { get; set; }
         public List<HybridLineSerializationObject> MotionList { get; set; }
         public List<ProcessHierarchySerializationObject> ProcessHierarchy { get; set; }
         public StrictEdgeWeightSetSerializationObject OverrideCost { get; set; }
@@ -53,73 +53,73 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
 
         public GeneralTaskSerializationObject(GeneralTask task)
         {
-            Cyclic = task.Cyclic;
-            BidirectionMotionDefault = Line.BIDIRECTIONAL_DEFAULT;
-            if (task.StartDepot != null)
-                StartDepot = task.StartDepot.UserID;
-            else
-                StartDepot = -1;
-            if (task.FinishDepot != null)
-                FinishDepot = task.FinishDepot.UserID;
-            else
-                FinishDepot = -1;
-            TimeLimit = task.TimeLimit;
-            ConfigList = new List<PositionSerializationObject>();
-            foreach (var item in task.PositionMatrix.Positions)
-            {
-                ConfigList.Add(new PositionSerializationObject(item.Out)); ///TODO: Rapid FIX change it!
-            }
-            DistanceFunction = new DistanceFunctionSerializationObject(task.PositionMatrix);
-            ResourceFunction = new ResourceFunctionSerializationObject(task.PositionMatrix);
-            OverrideCost = new StrictEdgeWeightSetSerializationObject(task.PositionMatrix.StrictUserEdgeWeights);
-            AddInMotionChangeoverToCost = false;
-            AddMotionLengthToCost = false;
-            LocalSearchStrategy = task.LocalSearchStrategy.ToString();
-            Validate = task.Validate;
+            //Cyclic = task.Cyclic;
+            //BidirectionMotionDefault = Line.BIDIRECTIONAL_DEFAULT;
+            //if (task.StartDepot != null)
+            //    StartDepot = task.StartDepot.UserID;
+            //else
+            //    StartDepot = -1;
+            //if (task.FinishDepot != null)
+            //    FinishDepot = task.FinishDepot.UserID;
+            //else
+            //    FinishDepot = -1;
+            //TimeLimit = task.TimeLimit;
+            //ConfigList = new List<PositionSerializationObject>();
+            //foreach (var item in task.PositionMatrix.Positions)
+            //{
+            //    ConfigList.Add(new PositionSerializationObject(item.Out)); ///TODO: Rapid FIX change it!
+            //}
+            //DistanceFunction = new DistanceFunctionSerializationObject(task.PositionMatrix);
+            //ResourceFunction = new ResourceFunctionSerializationObject(task.PositionMatrix);
+            //OverrideCost = new StrictEdgeWeightSetSerializationObject(task.PositionMatrix.StrictUserEdgeWeights);
+            //AddInMotionChangeoverToCost = false;
+            //AddMotionLengthToCost = false;
+            //LocalSearchStrategy = task.LocalSearchStrategy.ToString();
+            //Validate = task.Validate;
 
-            TaskType = "General";
-            UseShortcutInAlternatives = task.UseShortcutInAlternatives;
-            ProcessHierarchy = new List<ProcessHierarchySerializationObject>();
-            MotionPrecedence = new List<OrderConstraintSerializationObject>();
-            ProcessPrecedences = new List<OrderConstraintSerializationObject>();
-            MotionList = new List<HybridLineSerializationObject>();
-            foreach (var proc in task.Processes)
-            {
-                foreach (var alternative in proc.Alternatives)
-                {
-                    foreach (var lineTask in alternative.Tasks)
-                    {
-                        foreach (var position in lineTask.Positions)
-                        {
-                            ProcessHierarchy.Add(new ProcessHierarchySerializationObject()
-                            {
-                                ProcessID = proc.UserID,
-                                AlternativeID = alternative.UserID,
-                                TaskID = lineTask.UserID,
-                                PositionID = position.Node.UserID
-                            });
-                        }
-                    }
-                }
-            }
+            //TaskType = "General";
+            //UseShortcutInAlternatives = task.UseShortcutInAlternatives;
+            //ProcessHierarchy = new List<ProcessHierarchySerializationObject>();
+            //MotionPrecedence = new List<OrderConstraintSerializationObject>();
+            //ProcessPrecedences = new List<OrderConstraintSerializationObject>();
+            //MotionList = new List<HybridLineSerializationObject>();
+            //foreach (var proc in task.Processes)
+            //{
+            //    foreach (var alternative in proc.Alternatives)
+            //    {
+            //        foreach (var lineTask in alternative.Tasks)
+            //        {
+            //            foreach (var position in lineTask.Positions)
+            //            {
+            //                ProcessHierarchy.Add(new ProcessHierarchySerializationObject()
+            //                {
+            //                    ProcessID = proc.UserID,
+            //                    AlternativeID = alternative.UserID,
+            //                    TaskID = lineTask.UserID,
+            //                    PositionID = position.Node.UserID
+            //                });
+            //            }
+            //        }
+            //    }
+            //}
 
-            foreach (var posPrec in task.MotionPrecedence)
-            {
-                ProcessPrecedences.Add(new OrderConstraintSerializationObject()
-                {
-                    BeforeID = posPrec.Before.UserID,
-                    AfterID = posPrec.After.UserID
-                });
-            }
+            //foreach (var posPrec in task.MotionPrecedence)
+            //{
+            //    ProcessPrecedences.Add(new OrderConstraintSerializationObject()
+            //    {
+            //        BeforeID = posPrec.Before.UserID,
+            //        AfterID = posPrec.After.UserID
+            //    });
+            //}
 
-            foreach (var procPrec in task.ProcessPrecedence)
-            {
-                MotionPrecedence.Add(new OrderConstraintSerializationObject()
-                {
-                    BeforeID = procPrec.Before.UserID,
-                    AfterID = procPrec.After.UserID
-                });
-            }
+            //foreach (var procPrec in task.ProcessPrecedence)
+            //{
+            //    MotionPrecedence.Add(new OrderConstraintSerializationObject()
+            //    {
+            //        BeforeID = procPrec.Before.UserID,
+            //        AfterID = procPrec.After.UserID
+            //    });
+            //}
         }
 
 
@@ -127,37 +127,37 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         {
             var task = new GeneralTask();
             //TaskType
-            task.Validate = Validate;
-            task.Cyclic = Cyclic;
-            task.PositionMatrix = new PositionMatrix();
-            Line.BIDIRECTIONAL_DEFAULT = BidirectionMotionDefault;
-            task.PositionMatrix.UseResourceInLineLength = AddInMotionChangeoverToCost;
-            task.PositionMatrix.UseLineLengthInWeight = AddMotionLengthToCost;
-            task.IdlePenalty = IdlePenalty;
-            foreach (var pos in ConfigList)
-            {
-                var newPosition = pos.ToPosition();
-                task.PositionMatrix.Positions.Add(new GTSPNode(newPosition));
-                if (newPosition.UserID == StartDepot)
-                    task.StartDepot = newPosition;
-                if (newPosition.UserID == FinishDepot)
-                    task.FinishDepot = newPosition;
-            }
-            if (StartDepot != -1 && task.StartDepot == null)
-                SeqLogger.Error("StartDepot not exist position!", nameof(GeneralTaskSerializationObject));
-            if (FinishDepot != -1 && task.FinishDepot == null)
-                SeqLogger.Error("FinishDepot not exist as position!", nameof(GeneralTaskSerializationObject));
-            task.TimeLimit = TimeLimit;
-            task.PositionMatrix.StrictUserEdgeWeights = OverrideCost.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);
+            //task.Validate = Validate;
+            //task.Cyclic = Cyclic;
+            //task.PositionMatrix = new PositionMatrix();
+            //Line.BIDIRECTIONAL_DEFAULT = BidirectionMotionDefault;
+            //task.PositionMatrix.UseResourceInLineLength = AddInMotionChangeoverToCost;
+            //task.PositionMatrix.UseLineLengthInWeight = AddMotionLengthToCost;
+            //task.IdlePenalty = IdlePenalty;
+            //foreach (var pos in ConfigList)
+            //{
+            //    var newPosition = pos.ToConfig();
+            //    task.PositionMatrix.Positions.Add(new GTSPNode(newPosition));
+            //    if (newPosition.UserID == StartDepot)
+            //        task.StartDepot = newPosition;
+            //    if (newPosition.UserID == FinishDepot)
+            //        task.FinishDepot = newPosition;
+            //}
+            //if (StartDepot != -1 && task.StartDepot == null)
+            //    SeqLogger.Error("StartDepot not exist position!", nameof(GeneralTaskSerializationObject));
+            //if (FinishDepot != -1 && task.FinishDepot == null)
+            //    SeqLogger.Error("FinishDepot not exist as position!", nameof(GeneralTaskSerializationObject));
+            //task.TimeLimit = TimeLimit;
+            //task.PositionMatrix.StrictUserEdgeWeights = OverrideCost.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);
 
-            task.PositionMatrix.DistanceFunction = DistanceFunction.ToDistanceFunction();
-            task.PositionMatrix.ResourceFunction = ResourceFunction.ToResourceFunction();
-            task.UseMIPprecedenceSolver = UseMIPprecedenceSolver;
-            task.LocalSearchStrategy = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategy);
-            AddLinesToConfigList(task);
-            CreateProcessHierarchy(task);
-            CreatePrecedences(task);
-            task.UseShortcutInAlternatives = UseShortcutInAlternatives;
+            //task.PositionMatrix.DistanceFunction = DistanceFunction.ToDistanceFunction();
+            //task.PositionMatrix.ResourceFunction = ResourceFunction.ToResourceFunction();
+            //task.UseMIPprecedenceSolver = UseMIPprecedenceSolver;
+            //task.LocalSearchStrategy = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategy);
+            //AddLinesToConfigList(task);
+            //CreateProcessHierarchy(task);
+            //CreatePrecedences(task);
+            //task.UseShortcutInAlternatives = UseShortcutInAlternatives;
             return task;
         }
         private void AddLinesToConfigList(GeneralTask task)
@@ -242,7 +242,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     alter.Tasks.Add(task);
                 }
            
-                var position = FindNode(item.PositionID, pointLikeTask);
+                var position = FindNode(item.MotionID, pointLikeTask);
 
                 if (position == null)
                 {

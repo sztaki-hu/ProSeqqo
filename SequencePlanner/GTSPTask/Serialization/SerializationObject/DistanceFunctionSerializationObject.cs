@@ -2,6 +2,7 @@
 using SequencePlanner.Helper;
 using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
+using SequencePlanner.GeneralModels;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 {
@@ -14,36 +15,37 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 
 
         public DistanceFunctionSerializationObject(){}
-        public DistanceFunctionSerializationObject(PositionMatrix positionMatrix)
+        public DistanceFunctionSerializationObject(NewGeneralTask task)
         {
-            Function = positionMatrix.DistanceFunction.FunctionName;
+            var distFunc = task.CostManager.DistanceFunction;
+            Function = distFunc.FunctionName;
             if (Function == "Matrix")
             {
                 DistanceMatrix = new DistanceMatrixSerializationObject
                 {
-                    DistanceMatrix = ((MatrixDistanceFunction)positionMatrix.DistanceFunction).CostMatrix
+                    DistanceMatrix = ((MatrixDistanceFunction)distFunc).CostMatrix
                 };
-                foreach (var position in positionMatrix.Positions)
+                foreach (var motion in task.Hierarchy.Configs)
                 {
-                    if (!position.Node.Virtual)
+                    if (!motion.Virtual)
                     {
-                        DistanceMatrix.IDHeader.Add(position.Node.UserID);
-                        DistanceMatrix.NameFooter.Add(position.Node.Name);
-                        DistanceMatrix.ResourceFooter.Add(position.Node.ResourceID);
+                        DistanceMatrix.IDHeader.Add(motion.ID);
+                        DistanceMatrix.NameFooter.Add(motion.Name);
+                        DistanceMatrix.ResourceFooter.Add(motion.Resource.ID);
                     }
                 }
             }
 
             if (Function == "TrapezoidTime")
             {
-                TrapezoidAcceleration = ((TrapezoidTimeDistanceFunction)positionMatrix.DistanceFunction).MaxAcceleration;
-                TrapezoidSpeed = ((TrapezoidTimeDistanceFunction)positionMatrix.DistanceFunction).MaxSpeed;
+                TrapezoidAcceleration = ((TrapezoidTimeDistanceFunction)distFunc).MaxAcceleration;
+                TrapezoidSpeed = ((TrapezoidTimeDistanceFunction)distFunc).MaxSpeed;
             }
 
             if (Function == "TrapezoidTimeWithTimeBreaker")
             {
-                TrapezoidAcceleration = ((TrapezoidTimeDistanceFunction)positionMatrix.DistanceFunction).MaxAcceleration;
-                TrapezoidSpeed = ((TrapezoidTimeDistanceFunction)positionMatrix.DistanceFunction).MaxSpeed;
+                TrapezoidAcceleration = ((TrapezoidTimeDistanceFunction)distFunc).MaxAcceleration;
+                TrapezoidSpeed = ((TrapezoidTimeDistanceFunction)distFunc).MaxSpeed;
             }
         }
 

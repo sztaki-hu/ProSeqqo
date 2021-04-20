@@ -146,17 +146,22 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                     {
                         for (int i = 0; i < token.Lines.Count; i++)
                         {
-                            string[] line = token.Lines[i].Line.Split(";");
+                            var confs = GetIntVector(token.Lines[i].Line);
+                            string[] line = RemoveVector(token.Lines[i].Line).Split(";");
                             ProcessHierarchySerializationObject hierarchyObj = new ProcessHierarchySerializationObject
                             {
-                                PositionID = Int32.Parse(line[0]),
-                                TaskID = Int32.Parse(line[1]),
-                                AlternativeID = Int32.Parse(line[2]),
-                                ProcessID = Int32.Parse(line[3])
+                                ProcessID = Int32.Parse(line[0]),
+                                AlternativeID = Int32.Parse(line[1]),
+                                TaskID = Int32.Parse(line[2]),
+                                MotionID = Int32.Parse(line[3]),
+                                ConfigIDs = confs,
                             };
+                            if (line.Length > 4)
+                                hierarchyObj.Bidirectional = bool.Parse(line[4]);
+                            if (line.Length > 5)
+                                hierarchyObj.Name = line[5];
                             hierarchy.Add(hierarchyObj);
                         }
-
                         SeqLogger.Debug(token.Header + ": " + hierarchy.Count + " lines found", nameof(TokenConverter));
                         return hierarchy;
                     }
@@ -169,11 +174,11 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
         }
         
-        public static List<PositionSerializationObject> GetConfigListByHeader(this SEQTokenizer tokenizer, string header)
+        public static List<ConfigSerializationObject> GetConfigListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
             {
-                var positions = new List<PositionSerializationObject>();
+                var positions = new List<ConfigSerializationObject>();
                 foreach (var token in tokenizer.Tokens)
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
@@ -181,7 +186,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                         for (int j = 0; j < token.Lines.Count; j++)
                         {
 
-                            PositionSerializationObject posObj = new PositionSerializationObject();
+                            ConfigSerializationObject posObj = new ConfigSerializationObject();
                             List<double> config = new List<double>();
                             string[] line = token.Lines[j].Line.Split(';', '[', ']');     //1;[x;y;z;];Name--->[1][][x][y][z][][Name]
                             posObj.ID = int.Parse(line[0]);
@@ -191,7 +196,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                                 config.Add(Convert.ToDouble(line[i]));
                                 i++;
                             }
-                            posObj.Position = config.ToArray();
+                            posObj.Config = config.ToArray();
                             i++;
                             if (line.Length != i)
                             {
@@ -353,6 +358,22 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             {
                 throw new SeqException("Can not phrase header " + header, e);
             }
+        }
+
+        public static List<int> GetIntVector(string line)
+        {
+            string[] parts = line.Split('[', ';', ']');
+            int[] vector = new int[parts.Length - 2];
+            for (int i = 1; i < parts.Length - 1; i++)
+            {
+                vector[i - 1] = int.Parse(parts[i]);
+            }
+            return new List<int>(vector);
+        }
+        public static string RemoveVector(string line)
+        {
+            string[] parts = line.Split('[', ';', ']');
+            return string.Concat(parts[0], parts[parts.Length]);
         }
     }
 }

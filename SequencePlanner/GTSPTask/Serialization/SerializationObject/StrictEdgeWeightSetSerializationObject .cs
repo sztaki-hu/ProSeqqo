@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SequencePlanner.GeneralModels;
 using SequencePlanner.Helper;
 using SequencePlanner.Model;
 
@@ -13,16 +14,16 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         {
             Weights = new List<StrictEdgeWeightSerializationObject>();
         }
-        public StrictEdgeWeightSetSerializationObject(StrictEdgeWeightSet set)
+        public StrictEdgeWeightSetSerializationObject(List<ConfigCost> costs)
         {
             Weights = new List<StrictEdgeWeightSerializationObject>();
-            foreach (var item in set.GetAll())
+            foreach (var item in costs)
             {
                 Weights.Add(new StrictEdgeWeightSerializationObject()
                 {
-                    A = item.A.SequencingID,
-                    B = item.B.UserID,
-                    Weight = item.Weight,
+                    A = item.A.ID,
+                    B = item.B.ID,
+                    Weight = item.OverrideCost,
                     Bidirectional = item.Bidirectional
                 });
             }
