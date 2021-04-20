@@ -12,8 +12,8 @@ namespace SequencePlanner.Helper
         public int ORToolsFinishDepotSequenceID { get; }
 
 
-        public void Map(GeneralTask task);
-        public void ReverseMap(GeneralTask task);
+        public void Change(GeneralTask task);
+        public void ChangeBack(GeneralTask task);
         public GeneralTaskResult ResolveSolution(GeneralTaskResult result);
         public void OverrideWeights(GeneralGTSPRepresentation task);
     }

@@ -6,7 +6,7 @@ using SequencePlanner.GTSPTask.Task.General;
 
 namespace SequencePlanner.Helper
 {
-    public class GeneralDepotMapper : IDepotMapper
+    public class GeneraDepotMapper : IDepotMapper
     {
         private Position Position;
         private GTSPNode GTSPNode;
@@ -26,7 +26,7 @@ namespace SequencePlanner.Helper
         public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequencingID; else return -1; } }
         
 
-        public void Map(GeneralTask task)
+        public void Change(GeneralTask task)
         {
             Task = (GeneralTask)task;
             StartDepot = task.StartDepot;
@@ -54,7 +54,7 @@ namespace SequencePlanner.Helper
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepot(); break;
             }
         }
-        public void ReverseMap(GeneralTask task)
+        public void ChangeBack(GeneralTask task)
         {
             Task = (GeneralTask)task;
             switch (DepotChangeType)
@@ -161,14 +161,14 @@ namespace SequencePlanner.Helper
                 Positions = new List<GTSPNode>() { GTSPNode }
             };
 
-            Alternative = new Alternative()
+            Alternative = new Model.Alternative()
             {
                 Name = name,
                 Virtual = true,
                 Tasks = new List<Model.Task>() { TaskNode }
             };
 
-            Process = new Process()
+            Process = new Model.Process()
             {
                 Name = name,
                 Virtual = true,
