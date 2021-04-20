@@ -51,7 +51,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             ShortestPathProcessor = null;
             CalculateWeightFunction = PositionMatrix.CalculateWeight;
             DepotMapper = new GeneralDepotMapper();
-    }
+        }
 
 
         public GeneralTaskResult RunModel()

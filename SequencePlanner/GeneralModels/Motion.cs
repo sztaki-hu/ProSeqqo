@@ -4,7 +4,7 @@ namespace SequencePlanner.GeneralModels
 {
     public class Motion: Node
     {
-        public List<Config> SequenceMatrixID { get; set; }
+        public int SequenceMatrixID { get; set; }
         public List<Config> Configs { get; set; }
         public bool Bidirectional { get; set; }
         public double Length { get; set; }

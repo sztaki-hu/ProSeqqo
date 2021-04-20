@@ -12,12 +12,20 @@ namespace SequencePlanner.GeneralModels
         public List<ConfigCost> OverrideCost { get; set; }
         public double IdlePenalty{ get; set; }
 
+        public CostManager()
+        {
+            DistanceFunction = new EuclidianDistanceFunction();
+            ResourceFunction = new NoResourceFunction();
+            IdlePenalty = 0;
+            OverrideCost = new List<ConfigCost>();
+        }
+
         public double ComputeCost(Config From, Config To)
         {
             throw new NotImplementedException();
         }
 
-        public double ComputeCost(Motion From, Config To)
+        public double ComputeCost(Motion From, Motion To)
         {
             throw new NotImplementedException();
         }
