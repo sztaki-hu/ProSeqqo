@@ -50,7 +50,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             ProcessPrecedence = new List<GTSPPrecedenceConstraint>();
             ShortestPathProcessor = null;
             CalculateWeightFunction = PositionMatrix.CalculateWeight;
-            DepotMapper = new GeneralDepotMapper();
+            DepotMapper = new GeneraDepotMapper();
         }
 
 
@@ -62,7 +62,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             AddBidirectionals();
             if (Validate)
                 ValidateModel();
-            DepotMapper.Map(this);
+            DepotMapper.Change(this);
             if (UseShortcutInAlternatives)
             {
                 ShortestPathProcessor = new ShortestPathProcessor(this);
@@ -91,7 +91,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             ToLog(LogLevel.Debug);
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
-            GeneralTaskResult pointResult = new GeneralTaskResult(orTools.Solve());
+            GeneralTaskResult pointResult = ORToolsResultToResult(orTools.Solve());
             pointResult = ResolveSolution(pointResult);
             if (UseShortcutInAlternatives)
             {
@@ -99,7 +99,7 @@ namespace SequencePlanner.GTSPTask.Task.General
                 ShortestPathProcessor.ChangeBack();
             }
             pointResult = (GeneralTaskResult)DepotMapper.ResolveSolution(pointResult);
-            DepotMapper.ReverseMap(this);
+            DepotMapper.ChangeBack(this);
 
             SeqLogger.Indent--;
             SeqLogger.Debug("RunModel finished!", nameof(GeneralTask));
@@ -110,6 +110,12 @@ namespace SequencePlanner.GTSPTask.Task.General
             pointResult.Validate(DisjointConstraints, MotionPrecedence);
             return pointResult;
         }
+
+        private GeneralTaskResult ORToolsResultToResult(ORToolsResult oRToolsResult)
+        {
+            return null;
+        }
+
         public void ValidateModel()
         {
             GeneralTaskValidator.Validate(this);
@@ -129,23 +135,23 @@ namespace SequencePlanner.GTSPTask.Task.General
 
             var result = ORPreSolver.Solve();
             MIPRunTime = ORPreSolver.RunTime;
-            if (result.Count > 0)
+            if (result.Solution.Count > 0)
             {
                 long[][] initialSolution = new long[1][];
                 if (DepotMapper.ORToolsFinishDepot == null)
                 {
-                    initialSolution[0] = new long[result.Count];
-                    for (int i = 0; i < result.Count; i++)
+                    initialSolution[0] = new long[result.Solution.Count];
+                    for (int i = 0; i < result.Solution.Count; i++)
                     {
-                        initialSolution[0][i] = result[i];
+                        initialSolution[0][i] = result.Solution[i];
                     }
                 }
                 else
                 {
-                    initialSolution[0] = new long[result.Count - 1];
-                    for (int i = 0; i < result.Count - 1; i++)
+                    initialSolution[0] = new long[result.Solution.Count - 1];
+                    for (int i = 0; i < result.Solution.Count - 1; i++)
                     {
-                        initialSolution[0][i] = result[i];
+                        initialSolution[0][i] = result.Solution[i];
                     }
                 }
                 ResolveInitialSolution(initialSolution);
@@ -535,5 +541,7 @@ namespace SequencePlanner.GTSPTask.Task.General
             }
             return roundedMatrix;
         }
+
+
     }
 }
