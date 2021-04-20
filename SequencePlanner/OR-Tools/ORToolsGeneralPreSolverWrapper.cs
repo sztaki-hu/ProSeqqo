@@ -27,7 +27,7 @@ namespace SequencePlanner.OR_Tools
             RunTime = new TimeSpan();
         }
 
-        public List<int> Solve()
+        public ORToolsResult Solve()
         {
             // Init
             timer.Reset();
@@ -186,7 +186,7 @@ namespace SequencePlanner.OR_Tools
             constraints.Add(contraint.ToString());
             return contraint;
         }
-        private List<int> ProcessSolution(Solver solver, Solver.ResultStatus resultStatus)
+        private ORToolsResult ProcessSolution(Solver solver, Solver.ResultStatus resultStatus)
         {
             List<Process> processes = new List<Process>();
             var solution = new List<int>();
@@ -237,7 +237,14 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("Problem solved in " + solver.Nodes() + " branch-and-bound nodes", nameof(ORToolsGeneralPreSolverWrapper));
             SeqLogger.Indent--;
             SeqLogger.Debug("ORTools building finished!", nameof(ORToolsGeneralPreSolverWrapper));
-            return solution;
+            var result = new ORToolsResult()
+            {
+                Solution = solution,
+                StatusCode = DecodeStatusCodeInt(resultStatus),
+                StatusMessage = DecodeStatusCode(resultStatus),
+                Time = timer.Elapsed
+            };
+            return result;
         }
         private static string DecodeStatusCode(Solver.ResultStatus status)
         {
@@ -252,7 +259,21 @@ namespace SequencePlanner.OR_Tools
                 _ => "NO_STATUS: Something went wrong. :(",
             };
         }
-    
+
+        private static int DecodeStatusCodeInt(Solver.ResultStatus status)
+        {
+            return status switch
+            {
+                Solver.ResultStatus.OPTIMAL => 0,
+                Solver.ResultStatus.FEASIBLE => 1,
+                Solver.ResultStatus.INFEASIBLE => 2,
+                Solver.ResultStatus.UNBOUNDED => 3,
+                Solver.ResultStatus.ABNORMAL => 4,
+                Solver.ResultStatus.NOT_SOLVED => 6,
+                _ => -1,
+            };
+        }
+
         private class Process
         {
             public double Min { get; set; }
