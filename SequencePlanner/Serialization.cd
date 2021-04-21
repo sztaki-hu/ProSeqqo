@@ -134,11 +134,11 @@
       <FileName>GTSPTask\Serialization\Result\GeneralResultSerializationObject.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SequencePlanner.GTSPTask.Serialization.Result.GeneralResultSerializer">
+  <Class Name="SequencePlanner.GTSPTask.Serialization.Result.NewGeneralResultSerializer">
     <Position X="3.75" Y="10.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAUAAAAEAAAAAIAAAAAIAAAAAAAAAAAAA=</HashCode>
-      <FileName>GTSPTask\Serialization\Result\GeneralResultSerializer.cs</FileName>
+      <FileName>GTSPTask\Serialization\Result\NewGeneralResultSerializer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SequencePlanner.GTSPTask.Serialization.SerializationObject.Token.TokenConverter">
