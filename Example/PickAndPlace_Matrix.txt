@@ -1,23 +1,24 @@
 TaskType: General
 Validate: True
-Dimension: 0
-WeightMultiplier: 10
-CyclicSequence: False
+#Dimension: 0
+#WeightMultiplier: 10
+Cyclic: False
 StartDepot: 1
 FinishDepot: 6
 TimeLimit: 20
 DistanceFunction: Matrix
-ResourceDistanceFunction: Max
-ResourceSource: Matrix
-ResourceConstant: 5
+ResourceChangeoverFunction: Max
+ResourceChangeover: Matrix
+#ChangeoverConstant: 5
+UseMIPprecedenceSolver: False
 UseMIPprecedenceSolver: False
 
-ResourceMatrix:
+ChangeoverMatrix:
 1;5
 99;88
 77;66
 
-PositionMatrix:
+ConfigMatrix:
 1;2;3;4;5;6
 #--------
 0;2;3;4;5;6
@@ -31,15 +32,18 @@ Cam;P2;P3;P4;P5;P6
 1;  5; 5; 5; 5; 1
 
 ProcessHierarchy:
-#+-------------+---------+----------------+------------+
-#| Position ID | Task ID | Alternative ID | Process ID |
-#+-------------+---------+----------------+------------+
-		1;	    	20;			50;			  101;	
-		2;		   	21;			51;			  102;		
-		3;	        22;		    52;			  102;		
-		4;			23;			53;			  104;	
-		5;			24;			54;			  105;	
-		6;			25;			55;			  106;	
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+# ProcessID | AlternativeID  |  TaskID |       MotionID      |    ConfigID      |Bidirectional [optional]|    MotionName[optional]   | 
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+#   <int>   |      <int>     |  <int>  |         <int>       |      int[]       |       True/False       |         True/False        |
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+	101;50;20;1;[1]
+	102;51;21;2;[2]
+	102;52;22;3;[3]
+	104;53;23;4;[4]
+	105;54;24;5;[5]
+	106;55;25;6;[6]
+
 	
 ProcessPrecedence:
 #+----------------------+--------------------+------------------+
@@ -47,16 +51,16 @@ ProcessPrecedence:
 #+----------------------+--------------------+------------------+
 #104;102
 #101;102
-#102;105
+102;105
 #105;104
 	
-PositionPrecedence:
+MotionPrecedence:
 #+----------------------+--------------------+------------------+
 #| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
 #+----------------------+--------------------+------------------+
 #1;3
 #1;2
-#2;4
+2;4
 #3;4
 #4;5
 #5;6
