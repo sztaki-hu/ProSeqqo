@@ -51,9 +51,20 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             foreach (var item in Tokens)
             {
                 if (item.Header == header)
+                {
+                    item.Phrased = true;
                     return item;
+                }
             }
             return null;
+        }
+        public void CheckNotPhrased()
+        {
+            foreach (var token in Tokens)
+            {
+                if (!token.Phrased)
+                    throw new SeqException(token.Header + " is not used / valid option in line "+token.Lines[0].LineNumber+"!");
+            }
         }
 
         private List<TokenLineDeserializationObject> DeleteWhiteSpace(List<TokenLineDeserializationObject> lines)

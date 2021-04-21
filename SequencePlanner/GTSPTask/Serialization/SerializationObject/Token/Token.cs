@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SequencePlanner.Helper;
+using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
 {
@@ -6,6 +7,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
     {
         public string Header { get; set; }
         public List<TokenLineDeserializationObject> Lines { get; set; }
+        public bool Phrased { get; set; }
 
 
         public Token()

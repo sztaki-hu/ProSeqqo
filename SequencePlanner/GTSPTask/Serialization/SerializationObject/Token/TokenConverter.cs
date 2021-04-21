@@ -16,6 +16,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         find = true;
                         result = token.Lines[0].Line;
                     }
@@ -38,6 +39,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         int result = Int32.Parse(token.Lines[0].Line);
                         SeqLogger.Debug(token.Header + ": " + result, nameof(TokenConverter));
                         return result;
@@ -61,6 +63,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         if (token.Lines[0].Line.ToUpper().Equals("TRUE"))
                         {
                             find = true;
@@ -72,13 +75,13 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                             find = true;
                             result = false;
                         }
-
                         if (find)
                             SeqLogger.Debug(token.Header + ": " + result, nameof(TokenConverter));
-                        return result;
                     }
                 }
-                if (find == false)
+                if (find)
+                    return result;
+                else
                     SeqLogger.Warning("Can not find header with: " + header, nameof(TokenConverter));
                 return false;
             }
@@ -96,6 +99,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         double result = Double.Parse(token.Lines[0].Line);
                         SeqLogger.Debug(token.Header + ": " + result, nameof(TokenConverter));
                         return result;
@@ -117,6 +121,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         string[] parts = token.Lines[0].Line.Split('[', ';', ']');
                         double[] vector = new double[parts.Length - 2];
                         for (int i = 1; i < parts.Length-1; i++)
@@ -144,6 +149,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         for (int i = 0; i < token.Lines.Count; i++)
                         {
                             var confs = GetIntVector(token.Lines[i].Line);
@@ -183,6 +189,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         for (int j = 0; j < token.Lines.Count; j++)
                         {
 
@@ -228,6 +235,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         for (int i = 0; i < token.Lines.Count; i++)
                         {
                             string[] line = token.Lines[i].Line.Split(";");
@@ -269,6 +277,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         for (int i = 0; i < token.Lines.Count; i++)
                         {
                             string[] line = token.Lines[i].Line.Split(";");
@@ -306,6 +315,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         for (int i = 0; i < token.Lines.Count; i++)
                         {
                             string[] line = token.Lines[i].Line.Split(";");
@@ -336,6 +346,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
                     {
+                        token.Phrased = true;
                         for (int i = 0; i < token.Lines.Count; i++)
                         {
                             string[] line = token.Lines[i].Line.Split(";");
@@ -362,7 +373,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
 
         public static List<int> GetIntVector(string line)
         {
-            string[] parts = line.Split('[', ';', ']');
+            string[] parts = line.Split('[', ']');
             int[] vector = new int[parts.Length - 2];
             for (int i = 1; i < parts.Length - 1; i++)
             {
@@ -370,10 +381,12 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
             }
             return new List<int>(vector);
         }
+
         public static string RemoveVector(string line)
         {
-            string[] parts = line.Split('[', ';', ']');
-            return string.Concat(parts[0], parts[parts.Length]);
+            string[] parts = line.Split('[', ']');
+
+            return string.Concat(parts[0].Remove(parts[0].Length-1), parts[parts.Length-1]);
         }
     }
 }

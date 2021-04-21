@@ -125,14 +125,26 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             task.CostManager.AddInMotionChangeoverToCost = AddInMotionChangeoverToCost;
             task.CostManager.AddMotionLengthToCost = AddMotionLengthToCost;
             task.CostManager.IdlePenalty = IdlePenalty;
+            task.CostManager.DistanceFunction = DistanceFunction.ToDistanceFunction();
+            task.CostManager.ResourceFunction = ResourceFunction.ToResourceFunction();
+
+            task.SolverSettings.UseMIPprecedenceSolver = UseMIPprecedenceSolver;
+            task.SolverSettings.Metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategy);
+            task.SolverSettings.UseShortcutInAlternatives = UseShortcutInAlternatives;
+            
             foreach (var pos in ConfigList)
             {
-                var newPosition = pos.ToConfig();
-                //task.PositionMatrix.Positions.Add(new GTSPNode(newPosition));
-                //if (newPosition.ID == StartDepot)
-                //    task.StartDepot = newPosition;
-                //if (newPosition.ID == FinishDepot)
-                //    task.FinishDepot = newPosition;
+                task.Hierarchy.Configs.Add(pos.ToConfig());
+            }
+            AddLinesToConfigList(task);
+            CreateProcessHierarchy(task);
+            CreatePrecedences(task);
+            foreach (var motion in task.Hierarchy.Motions)
+            {
+                if (motion.ID == StartDepot)
+                    task.StartDepot = motion;
+                if (motion.ID == FinishDepot)
+                    task.FinishDepot = motion;
             }
             if (StartDepot != -1 && task.StartDepot == null)
                 SeqLogger.Error("StartDepot not exist position!", nameof(GeneralTaskSerializationObject));
@@ -140,15 +152,6 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 SeqLogger.Error("FinishDepot not exist as position!", nameof(GeneralTaskSerializationObject));
             task.SolverSettings.TimeLimit = TimeLimit;
             //task.PositionMatrix.StrictUserEdgeWeights = OverrideCost.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);
-
-            task.CostManager.DistanceFunction = DistanceFunction.ToDistanceFunction();
-            task.CostManager.ResourceFunction = ResourceFunction.ToResourceFunction();
-            task.SolverSettings.UseMIPprecedenceSolver = UseMIPprecedenceSolver;
-            task.SolverSettings.Metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategy);
-            AddLinesToConfigList(task);
-            CreateProcessHierarchy(task);
-            CreatePrecedences(task);
-            task.SolverSettings.UseShortcutInAlternatives = UseShortcutInAlternatives;
             return task;
         }
         private void AddLinesToConfigList(NewGeneralTask task)
@@ -220,7 +223,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 {
                     motion = new Motion()
                     {
-                        ID = item.TaskID
+                        ID = item.MotionID,
+                        Bidirectional = item.Bidirectional,
+                        Name = item.Name
                     };
                 }
 
@@ -228,10 +233,10 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     Process =proc,
                     Alternative = alter,
                     Task =t,
-                    Motion = motion
+                    Motion = motion,
                 };
-                var rec = new HierarchyRecord();
-                task.Hierarchy.HierarchyRecords.Add(rec);
+                task.Hierarchy.HierarchyRecords.Add(record);
+                task.Hierarchy.Motions.Add(motion);
             }
         }
         public new void FillBySEQTokens(SEQTokenizer tokenizer)
@@ -262,6 +267,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             MotionPrecedence = tokenizer.GetPrecedenceListByHeader("MotionPrecedence" );
             ProcessPrecedences = tokenizer.GetPrecedenceListByHeader("ProcessPrecedence");
             MotionList = tokenizer.GetHybridMotionListByHeader("MotionList");
+            tokenizer.CheckNotPhrased();
         }
         public string ToSEQ()
         {
