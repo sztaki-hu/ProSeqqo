@@ -1,4 +1,6 @@
-﻿using SequencePlanner.GTSPTask.Result;
+﻿using SequencePlanner.GeneralModels;
+using SequencePlanner.GeneralModels.Result;
+using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
 using SequencePlanner.GTSPTask.Serialization.Task;
 using SequencePlanner.GTSPTask.Task.General;
@@ -40,11 +42,11 @@ namespace SequencerConsole
 
                     //args = new string[] { "-i", example + "\\PickAndPlace_Original.txt",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
                     args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          };
-                    //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",           };
+                    args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",           };
                     //args = new string[] { "-i", example + "\\Line_Original.txt",            "-o", outdir + "\\Line_Original_out.json",            };
                     //args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.json",              };
-                    args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.seq",               };
-                    args = new string[] { "-i", example + "\\Hybrid_Matrix.txt",              "-o", outdir + "\\Hybrid_Matrix_out.seq",               };
+                    //args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.seq",               };
+                    //args = new string[] { "-i", example + "\\Hybrid_Matrix.txt",              "-o", outdir + "\\Hybrid_Matrix_out.seq",               };
                     //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        };
                     //args = new string[] { "-i", example + "\\CSOPA.txt",                        "-o", outdir + "\\CSOPA_out.json",                        };
                     //args = new string[] { "-i", example + "\\CelticLaser_Contour.txt",          "-o", outdir + "\\CelticLaser_Contour_out.txt",           };
@@ -131,8 +133,8 @@ namespace SequencerConsole
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                GeneralTaskSerializer ser = new GeneralTaskSerializer();
-                GeneralTask task = inputType switch
+                NewGeneralTaskSerializer ser = new NewGeneralTaskSerializer();
+                NewGeneralTask task = inputType switch
                 {
                     FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
                     FormatType.JSON => ser.ImportJSON(input),
@@ -181,29 +183,29 @@ namespace SequencerConsole
             }
         }
 
-        private static GeneralTaskResult RunPointLike()
+        private static TaskResult RunPointLike()
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                GeneralTaskSerializer ser = new GeneralTaskSerializer();
-                GeneralTask task = inputType switch
+                NewGeneralTaskSerializer ser = new NewGeneralTaskSerializer();
+                NewGeneralTask task = inputType switch
                 {
                     FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
                     FormatType.JSON => ser.ImportJSON(input),
                     FormatType.XML => ser.ImportXML(input),
                     _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
                 };
-                return task.RunModel();
+                return task.Run();
                 //var ct = new CancellationToken();
                 //WaitForSolution("Solver running!", ct);
             }
             return null;
         }
-        private static void OutGeneral(GeneralTaskResult result)
+        private static void OutGeneral(TaskResult result)
         {
             if (output != null && outputType != FormatType.Unknown)
             {
-                GeneralResultSerializer ser = new GeneralResultSerializer();
+                NewGeneralResultSerializer ser = new NewGeneralResultSerializer();
                 switch (outputType)
                 {
                     case FormatType.SEQ:
