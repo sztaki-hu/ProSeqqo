@@ -6,7 +6,7 @@ namespace SequencerTest.Units.Serialization.Result
 {
 
     [TestClass]
-    public class GeneralResultSerializerTest
+    public class NewGeneralResultSerializerTest
     {
         GeneralResultSerializer serializer;
         GeneralTaskResult result;
