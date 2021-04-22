@@ -18,6 +18,11 @@ namespace SequencePlanner.GeneralModels
             BidirectionalMotionDefault = false;
         }
 
+        public HierarchyRecord GetRecordByMotionID(int MotionID)
+        {
+            return HierarchyRecords.Where(r => r.Motion.ID == MotionID).FirstOrDefault();
+        }
+
         //Process
         public List<Process> GetProcesses()
         {

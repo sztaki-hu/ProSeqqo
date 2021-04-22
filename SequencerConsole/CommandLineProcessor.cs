@@ -170,7 +170,7 @@ namespace SequencerConsole
                     if (taskType == TaskType.General)
                     {
                         var result = RunPointLike();
-                        //result.ToLog(LogLevel.Info);
+                        result.ToLog(LogLevel.Info);
                         OutGeneral(result);
                     }
                 }
