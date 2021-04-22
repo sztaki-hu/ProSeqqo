@@ -142,13 +142,14 @@ namespace SequencePlanner.GTSPTask.Task.General.ShortCut
                 return A.OverrideWeightOut;
             if (B.OverrideWeightIn > 0)
                 return B.OverrideWeightIn;
-            double weight = DistanceFunction.ComputeDistance(A.Out, B.In);
-            weight = ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
-            if (A.AdditionalWeightOut > 0)
-                weight += A.AdditionalWeightOut;
-            if (B.AdditionalWeightIn > 0)
-                weight += B.AdditionalWeightIn;
-            return weight;
+            //double weight = DistanceFunction.ComputeDistance(A.Out, B.In);
+            //weight = ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
+            //if (A.AdditionalWeightOut > 0)
+            //    weight += A.AdditionalWeightOut;
+            //if (B.AdditionalWeightIn > 0)
+            //    weight += B.AdditionalWeightIn;
+            //return weight;
+            return 0;
         }
     }
 }
