@@ -55,12 +55,12 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         {
             Cyclic = task.Cyclic;
             BidirectionMotionDefault = task.Hierarchy.BidirectionalMotionDefault;
-            if (task.StartDepot != null)
-                StartDepot = task.StartDepot.ID;
+            if (task.StartDepotConfig != null)
+                StartDepot = task.StartDepotConfig.ID;
             else
                 StartDepot = -1;
-            if (task.FinishDepot != null)
-                FinishDepot = task.FinishDepot.ID;
+            if (task.FinishDepotConfig != null)
+                FinishDepot = task.FinishDepotConfig.ID;
             else
                 FinishDepot = -1;
             TimeLimit = task.SolverSettings.TimeLimit;
@@ -120,8 +120,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             //TaskType
             task.Validate = Validate;
             task.Cyclic = Cyclic;
-            //task.PositionMatrix = new PositionMatrix();
-            //Line.BIDIRECTIONAL_DEFAULT = BidirectionMotionDefault;
+            task.Hierarchy.BidirectionalMotionDefault = BidirectionMotionDefault;
             task.CostManager.AddInMotionChangeoverToCost = AddInMotionChangeoverToCost;
             task.CostManager.AddMotionLengthToCost = AddMotionLengthToCost;
             task.CostManager.IdlePenalty = IdlePenalty;
@@ -131,39 +130,35 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             task.SolverSettings.UseMIPprecedenceSolver = UseMIPprecedenceSolver;
             task.SolverSettings.Metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategy);
             task.SolverSettings.UseShortcutInAlternatives = UseShortcutInAlternatives;
+            task.SolverSettings.TimeLimit = TimeLimit;
             
-            foreach (var pos in ConfigList)
-            {
-                task.Hierarchy.Configs.Add(pos.ToConfig());
-            }
-            AddLinesToConfigList(task);
             CreateProcessHierarchy(task);
             CreatePrecedences(task);
-            foreach (var motion in task.Hierarchy.Motions)
+            foreach (var config in task.Hierarchy.Configs)
             {
-                if (motion.ID == StartDepot)
-                    task.StartDepot = motion;
-                if (motion.ID == FinishDepot)
-                    task.FinishDepot = motion;
+                if (config.ID == StartDepot)
+                    task.StartDepotConfig = config;
+                if (config.ID == FinishDepot)
+                    task.FinishDepotConfig = config;
             }
-            if (StartDepot != -1 && task.StartDepot == null)
+            //AddLinesToConfigList(task);
+            if (StartDepot != -1 && task.StartDepotConfig == null)
                 SeqLogger.Error("StartDepot not exist position!", nameof(GeneralTaskSerializationObject));
-            if (FinishDepot != -1 && task.FinishDepot == null)
+            if (FinishDepot != -1 && task.FinishDepotConfig == null)
                 SeqLogger.Error("FinishDepot not exist as position!", nameof(GeneralTaskSerializationObject));
-            task.SolverSettings.TimeLimit = TimeLimit;
             //task.PositionMatrix.StrictUserEdgeWeights = OverrideCost.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);
             return task;
         }
         private void AddLinesToConfigList(NewGeneralTask task)
         {
-            foreach (var line in MotionList)
+            foreach (var motion in MotionList)
             {
                 var m = new Motion()
                 {
-                    ID = line.LineID,
-                    Name = line.Name,
-                    Configs = new List<Config>() { task.Hierarchy.GetConfigByID(line.PositionIDA), task.Hierarchy.GetConfigByID(line.PositionIDB) },
-                    Bidirectional = line.Bidirectional
+                    ID = motion.LineID,
+                    Name = motion.Name,
+                    Configs = new List<Config>() { task.Hierarchy.GetConfigByID(motion.PositionIDA), task.Hierarchy.GetConfigByID(motion.PositionIDB) },
+                    Bidirectional = motion.Bidirectional
                 };
             }
         }
@@ -189,6 +184,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         }
         private void CreateProcessHierarchy(NewGeneralTask task)
         {
+            foreach (var pos in ConfigList)
+            {
+                task.Hierarchy.Configs.Add(pos.ToConfig());
+            }
+
             foreach (var item in ProcessHierarchy)
             {
                 Process proc = task.Hierarchy.GetProcessByID(item.ProcessID);
@@ -225,6 +225,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     {
                         ID = item.MotionID,
                         Bidirectional = item.Bidirectional,
+                        Configs = FindConfigsForMotion(task, item.ConfigIDs),
                         Name = item.Name
                     };
                 }
@@ -239,6 +240,17 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 task.Hierarchy.Motions.Add(motion);
             }
         }
+
+        private List<Config> FindConfigsForMotion(NewGeneralTask task, List<int> configIDs)
+        {
+            var configs = new List<Config>();
+            foreach (var item in configIDs)
+            {
+                configs.Add(task.Hierarchy.GetConfigByID(item));
+            }
+            return configs;
+        }
+
         public new void FillBySEQTokens(SEQTokenizer tokenizer)
         {
             TaskType = tokenizer.GetStringByHeader("TaskType");
@@ -253,7 +265,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             AddInMotionChangeoverToCost = tokenizer.GetBoolByHeader("AddInMotionChangeoverToCost");
             AddMotionLengthToCost = tokenizer.GetBoolByHeader("AddMotionLengthToCost");
             IdlePenalty = tokenizer.GetDoubleByHeader("IdlePenalty");
-           // Line.BIDIRECTIONAL_DEFAULT = BidirectionMotionDefault;
+            BidirectionMotionDefault = tokenizer.GetBoolByHeader("BidirectionMotionDefault");
             DistanceFunction = new DistanceFunctionSerializationObject();
             DistanceFunction.FillBySEQTokens(tokenizer);
             if ((ConfigList == null || ConfigList.Count == 0) & DistanceFunction.Function == "Matrix")
