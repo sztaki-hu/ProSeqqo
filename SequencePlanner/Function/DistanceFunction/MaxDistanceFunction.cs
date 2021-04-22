@@ -1,5 +1,5 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
+﻿using SequencePlanner.GeneralModels;
+using SequencePlanner.Helper;
 using System;
 
 namespace SequencePlanner.Function.DistanceFunction
@@ -9,28 +9,28 @@ namespace SequencePlanner.Function.DistanceFunction
         public override string FunctionName { get { return "Max"; } }
 
 
-        public override double ComputeDistance(Position A, Position B)
+        public override double ComputeDistance(Config A, Config B)
         {
             if (A == null || B == null)
                 throw new SeqException("MaxDistanceFunction A/B position null!");
-            if (A.Dimension != B.Dimension)
-                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
+            if (A.Configuration.Count != B.Configuration.Count)
+                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.ID + ", " + B.ID);
 
-            if (A.Vector.Length == B.Vector.Length)
+            if (A.Configuration.Count == B.Configuration.Count)
             {
                 double max = 0;
-                for (int i = 0; i < A.Vector.Length; i++)
+                for (int i = 0; i < A.Configuration.Count; i++)
                 {
-                    if (Math.Abs(A.Vector[i] - B.Vector[i]) > max)
+                    if (Math.Abs(A.Configuration[i] - B.Configuration[i]) > max)
                     {
-                        max = Math.Abs(A.Vector[i] - B.Vector[i]);
+                        max = Math.Abs(A.Configuration[i] - B.Configuration[i]);
                     }
                 }
                 return max;
             }
             else
             {
-                SeqLogger.Error("MaxDistanceFunction find dimension mismatch position userids: " + A.UserID + "-" + B.UserID);
+                SeqLogger.Error("MaxDistanceFunction find dimension mismatch position userids: " + A.ID + "-" + B.ID);
                 return 0;
             }
         }

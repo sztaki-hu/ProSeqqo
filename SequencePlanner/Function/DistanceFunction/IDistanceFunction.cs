@@ -1,5 +1,5 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
+﻿using SequencePlanner.GeneralModels;
+using SequencePlanner.Helper;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
@@ -7,8 +7,7 @@ namespace SequencePlanner.Function.DistanceFunction
     {
         public string FunctionName { get; }
 
-
-        public double ComputeDistance(Position A, Position B);
+        public double ComputeDistance(Config A, Config B);
         public void Validate();
         public void ToLog(LogLevel level);
     }

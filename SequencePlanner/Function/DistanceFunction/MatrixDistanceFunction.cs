@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Helper;
+﻿using SequencePlanner.GeneralModels;
+using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System.Collections.Generic;
 
@@ -19,27 +20,27 @@ namespace SequencePlanner.Function.DistanceFunction
         }
 
 
-        public override double ComputeDistance(Position A, Position B)
+        public override double ComputeDistance(Config A, Config B)
         {
             if (A == null || B == null)
                 throw new SeqException("MatrixDistanceFunction A/B position null!");
-            if (A.Dimension != B.Dimension)
-                throw new SeqException("MatrixDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
+            if (A.Configuration.Count != B.Configuration.Count)
+                throw new SeqException("MatrixDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.ID + ", " + B.ID);
 
             var aid = -1;
             var bid = -1;
             for (int i = 0; i < IDHeader.Count; i++)
             {
-                if (IDHeader[i] == A.UserID)
+                if (IDHeader[i] == A.ID)
                     aid = i;
-                if (IDHeader[i] == B.UserID)
+                if (IDHeader[i] == B.ID)
                     bid = i;
             }
 
             if (aid == -1)
-                throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + A.UserID + "] " + A.Name);
+                throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + A.ID + "] " + A.Name);
             if (bid == -1)
-                throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + B.UserID + "] " + B.Name);
+                throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + B.ID + "] " + B.Name);
 
             return CostMatrix[aid][bid];
         }

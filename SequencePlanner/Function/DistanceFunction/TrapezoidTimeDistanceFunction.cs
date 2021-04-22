@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Helper;
+﻿using SequencePlanner.GeneralModels;
+using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using System;
 
@@ -22,7 +23,7 @@ namespace SequencePlanner.Function.DistanceFunction
         }
 
 
-        public override double ComputeDistance(Position A, Position B)
+        public override double ComputeDistance(Config A, Config B)
         {
             return TrapezoidTimeCalculation(A, B, false);
         }
@@ -48,21 +49,21 @@ namespace SequencePlanner.Function.DistanceFunction
             }
         }
 
-        protected double TrapezoidTimeCalculation(Position A, Position B, bool withTieBreaker)
+        protected double TrapezoidTimeCalculation(Config A, Config B, bool withTieBreaker)
         {
             if (A == null || B == null)
                 throw new SeqException("TrapezoidTimeDistanceFunction A/B position null!");
-            if (A.Dimension != B.Dimension)
-                throw new SeqException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of Positions with UserID:" + A.UserID + ", " + B.UserID);
-            int Dimension = A.Dimension;
-            if (B.Dimension == Dimension && MaxAcceleration.Length == Dimension && MaxSpeed.Length == Dimension)
+            if (A.Configuration.Count != B.Configuration.Count)
+                throw new SeqException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of Positions with UserID:" + A.ID + ", " + B.ID);
+            int Dimension = A.Configuration.Count;
+            if (B.Configuration.Count == Dimension && MaxAcceleration.Length == Dimension && MaxSpeed.Length == Dimension)
             {
                 double maxTime = 0;
                 double sumTime = 0;
                 // Max of joint travel times
                 for (int i = 0; i < Dimension; i++)
                 {
-                    double angleDiff = Math.Abs(A.Vector[i] - B.Vector[i]);
+                    double angleDiff = Math.Abs(A.Configuration[i] - B.Configuration[i]);
                     // This version is for the 2*PI simmetry
                     //double angleDiff = min(abs(c1.x[i] - c2.x[i]), min(abs(c1.x[i] - c2.x[i] + TWOPI), abs(c1.x[i] - c2.x[i] - TWOPI)));
                     double time;

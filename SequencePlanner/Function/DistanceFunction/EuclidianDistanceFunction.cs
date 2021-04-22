@@ -1,5 +1,5 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
+﻿using SequencePlanner.GeneralModels;
+using SequencePlanner.Helper;
 using System;
 
 namespace SequencePlanner.Function.DistanceFunction
@@ -9,17 +9,17 @@ namespace SequencePlanner.Function.DistanceFunction
         public override string FunctionName { get { return "Euclidian"; } }
 
 
-        public override double ComputeDistance(Position A, Position B)
+        public override double ComputeDistance(Config A, Config B)
         {
             if (A == null || B == null)
                 throw new SeqException("EuclidianDistanceFunction A/B position null!");
-            if (A.Dimension != B.Dimension)
-                throw new SeqException("EuclidianDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID + ", " + B.UserID);
+            if (A.Configuration.Count != B.Configuration.Count)
+                throw new SeqException("EuclidianDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.ID + ", " + B.ID);
 
             double tmp = 0;
-            for (int i = 0; i < A.Vector.Length; i++)
+            for (int i = 0; i < A.Configuration.Count; i++)
             {
-                tmp += (A.Vector[i] - B.Vector[i]) * (A.Vector[i] - B.Vector[i]);
+                tmp += (A.Configuration[i] - B.Configuration[i]) * (A.Configuration[i] - B.Configuration[i]);
             }
             return Math.Sqrt(tmp);
         }

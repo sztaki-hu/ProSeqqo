@@ -1,4 +1,4 @@
-﻿using SequencePlanner.Model;
+﻿using SequencePlanner.GeneralModels;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
@@ -10,7 +10,7 @@ namespace SequencePlanner.Function.DistanceFunction
         public TrapezoidTimeWithTimeBreakerDistanceFunction(double[] maxAcceleration, double[] maxSpeed): base(maxAcceleration, maxSpeed){}
         
 
-        public override double ComputeDistance(Position A, Position B)
+        public override double ComputeDistance(Config A, Config B)
         {
             return TrapezoidTimeCalculation(A, B, true);
         }
