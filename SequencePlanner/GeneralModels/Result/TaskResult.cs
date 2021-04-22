@@ -33,6 +33,7 @@ namespace SequencePlanner.GeneralModels.Result
             SolutionMotion = new List<Motion>();
             SolutionConfig = new List<Config>();
             SolutionHierarchy = new List<HierarchyRecord>();
+            Costs = new List<double>();
             CostsBetweenConfigs = new List<DetailedConfigCost>();
             CostsBetweenMotions = new List<DetailedMotionCost>();
         }
@@ -47,6 +48,15 @@ namespace SequencePlanner.GeneralModels.Result
             SeqLogger.WriteLog(logLevel, "MIP Solver Time: " + PreSolverTime);
             SeqLogger.WriteLog(logLevel, "Full Cost: " + Cost);
             SeqLogger.WriteLog(logLevel, "Solution MotionIDs:" + Solution.ToListString());
+            SeqLogger.WriteLog(logLevel, "Full Cost: " + Costs.ToListString());
+            
+            SeqLogger.WriteLog(logLevel, "Motion Costs: ");
+            SeqLogger.Indent++;
+            foreach (var c in CostsBetweenMotions)
+            {
+                SeqLogger.WriteLog(logLevel,"\t" + c.ToString());
+            }
+            SeqLogger.Indent--;
         }
     }
 }

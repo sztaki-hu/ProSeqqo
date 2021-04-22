@@ -24,6 +24,11 @@ namespace SequencePlanner.Function.ResourceFunction
             return LinkingFunction.ComputeResourceDistanceCost(Cost, distance);
         }
 
+        public double GetResourceCost(Config A, Config B)
+        {
+            return Cost;
+        }
+
         public void Validate()
         {
             SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(ConstantResourceFunction));

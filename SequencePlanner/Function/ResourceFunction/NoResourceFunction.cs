@@ -11,6 +11,7 @@ namespace SequencePlanner.Function.ResourceFunction
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
 
         public double ComputeResourceCost(Config A, Config B, double distance) => distance;
+        public double GetResourceCost(Config A, Config B) => 0;
         public void Validate(){
             SeqLogger.Debug("ResourceFunction: " + FunctionName);
         }

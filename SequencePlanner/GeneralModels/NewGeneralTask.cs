@@ -125,6 +125,16 @@ namespace SequencePlanner.GeneralModels
                     if (taskResult.SolutionConfig.Count > 1)
                         taskResult.CostsBetweenConfigs.Add(CostManager.GetDetailedConfigCost(taskResult.SolutionConfig[i - 1], taskResult.SolutionConfig[i]));
                 }
+                for (int i = 1; i < taskResult.SolutionMotion.Count; i++)
+                {
+                    DetailedMotionCost detailedMotionCost = null;
+                    if (taskResult.SolutionMotion.Count > 1)
+                    {
+                        detailedMotionCost = CostManager.GetDetailedMotionCost(taskResult.SolutionMotion[i - 1], taskResult.SolutionMotion[i]);
+                        taskResult.CostsBetweenMotions.Add(detailedMotionCost);
+                        taskResult.Costs.Add(detailedMotionCost.FinalCost);
+                    }
+                }
             }
 
             taskResult = DepotMapper.ResolveSolution(taskResult);

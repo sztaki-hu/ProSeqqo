@@ -47,6 +47,30 @@ namespace SequencePlanner.Function.ResourceFunction
             return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
         }
 
+        public double GetResourceCost(Config A, Config B)
+        {
+            if (A.Resource.ID == -1)
+                throw new SeqException("Position with UserID: " + A.ID + " has no ResourceID: -1");
+            if (B.Resource.ID == -1)
+                throw new SeqException("Position with UserID: " + B.ID + " has no ResourceID: -1");
+            var ida = -1;
+            var idb = -1;
+            for (int i = 0; i < CostMatrixIDHeader.Count; i++)
+            {
+                if (CostMatrixIDHeader[i] == A.Resource.ID)
+                    ida = i;
+                if (CostMatrixIDHeader[i] == B.Resource.ID)
+                    idb = i;
+                if (ida != -1 && idb != -1)
+                    return CostMatrix[ida][idb];
+            }
+            if (ida == -1)
+                throw new SeqException("Position with ResourceID: " + A.Resource.ID + " not contained by CostMatrixIDHeader");
+            if (idb == -1)
+                throw new SeqException("Position with ResourceID: " + B.Resource.ID + " not contained by CostMatrixIDHeader");
+            return CostMatrix[ida][idb];
+        }
+
         public void Validate()
         {
             if(CostMatrixIDHeader.Count != CostMatrix.Count)

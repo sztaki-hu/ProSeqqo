@@ -10,6 +10,7 @@ namespace SequencePlanner.Function.ResourceFunction
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
 
         public double ComputeResourceCost(Config A, Config B, double distance);
+        public double GetResourceCost(Config A, Config B);
         public void Validate();
         public void ToLog(LogLevel level);
     }

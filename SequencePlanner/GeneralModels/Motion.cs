@@ -7,7 +7,8 @@ namespace SequencePlanner.GeneralModels
         public int SequenceMatrixID { get; set; }
         public List<Config> Configs { get; set; }
         public bool Bidirectional { get; set; }
-        public double Length { get; set; }
+        public double Cost { get; set; }
+        public double ResourceChangeoverCostInCost { get; set; }
         public double StricLength { get; set; }
         public Config FirstConfig { get { if (Configs.Count > 0) return Configs[0]; else return null; } }
         public Config LastConfig { get { if (Configs.Count > 0) return Configs[^1]; else return null; } }
@@ -39,7 +40,10 @@ namespace SequencePlanner.GeneralModels
 
         public override string ToString()
         {
-            return ID+"-"+Name;
+            string temp = ID.ToString();
+            if (Name is not null && !Name.Equals(""))
+                temp += "-" + Name;
+            return temp;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace SequencePlanner.GeneralModels
             for (int i = 0; i < Task.Hierarchy.Motions.Count; i++)
             {
                 Task.Hierarchy.Motions[i].SequenceMatrixID = i;
-                Task.CostManager.ComputeLength(Task.Hierarchy.Motions[i]);
+                Task.CostManager.ComputeCost(Task.Hierarchy.Motions[i]);
             }
 
             for (int i = 0; i < Task.Hierarchy.Motions.Count; i++)
