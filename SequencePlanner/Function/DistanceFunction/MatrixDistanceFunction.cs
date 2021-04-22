@@ -1,7 +1,6 @@
-﻿using SequencePlanner.GeneralModels;
+﻿using System.Collections.Generic;
 using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System.Collections.Generic;
+using SequencePlanner.GeneralModels;
 
 namespace SequencePlanner.Function.DistanceFunction
 {

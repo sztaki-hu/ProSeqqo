@@ -1,9 +1,9 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
 using System;
 using System.Collections.Generic;
+using SequencePlanner.Helper;
+using SequencePlanner.GeneralModels;
+using SequencePlanner.Function.DistanceFunction;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SequencerTest.Units.DistanceFunction
 {
@@ -11,20 +11,20 @@ namespace SequencerTest.Units.DistanceFunction
     public class DistanceFunctionTest
     {
         IDistanceFunction func;
-        Position A;
-        Position B;
-        Position C;
-        Position D;
-        Position E;
+        Config A;
+        Config B;
+        Config C;
+        Config D;
+        Config E;
 
         [TestInitialize()]
         public void Initialize()
         {
-            A = new Position() { Vector = new double[] { 0, 0, 0 } };
-            B = new Position() { Vector = new double[] { 5, 0, 0 } };
-            C = new Position() { Vector = new double[] { 0, 5, 0 } };
-            D = new Position() { Vector = new double[] { 0, 0, 5 } };
-            E = new Position() { Vector = new double[] { 5, 5, 5 } };
+            A = new Config(1,new List<double> { 0, 0, 0 } );
+            B = new Config(1,new List<double> { 5, 0, 0 } );
+            C = new Config(1,new List<double> { 0, 5, 0 } );
+            D = new Config(1,new List<double> { 0, 0, 5 } );
+            E = new Config(1,new List<double> { 5, 5, 5 } );
         }
 
         [TestMethod()]
