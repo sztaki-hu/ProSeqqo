@@ -1,6 +1,7 @@
 ﻿using SequencePlanner.GeneralModels.Result;
-using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.Helper;
+using System;
+using System.Collections.Generic;
 
 namespace SequencePlanner.GeneralModels
 {
@@ -11,6 +12,8 @@ namespace SequencePlanner.GeneralModels
         private NewGeneralTask Task { get; set; }
         private TaskResult Result { get; set; }
         private DepotChangeType DepotChangeType { get; set; }
+        private Config StartDepotConfig { get; set; }
+        private Config FinishDepotConfig { get; set; }
         private Motion StartDepot { get; set; }
         private Motion FinishDepot { get; set; }
         public Motion ORToolsStartDepot { get; set; }
@@ -26,8 +29,7 @@ namespace SequencePlanner.GeneralModels
 
         public void Change()
         {
-            StartDepot = Task.StartDepot;
-            FinishDepot = Task.FinishDepot;
+            CreateMotionForDepos();
             if (Task.Cyclic)
                 DepotChangeType = DepotChangeType.CyclicStartDepot;
             else
@@ -50,9 +52,15 @@ namespace SequencePlanner.GeneralModels
                 case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepot(); break;
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepot(); break;
             }
+            Task.StartDepot = ORToolsStartDepot;
+            Task.FinishDepot = ORToolsFinishDepot;
         }
+
+        
+
         public void ChangeBack()
         {
+            RemoveMotionForDepots();
             switch (DepotChangeType)
             {
                 case DepotChangeType.CyclicStartDepot: CyclicStartDepotReverse(); break;
@@ -62,6 +70,31 @@ namespace SequencePlanner.GeneralModels
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepotReverse(); break;
             }
         }
+
+        private void CreateMotionForDepos()
+        {
+            StartDepotConfig = Task.StartDepotConfig;
+            FinishDepotConfig = Task.FinishDepotConfig;
+            StartDepot = Task.StartDepot;
+            FinishDepot = Task.FinishDepot;
+            if (StartDepotConfig != null)
+            {
+                StartDepot = CreateMotion(StartDepotConfig, "StartDepot");
+            }
+            if (FinishDepotConfig != null)
+            {
+                FinishDepot = CreateMotion(FinishDepotConfig, "FinishDepot");
+            }
+        }
+
+        private void RemoveMotionForDepots()
+        {
+            if (StartDepot != null)
+                Task.Hierarchy.DeleteMotion(StartDepot);
+            if (FinishDepot != null)
+                Task.Hierarchy.DeleteMotion(FinishDepot);
+        }
+
         public TaskResult ResolveSolution(TaskResult result)
         {
             Result = result;
@@ -100,7 +133,9 @@ namespace SequencePlanner.GeneralModels
         private void NotCyclicStartFinishDepot()
         {
             ORToolsStartDepot = StartDepot;
+            Task.StartDepot = StartDepot;
             ORToolsFinishDepot = FinishDepot;
+            Task.FinishDepot = FinishDepot;
         }
 
         //REVERSE
@@ -172,6 +207,44 @@ namespace SequencePlanner.GeneralModels
 
             return motion;
         }
+
+        private Motion CreateMotion(Config config, string name)
+        {
+            Motion motion = new Motion()
+            {
+                ID = 999999,
+                Name = name,
+                Virtual = true,
+                Configs = new List<Config>() { config }
+            };
+
+            Task t = new Task()
+            {
+                ID = 999999,
+                Name = name,
+                Virtual = true
+            };
+
+            Alternative alternative = new Alternative()
+            {
+                ID = 999999,
+                Name = name,
+                Virtual = true
+            };
+
+            Process process = new Process()
+            {
+                ID = 999999,
+                Name = name,
+                Virtual = true
+            };
+
+            Record = new HierarchyRecord() { Process = process, Alternative = alternative, Task = t, Motion = motion };
+            Task.Hierarchy.HierarchyRecords.Add(Record);
+            Task.Hierarchy.Motions.Add(motion);
+            return motion;
+        }
+
         private void DeleteVirualNode(NewGeneralTask task)
         {
             task.Hierarchy.HierarchyRecords.Remove(Record);

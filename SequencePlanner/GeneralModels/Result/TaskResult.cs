@@ -19,5 +19,14 @@ namespace SequencePlanner.GeneralModels.Result
         public double Cost { get; set; }
         public List<Cost<Motion>> CostsBetweenMotions { get; set; }
         public List<Cost<Config>> CostsBetweenConfigs { get; set; }
+
+        public TaskResult()
+        {
+            Solution = new List<int>();
+            SolutionMotion = new List<Motion>();
+            SolutionConfig = new List<Config>();
+            SolutionHierarchy = new List<HierarchyRecord>();
+
+        }
     }
 }

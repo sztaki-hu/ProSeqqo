@@ -9,6 +9,8 @@ namespace SequencePlanner.GeneralModels
         public bool Bidirectional { get; set; }
         public double Length { get; set; }
         public double StricLength { get; set; }
+        public Config FirstConfig { get { if (Configs.Count > 0) return Configs[0]; else return null; } }
+        public Config LastConfig { get { if (Configs.Count > 0) return Configs[^1]; else return null; } }
 
 
         public Motion():base()
@@ -20,17 +22,24 @@ namespace SequencePlanner.GeneralModels
             Configs = new List<Config>();
         }
 
-        public Motion(int id, Config a, Config b): base(id, id+"-Motion") {
-        
+        public Motion(int id, Config a, Config b): base(id, id+"-Motion")
+        {
+            
         }
+
         public Motion(int id, Config config) : base(id, id+"-Motion")
         {
-
+            
         }
 
         public Motion(int id, List<Config> motion): base(id, id+"-Motion")
         {
 
+        }
+
+        public override string ToString()
+        {
+            return ID+"-"+Name;
         }
     }
 }

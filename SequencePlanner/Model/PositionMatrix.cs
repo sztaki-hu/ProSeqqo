@@ -83,7 +83,7 @@ namespace SequencePlanner.Model
                 Matrix[A.Node.SequencingID, B.Node.SequencingID] = B.OverrideWeightOut;
                 return B.OverrideWeightOut;
             }
-            double weight;
+            double weight = 0;
             if (A.Node.Virtual || B.Node.Virtual)
                 weight = 0;
             else
@@ -91,9 +91,9 @@ namespace SequencePlanner.Model
                 var strict = GetStrictEdgeWeight(A.Out, B.In);
                 if (strict is not null)
                     weight = strict.Weight;
-                else
-                    weight = DistanceFunction.ComputeDistance(A.Out, B.In);
-                weight = ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
+                //else
+                    //weight = DistanceFunction.ComputeDistance(A.Out, B.In);
+                //weight = ResourceFunction.ComputeResourceCost(A.Out, B.In, weight);
             }
             if (A.AdditionalWeightOut > 0)
                 weight += A.AdditionalWeightOut;
@@ -105,14 +105,14 @@ namespace SequencePlanner.Model
 
         public double CalculateWeight(Position A, Position B)
         {
-            double weight;
+            double weight = 0;
             if (A.Virtual || B.Virtual)
                 weight = 0;
             else
             {
-                weight = DistanceFunction.ComputeDistance(A, B);
-                if(UseResourceInLineLength)
-                    weight = ResourceFunction.ComputeResourceCost(A, B, weight);
+                //weight = DistanceFunction.ComputeDistance(A, B);
+                //if(UseResourceInLineLength)
+                    //weight = ResourceFunction.ComputeResourceCost(A, B, weight);
             }
             return weight;
         }

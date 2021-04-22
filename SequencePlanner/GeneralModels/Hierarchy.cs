@@ -40,7 +40,28 @@ namespace SequencePlanner.GeneralModels
         {
             return HierarchyRecords.Where(r => r.Process.GlobalID == process.GlobalID)
                                    .Select(r => r.Task)
+                                   .OrderBy(r => r.ID)
                                    .ToList();
+        }
+
+        public List<Task> GetFirstTasksOfAlternativesInProcesses(Process process)
+        {
+            var tasks = new List<Task>();
+            foreach (var alternative in GetAlternativesOf(process))
+            {
+                tasks.Add(GetOrderedTasksOf(alternative)[0]);
+            }
+            return tasks;
+        }
+
+        public List<Task> GetLastTasksOfAlternativesInProcess(Process process)
+        {
+            var tasks = new List<Task>();
+            foreach (var alternative in GetAlternativesOf(process))
+            {
+                tasks.Add(GetOrderedTasksOf(alternative)[^-1]);
+            }
+            return tasks;
         }
 
         public List<Motion> GetMotionsOf(Process process)
@@ -93,6 +114,15 @@ namespace SequencePlanner.GeneralModels
         {
             return HierarchyRecords.Where(r => r.Alternative.GlobalID == alternative.GlobalID)
                                    .Select(r => r.Task)
+                                   .ToList();
+        }
+
+        public List<Task> GetOrderedTasksOf(Alternative alternative)
+        {
+            return HierarchyRecords.Where(r => r.Alternative.GlobalID == alternative.GlobalID)
+                                   .Select(r => r.Task)
+                                   .OrderBy(r => r.ID)
+                                   .Distinct()
                                    .ToList();
         }
 
@@ -166,6 +196,10 @@ namespace SequencePlanner.GeneralModels
         {
             return HierarchyRecords.Where(r => r.Motion.ID == id).Select(r => r.Motion).FirstOrDefault();
         }
+        public Motion GetMotionBySeqID(int id)
+        {
+            return HierarchyRecords.Where(r => r.Motion.SequenceMatrixID == id).Select(r => r.Motion).FirstOrDefault();
+        }
 
         public Process GetProcessOf(Motion motion)
         {
@@ -198,6 +232,39 @@ namespace SequencePlanner.GeneralModels
             return HierarchyRecords.Where(r => r.Motion.GlobalID == motion.GlobalID)
                                    .Select(r => r.Motion)
                                    .ToList();
+        }
+
+        public List<Motion> GetMotionsOfFirstTasksOfAlternativesInProcesses(Process process)
+        {
+            var motions = new List<Motion>();
+            foreach (var alternative in GetAlternativesOf(process))
+            {
+                foreach (var item in GetMotionsOf(GetOrderedTasksOf(alternative)[0]))
+                {
+                    motions.Add(item);
+                }
+            }
+            return motions;
+        }
+
+        public List<Motion> GetMotionsOfLastTasksOfAlternativesInProcesses(Process process)
+        {
+            var motions = new List<Motion>();
+            foreach (var alternative in GetAlternativesOf(process))
+            {
+                if (GetTasksOf(alternative).Count > 0)
+                {
+                    List<Task> tasks = GetOrderedTasksOf(alternative);
+                    motions = GetMotionsOf(tasks[tasks.Count-1]);
+                }
+            }
+            return motions;
+        }
+
+        public void DeleteMotion(Motion motion)
+        {
+            Motions.Remove(motion);
+            HierarchyRecords.Remove(HierarchyRecords.Where(r => r.Motion.GlobalID == motion.GlobalID).FirstOrDefault());
         }
 
         public Config GetConfigByID(int id)

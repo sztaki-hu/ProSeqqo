@@ -10,10 +10,10 @@ namespace SequencePlanner.GeneralModels
     {
         public bool Validate { get; set; }
         public bool Cyclic { get; set; }
+        public Config StartDepotConfig { get; set; }
+        public Config FinishDepotConfig { get; set; }
         public Motion StartDepot { get; set; }
         public Motion FinishDepot { get; set; }
-
-
         public CostManager CostManager { get; set; }
         public Hierarchy Hierarchy { get; set; }
         public SolverSettings SolverSettings { get; set; }
@@ -29,6 +29,8 @@ namespace SequencePlanner.GeneralModels
         {
             Validate = true;
             Cyclic = true;
+            StartDepotConfig = null;
+            FinishDepotConfig = null;
             StartDepot = null;
             FinishDepot = null;
             CostManager = new CostManager();
@@ -36,7 +38,7 @@ namespace SequencePlanner.GeneralModels
             SolverSettings = new SolverSettings();
             ProcessPrecedences    = new List<ProcessPrecedence>();
             MotionPrecedences    = new List<MotionPrecedence>();
-            PCGTSPRepresentation = new PCGTSPRepresentation();
+            PCGTSPRepresentation = new PCGTSPRepresentation(this);
             DepotMapper = new NewGeneraDepotMapper(this);
             ShortcutMapper = new GeneralShortcutMapper(this);
             InitialSolver = new InitialSolver(this);
@@ -48,11 +50,9 @@ namespace SequencePlanner.GeneralModels
             ValidateTask();
             DepotMapper.Change();
             ShortcutMapper.Change();
-            PCGTSPRepresentation.Build(Hierarchy, CostManager);
+            PCGTSPRepresentation.Build();
             InitialSolver.CreateInitialSolution();
             var result = RunTask();
-            result = DepotMapper.ResolveSolution(result);
-            result = ShortcutMapper.ResolveSolution(result);  
             DepotMapper.ChangeBack();
             ShortcutMapper.ChangeBack();
             return result;
@@ -76,15 +76,35 @@ namespace SequencePlanner.GeneralModels
             };
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
             orTools.Build();
-            return null;
-            //var orToolsResult = orTools.Solve();
-            //var result = ResolveSolution(orToolsResult);
-            //return result;
+            var orToolsResult = orTools.Solve();
+            var result = ResolveSolution(orToolsResult);
+            return result;
         }
 
-        private TaskResult ResolveSolution(TaskResult result)
+        private TaskResult ResolveSolution(ORToolsResult result)
         {
-            throw new NotImplementedException();
+
+            TaskResult taskResult = new TaskResult()
+            {
+                StatusCode = result.StatusCode,
+                StatusMessage = result.StatusMessage
+            };
+            if(result.StatusCode==1)
+                foreach (var item in result.Solution)
+                {
+                    taskResult.Solution.Add(item);
+                    var motion = Hierarchy.GetMotionBySeqID(item);
+                    if (motion == null)
+                        throw new SeqException("OR-Tools solution seqID can not be resolved: "+ item);
+                    foreach (var config in motion.Configs)
+                    {
+                        taskResult.SolutionConfig.Add(config);
+                    }
+                    Console.WriteLine(motion);
+                }
+            taskResult = DepotMapper.ResolveSolution(taskResult);
+            taskResult = ShortcutMapper.ResolveSolution(taskResult);
+            return taskResult;
         }
     }
 }

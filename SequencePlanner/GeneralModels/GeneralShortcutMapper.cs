@@ -1,5 +1,6 @@
 ﻿using SequencePlanner.GeneralModels.Result;
 using SequencePlanner.GTSPTask.Result;
+using System;
 
 namespace SequencePlanner.GeneralModels
 {
@@ -13,17 +14,26 @@ namespace SequencePlanner.GeneralModels
 
         public void Change()
         {
-            throw new System.NotImplementedException();
+            if (!Task.SolverSettings.UseShortcutInAlternatives)
+                return;
+            else
+                throw new NotImplementedException();
         }
 
         public void ChangeBack()
         {
-            throw new System.NotImplementedException();
+            if (!Task.SolverSettings.UseShortcutInAlternatives)
+                return;
+            else
+                throw new NotImplementedException();
         }
 
         public TaskResult ResolveSolution(TaskResult generalTaskReult)
         {
-            return generalTaskReult;
+            if (!Task.SolverSettings.UseShortcutInAlternatives)
+                return generalTaskReult;
+            else
+                throw new NotImplementedException();
         }
     }
 }
