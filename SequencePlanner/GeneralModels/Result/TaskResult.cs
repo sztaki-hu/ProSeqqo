@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.GeneralModels.Result
 {
     public class TaskResult
     {
-        public DateTime FullTime {get;set;}
-        public DateTime SolverTime {get;set;}
-        public DateTime PreSolverTime {get;set;}
+        public TimeSpan FullTime {get;set;}
+        public TimeSpan SolverTime {get;set;}
+        public TimeSpan PreSolverTime {get;set;}
         public int StatusCode { get; set; }
         public string StatusMessage { get; set; }
         public string ErrorMessage { get; set; }
@@ -17,16 +18,35 @@ namespace SequencePlanner.GeneralModels.Result
         public List<HierarchyRecord> SolutionHierarchy { get; set; }
         public List<double> Costs { get; set; }
         public double Cost { get; set; }
-        public List<Cost<Motion>> CostsBetweenMotions { get; set; }
-        public List<Cost<Config>> CostsBetweenConfigs { get; set; }
+        public List<DetailedMotionCost> CostsBetweenMotions { get; set; }
+        public List<DetailedConfigCost> CostsBetweenConfigs { get; set; }
 
         public TaskResult()
         {
+            StatusCode = -1;
+            StatusMessage = "Result initalized.";
+            ErrorMessage = "No Error";
+            FullTime = new TimeSpan();
+            SolverTime = new TimeSpan();
+            PreSolverTime = new TimeSpan();
             Solution = new List<int>();
             SolutionMotion = new List<Motion>();
             SolutionConfig = new List<Config>();
             SolutionHierarchy = new List<HierarchyRecord>();
+            CostsBetweenConfigs = new List<DetailedConfigCost>();
+            CostsBetweenMotions = new List<DetailedMotionCost>();
+        }
 
+        public void ToLog(LogLevel logLevel)
+        {
+            SeqLogger.WriteLog(logLevel, "Status code: " + StatusCode);
+            SeqLogger.WriteLog(logLevel, "Status message: " + StatusMessage);
+            SeqLogger.WriteLog(logLevel, "Error message: " + ErrorMessage);
+            SeqLogger.WriteLog(logLevel, "Full Time:" + FullTime);
+            SeqLogger.WriteLog(logLevel, "Solver Time: " + SolverTime);
+            SeqLogger.WriteLog(logLevel, "MIP Solver Time: " + PreSolverTime);
+            SeqLogger.WriteLog(logLevel, "Full Cost: " + Cost);
+            SeqLogger.WriteLog(logLevel, "Solution MotionIDs:" + Solution.ToListString());
         }
     }
 }

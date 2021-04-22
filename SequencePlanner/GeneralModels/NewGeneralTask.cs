@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using SequencePlanner.GeneralModels.Result;
 using SequencePlanner.Helper;
 using SequencePlanner.OR_Tools;
@@ -24,6 +25,7 @@ namespace SequencePlanner.GeneralModels
         private NewGeneraDepotMapper DepotMapper { get; set; }
         private GeneralShortcutMapper ShortcutMapper { get; set; }
         private InitialSolver InitialSolver { get; set; }
+        private Stopwatch Timer { get; set; }
 
         public NewGeneralTask()
         {
@@ -42,11 +44,13 @@ namespace SequencePlanner.GeneralModels
             DepotMapper = new NewGeneraDepotMapper(this);
             ShortcutMapper = new GeneralShortcutMapper(this);
             InitialSolver = new InitialSolver(this);
+            Timer = new Stopwatch();
         }
 
 
         public Result.TaskResult Run()
         {
+            Timer.Restart();
             ValidateTask();
             DepotMapper.Change();
             ShortcutMapper.Change();
@@ -55,6 +59,8 @@ namespace SequencePlanner.GeneralModels
             var result = RunTask();
             DepotMapper.ChangeBack();
             ShortcutMapper.ChangeBack();
+            Timer.Stop();
+            result.FullTime = Timer.Elapsed;
             return result;
         }
 
@@ -87,21 +93,40 @@ namespace SequencePlanner.GeneralModels
             TaskResult taskResult = new TaskResult()
             {
                 StatusCode = result.StatusCode,
-                StatusMessage = result.StatusMessage
+                StatusMessage = result.StatusMessage,
+                SolverTime = result.Time,
+                PreSolverTime = InitialSolver.Time
             };
-            if(result.StatusCode==1)
+
+            if (result.StatusCode == 1)
+            {
                 foreach (var item in result.Solution)
                 {
-                    taskResult.Solution.Add(item);
                     var motion = Hierarchy.GetMotionBySeqID(item);
-                    if (motion == null)
-                        throw new SeqException("OR-Tools solution seqID can not be resolved: "+ item);
-                    foreach (var config in motion.Configs)
+                    if (motion != null)
                     {
-                        taskResult.SolutionConfig.Add(config);
+                        taskResult.SolutionHierarchy.Add(Hierarchy.GetRecordByMotionID(motion.ID));
+                        taskResult.Solution.Add(motion.ID);
+                        taskResult.SolutionMotion.Add(motion);
+                        foreach (var config in motion.Configs)
+                        {
+                            taskResult.SolutionConfig.Add(config);
+                        }
+                        Console.WriteLine(motion);
                     }
-                    Console.WriteLine(motion);
+                    else
+                    {
+                        throw new SeqException("OR-Tools solution seqID can not be resolved: " + item);
+                    }
                 }
+
+                for (int i = 1; i < taskResult.SolutionConfig.Count; i++)
+                {
+                    if (taskResult.SolutionConfig.Count > 1)
+                        taskResult.CostsBetweenConfigs.Add(CostManager.GetDetailedConfigCost(taskResult.SolutionConfig[i - 1], taskResult.SolutionConfig[i]));
+                }
+            }
+
             taskResult = DepotMapper.ResolveSolution(taskResult);
             taskResult = ShortcutMapper.ResolveSolution(taskResult);
             return taskResult;
