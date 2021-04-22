@@ -14,7 +14,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         {
             Weights = new List<StrictEdgeWeightSerializationObject>();
         }
-        public StrictEdgeWeightSetSerializationObject(List<ConfigCost> costs)
+        public StrictEdgeWeightSetSerializationObject(List<DetailedConfigCost> costs)
         {
             Weights = new List<StrictEdgeWeightSerializationObject>();
             foreach (var item in costs)

@@ -1,6 +1,6 @@
 ﻿namespace SequencePlanner.GeneralModels
 {
-    public class ConfigCost: Cost<Config>
+    public class DetailedConfigCost: DetailedCost<Config>
     {
     }
 }

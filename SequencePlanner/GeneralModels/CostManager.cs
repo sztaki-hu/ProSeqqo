@@ -9,7 +9,7 @@ namespace SequencePlanner.GeneralModels
     {
         public IDistanceFunction DistanceFunction { get; set; }
         public IResourceFunction ResourceFunction { get; set; }
-        public List<ConfigCost> OverrideCost { get; set; }
+        public List<DetailedConfigCost> OverrideCost { get; set; }
         public double IdlePenalty{ get; set; }
         public bool AddMotionLengthToCost { get; set; }
         public bool AddInMotionChangeoverToCost { get; set; }
@@ -20,7 +20,7 @@ namespace SequencePlanner.GeneralModels
             DistanceFunction = new EuclidianDistanceFunction();
             ResourceFunction = new NoResourceFunction();
             IdlePenalty = 0;
-            OverrideCost = new List<ConfigCost>();
+            OverrideCost = new List<DetailedConfigCost>();
         }
 
         public double ComputeCost(Config From, Config To)
@@ -46,7 +46,7 @@ namespace SequencePlanner.GeneralModels
             //    return To.OverrideWeightOut;
             
             double weight;
-            List<ConfigCost> strict = new List<ConfigCost>();
+            List<DetailedConfigCost> strict = new List<DetailedConfigCost>();
             if (From.Configs.Count>0 && To.Configs.Count>0)
                 strict = GetCostOverrides(From.LastConfig, To.FirstConfig);
             if (strict is not null && strict.Count>0)
@@ -73,9 +73,9 @@ namespace SequencePlanner.GeneralModels
             motion.Length = cost;
         }
 
-        public List<ConfigCost> GetCostOverrides(Config A, Config B)
+        public List<DetailedConfigCost> GetCostOverrides(Config A, Config B)
         {
-            List<ConfigCost> costs = new List<ConfigCost>();
+            List<DetailedConfigCost> costs = new List<DetailedConfigCost>();
             foreach (var cost in OverrideCost)
             {
                 if (cost.A.ID == A.ID && cost.B.ID == B.ID)
@@ -86,6 +86,22 @@ namespace SequencePlanner.GeneralModels
             if (costs.Count > 0)
                 throw new SeqException("Multiple override cost for configs: "+A.ID+"-"+B.ID);
             return costs;
+        }
+
+        public DetailedConfigCost GetDetailedConfigCost(Config from, Config to)
+        {
+            var configCost = new DetailedConfigCost()
+            {
+                A = from, 
+                B = to
+            };
+            configCost.DistanceFunctionCost = DistanceFunction.ComputeDistance(from, to);
+            configCost.ResourceChangeoverCost = ResourceFunction.ComputeResourceCost(from, to, configCost.DistanceFunctionCost);
+            var overrideCost = GetCostOverrides(from, to);
+            if (overrideCost.Count > 0)
+                configCost.OverrideCost = overrideCost[0].OverrideCost;
+            configCost.FinalCost = ComputeCost(from, to);
+            return configCost;
         }
     }
 }
