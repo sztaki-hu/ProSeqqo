@@ -2,6 +2,7 @@
 using SequencePlanner.Model;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using System.Collections.Generic;
+using SequencePlanner.GeneralModels;
 
 namespace SequencePlanner.Function.ResourceFunction
 {
@@ -22,27 +23,27 @@ namespace SequencePlanner.Function.ResourceFunction
         }
 
 
-        public double ComputeResourceCost(Position A, Position B, double distance)
+        public double ComputeResourceCost(Config A, Config B, double distance)
         {
-            if (A.ResourceID == -1)
-                throw new SeqException("Position with UserID: " + A.UserID + " has no ResourceID: -1");
-            if (B.ResourceID == -1)
-                throw new SeqException("Position with UserID: " + B.UserID + " has no ResourceID: -1");
+            if (A.Resource.ID == -1)
+                throw new SeqException("Position with UserID: " + A.ID + " has no ResourceID: -1");
+            if (B.Resource.ID == -1)
+                throw new SeqException("Position with UserID: " + B.ID + " has no ResourceID: -1");
             var ida = -1;
             var idb = -1;
             for (int i = 0; i < CostMatrixIDHeader.Count; i++)
             {
-                if (CostMatrixIDHeader[i] == A.ResourceID)
+                if (CostMatrixIDHeader[i] == A.Resource.ID)
                     ida = i;
-                if (CostMatrixIDHeader[i] == B.ResourceID)
+                if (CostMatrixIDHeader[i] == B.Resource.ID)
                     idb = i;
                 if(ida!=-1 && idb!=-1)
                     return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
             }
             if (ida == -1)
-                throw new SeqException("Position with ResourceID: "+ A.ResourceID + " not contained by CostMatrixIDHeader");
+                throw new SeqException("Position with ResourceID: "+ A.Resource.ID + " not contained by CostMatrixIDHeader");
             if (idb == -1)
-                throw new SeqException("Position with ResourceID: "+ B.ResourceID + " not contained by CostMatrixIDHeader");
+                throw new SeqException("Position with ResourceID: "+ B.Resource.ID + " not contained by CostMatrixIDHeader");
             return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
         }
 

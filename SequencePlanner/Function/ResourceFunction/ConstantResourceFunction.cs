@@ -1,6 +1,7 @@
 ﻿using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
+using SequencePlanner.GeneralModels;
 
 namespace SequencePlanner.Function.ResourceFunction
 {
@@ -18,7 +19,7 @@ namespace SequencePlanner.Function.ResourceFunction
             Validate();
         }
 
-        public double ComputeResourceCost(Position A, Position B, double distance)
+        public double ComputeResourceCost(Config  A, Config B, double distance)
         {
             return LinkingFunction.ComputeResourceDistanceCost(Cost, distance);
         }
