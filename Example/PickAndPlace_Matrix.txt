@@ -5,13 +5,18 @@ Validate: True
 Cyclic: False
 StartDepot: 1
 FinishDepot: 6
-TimeLimit: 20
+TimeLimit: 20000
 DistanceFunction: Matrix
 ResourceChangeoverFunction: Max
 ResourceChangeover: Matrix
 #ChangeoverConstant: 5
 UseMIPprecedenceSolver: False
-UseMIPprecedenceSolver: False
+UseShortcutInAlternatives: False
+LocalSearchStrategy: GreedyDescent
+BidirectionMotionDefault: True
+AddMotionLengthToCost: True
+AddInMotionChangeoverToCost: True
+IdlePenalty: 10
 
 ChangeoverMatrix:
 1;5
@@ -64,3 +69,11 @@ MotionPrecedence:
 #3;4
 #4;5
 #5;6
+
+OverrideCost:
+#+-----------------+---------------+----------+-----------------------+
+#| From (ConfigID) | To (ConfigID) |   Cost   |Bidirectional[optional]|
+#+-----------------+---------------+----------+-----------------------+
+#|      <int>      |     <int>     | <double> |        <bool>         |
+#+-----------------+---------------+----------+-----------------------+
+1;2;10;True

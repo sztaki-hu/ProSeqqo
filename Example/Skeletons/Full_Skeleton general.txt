@@ -1,8 +1,8 @@
 Task: General
 Validate: True/False
 Cyclic: True/False
-StartDepot: <ConfigID/MotionID>
-FinishDepot: <ConfigID/MotionID>
+StartDepot: <ConfigID>
+FinishDepot: <ConfigID>
 
 #Cost----------------------------------
 DistanceFunction: Euclidian/Max/TrapezoidTime/Manhattan/Matrix
