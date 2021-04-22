@@ -261,7 +261,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             TimeLimit = tokenizer.GetIntByHeader("TimeLimit");
             ConfigList = tokenizer.GetConfigListByHeader("ConfigList");
             UseMIPprecedenceSolver = tokenizer.GetBoolByHeader("UseMIPprecedenceSolver");
-            BidirectionMotionDefault = tokenizer.GetBoolByHeader("BidirectionLineDefault");
+            BidirectionMotionDefault = tokenizer.GetBoolByHeader("BidirectionMotionDefault");
             AddInMotionChangeoverToCost = tokenizer.GetBoolByHeader("AddInMotionChangeoverToCost");
             AddMotionLengthToCost = tokenizer.GetBoolByHeader("AddMotionLengthToCost");
             IdlePenalty = tokenizer.GetDoubleByHeader("IdlePenalty");
