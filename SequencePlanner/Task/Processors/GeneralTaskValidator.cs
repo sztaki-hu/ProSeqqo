@@ -5,7 +5,7 @@ using SequencePlanner.Helper;
 //TODO: MotionPrecedence only between processes, no inside alternatives and between alternatives in one process.
 namespace SequencePlanner.GeneralModels
 {
-    public class GeneralTaskValidator
+    public static class GeneralTaskValidator
     {
         public static void Validate(GeneralTask pointLikeTask)
         {
