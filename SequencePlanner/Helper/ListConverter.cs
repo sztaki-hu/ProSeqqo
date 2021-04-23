@@ -29,7 +29,7 @@ namespace SequencePlanner.Helper
             {
                 for (int i = 0; i < list.Count - 1; i++)
                 {
-                    tmp += list[i].ToString("0.##") + "/ ";
+                    tmp += list[i].ToString("0.##") + "; ";
                 }
                 tmp += list[^1];
             }

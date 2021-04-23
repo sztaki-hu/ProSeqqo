@@ -374,10 +374,11 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
         public static List<int> GetIntVector(string line)
         {
             string[] parts = line.Split('[', ']');
-            int[] vector = new int[parts.Length - 2];
-            for (int i = 1; i < parts.Length - 1; i++)
+            string[] vec = parts[1].Split(';');
+            int[] vector = new int[vec.Length];
+            for (int i = 0; i < vec.Length; i++)
             {
-                vector[i - 1] = int.Parse(parts[i]);
+                vector[i] = int.Parse(vec[i]);
             }
             return new List<int>(vector);
         }
