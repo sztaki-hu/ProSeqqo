@@ -23,30 +23,41 @@ namespace SequencePlanner.GeneralModels
             OverrideCost = new List<DetailedConfigCost>();
         }
 
-        public double ComputeCost(Config From, Config To, bool useResource = true)
+        public DetailedConfigCost ComputeCost(Config From, Config To)
         {
-            var weight = 0.0;
-            var cost = GetCostOverrides(From, To);
-            if (cost.Count>0)
-                weight = cost[0].OverrideCost;
-            else
+            var cost = new DetailedConfigCost()
+            {
+                A = From,
+                B = To
+            };
+            var weight = GetOverrideCost(From, To);
+            cost.OverrideCost = weight;
+            if (weight == 0)
+            {
                 weight = DistanceFunction.ComputeDistance(From, To);
-            if(useResource)
-                weight = ResourceFunction.ComputeResourceCost(From, To, weight);
-            return weight;
+                cost.DistanceFunctionCost = weight;
+            }
+            if (weight > 0)
+            {
+                weight += GetPenaltyCost(weight);
+                cost.Penalty = GetPenaltyCost(weight);
+            }
+            weight = ResourceFunction.ComputeResourceCost(From, To, weight);
+            cost.ResourceChangeoverCost = ResourceFunction.GetResourceCost(From, To);
+            cost.FinalCost = weight;
+            return cost;
         }
 
         public double ComputeCost(Motion From, Motion To)
         {
-            if (From.Virtual || From.Virtual)
-                return 0.0;
+            //if (From.Virtual || From.Virtual)
+            //    return 0.0;
 
-            double weight = ComputeCost(From.LastConfig, To.FirstConfig);
-            if (AddMotionLengthToCost)
-                weight += To.Cost;
-            if (AddMotionLengthToCost)
-                weight += To.Cost;
+            double weight = ComputeCost(From.LastConfig, To.FirstConfig).FinalCost;
             weight = ResourceFunction.ComputeResourceCost(From.LastConfig, To.FirstConfig, weight);
+            if (AddMotionLengthToCost)
+                weight += To.Cost;
+
 
             //if (From.OverrideWeightOut > 0)
             //   return From.OverrideWeightOut;
@@ -73,48 +84,44 @@ namespace SequencePlanner.GeneralModels
 
         public void ComputeCost(Motion motion)
         {
-            var cost = 0.0;
-            var resCost = 0.0;
+            motion.DetailedCost = new DetailedConfigCost();
             for (int i = 1; i < motion.Configs.Count; i++)
             {
-                cost+=ComputeCost(motion.Configs[i - 1], motion.Configs[i], AddInMotionChangeoverToCost);
-                if (AddInMotionChangeoverToCost)
-                    resCost += ResourceFunction.GetResourceCost(motion.Configs[i - 1], motion.Configs[i]);
+                motion.DetailedCost = motion.DetailedCost.Add(ComputeCost(motion.Configs[i - 1], motion.Configs[i]));
             }
-            if (AddInMotionChangeoverToCost)
-                motion.ResourceChangeoverCostInCost = resCost;
-            motion.Cost = cost;
+            motion.DetailedCost.FinalCost = 0;
+            if (AddMotionLengthToCost)
+            {
+                motion.DetailedCost.FinalCost += motion.DetailedCost.DistanceFunctionCost + motion.DetailedCost.OverrideCost + motion.DetailedCost.Penalty;
+                if (AddInMotionChangeoverToCost)
+                    motion.DetailedCost.FinalCost += motion.DetailedCost.ResourceChangeoverCost;
+            }
         }
 
-        public List<DetailedConfigCost> GetCostOverrides(Config A, Config B)
+        public double GetOverrideCost(Config A, Config B)
         {
             List<DetailedConfigCost> costs = new List<DetailedConfigCost>();
             foreach (var cost in OverrideCost)
             {
                 if (cost.A.ID == A.ID && cost.B.ID == B.ID)
                     costs.Add(cost);
-                if(cost.Bidirectional && cost.A.ID == B.ID && cost.B.ID == A.ID)
+                if (cost.Bidirectional && cost.A.ID == B.ID && cost.B.ID == A.ID)
                     costs.Add(cost);
             }
-            if (costs.Count > 0)
-                throw new SeqException("Multiple override cost for configs: "+A.ID+"-"+B.ID);
-            return costs;
+            if (costs.Count > 1)
+                throw new SeqException("Multiple override cost for configs: " + A.ID + "-" + B.ID);
+            if (costs.Count == 0)
+                return 0;
+            else
+                return costs[0].OverrideCost;
         }
 
-        public DetailedConfigCost GetDetailedConfigCost(Config from, Config to)
+        public double GetPenaltyCost(double weight)
         {
-            var configCost = new DetailedConfigCost()
-            {
-                A = from, 
-                B = to
-            };
-            configCost.DistanceFunctionCost = DistanceFunction.ComputeDistance(from, to);
-            configCost.ResourceChangeoverCost = ResourceFunction.ComputeResourceCost(from, to, configCost.DistanceFunctionCost);
-            var overrideCost = GetCostOverrides(from, to);
-            if (overrideCost.Count > 0)
-                configCost.OverrideCost = overrideCost[0].OverrideCost;
-            configCost.FinalCost = ComputeCost(from, to);
-            return configCost;
+            if (weight > 0)
+                return IdlePenalty;
+            else
+                return 0;
         }
 
         public DetailedMotionCost GetDetailedMotionCost(Motion from, Motion to)
@@ -126,7 +133,7 @@ namespace SequencePlanner.GeneralModels
                 FinalCost = ComputeCost(from, to)
             };
             motionCost.DistanceFunctionCost = DistanceFunction.ComputeDistance(from.LastConfig, to.FirstConfig);
-            motionCost.ResourceChangeoverCost = ResourceFunction.ComputeResourceCost(from.LastConfig, to.FirstConfig, motionCost.DistanceFunctionCost);
+            motionCost.ResourceChangeoverCost = ResourceFunction.GetResourceCost(from.LastConfig, to.FirstConfig);
             motionCost.MotionCost = from.Cost;
             motionCost.ResourceChangeoverCostInMotionCost = from.ResourceChangeoverCostInCost;
             //var overrideCost = GetCostOverrides(from, to);

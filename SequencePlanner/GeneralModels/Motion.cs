@@ -7,7 +7,8 @@ namespace SequencePlanner.GeneralModels
         public int SequenceMatrixID { get; set; }
         public List<Config> Configs { get; set; }
         public bool Bidirectional { get; set; }
-        public double Cost { get; set; }
+        public double Cost { get { return DetailedCost.FinalCost; } }
+        public DetailedConfigCost DetailedCost { get; set; }
         public double ResourceChangeoverCostInCost { get; set; }
         public double StricLength { get; set; }
         public Config FirstConfig { get { if (Configs.Count > 0) return Configs[0]; else return null; } }
@@ -16,10 +17,13 @@ namespace SequencePlanner.GeneralModels
 
         public Motion():base()
         {
+            DetailedCost = new DetailedConfigCost();
             Configs = new List<Config>();
         }
 
-        public Motion(int id, string name): base(id, name) {
+        public Motion(int id, string name): base(id, name)
+        {
+            DetailedCost = new DetailedConfigCost();
             Configs = new List<Config>();
         }
 

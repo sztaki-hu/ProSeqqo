@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,18 @@ namespace SequencePlanner.GeneralModels
         {
             Configuration = configuration;
             Resource = resource;
+        }
+
+        public override string ToString()
+        {
+            string temp = ID.ToString();
+            if (Name is not null && !Name.Equals(""))
+                temp += "-" + Name;
+            if (Configuration is not null && Configuration.Count>0)
+                temp += " ["+Configuration.ToListString()+"] ";
+            if (Virtual)
+                temp += " !Virtual";
+            return temp;
         }
     }
 }

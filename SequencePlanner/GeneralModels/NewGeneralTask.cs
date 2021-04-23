@@ -106,13 +106,13 @@ namespace SequencePlanner.GeneralModels
                     if (motion != null)
                     {
                         taskResult.SolutionHierarchy.Add(Hierarchy.GetRecordByMotionID(motion.ID));
-                        taskResult.Solution.Add(motion.ID);
+                        taskResult.SolutionMotionIDs.Add(motion.ID);
                         taskResult.SolutionMotion.Add(motion);
                         foreach (var config in motion.Configs)
                         {
                             taskResult.SolutionConfig.Add(config);
+                            taskResult.SolutionConfigIDs.Add(config.ID);
                         }
-                        Console.WriteLine(motion);
                     }
                     else
                     {
@@ -122,9 +122,15 @@ namespace SequencePlanner.GeneralModels
 
                 for (int i = 1; i < taskResult.SolutionConfig.Count; i++)
                 {
+                    DetailedConfigCost detailedConfigCost = null;
                     if (taskResult.SolutionConfig.Count > 1)
-                        taskResult.CostsBetweenConfigs.Add(CostManager.GetDetailedConfigCost(taskResult.SolutionConfig[i - 1], taskResult.SolutionConfig[i]));
+                    {
+                        detailedConfigCost = CostManager.ComputeCost(taskResult.SolutionConfig[i - 1], taskResult.SolutionConfig[i]);
+                        taskResult.CostsBetweenConfigs.Add(detailedConfigCost);
+                        taskResult.ConfigCosts.Add(detailedConfigCost.FinalCost);
+                    }
                 }
+
                 for (int i = 1; i < taskResult.SolutionMotion.Count; i++)
                 {
                     DetailedMotionCost detailedMotionCost = null;
@@ -132,7 +138,7 @@ namespace SequencePlanner.GeneralModels
                     {
                         detailedMotionCost = CostManager.GetDetailedMotionCost(taskResult.SolutionMotion[i - 1], taskResult.SolutionMotion[i]);
                         taskResult.CostsBetweenMotions.Add(detailedMotionCost);
-                        taskResult.Costs.Add(detailedMotionCost.FinalCost);
+                        taskResult.MotionCosts.Add(detailedMotionCost.FinalCost);
                     }
                 }
             }
