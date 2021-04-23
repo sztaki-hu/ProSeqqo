@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using Microsoft.Win32;
-using SequencePlanner.Helper;
 
 namespace LineAnimation
 {
@@ -334,7 +333,7 @@ namespace LineAnimation
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
                 OpenFile(openFileDialog.FileName);
-              //PhraseFile(openFileDialog.FileName);
+            //PhraseFile(openFileDialog.FileName);
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)

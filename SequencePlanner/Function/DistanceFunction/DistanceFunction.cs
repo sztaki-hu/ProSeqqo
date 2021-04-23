@@ -3,7 +3,7 @@ using SequencePlanner.Model.Hierarchy;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
-    public abstract class DistanceFunction: IDistanceFunction
+    public abstract class DistanceFunction : IDistanceFunction
     {
         public virtual string FunctionName { get; }
 
@@ -13,7 +13,7 @@ namespace SequencePlanner.Function.DistanceFunction
         public void ToLog(LogLevel level)
         {
             SeqLogger.Indent++;
-            SeqLogger.WriteLog(level, "DistanceFunction: "+FunctionName, nameof(DistanceFunction));
+            SeqLogger.WriteLog(level, "DistanceFunction: " + FunctionName, nameof(DistanceFunction));
             SeqLogger.Indent--;
         }
     }

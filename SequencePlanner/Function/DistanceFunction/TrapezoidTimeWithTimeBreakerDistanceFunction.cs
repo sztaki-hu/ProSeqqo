@@ -7,8 +7,8 @@ namespace SequencePlanner.Function.DistanceFunction
         public override string FunctionName { get { return "TrapezoidTimeWithTimeBreaker"; } }
 
 
-        public TrapezoidTimeWithTimeBreakerDistanceFunction(double[] maxAcceleration, double[] maxSpeed): base(maxAcceleration, maxSpeed){}
-        
+        public TrapezoidTimeWithTimeBreakerDistanceFunction(double[] maxAcceleration, double[] maxSpeed) : base(maxAcceleration, maxSpeed) { }
+
 
         public override double ComputeDistance(Config A, Config B)
         {

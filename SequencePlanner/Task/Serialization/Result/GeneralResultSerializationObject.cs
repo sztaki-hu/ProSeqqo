@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using SequencePlanner.Helper;
+﻿using SequencePlanner.Helper;
 using SequencePlanner.Task;
+using System;
+using System.Collections.Generic;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
@@ -41,7 +41,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             //PositionResult = result.PositionResult;
         }
 
-        public GeneralResultSerializationObject(List<string> seqString) 
+        public GeneralResultSerializationObject(List<string> seqString)
         {
             throw new NotImplementedException();
         }
@@ -72,8 +72,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public new string ToSEQ()
         {
-            string seq ="";
-            string newline ="\n";
+            string seq = "";
+            string newline = "\n";
             string d = ";";
             seq += nameof(Created) + ": " + Created + newline;
             seq += nameof(StatusCode) + ": " + StatusCode + newline;

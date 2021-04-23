@@ -1,9 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using Google.OrTools.ConstraintSolver;
+﻿using Google.OrTools.ConstraintSolver;
 using Google.Protobuf.WellKnownTypes;
 using SequencePlanner.Helper;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SequencePlanner.OR_Tools
 {
@@ -29,10 +29,10 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("ORTools building started!", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent++;
             Timer = new Stopwatch();
-            SeqLogger.Debug("GTSP Matrix Dimension: " + param.GTSPRepresentation.RoundedCostMatrix.GetLength(0) + "x"+ param.GTSPRepresentation.RoundedCostMatrix.GetLength(1), nameof(ORToolsSequencerWrapper));
+            SeqLogger.Debug("GTSP Matrix Dimension: " + param.GTSPRepresentation.RoundedCostMatrix.GetLength(0) + "x" + param.GTSPRepresentation.RoundedCostMatrix.GetLength(1), nameof(ORToolsSequencerWrapper));
             SeqLogger.Debug("GTSP Start Depot SeqID: " + param.GTSPRepresentation.StartDepot, nameof(ORToolsSequencerWrapper));
-            if(param.GTSPRepresentation.FinishDepot == null)
-                manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedCostMatrix.GetLength(0), 1, param.GTSPRepresentation.StartDepot.SequenceMatrixID );
+            if (param.GTSPRepresentation.FinishDepot == null)
+                manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedCostMatrix.GetLength(0), 1, param.GTSPRepresentation.StartDepot.SequenceMatrixID);
             else
             {
                 manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedCostMatrix.GetLength(0), 1, new int[] { param.GTSPRepresentation.StartDepot.SequenceMatrixID }, new int[] { param.GTSPRepresentation.FinishDepot.SequenceMatrixID });
@@ -42,7 +42,8 @@ namespace SequencePlanner.OR_Tools
 
             //Edge weight callback
             int transitCallbackIndex = routing.RegisterTransitCallback(
-              (long fromIndex, long toIndex) => {
+              (long fromIndex, long toIndex) =>
+              {
                   // Convert from routing variable Index to distance matrix NodeIndex.
                   var fromNode = Convert.ToInt32(manager.IndexToNode(fromIndex));
                   var toNode = Convert.ToInt32(manager.IndexToNode(toIndex));
@@ -66,7 +67,7 @@ namespace SequencePlanner.OR_Tools
             if (param.GTSPRepresentation.MotionPrecedences.Count > 0)
             {
                 //Add distance dimension
-                routing.AddDimension(transitCallbackIndex,0, int.MaxValue - 100, true, "Distance");
+                routing.AddDimension(transitCallbackIndex, 0, int.MaxValue - 100, true, "Distance");
                 RoutingDimension distanceDimension = routing.GetMutableDimension("Distance");
 
                 //Add order constraints
@@ -81,7 +82,7 @@ namespace SequencePlanner.OR_Tools
             }
 
             searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
-            
+
             //Set time limit
             if (param.TimeLimit != 0)
             {
@@ -89,29 +90,31 @@ namespace SequencePlanner.OR_Tools
                 var ns = (param.TimeLimit - (sec * 1000)) * 1000000;
                 searchParameters.TimeLimit = new Duration { Seconds = sec, Nanos = ns };
                 SeqLogger.Debug("Time Limit: " + searchParameters.TimeLimit.ToDiagnosticString(), nameof(ORToolsSequencerWrapper));
-            }else
+            }
+            else
                 SeqLogger.Debug("No time limit!", nameof(ORToolsSequencerWrapper));
 
             // Setting first solution heuristic.
             searchParameters.LocalSearchMetaheuristic = LocalSearchStrategyEnum.ResolveEnum(param.LocalSearchStrategy);
-            SeqLogger.Debug("First solution strategy: "+ searchParameters.FirstSolutionStrategy.ToString(), nameof(ORToolsSequencerWrapper));
-            SeqLogger.Debug("Use depth first search: "+ searchParameters.UseDepthFirstSearch.ToString(), nameof(ORToolsSequencerWrapper));
-            SeqLogger.Debug("Local search metahearustic "+ searchParameters.LocalSearchMetaheuristic.ToString(), nameof(ORToolsSequencerWrapper));
+            SeqLogger.Debug("First solution strategy: " + searchParameters.FirstSolutionStrategy.ToString(), nameof(ORToolsSequencerWrapper));
+            SeqLogger.Debug("Use depth first search: " + searchParameters.UseDepthFirstSearch.ToString(), nameof(ORToolsSequencerWrapper));
+            SeqLogger.Debug("Local search metahearustic " + searchParameters.LocalSearchMetaheuristic.ToString(), nameof(ORToolsSequencerWrapper));
             //searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
             //searchParameters.UseCp = Google.OrTools.Util.OptionalBoolean.BoolTrue;
             //searchParameters.UseCpSat = Google.OrTools.Util.OptionalBoolean.BoolTrue;
 
             routing.CloseModelWithParameters(searchParameters);
 
-            if (param.GTSPRepresentation.InitialRoutes!=null && param.GTSPRepresentation.InitialRoutes.Length > 0)
+            if (param.GTSPRepresentation.InitialRoutes != null && param.GTSPRepresentation.InitialRoutes.Length > 0)
             {
-                SeqLogger.Debug("Initial route: "+ param.GTSPRepresentation.InitialRoutes[0].ToListString(), nameof(ORToolsSequencerWrapper));
+                SeqLogger.Debug("Initial route: " + param.GTSPRepresentation.InitialRoutes[0].ToListString(), nameof(ORToolsSequencerWrapper));
                 InitialSolution = routing.ReadAssignmentFromRoutes(param.GTSPRepresentation.InitialRoutes, true);
                 if (InitialSolution == null)
                     SeqLogger.Error("Initial solution given, but not accepted!", nameof(ORToolsSequencerWrapper));
                 else
-                    SeqLogger.Debug("Initial route given with " + param.GTSPRepresentation.InitialRoutes[0].Length+" element.", nameof(ORToolsSequencerWrapper));
-            }else
+                    SeqLogger.Debug("Initial route given with " + param.GTSPRepresentation.InitialRoutes[0].Length + " element.", nameof(ORToolsSequencerWrapper));
+            }
+            else
                 SeqLogger.Debug("Initial route not given.", nameof(ORToolsSequencerWrapper));
             SeqLogger.Indent--;
             SeqLogger.Debug("ORTools building finished!", nameof(ORToolsSequencerWrapper));
@@ -123,7 +126,7 @@ namespace SequencePlanner.OR_Tools
             Timer.Start();
             Assignment solution;
 
-            
+
             if (InitialSolution != null)
                 solution = routing.SolveFromAssignmentWithParameters(InitialSolution, searchParameters);
             else

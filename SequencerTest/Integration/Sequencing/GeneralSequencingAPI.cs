@@ -1,8 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.GTSPTask;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SequencerTest.Integration.Sequencing
 {
@@ -15,10 +11,10 @@ namespace SequencerTest.Integration.Sequencing
 
         }
 
-            [TestMethod]
+        [TestMethod]
         public void GetterSetter()
         {
-        
+
         }
     }
 }

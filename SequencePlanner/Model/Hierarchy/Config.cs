@@ -1,29 +1,25 @@
 ﻿using SequencePlanner.Helper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SequencePlanner.Model.Hierarchy
 {
-    public class Config: Node
+    public class Config : Node
     {
         public List<double> Configuration { get; set; }
         public Resource Resource { get; set; }
 
 
-        public Config(int id, List<double> configuration) : base(id, id+"-Config")
+        public Config(int id, List<double> configuration) : base(id, id + "-Config")
         {
             Configuration = configuration;
         }
 
-        public Config(int id, List<double> configuration, string name): base(id, name)
+        public Config(int id, List<double> configuration, string name) : base(id, name)
         {
             Configuration = configuration;
         }
 
-        public Config(int id, List<double> configuration, string name, Resource resource): this(id, configuration, name)
+        public Config(int id, List<double> configuration, string name, Resource resource) : this(id, configuration, name)
         {
             Configuration = configuration;
             Resource = resource;
@@ -40,8 +36,8 @@ namespace SequencePlanner.Model.Hierarchy
             string temp = ID.ToString();
             if (Name is not null && !Name.Equals(""))
                 temp += "-" + Name;
-            if (Configuration is not null && Configuration.Count>0)
-                temp += " ["+Configuration.ToListString()+"] ";
+            if (Configuration is not null && Configuration.Count > 0)
+                temp += " [" + Configuration.ToListString() + "] ";
             if (Virtual)
                 temp += " !Virtual";
             return temp;

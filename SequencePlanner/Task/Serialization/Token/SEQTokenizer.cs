@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
-using SequencePlanner.Helper;
+using System.Threading;
 
 namespace SequencePlanner.Task.Serialization.Token
 {
@@ -63,7 +63,7 @@ namespace SequencePlanner.Task.Serialization.Token
             foreach (var token in Tokens)
             {
                 if (!token.Phrased)
-                    throw new SeqException(token.Header + " is not used / valid option in line "+token.Lines[0].LineNumber+"!");
+                    throw new SeqException(token.Header + " is not used / valid option in line " + token.Lines[0].LineNumber + "!");
             }
         }
 
@@ -90,7 +90,8 @@ namespace SequencePlanner.Task.Serialization.Token
             foreach (var line in lines)
             {
                 words = line.Line.Split(new string[] { "#", "//" }, StringSplitOptions.None);
-                noComments.Add(new TokenLineDeserializationObject() { 
+                noComments.Add(new TokenLineDeserializationObject()
+                {
                     LineNumber = line.LineNumber,
                     Line = words[0]
                 });
@@ -112,7 +113,7 @@ namespace SequencePlanner.Task.Serialization.Token
                 }
                 foreach (var word in words)
                 {
-                    
+
                 }
 
             }

@@ -2,7 +2,7 @@
 
 namespace SequencePlanner.Model
 {
-    public class MotionDisjointSet: DisjointSet<Motion>
+    public class MotionDisjointSet : DisjointSet<Motion>
     {
 
     }

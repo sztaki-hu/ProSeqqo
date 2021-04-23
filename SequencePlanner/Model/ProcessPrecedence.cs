@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.Model
 {
-    public class ProcessPrecedence: Precedence<Process>
+    public class ProcessPrecedence : Precedence<Process>
     {
-        public ProcessPrecedence(Process before, Process after): base(before, after){
+        public ProcessPrecedence(Process before, Process after) : base(before, after)
+        {
 
         }
 

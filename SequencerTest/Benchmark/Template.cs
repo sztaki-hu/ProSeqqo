@@ -15,14 +15,14 @@ namespace SequencerTest.Benchmark
         public string OutPath { get; set; }
         public TaskType TaskType { get; set; }
         public FormatType FormatType { get; set; }
-        public List<Dictionary<string, string>> ParameterCombinatrions  { get; set; }
+        public List<Dictionary<string, string>> ParameterCombinatrions { get; set; }
         public List<string> GeneretedTasks { get; set; }
         public List<GeneralTaskResult> PointResults { get; set; }
 
-        public Template(string path, string generatePath,  string outPath, List<Dictionary<string, string>> parameterCombinatrions)
+        public Template(string path, string generatePath, string outPath, List<Dictionary<string, string>> parameterCombinatrions)
         {
             ParameterCombinatrions = parameterCombinatrions;
-            if(parameterCombinatrions is null)
+            if (parameterCombinatrions is null)
                 ParameterCombinatrions = new List<Dictionary<string, string>>();
             FilePath = path;
             FileName = System.IO.Path.GetFileName(path);
@@ -44,12 +44,12 @@ namespace SequencerTest.Benchmark
                 var i = 0;
                 foreach (var param in ParameterCombinatrions)
                 {
-                    newGeneration = Path.Combine(GeneratePath, FileName.Split(".")[0]+"_"+(i++)+"."+ FileName.Split(".")[1]);
+                    newGeneration = Path.Combine(GeneratePath, FileName.Split(".")[0] + "_" + (i++) + "." + FileName.Split(".")[1]);
                     File.Copy(FilePath, newGeneration);
                     foreach (var item in param)
                     {
                         string text = File.ReadAllText(newGeneration);
-                        text = text.Replace("<*"+item.Key+"*>", item.Value);
+                        text = text.Replace("<*" + item.Key + "*>", item.Value);
                         File.WriteAllText(newGeneration, text);
                     }
                     SeqLogger.Info("Task created: " + newGeneration);
@@ -69,7 +69,7 @@ namespace SequencerTest.Benchmark
             int i = 1;
             foreach (var task in GeneretedTasks)
             {
-                SeqLogger.Info(i++ + "/" + GeneretedTasks.Count+" Task running: "+Path.GetFileName(task) );
+                SeqLogger.Info(i++ + "/" + GeneretedTasks.Count + " Task running: " + Path.GetFileName(task));
                 RunTask(task);
                 SeqLogger.InitBacklog();
             }
@@ -133,22 +133,22 @@ namespace SequencerTest.Benchmark
             var s = ";";
             for (int i = 0; i < GeneretedTasks.Count; i++)
             {
-                tmp += FileName+s;
-                tmp += Path.GetFileName(GeneretedTasks[i])+s;
-                tmp += TaskType.ToString()+s;
+                tmp += FileName + s;
+                tmp += Path.GetFileName(GeneretedTasks[i]) + s;
+                tmp += TaskType.ToString() + s;
 
                 //if (TaskType == TaskType.General && PointResults is not null && PointResults.Count > i)
-                    //tmp += PointResults[i].ToCSV();
-                
-                if(ParameterCombinatrions.Count>i)
+                //tmp += PointResults[i].ToCSV();
+
+                if (ParameterCombinatrions.Count > i)
                 {
                     tmp += s;
                     foreach (var item in ParameterCombinatrions[i])
                     {
-                        tmp += item.Key + "=" + item.Value+",";
+                        tmp += item.Key + "=" + item.Value + ",";
                     }
                 }
-                if (i!=GeneretedTasks.Count-1)
+                if (i != GeneretedTasks.Count - 1)
                     tmp += "\n";
             }
             return tmp;

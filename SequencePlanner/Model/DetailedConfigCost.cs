@@ -2,11 +2,11 @@
 
 namespace SequencePlanner.Model
 {
-    public class DetailedConfigCost: DetailedCost<Config>
+    public class DetailedConfigCost : DetailedCost<Config>
     {
         public override string ToString()
         {
-            return A.ToString() + " - " + B.ToString() + " Cost: " + FinalCost + " (Details: Distance: " + DistanceFunctionCost + " ResourceChangCost: " + ResourceChangeoverCost + " OverrideCost: " + OverrideCost + " Penalty: " + Penalty+")";
+            return A.ToString() + " - " + B.ToString() + " Cost: " + FinalCost + " (Details: Distance: " + DistanceFunctionCost + " ResourceChangCost: " + ResourceChangeoverCost + " OverrideCost: " + OverrideCost + " Penalty: " + Penalty + ")";
         }
 
         public DetailedConfigCost Add(DetailedConfigCost config)

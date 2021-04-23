@@ -20,7 +20,7 @@ namespace SequencePlanner.Task.Serialization.Model
             ResourceID = config.Resource.ID;
         }
 
-        
+
         public Config ToConfig()
         {
             return new Config(ID, new List<double>(Config), Name, new Resource(ResourceID, Name));

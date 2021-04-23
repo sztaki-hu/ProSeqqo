@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using SequencePlanner.Helper;
+﻿using SequencePlanner.Helper;
 using SequencePlanner.Model.Hierarchy;
+using System.Collections.Generic;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
@@ -46,7 +46,7 @@ namespace SequencePlanner.Function.DistanceFunction
 
         public override void Validate()
         {
-            if (CostMatrix==null || IDHeader==null)
+            if (CostMatrix == null || IDHeader == null)
                 throw new SeqException("MatrixDistanceFunction contains null property, ResourceIDList/CostMatrix.");
             if (CostMatrix.Count != CostMatrix[0].Count)
                 throw new SeqException("MatrixDistanceFunction.CostMatrix size should be n x n.");

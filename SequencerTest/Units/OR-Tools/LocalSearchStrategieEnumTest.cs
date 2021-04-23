@@ -1,12 +1,6 @@
 ﻿using Google.OrTools.ConstraintSolver;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SequencePlanner.Helper;
-using SequencePlanner.OR_Tools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SequencerTest.Units.OR_Tools
 {
@@ -77,7 +71,7 @@ namespace SequencerTest.Units.OR_Tools
         {
             //AUTOMATIC
             var metaheuristics = LocalSearchStrategyEnum.ResolveEnum(Metaheuristics.Automatic);
-            Assert.AreEqual(metaheuristics,LocalSearchMetaheuristic.Types.Value.Automatic);
+            Assert.AreEqual(metaheuristics, LocalSearchMetaheuristic.Types.Value.Automatic);
 
             //GREEDYDESCENT
             metaheuristics = LocalSearchStrategyEnum.ResolveEnum(Metaheuristics.GreedyDescent);

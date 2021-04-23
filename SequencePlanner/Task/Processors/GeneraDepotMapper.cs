@@ -7,7 +7,7 @@ namespace SequencePlanner.Task.Processors
     public class GeneraDepotMapper : ITaskProcessor
     {
         private HierarchyRecord Record { get; set; }
-  
+
         private GeneralTask Task { get; set; }
         private GeneralTaskResult Result { get; set; }
         private DepotChangeType DepotChangeType { get; set; }
@@ -20,7 +20,7 @@ namespace SequencePlanner.Task.Processors
 
         public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequenceMatrixID; else return -1; } }
         public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequenceMatrixID; else return -1; } }
-        
+
         public GeneraDepotMapper(GeneralTask task)
         {
             Task = task;
@@ -55,7 +55,7 @@ namespace SequencePlanner.Task.Processors
             Task.FinishDepot = ORToolsFinishDepot;
         }
 
-        
+
 
         public void ChangeBack()
         {
@@ -158,7 +158,7 @@ namespace SequencePlanner.Task.Processors
         private void NotCyclicNoDepotResolve()
         {
             //Result.Delete(Result.Solution.Count - 1);
-           // Result.Delete(0);
+            // Result.Delete(0);
         }
         private void NotCyclicOnlyStartDepotResolve()
         {
@@ -169,8 +169,8 @@ namespace SequencePlanner.Task.Processors
             //Result.Delete(0);
         }
         private void NotCyclicStartFinishDepotResolve() { }
-        
-        private Motion CreateVirtualNode(GeneralTask task,string name)
+
+        private Motion CreateVirtualNode(GeneralTask task, string name)
         {
             Motion motion = new Motion()
             {

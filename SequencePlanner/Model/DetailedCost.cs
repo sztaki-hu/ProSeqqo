@@ -15,7 +15,7 @@ namespace SequencePlanner.Model
 
         public override string ToString()
         {
-            return A.ToString()+"-"+B.ToString()+" Cost: "+FinalCost+" (Details: Distance: "+DistanceFunctionCost + " ResourceChangCost: "+ ResourceChangeoverCost+ " OverrideCost: "+ OverrideCost+" Penalty: "+Penalty;
+            return A.ToString() + "-" + B.ToString() + " Cost: " + FinalCost + " (Details: Distance: " + DistanceFunctionCost + " ResourceChangCost: " + ResourceChangeoverCost + " OverrideCost: " + OverrideCost + " Penalty: " + Penalty;
         }
 
         public void ToLog(LogLevel logLevel)

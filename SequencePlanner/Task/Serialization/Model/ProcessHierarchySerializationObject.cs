@@ -4,7 +4,7 @@ namespace SequencePlanner.Task.Serialization.Model
 {
     public class ProcessHierarchySerializationObject
     {
-        public int ProcessID { get; set; } 
+        public int ProcessID { get; set; }
         public int AlternativeID { get; set; }
         public int TaskID { get; set; }
         public int MotionID { get; set; }
@@ -15,7 +15,7 @@ namespace SequencePlanner.Task.Serialization.Model
 
         public override string ToString()
         {
-            return " ProcessID: " + ProcessID + " AlternativeID: " + AlternativeID+ " TaskID: " + TaskID + "MotionID: " + MotionID;
+            return " ProcessID: " + ProcessID + " AlternativeID: " + AlternativeID + " TaskID: " + TaskID + "MotionID: " + MotionID;
         }
 
         public string ToSEQ()
@@ -23,7 +23,7 @@ namespace SequencePlanner.Task.Serialization.Model
             string separator = ";";
             string newline = "\n";
             string seq = "";
-            seq += ProcessID + separator+ newline; 
+            seq += ProcessID + separator + newline;
             seq += AlternativeID + separator;
             seq += TaskID + separator;
             seq += MotionID + separator;
@@ -32,7 +32,7 @@ namespace SequencePlanner.Task.Serialization.Model
             {
                 seq += configID + separator;
             }
-            seq += "]"+separator;
+            seq += "]" + separator;
             seq += Bidirectional + separator;
             seq += Name + separator;
 

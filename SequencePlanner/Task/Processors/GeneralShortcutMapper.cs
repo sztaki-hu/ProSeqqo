@@ -2,7 +2,7 @@
 
 namespace SequencePlanner.Task.Processors
 {
-    public  class GeneralShortcutMapper: ITaskProcessor
+    public class GeneralShortcutMapper : ITaskProcessor
     {
         public GeneralTask Task { get; set; }
         public GeneralShortcutMapper(GeneralTask task)

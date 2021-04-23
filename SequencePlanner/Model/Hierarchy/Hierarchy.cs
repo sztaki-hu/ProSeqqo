@@ -31,12 +31,12 @@ namespace SequencePlanner.Model.Hierarchy
 
         public Process GetProcessByID(int id)
         {
-            return HierarchyRecords.Where(r => r.Process.ID==id).Select(r => r.Process).FirstOrDefault();
+            return HierarchyRecords.Where(r => r.Process.ID == id).Select(r => r.Process).FirstOrDefault();
         }
 
         public List<Alternative> GetAlternativesOf(Process process)
         {
-            return HierarchyRecords.Where(r => r.Process.GlobalID==process.GlobalID)
+            return HierarchyRecords.Where(r => r.Process.GlobalID == process.GlobalID)
                                    .Select(r => r.Alternative)
                                    .ToList();
         }
@@ -112,7 +112,7 @@ namespace SequencePlanner.Model.Hierarchy
 
         public List<Alternative> GetNeighboursOf(Alternative alternative)
         {
-           return GetAlternativesOf(GetProcessOf(alternative));
+            return GetAlternativesOf(GetProcessOf(alternative));
         }
 
         public List<Task> GetTasksOf(Alternative alternative)
@@ -260,7 +260,7 @@ namespace SequencePlanner.Model.Hierarchy
                 if (GetTasksOf(alternative).Count > 0)
                 {
                     List<Task> tasks = GetOrderedTasksOf(alternative);
-                    motions = GetMotionsOf(tasks[tasks.Count-1]);
+                    motions = GetMotionsOf(tasks[tasks.Count - 1]);
                 }
             }
             return motions;

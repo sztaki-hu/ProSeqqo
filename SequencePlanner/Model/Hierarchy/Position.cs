@@ -1,12 +1,12 @@
 ﻿namespace SequencePlanner.Model.Hierarchy
 {
-    public class Position: BaseNode
+    public class Position : BaseNode
     {
         public double[] Vector { get; set; }
         public int Dimension { get { return Vector.Length; } }
 
 
-        public Position():base()
+        public Position() : base()
         {
             Name = UserID + "_Position_" + GlobalID;
             Vector = System.Array.Empty<double>();
@@ -17,7 +17,7 @@
         public Position GetCopy()
         {
             var copy = (Position)base.GetCopy(new Position());
-            copy.Vector = (double[]) Vector.Clone();
+            copy.Vector = (double[])Vector.Clone();
             return copy;
         }
         public override string ToString()

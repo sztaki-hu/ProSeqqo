@@ -2,7 +2,7 @@
 
 namespace SequencePlanner.Model.Hierarchy
 {
-    public class Motion: Node
+    public class Motion : Node
     {
         public int SequenceMatrixID { get; set; }
         public List<Config> Configs { get; set; }
@@ -15,29 +15,29 @@ namespace SequencePlanner.Model.Hierarchy
         public Config LastConfig { get { if (Configs.Count > 0) return Configs[^1]; else return null; } }
 
 
-        public Motion():base()
+        public Motion() : base()
         {
             DetailedCost = new DetailedConfigCost();
             Configs = new List<Config>();
         }
 
-        public Motion(int id, string name): base(id, name)
+        public Motion(int id, string name) : base(id, name)
         {
             DetailedCost = new DetailedConfigCost();
             Configs = new List<Config>();
         }
 
-        public Motion(int id, Config a, Config b): base(id, id+"-Motion")
+        public Motion(int id, Config a, Config b) : base(id, id + "-Motion")
         {
-            
+
         }
 
-        public Motion(int id, Config config) : base(id, id+"-Motion")
+        public Motion(int id, Config config) : base(id, id + "-Motion")
         {
-            
+
         }
 
-        public Motion(int id, List<Config> motion): base(id, id+"-Motion")
+        public Motion(int id, List<Config> motion) : base(id, id + "-Motion")
         {
 
         }

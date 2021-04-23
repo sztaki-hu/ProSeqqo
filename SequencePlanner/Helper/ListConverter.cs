@@ -11,7 +11,7 @@ namespace SequencePlanner.Helper
                 string tmp = "";
                 if (list is not null && list.Length > 0)
                 {
-                        for (int i = 0; i < list.Length - 1; i++)
+                    for (int i = 0; i < list.Length - 1; i++)
                     {
                         tmp += list[i].ToString("0.#####") + "/ ";
                     }
@@ -61,7 +61,7 @@ namespace SequencePlanner.Helper
             }
             return tmp;
         }
-        
+
         public static string ToListString(this long[] list)
         {
             string tmp = "";

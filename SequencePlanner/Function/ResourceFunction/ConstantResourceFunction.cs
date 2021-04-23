@@ -1,5 +1,5 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
+﻿using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
+using SequencePlanner.Helper;
 using SequencePlanner.Model.Hierarchy;
 
 namespace SequencePlanner.Function.ResourceFunction
@@ -18,7 +18,7 @@ namespace SequencePlanner.Function.ResourceFunction
             Validate();
         }
 
-        public double ComputeResourceCost(Config  A, Config B, double distance)
+        public double ComputeResourceCost(Config A, Config B, double distance)
         {
             if (A.Resource.ID != B.Resource.ID)
                 return LinkingFunction.ComputeResourceDistanceCost(Cost, distance);
@@ -38,7 +38,7 @@ namespace SequencePlanner.Function.ResourceFunction
         {
             SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(ConstantResourceFunction));
             SeqLogger.Info("ChangeoverConstant: " + Cost, nameof(ConstantResourceFunction));
-            if(LinkingFunction == null)
+            if (LinkingFunction == null)
             {
                 throw new SeqException("ConstantResourceFunction.LinkingFunction not given.");
             }

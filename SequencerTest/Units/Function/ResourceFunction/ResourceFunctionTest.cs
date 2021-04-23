@@ -1,10 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.Model;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using System.Collections.Generic;
 using SequencePlanner.Model.Hierarchy;
+using System.Collections.Generic;
 
 namespace SequencerTest.Units
 {
@@ -21,11 +19,11 @@ namespace SequencerTest.Units
         [TestInitialize()]
         public void Initialize()
         {
-            A = new Config(1,new List<double> { 0, 0, 0 }) { Resource = new Resource(0, "") };
-            B = new Config(1,new List<double> { 5, 0, 0 }) { Resource = new Resource(1, "") };
-            C = new Config(1,new List<double> { 0, 5, 0 }) { Resource = new Resource(2, "") };
-            D = new Config(1,new List<double> { 0, 0, 5 }) { Resource = new Resource(3, "") };
-            E = new Config(1,new List<double> { 5, 5, 5 }) { Resource = new Resource(4, "") };
+            A = new Config(1, new List<double> { 0, 0, 0 }) { Resource = new Resource(0, "") };
+            B = new Config(1, new List<double> { 5, 0, 0 }) { Resource = new Resource(1, "") };
+            C = new Config(1, new List<double> { 0, 5, 0 }) { Resource = new Resource(2, "") };
+            D = new Config(1, new List<double> { 0, 0, 5 }) { Resource = new Resource(3, "") };
+            E = new Config(1, new List<double> { 5, 5, 5 }) { Resource = new Resource(4, "") };
         }
 
         [TestMethod]

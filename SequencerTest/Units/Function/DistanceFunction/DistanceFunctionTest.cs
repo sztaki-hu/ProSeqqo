@@ -1,9 +1,9 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SequencePlanner.Function.DistanceFunction;
+using SequencePlanner.Helper;
+using SequencePlanner.Model.Hierarchy;
 using System;
 using System.Collections.Generic;
-using SequencePlanner.Helper;
-using SequencePlanner.Function.DistanceFunction;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Model.Hierarchy;
 
 namespace SequencerTest.Units.DistanceFunction
 {
@@ -20,11 +20,11 @@ namespace SequencerTest.Units.DistanceFunction
         [TestInitialize()]
         public void Initialize()
         {
-            A = new Config(1,new List<double> { 0, 0, 0 } );
-            B = new Config(1,new List<double> { 5, 0, 0 } );
-            C = new Config(1,new List<double> { 0, 5, 0 } );
-            D = new Config(1,new List<double> { 0, 0, 5 } );
-            E = new Config(1,new List<double> { 5, 5, 5 } );
+            A = new Config(1, new List<double> { 0, 0, 0 });
+            B = new Config(1, new List<double> { 5, 0, 0 });
+            C = new Config(1, new List<double> { 0, 5, 0 });
+            D = new Config(1, new List<double> { 0, 0, 5 });
+            E = new Config(1, new List<double> { 5, 5, 5 });
         }
 
         [TestMethod()]
@@ -34,7 +34,7 @@ namespace SequencerTest.Units.DistanceFunction
             Assert.AreEqual(5, func.ComputeDistance(A, B));
             Assert.AreEqual(5, func.ComputeDistance(A, C));
             Assert.AreEqual(5, func.ComputeDistance(A, D));
-            Assert.AreEqual(Math.Round(8.660254,2), Math.Round(func.ComputeDistance(A, E),2));
+            Assert.AreEqual(Math.Round(8.660254, 2), Math.Round(func.ComputeDistance(A, E), 2));
         }
 
         [TestMethod()]
@@ -81,7 +81,7 @@ namespace SequencerTest.Units.DistanceFunction
         public void MatrixDistanceFunction()
         {
             Exception expectedExcetpion = null;
-            func = new MatrixDistanceFunction(new List<List<double>> { new List<double>{ 1, 2 }, new List<double> { 2, 1 } }, new List<int>() { A.ID, B.ID });
+            func = new MatrixDistanceFunction(new List<List<double>> { new List<double> { 1, 2 }, new List<double> { 2, 1 } }, new List<int>() { A.ID, B.ID });
             Assert.AreEqual(1, func.ComputeDistance(A, B));
             Assert.AreEqual(1, func.ComputeDistance(B, A));
             Assert.AreEqual(1, func.ComputeDistance(A, A));

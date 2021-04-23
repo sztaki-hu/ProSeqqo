@@ -1,15 +1,15 @@
-﻿using System;
-using System.Linq;
+﻿using SequencePlanner.Helper;
+using System;
 using System.Collections.Generic;
-using SequencePlanner.Helper;
+using System.Linq;
 
 namespace SequencePlanner.Task.Serialization.Token
 {
     public class TokenLineDeserializationObject
     {
-        public int LineNumber { get;set; }
-        public string Line { get;set; }
-        public bool KeyWord { get;set; }
+        public int LineNumber { get; set; }
+        public string Line { get; set; }
+        public bool KeyWord { get; set; }
 
 
         public int ToInt()
@@ -20,7 +20,7 @@ namespace SequencePlanner.Task.Serialization.Token
             }
             catch (Exception)
             {
-                throw new SeqException("Can't phrase int value at Line "+LineNumber+" - "+KeyWord);
+                throw new SeqException("Can't phrase int value at Line " + LineNumber + " - " + KeyWord);
             }
         }
         public bool ToBool()

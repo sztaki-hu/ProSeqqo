@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using SequencePlanner.Model;
+﻿using SequencePlanner.Model;
+using System.Collections.Generic;
 
 namespace SequencePlanner.Task.Serialization.Model
 {
     public class StrictEdgeWeightSetSerializationObject
     {
-        public List<StrictEdgeWeightSerializationObject> Weights {get;set;}
+        public List<StrictEdgeWeightSerializationObject> Weights { get; set; }
 
 
         public StrictEdgeWeightSetSerializationObject()

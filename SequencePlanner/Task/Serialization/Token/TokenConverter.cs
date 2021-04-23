@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using SequencePlanner.Helper;
+﻿using SequencePlanner.Helper;
 using SequencePlanner.Task.Serialization.Model;
+using System;
+using System.Collections.Generic;
 
 namespace SequencePlanner.Task.Serialization.Token
 {
@@ -31,7 +31,7 @@ namespace SequencePlanner.Task.Serialization.Token
                 throw new SeqException("Can not phrase header " + header, e);
             }
         }
-        
+
         public static int GetIntByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
@@ -125,7 +125,7 @@ namespace SequencePlanner.Task.Serialization.Token
                         token.Phrased = true;
                         string[] parts = token.Lines[0].Line.Split('[', ';', ']');
                         double[] vector = new double[parts.Length - 2];
-                        for (int i = 1; i < parts.Length-1; i++)
+                        for (int i = 1; i < parts.Length - 1; i++)
                         {
                             vector[i - 1] = double.Parse(parts[i]);
                         }
@@ -180,7 +180,7 @@ namespace SequencePlanner.Task.Serialization.Token
                 throw new SeqException("Can not phrase header " + header, e);
             }
         }
-        
+
         public static List<ConfigSerializationObject> GetConfigListByHeader(this SEQTokenizer tokenizer, string header)
         {
             try
@@ -388,7 +388,7 @@ namespace SequencePlanner.Task.Serialization.Token
         {
             string[] parts = line.Split('[', ']');
 
-            return string.Concat(parts[0].Remove(parts[0].Length-1), parts[parts.Length-1]);
+            return string.Concat(parts[0].Remove(parts[0].Length - 1), parts[parts.Length - 1]);
         }
     }
 }

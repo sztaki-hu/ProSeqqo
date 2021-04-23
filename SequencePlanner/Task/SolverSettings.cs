@@ -4,12 +4,12 @@ namespace SequencePlanner.Task
 {
     public class SolverSettings
     {
-       public Metaheuristics Metaheuristics { get; set; }
-       public int TimeLimit { get; set; }
-       public bool UseShortcutInAlternatives { get; set; }
-       public bool UseMIPprecedenceSolver { get; set; }
+        public Metaheuristics Metaheuristics { get; set; }
+        public int TimeLimit { get; set; }
+        public bool UseShortcutInAlternatives { get; set; }
+        public bool UseMIPprecedenceSolver { get; set; }
 
-       public SolverSettings()
+        public SolverSettings()
         {
             Metaheuristics = Metaheuristics.Automatic;
             TimeLimit = 0;

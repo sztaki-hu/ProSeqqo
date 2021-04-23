@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Task
-{ 
+{
     public class GeneralTaskResult
     {
-        public TimeSpan FullTime {get;set;}
-        public TimeSpan SolverTime {get;set;}
-        public TimeSpan PreSolverTime {get;set;}
+        public TimeSpan FullTime { get; set; }
+        public TimeSpan SolverTime { get; set; }
+        public TimeSpan PreSolverTime { get; set; }
         public int StatusCode { get; set; }
         public string StatusMessage { get; set; }
         public string ErrorMessage { get; set; }
@@ -62,7 +62,7 @@ namespace SequencePlanner.Task
             SeqLogger.Indent++;
             foreach (var c in CostsBetweenMotions)
             {
-                SeqLogger.WriteLog(logLevel,"\t" + c.ToString());
+                SeqLogger.WriteLog(logLevel, "\t" + c.ToString());
             }
             SeqLogger.Indent--;
             SeqLogger.WriteLog(logLevel, "Config Costs: ");

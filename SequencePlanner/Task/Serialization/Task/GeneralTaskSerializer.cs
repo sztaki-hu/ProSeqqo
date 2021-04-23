@@ -1,9 +1,9 @@
-﻿using System.IO;
-using System.Linq;
-using Newtonsoft.Json;
-using System.Xml.Serialization;
+﻿using Newtonsoft.Json;
 using SequencePlanner.Helper;
 using SequencePlanner.Task;
+using System.IO;
+using System.Linq;
+using System.Xml.Serialization;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {

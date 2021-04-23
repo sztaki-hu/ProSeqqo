@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SequencePlanner.Model.Hierarchy
+﻿namespace SequencePlanner.Model.Hierarchy
 {
     public class HierarchyRecord
     {

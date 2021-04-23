@@ -1,5 +1,4 @@
-﻿using SequencePlanner.Helper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SequencePlanner.Task.Serialization.Token
 {

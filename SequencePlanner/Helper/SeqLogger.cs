@@ -30,20 +30,20 @@ namespace SequencePlanner.Helper
                     case LogLevel.Critical: Console.ForegroundColor = ConsoleColor.DarkRed; break;
                 }
                 var indent = "";
-                if(UseIndent)
+                if (UseIndent)
                     for (int i = 0; i < Indent; i++)
                     {
                         indent += "   ";
                     }
-                var log = level.ToString()+":  " + indent;
-                Console.Write(level.ToString()+ ":  " + indent);
+                var log = level.ToString() + ":  " + indent;
+                Console.Write(level.ToString() + ":  " + indent);
                 Console.ForegroundColor = ConsoleColor.White;
                 if (nameOfClass != null)
                 {
                     Console.Write(nameOfClass + ":\t");
                     log += nameOfClass + ":   ";
                 }
-                Console.Write(message+"\n");
+                Console.Write(message + "\n");
                 log += message;
                 if (Backlog == null)
                     Backlog = new List<string>();

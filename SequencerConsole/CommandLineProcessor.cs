@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SequencePlanner.GTSPTask.Serialization.Result;
+using SequencePlanner.GTSPTask.Serialization.Task;
+using SequencePlanner.Helper;
+using SequencePlanner.Task;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using SequencePlanner.Helper;
-using SequencePlanner.GTSPTask.Serialization.Result;
-using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.Task;
 
 namespace SequencerConsole
 {
@@ -38,8 +38,8 @@ namespace SequencerConsole
                     string graph = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\graph";
 
                     //args = new string[] { "-i", example + "\\PickAndPlace_Original.txt",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
-                    args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          };
-                    args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt",          "-o", outdir + "\\PickAndPlace_Matrix_out.txt",           };
+                    args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt", "-o", outdir + "\\PickAndPlace_Matrix_out.json", };
+                    args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt", "-o", outdir + "\\PickAndPlace_Matrix_out.txt", };
                     //args = new string[] { "-i", example + "\\Line_Original.txt",            "-o", outdir + "\\Line_Original_out.json",            };
                     //args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.json",              };
                     //args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.seq",               };
@@ -156,7 +156,7 @@ namespace SequencerConsole
             }
         }
 
-        
+
         private static void Run()
         {
             try

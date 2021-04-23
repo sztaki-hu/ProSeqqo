@@ -1,5 +1,4 @@
-﻿using SequencePlanner.Model;
-using SequencePlanner.Model.Hierarchy;
+﻿using SequencePlanner.Model.Hierarchy;
 
 namespace SequencePlanner.Task.Serialization.Model
 {
@@ -36,13 +35,13 @@ namespace SequencePlanner.Task.Serialization.Model
             string separator = ";";
             string newline = "\n";
             string seq = "";
-            seq += LineID+separator;
-            seq += ContourID+separator;
-            seq += PositionIDA+separator;
-            seq += PositionIDB+separator;
-            seq += Name+separator;
-            seq += ResourceID+separator;
-            seq += Bidirectional+separator+newline;
+            seq += LineID + separator;
+            seq += ContourID + separator;
+            seq += PositionIDA + separator;
+            seq += PositionIDB + separator;
+            seq += Name + separator;
+            seq += ResourceID + separator;
+            seq += Bidirectional + separator + newline;
             return seq;
         }
 

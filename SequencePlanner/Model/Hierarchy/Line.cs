@@ -2,7 +2,7 @@
 
 namespace SequencePlanner.Model.Hierarchy
 {
-    public class Line: BaseNode
+    public class Line : BaseNode
     {
         public static bool BIDIRECTIONAL_DEFAULT;
         //Normal line NodeA->NodeB, reverse NodeB->NodeA
@@ -12,9 +12,9 @@ namespace SequencePlanner.Model.Hierarchy
         public bool Bidirectional { get; set; }
 
 
-        public Line(): base()
+        public Line() : base()
         {
-            Name = UserID + "_Line_" +GlobalID;
+            Name = UserID + "_Line_" + GlobalID;
             NodeA = null;
             NodeB = null;
             Bidirectional = BIDIRECTIONAL_DEFAULT;
@@ -40,7 +40,7 @@ namespace SequencePlanner.Model.Hierarchy
         public void Validate()
         {
             if (NodeA == null)
-                throw new SeqException("Line with UserID: "+UserID+" NodeA should not be null.");
+                throw new SeqException("Line with UserID: " + UserID + " NodeA should not be null.");
             if (NodeB == null)
                 throw new SeqException("Line with UserID: " + UserID + " NodeB should not be null.");
         }

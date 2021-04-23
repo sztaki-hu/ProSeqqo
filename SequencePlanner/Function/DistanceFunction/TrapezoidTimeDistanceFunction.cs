@@ -37,13 +37,13 @@ namespace SequencePlanner.Function.DistanceFunction
                 throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/JointThresholdTime.");
             for (int i = 0; i < MaxSpeed.Length; i++)
             {
-                if(MaxAcceleration[i]<=0)
+                if (MaxAcceleration[i] <= 0)
                     throw new SeqException("MaxAcceleration contains >=0 !");
-                if(MaxSpeed[i]<=0)
+                if (MaxSpeed[i] <= 0)
                     throw new SeqException("MaxSpeed contains >=0 !");
-                if(JointThresholdTime[i]<=0)
+                if (JointThresholdTime[i] <= 0)
                     throw new SeqException("JointThresholdTime contains >=0 !");
-                if(JointThresholdDist[i]<=0)
+                if (JointThresholdDist[i] <= 0)
                     throw new SeqException("JointThresholdDist contains >=0 !");
             }
         }
@@ -90,7 +90,7 @@ namespace SequencePlanner.Function.DistanceFunction
 
         private void InitParameters()
         {
-            if(MaxAcceleration.Length != MaxSpeed.Length)
+            if (MaxAcceleration.Length != MaxSpeed.Length)
                 throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
             int Dimension = MaxSpeed.Length;
             JointThresholdTime = new double[Dimension];

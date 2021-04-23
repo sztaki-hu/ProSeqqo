@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Diagnostics;
-using System.Collections.Generic;
-using Google.OrTools.LinearSolver;
-using SequencePlanner.Model;
+﻿using Google.OrTools.LinearSolver;
 using SequencePlanner.Helper;
+using SequencePlanner.Model;
 using SequencePlanner.Model.Hierarchy;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace SequencePlanner.OR_Tools
 {
@@ -14,11 +14,11 @@ namespace SequencePlanner.OR_Tools
         public TimeSpan RunTime { get; private set; }
         private readonly ORToolsGeneralPreSolverTask parameters;
         private readonly Stopwatch timer;
-        private Variable[] x;                 
-        private Variable[] position; 
+        private Variable[] x;
+        private Variable[] position;
         private int[] alternativeID;
         private int[] processID;
-        private readonly List<string> constraints =  new List<string>(); 
+        private readonly List<string> constraints = new List<string>();
 
         public ORToolsGeneralPreSolverWrapper(ORToolsGeneralPreSolverTask parameters)
         {
@@ -72,7 +72,7 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Debug("Solver finished!", nameof(ORToolsGeneralPreSolverWrapper));
             return resultStatus;
         }
-        
+
         private void AddStartDepotConstraints(Solver solver)
         {
             if (parameters.StartDepot > -1)                                                                                         //If Start depo exist, position = 0 and selected x = 1
@@ -98,13 +98,13 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Trace("Precedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.OrderPrecedenceConstraints)
             {
-                solver.Add(position[item.Before.SequenceMatrixID] +1 <= position[item.After.SequenceMatrixID] +parameters.DisjointConstraints.Count*(2-x[item.Before.SequenceMatrixID] -x[item.After.SequenceMatrixID]));
+                solver.Add(position[item.Before.SequenceMatrixID] + 1 <= position[item.After.SequenceMatrixID] + parameters.DisjointConstraints.Count * (2 - x[item.Before.SequenceMatrixID] - x[item.After.SequenceMatrixID]));
                 //solver.Add(position[item.Before.SequencingID] +1 <= position[item.After.SequencingID]+9*(2-x[item.Before.SequencingID]-x[item.After.SequencingID]));
                 constraints.Add((position[item.Before.SequenceMatrixID] + 1 <= position[item.After.SequenceMatrixID] + parameters.DisjointConstraints.Count * (2 - x[item.Before.SequenceMatrixID] - x[item.After.SequenceMatrixID])).ToString());
                 SeqLogger.Trace(item.ToString(), nameof(ORToolsGeneralPreSolverWrapper));
             }
             SeqLogger.Indent--;
-        }        
+        }
         private void AddStrictPrecedenceConstraints(Solver solver, List<MotionPrecedenceList> precedenceHierarchy)
         {
             SeqLogger.Trace("StrictPrecedences: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
@@ -124,11 +124,11 @@ namespace SequencePlanner.OR_Tools
                 {
                     foreach (var a in item.After)
                     {
-                        solver.Add(position[b.SequenceMatrixID]+1 == position[a.SequenceMatrixID]);
+                        solver.Add(position[b.SequenceMatrixID] + 1 == position[a.SequenceMatrixID]);
                         constraints.Add((position[b.SequenceMatrixID] + 1 == position[a.SequenceMatrixID]).ToString());
-                        SeqLogger.Trace(new MotionPrecedence(b,a).ToString(), nameof(ORToolsGeneralPreSolverWrapper));
+                        SeqLogger.Trace(new MotionPrecedence(b, a).ToString(), nameof(ORToolsGeneralPreSolverWrapper));
                     }
-                }     
+                }
             }
             SeqLogger.Indent--;
         }
@@ -191,7 +191,7 @@ namespace SequencePlanner.OR_Tools
             List<Process> processes = new List<Process>();
             var solution = new List<int>();
             var solutionString = "Initial solution found: ";
-            
+
             for (int i = 0; i < parameters.Processes.Count; i++)
             {
                 processes.Add(new Process());
@@ -201,11 +201,12 @@ namespace SequencePlanner.OR_Tools
             {
                 for (int i = 0; i < parameters.NumberOfNodes; i++)
                 {
-                    if (x[i].SolutionValue() == 1) {                                                    //If node selected
+                    if (x[i].SolutionValue() == 1)
+                    {                                                    //If node selected
                         int aktProcessID = (int)processID[i];
                         processes[aktProcessID].PosKey.Add(i);                                          //Add node index to process
                         processes[aktProcessID].PosOrder.Add((int)position[i].SolutionValue());         //Add node position to process
-                        if (position[i].SolutionValue() < processes[aktProcessID].Min)                  
+                        if (position[i].SolutionValue() < processes[aktProcessID].Min)
                             processes[aktProcessID].Min = position[i].SolutionValue();                  //Find the first position in process
                         if (position[i].SolutionValue() > processes[aktProcessID].Max)
                             processes[aktProcessID].Max = position[i].SolutionValue();                  //Find the last position in process
@@ -223,7 +224,7 @@ namespace SequencePlanner.OR_Tools
                 {
                     if (x[p].SolutionValue() == 1)
                         SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + this.position[p].SolutionValue() + ", Alternative = " + this.alternativeID[p] + ", Process = " + this.processID[p], nameof(OR_Tools.ORToolsGeneralPreSolverWrapper));
-                }   
+                }
                 SeqLogger.Info(solutionString, nameof(ORToolsGeneralPreSolverWrapper));
             }
             else

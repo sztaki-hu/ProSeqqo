@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using SequencePlanner.Model;
-using SequencePlanner.Helper;
+﻿using SequencePlanner.Helper;
 
 //TODO: MotionPrecedence only between processes, no inside alternatives and between alternatives in one process.
 namespace SequencePlanner.Task.Processors
@@ -26,7 +24,7 @@ namespace SequencePlanner.Task.Processors
             //CheckProcessHierarchy(pointLikeTask);
             //CheckProcessPrecedence(pointLikeTask);
             //CheckUseAlternativeShortcuts(pointLikeTask);
-            
+
             SeqLogger.Indent--;
             SeqLogger.Debug("Validation finished!", nameof(GeneralTaskValidator));
         }

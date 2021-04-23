@@ -40,8 +40,8 @@ namespace SequencePlanner.Task
 
         public void Build()
         {
-            CostMatrix =        new double[Task.Hierarchy.Motions.Count, Task.Hierarchy.Motions.Count];
-            RoundedCostMatrix = new int[Task.Hierarchy.Motions.Count   , Task.Hierarchy.Motions.Count];
+            CostMatrix = new double[Task.Hierarchy.Motions.Count, Task.Hierarchy.Motions.Count];
+            RoundedCostMatrix = new int[Task.Hierarchy.Motions.Count, Task.Hierarchy.Motions.Count];
 
             for (int i = 0; i < Task.Hierarchy.Motions.Count; i++)
             {

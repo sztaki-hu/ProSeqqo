@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SequencePlanner.Model.Hierarchy
+﻿namespace SequencePlanner.Model.Hierarchy
 {
     public class Node
     {
@@ -21,7 +15,7 @@ namespace SequencePlanner.Model.Hierarchy
             Virtual = false;
         }
 
-        public Node(int id, string name): this()
+        public Node(int id, string name) : this()
         {
             ID = id;
             Name = name;

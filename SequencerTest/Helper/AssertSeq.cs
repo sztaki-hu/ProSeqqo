@@ -7,7 +7,7 @@ namespace SequencerTest.Helper
     {
         public static void AssertPosition(Position excepted, Position actual)
         {
-            if(excepted != null)
+            if (excepted != null)
             {
                 Assert.AreEqual(excepted.Name, actual.Name);
                 Assert.AreEqual(excepted.UserID, actual.UserID);

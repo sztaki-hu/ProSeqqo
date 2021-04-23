@@ -7,7 +7,7 @@ namespace SequencePlanner.Function.DistanceFunction
     public class ManhattanDistanceFunction : DistanceFunction
     {
         public override string FunctionName { get { return "Manhattan"; } }
-     
+
 
         public override double ComputeDistance(Config A, Config B)
         {
@@ -27,7 +27,7 @@ namespace SequencePlanner.Function.DistanceFunction
             }
             else
             {
-                SeqLogger.Error("ManhattanDistanceFunction find dimension mismatch position userids: "+A.ID+"-"+B.ID);
+                SeqLogger.Error("ManhattanDistanceFunction find dimension mismatch position userids: " + A.ID + "-" + B.ID);
                 return 0;
             }
         }

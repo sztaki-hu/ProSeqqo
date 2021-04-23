@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using SequencePlanner.Helper;
+﻿using SequencePlanner.Helper;
 using SequencePlanner.Model;
 using SequencePlanner.Model.Hierarchy;
 using SequencePlanner.OR_Tools;
 using SequencePlanner.Task.Processors;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SequencePlanner.Task
 {
@@ -39,8 +39,8 @@ namespace SequencePlanner.Task
             CostManager = new CostManager();
             Hierarchy = new Hierarchy();
             SolverSettings = new SolverSettings();
-            ProcessPrecedences    = new List<ProcessPrecedence>();
-            MotionPrecedences    = new List<MotionPrecedence>();
+            ProcessPrecedences = new List<ProcessPrecedence>();
+            MotionPrecedences = new List<MotionPrecedence>();
             PCGTSPRepresentation = new PCGTSPRepresentation(this);
             DepotMapper = new GeneraDepotMapper(this);
             ShortcutMapper = new GeneralShortcutMapper(this);

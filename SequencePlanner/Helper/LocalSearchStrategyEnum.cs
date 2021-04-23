@@ -1,5 +1,4 @@
 ﻿using Google.OrTools.ConstraintSolver;
-using SequencePlanner.Helper;
 
 namespace SequencePlanner.Helper
 {
@@ -29,10 +28,10 @@ namespace SequencePlanner.Helper
 
         public static Metaheuristics ResolveEnum(string metaheuristics)
         {
-            if(metaheuristics != null)
+            if (metaheuristics != null)
             {
                 metaheuristics = metaheuristics.ToUpper();
-                if(metaheuristics.Contains(Metaheuristics.Automatic.ToString().ToUpper()))
+                if (metaheuristics.Contains(Metaheuristics.Automatic.ToString().ToUpper()))
                     return Metaheuristics.Automatic;
                 if (metaheuristics.Contains(Metaheuristics.GreedyDescent.ToString().ToUpper()))
                     return Metaheuristics.GreedyDescent;

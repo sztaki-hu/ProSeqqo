@@ -73,7 +73,7 @@ namespace SequencerTest.Benchmark
                 }
                 catch (Exception e)
                 {
-                    Assert.Fail("Benchmark failed at "+ templates[i].FileName);
+                    Assert.Fail("Benchmark failed at " + templates[i].FileName);
                     Console.WriteLine(e.ToString());
                 }
                 SeqLogger.Indent--;

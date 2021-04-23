@@ -8,13 +8,13 @@ namespace SequencerTest.Units.Serialization.Tokens
         [TestMethod()]
         public void TokenizeTest()
         {
-            
+
         }
 
         [TestMethod()]
         public void FindTokenByHeaderTest()
         {
-            
+
         }
     }
 }

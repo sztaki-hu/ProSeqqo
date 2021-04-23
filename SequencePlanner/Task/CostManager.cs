@@ -12,7 +12,7 @@ namespace SequencePlanner.Task
         public IDistanceFunction DistanceFunction { get; set; }
         public IResourceFunction ResourceFunction { get; set; }
         public List<DetailedConfigCost> OverrideCost { get; set; }
-        public double IdlePenalty{ get; set; }
+        public double IdlePenalty { get; set; }
         public bool AddMotionLengthToCost { get; set; }
         public bool AddInMotionChangeoverToCost { get; set; }
 
@@ -75,7 +75,7 @@ namespace SequencePlanner.Task
             //else
             //    weight = DistanceFunction.ComputeDistance(From.LastConfig, To.FirstConfig);
             //weight = ResourceFunction.ComputeResourceCost(From.LastConfig, To.FirstConfig, weight);
-            
+
             //if (From.AdditionalWeightOut > 0)
             //    weight += From.AdditionalWeightOut;
             //if (To.AdditionalWeightIn > 0)

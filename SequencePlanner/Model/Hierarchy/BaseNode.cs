@@ -10,7 +10,7 @@
         public bool Virtual { get; set; }
         public string Name { get; set; }
 
-       
+
         public BaseNode()
         {
             GlobalID = ++MAX_GLOBALID;
@@ -30,7 +30,7 @@
                 SequencingID = this.SequencingID,
                 ResourceID = this.ResourceID,
                 Virtual = this.Virtual,
-                Name = Name+"_Reverse"
+                Name = Name + "_Reverse"
             };
         }
 
@@ -62,7 +62,7 @@
             str += "[GID:" + GlobalID;
             str += "|UID:" + UserID;
             str += "|SID:" + SequencingID;
-            str += "|RID:" + ResourceID +"]";
+            str += "|RID:" + ResourceID + "]";
             return str;
         }
         public override bool Equals(object obj)

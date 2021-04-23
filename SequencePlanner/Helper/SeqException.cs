@@ -8,7 +8,7 @@ namespace SequencePlanner.Helper
 
         public SeqException(string message) : base("\nError:" + message)
         {
-            SeqLogger.Critical(message); 
+            SeqLogger.Critical(message);
         }
 
         public SeqException(string message, string instruction) : base("\nError: " + message + "\n" + "Instruction: " + instruction)
