@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Model
 {
     public class DisjointSet<Base>
     {

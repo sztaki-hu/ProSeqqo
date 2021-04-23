@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using SequencePlanner.Helper;
-using SequencePlanner.GeneralModels.Result;
+using SequencePlanner.Task;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {

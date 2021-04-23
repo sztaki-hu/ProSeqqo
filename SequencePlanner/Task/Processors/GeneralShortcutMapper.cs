@@ -1,7 +1,6 @@
-﻿using SequencePlanner.GeneralModels.Result;
-using System;
+﻿using System;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Task.Processors
 {
     public  class GeneralShortcutMapper: ITaskProcessor
     {

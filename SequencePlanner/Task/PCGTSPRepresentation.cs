@@ -1,8 +1,10 @@
-﻿using System;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Model;
+using SequencePlanner.Model.Hierarchy;
+using System;
 using System.Collections.Generic;
-using SequencePlanner.Helper;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Task
 {
     public class PCGTSPRepresentation
     {
@@ -152,7 +154,7 @@ namespace SequencePlanner.GeneralModels
             }
         }
 
-        private void ConnectTasks(Task a, Task b)
+        private void ConnectTasks(Model.Hierarchy.Task a, Model.Hierarchy.Task b)
         {
             foreach (var from in Task.Hierarchy.GetMotionsOf(a))
             {

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SequencePlanner.Task.Serialization.Token;
+using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using System.Text.Json.Serialization;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
+using System.Xml.Serialization;
 
-namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
+namespace SequencePlanner.Task.Serialization.Model
 {
     public class DistanceMatrixSerializationObject
     {
@@ -55,7 +55,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                     //seq += close;
                     if (i < DistanceMatrix.Count - 1)
                         //seq += separator;
-                    seq += newline;
+                        seq += newline;
                 }
                 seq += newline;
             }
@@ -101,7 +101,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 tmp = matrix.Lines[i].Line.Split(';');  //10;20;30;40;Name--->[10][20][30][40][Name]
                 for (int j = 0; j < dim; j++)
                 {
-                    distanceMatrix[i - 1,j] = double.Parse(tmp[j]);
+                    distanceMatrix[i - 1, j] = double.Parse(tmp[j]);
                 }
             }
             if (matrix.Lines.Count > dim + 1)
@@ -114,7 +114,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             }
             if (matrix.Lines.Count > dim + 2)
             {
-                tmp = matrix.Lines[dim+2].Line.Split(';');
+                tmp = matrix.Lines[dim + 2].Line.Split(';');
                 for (int i = 0; i < tmp.Length; i++)
                 {
                     ResourceFooter.Add(Int32.Parse(tmp[i]));
@@ -139,7 +139,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                 {
                     ID = IDHeader[i]
                 };
-                if (NameFooter!=null && NameFooter.Count!=0)
+                if (NameFooter != null && NameFooter.Count != 0)
                     position.Name = NameFooter[i];
                 if (ResourceFooter != null && ResourceFooter.Count != 0)
                     position.ResourceID = ResourceFooter[i];

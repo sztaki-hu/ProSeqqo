@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Model.Hierarchy
 {
     public class Motion: Node
     {

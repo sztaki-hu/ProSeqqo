@@ -1,10 +1,9 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Function.ResourceFunction;
+﻿using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
+using SequencePlanner.Helper;
+using SequencePlanner.Task.Serialization.Token;
 
-
-namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
+namespace SequencePlanner.Task.Serialization.Model
 {
     public class ResourceFunctionSerializationObject
     {
@@ -17,13 +16,13 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public ResourceFunctionSerializationObject() { }
         public ResourceFunctionSerializationObject(IResourceFunction resFunc)
         {
-            if(resFunc.LinkingFunction!=null)
+            if (resFunc.LinkingFunction != null)
                 ResourceDistanceFunction = resFunc.LinkingFunction.FunctionName;
             ResourceSource = resFunc.FunctionName;
 
             if (ResourceSource == "Off")
             {
-                
+
             }
             if (ResourceSource == "Constant")
             {
@@ -48,11 +47,11 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
             string newline = "\n";
             string seq = "";
             seq += "ResourceChangeover: " + ResourceDistanceFunction + newline;
-            if(ResourceSource != "Off")
+            if (ResourceSource != "Off")
                 seq += "ResourceSource: " + ResourceSource + newline;
-            if(ResourceSource == "Constant")
+            if (ResourceSource == "Constant")
                 seq += "ResourceCostConstant: " + ResourceCostConstant + newline;
-            if(ResourceSource == "Matrix")
+            if (ResourceSource == "Matrix")
             {
                 //TODO: Create ResourceCostMatrix2.ToSEQ;
                 seq += "ResourceCostMatrix: " + newline;

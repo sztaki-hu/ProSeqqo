@@ -3,7 +3,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Xml.Serialization;
 using SequencePlanner.Helper;
-using SequencePlanner.GeneralModels;
+using SequencePlanner.Task;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {

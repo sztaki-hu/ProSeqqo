@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Model;
+using SequencePlanner.Model.Hierarchy;
+using SequencePlanner.Task;
+using SequencePlanner.Task.Serialization.Model;
+using SequencePlanner.Task.Serialization.Token;
+using System;
 using System.Collections.Generic;
-using SequencePlanner.Helper;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
-using SequencePlanner.OR_Tools;
-using SequencePlanner.GeneralModels;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {
@@ -41,7 +42,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public List<OrderConstraintSerializationObject> MotionPrecedence { get; set; }
 
 
-        public GeneralTaskSerializationObject(){ }
+        public GeneralTaskSerializationObject() { }
 
         public GeneralTaskSerializationObject(List<string> seqString) : base()
         {
@@ -130,7 +131,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             task.SolverSettings.Metaheuristics = LocalSearchStrategyEnum.ResolveEnum(LocalSearchStrategy);
             task.SolverSettings.UseShortcutInAlternatives = UseShortcutInAlternatives;
             task.SolverSettings.TimeLimit = TimeLimit;
-            
+
             CreateProcessHierarchy(task);
             CreatePrecedences(task);
             foreach (var config in task.Hierarchy.Configs)
@@ -208,15 +209,15 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     };
                 }
 
-                GeneralModels.Task t = task.Hierarchy.GetTaskByID(item.TaskID);
+                Model.Hierarchy.Task t = task.Hierarchy.GetTaskByID(item.TaskID);
                 if (t == null)
                 {
-                    t = new GeneralModels.Task
+                    t = new Model.Hierarchy.Task
                     {
                         ID = item.TaskID
                     };
                 }
-           
+
                 var motion = task.Hierarchy.GetMotionByID(item.MotionID);
                 if (motion == null)
                 {
@@ -229,10 +230,11 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     };
                 }
 
-                var record = new HierarchyRecord(){
-                    Process =proc,
+                var record = new HierarchyRecord()
+                {
+                    Process = proc,
                     Alternative = alter,
-                    Task =t,
+                    Task = t,
                     Motion = motion,
                 };
                 task.Hierarchy.HierarchyRecords.Add(record);
@@ -273,9 +275,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             ResourceFunction.FillBySEQTokens(tokenizer);
             LocalSearchStrategy = tokenizer.GetStringByHeader("LocalSearchStrategy");
             OverrideCost = tokenizer.GetStrictEdgeWeightSet("OverrideCost");
-            UseShortcutInAlternatives = tokenizer.GetBoolByHeader("UseShortcutInAlternatives" );
-            ProcessHierarchy = tokenizer.GetProcessHierarchyByHeader("ProcessHierarchy" );
-            MotionPrecedence = tokenizer.GetPrecedenceListByHeader("MotionPrecedence" );
+            UseShortcutInAlternatives = tokenizer.GetBoolByHeader("UseShortcutInAlternatives");
+            ProcessHierarchy = tokenizer.GetProcessHierarchyByHeader("ProcessHierarchy");
+            MotionPrecedence = tokenizer.GetPrecedenceListByHeader("MotionPrecedence");
             ProcessPrecedences = tokenizer.GetPrecedenceListByHeader("ProcessPrecedence");
             MotionList = tokenizer.GetHybridMotionListByHeader("MotionList");
             tokenizer.CheckNotPhrased();

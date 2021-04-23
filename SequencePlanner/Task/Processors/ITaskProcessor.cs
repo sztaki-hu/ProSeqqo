@@ -1,6 +1,4 @@
-﻿using SequencePlanner.GeneralModels.Result;
-
-namespace SequencePlanner.GeneralModels
+﻿namespace SequencePlanner.Task.Processors
 {
     public interface ITaskProcessor
     {

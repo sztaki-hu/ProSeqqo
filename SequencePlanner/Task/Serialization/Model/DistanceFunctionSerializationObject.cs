@@ -1,10 +1,8 @@
-﻿using SequencePlanner.Model;
+﻿using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Helper;
-using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
-using SequencePlanner.GeneralModels;
+using SequencePlanner.Task.Serialization.Token;
 
-namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
+namespace SequencePlanner.Task.Serialization.Model
 {
     public class DistanceFunctionSerializationObject
     {
@@ -14,7 +12,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
         public double[] TrapezoidSpeed { get; set; }
 
 
-        public DistanceFunctionSerializationObject(){}
+        public DistanceFunctionSerializationObject() { }
         public DistanceFunctionSerializationObject(GeneralTask task)
         {
             var distFunc = task.CostManager.DistanceFunction;
@@ -129,6 +127,6 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
                     TrapezoidSpeed = tokenizer.GetDoubleVectorByHeader("TrapezoidSpeed");
                 }
             }
-        }   
+        }
     }
 }

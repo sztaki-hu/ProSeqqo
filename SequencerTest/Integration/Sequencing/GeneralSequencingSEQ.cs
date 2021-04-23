@@ -1,7 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.GeneralModels;
-using SequencePlanner.GTSPTask.Serialization.Task;
-using System;
 
 namespace SequencerTest.Integration.Sequencing
 {

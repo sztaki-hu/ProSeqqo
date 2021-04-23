@@ -1,4 +1,4 @@
-﻿namespace SequencePlanner.Model
+﻿namespace SequencePlanner.Model.Hierarchy
 {
     public class BaseNode
     {

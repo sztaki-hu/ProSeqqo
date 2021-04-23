@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
+﻿using SequencePlanner.Task.Serialization.Token;
+using System.Collections.Generic;
 
-namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
+namespace SequencePlanner.Task.Serialization.Model
 {
     public class ResourceMatrixSerializationObject
     {

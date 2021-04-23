@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Task.Processors
 {
     public class InitialSolver
     {

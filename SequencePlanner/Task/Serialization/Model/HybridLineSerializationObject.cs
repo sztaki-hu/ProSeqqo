@@ -1,6 +1,7 @@
 ﻿using SequencePlanner.Model;
+using SequencePlanner.Model.Hierarchy;
 
-namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
+namespace SequencePlanner.Task.Serialization.Model
 {
     public class HybridLineSerializationObject
     {

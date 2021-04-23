@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using SequencePlanner.GeneralModels;
-using SequencePlanner.Helper;
+using SequencePlanner.Model;
 
-namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
+namespace SequencePlanner.Task.Serialization.Model
 {
     public class StrictEdgeWeightSetSerializationObject
     {

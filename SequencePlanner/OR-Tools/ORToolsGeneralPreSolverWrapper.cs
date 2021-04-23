@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Google.OrTools.LinearSolver;
 using SequencePlanner.Model;
 using SequencePlanner.Helper;
-using SequencePlanner.GeneralModels;
+using SequencePlanner.Model.Hierarchy;
 
 namespace SequencePlanner.OR_Tools
 {

@@ -1,9 +1,11 @@
 ﻿using SequencePlanner.Function.DistanceFunction;
 using SequencePlanner.Function.ResourceFunction;
 using SequencePlanner.Helper;
+using SequencePlanner.Model;
+using SequencePlanner.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Task
 {
     public class CostManager
     {

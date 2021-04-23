@@ -1,4 +1,5 @@
-﻿using SequencePlanner.GeneralModels;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Task;
 
 namespace SequencePlanner.OR_Tools
 {
@@ -6,6 +7,6 @@ namespace SequencePlanner.OR_Tools
     {
         public int TimeLimit { get; set; }
         public PCGTSPRepresentation GTSPRepresentation { get; set; }
-        public LocalSearchStrategyEnum.Metaheuristics LocalSearchStrategy { get; set; }
+        public Metaheuristics LocalSearchStrategy { get; set; }
     }
 }

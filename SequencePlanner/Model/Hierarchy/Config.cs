@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Model.Hierarchy
 {
     public class Config: Node
     {

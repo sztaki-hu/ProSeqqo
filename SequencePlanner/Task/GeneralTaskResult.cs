@@ -1,9 +1,11 @@
 ﻿using SequencePlanner.Helper;
+using SequencePlanner.Model;
+using SequencePlanner.Model.Hierarchy;
 using System;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GeneralModels.Result
-{
+namespace SequencePlanner.Task
+{ 
     public class GeneralTaskResult
     {
         public TimeSpan FullTime {get;set;}

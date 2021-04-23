@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using SequencePlanner.GeneralModels.Result;
 using SequencePlanner.Helper;
+using SequencePlanner.Model;
+using SequencePlanner.Model.Hierarchy;
 using SequencePlanner.OR_Tools;
+using SequencePlanner.Task.Processors;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Task
 {
     public class GeneralTask
     {
@@ -48,7 +49,7 @@ namespace SequencePlanner.GeneralModels
         }
 
 
-        public Result.GeneralTaskResult Run()
+        public GeneralTaskResult Run()
         {
             Timer.Restart();
             ValidateTask();

@@ -1,6 +1,6 @@
 ﻿using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using SequencePlanner.Helper;
-using SequencePlanner.GeneralModels;
+using SequencePlanner.Model.Hierarchy;
 
 namespace SequencePlanner.Function.ResourceFunction
 {

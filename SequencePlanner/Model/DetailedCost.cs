@@ -1,6 +1,6 @@
 ﻿using SequencePlanner.Helper;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Model
 {
     public class DetailedCost<Base>
     {

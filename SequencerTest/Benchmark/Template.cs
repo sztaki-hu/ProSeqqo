@@ -1,7 +1,6 @@
-﻿using SequencePlanner.GeneralModels;
-using SequencePlanner.GeneralModels.Result;
-using SequencePlanner.GTSPTask.Serialization.Task;
+﻿using SequencePlanner.GTSPTask.Serialization.Task;
 using SequencePlanner.Helper;
+using SequencePlanner.Task;
 using System;
 using System.Collections.Generic;
 using System.IO;

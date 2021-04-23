@@ -1,6 +1,6 @@
 ﻿using SequencePlanner.Helper;
 
-namespace SequencePlanner.Model
+namespace SequencePlanner.Model.Hierarchy
 {
     public class Line: BaseNode
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using SequencePlanner.Helper;
 
-namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
+namespace SequencePlanner.Task.Serialization.Token
 {
     public class TokenLineDeserializationObject
     {

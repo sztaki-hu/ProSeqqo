@@ -1,7 +1,7 @@
 ﻿using Google.OrTools.ConstraintSolver;
 using SequencePlanner.Helper;
 
-namespace SequencePlanner.OR_Tools
+namespace SequencePlanner.Helper
 {
     public class LocalSearchStrategyEnum
     {

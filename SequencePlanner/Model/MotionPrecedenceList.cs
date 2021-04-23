@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using SequencePlanner.Model.Hierarchy;
+using System.Collections.Generic;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Model
 {
     public class MotionPrecedenceList: Precedence<List<Motion>>
     {

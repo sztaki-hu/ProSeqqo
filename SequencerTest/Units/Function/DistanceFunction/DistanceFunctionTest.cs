@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using SequencePlanner.Helper;
-using SequencePlanner.GeneralModels;
 using SequencePlanner.Function.DistanceFunction;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SequencePlanner.Model.Hierarchy;
 
 namespace SequencerTest.Units.DistanceFunction
 {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using SequencePlanner.Helper;
+using SequencePlanner.Task.Serialization.Model;
 
-namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
+namespace SequencePlanner.Task.Serialization.Token
 {
     public static class TokenConverter
     {

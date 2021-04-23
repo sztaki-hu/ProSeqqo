@@ -1,4 +1,5 @@
-﻿using SequencePlanner.GeneralModels;
+﻿using SequencePlanner.Model;
+using SequencePlanner.Model.Hierarchy;
 using System.Collections.Generic;
 
 namespace SequencePlanner.OR_Tools
@@ -10,7 +11,7 @@ namespace SequencePlanner.OR_Tools
         public int FinishDepot { get; set; }
         public List<Process> Processes { get; set; }
         public List<MotionPrecedenceList> StrictOrderPrecedenceHierarchy { get; set; }
-        public List<GeneralModels.MotionPrecedence> OrderPrecedenceConstraints { get; set; }
-        public List<GeneralModels.MotionDisjointSet> DisjointConstraints { get; set; }
+        public List<MotionPrecedence> OrderPrecedenceConstraints { get; set; }
+        public List<MotionDisjointSet> DisjointConstraints { get; set; }
     }
 }

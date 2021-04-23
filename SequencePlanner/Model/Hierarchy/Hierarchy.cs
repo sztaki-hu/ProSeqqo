@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Model.Hierarchy
 {
     public class Hierarchy
     {

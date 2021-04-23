@@ -1,9 +1,8 @@
-﻿using SequencePlanner.GeneralModels.Result;
-using SequencePlanner.Helper;
-using System;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Task.Processors
 {
     public class GeneraDepotMapper : ITaskProcessor
     {
@@ -180,7 +179,7 @@ namespace SequencePlanner.GeneralModels
                 Virtual = true
             };
 
-            Task t = new Task()
+            Model.Hierarchy.Task t = new Model.Hierarchy.Task()
             {
                 ID = 999999,
                 Name = name,
@@ -218,7 +217,7 @@ namespace SequencePlanner.GeneralModels
                 Configs = new List<Config>() { config }
             };
 
-            Task t = new Task()
+            Model.Hierarchy.Task t = new Model.Hierarchy.Task()
             {
                 ID = 999999,
                 Name = name,

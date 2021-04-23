@@ -1,4 +1,4 @@
-﻿namespace SequencePlanner.GeneralModels
+﻿namespace SequencePlanner.Model.Hierarchy
 {
     public class Alternative: Node
     {

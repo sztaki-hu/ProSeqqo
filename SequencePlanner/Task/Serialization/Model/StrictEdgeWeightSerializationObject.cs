@@ -1,4 +1,4 @@
-﻿namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
+﻿namespace SequencePlanner.Task.Serialization.Model
 {
     public class StrictEdgeWeightSerializationObject
     {

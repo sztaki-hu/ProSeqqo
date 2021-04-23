@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SequencePlanner.Model.Hierarchy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SequencePlanner.GeneralModels
+namespace SequencePlanner.Model
 {
     public class MotionPrecedence: Precedence<Motion>
     {

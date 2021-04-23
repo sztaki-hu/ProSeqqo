@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SequencePlanner.Model.Hierarchy;
 
 namespace SequencerTest.Helper
 {

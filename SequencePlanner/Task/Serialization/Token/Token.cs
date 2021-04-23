@@ -1,7 +1,7 @@
 ﻿using SequencePlanner.Helper;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GTSPTask.Serialization.SerializationObject.Token
+namespace SequencePlanner.Task.Serialization.Token
 {
     public class Token
     {

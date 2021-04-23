@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SequencePlanner.Helper;
-using SequencePlanner.GeneralModels.Result;
+using SequencePlanner.Task;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
