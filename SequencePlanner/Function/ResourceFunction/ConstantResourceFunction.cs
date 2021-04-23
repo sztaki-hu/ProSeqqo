@@ -21,12 +21,18 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public double ComputeResourceCost(Config  A, Config B, double distance)
         {
-            return LinkingFunction.ComputeResourceDistanceCost(Cost, distance);
+            if (A.Resource.ID != B.Resource.ID)
+                return LinkingFunction.ComputeResourceDistanceCost(Cost, distance);
+            else
+                return distance;
         }
 
         public double GetResourceCost(Config A, Config B)
         {
-            return Cost;
+            if (A.Resource.ID != B.Resource.ID)
+                return Cost;
+            else
+                return 0;
         }
 
         public void Validate()
