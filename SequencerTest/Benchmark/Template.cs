@@ -18,7 +18,7 @@ namespace SequencerTest.Benchmark
         public FormatType FormatType { get; set; }
         public List<Dictionary<string, string>> ParameterCombinatrions  { get; set; }
         public List<string> GeneretedTasks { get; set; }
-        public List<TaskResult> PointResults { get; set; }
+        public List<GeneralTaskResult> PointResults { get; set; }
 
         public Template(string path, string generatePath,  string outPath, List<Dictionary<string, string>> parameterCombinatrions)
         {
@@ -30,7 +30,7 @@ namespace SequencerTest.Benchmark
             OutPath = outPath;
             GeneratePath = generatePath;
             GeneretedTasks = new List<string>();
-            PointResults = new List<TaskResult>();
+            PointResults = new List<GeneralTaskResult>();
             TaskType = TaskType.Unknown;
             FormatType = FormatType.Unknown;
             TaskType = CheckTaskType(FilePath);
@@ -80,9 +80,9 @@ namespace SequencerTest.Benchmark
         {
             TaskType = CheckTaskType(FilePath);
             FormatType = CheckFormat(FilePath);
-            NewGeneralTaskSerializer serPL;
-            NewGeneralTask pointLikeTask;
-            TaskResult pointTaskResult;
+            GeneralTaskSerializer serPL;
+            GeneralTask pointLikeTask;
+            GeneralTaskResult pointTaskResult;
 
             if (TaskType != TaskType.Unknown && FormatType != FormatType.Unknown)
             {
@@ -91,7 +91,7 @@ namespace SequencerTest.Benchmark
                     try
                     {
                         SeqLogger.LogLevel = LogLevel.Info;
-                        serPL = new NewGeneralTaskSerializer();
+                        serPL = new GeneralTaskSerializer();
                         pointLikeTask = FormatType switch
                         {
                             FormatType.SEQ or FormatType.TXT => serPL.ImportSEQ(path),
@@ -159,8 +159,6 @@ namespace SequencerTest.Benchmark
         {
             foreach (var line in File.ReadAllLines(input))
             {
-                if (line.Contains("Line"))
-                    return TaskType.Line;
                 if (line.Contains("General"))
                     return TaskType.General;
             }

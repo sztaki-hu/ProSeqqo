@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GeneralModels.Result
 {
-    public class TaskResult
+    public class GeneralTaskResult
     {
         public TimeSpan FullTime {get;set;}
         public TimeSpan SolverTime {get;set;}
@@ -24,7 +24,7 @@ namespace SequencePlanner.GeneralModels.Result
         public List<DetailedMotionCost> CostsBetweenMotions { get; set; }
         public List<DetailedConfigCost> CostsBetweenConfigs { get; set; }
 
-        public TaskResult()
+        public GeneralTaskResult()
         {
             StatusCode = -1;
             StatusMessage = "Result initalized.";

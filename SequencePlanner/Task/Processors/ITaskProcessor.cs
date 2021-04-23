@@ -2,10 +2,10 @@
 
 namespace SequencePlanner.GeneralModels
 {
-    public interface ITaskSolverProcess
+    public interface ITaskProcessor
     {
         public void Change();
         public void ChangeBack();
-        public TaskResult ResolveSolution(TaskResult generalTaskReult);
+        public GeneralTaskResult ResolveSolution(GeneralTaskResult generalTaskReult);
     }
 }

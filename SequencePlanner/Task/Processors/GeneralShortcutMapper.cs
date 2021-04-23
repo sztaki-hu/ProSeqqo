@@ -3,10 +3,10 @@ using System;
 
 namespace SequencePlanner.GeneralModels
 {
-    public  class GeneralShortcutMapper: ITaskSolverProcess
+    public  class GeneralShortcutMapper: ITaskProcessor
     {
-        public NewGeneralTask Task { get; set; }
-        public GeneralShortcutMapper(NewGeneralTask task)
+        public GeneralTask Task { get; set; }
+        public GeneralShortcutMapper(GeneralTask task)
         {
             Task = task;
         }
@@ -27,7 +27,7 @@ namespace SequencePlanner.GeneralModels
                 throw new NotImplementedException();
         }
 
-        public TaskResult ResolveSolution(TaskResult generalTaskReult)
+        public GeneralTaskResult ResolveSolution(GeneralTaskResult generalTaskReult)
         {
             if (!Task.SolverSettings.UseShortcutInAlternatives)
                 return generalTaskReult;

@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.GeneralModels
 {
-    public class NewGeneraDepotMapper : ITaskSolverProcess
+    public class GeneraDepotMapper : ITaskProcessor
     {
         private HierarchyRecord Record { get; set; }
   
-        private NewGeneralTask Task { get; set; }
-        private TaskResult Result { get; set; }
+        private GeneralTask Task { get; set; }
+        private GeneralTaskResult Result { get; set; }
         private DepotChangeType DepotChangeType { get; set; }
         private Config StartDepotConfig { get; set; }
         private Config FinishDepotConfig { get; set; }
@@ -22,7 +22,7 @@ namespace SequencePlanner.GeneralModels
         public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequenceMatrixID; else return -1; } }
         public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequenceMatrixID; else return -1; } }
         
-        public NewGeneraDepotMapper(NewGeneralTask task)
+        public GeneraDepotMapper(GeneralTask task)
         {
             Task = task;
         }
@@ -95,7 +95,7 @@ namespace SequencePlanner.GeneralModels
                 Task.Hierarchy.DeleteMotion(FinishDepot);
         }
 
-        public TaskResult ResolveSolution(TaskResult result)
+        public GeneralTaskResult ResolveSolution(GeneralTaskResult result)
         {
             Result = result;
             switch (DepotChangeType)
@@ -171,7 +171,7 @@ namespace SequencePlanner.GeneralModels
         }
         private void NotCyclicStartFinishDepotResolve() { }
         
-        private Motion CreateVirtualNode(NewGeneralTask task,string name)
+        private Motion CreateVirtualNode(GeneralTask task,string name)
         {
             Motion motion = new Motion()
             {
@@ -245,7 +245,7 @@ namespace SequencePlanner.GeneralModels
             return motion;
         }
 
-        private void DeleteVirualNode(NewGeneralTask task)
+        private void DeleteVirualNode(GeneralTask task)
         {
             task.Hierarchy.HierarchyRecords.Remove(Record);
             task.Hierarchy.Motions.Remove(Record.Motion);

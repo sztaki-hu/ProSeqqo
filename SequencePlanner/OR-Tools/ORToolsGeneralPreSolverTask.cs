@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.OR_Tools
 {
-    public class ORToolsGeneralPreSolverTask: IORToolsPreSolverTask
+    public class ORToolsGeneralPreSolverTask
     {
         public int NumberOfNodes { get; set; }
         public int StartDepot { get; set; }

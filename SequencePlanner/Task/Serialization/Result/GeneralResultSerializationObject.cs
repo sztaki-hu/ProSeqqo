@@ -5,7 +5,7 @@ using SequencePlanner.GeneralModels.Result;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
 {
-    public class NewGeneralResultSerializationObject
+    public class GeneralResultSerializationObject
     {
         public string Created { get { return DateTime.UtcNow.ToString(); } }
         public string FullTime { get; set; }
@@ -19,7 +19,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         public List<string> Log { get; set; }
         //public List<GTSPNode> PositionResult { get; set; }
 
-        public NewGeneralResultSerializationObject()
+        public GeneralResultSerializationObject()
         {
             SolutionRaw = new List<long>();
             CostsRaw = new List<double>();
@@ -27,7 +27,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             //PositionResult = new List<GTSPNode>();
         }
 
-        public NewGeneralResultSerializationObject(TaskResult result)
+        public GeneralResultSerializationObject(GeneralTaskResult result)
         {
             //FullTime = result.FullTime.ToString();
             //SolverTime = result.SolverTime.ToString();
@@ -41,19 +41,19 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             //PositionResult = result.PositionResult;
         }
 
-        public NewGeneralResultSerializationObject(List<string> seqString) 
+        public GeneralResultSerializationObject(List<string> seqString) 
         {
             throw new NotImplementedException();
         }
 
-        public TaskResult ToGeneralResult()
+        public GeneralTaskResult ToGeneralResult()
         {
-            var result = new TaskResult();
+            var result = new GeneralTaskResult();
             //result.PositionResult = PositionResult;
             return result;
         }
 
-        public TaskResult ToTaskResult(TaskResult result)
+        public GeneralTaskResult ToTaskResult(GeneralTaskResult result)
         {
             //if (FullTime is not null)
             //    result.FullTime = TimeSpan.Parse(FullTime);

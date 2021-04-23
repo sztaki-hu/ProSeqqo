@@ -15,7 +15,7 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 
 
         public DistanceFunctionSerializationObject(){}
-        public DistanceFunctionSerializationObject(NewGeneralTask task)
+        public DistanceFunctionSerializationObject(GeneralTask task)
         {
             var distFunc = task.CostManager.DistanceFunction;
             Function = distFunc.FunctionName;

@@ -8,7 +8,7 @@ using SequencePlanner.GeneralModels;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {
-    public class NewGeneralTaskSerializationObject
+    public class GeneralTaskSerializationObject
     {
         public string TaskType { get; set; }
         public bool Validate { get; set; }
@@ -41,16 +41,16 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         public List<OrderConstraintSerializationObject> MotionPrecedence { get; set; }
 
 
-        public NewGeneralTaskSerializationObject(){ }
+        public GeneralTaskSerializationObject(){ }
 
-        public NewGeneralTaskSerializationObject(List<string> seqString) : base()
+        public GeneralTaskSerializationObject(List<string> seqString) : base()
         {
             var tokenizer = new SEQTokenizer();
             tokenizer.Tokenize(seqString);
             FillBySEQTokens(tokenizer);
         }
 
-        public NewGeneralTaskSerializationObject(NewGeneralTask task)
+        public GeneralTaskSerializationObject(GeneralTask task)
         {
             Cyclic = task.Cyclic;
             BidirectionMotionDefault = task.Hierarchy.BidirectionalMotionDefault;
@@ -113,9 +113,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
         }
 
 
-        public NewGeneralTask ToGeneralTask()
+        public GeneralTask ToGeneralTask()
         {
-            var task = new NewGeneralTask();
+            var task = new GeneralTask();
             //TaskType
             task.Validate = Validate;
             task.Cyclic = Cyclic;
@@ -142,13 +142,13 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             //AddLinesToConfigList(task);
             if (StartDepot != -1 && task.StartDepotConfig == null)
-                SeqLogger.Error("StartDepot not exist position!", nameof(NewGeneralTaskSerializationObject));
+                SeqLogger.Error("StartDepot not exist position!", nameof(GeneralTaskSerializationObject));
             if (FinishDepot != -1 && task.FinishDepotConfig == null)
-                SeqLogger.Error("FinishDepot not exist as position!", nameof(NewGeneralTaskSerializationObject));
+                SeqLogger.Error("FinishDepot not exist as position!", nameof(GeneralTaskSerializationObject));
             //task.PositionMatrix.StrictUserEdgeWeights = OverrideCost.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);
             return task;
         }
-        private void AddLinesToConfigList(NewGeneralTask task)
+        private void AddLinesToConfigList(GeneralTask task)
         {
             foreach (var motion in MotionList)
             {
@@ -161,7 +161,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 };
             }
         }
-        private void CreatePrecedences(NewGeneralTask task)
+        private void CreatePrecedences(GeneralTask task)
         {
             foreach (var posPrec in MotionPrecedence)
             {
@@ -181,7 +181,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 task.ProcessPrecedences.Add(new ProcessPrecedence(before, after));
             }
         }
-        private void CreateProcessHierarchy(NewGeneralTask task)
+        private void CreateProcessHierarchy(GeneralTask task)
         {
             foreach (var pos in ConfigList)
             {
@@ -240,7 +240,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
         }
 
-        private List<Config> FindConfigsForMotion(NewGeneralTask task, List<int> configIDs)
+        private List<Config> FindConfigsForMotion(GeneralTask task, List<int> configIDs)
         {
             var configs = new List<Config>();
             foreach (var item in configIDs)

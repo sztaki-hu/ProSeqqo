@@ -9,9 +9,9 @@ namespace SequencePlanner.GeneralModels
 
 
         private Stopwatch Timer;
-        private NewGeneralTask Task;
+        private GeneralTask Task;
 
-        public InitialSolver(NewGeneralTask newGeneralTask)
+        public InitialSolver(GeneralTask newGeneralTask)
         {
             Task = newGeneralTask;
             Timer = new Stopwatch();

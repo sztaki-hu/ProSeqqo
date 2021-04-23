@@ -131,8 +131,8 @@ namespace SequencerConsole
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                NewGeneralTaskSerializer ser = new NewGeneralTaskSerializer();
-                NewGeneralTask task = inputType switch
+                GeneralTaskSerializer ser = new GeneralTaskSerializer();
+                GeneralTask task = inputType switch
                 {
                     FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
                     FormatType.JSON => ser.ImportJSON(input),
@@ -181,12 +181,12 @@ namespace SequencerConsole
             }
         }
 
-        private static TaskResult RunPointLike()
+        private static GeneralTaskResult RunPointLike()
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                NewGeneralTaskSerializer ser = new NewGeneralTaskSerializer();
-                NewGeneralTask task = inputType switch
+                GeneralTaskSerializer ser = new GeneralTaskSerializer();
+                GeneralTask task = inputType switch
                 {
                     FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
                     FormatType.JSON => ser.ImportJSON(input),
@@ -199,11 +199,11 @@ namespace SequencerConsole
             }
             return null;
         }
-        private static void OutGeneral(TaskResult result)
+        private static void OutGeneral(GeneralTaskResult result)
         {
             if (output != null && outputType != FormatType.Unknown)
             {
-                NewGeneralResultSerializer ser = new NewGeneralResultSerializer();
+                GeneralResultSerializer ser = new GeneralResultSerializer();
                 switch (outputType)
                 {
                     case FormatType.SEQ:

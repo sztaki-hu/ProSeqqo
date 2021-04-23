@@ -16,7 +16,7 @@ namespace SequencePlanner.GeneralModels
         public List<Motion> InitialSolution { get; set; }
         public long[][] InitialRoutes { get { return ToInitialRoute(); } }
 
-        private NewGeneralTask Task { get; set; }
+        private GeneralTask Task { get; set; }
 
 
         public PCGTSPRepresentation()
@@ -27,7 +27,7 @@ namespace SequencePlanner.GeneralModels
             InitialSolution = new List<Motion>();
         }
 
-        public PCGTSPRepresentation(NewGeneralTask task)
+        public PCGTSPRepresentation(GeneralTask task)
         {
             Task = task;
             CostMultiplier = 1000;

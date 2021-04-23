@@ -7,7 +7,7 @@ using SequencePlanner.OR_Tools;
 
 namespace SequencePlanner.GeneralModels
 {
-    public class NewGeneralTask
+    public class GeneralTask
     {
         public bool Validate { get; set; }
         public bool Cyclic { get; set; }
@@ -22,12 +22,12 @@ namespace SequencePlanner.GeneralModels
         public List<MotionPrecedence> MotionPrecedences { get; set; }
         public PCGTSPRepresentation PCGTSPRepresentation { get; set; }
 
-        private NewGeneraDepotMapper DepotMapper { get; set; }
+        private GeneraDepotMapper DepotMapper { get; set; }
         private GeneralShortcutMapper ShortcutMapper { get; set; }
         private InitialSolver InitialSolver { get; set; }
         private Stopwatch Timer { get; set; }
 
-        public NewGeneralTask()
+        public GeneralTask()
         {
             Validate = true;
             Cyclic = true;
@@ -41,14 +41,14 @@ namespace SequencePlanner.GeneralModels
             ProcessPrecedences    = new List<ProcessPrecedence>();
             MotionPrecedences    = new List<MotionPrecedence>();
             PCGTSPRepresentation = new PCGTSPRepresentation(this);
-            DepotMapper = new NewGeneraDepotMapper(this);
+            DepotMapper = new GeneraDepotMapper(this);
             ShortcutMapper = new GeneralShortcutMapper(this);
             InitialSolver = new InitialSolver(this);
             Timer = new Stopwatch();
         }
 
 
-        public Result.TaskResult Run()
+        public Result.GeneralTaskResult Run()
         {
             Timer.Restart();
             ValidateTask();
@@ -67,12 +67,12 @@ namespace SequencePlanner.GeneralModels
         private void ValidateTask()
         {
             if (Validate)
-                NewGeneralTaskValidator.Validate(this);
+                GeneralTaskValidator.Validate(this);
             else
                 SeqLogger.Warning("Task validation turned off.");
         }
 
-        private TaskResult RunTask()
+        private GeneralTaskResult RunTask()
         {
             var orToolsParam = new ORToolsTask()
             {
@@ -87,10 +87,10 @@ namespace SequencePlanner.GeneralModels
             return result;
         }
 
-        private TaskResult ResolveSolution(ORToolsResult result)
+        private GeneralTaskResult ResolveSolution(ORToolsResult result)
         {
 
-            TaskResult taskResult = new TaskResult()
+            GeneralTaskResult taskResult = new GeneralTaskResult()
             {
                 StatusCode = result.StatusCode,
                 StatusMessage = result.StatusMessage,

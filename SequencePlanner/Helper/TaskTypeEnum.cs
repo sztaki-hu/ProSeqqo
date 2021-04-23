@@ -2,7 +2,6 @@
 {
     public enum TaskType
     {
-        Line,
         General,
         Unknown
     }
