@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SequencePlanner.GeneralModels.GeneraDepotMapper" Collapsed="true">
+    <Position X="5.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAgAAUBwJEABgBgNEgAASEU0AAgAACEFAAAAAABAA=</HashCode>
+      <FileName>Task\Processors\GeneraDepotMapper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.GeneralShortcutMapper" Collapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAEAAAAAAAAAgAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Task\Processors\GeneralShortcutMapper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.GeneralTaskValidator" Collapsed="true">
+    <Position X="10" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Task\Processors\GeneralTaskValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.InitialSolver" Collapsed="true">
+    <Position X="10.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAEAAAAAEAQA=</HashCode>
+      <FileName>Task\Processors\InitialSolver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.CostManager" Collapsed="true">
+    <Position X="7.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAEAAAAAAJAAAAAAQAAAAACAgAAAQAAAAAAEAAAAAA=</HashCode>
+      <FileName>Task\CostManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.GeneralTask" Collapsed="true">
+    <Position X="9.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAgkAAKEIAAgAAAAAAEAEAAAgAEAABAgAAAFAAI=</HashCode>
+      <FileName>Task\GeneralTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Result.GeneralTaskResult" Collapsed="true">
+    <Position X="11.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAEQAAAAAgAACAAIaAAAAIAAACAAAAAoAAAgIAECEA=</HashCode>
+      <FileName>Task\GeneralTaskResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.PCGTSPRepresentation" Collapsed="true">
+    <Position X="13.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIoIBAAIEAQIAAoAABAQAAAAAgBABAEAAEAAAAAA=</HashCode>
+      <FileName>Task\PCGTSPRepresentation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.SolverSettings" Collapsed="true">
+    <Position X="12.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAgAAAAAIAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Task\SolverSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="SequencePlanner.GeneralModels.ITaskProcessor" Collapsed="true">
+    <Position X="6.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAEAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Task\Processors\ITaskProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
