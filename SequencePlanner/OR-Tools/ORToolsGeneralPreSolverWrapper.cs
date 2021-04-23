@@ -41,7 +41,7 @@ namespace SequencePlanner.OR_Tools
             //position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 9.0, "pos");      // Int, indicates order of nodes
             alternativeID = new int[parameters.NumberOfNodes];                                                                      // Alternative ID of Node
             processID = new int[parameters.NumberOfNodes];                                                                          // Process ID of Node
-            FillAlternativesAndProcesses(parameters.Processes);                                                             // Fill ProcessID and AlternativeID
+            //FillAlternativesAndProcesses(parameters.Processes);                                                             // Fill ProcessID and AlternativeID
 
             // Precedences
             AddStartDepotConstraints(solver);
@@ -143,22 +143,22 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent--;
         }
 
-        private void FillAlternativesAndProcesses(List<Model.Process> processes)
+        private void FillAlternativesAndProcesses(List<Process> processes)
         {
-            for (int i = 0; i < processes.Count; i++)
-            {
-                for (int j = 0; j < processes[i].Alternatives.Count; j++)
-                {
-                    for (int k = 0; k < processes[i].Alternatives[j].Tasks.Count; k++)
-                    {
-                        for (int m = 0; m < processes[i].Alternatives[j].Tasks[k].Positions.Count; m++)
-                        {
-                            processID[processes[i].Alternatives[j].Tasks[k].Positions[m].Node.SequencingID] = i;         // i is the index of process; processID[n] n is the number of node
-                            alternativeID[processes[i].Alternatives[j].Tasks[k].Positions[m].Node.SequencingID] = j;     // j is the index of alternative in i process; processID[n] n is the number of node
-                        }
-                    }
-                }
-            }
+            //for (int i = 0; i < processes.Count; i++)
+            //{
+            //    for (int j = 0; j < processes[i].Alternatives.Count; j++)
+            //    {
+            //        for (int k = 0; k < processes[i].Alternatives[j].Tasks.Count; k++)
+            //        {
+            //            for (int m = 0; m < processes[i].Alternatives[j].Tasks[k].Positions.Count; m++)
+            //            {
+            //                processID[processes[i].Alternatives[j].Tasks[k].Positions[m].Node.SequencingID] = i;         // i is the index of process; processID[n] n is the number of node
+            //                alternativeID[processes[i].Alternatives[j].Tasks[k].Positions[m].Node.SequencingID] = j;     // j is the index of alternative in i process; processID[n] n is the number of node
+            //            }
+            //        }
+            //    }
+            //}
         }
         private LinearConstraint CreateStrictOrderPrecedence(List<Motion> before, List<Motion> after)
         {

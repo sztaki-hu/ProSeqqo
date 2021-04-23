@@ -1,5 +1,4 @@
 ﻿using SequencePlanner.GeneralModels;
-using SequencePlanner.GTSPTask.Task.General;
 
 namespace SequencePlanner.OR_Tools
 {

@@ -26,11 +26,6 @@
 
   <ItemGroup>
     <Folder Include="Resources\Example\" />
-    <Folder Include="Units\GTSPTask\Result\" />
-    <Folder Include="Units\GTSPTask\Task\Base\" />
-    <Folder Include="Units\GTSPTask\Task\PointLike\" />
-    <Folder Include="Units\Serialization\Token\" />
-    <Folder Include="Units\Serialization\SerializationObject\" />
   </ItemGroup>
 
   <ItemGroup>

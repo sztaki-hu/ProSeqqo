@@ -35,12 +35,12 @@ namespace SequencerTest.Units
             Assert.AreEqual(2, func.ComputeResourceCost(A, B, 1));
             Assert.AreEqual(3, func.ComputeResourceCost(A, C, 2));
             Assert.AreEqual(-4, func.ComputeResourceCost(B, A, -5));
-            Assert.AreEqual(1, func.ComputeResourceCost(A, A, 0));
+            Assert.AreEqual(0, func.ComputeResourceCost(A, A, 0));
             func = new ConstantResourceFunction(1, new MaxResourceDistanceLinkFunction());
             Assert.AreEqual(1, func.ComputeResourceCost(A, B, 1));
             Assert.AreEqual(2, func.ComputeResourceCost(A, C, 2));
             Assert.AreEqual(1, func.ComputeResourceCost(B, A, -5));
-            Assert.AreEqual(1, func.ComputeResourceCost(A, A, 0));
+            Assert.AreEqual(0, func.ComputeResourceCost(A, A, 0));
         }
 
         [TestMethod]

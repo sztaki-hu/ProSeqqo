@@ -1,14 +1,12 @@
-﻿using SequencePlanner.GeneralModels;
-using SequencePlanner.GeneralModels.Result;
-using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.GTSPTask.Serialization.Result;
-using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.GTSPTask.Task.General;
-using SequencePlanner.Helper;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using SequencePlanner.Helper;
+using SequencePlanner.GeneralModels;
+using SequencePlanner.GeneralModels.Result;
+using SequencePlanner.GTSPTask.Serialization.Result;
+using SequencePlanner.GTSPTask.Serialization.Task;
 
 namespace SequencerConsole
 {

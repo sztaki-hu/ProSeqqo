@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using SequencePlanner.Helper;
-using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject;
 using SequencePlanner.GTSPTask.Serialization.SerializationObject.Token;
 using SequencePlanner.OR_Tools;
@@ -143,9 +142,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             //AddLinesToConfigList(task);
             if (StartDepot != -1 && task.StartDepotConfig == null)
-                SeqLogger.Error("StartDepot not exist position!", nameof(GeneralTaskSerializationObject));
+                SeqLogger.Error("StartDepot not exist position!", nameof(NewGeneralTaskSerializationObject));
             if (FinishDepot != -1 && task.FinishDepotConfig == null)
-                SeqLogger.Error("FinishDepot not exist as position!", nameof(GeneralTaskSerializationObject));
+                SeqLogger.Error("FinishDepot not exist as position!", nameof(NewGeneralTaskSerializationObject));
             //task.PositionMatrix.StrictUserEdgeWeights = OverrideCost.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);
             return task;
         }

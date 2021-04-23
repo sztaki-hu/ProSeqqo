@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using SequencePlanner.Helper;
-using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GeneralModels.Result;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
@@ -72,7 +71,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             SeqLogger.Debug("Input task type: PointLike", nameof(NewGeneralResultSerializer));
             SeqLogger.Info("Input file: " + path, nameof(NewGeneralResultSerializer));
             SeqLogger.Debug("Input type: XML", nameof(NewGeneralResultSerializer));
-            XmlSerializer x = new XmlSerializer(typeof(GeneralResultSerializationObject));
+            XmlSerializer x = new XmlSerializer(typeof(NewGeneralResultSerializationObject));
             TextReader reader = new StreamReader(path);
             var seqObject = (NewGeneralResultSerializationObject)x.Deserialize(reader);
             SeqLogger.Debug("Input readed!", nameof(NewGeneralResultSerializer));

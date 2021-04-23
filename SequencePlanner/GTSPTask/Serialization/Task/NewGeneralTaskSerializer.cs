@@ -2,7 +2,6 @@
 using System.Linq;
 using Newtonsoft.Json;
 using System.Xml.Serialization;
-using SequencePlanner.GTSPTask.Task.General;
 using SequencePlanner.Helper;
 using SequencePlanner.GeneralModels;
 
@@ -60,7 +59,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             SeqLogger.Info("Output file: " + path, nameof(NewGeneralTaskSerializer));
             SeqLogger.Debug("Output type: XML", nameof(NewGeneralTaskSerializer));
             var seqObject = new NewGeneralTaskSerializationObject(task);
-            XmlSerializer x = new XmlSerializer(typeof(GeneralTaskSerializationObject));
+            XmlSerializer x = new XmlSerializer(typeof(NewGeneralTaskSerializationObject));
             TextWriter writer = new StreamWriter(path);
             x.Serialize(writer, seqObject);
             writer.Close();
@@ -72,7 +71,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             SeqLogger.Debug("Input task type: GeneralTask", nameof(NewGeneralTaskSerializer));
             SeqLogger.Info("Input file: " + path, nameof(NewGeneralTaskSerializer));
             SeqLogger.Debug("Input type: XML", nameof(NewGeneralTaskSerializer));
-            XmlSerializer x = new XmlSerializer(typeof(GeneralTaskSerializationObject));
+            XmlSerializer x = new XmlSerializer(typeof(NewGeneralTaskSerializationObject));
             TextReader reader = new StreamReader(path);
             var seqObject = (NewGeneralTaskSerializationObject)x.Deserialize(reader);
             SeqLogger.Debug("Input readed!", nameof(NewGeneralTaskSerializer));

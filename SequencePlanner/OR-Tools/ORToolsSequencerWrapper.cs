@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Google.OrTools.ConstraintSolver;
 using Google.Protobuf.WellKnownTypes;
 using SequencePlanner.Helper;
-using SequencePlanner.GTSPTask.Result;
 
 namespace SequencePlanner.OR_Tools
 {

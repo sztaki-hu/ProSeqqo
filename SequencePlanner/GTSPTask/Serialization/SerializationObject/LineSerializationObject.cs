@@ -20,12 +20,12 @@ namespace SequencePlanner.GTSPTask.Serialization.SerializationObject
 
         public LineSerializationObject(Line line)
         {
-            LineID = line.UserID;
+            //LineID = line.;
             //ContourID = line.
             PositionIDA = line.NodeA.UserID;
             PositionIDB = line.NodeB.UserID;
-            Name = line.Name;
-            ResourceID = line.ResourceID;
+            //Name = line.Name;
+            //ResourceID = line.ResourceID;
             Bidirectional = line.Bidirectional;
         }
 

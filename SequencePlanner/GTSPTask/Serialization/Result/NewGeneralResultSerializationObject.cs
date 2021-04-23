@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SequencePlanner.Model;
 using SequencePlanner.Helper;
-using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GeneralModels.Result;
 
 namespace SequencePlanner.GTSPTask.Serialization.Result
@@ -19,14 +17,14 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         public int StatusCode { get; set; }
         public string StatusMessage { get; set; }
         public List<string> Log { get; set; }
-        public List<GTSPNode> PositionResult { get; set; }
+        //public List<GTSPNode> PositionResult { get; set; }
 
         public NewGeneralResultSerializationObject()
         {
             SolutionRaw = new List<long>();
             CostsRaw = new List<double>();
             Log = new List<string>();
-            PositionResult = new List<GTSPNode>();
+            //PositionResult = new List<GTSPNode>();
         }
 
         public NewGeneralResultSerializationObject(TaskResult result)
@@ -86,20 +84,20 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             seq += nameof(CostSum) + ": " + CostSum + newline;
             seq += nameof(SolutionRaw) + ": " + SolutionRaw.ToListString() + newline;
             seq += nameof(CostsRaw) + ": " + CostsRaw.ToListString() + newline;
-            if (StatusCode == 1)
-            {
-                //seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
-                seq += nameof(PositionResult) + ": " + newline;
-                foreach (var position in PositionResult)
-                {
-                    seq += position.Node.UserID + d + "[" + position.In.Vector.ToListString() + "]" + d + position.Node.Name + d + position.Node.ResourceID + newline;
-                }
-                seq += nameof(Log) + ": " + newline;
-                foreach (var line in Log)
-                {
-                    seq += line.Replace(':', '>') + newline;
-                }
-            }
+            //if (StatusCode == 1)
+            //{
+            //    //seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
+            //    seq += nameof(PositionResult) + ": " + newline;
+            //    foreach (var position in PositionResult)
+            //    {
+            //        seq += position.Node.UserID + d + "[" + position.In.Vector.ToListString() + "]" + d + position.Node.Name + d + position.Node.ResourceID + newline;
+            //    }
+            //    seq += nameof(Log) + ": " + newline;
+            //    foreach (var line in Log)
+            //    {
+            //        seq += line.Replace(':', '>') + newline;
+            //    }
+            //}
             return seq;
         }
     }

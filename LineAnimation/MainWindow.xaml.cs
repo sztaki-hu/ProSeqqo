@@ -1,14 +1,12 @@
-﻿using Microsoft.Win32;
-using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.GTSPTask.Serialization.Result;
-using SequencePlanner.Helper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using Microsoft.Win32;
+using SequencePlanner.Helper;
 
 namespace LineAnimation
 {
@@ -249,59 +247,59 @@ namespace LineAnimation
 
         public void OpenFile(string file)
         {
-            LineResultSerializer serializer = new LineResultSerializer();
-            LineTaskResult result = null;
-            if(file.Contains(".json"))
-                result = serializer.ImportJSON(file);
-            if (file.Contains(".xml"))
-                result = serializer.ImportXML(file);
-            if (file.Contains(".txt") || file.Contains(".seq"))
-                result = serializer.ImportSEQ(file);
-            if (result is null)
-                throw new SeqException("File format not supported.");
-            GTSPLines.Clear();
-            GTSPoints.Clear();
-            for (int i = 1; i < result.PositionResult.Count; i++)
-            {
-                Point3D point = new Point3D();
-                if (result.PositionResult[i].Vector.Length > 0)
-                    point.X = result.PositionResult[i].Vector[0];
-                if (result.PositionResult[i].Vector.Length > 1)
-                    point.Y = result.PositionResult[i].Vector[1];
-                if (result.PositionResult[i].Vector.Length > 2)
-                    point.Z = result.PositionResult[i].Vector[2];
-                GTSPoints.Add(new Point(result.PositionResult[i].UserID.ToString(), result.PositionResult[i].Name, result.PositionResult[i].ToString()) { Config = point});
-            }
+            //LineResultSerializer serializer = new LineResultSerializer();
+            //LineTaskResult result = null;
+            //if(file.Contains(".json"))
+            //    result = serializer.ImportJSON(file);
+            //if (file.Contains(".xml"))
+            //    result = serializer.ImportXML(file);
+            //if (file.Contains(".txt") || file.Contains(".seq"))
+            //    result = serializer.ImportSEQ(file);
+            //if (result is null)
+            //    throw new SeqException("File format not supported.");
+            //GTSPLines.Clear();
+            //GTSPoints.Clear();
+            //for (int i = 1; i < result.PositionResult.Count; i++)
+            //{
+            //    Point3D point = new Point3D();
+            //    if (result.PositionResult[i].Vector.Length > 0)
+            //        point.X = result.PositionResult[i].Vector[0];
+            //    if (result.PositionResult[i].Vector.Length > 1)
+            //        point.Y = result.PositionResult[i].Vector[1];
+            //    if (result.PositionResult[i].Vector.Length > 2)
+            //        point.Z = result.PositionResult[i].Vector[2];
+            //    GTSPoints.Add(new Point(result.PositionResult[i].UserID.ToString(), result.PositionResult[i].Name, result.PositionResult[i].ToString()) { Config = point});
+            //}
 
-            for (int i = 1; i < GTSPoints.Count-1; i+=2)
-            {
-                Line l = new Line()
-                {
-                    ID = 0,
-                    ContourID = 0,
-                    Name = "",
-                    Length = 10,
-                    DrawType = DrawType.Travel,
-                    A = GTSPoints[i-1],
-                    B = GTSPoints[i]
-                };
-                GTSPLines.Add(l);
+            //for (int i = 1; i < GTSPoints.Count-1; i+=2)
+            //{
+            //    Line l = new Line()
+            //    {
+            //        ID = 0,
+            //        ContourID = 0,
+            //        Name = "",
+            //        Length = 10,
+            //        DrawType = DrawType.Travel,
+            //        A = GTSPoints[i-1],
+            //        B = GTSPoints[i]
+            //    };
+            //    GTSPLines.Add(l);
 
-                l = new Line()
-                {
-                    ID = 0,
-                    ContourID = 0,
-                    Name = "",
-                    Length = 10,
-                    DrawType = DrawType.Work,
-                    A = GTSPoints[i],
-                    B = GTSPoints[i+1]
-                };
-                GTSPLines.Add(l);
-            }
+            //    l = new Line()
+            //    {
+            //        ID = 0,
+            //        ContourID = 0,
+            //        Name = "",
+            //        Length = 10,
+            //        DrawType = DrawType.Work,
+            //        A = GTSPoints[i],
+            //        B = GTSPoints[i+1]
+            //    };
+            //    GTSPLines.Add(l);
+            //}
 
-            MaxNumberOfLines = GTSPLines.Count;
-            NumberOfPoints = 0;
+            //MaxNumberOfLines = GTSPLines.Count;
+            //NumberOfPoints = 0;
         }
 
         protected void RaisePropertyChanged(string propertyName)

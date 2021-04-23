@@ -8,7 +8,7 @@ namespace SequencePlanner.OR_Tools
         public int NumberOfNodes { get; set; }
         public int StartDepot { get; set; }
         public int FinishDepot { get; set; }
-        public List<Model.Process> Processes { get; set; }
+        public List<Process> Processes { get; set; }
         public List<MotionPrecedenceList> StrictOrderPrecedenceHierarchy { get; set; }
         public List<GeneralModels.MotionPrecedence> OrderPrecedenceConstraints { get; set; }
         public List<GeneralModels.MotionDisjointSet> DisjointConstraints { get; set; }

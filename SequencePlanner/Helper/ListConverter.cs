@@ -62,32 +62,7 @@ namespace SequencePlanner.Helper
             }
             return tmp;
         }
-        public static string ToListString(this List<BaseNode> list)
-        {
-            string tmp = "";
-            if (list is not null && list.Count > 0)
-            {
-                for (int i = 0; i < list.Count - 1; i++)
-                {
-                    tmp += list[i].UserID + ", ";
-                }
-                tmp += list[^1].UserID;
-            }
-            return tmp;
-        }
-        public static string ToListString(this List<GTSPNode> list)
-        {
-            string tmp = "";
-            if (list is not null && list.Count > 0)
-            {
-                for (int i = 0; i < list.Count - 1; i++)
-                {
-                    tmp += list[i].Node.UserID + ", ";
-                }
-                tmp += list[^1].Node.UserID;
-            }
-            return tmp;
-        }
+        
         public static string ToListString(this long[] list)
         {
             string tmp = "";
