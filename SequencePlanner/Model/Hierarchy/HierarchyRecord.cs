@@ -1,4 +1,6 @@
-﻿namespace SequencePlanner.Model.Hierarchy
+﻿using SequencePlanner.Helper;
+
+namespace SequencePlanner.Model.Hierarchy
 {
     public class HierarchyRecord
     {
@@ -9,7 +11,7 @@
 
         public override string ToString()
         {
-            return "Process: " + Process.ID + " Alternative: " + Alternative.ID + " Task: " + Task.ID + " Motion: " + Motion.ID;
+            return "Process: " + Process.ID + " Alternative: " + Alternative.ID + " Task: " + Task.ID + " Motion: " + Motion.ID + " Configs: [" + Motion.Configs.ToIDListString() +"]";
         }
     }
 }

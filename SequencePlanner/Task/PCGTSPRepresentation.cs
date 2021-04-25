@@ -87,6 +87,33 @@ namespace SequencePlanner.Task
             }
         }
 
+        //public List<MotionPrecedenceList> CreatePrecedenceHierarchiesForInitialSolution()
+        //{
+            //var prec = new List<MotionPrecedenceList>();
+            //foreach (var alternative in Alternatives)
+            //{
+            //    if (alternative.Tasks.Count >= 2)
+            //    {
+            //        MotionPrecedenceList tmp = null;
+            //        for (int i = 0; i < alternative.Tasks.Count - 1; i++)
+            //        {
+            //            tmp = new MotionPrecedenceList();
+            //            foreach (var item in alternative.Tasks[i].Positions)
+            //            {
+            //                tmp.Before.Add(item.Node);
+            //            }
+            //            foreach (var item in alternative.Tasks[i + 1].Positions)
+            //            {
+            //                tmp.After.Add(item.Node);
+            //            }
+            //            prec.Add(tmp);
+            //        }
+            //    }
+            //}
+            //return prec;
+        //}
+
+
         private List<MotionPrecedence> CreateProcessPrecedence(ProcessPrecedence precedence)
         {
             List<MotionPrecedence> motionPrecedences = new List<MotionPrecedence>();
@@ -102,7 +129,7 @@ namespace SequencePlanner.Task
             return motionPrecedences;
         }
 
-        private List<MotionPrecedence> CreateProcessPrecedenceFull(ProcessPrecedence precedence)
+        public List<MotionPrecedence> CreateProcessPrecedenceFull(ProcessPrecedence precedence)
         {
             List<MotionPrecedence> motionPrecedences = new List<MotionPrecedence>();
             List<Motion> BeforeMotions = Task.Hierarchy.GetMotionsOf(precedence.Before);
@@ -160,7 +187,7 @@ namespace SequencePlanner.Task
             {
                 foreach (var to in Task.Hierarchy.GetMotionsOf(b))
                 {
-                    CostMatrix[from.SequenceMatrixID, to.SequenceMatrixID] = Task.CostManager.ComputeCost(from, to);
+                    CostMatrix[from.SequenceMatrixID, to.SequenceMatrixID] = Task.CostManager.ComputeCost(from, to).FinalCost;
                     RoundedCostMatrix[from.SequenceMatrixID, to.SequenceMatrixID] = Convert.ToInt32(CostMatrix[from.SequenceMatrixID, to.SequenceMatrixID] * CostMultiplier);
                 }
             }

@@ -90,7 +90,6 @@ namespace SequencePlanner.Task
 
         private GeneralTaskResult ResolveSolution(ORToolsResult result)
         {
-
             GeneralTaskResult taskResult = new GeneralTaskResult()
             {
                 StatusCode = result.StatusCode,
@@ -121,32 +120,41 @@ namespace SequencePlanner.Task
                     }
                 }
 
-                for (int i = 1; i < taskResult.SolutionConfig.Count; i++)
-                {
-                    DetailedConfigCost detailedConfigCost = null;
-                    if (taskResult.SolutionConfig.Count > 1)
-                    {
-                        detailedConfigCost = CostManager.ComputeCost(taskResult.SolutionConfig[i - 1], taskResult.SolutionConfig[i]);
-                        taskResult.CostsBetweenConfigs.Add(detailedConfigCost);
-                        taskResult.ConfigCosts.Add(detailedConfigCost.FinalCost);
-                    }
-                }
-
+                if (taskResult.SolutionMotion.Count > 0)
+                    AddConfigCostsOfMotion(taskResult, taskResult.SolutionMotion[0]);
                 for (int i = 1; i < taskResult.SolutionMotion.Count; i++)
                 {
-                    DetailedMotionCost detailedMotionCost = null;
-                    if (taskResult.SolutionMotion.Count > 1)
-                    {
-                        detailedMotionCost = CostManager.GetDetailedMotionCost(taskResult.SolutionMotion[i - 1], taskResult.SolutionMotion[i]);
-                        taskResult.CostsBetweenMotions.Add(detailedMotionCost);
-                        taskResult.MotionCosts.Add(detailedMotionCost.FinalCost);
-                    }
+                    AddConfigCostsBetweenMotions(taskResult, taskResult.SolutionMotion[i-1], taskResult.SolutionMotion[i]);
+                    AddConfigCostsOfMotion(taskResult, taskResult.SolutionMotion[i]);
                 }
             }
 
             taskResult = DepotMapper.ResolveSolution(taskResult);
             taskResult = ShortcutMapper.ResolveSolution(taskResult);
             return taskResult;
+        }
+
+        private void AddConfigCostsOfMotion(GeneralTaskResult result, Motion motion)
+        {
+            for (int i = 0; i < motion.Configs.Count-1; i++)
+            {
+                var cost = CostManager.ComputeCostInMotion(motion.Configs[i], motion.Configs[i + 1]);
+                result.CostsBetweenConfigs.Add(cost);
+                result.ConfigCosts.Add(cost.FinalCost);
+                result.FullConfigCost += cost.FinalCost;  
+            }
+        }
+        private void AddConfigCostsBetweenMotions(GeneralTaskResult result, Motion from, Motion to)
+        {
+            var cost = CostManager.ComputeCostBetweenMotionConfigs(from.LastConfig, to.FirstConfig);
+            result.CostsBetweenConfigs.Add(cost);
+            result.ConfigCosts.Add(cost.FinalCost);
+            result.FullConfigCost += cost.FinalCost;
+
+            var motionCost = CostManager.ComputeCost(from, to);
+            result.CostsBetweenMotions.Add(motionCost);
+            result.MotionCosts.Add(motionCost.FinalCost);
+            result.FullMotionCost += motionCost.FinalCost;
         }
     }
 }

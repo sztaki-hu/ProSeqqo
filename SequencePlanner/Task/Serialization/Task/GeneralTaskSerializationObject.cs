@@ -133,6 +133,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             task.SolverSettings.TimeLimit = TimeLimit;
 
             CreateProcessHierarchy(task);
+            CreateOverrideCosts(task);
             CreatePrecedences(task);
             foreach (var config in task.Hierarchy.Configs)
             {
@@ -149,6 +150,34 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             //task.PositionMatrix.StrictUserEdgeWeights = OverrideCost.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);
             return task;
         }
+
+        private void CreateOverrideCosts(GeneralTask task)
+        {
+            foreach (var item in OverrideCost.Weights)
+            {
+                Config A = null;
+                Config B = null;
+                foreach (var c in task.Hierarchy.Configs)
+                {
+                    if (c.ID == item.A)
+                        A = c;
+                    if (c.ID == item.B)
+                        B = c;
+                }
+
+                if (A is null || B is null)
+                    throw new SeqException("Config not found for override cost: " + item.A + " " + item.B);
+
+                task.CostManager.OverrideCost.Add(new DetailedConfigCost()
+                {
+                    A = A,
+                    B = B,
+                    OverrideCost = item.Weight,
+                    Bidirectional = item.Bidirectional
+                });
+            }
+        }
+
         private void AddLinesToConfigList(GeneralTask task)
         {
             foreach (var motion in MotionList)
@@ -162,6 +191,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 };
             }
         }
+
         private void CreatePrecedences(GeneralTask task)
         {
             foreach (var posPrec in MotionPrecedence)
