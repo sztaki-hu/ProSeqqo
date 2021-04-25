@@ -1,4 +1,5 @@
 ﻿using SequencePlanner.Model;
+using System;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Task.Serialization.Model

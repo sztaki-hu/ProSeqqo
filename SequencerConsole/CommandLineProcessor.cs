@@ -87,7 +87,7 @@ namespace SequencerConsole
                     Version(args);
                     input = Input(args);
                     output = Output(args);
-                    log = LogLevel.Debug;
+                    log = LogLevel.Info;
                     SeqLogger.UseIndent = true;
                     Run();
                 }

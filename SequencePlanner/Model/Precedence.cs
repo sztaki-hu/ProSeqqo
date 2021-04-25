@@ -7,6 +7,7 @@ namespace SequencePlanner.Model
         public Base Before { get; set; }
         public Base After { get; set; }
 
+
         public Precedence(Base before, Base after)
         {
             Before = before;

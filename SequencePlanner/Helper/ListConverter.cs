@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SequencePlanner.Model.Hierarchy;
+using System.Collections.Generic;
 
 namespace SequencePlanner.Helper
 {
@@ -72,6 +73,33 @@ namespace SequencePlanner.Helper
                     tmp += list[i] + ", ";
                 }
                 tmp += list[^1];
+            }
+            return tmp;
+        }
+
+        public static string FitFor(this string tmp, int space)
+        {
+            if (tmp.Length < space)
+            {
+                for (int i = 0; i < space - tmp.Length; i++)
+                {
+                    tmp += " ";
+                }
+            }
+            return tmp;
+        }
+
+        public static string ToIDListString(this List<Config> list)
+        {
+            string tmp = "";
+            if (list is not null && list.Count > 0)
+            {
+                for (int i = 0; i < list.Count - 1; i++)
+                {
+                    tmp += list[i].ID + ", ";
+                }
+                tmp += list[^1].ID;
+
             }
             return tmp;
         }

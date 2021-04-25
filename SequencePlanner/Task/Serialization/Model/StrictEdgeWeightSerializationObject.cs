@@ -1,4 +1,7 @@
-﻿namespace SequencePlanner.Task.Serialization.Model
+﻿using SequencePlanner.Model;
+using System;
+
+namespace SequencePlanner.Task.Serialization.Model
 {
     public class StrictEdgeWeightSerializationObject
     {
