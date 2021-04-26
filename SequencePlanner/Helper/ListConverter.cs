@@ -103,5 +103,20 @@ namespace SequencePlanner.Helper
             }
             return tmp;
         }
+
+        public static string ToIDListString(this List<Motion> list)
+        {
+            string tmp = "";
+            if (list is not null && list.Count > 0)
+            {
+                for (int i = 0; i < list.Count - 1; i++)
+                {
+                    tmp += list[i].ToString() + ", ";
+                }
+                tmp += list[^1].ID;
+
+            }
+            return tmp;
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
 
         public GeneralTask ImportSEQ(string path)
         {
-            SeqLogger.Debug("Input task type: PointLike", nameof(GeneralTaskSerializer));
+            SeqLogger.Debug("Input task type: General", nameof(GeneralTaskSerializer));
             SeqLogger.Info("Input file: " + path, nameof(GeneralTaskSerializer));
             SeqLogger.Debug("Input type: SEQ", nameof(GeneralTaskSerializer));
             var seqString = File.ReadAllLines(path).ToList();
@@ -33,7 +33,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
 
         public void ExportJSON(GeneralTask task, string path)
         {
-            SeqLogger.Debug("Output task type: GeneralTask", nameof(GeneralTaskSerializer));
+            SeqLogger.Debug("Output task type: General", nameof(GeneralTaskSerializer));
             SeqLogger.Info("Output file: " + path, nameof(GeneralTaskSerializer));
             SeqLogger.Debug("Output type: JSON", nameof(GeneralTaskSerializer));
             var seqObject = new GeneralTaskSerializationObject(task);
@@ -44,7 +44,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
 
         public GeneralTask ImportJSON(string path)
         {
-            SeqLogger.Debug("Input task type: GeneralTask", nameof(GeneralTaskSerializer));
+            SeqLogger.Debug("Input task type: General", nameof(GeneralTaskSerializer));
             SeqLogger.Info("Input file: " + path, nameof(GeneralTaskSerializer));
             SeqLogger.Debug("Input type: JSON", nameof(GeneralTaskSerializer));
             var jsonString = File.ReadAllText(path);
@@ -55,7 +55,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
 
         public void ExportXML(GeneralTask task, string path)
         {
-            SeqLogger.Debug("Output task type: GeneralTask", nameof(GeneralTaskSerializer));
+            SeqLogger.Debug("Output task type: General", nameof(GeneralTaskSerializer));
             SeqLogger.Info("Output file: " + path, nameof(GeneralTaskSerializer));
             SeqLogger.Debug("Output type: XML", nameof(GeneralTaskSerializer));
             var seqObject = new GeneralTaskSerializationObject(task);
@@ -68,7 +68,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
 
         public GeneralTask ImportXML(string path)
         {
-            SeqLogger.Debug("Input task type: GeneralTask", nameof(GeneralTaskSerializer));
+            SeqLogger.Debug("Input task type: General", nameof(GeneralTaskSerializer));
             SeqLogger.Info("Input file: " + path, nameof(GeneralTaskSerializer));
             SeqLogger.Debug("Input type: XML", nameof(GeneralTaskSerializer));
             XmlSerializer x = new XmlSerializer(typeof(GeneralTaskSerializationObject));

@@ -284,7 +284,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
 
         public new void FillBySEQTokens(SEQTokenizer tokenizer)
         {
-            TaskType = tokenizer.GetStringByHeader("TaskType");
+            TaskType = tokenizer.GetStringByHeader("Task");
             Validate = tokenizer.GetBoolByHeader("Validate");
             Cyclic = tokenizer.GetBoolByHeader("Cyclic");
             StartDepot = tokenizer.GetIntByHeader("StartDepot");
