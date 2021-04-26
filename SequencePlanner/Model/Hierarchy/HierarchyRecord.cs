@@ -9,6 +9,17 @@ namespace SequencePlanner.Model.Hierarchy
         public Task Task { get; set; }
         public Motion Motion { get; set; }
 
+        public HierarchyRecord Copy()
+        {
+            return new HierarchyRecord()
+            {
+                Process = Process,
+                Alternative = Alternative,
+                Task = Task,
+                Motion = Motion
+            };
+        }
+
         public override string ToString()
         {
             return "Process: " + Process.ID + " Alternative: " + Alternative.ID + " Task: " + Task.ID + " Motion: " + Motion.ID + " Configs: [" + Motion.Configs.ToIDListString() +"]";

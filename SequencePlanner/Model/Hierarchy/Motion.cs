@@ -42,6 +42,24 @@ namespace SequencePlanner.Model.Hierarchy
 
         }
 
+        public Motion GetReverse()
+        {
+            var configs = new List<Config>();
+            foreach (var config in Configs)
+            {
+                configs.Add(config);
+            }
+            configs.Reverse();
+
+            return new Motion()
+            {
+                ID = -ID,
+                Name = Name + "_Reverse",
+                Configs = configs,
+                Bidirectional = false,
+            };
+        }
+
         public override string ToString()
         {
             string temp = ID.ToString();

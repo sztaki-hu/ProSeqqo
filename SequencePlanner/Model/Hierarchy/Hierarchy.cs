@@ -18,9 +18,43 @@ namespace SequencePlanner.Model.Hierarchy
             BidirectionalMotionDefault = false;
         }
 
-        public HierarchyRecord GetRecordByMotionID(int MotionID)
+        public void Build()
         {
-            return HierarchyRecords.Where(r => r.Motion.ID == MotionID).FirstOrDefault();
+            GenerateBidirectionals();
+        }
+
+        private void GenerateBidirectionals()
+        {
+            for (int i = 0; i < Motions.Count; i++)
+            {
+                if (Motions[i].Bidirectional)
+                {
+                    var record = GetRecordByMotion(Motions[i]).Copy();
+                    var bid = Motions[i].GetReverse();
+                    Motions.Add(bid);
+                    HierarchyRecords.Add(record);
+                }
+            }
+        }
+
+        public HierarchyRecord GetRecordByMotion(Motion motion)
+        {
+            return HierarchyRecords.Where(r => r.Motion.ID == motion.ID).FirstOrDefault();
+        }
+
+        public List<HierarchyRecord> GetRecordsByTask(Task task)
+        {
+            return HierarchyRecords.Where(r => r.Task.ID == task.ID).ToList();
+        }
+
+        public List<HierarchyRecord> GetRecordsByAlternative(Alternative alternative)
+        {
+            return HierarchyRecords.Where(r => r.Alternative.ID == alternative.ID).ToList();
+        }
+
+        public List<HierarchyRecord> GetRecordByProcess(Process process)
+        {
+            return HierarchyRecords.Where(r => r.Process.ID == process.ID).ToList();
         }
 
         //Process
