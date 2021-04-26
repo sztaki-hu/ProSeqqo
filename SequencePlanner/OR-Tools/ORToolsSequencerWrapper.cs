@@ -105,7 +105,7 @@ namespace SequencePlanner.OR_Tools
 
             routing.CloseModelWithParameters(searchParameters);
 
-            if (param.GTSPRepresentation.InitialRoutes != null && param.GTSPRepresentation.InitialRoutes.Length > 0)
+            if (param.GTSPRepresentation.InitialRoutes != null && param.GTSPRepresentation.InitialRoutes[0].Length > 0)
             {
                 SeqLogger.Debug("Initial route: " + param.GTSPRepresentation.InitialRoutes[0].ToListString(), nameof(ORToolsSequencerWrapper));
                 InitialSolution = routing.ReadAssignmentFromRoutes(param.GTSPRepresentation.InitialRoutes, true);
