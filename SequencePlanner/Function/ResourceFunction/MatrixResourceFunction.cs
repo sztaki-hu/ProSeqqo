@@ -30,20 +30,17 @@ namespace SequencePlanner.Function.ResourceFunction
                 throw new SeqException("Position with UserID: " + B.ID + " has no ResourceID: -1");
             var ida = -1;
             var idb = -1;
-            if (A.Resource.ID != B.Resource.ID)
+            for (int i = 0; i < CostMatrixIDHeader.Count; i++)
             {
-                for (int i = 0; i < CostMatrixIDHeader.Count; i++)
-                {
-                    if (CostMatrixIDHeader[i] == A.Resource.ID)
-                        ida = i;
-                    if (CostMatrixIDHeader[i] == B.Resource.ID)
-                        idb = i;
-                    if (ida != -1 && idb != -1)
-                        return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
-                }
+                if (CostMatrixIDHeader[i] == A.Resource.ID)
+                    ida = i;
+                if (CostMatrixIDHeader[i] == B.Resource.ID)
+                    idb = i;
+                if (ida != -1 && idb != -1)
+                    return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
             }
-            else
-                return distance;
+            return distance;
+            
             if (ida == -1)
                 throw new SeqException("Position with ResourceID: " + A.Resource.ID + " not contained by CostMatrixIDHeader");
             if (idb == -1)
@@ -59,20 +56,16 @@ namespace SequencePlanner.Function.ResourceFunction
                 throw new SeqException("Position with UserID: " + B.ID + " has no ResourceID: -1");
             var ida = -1;
             var idb = -1;
-            if (A.Resource.ID != B.Resource.ID)
+
+            for (int i = 0; i < CostMatrixIDHeader.Count; i++)
             {
-                for (int i = 0; i < CostMatrixIDHeader.Count; i++)
-                {
-                    if (CostMatrixIDHeader[i] == A.Resource.ID)
-                        ida = i;
-                    if (CostMatrixIDHeader[i] == B.Resource.ID)
-                        idb = i;
-                    if (ida != -1 && idb != -1)
-                        return CostMatrix[ida][idb];
-                }
+                if (CostMatrixIDHeader[i] == A.Resource.ID)
+                    ida = i;
+                if (CostMatrixIDHeader[i] == B.Resource.ID)
+                    idb = i;
+                if (ida != -1 && idb != -1)
+                    return CostMatrix[ida][idb];
             }
-            else
-                return 0;
 
             if (ida == -1)
                 throw new SeqException("Position with ResourceID: " + A.Resource.ID + " not contained by CostMatrixIDHeader");

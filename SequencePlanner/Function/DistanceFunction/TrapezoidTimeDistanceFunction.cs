@@ -90,8 +90,12 @@ namespace SequencePlanner.Function.DistanceFunction
 
         private void InitParameters()
         {
+            if (MaxAcceleration is null || MaxAcceleration.Length == 0)
+                throw new SeqException("TrapezoidTime MaxAcceleration in null or empty!", "Check dimension of MaxAcceleration.");
+            if (MaxSpeed is null || MaxSpeed.Length == 0)
+                throw new SeqException("TrapezoidTime found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
             if (MaxAcceleration.Length != MaxSpeed.Length)
-                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
+                throw new SeqException("TrapezoidTime MaxSpeed is null or empty!", "Check dimension of Speed.");
             int Dimension = MaxSpeed.Length;
             JointThresholdTime = new double[Dimension];
             JointThresholdDist = new double[Dimension];
@@ -102,7 +106,7 @@ namespace SequencePlanner.Function.DistanceFunction
                 {
                     if (MaxAcceleration[i] == 0.0)
                     {
-                        throw new DivideByZeroException("Trapezoid_Time Error: Acceleration is zero!");
+                        throw new DivideByZeroException("TrapezoidTime Error: Acceleration is zero!");
                     }
                     else
                     {
