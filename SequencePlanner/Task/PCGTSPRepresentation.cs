@@ -58,6 +58,7 @@ namespace SequencePlanner.Task
                 }
             }
 
+            CreateDisjointConstraints();
             ConnectProcesses();
             ConnectInAlternatives();
             CreatePrecedenceConstraints();
@@ -87,33 +88,6 @@ namespace SequencePlanner.Task
             }
         }
 
-        //public List<MotionPrecedenceList> CreatePrecedenceHierarchiesForInitialSolution()
-        //{
-            //var prec = new List<MotionPrecedenceList>();
-            //foreach (var alternative in Alternatives)
-            //{
-            //    if (alternative.Tasks.Count >= 2)
-            //    {
-            //        MotionPrecedenceList tmp = null;
-            //        for (int i = 0; i < alternative.Tasks.Count - 1; i++)
-            //        {
-            //            tmp = new MotionPrecedenceList();
-            //            foreach (var item in alternative.Tasks[i].Positions)
-            //            {
-            //                tmp.Before.Add(item.Node);
-            //            }
-            //            foreach (var item in alternative.Tasks[i + 1].Positions)
-            //            {
-            //                tmp.After.Add(item.Node);
-            //            }
-            //            prec.Add(tmp);
-            //        }
-            //    }
-            //}
-            //return prec;
-        //}
-
-
         private List<MotionPrecedence> CreateProcessPrecedence(ProcessPrecedence precedence)
         {
             List<MotionPrecedence> motionPrecedences = new List<MotionPrecedence>();
@@ -142,6 +116,83 @@ namespace SequencePlanner.Task
                 }
             }
             return motionPrecedences;
+        }
+
+        public  List<MotionPrecedenceList> CreatePrecedenceHierarchiesForInitialSolution()
+        {
+            var prec = new List<MotionPrecedenceList>();
+            foreach (var alternative in Task.Hierarchy.GetAlternatives())
+            {
+                var listOfTasks = Task.Hierarchy.GetTasksOf(alternative);
+                if (listOfTasks.Count >= 2)
+                {
+                    for (int i = 0; i < listOfTasks.Count - 1; i++)
+                    {
+                        MotionPrecedenceList tmp = new MotionPrecedenceList();
+                        foreach (var item in Task.Hierarchy.GetMotionsOf(listOfTasks[i]))
+                        {
+                            tmp.Before.Add(item);
+                        }
+                        foreach (var item in Task.Hierarchy.GetMotionsOf(listOfTasks[i+1]))
+                        {
+                            tmp.After.Add(item);
+                        }
+                        prec.Add(tmp);
+                    }
+                }
+            }
+            return prec;
+        }
+
+        private List<MotionDisjointSet> CreateDisjointConstraints()
+        {
+            DisjointSets = new List<MotionDisjointSet>();
+            foreach (var process in Task.Hierarchy.GetProcesses())
+            {
+                var alternatives = Task.Hierarchy.GetAlternativesOf(process);
+                if (alternatives.Count > 0)//!
+                {
+                    int[] taskNumberOfAlternatives = new int[alternatives.Count];
+                    int maxTaskNumber = 0;
+                    for (int i = 0; i < alternatives.Count; i++)
+                    {
+                        taskNumberOfAlternatives[i] = Task.Hierarchy.GetTasksOf(alternatives[i]).Count;
+                        if (taskNumberOfAlternatives[i] > maxTaskNumber)
+                            maxTaskNumber = taskNumberOfAlternatives[i];
+                    }
+
+                    //if (process.Alternatives.Count < 0)
+                    //{
+                    //    maxTaskNumber = process.Alternatives[0].Tasks.Count;
+                    //}
+
+                    for (int i = 0; i < maxTaskNumber; i++)
+                    {
+                        var constraint = new MotionDisjointSet();
+                        for (int j = 0; j < alternatives.Count; j++)
+                        {
+                            if (taskNumberOfAlternatives[j] <= i)
+                            {
+                                //Add positions of positions of j. alternative last layer
+                                var tasks = Task.Hierarchy.GetTasksOf(alternatives[j]);
+                                var positions = Task.Hierarchy.GetMotionsOf(tasks[taskNumberOfAlternatives[j] - 1]);
+                                foreach (var position in positions)
+                                    constraint.Elements.Add(position);
+                            }
+                            else
+                            {
+                                var tasks = Task.Hierarchy.GetTasksOf(alternatives[j]);
+                                var positions = Task.Hierarchy.GetMotionsOf(tasks[i]);
+                                //Add positions of positions of j. alternative i.layer
+                                foreach (var position in positions)
+                                    constraint.Elements.Add(position);
+                            }
+                        }
+                        DisjointSets.Add(constraint);
+                    }
+                }
+            }
+            return DisjointSets;
         }
 
         private void ConnectProcesses()

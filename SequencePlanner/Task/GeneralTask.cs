@@ -55,6 +55,7 @@ namespace SequencePlanner.Task
             ValidateTask();
             DepotMapper.Change();
             ShortcutMapper.Change();
+            Hierarchy.Build();
             PCGTSPRepresentation.Build();
             InitialSolver.CreateInitialSolution();
             var result = RunTask();
@@ -105,7 +106,7 @@ namespace SequencePlanner.Task
                     var motion = Hierarchy.GetMotionBySeqID(item);
                     if (motion != null)
                     {
-                        taskResult.SolutionHierarchy.Add(Hierarchy.GetRecordByMotionID(motion.ID));
+                        taskResult.SolutionHierarchy.Add(Hierarchy.GetRecordByMotion(motion));
                         taskResult.SolutionMotionIDs.Add(motion.ID);
                         taskResult.SolutionMotion.Add(motion);
                         foreach (var config in motion.Configs)

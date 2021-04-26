@@ -8,7 +8,6 @@ namespace SequencePlanner.Task.Processors
     {
         public TimeSpan Time { get; set; }
 
-
         private Stopwatch Timer;
         private GeneralTask Task;
 
@@ -29,12 +28,13 @@ namespace SequencePlanner.Task.Processors
                 {
                     NumberOfNodes = Task.Hierarchy.Motions.Count,
                     DisjointConstraints = Task.PCGTSPRepresentation.DisjointSets,
-                    //StrictOrderPrecedenceHierarchy = Task.PCGTSPRepresentation.CreateProcessPrecedenceFull(),
+                    StrictOrderPrecedenceHierarchy = Task.PCGTSPRepresentation.CreatePrecedenceHierarchiesForInitialSolution(),
                     OrderPrecedenceConstraints = Task.PCGTSPRepresentation.MotionPrecedences,
                     StartDepot = Task.PCGTSPRepresentation.StartDepot.SequenceMatrixID,
-                    FinishDepot = Task.PCGTSPRepresentation.FinishDepot.SequenceMatrixID,
-                    //Processes = Processes
+                    Processes = Task.Hierarchy.GetProcesses()
                 };
+                if (Task.PCGTSPRepresentation.FinishDepot is not null)
+                    task.FinishDepot = Task.PCGTSPRepresentation.FinishDepot.SequenceMatrixID;
                 var solver = new ORToolsGeneralPreSolverWrapper(task);
                 var result = solver.Solve();
                 PhraseSolution(result);
