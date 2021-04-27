@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SequencerTest.Units.Model.Hierarchy
+namespace SequencerTest.Units.Task.Processors
 {
     [TestClass]
-    public class ProcessPrecedenceTest
+    public class TaskValidatorTest
     {
         [TestInitialize()]
         public void Initialize()

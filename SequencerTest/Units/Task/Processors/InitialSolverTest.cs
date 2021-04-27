@@ -1,18 +1,20 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SequencerTest.Units.GTSP
+namespace SequencerTest.Units.Task.Processors
 {
     [TestClass]
-    public class GTSPPPrecedenceConstraintListTest
+    public class InitialSolverTest
     {
         [TestInitialize()]
         public void Initialize()
         {
+
         }
 
-        [TestMethod]
-        public void Running()
+        [TestMethod()]
+        public void TestFunciton()
         {
+
         }
     }
 }

@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="Resources\Example\" />
-    <Folder Include="Units\Task\Serialization\" />
   </ItemGroup>
 
   <ItemGroup>

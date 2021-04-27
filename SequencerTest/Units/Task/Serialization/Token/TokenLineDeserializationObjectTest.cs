@@ -1,18 +1,20 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SequencerTest.Units.GTSP
+namespace SequencerTest.Units.Task.Serialization.Token
 {
     [TestClass]
-    public class GTSPPPrecedenceConstraintTest
+    public class TokenLineDeserializationObjectTest
     {
         [TestInitialize()]
         public void Initialize()
         {
+
         }
 
-        [TestMethod]
-        public void Running()
+        [TestMethod()]
+        public void TestFunciton()
         {
+
         }
     }
 }
