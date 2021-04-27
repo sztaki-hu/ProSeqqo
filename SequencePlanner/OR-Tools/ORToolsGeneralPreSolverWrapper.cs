@@ -36,25 +36,25 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Indent++;
             Solver solver = Solver.CreateSolver("CBC_MIXED_INTEGER_PROGRAMMING");
             x = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 1.0, "x");                                                    // Boolean, indicates if node is selected
-            position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count, "pos");      // Int, indicates order of nodes
-            //position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count*1000, "pos");      // Int, indicates order of nodes
+            position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count, "pos");          // Int, indicates order of nodes
+            //position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, parameters.DisjointConstraints.Count*1000, "pos");   // Int, indicates order of nodes
             //position = solver.MakeIntVarArray(parameters.NumberOfNodes, 0.0, 9.0, "pos");      // Int, indicates order of nodes
             alternativeID = new int[parameters.NumberOfNodes];                                                                      // Alternative ID of Node
             processID = new int[parameters.NumberOfNodes];                                                                          // Process ID of Node
-            //FillAlternativesAndProcesses(parameters.Processes);                                                             // Fill ProcessID and AlternativeID
+            FillAlternativesAndProcesses(parameters.Hierarchy);                                                                   // Fill ProcessID and AlternativeID
 
             // Precedences
             AddStartDepotConstraints(solver);
             AddFinishDepotConstraints(solver);
             AddDisjointConstraints(solver, parameters.DisjointConstraints);                                                      //Add disjoint sets of alternative nodes
-            AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                                 //Add order precedences, node1 should be before node2 in the solution if both are selected
-            AddStrictPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                       //Add strct order precedences, node1 must be followed by node2 directly
-            AddStrictOrderPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                       //Add strct order precedences, node1 must be followed by node2 directly
+            AddPrecedenceConstraints(solver, parameters.OrderPrecedenceConstraints);                                             //Add order precedences, node1 should be before node2 in the solution if both are selected
+            AddStrictPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                                   //Add strct order precedences, node1 must be followed by node2 directly
+            AddStrictOrderPrecedenceConstraints(solver, parameters.StrictOrderPrecedenceHierarchy);                              //Add strct order precedences, node1 must be followed by node2 directly
             //AddAlternativeDenyConstraints(solver, parameters.Processes);
-            //foreach (var item in constraints)
-            //{
-            //    SeqLogger.Critical(item);
-            //}
+            foreach (var item in constraints)
+            {
+                SeqLogger.Critical(item);
+            }
             SeqLogger.Debug("Number of variables = " + solver.NumVariables(), nameof(ORToolsGeneralPreSolverWrapper));
             SeqLogger.Debug("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsGeneralPreSolverWrapper));
 
@@ -137,28 +137,35 @@ namespace SequencePlanner.OR_Tools
             SeqLogger.Trace("DisjointSets: ", nameof(ORToolsGeneralPreSolverWrapper)); SeqLogger.Indent++;
             foreach (var item in parameters.DisjointConstraints)
             {
-                solver.Add(CreateDisjointConstraint(item));
-                SeqLogger.Trace(item.ToString(), nameof(ORToolsGeneralPreSolverWrapper));
+                if (item.Elements.Count > 0)
+                {
+                    solver.Add(CreateDisjointConstraint(item));
+                     SeqLogger.Trace(item.ToString(), nameof(ORToolsGeneralPreSolverWrapper));
+                }
             }
             SeqLogger.Indent--;
         }
 
-        private void FillAlternativesAndProcesses(List<Process> processes)
+        private void FillAlternativesAndProcesses(Hierarchy hierarchy)
         {
-            //for (int i = 0; i < processes.Count; i++)
-            //{
-            //    for (int j = 0; j < processes[i].Alternatives.Count; j++)
-            //    {
-            //        for (int k = 0; k < processes[i].Alternatives[j].Tasks.Count; k++)
-            //        {
-            //            for (int m = 0; m < processes[i].Alternatives[j].Tasks[k].Positions.Count; m++)
-            //            {
-            //                processID[processes[i].Alternatives[j].Tasks[k].Positions[m].Node.SequencingID] = i;         // i is the index of process; processID[n] n is the number of node
-            //                alternativeID[processes[i].Alternatives[j].Tasks[k].Positions[m].Node.SequencingID] = j;     // j is the index of alternative in i process; processID[n] n is the number of node
-            //            }
-            //        }
-            //    }
-            //}
+            var processes = hierarchy.GetProcesses();
+            for (int i = 0; i < processes.Count; i++)
+            {
+                var alternatives = hierarchy.GetAlternativesOf(processes[i]);
+                for (int j = 0; j < alternatives.Count; j++)
+                {
+                    var tasks = hierarchy.GetTasksOf(alternatives[j]);
+                    for (int k = 0; k < tasks.Count; k++)
+                    {
+                        var motions = hierarchy.GetMotionsOf(tasks[k]);
+                        for (int m = 0; m < motions.Count; m++)
+                        {
+                            processID[motions[m].SequenceMatrixID] = i;         // i is the index of process; processID[n] n is the number of node
+                            alternativeID[motions[m].SequenceMatrixID] = j;     // j is the index of alternative in i process; processID[n] n is the number of node
+                        }
+                    }
+                }
+            }
         }
         private LinearConstraint CreateStrictOrderPrecedence(List<Motion> before, List<Motion> after)
         {
@@ -192,13 +199,19 @@ namespace SequencePlanner.OR_Tools
             var solution = new List<int>();
             var solutionString = "Initial solution found: ";
 
-            for (int i = 0; i < parameters.Processes.Count; i++)
+            for (int i = 0; i < parameters.Hierarchy.GetProcesses().Count; i++)
             {
                 processes.Add(new Process());
             }
 
             if (resultStatus == Solver.ResultStatus.OPTIMAL)
             {
+                for (int p = 0; p < parameters.NumberOfNodes; p++)                                           //Trace the selected nodes
+                {
+                    if (x[p].SolutionValue() == 1)
+                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + this.position[p].SolutionValue() + ", Alternative = " + this.alternativeID[p] + ", Process = " + this.processID[p], nameof(OR_Tools.ORToolsGeneralPreSolverWrapper));
+                }
+
                 for (int i = 0; i < parameters.NumberOfNodes; i++)
                 {
                     if (x[i].SolutionValue() == 1)
@@ -213,6 +226,11 @@ namespace SequencePlanner.OR_Tools
                     }
                 }
 
+                foreach (var item in processes)
+                {
+                    SeqLogger.Trace(item.ToString());
+                }
+
                 List<Process> SortedList = processes.OrderBy(o => o.Min).ToList();                      //Order the processes by the minimum
                 foreach (var item in SortedList)
                     solution.AddRange(item.GetResult());                                                //Add the nodes of the process
@@ -220,11 +238,7 @@ namespace SequencePlanner.OR_Tools
                 foreach (var item in solution)
                     solutionString += item.ToString() + ",";
 
-                for (int p = 0; p < parameters.NumberOfNodes; p++)                                           //Trace the selected nodes
-                {
-                    if (x[p].SolutionValue() == 1)
-                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + this.position[p].SolutionValue() + ", Alternative = " + this.alternativeID[p] + ", Process = " + this.processID[p], nameof(OR_Tools.ORToolsGeneralPreSolverWrapper));
-                }
+
                 SeqLogger.Info(solutionString, nameof(ORToolsGeneralPreSolverWrapper));
             }
             else
@@ -304,6 +318,11 @@ namespace SequencePlanner.OR_Tools
                     }
                 }
                 return result;
+            }
+
+            public override string ToString()
+            {
+                return "Akt: " + Akt+" Min: " + Min + " Max: " + Max + " PosKey: " +PosKey.ToListString()+ " PosOrder: "+PosOrder.ToListString();
             }
         }
     }
