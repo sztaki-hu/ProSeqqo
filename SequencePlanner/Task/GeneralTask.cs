@@ -23,8 +23,8 @@ namespace SequencePlanner.Task
         public List<MotionPrecedence> MotionPrecedences { get; set; }
         public GTSPRepresentation PCGTSPRepresentation { get; set; }
 
-        private GeneraDepotMapper DepotMapper { get; set; }
-        private GeneralShortcutMapper ShortcutMapper { get; set; }
+        private DepotMapper DepotMapper { get; set; }
+        private ShortcutMapper ShortcutMapper { get; set; }
         private InitialSolver InitialSolver { get; set; }
         private Stopwatch Timer { get; set; }
 
@@ -42,8 +42,8 @@ namespace SequencePlanner.Task
             ProcessPrecedences = new List<ProcessPrecedence>();
             MotionPrecedences = new List<MotionPrecedence>();
             PCGTSPRepresentation = new GTSPRepresentation(this);
-            DepotMapper = new GeneraDepotMapper(this);
-            ShortcutMapper = new GeneralShortcutMapper(this);
+            DepotMapper = new DepotMapper(this);
+            ShortcutMapper = new ShortcutMapper(this);
             InitialSolver = new InitialSolver(this);
             Timer = new Stopwatch();
         }
@@ -70,7 +70,7 @@ namespace SequencePlanner.Task
         private void ValidateTask()
         {
             if (Validate)
-                GeneralTaskValidator.Validate(this);
+                TaskValidator.Validate(this);
             else
                 SeqLogger.Warning("Task validation turned off.");
         }

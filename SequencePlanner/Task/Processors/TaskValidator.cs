@@ -3,11 +3,11 @@
 //TODO: MotionPrecedence only between processes, no inside alternatives and between alternatives in one process.
 namespace SequencePlanner.Task.Processors
 {
-    public static class GeneralTaskValidator
+    public static class TaskValidator
     {
         public static void Validate(GeneralTask pointLikeTask)
         {
-            SeqLogger.Debug("Validation started!", nameof(GeneralTaskValidator));
+            SeqLogger.Debug("Validation started!", nameof(TaskValidator));
             SeqLogger.Indent++;
             //CheckDistaceFunction(pointLikeTask);
             //CheckWeightMultiplier(pointLikeTask);
@@ -26,7 +26,7 @@ namespace SequencePlanner.Task.Processors
             //CheckUseAlternativeShortcuts(pointLikeTask);
 
             SeqLogger.Indent--;
-            SeqLogger.Debug("Validation finished!", nameof(GeneralTaskValidator));
+            SeqLogger.Debug("Validation finished!", nameof(TaskValidator));
         }
 
         ////Q17

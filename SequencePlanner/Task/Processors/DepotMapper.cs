@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.Task.Processors
 {
-    public class GeneraDepotMapper : ITaskProcessor
+    public class DepotMapper : ITaskProcessor
     {
         private HierarchyRecord Record { get; set; }
 
@@ -21,7 +21,7 @@ namespace SequencePlanner.Task.Processors
         public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequenceMatrixID; else return -1; } }
         public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequenceMatrixID; else return -1; } }
 
-        public GeneraDepotMapper(GeneralTask task)
+        public DepotMapper(GeneralTask task)
         {
             Task = task;
         }
