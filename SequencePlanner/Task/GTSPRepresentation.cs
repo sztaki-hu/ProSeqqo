@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SequencePlanner.Task
 {
-    public class PCGTSPRepresentation
+    public class GTSPRepresentation
     {
         public Motion StartDepot { get; set; }
         public Motion FinishDepot { get; set; }
@@ -21,7 +21,7 @@ namespace SequencePlanner.Task
         private GeneralTask Task { get; set; }
 
 
-        public PCGTSPRepresentation()
+        public GTSPRepresentation()
         {
             CostMultiplier = 1000;
             DisjointSets = new List<MotionDisjointSet>();
@@ -29,7 +29,7 @@ namespace SequencePlanner.Task
             InitialSolution = new List<Motion>();
         }
 
-        public PCGTSPRepresentation(GeneralTask task)
+        public GTSPRepresentation(GeneralTask task)
         {
             Task = task;
             CostMultiplier = 1000;

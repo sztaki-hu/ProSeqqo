@@ -21,7 +21,7 @@ namespace SequencePlanner.Task
         public SolverSettings SolverSettings { get; set; }
         public List<ProcessPrecedence> ProcessPrecedences { get; set; }
         public List<MotionPrecedence> MotionPrecedences { get; set; }
-        public PCGTSPRepresentation PCGTSPRepresentation { get; set; }
+        public GTSPRepresentation PCGTSPRepresentation { get; set; }
 
         private GeneraDepotMapper DepotMapper { get; set; }
         private GeneralShortcutMapper ShortcutMapper { get; set; }
@@ -41,7 +41,7 @@ namespace SequencePlanner.Task
             SolverSettings = new SolverSettings();
             ProcessPrecedences = new List<ProcessPrecedence>();
             MotionPrecedences = new List<MotionPrecedence>();
-            PCGTSPRepresentation = new PCGTSPRepresentation(this);
+            PCGTSPRepresentation = new GTSPRepresentation(this);
             DepotMapper = new GeneraDepotMapper(this);
             ShortcutMapper = new GeneralShortcutMapper(this);
             InitialSolver = new InitialSolver(this);
