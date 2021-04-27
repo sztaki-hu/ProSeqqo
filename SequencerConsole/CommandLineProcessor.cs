@@ -40,8 +40,9 @@ namespace SequencerConsole
                     //args = new string[] { "-i", example + "\\PickAndPlace_Original.txt",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
                     args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt", "-o", outdir + "\\PickAndPlace_Matrix_out.json", };
                     args = new string[] { "-i", example + "\\PickAndPlace_Matrix.txt", "-o", outdir + "\\PickAndPlace_Matrix_out.txt", };
+                    args = new string[] { "-i", example + "\\MesterEcset.txt", "-o", outdir + "\\MesterEcset.txt", };
                     //args = new string[] { "-i", example + "\\Line_Original.txt",            "-o", outdir + "\\Line_Original_out.json",            };
-                    //args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.json",              };
+                    args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.json",              };
                     //args = new string[] { "-i", example + "\\Line_Matrix.txt",              "-o", outdir + "\\Line_Matrix_out.seq",               };
                     //args = new string[] { "-i", example + "\\Hybrid_Matrix.txt",              "-o", outdir + "\\Hybrid_Matrix_out.seq",               };
                     //args = new string[] { "-i", example + "\\Kocka.txt",                        "-o", outdir + "\\Kocka_out.json",                        };
@@ -87,7 +88,7 @@ namespace SequencerConsole
                     Version(args);
                     input = Input(args);
                     output = Output(args);
-                    log = LogLevel.Info;
+                    log = LogLevel.Trace;
                     SeqLogger.UseIndent = true;
                     Run();
                 }
