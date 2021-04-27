@@ -16,12 +16,10 @@ namespace SequencePlanner.OR_Tools
         private Assignment InitialSolution;
         private Stopwatch Timer;
 
-
         public ORToolsSequencerWrapper(ORToolsTask parameters)
         {
             param = parameters;
         }
-
 
         //Create OR-Tools Representation from SequencerTask
         public void Build()

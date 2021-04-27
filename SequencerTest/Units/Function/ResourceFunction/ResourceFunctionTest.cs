@@ -4,7 +4,7 @@ using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using SequencePlanner.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencerTest.Units
+namespace SequencerTest.Units.Function.ResourceFunction
 {
     [TestClass]
     public class ResourceFunctionTest

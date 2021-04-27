@@ -113,7 +113,7 @@ namespace SequencePlanner.Helper
                 {
                     tmp += list[i].ToString() + ", ";
                 }
-                tmp += list[^1].ID;
+                tmp += list[^1].ToString();
 
             }
             return tmp;

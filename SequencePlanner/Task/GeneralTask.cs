@@ -63,6 +63,7 @@ namespace SequencePlanner.Task
             ShortcutMapper.ChangeBack();
             Timer.Stop();
             result.FullTime = Timer.Elapsed;
+            result.PreSolverTime = InitialSolver.Time;
             return result;
         }
 

@@ -5,7 +5,7 @@ using SequencePlanner.Model.Hierarchy;
 using System;
 using System.Collections.Generic;
 
-namespace SequencerTest.Units.DistanceFunction
+namespace SequencerTest.Units.Function.DistanceFunction
 {
     [TestClass]
     public class DistanceFunctionTest
@@ -61,14 +61,13 @@ namespace SequencerTest.Units.DistanceFunction
         [TestMethod()]
         public void TrapezoidTimeDistanceFunction()
         {
-            Assert.ThrowsException<NullReferenceException>(() =>    new TrapezoidTimeDistanceFunction(null,                        new double[] { 1, 2, 3 }));
-            Assert.ThrowsException<NullReferenceException>(() => new TrapezoidTimeDistanceFunction(new double[] { 1, 2, 3 },    null));
+            Assert.ThrowsException<SeqException>(() =>    new TrapezoidTimeDistanceFunction(null,                        new double[] { 1, 2, 3 }));
+            Assert.ThrowsException<SeqException>(() => new TrapezoidTimeDistanceFunction(new double[] { 1, 2, 3 },    null));
             Assert.ThrowsException<SeqException>(() => new TrapezoidTimeDistanceFunction(new double[] { },            new double[] { 1, 2, 3 }));
             Assert.ThrowsException<SeqException>(() => new TrapezoidTimeDistanceFunction(new double[] { 1, 2, 3 },    new double[] { }));
             Assert.ThrowsException<SeqException>(() => new TrapezoidTimeDistanceFunction(new double[] { 1, 2, 3, 4 }, new double[] { 1, 2, 3 }));
             Assert.ThrowsException<SeqException>(() => new TrapezoidTimeDistanceFunction(new double[] { 1, 2, 3 },    new double[] { 1, 2, 3, 4 }));
-            Assert.ThrowsException<SeqException>(() => new TrapezoidTimeDistanceFunction(new double[] { 1, 2, 3 },    new double[] { 1, 2, 3 }));
-            Assert.ThrowsException<SeqException>(() => new TrapezoidTimeDistanceFunction(new double[] { 1, 2, 3 },    new double[] { 1, 2, 3 }));
+
            
             func = new TrapezoidTimeDistanceFunction(new double[] { 1, 2, 3 }, new double[] { 1, 2, 3 });
             Assert.AreEqual("TrapezoidTime", func.FunctionName);

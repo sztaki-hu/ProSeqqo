@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Resources\Example\" />
+    <Folder Include="Units\Model\Hierarchy\" />
   </ItemGroup>
 
   <ItemGroup>

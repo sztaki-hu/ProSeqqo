@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 
-namespace SequencerTest.Units
+namespace SequencerTest.Units.Function.ResourceFunction
 {
     [TestClass]
     public class ResourceDistanceLinkTest

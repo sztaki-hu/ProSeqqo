@@ -32,6 +32,7 @@ namespace SequencePlanner.Model.Hierarchy
                     var record = GetRecordByMotion(Motions[i]).Copy();
                     var bid = Motions[i].GetReverse();
                     Motions.Add(bid);
+                    record.Motion = bid;
                     HierarchyRecords.Add(record);
                 }
             }
@@ -72,6 +73,7 @@ namespace SequencePlanner.Model.Hierarchy
         {
             return HierarchyRecords.Where(r => r.Process.GlobalID == process.GlobalID)
                                    .Select(r => r.Alternative)
+                                   .Distinct()
                                    .ToList();
         }
 
@@ -153,6 +155,7 @@ namespace SequencePlanner.Model.Hierarchy
         {
             return HierarchyRecords.Where(r => r.Alternative.GlobalID == alternative.GlobalID)
                                    .Select(r => r.Task)
+                                   .Distinct()
                                    .ToList();
         }
 
@@ -217,6 +220,7 @@ namespace SequencePlanner.Model.Hierarchy
         {
             return HierarchyRecords.Where(r => r.Task.GlobalID == task.GlobalID)
                                    .Select(r => r.Motion)
+                                   .Distinct()
                                    .ToList();
         }
 
