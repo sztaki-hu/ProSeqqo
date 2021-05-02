@@ -11,6 +11,9 @@
     <PackageProjectUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</PackageProjectUrl>
     <RepositoryUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageIcon></PackageIcon>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <ApplicationIcon>RobotSeqLogo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
