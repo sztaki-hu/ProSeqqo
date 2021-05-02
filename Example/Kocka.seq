@@ -32,7 +32,6 @@ ConfigList:
 15;	[4;3];	Cube5_A
 16;	[4;3];  Cube5_B
 
-
 ProcessHierarchy:
 #-----------+---------------+---------+----------+----------+------------------------+---------------------------+
 # ProcessID | AlternativeID |  TaskID | MotionID | ConfigID |Bidirectional [optional]|    MotionName[optional]   | 

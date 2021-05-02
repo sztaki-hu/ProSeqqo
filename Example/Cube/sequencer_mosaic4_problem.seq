@@ -1,0 +1,53 @@
+TaskType: General
+Dimensions: 2
+WeightMultiplier: Auto
+CyclicSequence: False
+StartDepot: 0
+DistanceFunction: Euclidian
+ResourceSource: Off
+TimeLimit: 0
+UseMIPprecedenceSolver: True
+LocalSearchStrategy: Automatic
+UseShortcutInAlternatives: False
+PositionList: 
+0;[0;0];Init
+11000;[0,2746;0,0043];white_110_Start_g0
+10900;[0,0028;0,0791];gray_109_Start_g0
+10800;[0,2463;0,2135];black_108_Start_g0
+10700;[0,2623;0,1307];white_107_Start_g0
+10600;[0,0688;0,0897];gray_106_Start_g0
+10500;[0,0036;0,2133];black_105_Start_g0
+10400;[0,0217;0,008];white_104_Start_g0
+10300;[0,2926;0,172];gray_103_Start_g0
+10200;[0,1496;0,1783];black_102_Start_g0
+9800;[0,04;0,04];white_98_End_g0
+9700;[0,04;0,066];white_97_End_g0
+9600;[0,144;0,092];white_96_End_g0
+9500;[0,118;0,118];gray_95_End_g0
+9400;[0,144;0,118];gray_94_End_g0
+9300;[0,092;0,092];gray_93_End_g0
+9200;[0,066;0,092];black_92_End_g0
+9100;[0,092;0,118];black_91_End_g0
+9000;[0,066;0,066];black_90_End_g0
+ProcessHierarchy: 
+0;0;0;0;[0]
+98;9800;9801;11000;[11000]
+98;9800;9802;9800;[9800]
+97;9700;9701;10700;[10700]
+97;9700;9702;9700;[9700]
+96;9600;9601;10400;[10400]
+96;9600;9602;9600;[9600]
+95;9500;9501;10900;[10900]
+95;9500;9502;9500;[9500]
+94;9400;9401;10600;[10600]
+94;9400;9402;9400;[9400]
+93;9300;9301;10300;[10300]
+93;9300;9302;9300;[9300]
+92;9200;9201;10800;[10800]
+92;9200;9202;9200;[9200]
+91;9100;9101;10500;[10500]
+91;9100;9102;9100;[9100]
+90;9000;9001;10200;[10200]
+90;9000;9002;9000;[9000]
+ProcessPrecedence: 
+PositionPrecedence: 

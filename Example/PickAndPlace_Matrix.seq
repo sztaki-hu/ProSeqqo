@@ -3,23 +3,28 @@ Validate: True
 Cyclic: False
 StartDepot: 1
 FinishDepot: 6
+
+#Cost----------------------------------
 DistanceFunction: Matrix
 BidirectionMotionDefault: False
-IdlePenalty: 1000
 AddMotionLengthToCost: False
 AddInMotionChangeoverToCost: False
+IdlePenalty: 1000
+
+#Resource------------------------------
 ResourceChangeover: Matrix
 ResourceChangeoverFunction: Add
 #ChangeoverConstant: 5
-LocalSearchStrategy: GreedyDescent
-TimeLimit: 20000
-UseMIPprecedenceSolver: False
-UseShortcutInAlternatives: False
-
 ChangeoverMatrix:
 1;5
 99;88
 77;66
+
+#Solver--------------------------------
+LocalSearchStrategy: GreedyDescent
+TimeLimit: 20000
+UseMIPprecedenceSolver: False
+UseShortcutInAlternatives: False
 
 ConfigMatrix:
 1;2;3;4;5;6
@@ -46,7 +51,6 @@ ProcessHierarchy:
 104;	53;	23;	4;	[2;3;4;5]
 105;	54;	24;	5;	[5]
 #106;	55;	25;	6;	[6]
-
 	
 ProcessPrecedence:
 #+----------------------+--------------------+------------------+

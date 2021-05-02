@@ -11,7 +11,7 @@ TrapezoidAcceleration: [0.666667;0.666667;0.666667;0.666667;0.666667;0.666667]
 #Resource------------------------------
 ResourceChangeover: Off
 
-#Solver-------------------------------
+#Solver--------------------------------
 LocalSearchStrategy: GuidedLocalSearch
 TimeLimit: 10000
 UseMIPprecedenceSolver: False
@@ -60,7 +60,6 @@ PositionList:
 35; [1.29527;-1.32865;-1.92385;-1.51083;1.55643;-0.275295];
 36; [1.29527;-1.71513;-1.57846;1.67186;-1.55643;2.8663];
 
-
 ProcessHierarchy:
 #+-------------+---------+----------------+------------+
 #| Position ID | Task ID | Alternative ID | Process ID |
@@ -106,8 +105,6 @@ ProcessHierarchy:
 69;	49;	38;	31;
 70;	50;	40;	33;
 70;	50;	40;	34;
-
-
 
 ProcessPrecedence:
 #+----------------------+--------------------+

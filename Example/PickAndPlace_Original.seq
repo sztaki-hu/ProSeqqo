@@ -2,11 +2,17 @@ Task: General
 Cyclic: False
 StartDepot: 1
 FinishDepot: 5
-TimeLimit: 20
+
+#Cost----------------------------------
 DistanceFunction: TrapezoidTime
 TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
 TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
+
+#Resource------------------------------
 ResourceChangeover: Off
+
+#Solver--------------------------------
+TimeLimit: 20000
 
 #Hierarchy-----------------------------
 ConfigList:
@@ -95,12 +101,12 @@ MotionPrecedence:
 #|         <int>         |       <int>          |
 #+-----------------------+----------------------+
 #Camera first:
-	1;	6
-	1;	7
-	1;	8
-	1;	9
-	1;	10
-	10;	1
+1;	6
+1;	7
+1;	8
+1;	9
+1;	10
+10;	1
 
 OverrideCost:
 #+-----------------+---------------+----------+-----------------------+
