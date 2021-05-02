@@ -1,23 +1,20 @@
-TaskType: General
+Task: General
 Validate: True
-#Dimension: 0
-
-#WeightMultiplier: 10
 Cyclic: False
 StartDepot: 1
 FinishDepot: 6
-TimeLimit: 20000
 DistanceFunction: Matrix
-ResourceChangeoverFunction: Add
+BidirectionMotionDefault: False
+IdlePenalty: 1000
+AddMotionLengthToCost: False
+AddInMotionChangeoverToCost: False
 ResourceChangeover: Matrix
+ResourceChangeoverFunction: Add
 #ChangeoverConstant: 5
+LocalSearchStrategy: GreedyDescent
+TimeLimit: 20000
 UseMIPprecedenceSolver: False
 UseShortcutInAlternatives: False
-LocalSearchStrategy: GreedyDescent
-BidirectionMotionDefault: False
-AddMotionLengthToCost: True
-AddInMotionChangeoverToCost: True
-IdlePenalty: 1000
 
 ChangeoverMatrix:
 1;5
@@ -43,12 +40,12 @@ ProcessHierarchy:
 #-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
 #   <int>   |      <int>     |  <int>  |         <int>       |      int[]       |       True/False       |         True/False        |
 #-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
-	#101;50;20;1;[1];True;Cam
-	#102;51;21;2;[2]
-	#102;52;22;3;[3]
-	104;53;23;4;[2;3;4;5]
-	#105;54;24;5;[5]
-	106;55;25;6;[6]
+#101;	50;	20;	1;	[1]	;True;Cam
+102;	51;	21;	2;	[2]
+102;	52;	22;	3;	[3]
+104;	53;	23;	4;	[2;3;4;5]
+105;	54;	24;	5;	[5]
+#106;	55;	25;	6;	[6]
 
 	
 ProcessPrecedence:

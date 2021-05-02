@@ -60,11 +60,11 @@ ConfigMatrix:
 #+----------+----------+-----+------------------+
 
 ProcessHierarchy:
-#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
-# ProcessID | AlternativeID  |  TaskID |       MotionID      |    ConfigID      |Bidirectional [optional]|    MotionName[optional]   | 
-#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
-#   <int>   |      <int>     |  <int>  |         <int>       |      int[]       |       True/False       |         True/False        |
-#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+#-----------+---------------+---------+----------+----------+------------------------+---------------------------+
+# ProcessID | AlternativeID |  TaskID | MotionID | ConfigID |Bidirectional [optional]|    MotionName[optional]   | 
+#-----------+---------------+---------+----------+----------+------------------------+---------------------------+
+#   <int>   |      <int>    |  <int>  |  <int>   |   int[]  |       True/False       |         True/False        |
+#-----------+---------------+---------+----------+--------- +------------------------+---------------------------+
 
 ProcessPrecedence:
 #+-------------------------+----------------------+
@@ -86,64 +86,3 @@ OverrideCost:
 #+-----------------+---------------+----------+-----------------------+
 #|      <int>      |     <int>     | <double> |        <bool>         |
 #+-----------------+---------------+----------+-----------------------+
-
-
-
-
-
-
-
-
-MotionPrecedence:
-#+-------------------------+----------------------+
-#|  PredecessorLineID      |  SuccessorLineID     |
-#+-------------------------+----------------------+
-#|          <int>          |         <int>        |
-#+-------------------------+----------------------+
-
-ContourPrecedence:
-#+-------------------------+----------------------+
-#|  PredecessorContourID   |  SuccessorContourID  |
-#+-------------------------+----------------------+
-#|          <int>          |         <int>        |
-#+-------------------------+----------------------+
-
-LineList:
-#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
-#| LineID | ContourID | PositionAID | PositionBID |  Name[optional]  |  ResourceID [optional]  | Bidirectional [optional]  |
-#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
-#|  <int> |   <int>   |    <int>    |    <int>    |     <string>     |          <int>          |         True/False        |
-#+--------+-----------+-------------+-------------+------------------+-------------------------+---------------------------+
-
-#MotionList:
-##+----------+-------------+-------------+------------------+---------------------------+
-##| MotionID |  ConfigIDA  | ConfigIDB   |  Name[optional]  | Bidirectional [optional]  |
-#+----------+-------------+-------------+------------------+---------------------------+
-#|  <int>   |    <int>    |    <int>    |     <string>     |         True/False        |
-#+----------+-------------+-------------+------------------+---------------------------+
-
-|*[`Dimension`](#dimension)|Int| ?TODO: Not necessary? Dimension of configurations. Dimension = 0 if `DistanceFunction` = Matrix, else it have to be fit for configurations of `ConfigurationList`. |
-#### *Dimension
-?Not necessary?
-Dimension of used configurations, Dimension = 0 if `DistanceFunction` = Matrix, else it have to be fit for configurations of `ConfigurationList`.
-
-| Param  | Rule   |
-| ------ | ------ |
-| Int    | >=0 |
-
-<details>
-<summary>Usage</summary>
-
-```
-//SEQ
-Dimension: 0
-Dimension: 3
-
-//JSON
-//XML
-//C#
-```
-</details>
-
-Dimension: <int> 
-|[`MotionList`](#motionlist) | `MotionID` ; `ConfigID` ; `ConfigID` ; ~`Name` ; ~`Bidirectional` | List of records that needs a globally unique identifier (scope: `ConfigList`/`ConfigMatrix`) and two configurations. Configs can be used multiple times for motion definition.  |
