@@ -9,7 +9,7 @@ namespace SequencePlanner.Task.Serialization.Model
         public int TaskID { get; set; }
         public int MotionID { get; set; }
         public List<int> ConfigIDs { get; set; }
-        public bool Bidirectional { get; set; }
+        public bool? Bidirectional { get; set; }
         public string Name { get; set; }
 
 

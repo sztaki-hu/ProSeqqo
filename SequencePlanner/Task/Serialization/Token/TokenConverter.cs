@@ -164,7 +164,12 @@ namespace SequencePlanner.Task.Serialization.Token
                                 ConfigIDs = confs,
                             };
                             if (line.Length > 4)
-                                hierarchyObj.Bidirectional = bool.Parse(line[4]);
+                            {
+                                if (line[4].ToUpper().Equals("TRUE") || line[4].ToUpper().Equals("FALSE"))
+                                    hierarchyObj.Bidirectional = bool.Parse(line[4]);
+                                else
+                                    hierarchyObj.Bidirectional = null;
+                            }
                             if (line.Length > 5)
                                 hierarchyObj.Name = line[5];
                             hierarchy.Add(hierarchyObj);

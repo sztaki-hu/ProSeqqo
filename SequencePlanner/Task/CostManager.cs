@@ -16,7 +16,6 @@ namespace SequencePlanner.Task
         public bool AddMotionLengthToCost { get; set; }
         public bool AddInMotionChangeoverToCost { get; set; }
 
-
         public CostManager()
         {
             DistanceFunction = new EuclidianDistanceFunction();
@@ -32,11 +31,21 @@ namespace SequencePlanner.Task
                 A = From,
                 B = To
             };
-            var weight = GetOverrideCost(From, To);
-            cost.OverrideCost = weight;
-            if (weight == 0)
+            if (From is null || To is null)
+                return cost;
+            var weight = 0.0;
+            var overWeight = GetOverrideCost(From, To);
+            if(overWeight is not null)
             {
-                weight = DistanceFunction.ComputeDistance(From, To);
+                cost.OverrideCost = (double)overWeight;
+                weight = (double) overWeight;
+            }
+            else
+            {
+                if (From.Virtual || To.Virtual)
+                    weight = 0.0;
+                else
+                    weight = DistanceFunction.ComputeDistance(From, To);
                 cost.DistanceFunctionCost = weight;
             }
             if (weight > 0)
@@ -59,11 +68,19 @@ namespace SequencePlanner.Task
             };
             if (AddMotionLengthToCost)
             {
-                var weight = GetOverrideCost(From, To);
-                cost.OverrideCost = weight;
-                if (weight == 0)
+                var weight = 0.0;
+                var overWeight = GetOverrideCost(From, To);
+                if (overWeight is not null)
                 {
-                    weight = DistanceFunction.ComputeDistance(From, To);
+                    cost.OverrideCost = (double)overWeight;
+                    weight = (double)overWeight;
+                }
+                else
+                {
+                    if (From.Virtual || To.Virtual)
+                        weight = 0.0;
+                    else
+                        weight = DistanceFunction.ComputeDistance(From, To);
                     cost.DistanceFunctionCost = weight;
                 }
                 if (weight > 0)
@@ -126,7 +143,6 @@ namespace SequencePlanner.Task
             //    weight += From.AdditionalWeightOut;
             //if (To.AdditionalWeightIn > 0)
             //    weight += To.AdditionalWeightIn;
-
         }
 
         public DetailedConfigCost ComputeCost(Motion motion)
@@ -139,10 +155,7 @@ namespace SequencePlanner.Task
             return motion.DetailedCost;
         }
 
-
-
-
-        public double GetOverrideCost(Config A, Config B)
+        public double? GetOverrideCost(Config A, Config B)
         {
             List<DetailedConfigCost> costs = new List<DetailedConfigCost>();
             foreach (var cost in OverrideCost)
@@ -155,7 +168,7 @@ namespace SequencePlanner.Task
             if (costs.Count > 1)
                 throw new SeqException("Multiple override cost for configs: " + A.ID + "-" + B.ID);
             if (costs.Count == 0)
-                return 0;
+                return null;
             else
                 return costs[0].OverrideCost;
         }

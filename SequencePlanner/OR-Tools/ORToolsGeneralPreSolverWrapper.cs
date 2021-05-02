@@ -53,7 +53,7 @@ namespace SequencePlanner.OR_Tools
             //AddAlternativeDenyConstraints(solver, parameters.Processes);
             foreach (var item in constraints)
             {
-                SeqLogger.Critical(item);
+                SeqLogger.Trace(item);
             }
             SeqLogger.Debug("Number of variables = " + solver.NumVariables(), nameof(ORToolsGeneralPreSolverWrapper));
             SeqLogger.Debug("Number of constraints = " + solver.NumConstraints(), nameof(ORToolsGeneralPreSolverWrapper));

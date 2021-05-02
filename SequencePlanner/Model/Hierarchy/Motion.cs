@@ -13,6 +13,8 @@ namespace SequencePlanner.Model.Hierarchy
         public double StricLength { get; set; }
         public Config FirstConfig { get { if (Configs.Count > 0) return Configs[0]; else return null; } }
         public Config LastConfig { get { if (Configs.Count > 0) return Configs[^1]; else return null; } }
+        public OverrideCost OverrideCostIn { get; set; }
+        public OverrideCost OverrideCostOut { get; set; }
 
 
         public Motion() : base()
@@ -29,17 +31,23 @@ namespace SequencePlanner.Model.Hierarchy
 
         public Motion(int id, Config a, Config b) : base(id, id + "-Motion")
         {
-
+            DetailedCost = new DetailedConfigCost();
+            Configs = new List<Config>();
+            Configs.Add(a);
+            Configs.Add(b);
         }
 
         public Motion(int id, Config config) : base(id, id + "-Motion")
         {
-
+            DetailedCost = new DetailedConfigCost();
+            Configs = new List<Config>();
+            Configs.Add(config);
         }
 
         public Motion(int id, List<Config> motion) : base(id, id + "-Motion")
         {
-
+            DetailedCost = new DetailedConfigCost();
+            Configs = motion;
         }
 
         public Motion GetReverse()

@@ -254,10 +254,17 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     motion = new Motion()
                     {
                         ID = item.MotionID,
-                        Bidirectional = item.Bidirectional,
                         Configs = FindConfigsForMotion(task, item.ConfigIDs),
                         Name = item.Name
                     };
+                    if (item.Bidirectional is null)
+                    {
+                        motion.Bidirectional = BidirectionMotionDefault;
+                    }
+                    else
+                    {
+                        motion.Bidirectional = (bool)item.Bidirectional;
+                    }
                 }
 
                 var record = new HierarchyRecord()
