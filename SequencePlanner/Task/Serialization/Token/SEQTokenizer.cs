@@ -63,7 +63,10 @@ namespace SequencePlanner.Task.Serialization.Token
             foreach (var token in Tokens)
             {
                 if (!token.Phrased)
-                    throw new SeqException(token.Header + " is not used / valid option in line " + token.Lines[0].LineNumber + "!");
+                    if(token.Lines.Count>0)
+                        throw new SeqException(token.Header + " is not used / valid option in line " + token.Lines[0].LineNumber + "!");
+                    else
+                        throw new SeqException(token.Header + " is not used / valid option!");
             }
         }
 
