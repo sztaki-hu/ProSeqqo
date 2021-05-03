@@ -230,7 +230,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     };
                 }
 
-                Alternative alter = task.Hierarchy.GetAlternativeByID(item.AlternativeID);
+                Alternative alter = task.Hierarchy.GetAlternativeInProcess(item.AlternativeID, proc);
+                //Alternative alter = task.Hierarchy.GetAlternativeByID(item.AlternativeID);
                 if (alter == null)
                 {
                     alter = new Alternative()
@@ -239,7 +240,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     };
                 }
 
-                Model.Hierarchy.Task t = task.Hierarchy.GetTaskByID(item.TaskID);
+
+                Model.Hierarchy.Task t = task.Hierarchy.GetTaskInProcessAlternative(item.TaskID,proc,alter);
+                //Model.Hierarchy.Task t = task.Hierarchy.GetTaskByID(item.TaskID);
                 if (t == null)
                 {
                     t = new Model.Hierarchy.Task

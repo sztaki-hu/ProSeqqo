@@ -29,22 +29,22 @@ namespace SequencePlanner.Task.Processors
                 var task = new ORToolsGeneralPreSolverTask()
                 {
                     NumberOfNodes = Task.Hierarchy.Motions.Count,
-                    DisjointConstraints = Task.PCGTSPRepresentation.DisjointSets,
-                    StrictOrderPrecedenceHierarchy = Task.PCGTSPRepresentation.CreatePrecedenceHierarchiesForInitialSolution(),
-                    OrderPrecedenceConstraints = Task.PCGTSPRepresentation.MotionPrecedences,
+                    DisjointConstraints = Task.GTSPRepresentation.DisjointSets,
+                    StrictOrderPrecedenceHierarchy = Task.GTSPRepresentation.CreatePrecedenceHierarchiesForInitialSolution(),
+                    OrderPrecedenceConstraints = Task.GTSPRepresentation.MotionPrecedences,
                     Hierarchy = Task.Hierarchy
                 };
-                if (Task.PCGTSPRepresentation.StartDepot is not null)
-                    task.StartDepot = Task.PCGTSPRepresentation.StartDepot.SequenceMatrixID;
+                if (Task.GTSPRepresentation.StartDepot is not null)
+                    task.StartDepot = Task.GTSPRepresentation.StartDepot.SequenceMatrixID;
                 else
                     task.StartDepot = -1;
-                if (Task.PCGTSPRepresentation.FinishDepot is not null)
-                    task.FinishDepot = Task.PCGTSPRepresentation.FinishDepot.SequenceMatrixID;
+                if (Task.GTSPRepresentation.FinishDepot is not null)
+                    task.FinishDepot = Task.GTSPRepresentation.FinishDepot.SequenceMatrixID;
                 else
                     task.FinishDepot = -1;
                 var solver = new ORToolsGeneralPreSolverWrapper(task);
                 var result = solver.Solve();
-                Task.PCGTSPRepresentation.InitialSolution = PhraseSolution(result);
+                Task.GTSPRepresentation.InitialSolution = PhraseSolution(result);
                 Time = Timer.Elapsed;
             }
         }

@@ -116,6 +116,17 @@ namespace SequencePlanner.Model.Hierarchy
         {
             return HierarchyRecords.Where(r => r.Process.GlobalID == process.GlobalID && r.Alternative.GlobalID == alternative.GlobalID).Count() > 0;
         }
+        public bool IsAlternativeInProcess(int alternativeID, Process process)
+        {
+            return HierarchyRecords.Where(r => r.Process.GlobalID == process.GlobalID && r.Alternative.ID == alternativeID).Count() > 0;
+        }
+
+        public Alternative GetAlternativeInProcess(int alternativeID, Process proc)
+        {
+            return HierarchyRecords.Where(r => r.Process.GlobalID == proc.GlobalID && r.Alternative.ID == alternativeID)
+                                   .Select(r => r.Alternative)
+                                   .FirstOrDefault();
+        }
 
         public bool IsTaskInProcess(Task task, Process process)
         {
@@ -136,7 +147,9 @@ namespace SequencePlanner.Model.Hierarchy
 
         public Alternative GetAlternativeByID(int id)
         {
-            return HierarchyRecords.Where(r => r.Alternative.ID == id).Select(r => r.Alternative).FirstOrDefault();
+            return HierarchyRecords.Where(r => r.Alternative.ID == id)
+                                   .Select(r => r.Alternative)
+                                   .FirstOrDefault();
         }
 
         public Process GetProcessOf(Alternative alternative)
@@ -180,11 +193,22 @@ namespace SequencePlanner.Model.Hierarchy
             return HierarchyRecords.Where(r => r.Alternative.GlobalID == alternative.GlobalID && r.Task.GlobalID == task.GlobalID).Count() > 0;
         }
 
+        public bool IsTaskInAlternative(int taskID, Alternative alternative)
+        {
+            return HierarchyRecords.Where(r => r.Alternative.GlobalID == alternative.GlobalID && r.Task.ID == taskID).Count() > 0;
+        }
+
         public bool IsMotionInAlternative(Motion motion, Alternative alternative)
         {
             return HierarchyRecords.Where(r => r.Alternative.GlobalID == alternative.GlobalID && r.Motion.GlobalID == motion.GlobalID).Count() > 0;
         }
 
+        public Task GetTaskInProcessAlternative(int taskID, Process proc, Alternative alternative)
+        {
+            return HierarchyRecords.Where(r => r.Process.GlobalID == proc.GlobalID && r.Alternative.GlobalID == alternative.GlobalID && r.Task.ID == taskID)
+                                   .Select(r => r.Task)
+                                   .FirstOrDefault();
+        }
 
         //Tasks
         public List<Task> GetTasks()

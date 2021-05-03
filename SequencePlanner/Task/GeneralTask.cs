@@ -21,7 +21,7 @@ namespace SequencePlanner.Task
         public SolverSettings SolverSettings { get; set; }
         public List<ProcessPrecedence> ProcessPrecedences { get; set; }
         public List<MotionPrecedence> MotionPrecedences { get; set; }
-        public GTSPRepresentation PCGTSPRepresentation { get; set; }
+        public GTSPRepresentation GTSPRepresentation { get; set; }
 
         private DepotMapper DepotMapper { get; set; }
         private ShortcutMapper ShortcutMapper { get; set; }
@@ -41,7 +41,7 @@ namespace SequencePlanner.Task
             SolverSettings = new SolverSettings();
             ProcessPrecedences = new List<ProcessPrecedence>();
             MotionPrecedences = new List<MotionPrecedence>();
-            PCGTSPRepresentation = new GTSPRepresentation(this);
+            GTSPRepresentation = new GTSPRepresentation(this);
             DepotMapper = new DepotMapper(this);
             ShortcutMapper = new ShortcutMapper(this);
             InitialSolver = new InitialSolver(this);
@@ -56,7 +56,7 @@ namespace SequencePlanner.Task
             DepotMapper.Change();
             ShortcutMapper.Change();
             Hierarchy.Build();
-            PCGTSPRepresentation.Build();
+            GTSPRepresentation.Build();
             InitialSolver.CreateInitialSolution();
             var result = RunTask();
             DepotMapper.ChangeBack();
@@ -80,7 +80,7 @@ namespace SequencePlanner.Task
             var orToolsParam = new ORToolsTask()
             {
                 TimeLimit = SolverSettings.TimeLimit,
-                GTSPRepresentation = PCGTSPRepresentation,
+                GTSPRepresentation = GTSPRepresentation,
                 LocalSearchStrategy = SolverSettings.Metaheuristics
             };
             var orTools = new ORToolsSequencerWrapper(orToolsParam);
