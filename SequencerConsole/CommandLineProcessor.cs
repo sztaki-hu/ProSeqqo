@@ -175,7 +175,7 @@ namespace SequencerConsole
                     }
                 }
                 else
-                    throw new SeqException("Unknown task type!", "It should be TaskType: General");
+                    throw new SeqException("Unknown task type!", "It should be Task: General");
             }
             catch (Exception e)
             {
