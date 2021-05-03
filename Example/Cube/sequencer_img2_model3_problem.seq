@@ -1,14 +1,14 @@
-TaskType: General
-Dimension: 2
-CyclicSequence: False
+Task: General
+Cyclic: False
 StartDepot: 0
 DistanceFunction: Euclidian
-ResourceSource: Off
+ResourceChangeover: Off
 TimeLimit: 0
 UseMIPprecedenceSolver: True
 LocalSearchStrategy: Automatic
 UseShortcutInAlternatives: False
-PositionList: 
+
+ConfigList: 
 0;[0;0];Init
 1500;[0,0716;0,0545];greencylin_15_Start_g0
 1501;[0,0716;0,0545];greencylin_15_Start_g1
@@ -34,6 +34,7 @@ PositionList:
 201;[0,19;0,02];greencylin_2_End_g1
 100;[0,105;0,009];greenprism_1_End_g0
 1600;[0,195;0,031];blueprism_16_End_g0
+
 ProcessHierarchy: 
 0;0;0;0;[0]
 6;600;601;800;[800]
@@ -60,8 +61,10 @@ ProcessHierarchy:
 1;100;102;100;[100]
 16;1600;1601;1300;[1300]
 16;1600;1602;1600;[1600]
+
 ProcessPrecedence: 
-PositionPrecedence: 
+
+MotionPrecedence: 
 600;500
 600;501
 601;500
