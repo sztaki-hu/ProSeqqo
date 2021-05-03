@@ -1,0 +1,138 @@
+Task: General
+Cyclic: True
+StartDepot: 32
+TimeLimit: 0
+DistanceFunction: Euclidian
+ResourceChangeover: Off
+UseMIPprecedenceSolver: True
+
+ConfigList:
+#+----------+---------------------+------------------+----------------------+
+#| ConfigID |       Config        |  Name[optional]  | ResourceID[optional] |
+#+----------+---------------------+------------------+----------------------+
+#|  <int>   | <double[Dimension]> |     <string>     |         <int>        |
+#+----------+---------------------+------------------+----------------------+
+32;[-20;-20;-20];Init
+#Put down X
+0;[0;0;0];0A_0_Putdown_x
+1;[0;10;0];0A_1_Putdown_x
+2;[0;20;0];0A_2_Putdown_x
+3;[10;20;0];0B_0_Putdown_x
+4;[20;20;0];0B_1_Putdown_x
+5;[20;10;0];0C_0_Putdown_x
+6;[20;0;0];0C_1_Putdown_x
+7;[10;0;0];0D_0_Putdown_x
+#Put down Y
+8;[0;0;0];0A_0_Putdown_y
+9;[0;10;0];0A_1_Putdown_y
+10;[0;20;0];0A_2_Putdown_y
+11;[10;20;0];0B_0_Putdown_y
+12;[20;20;0];0B_1_Putdown_y
+13;[20;10;0];0C_0_Putdown_y
+14;[20;0;0];0C_1_Putdown_y
+15;[10;0;0];0D_0_Putdown_y
+#Pick up X
+16;[-20;-20;-20];0A_0_Pickup_X
+17;[-20;-20;-20];0A_1_Pickup_X
+18;[-20;-20;-20];0A_2_Pickup_X
+19;[-20;-20;-20];0B_0_Pickup_X
+20;[-20;-20;-20];0B_1_Pickup_X
+21;[-20;-20;-20];0C_0_Pickup_X
+22;[-20;-20;-20];0C_1_Pickup_X
+23;[-20;-20;-20];0D_0_Pickup_X
+#Pick up Y
+24;[-20;-20;-20];0A_0_Pickup_Y
+25;[-20;-20;-20];0A_1_Pickup_Y
+26;[-20;-20;-20];0A_2_Pickup_Y
+27;[-20;-20;-20];0B_0_Pickup_Y
+28;[-20;-20;-20];0B_1_Pickup_Y
+29;[-20;-20;-20];0C_0_Pickup_Y
+30;[-20;-20;-20];0C_1_Pickup_Y
+31;[-20;-20;-20];0D_0_Pickup_Y
+
+ProcessHierarchy:
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+# ProcessID | AlternativeID  |  TaskID |       MotionID      |    ConfigID      |Bidirectional [optional]|    MotionName[optional]   |
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+#   <int>   |      <int>     |  <int>  |         <int>       |      int[]       |       True/False       |         True/False        |
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+32 ;	0 ;	0 ;	32 ;	[32]	#Init
+#Cube: 0A_0
+0 ;	0 ;	0 ;	16 ;	[16]	#0A_0_Pickup_X
+0 ;	0 ;	1 ;	0 ;	[0]	#0A_0_Putdown_X
+0 ;	1 ;	0 ;	24 ;	[24]	#0A_0_Pickup_Y
+0 ;	1 ;	1 ;	8 ;	[8]	#0A_0_Putdown_Y
+#Cube: 0A_1
+1 ;	0 ;	0 ;	17 ;	[17]	#0A_1_Pickup_X
+1 ;	0 ;	1 ;	1 ;	[1]	#0A_1_Putdown_X
+1 ;	1 ;	0 ;	25 ;	[25]	#0A_1_Pickup_Y
+1 ;	1 ;	1 ;	9 ;	[9]	#0A_1_Putdown_Y
+#Cube: 0A_2
+2 ;	0 ;	0 ;	18 ;	[18]	#0A_2_Pickup_X
+2 ;	0 ;	1 ;	2 ;	[2]	#0A_2_Putdown_X
+2 ;	1 ;	0 ;	26 ;	[26]	#0A_2_Pickup_Y
+2 ;	1 ;	1 ;	10 ;	[10]	#0A_2_Putdown_Y
+#Cube: 0B_0
+3 ;	0 ;	0 ;	19 ;	[19]	#0B_0_Pickup_X
+3 ;	0 ;	1 ;	3 ;	[3]	#0B_0_Putdown_X
+3 ;	1 ;	0 ;	27 ;	[27]	#0B_0_Pickup_Y
+3 ;	1 ;	1 ;	11 ;	[11]	#0B_0_Putdown_Y
+#Cube: 0B_1
+4 ;	0 ;	0 ;	20 ;	[20]	#0B_1_Pickup_X
+4 ;	0 ;	1 ;	4 ;	[4]	#0B_1_Putdown_X
+4 ;	1 ;	0 ;	28 ;	[28]	#0B_1_Pickup_Y
+4 ;	1 ;	1 ;	12 ;	[12]	#0B_1_Putdown_Y
+#Cube: 0C_0
+5 ;	0 ;	0 ;	21 ;	[21]	#0C_0_Pickup_X
+5 ;	0 ;	1 ;	5 ;	[5]	#0C_0_Putdown_X
+5 ;	1 ;	0 ;	29 ;	[29]	#0C_0_Pickup_Y
+5 ;	1 ;	1 ;	13 ;	[13]	#0C_0_Putdown_Y
+#Cube: 0C_1
+6 ;	0 ;	0 ;	22 ;	[22]	#0C_1_Pickup_X
+6 ;	0 ;	1 ;	6 ;	[6]	#0C_1_Putdown_X
+6 ;	1 ;	0 ;	30 ;	[30]	#0C_1_Pickup_Y
+6 ;	1 ;	1 ;	14 ;	[14]	#0C_1_Putdown_Y
+#Cube: 0D_0
+7 ;	0 ;	0 ;	23 ;	[23]	#0D_0_Pickup_X
+7 ;	0 ;	1 ;	7 ;	[7]	#0D_0_Putdown_X
+7 ;	1 ;	0 ;	31 ;	[31]	#0D_0_Pickup_Y
+7 ;	1 ;	1 ;	15 ;	[15]	#0D_0_Putdown_Y
+
+MotionPrecedence:
+#+-----------------------+----------------------+
+#| Predecessor(MotionID) | Successor (MotionID) |
+#+-----------------------+----------------------+
+#|         <int>         |       <int>          |
+#+-----------------------+----------------------+
+8 ;	7	#0A_0 Yaxis ---Ahed---> 0D_0 Xaxis
+8 ;	15	#0A_0 Yaxis ---Ahed---> 0D_0 Yaxis
+0 ;	1	#0A_0 Xaxis ---Right---> 0A_1 Xaxis
+0 ;	9	#0A_0 Xaxis ---Right---> 0A_1 Yaxis
+1 ;	0	#0A_1 Xaxis ---Left---> 0A_0 Xaxis
+1 ;	8	#0A_1 Xaxis ---Left---> 0A_0 Yaxis
+1 ;	2	#0A_1 Xaxis ---Right---> 0A_2 Xaxis
+1 ;	10	#0A_1 Xaxis ---Right---> 0A_2 Yaxis
+10 ;	3	#0A_2 Yaxis ---Ahed---> 0B_0 Xaxis
+10 ;	11	#0A_2 Yaxis ---Ahed---> 0B_0 Yaxis
+2 ;	1	#0A_2 Xaxis ---Left---> 0A_1 Xaxis
+2 ;	9	#0A_2 Xaxis ---Left---> 0A_1 Yaxis
+11 ;	4	#0B_0 Yaxis ---Ahed---> 0B_1 Xaxis
+11 ;	12	#0B_0 Yaxis ---Ahed---> 0B_1 Yaxis
+11 ;	2	#0B_0 Yaxis ---Back---> 0A_2 Xaxis
+11 ;	10	#0B_0 Yaxis ---Back---> 0A_2 Yaxis
+12 ;	3	#0B_1 Yaxis ---Back---> 0B_0 Xaxis
+12 ;	11	#0B_1 Yaxis ---Back---> 0B_0 Yaxis
+4 ;	5	#0B_1 Xaxis ---Left---> 0C_0 Xaxis
+4 ;	13	#0B_1 Xaxis ---Left---> 0C_0 Yaxis
+5 ;	6	#0C_0 Xaxis ---Left---> 0C_1 Xaxis
+5 ;	14	#0C_0 Xaxis ---Left---> 0C_1 Yaxis
+5 ;	4	#0C_0 Xaxis ---Right---> 0B_1 Xaxis
+5 ;	12	#0C_0 Xaxis ---Right---> 0B_1 Yaxis
+14 ;	7	#0C_1 Yaxis ---Back---> 0D_0 Xaxis
+14 ;	15	#0C_1 Yaxis ---Back---> 0D_0 Yaxis
+6 ;	5	#0C_1 Xaxis ---Right---> 0C_0 Xaxis
+6 ;	13	#0C_1 Xaxis ---Right---> 0C_0 Yaxis
+15 ;	6	#0D_0 Yaxis ---Ahed---> 0C_1 Xaxis
+15 ;	14	#0D_0 Yaxis ---Ahed---> 0C_1 Yaxis
+15 ;	0	#0D_0 Yaxis ---Back---> 0A_0 Xaxis
+15 ;	8	#0D_0 Yaxis ---Back---> 0A_0 Yaxis

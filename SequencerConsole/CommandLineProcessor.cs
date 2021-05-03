@@ -287,6 +287,10 @@ namespace SequencerConsole
 
         private static string Input(string[] args)
         {
+            foreach (var item in args)
+            {
+                Console.WriteLine(item);
+            }
             for (int i = 0; i < args.Length; i++)
             {
                 if (args[i].Equals("-input") || args[i].Equals("-i") || args.Length==1)
@@ -307,11 +311,11 @@ namespace SequencerConsole
                         if (filename[1].ToUpper() == "XML")
                             inputType = FormatType.XML;
                         if (inputType == FormatType.Unknown)
-                            throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml:" + args[i + 1]);
+                            throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml");
                     }
                     else
                     {
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml:" + args[i + 1]);
+                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml.");
                     }
                     if(args.Length == 1)
                     {
