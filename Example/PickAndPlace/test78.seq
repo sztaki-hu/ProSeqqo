@@ -1,17 +1,16 @@
-TaskType: General
-Dimension: 6
-WeightMultiplier: Auto
-CyclicSequence: True
+Task: General
+
+Cyclic: True
 StartDepot: 1
 TimeLimit: 1000
 DistanceFunction: TrapezoidTime
-ResourceSource: Off
+ResourceChangeover: Off
 TrapezoidSpeed: [2,269;2,269;2,269;3,316;3,316;3,316]
 TrapezoidAcceleration: [10,472;10,472;10,472;10,472;10,472;10,472]
 LocalSearchStrategy: Automatic
 UseShortcutInAlternatives: False
 UseMIPprecedenceSolver: False
-PositionList: 
+ConfigList: 
 1;[-1,86855;-1,44418;1,69802;-1,99163;-1,51983;-0,293486];Camera
 2;[-1,35602;3,39851;6,0631;-2,29427;-5,30202;-3,73764];Grasp1_1
 3;[1,53789;-0,322699;0,385333;-1,10588;-2,30266;2,28784];Grasp1_2
@@ -632,4 +631,4 @@ ProcessHierarchy:
 4025;3025;2025;308;[308]
 4025;3025;2025;309;[309]
 ProcessPrecedence: 
-PositionPrecedence: 
+MotionPrecedence: 
