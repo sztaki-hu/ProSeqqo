@@ -24,6 +24,8 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public double ComputeResourceCost(Config A, Config B, double distance)
         {
+            if (A.Virtual || B.Virtual)
+                return LinkingFunction.ComputeResourceDistanceCost(0, distance);
             if (A.Resource.ID == -1)
                 throw new SeqException("Position with UserID: " + A.ID + " has no ResourceID: -1");
             if (B.Resource.ID == -1)
@@ -50,6 +52,8 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public double GetResourceCost(Config A, Config B)
         {
+            if (A.Virtual || B.Virtual)
+                return 0;
             if (A.Resource.ID == -1)
                 throw new SeqException("Position with UserID: " + A.ID + " has no ResourceID: -1");
             if (B.Resource.ID == -1)

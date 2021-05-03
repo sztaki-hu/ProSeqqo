@@ -12,11 +12,13 @@ namespace SequencePlanner.Model.Hierarchy
         public Config(int id, List<double> configuration) : base(id, id + "-Config")
         {
             Configuration = configuration;
+            Resource = new Resource() { ID = -1 };
         }
 
         public Config(int id, List<double> configuration, string name) : base(id, name)
         {
             Configuration = configuration;
+            Resource = new Resource() { ID = -1};
         }
 
         public Config(int id, List<double> configuration, string name, Resource resource) : this(id, configuration, name)

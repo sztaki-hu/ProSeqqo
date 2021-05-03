@@ -32,9 +32,12 @@ namespace SequencePlanner.Task.Processors
                     DisjointConstraints = Task.PCGTSPRepresentation.DisjointSets,
                     StrictOrderPrecedenceHierarchy = Task.PCGTSPRepresentation.CreatePrecedenceHierarchiesForInitialSolution(),
                     OrderPrecedenceConstraints = Task.PCGTSPRepresentation.MotionPrecedences,
-                    StartDepot = Task.PCGTSPRepresentation.StartDepot.SequenceMatrixID,
                     Hierarchy = Task.Hierarchy
                 };
+                if (Task.PCGTSPRepresentation.StartDepot is not null)
+                    task.StartDepot = Task.PCGTSPRepresentation.StartDepot.SequenceMatrixID;
+                else
+                    task.StartDepot = -1;
                 if (Task.PCGTSPRepresentation.FinishDepot is not null)
                     task.FinishDepot = Task.PCGTSPRepresentation.FinishDepot.SequenceMatrixID;
                 else

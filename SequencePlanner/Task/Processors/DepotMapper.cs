@@ -24,22 +24,24 @@ namespace SequencePlanner.Task.Processors
         public DepotMapper(GeneralTask task)
         {
             Task = task;
+
         }
 
         public void Change()
         {
-            CreateMotionForDepos();
+            StartDepotConfig = Task.StartDepotConfig;
+            FinishDepotConfig = Task.FinishDepotConfig;
             if (Task.Cyclic)
                 DepotChangeType = DepotChangeType.CyclicStartDepot;
             else
             {
-                if (StartDepot is null && FinishDepot is null)
+                if (StartDepotConfig is null && FinishDepotConfig is null)
                     DepotChangeType = DepotChangeType.NotCyclicNoDepot;
-                if (StartDepot is not null && FinishDepot is null)
+                if (StartDepotConfig is not null && FinishDepotConfig is null)
                     DepotChangeType = DepotChangeType.NotCyclicOnlyStartDepot;
-                if (StartDepot is null && FinishDepot is not null)
+                if (StartDepotConfig is null && FinishDepotConfig is not null)
                     DepotChangeType = DepotChangeType.NotCyclicOnlyFinishDepot;
-                if (StartDepot is not null && FinishDepot is not null)
+                if (StartDepotConfig is not null && FinishDepotConfig is not null)
                     DepotChangeType = DepotChangeType.NotCyclicStartFinishDepot;
             }
 
@@ -51,15 +53,18 @@ namespace SequencePlanner.Task.Processors
                 case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepot(); break;
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepot(); break;
             }
-            Task.StartDepot = ORToolsStartDepot;
-            Task.FinishDepot = ORToolsFinishDepot;
+
+            ORToolsStartDepot = StartDepot;
+            ORToolsFinishDepot = FinishDepot;
+            Task.StartDepot = StartDepot;
+            Task.FinishDepot = FinishDepot;
         }
 
 
 
         public void ChangeBack()
         {
-            RemoveMotionForDepots();
+            //RemoveMotionForDepots();
             switch (DepotChangeType)
             {
                 case DepotChangeType.CyclicStartDepot: CyclicStartDepotReverse(); break;
@@ -72,17 +77,15 @@ namespace SequencePlanner.Task.Processors
 
         private void CreateMotionForDepos()
         {
-            StartDepotConfig = Task.StartDepotConfig;
-            FinishDepotConfig = Task.FinishDepotConfig;
             StartDepot = Task.StartDepot;
             FinishDepot = Task.FinishDepot;
             if (StartDepotConfig != null)
             {
-                StartDepot = CreateMotion(StartDepotConfig, "StartDepot");
+                StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
             }
             if (FinishDepotConfig != null)
             {
-                FinishDepot = CreateMotion(FinishDepotConfig, "FinishDepot");
+                FinishDepot = CreateMotion(FinishDepotConfig, 8888888, "FinishDepot");
             }
         }
 
@@ -112,44 +115,71 @@ namespace SequencePlanner.Task.Processors
 
         private void CyclicStartDepot()
         {
+            if (StartDepotConfig != null)
+            {
+                StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
+            }
             ORToolsStartDepot = StartDepot;
             ORToolsFinishDepot = null;
         }
         private void NotCyclicNoDepot()
         {
-            ORToolsStartDepot = CreateVirtualNode(Task, "VirtualStartAndFinish");
+            if (StartDepotConfig != null)
+            {
+                StartDepot = CreateVirtualMotion(9999999, "VirtualStartDepot");
+            }
+            if (FinishDepotConfig != null)
+            {
+                FinishDepot = CreateVirtualMotion(8888888, "VirtualFinishDepot");
+            }
         }
         private void NotCyclicOnlyStartDepot()
         {
-            ORToolsStartDepot = StartDepot;
-            ORToolsFinishDepot = CreateVirtualNode(Task, "VirtualFinish"); ;
+            if (StartDepotConfig != null)
+            {
+                StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
+            }
+            if (FinishDepotConfig == null)
+            {
+                FinishDepot = CreateVirtualMotion(8888888, "VirtualFinishDepot");
+            }
         }
         private void NotCyclicOnlyFinishDepot()
         {
-            ORToolsStartDepot = CreateVirtualNode(Task, "VirtualStart");
-            ORToolsFinishDepot = StartDepot;
+            if (StartDepotConfig == null)
+            {
+                StartDepot = CreateVirtualMotion(9999999, "VirtualStartDepot");
+            }
+            if (FinishDepotConfig != null)
+            {
+                FinishDepot = CreateMotion(FinishDepotConfig, 8888888, "FinishDepot");
+            }
         }
         private void NotCyclicStartFinishDepot()
         {
-            ORToolsStartDepot = StartDepot;
-            Task.StartDepot = StartDepot;
-            ORToolsFinishDepot = FinishDepot;
-            Task.FinishDepot = FinishDepot;
+            if (StartDepotConfig != null)
+            {
+                StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
+            }
+            if (FinishDepotConfig != null)
+            {
+                FinishDepot = CreateMotion(FinishDepotConfig, 8888888, "FinishDepot");
+            }
         }
 
         //REVERSE
-        private void CyclicStartDepotReverse() { }
+        private void CyclicStartDepotReverse() {
+            
+        }
         private void NotCyclicNoDepotReverse()
         {
-            DeleteVirualNode(Task);
+            
         }
         private void NotCyclicOnlyStartDepotReverse()
         {
-            DeleteVirualNode(Task);
         }
         private void NotCyclicOnlyFinishDepotReverse()
         {
-            DeleteVirualNode(Task);
         }
         private void NotCyclicStartFinishDepotReverse() { }
 
@@ -157,61 +187,21 @@ namespace SequencePlanner.Task.Processors
         private void CyclicStartDepotResolve() { }
         private void NotCyclicNoDepotResolve()
         {
-            //Result.Delete(Result.Solution.Count - 1);
-            // Result.Delete(0);
+
         }
         private void NotCyclicOnlyStartDepotResolve()
         {
-            //Result.Delete(Result.SolutionRaw.Count - 1);
         }
         private void NotCyclicOnlyFinishDepotResolve()
         {
-            //Result.Delete(0);
         }
         private void NotCyclicStartFinishDepotResolve() { }
 
-        private Motion CreateVirtualNode(GeneralTask task, string name)
+        private Motion CreateMotion(Config config, int id, string name)
         {
             Motion motion = new Motion()
             {
-                ID = 999999,
-                Name = name,
-                Virtual = true
-            };
-
-            Model.Hierarchy.Task t = new Model.Hierarchy.Task()
-            {
-                ID = 999999,
-                Name = name,
-                Virtual = true
-            };
-
-            Alternative alternative = new Alternative()
-            {
-                ID = 999999,
-                Name = name,
-                Virtual = true
-            };
-
-            Process process = new Process()
-            {
-                ID = 999999,
-                Name = name,
-                Virtual = true
-            };
-
-            Record = new HierarchyRecord() { Process = process, Alternative = alternative, Task = t, Motion = motion };
-            task.Hierarchy.HierarchyRecords.Add(Record);
-            task.Hierarchy.Motions.Add(motion);
-
-            return motion;
-        }
-
-        private Motion CreateMotion(Config config, string name)
-        {
-            Motion motion = new Motion()
-            {
-                ID = 999999,
+                ID = id,
                 Name = name,
                 Virtual = true,
                 Configs = new List<Config>() { config }
@@ -219,21 +209,64 @@ namespace SequencePlanner.Task.Processors
 
             Model.Hierarchy.Task t = new Model.Hierarchy.Task()
             {
-                ID = 999999,
+                ID = id,
                 Name = name,
                 Virtual = true
             };
 
             Alternative alternative = new Alternative()
             {
-                ID = 999999,
+                ID = id,
                 Name = name,
                 Virtual = true
             };
 
             Process process = new Process()
             {
-                ID = 999999,
+                ID = id,
+                Name = name,
+                Virtual = true
+            };
+
+            Record = new HierarchyRecord() { Process = process, Alternative = alternative, Task = t, Motion = motion };
+            Task.Hierarchy.HierarchyRecords.Add(Record);
+            Task.Hierarchy.Motions.Add(motion);
+            return motion;
+        }
+
+        private Motion CreateVirtualMotion(int id, string name)
+        {
+            Config c = new Config(id, new List<double>())
+            {
+                Virtual = true,
+                Name = name,
+            };
+
+            Motion motion = new Motion()
+            {
+                ID = id,
+                Name = name,
+                Virtual = true,
+                Configs = new List<Config>() { c }
+            };
+
+            Model.Hierarchy.Task t = new Model.Hierarchy.Task()
+            {
+                ID = id,
+                Name = name,
+                Virtual = true
+            };
+
+            Alternative alternative = new Alternative()
+            {
+                ID = id,
+                Name = name,
+                Virtual = true
+            };
+
+            Process process = new Process()
+            {
+                ID = id,
                 Name = name,
                 Virtual = true
             };
