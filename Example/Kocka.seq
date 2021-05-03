@@ -1,4 +1,4 @@
-TaskType: General
+Task: General
 Cyclic: True
 StartDepot: 0
 TimeLimit: 20000

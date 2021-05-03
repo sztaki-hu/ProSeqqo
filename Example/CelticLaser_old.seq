@@ -1,13 +1,12 @@
-TaskType: Line
+Task: General
 DistanceFunction: Euclidian
-Dimension: 2
 TimeLimit: 6000
-CyclicSequence: False
+Cyclic: False
 StartDepot: 5
 #FinishDepot: 3
-ContourPenalty: 0
-BidirectionLineDefault: True
-ResourceSource: Off
+IdlePenalty: 0
+BidirectionMotionDefault: True
+ResourceChangeover: Off
 UseMIPprecedenceSolver: True
 
 PositionList:

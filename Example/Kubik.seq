@@ -4,7 +4,7 @@ StartDepot: 96
 TimeLimit: 0
 DistanceFunction: Euclidian
 ResourceChangeover: Off
-UseMIPprecedenceSolver: True
+UseMIPprecedenceSolver: False
 
 ConfigList:
 #+----------+---------------------+------------------+----------------------+
