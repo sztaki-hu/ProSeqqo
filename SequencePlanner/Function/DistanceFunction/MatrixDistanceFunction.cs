@@ -40,7 +40,7 @@ namespace SequencePlanner.Function.DistanceFunction
                 throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + A.ID + "] " + A.Name);
             if (bid == -1)
                 throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + B.ID + "] " + B.Name);
-
+            System.Console.WriteLine("Cost[" +A+";"+B+"]="+ CostMatrix[aid][bid]) ;
             return CostMatrix[aid][bid];
         }
 

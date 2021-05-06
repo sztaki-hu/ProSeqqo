@@ -33,6 +33,7 @@ namespace SequencerConsole
                         //Debug in VS
                         SeqLogger.LogLevel = LogLevel.Trace;
                         string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example";
+                        string castle = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\CubeCastle";
                         string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\Out";
 
                         //args = new string[] { "-i", example + "\\CelticLaser.seq",                  "-o", outdir + "\\CelticLaser_out.json",                   };
@@ -42,15 +43,17 @@ namespace SequencerConsole
                         //args = new string[] { "-i", example + "\\Etalon.seq",                       "-o", outdir + "\\etalon_o.json",                         };
                         //args = new string[] { "-i", example + "\\EtalonMatrix.seq",                 "-o", outdir + "\\etalonMatrix_o.json",                    };
                         //args = new string[] { "-i", example + "\\Frochliche.seq",                   "-o", outdir + "\\Frochliche.json"                        };
-                        args = new string[] { "-i", example + "\\Hybrid_Matrix.seq",                "-o", outdir + "\\Hybrid_Matrix_out.json",                 };
+                        //args = new string[] { "-i", example + "\\Hybrid_Matrix.seq",                "-o", outdir + "\\Hybrid_Matrix_out.json",                 };
                         //args = new string[] { "-i", example + "\\Hybrid_Original.seq",              "-o", outdir + "\\Hybrid_Original_out.json",               };
                         //args = new string[] { "-i", example + "\\Kocka.seq",                        "-o", outdir + "\\Kocka_out.json",                        };
                         //args = new string[] { "-i", example + "\\Kocka2.seq",                        "-o", outdir + "\\Kocka_out.json",                        };
                         //args = new string[] { "-i", example + "\\Kubik.seq",                        "-o", outdir + "\\Kubik_out.json",                        };
-                        //args = new string[] { "-i", example + "\\MesterEcset.seq",                  "-o", outdir + "\\MesterEcset.json",                       };
+                        args = new string[] { "-i", example + "\\MesterEcset.seq",                  "-o", outdir + "\\MesterEcset.json",                       };
+                        args = new string[] { "-i", example + "\\MesterEcsetOrigin.seq",                  "-o", outdir + "\\MesterEcsetOrigin.json",                       };
                         //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.seq",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          };
                         //args = new string[] { "-i", example + "\\PickAndPlace_Original.seq",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
                         //args = new string[] { "-i", example + "\\Seqtest.seq",                      "-o", outdir + "\\seqtest_o.json",                        };
+                        //args = new string[] { "-i", castle + "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
 
                         Help(args);
                         Version(args);
@@ -142,7 +145,7 @@ namespace SequencerConsole
                 {
                     if (taskType == TaskType.General)
                     {
-                        var result = RunPointLike();
+                        var result = RunTask();
                         result.ToLog(LogLevel.Info);
                         OutGeneral(result);
                     }
@@ -157,7 +160,7 @@ namespace SequencerConsole
             }
         }
 
-        private static GeneralTaskResult RunPointLike()
+        private static GeneralTaskResult RunTask()
         {
             if (inputType != FormatType.Unknown && input != null)
             {

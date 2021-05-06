@@ -3,6 +3,7 @@ using SequencePlanner.Model;
 using SequencePlanner.Model.Hierarchy;
 using SequencePlanner.OR_Tools;
 using SequencePlanner.Task.Processors;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -58,6 +59,21 @@ namespace SequencePlanner.Task
             Hierarchy.Build();
             GTSPRepresentation.Build();
             InitialSolver.CreateInitialSolution();
+            CheckSolution(GTSPRepresentation.DisjointSets, GTSPRepresentation.MotionPrecedences, ProcessPrecedences, GTSPRepresentation.InitialSolution);
+            //TODO: DEBUG
+            foreach (var item in Hierarchy.HierarchyRecords)
+            {
+                System.Console.WriteLine(item+"SEQID: "+item.Motion.SequenceMatrixID);
+            }
+            foreach (var item in GTSPRepresentation.InitialSolution)
+            {
+                Console.WriteLine(item);
+            }
+            foreach (var item in GTSPRepresentation.MotionPrecedences)
+            {
+                Console.WriteLine(item);
+            }
+            Console.ReadKey();
             var result = RunTask();
             DepotMapper.ChangeBack();
             ShortcutMapper.ChangeBack();
@@ -87,6 +103,7 @@ namespace SequencePlanner.Task
             orTools.Build();
             var orToolsResult = orTools.Solve();
             var result = ResolveSolution(orToolsResult);
+            CheckSolution(GTSPRepresentation.DisjointSets, GTSPRepresentation.MotionPrecedences, null, result.SolutionMotion);
             return result;
         }
 
@@ -157,6 +174,115 @@ namespace SequencePlanner.Task
             result.CostsBetweenMotions.Add(motionCost);
             result.MotionCosts.Add(motionCost.FinalCost);
             result.FullMotionCost += motionCost.FinalCost;
+        }
+
+        //VALIDATE RESULT
+        public void CheckSolution(List<MotionDisjointSet> disjointConstraints, List<MotionPrecedence> positionPrecedence, List<ProcessPrecedence> processPrecedences, List<Motion> solution)
+        {
+            ValidateDisjoint(disjointConstraints, solution);
+            ValidatePositionPrec(positionPrecedence, solution);
+            //ValidateProcessPrec(processPrecedences, solution);
+        }
+        private void ValidatePositionPrec(List<MotionPrecedence> positionPrecedence, List<Motion> solution)
+        {
+            if (positionPrecedence is not null && solution.Count > 0 && positionPrecedence.Count > 0)
+            {
+                var findFirst = false;
+                var first = -1;
+                var findSecond = false;
+                var second = -1;
+                foreach (var prec in positionPrecedence)
+                {
+                    findFirst = false;
+                    first = -1;
+                    findSecond = false;
+                    second = -1;
+                    for (int i = 0; i < solution.Count - 1; i++)
+                    {
+                        if (solution[i].ID == prec.Before.ID)
+                        {
+                            findFirst = true;
+                            first = i;
+                        }
+                        if (solution[i].ID == prec.After.ID)
+                        {
+                            findSecond = true;
+                            second = i;
+                        }
+                    }
+
+                    if (findSecond && findFirst && first > second)
+                        throw new SeqException("Result violates position precedence: " + prec);
+
+                    //Check last result item, if not equal with the start depot
+                    if (solution[0].GlobalID != solution[^1].GlobalID)
+                    {
+                        findFirst = false;
+                        first = -1;
+                        findSecond = false;
+                        second = -1;
+                        if (solution[^1].ID == prec.Before.ID)
+                        {
+                            findFirst = true;
+                            first = solution.Count;
+                        }
+                        if (solution[^1].ID == prec.After.ID)
+                        {
+                            findSecond = true;
+                            second = solution.Count;
+                        }
+                    }
+
+                    if (findSecond && findFirst && first > second)
+                        throw new SeqException("Result violates position precedence: " + prec);
+                }
+            }
+        }
+
+        private void ValidateDisjoint(List<MotionDisjointSet> disjointConstraints, List<Motion> solution)
+        {
+            foreach (var disj in disjointConstraints)
+            {
+                foreach (var d in disj.IDs)
+                {
+                    var findOne = false;
+                    for (int i = 0; i < solution.Count - 1; i++)
+                    {
+                        if (d == solution[i].ID)
+                            if (findOne == true)
+                                throw new SeqException("Result contains more than one element of disjoint set.");
+                            else
+                                findOne = true;
+                    }
+                }
+            };
+        }
+
+        private void ValidateProcessPrec(List<ProcessPrecedence> processPrecedence, List<Motion> solution)
+        {
+            foreach (var prec in processPrecedence)
+            {
+                var findFirst = false;
+                var first = -1;
+
+                var findSecond = false;
+                var second = -1;
+                for (int i = 0; i < solution.Count; i++)
+                {
+                    if (solution[i].ID == prec.Before.ID)
+                    {
+                        findFirst = true;
+                        first = i;
+                    }
+                    if (solution[i].ID == prec.After.ID)
+                    {
+                        findSecond = true;
+                        second = i;
+                    }
+                }
+                if (findSecond && findFirst && first > second)
+                    throw new SeqException("Result violates position precedence: " + prec);
+            }
         }
     }
 }

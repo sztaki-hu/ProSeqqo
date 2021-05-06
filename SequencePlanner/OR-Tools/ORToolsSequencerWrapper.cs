@@ -19,6 +19,24 @@ namespace SequencePlanner.OR_Tools
         public ORToolsSequencerWrapper(ORToolsTask parameters)
         {
             param = parameters;
+            Console.WriteLine("ORPARAM:");
+            Console.WriteLine("StartDepot"+param.GTSPRepresentation.StartDepot);
+            Console.WriteLine("FinishDepot"+param.GTSPRepresentation.FinishDepot);
+            foreach (var item in param.GTSPRepresentation.InitialRoutes[0])
+            {
+                Console.WriteLine(item);
+            }
+            foreach (var item in param.GTSPRepresentation.InitialSolution)
+            {
+                Console.WriteLine(item);
+            }
+            for (int i = 0; i < param.GTSPRepresentation.RoundedCostMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < param.GTSPRepresentation.RoundedCostMatrix.GetLength(1); j++)
+                {
+                    Console.WriteLine("["+i+";"+j+"]="+param.GTSPRepresentation.RoundedCostMatrix[i,j]);
+                }
+            }
         }
 
         //Create OR-Tools Representation from SequencerTask
@@ -108,9 +126,9 @@ namespace SequencePlanner.OR_Tools
                 SeqLogger.Debug("Initial route: " + param.GTSPRepresentation.InitialRoutes[0].ToListString(), nameof(ORToolsSequencerWrapper));
                 InitialSolution = routing.ReadAssignmentFromRoutes(param.GTSPRepresentation.InitialRoutes, true);
                 if (InitialSolution == null)
-                    SeqLogger.Error("Initial solution given, but not accepted!", nameof(ORToolsSequencerWrapper));
+                    SeqLogger.Critical("Initial solution given, but not accepted!", nameof(ORToolsSequencerWrapper));
                 else
-                    SeqLogger.Debug("Initial route given with " + param.GTSPRepresentation.InitialRoutes[0].Length + " element.", nameof(ORToolsSequencerWrapper));
+                    SeqLogger.Debug("Initial route accepted with " + param.GTSPRepresentation.InitialRoutes[0].Length + " element.", nameof(ORToolsSequencerWrapper));
             }
             else
                 SeqLogger.Debug("Initial route not given.", nameof(ORToolsSequencerWrapper));

@@ -1,6 +1,6 @@
 Task: General
 Validate: True
-Cyclic: False
+Cyclic: True
 StartDepot: 0
 
 DistanceFunction: Matrix
@@ -71,7 +71,7 @@ ProcessHierarchy:
 #P2-A3
 2;	3;	64;	17;	[17]
 #-------------
-#P3-A1	#P3-A1
+#P3-A1
 3;	4;	70;	18;	[18]
 3;	4;	70;	19;	[19]
 3;	4;	70;	20;	[20]

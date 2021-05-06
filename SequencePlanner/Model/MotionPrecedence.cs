@@ -8,5 +8,10 @@ namespace SequencePlanner.Model
         {
 
         }
+
+        public override string ToString()
+        {
+            return base.ToString()+" SeqID: ["+Before.SequenceMatrixID+"-"+After.SequenceMatrixID+"]";
+        }
     }
 }
