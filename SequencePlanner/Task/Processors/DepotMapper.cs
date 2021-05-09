@@ -15,16 +15,10 @@ namespace SequencePlanner.Task.Processors
         private Config FinishDepotConfig { get; set; }
         private Motion StartDepot { get; set; }
         private Motion FinishDepot { get; set; }
-        public Motion ORToolsStartDepot { get; set; }
-        public Motion ORToolsFinishDepot { get; set; }
-
-        public int ORToolsStartDepotSequenceID { get { if (ORToolsStartDepot is not null) return ORToolsStartDepot.SequenceMatrixID; else return -1; } }
-        public int ORToolsFinishDepotSequenceID { get { if (ORToolsFinishDepot is not null) return ORToolsFinishDepot.SequenceMatrixID; else return -1; } }
 
         public DepotMapper(GeneralTask task)
         {
             Task = task;
-
         }
 
         public void Change()
@@ -53,18 +47,12 @@ namespace SequencePlanner.Task.Processors
                 case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepot(); break;
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepot(); break;
             }
-
-            ORToolsStartDepot = StartDepot;
-            ORToolsFinishDepot = FinishDepot;
             Task.StartDepot = StartDepot;
             Task.FinishDepot = FinishDepot;
         }
 
-
-
         public void ChangeBack()
         {
-            //RemoveMotionForDepots();
             switch (DepotChangeType)
             {
                 case DepotChangeType.CyclicStartDepot: CyclicStartDepotReverse(); break;
@@ -73,28 +61,6 @@ namespace SequencePlanner.Task.Processors
                 case DepotChangeType.NotCyclicOnlyFinishDepot: NotCyclicOnlyFinishDepotReverse(); break;
                 case DepotChangeType.NotCyclicStartFinishDepot: NotCyclicStartFinishDepotReverse(); break;
             }
-        }
-
-        private void CreateMotionForDepos()
-        {
-            StartDepot = Task.StartDepot;
-            FinishDepot = Task.FinishDepot;
-            if (StartDepotConfig != null)
-            {
-                StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
-            }
-            if (FinishDepotConfig != null)
-            {
-                FinishDepot = CreateMotion(FinishDepotConfig, 8888888, "FinishDepot");
-            }
-        }
-
-        private void RemoveMotionForDepots()
-        {
-            if (StartDepot != null)
-                Task.Hierarchy.DeleteMotion(StartDepot);
-            if (FinishDepot != null)
-                Task.Hierarchy.DeleteMotion(FinishDepot);
         }
 
         public GeneralTaskResult ResolveSolution(GeneralTaskResult result)
@@ -113,58 +79,34 @@ namespace SequencePlanner.Task.Processors
             return Result;
         }
 
+        //CHANGE
         private void CyclicStartDepot()
         {
-            if (StartDepotConfig != null)
-            {
-                StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
-            }
-            ORToolsStartDepot = StartDepot;
-            ORToolsFinishDepot = null;
+            StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
+            FinishDepot = null;
         }
+
         private void NotCyclicNoDepot()
         {
-            if (StartDepotConfig != null)
-            {
-                StartDepot = CreateVirtualMotion(9999999, "VirtualStartDepot");
-            }
-            if (FinishDepotConfig != null)
-            {
-                FinishDepot = CreateVirtualMotion(8888888, "VirtualFinishDepot");
-            }
+            StartDepot = CreateVirtualMotion(9999999, "VirtualStartDepot");
+            FinishDepot = CreateVirtualMotion(8888888, "VirtualFinishDepot");
         }
+
         private void NotCyclicOnlyStartDepot()
         {
-            if (StartDepotConfig != null)
-            {
-                StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
-            }
-            if (FinishDepotConfig == null)
-            {
-                FinishDepot = CreateVirtualMotion(8888888, "VirtualFinishDepot");
-            }
+            StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
+            FinishDepot = CreateVirtualMotion(8888888, "VirtualFinishDepot");
         }
         private void NotCyclicOnlyFinishDepot()
         {
-            if (StartDepotConfig == null)
-            {
-                StartDepot = CreateVirtualMotion(9999999, "VirtualStartDepot");
-            }
-            if (FinishDepotConfig != null)
-            {
-                FinishDepot = CreateMotion(FinishDepotConfig, 8888888, "FinishDepot");
-            }
+            StartDepot = CreateVirtualMotion(9999999, "VirtualStartDepot");
+            FinishDepot = CreateMotion(FinishDepotConfig, 8888888, "FinishDepot");
         }
         private void NotCyclicStartFinishDepot()
         {
-            if (StartDepotConfig != null)
-            {
-                StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
-            }
-            if (FinishDepotConfig != null)
-            {
-                FinishDepot = CreateMotion(FinishDepotConfig, 8888888, "FinishDepot");
-            }
+            StartDepot = CreateMotion(StartDepotConfig, 9999999, "StartDepot");
+            FinishDepot = CreateMotion(FinishDepotConfig, 8888888, "FinishDepot");
+            
         }
 
         //REVERSE
@@ -181,21 +123,30 @@ namespace SequencePlanner.Task.Processors
         private void NotCyclicOnlyFinishDepotReverse()
         {
         }
-        private void NotCyclicStartFinishDepotReverse() { }
+        private void NotCyclicStartFinishDepotReverse()
+        {
+        }
 
         //RESOLVE
-        private void CyclicStartDepotResolve() { }
+        private void CyclicStartDepotResolve(){
+        
+        }
         private void NotCyclicNoDepotResolve()
         {
 
         }
         private void NotCyclicOnlyStartDepotResolve()
         {
+
         }
         private void NotCyclicOnlyFinishDepotResolve()
         {
+
         }
-        private void NotCyclicStartFinishDepotResolve() { }
+        private void NotCyclicStartFinishDepotResolve()
+        {
+
+        }
 
         private Motion CreateMotion(Config config, int id, string name)
         {
@@ -275,12 +226,6 @@ namespace SequencePlanner.Task.Processors
             Task.Hierarchy.HierarchyRecords.Add(Record);
             Task.Hierarchy.Motions.Add(motion);
             return motion;
-        }
-
-        private void DeleteVirualNode(GeneralTask task)
-        {
-            task.Hierarchy.HierarchyRecords.Remove(Record);
-            task.Hierarchy.Motions.Remove(Record.Motion);
         }
     }
 }
