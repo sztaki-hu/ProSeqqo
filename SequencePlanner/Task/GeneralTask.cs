@@ -60,20 +60,6 @@ namespace SequencePlanner.Task
             GTSPRepresentation.Build();
             InitialSolver.CreateInitialSolution();
             CheckSolution(GTSPRepresentation.DisjointSets, GTSPRepresentation.MotionPrecedences, ProcessPrecedences, GTSPRepresentation.InitialSolution);
-            //TODO: DEBUG
-            foreach (var item in Hierarchy.HierarchyRecords)
-            {
-                System.Console.WriteLine(item+"SEQID: "+item.Motion.SequenceMatrixID);
-            }
-            foreach (var item in GTSPRepresentation.InitialSolution)
-            {
-                Console.WriteLine(item);
-            }
-            foreach (var item in GTSPRepresentation.MotionPrecedences)
-            {
-                Console.WriteLine(item);
-            }
-            Console.ReadKey();
             var result = RunTask();
             DepotMapper.ChangeBack();
             ShortcutMapper.ChangeBack();

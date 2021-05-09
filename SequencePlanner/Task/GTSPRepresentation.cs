@@ -20,7 +20,6 @@ namespace SequencePlanner.Task
 
         private GeneralTask Task { get; set; }
 
-
         public GTSPRepresentation()
         {
             CostMultiplier = 1000;
