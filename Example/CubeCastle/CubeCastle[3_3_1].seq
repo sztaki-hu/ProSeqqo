@@ -1,4 +1,5 @@
 Task: General
+Validate: True
 Cyclic: True
 StartDepot: 32
 TimeLimit: 0
@@ -56,17 +57,17 @@ ProcessHierarchy:
 #-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
 #   <int>   |      <int>     |  <int>  |         <int>       |      int[]       |       True/False       |         True/False        |
 #-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
-32 ;	0 ;	0 ;	32 ;	[32]	#Init
+32;		0;		0;		32 ;	[32]	#Init
 #Cube: 0A_0
-0 ;	0 ;	0 ;	16 ;	[16]	#0A_0_Pickup_X
-0 ;	0 ;	1 ;	0 ;	[0]	#0A_0_Putdown_X
-0 ;	1 ;	0 ;	24 ;	[24]	#0A_0_Pickup_Y
-0 ;	1 ;	1 ;	8 ;	[8]	#0A_0_Putdown_Y
+0;		0;		0;		16 ;	[16]	#0A_0_Pickup_X
+0;		0;		1;		0 ;		[0]		#0A_0_Putdown_X
+0;		1;		0;		24 ;	[24]	#0A_0_Pickup_Y
+0;		1;		1;		8 ;		[8]		#0A_0_Putdown_Y
 #Cube: 0A_1
-1 ;	0 ;	0 ;	17 ;	[17]	#0A_1_Pickup_X
-1 ;	0 ;	1 ;	1 ;	[1]	#0A_1_Putdown_X
-1 ;	1 ;	0 ;	25 ;	[25]	#0A_1_Pickup_Y
-1 ;	1 ;	1 ;	9 ;	[9]	#0A_1_Putdown_Y
+1 ;		0;		0;		17;		[17]	#0A_1_Pickup_X
+1 ;		0;		1;		1 ;		[1]		#0A_1_Putdown_X
+1 ;		1;		0;		25;		[25]	#0A_1_Pickup_Y
+1 ;		1;		1;		9 ;		[9]		#0A_1_Putdown_Y
 #Cube: 0A_2
 2 ;	0 ;	0 ;	18 ;	[18]	#0A_2_Pickup_X
 2 ;	0 ;	1 ;	2 ;	[2]	#0A_2_Putdown_X
@@ -104,35 +105,35 @@ MotionPrecedence:
 #+-----------------------+----------------------+
 #|         <int>         |       <int>          |
 #+-----------------------+----------------------+
-8 ;	7	#0A_0 Yaxis ---Ahed---> 0D_0 Xaxis
-8 ;	15	#0A_0 Yaxis ---Ahed---> 0D_0 Yaxis
-0 ;	1	#0A_0 Xaxis ---Right---> 0A_1 Xaxis
-0 ;	9	#0A_0 Xaxis ---Right---> 0A_1 Yaxis
-1 ;	0	#0A_1 Xaxis ---Left---> 0A_0 Xaxis
-1 ;	8	#0A_1 Xaxis ---Left---> 0A_0 Yaxis
-1 ;	2	#0A_1 Xaxis ---Right---> 0A_2 Xaxis
-1 ;	10	#0A_1 Xaxis ---Right---> 0A_2 Yaxis
-10 ;	3	#0A_2 Yaxis ---Ahed---> 0B_0 Xaxis
-10 ;	11	#0A_2 Yaxis ---Ahed---> 0B_0 Yaxis
-2 ;	1	#0A_2 Xaxis ---Left---> 0A_1 Xaxis
-2 ;	9	#0A_2 Xaxis ---Left---> 0A_1 Yaxis
-11 ;	4	#0B_0 Yaxis ---Ahed---> 0B_1 Xaxis
-11 ;	12	#0B_0 Yaxis ---Ahed---> 0B_1 Yaxis
-11 ;	2	#0B_0 Yaxis ---Back---> 0A_2 Xaxis
-11 ;	10	#0B_0 Yaxis ---Back---> 0A_2 Yaxis
-12 ;	3	#0B_1 Yaxis ---Back---> 0B_0 Xaxis
-12 ;	11	#0B_1 Yaxis ---Back---> 0B_0 Yaxis
-4 ;	5	#0B_1 Xaxis ---Left---> 0C_0 Xaxis
-4 ;	13	#0B_1 Xaxis ---Left---> 0C_0 Yaxis
-5 ;	6	#0C_0 Xaxis ---Left---> 0C_1 Xaxis
-5 ;	14	#0C_0 Xaxis ---Left---> 0C_1 Yaxis
-5 ;	4	#0C_0 Xaxis ---Right---> 0B_1 Xaxis
-5 ;	12	#0C_0 Xaxis ---Right---> 0B_1 Yaxis
-14 ;	7	#0C_1 Yaxis ---Back---> 0D_0 Xaxis
-14 ;	15	#0C_1 Yaxis ---Back---> 0D_0 Yaxis
-6 ;	5	#0C_1 Xaxis ---Right---> 0C_0 Xaxis
-6 ;	13	#0C_1 Xaxis ---Right---> 0C_0 Yaxis
-15 ;	6	#0D_0 Yaxis ---Ahed---> 0C_1 Xaxis
-15 ;	14	#0D_0 Yaxis ---Ahed---> 0C_1 Yaxis
-15 ;	0	#0D_0 Yaxis ---Back---> 0A_0 Xaxis
-15 ;	8	#0D_0 Yaxis ---Back---> 0A_0 Yaxis
+8 ;	7	#0A_0 Yaxis -Ahed--> 0D_0 Xaxis
+8 ;	15	#0A_0 Yaxis -Ahed--> 0D_0 Yaxis
+0 ;	1	#0A_0 Xaxis -Right-> 0A_1 Xaxis
+0 ;	9	#0A_0 Xaxis -Right-> 0A_1 Yaxis
+1 ;	0	#0A_1 Xaxis -Left--> 0A_0 Xaxis
+1 ;	8	#0A_1 Xaxis -Left--> 0A_0 Yaxis
+1 ;	2	#0A_1 Xaxis -Right-> 0A_2 Xaxis
+1 ;	10	#0A_1 Xaxis -Right-> 0A_2 Yaxis
+10;	3	#0A_2 Yaxis -Ahed--> 0B_0 Xaxis
+10;	11	#0A_2 Yaxis -Ahed--> 0B_0 Yaxis
+2 ;	1	#0A_2 Xaxis -Left--> 0A_1 Xaxis
+2 ;	9	#0A_2 Xaxis -Left--> 0A_1 Yaxis
+11;	4	#0B_0 Yaxis -Ahed--> 0B_1 Xaxis
+11;	12	#0B_0 Yaxis -Ahed--> 0B_1 Yaxis
+11;	2	#0B_0 Yaxis -Back--> 0A_2 Xaxis
+11;	10	#0B_0 Yaxis -Back--> 0A_2 Yaxis
+12;	3	#0B_1 Yaxis -Back--> 0B_0 Xaxis
+12;	11	#0B_1 Yaxis -Back--> 0B_0 Yaxis
+4 ;	5	#0B_1 Xaxis -Left--> 0C_0 Xaxis
+4 ;	13	#0B_1 Xaxis -Left--> 0C_0 Yaxis
+5 ;	6	#0C_0 Xaxis -Left--> 0C_1 Xaxis
+5 ;	14	#0C_0 Xaxis -Left--> 0C_1 Yaxis
+5 ;	4	#0C_0 Xaxis -Right-> 0B_1 Xaxis
+5 ;	12	#0C_0 Xaxis -Right-> 0B_1 Yaxis
+14;	7	#0C_1 Yaxis -Back--> 0D_0 Xaxis
+14;	15	#0C_1 Yaxis -Back--> 0D_0 Yaxis
+6 ;	5	#0C_1 Xaxis -Right-> 0C_0 Xaxis
+6 ;	13	#0C_1 Xaxis -Right-> 0C_0 Yaxis
+15;	6	#0D_0 Yaxis -Ahed--> 0C_1 Xaxis
+15;	14	#0D_0 Yaxis -Ahed--> 0C_1 Yaxis
+15;	0	#0D_0 Yaxis -Back--> 0A_0 Xaxis
+15;	8	#0D_0 Yaxis -Back--> 0A_0 Yaxis

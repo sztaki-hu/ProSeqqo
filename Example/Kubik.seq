@@ -1,6 +1,6 @@
 Task: General
-Cyclic: True
-StartDepot: 96
+Cyclic: False
+#StartDepot: 96
 TimeLimit: 0
 DistanceFunction: Euclidian
 ResourceChangeover: Off
