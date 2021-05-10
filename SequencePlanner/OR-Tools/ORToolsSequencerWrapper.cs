@@ -19,9 +19,6 @@ namespace SequencePlanner.OR_Tools
         public ORToolsSequencerWrapper(ORToolsTask parameters)
         {
             param = parameters;
-            Console.WriteLine("ORPARAM:");
-            Console.WriteLine("StartDepot"+param.GTSPRepresentation.StartDepot);
-            Console.WriteLine("FinishDepot"+param.GTSPRepresentation.FinishDepot);
         }
 
         //Create OR-Tools Representation from SequencerTask

@@ -83,7 +83,7 @@ namespace SequencePlanner.Function.DistanceFunction
             }
             else
             {
-                Console.WriteLine("EdgeWeightFunctions:Trapezoid_Time dimension mismatch!");
+                SeqLogger.Warning("EdgeWeightFunctions:Trapezoid_Time dimension mismatch!");
                 return 0.0;
             }
         }
