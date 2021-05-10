@@ -29,9 +29,9 @@ namespace SequencePlanner.Model.Hierarchy
             {
                 if (Motions[i].Bidirectional)
                 {
-                    var record = GetRecordByMotion(Motions[i]).Copy();
                     var bid = Motions[i].GetReverse();
                     Motions.Add(bid);
+                    var record = GetRecordByMotion(Motions[i]).Copy();
                     record.Motion = bid;
                     HierarchyRecords.Add(record);
                 }

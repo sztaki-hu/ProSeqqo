@@ -106,7 +106,7 @@ namespace SequencePlanner.Task.Serialization.Token
                         return result;
                     }
                 }
-                return -1;
+                return 0;
             }
             catch (Exception e)
             {
