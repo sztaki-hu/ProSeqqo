@@ -22,21 +22,6 @@ namespace SequencePlanner.OR_Tools
             Console.WriteLine("ORPARAM:");
             Console.WriteLine("StartDepot"+param.GTSPRepresentation.StartDepot);
             Console.WriteLine("FinishDepot"+param.GTSPRepresentation.FinishDepot);
-            foreach (var item in param.GTSPRepresentation.InitialRoutes[0])
-            {
-                Console.WriteLine(item);
-            }
-            foreach (var item in param.GTSPRepresentation.InitialSolution)
-            {
-                Console.WriteLine(item);
-            }
-            for (int i = 0; i < param.GTSPRepresentation.RoundedCostMatrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < param.GTSPRepresentation.RoundedCostMatrix.GetLength(1); j++)
-                {
-                    Console.WriteLine("["+i+";"+j+"]="+param.GTSPRepresentation.RoundedCostMatrix[i,j]);
-                }
-            }
         }
 
         //Create OR-Tools Representation from SequencerTask
@@ -52,6 +37,8 @@ namespace SequencePlanner.OR_Tools
             else
             {
                 manager = new RoutingIndexManager(param.GTSPRepresentation.RoundedCostMatrix.GetLength(0), 1, new int[] { param.GTSPRepresentation.StartDepot.SequenceMatrixID }, new int[] { param.GTSPRepresentation.FinishDepot.SequenceMatrixID });
+                if(param.GTSPRepresentation.InitialSolution is not null && param.GTSPRepresentation.InitialSolution.Count>0)
+                    param.GTSPRepresentation.InitialSolution.Remove(param.GTSPRepresentation.FinishDepot);
                 SeqLogger.Debug("GTSP Finish Depot SeqID: " + param.GTSPRepresentation.FinishDepot, nameof(ORToolsSequencerWrapper));
             }
             routing = new RoutingModel(manager);

@@ -49,7 +49,6 @@ namespace SequencePlanner.Task
             Timer = new Stopwatch();
         }
 
-
         public GeneralTaskResult Run()
         {
             Timer.Restart();
@@ -58,6 +57,7 @@ namespace SequencePlanner.Task
             ShortcutMapper.Change();
             Hierarchy.Build();
             GTSPRepresentation.Build();
+            GTSPRepresentation.ORToolsFixFinishDepot();
             InitialSolver.CreateInitialSolution();
             CheckSolution(GTSPRepresentation.DisjointSets, GTSPRepresentation.MotionPrecedences, ProcessPrecedences, GTSPRepresentation.InitialSolution);
             var result = RunTask();

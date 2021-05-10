@@ -65,6 +65,30 @@ namespace SequencePlanner.Task
             FinishDepot = Task.FinishDepot;
         }
 
+        public void ORToolsFixFinishDepot()
+        {
+            if(Task.FinishDepot is not null)
+            {
+                var finishSeqID = Task.FinishDepot.SequenceMatrixID;
+                var maxSeqID = 0;
+                Motion maxSeqMotion = null;
+                foreach (var item in Task.Hierarchy.GetMotions())
+                {
+                    if (item.SequenceMatrixID > maxSeqID)
+                    {
+                        maxSeqID = item.SequenceMatrixID;
+                        maxSeqMotion = item;
+                    }
+                }
+                if(maxSeqMotion!=null && Task.FinishDepot.GlobalID != maxSeqMotion.GlobalID)
+                {
+                    maxSeqMotion.SequenceMatrixID = finishSeqID;
+                    Task.FinishDepot.SequenceMatrixID = maxSeqID;
+                }
+                SwapNodes(finishSeqID, maxSeqID);
+            }
+        }
+
         private void CreatePrecedenceConstraints(bool fullProcessPrecedence = false)
         {
             if (ProcessPrecedence.IsCyclic(Task.ProcessPrecedences))
@@ -74,6 +98,27 @@ namespace SequencePlanner.Task
             {
                 MotionPrecedences.AddRange(Task.MotionPrecedences);
             }
+
+            List<MotionPrecedence> bidirPrec = new List<MotionPrecedence>();
+            for (int i = 0; i < MotionPrecedences.Count; i++)
+            {
+                if(MotionPrecedences[i].Before.Bidirectional)
+                {
+                    bidirPrec.Add(new MotionPrecedence(Task.Hierarchy.GetMotionByID(-MotionPrecedences[i].Before.ID), MotionPrecedences[i].After));
+                }
+
+                if (MotionPrecedences[i].After.Bidirectional)
+                {
+                    bidirPrec.Add(new MotionPrecedence(MotionPrecedences[i].Before, Task.Hierarchy.GetMotionByID(-MotionPrecedences[i].After.ID)));
+                }
+
+                if (MotionPrecedences[i].Before.Bidirectional && MotionPrecedences[i].After.Bidirectional)
+                {
+                    bidirPrec.Add(new MotionPrecedence(Task.Hierarchy.GetMotionByID(-MotionPrecedences[i].Before.ID), Task.Hierarchy.GetMotionByID(-MotionPrecedences[i].After.ID)));
+                }
+            }
+
+            MotionPrecedences.AddRange(bidirPrec);
 
             if (Task.ProcessPrecedences != null)
             {
@@ -252,6 +297,35 @@ namespace SequencePlanner.Task
                 rout[0][i] = InitialSolution[i].SequenceMatrixID;
             }
             return rout;
+        }
+
+        private void SwapNodes(int from, int to)
+        {
+            int n = CostMatrix.GetLength(0);
+            double[] tmp = new double[n];
+            int[] tmpRound = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                tmp[i] = CostMatrix[i, to];
+                tmpRound[i] = RoundedCostMatrix[i, to];
+
+                CostMatrix[i,to] = CostMatrix[i,from];
+                RoundedCostMatrix[i,to] = RoundedCostMatrix[i,from];
+
+                CostMatrix[i, from] = tmp[i];
+                RoundedCostMatrix[i, from] = tmpRound[i];
+            }
+            for (int i = 0; i < n; i++)
+            {
+                tmp[i] = CostMatrix[to, i];
+                tmpRound[i] = RoundedCostMatrix[to,i];
+
+                CostMatrix[to, i] = CostMatrix[from,i];
+                RoundedCostMatrix[to,i] = RoundedCostMatrix[from,i];
+
+                CostMatrix[from,i] = tmp[i];
+                RoundedCostMatrix[from,i] = tmpRound[i];
+            }
         }
     }
 }
