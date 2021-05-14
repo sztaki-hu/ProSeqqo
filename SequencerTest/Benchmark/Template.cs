@@ -1,4 +1,5 @@
-﻿using SequencePlanner.GTSPTask.Serialization.Task;
+﻿using SequencePlanner.GTSPTask.Serialization.Result;
+using SequencePlanner.GTSPTask.Serialization.Task;
 using SequencePlanner.Helper;
 using SequencePlanner.Task;
 using System;
@@ -98,13 +99,13 @@ namespace SequencerTest.Benchmark
                             FormatType.XML => serPL.ImportXML(path),
                             _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
                         };
-                        //pointTaskResult = pointLikeTask.RunModel();
-                        //GeneralResultSerializer serRes = new GeneralResultSerializer();
-                        //serRes.ExportJSON(pointTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
-                        //SeqLogger.LogLevel = LogLevel.Info;
-                        //SeqLogger.Info(pointTaskResult.StatusMessage + " Solver Time:" + pointTaskResult.SolverTime + " Cost:" + pointTaskResult.CostSum);
+                        pointTaskResult = pointLikeTask.Run();
+                        GeneralResultSerializer serRes = new GeneralResultSerializer();
+                        serRes.ExportJSON(pointTaskResult, Path.Combine(OutPath, Path.GetFileName(path).Split(".")[0] + ".json"));
+                        SeqLogger.LogLevel = LogLevel.Info;
+                        SeqLogger.Info(pointTaskResult.StatusMessage + " Solver Time:" + pointTaskResult.SolverTime + " Cost:" + pointTaskResult.MotionCosts);
                         //pointTaskResult.Log.Clear();
-                        //PointResults.Add(pointTaskResult);
+                        PointResults.Add(pointTaskResult);
                     }
                     catch (Exception e)
                     {
@@ -120,11 +121,16 @@ namespace SequencerTest.Benchmark
             }
         }
 
-        public static string ToCSVHeader()
+        public string ToCSVHeader()
         {
             var s = ";";
-            return s;
-            //return "TemplateName" + s + nameof(GeneretedTasks) + s + nameof(TaskType) + s + TaskResult.ToCSVHeader() + s+ nameof(ParameterCombinatrions);
+            var tmp="";
+            if(ParameterCombinatrions is not null && ParameterCombinatrions.Count>0)
+            foreach (var item in ParameterCombinatrions[0])
+            {
+                tmp += item.Key+s;
+            }
+            return "TemplateName" + s + nameof(GeneretedTasks) + s + nameof(TaskType) + s + GeneralTaskResult.CSVHeader() + s + tmp;
         }
 
         public string ToCSV()
@@ -137,15 +143,15 @@ namespace SequencerTest.Benchmark
                 tmp += Path.GetFileName(GeneretedTasks[i]) + s;
                 tmp += TaskType.ToString() + s;
 
-                //if (TaskType == TaskType.General && PointResults is not null && PointResults.Count > i)
-                //tmp += PointResults[i].ToCSV();
+                if (TaskType == TaskType.General && PointResults is not null && PointResults.Count > i)
+                    tmp += PointResults[i].ToCSV();
 
                 if (ParameterCombinatrions.Count > i)
                 {
                     tmp += s;
                     foreach (var item in ParameterCombinatrions[i])
                     {
-                        tmp += item.Key + "=" + item.Value + ",";
+                        tmp += item.Value + s;
                     }
                 }
                 if (i != GeneretedTasks.Count - 1)

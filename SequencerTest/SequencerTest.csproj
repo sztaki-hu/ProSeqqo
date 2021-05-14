@@ -344,6 +344,9 @@
     <None Update="Resources\Benchmark\Kubik\Templates\Offline\Kubik[5_5_5].seq">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Benchmark\MesterEcset\Templates\MesterEcset.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Benchmark\PickAndPlace\Out\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

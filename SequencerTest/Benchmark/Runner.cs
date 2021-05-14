@@ -81,7 +81,7 @@ namespace SequencerTest.Benchmark
 
             using (StreamWriter file = File.CreateText("Resources/Benchmark/" + generationDir + ".csv"))
             {
-                file.WriteLine(Template.ToCSVHeader());
+                file.WriteLine(templates[0].ToCSVHeader());
                 for (int i = 0; i < firstNTemplate; i++)
                 {
                     file.WriteLine(templates[i].ToCSV());
