@@ -80,5 +80,33 @@ namespace SequencePlanner.Task
             }
             SeqLogger.Indent--;
         }
+
+        public static string CSVHeader()
+        {
+            var sep = ";";
+            return "StatusCode" + sep
+            + "StatusMessage" + sep
+            + "ErrorMessage" + sep
+            + "FullTime" + sep
+            + "SolverTime" + sep
+            + "PreSolverTime" + sep
+            + "FullMotionCost" + sep
+            + "SolutionMotionIDs" + sep
+            + "SolutionConfigIDs";
+        }
+
+        public string ToCSV()
+        {
+            var sep = ";";
+            return StatusCode + sep
+            + StatusMessage + sep
+            + ErrorMessage + sep
+            + FullTime + sep
+            + SolverTime + sep
+            + PreSolverTime + sep
+            + FullMotionCost + sep
+            + SolutionMotionIDs.ToListString() + sep
+            + SolutionConfigIDs.ToListString();
+        }
     }
 }

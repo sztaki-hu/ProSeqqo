@@ -58,7 +58,7 @@ namespace SequencePlanner.Task
             }
 
             CreateDisjointConstraints();
-            ConnectProcesses();
+            ConnectProcesses2();
             ConnectInAlternatives();
             CreatePrecedenceConstraints();
             StartDepot = Task.StartDepot;
@@ -265,6 +265,23 @@ namespace SequencePlanner.Task
             }
         }
 
+        private void ConnectProcesses2()
+        {
+            for (int i = 0; i < Task.Hierarchy.HierarchyRecords.Count; i++)
+            {
+                for (int j = 0; j < Task.Hierarchy.HierarchyRecords.Count; j++)
+                {
+                    if (i != j)
+                    {
+                        var a = Task.Hierarchy.HierarchyRecords[i];
+                        var b = Task.Hierarchy.HierarchyRecords[j];
+                        if (a.FirstTaskOfAlternative && b.LastTaskOfAlternative)
+                            ConnectRecords(a, b);
+                    }
+                }
+            }
+        }
+
         private void ConnectInAlternatives()
         {
             foreach (var alternative in Task.Hierarchy.GetAlternatives())
@@ -286,6 +303,12 @@ namespace SequencePlanner.Task
                     RoundedCostMatrix[from.SequenceMatrixID, to.SequenceMatrixID] = Convert.ToInt32(CostMatrix[from.SequenceMatrixID, to.SequenceMatrixID] * CostMultiplier);
                 }
             }
+        }
+
+        private void ConnectRecords(HierarchyRecord a, HierarchyRecord b)
+        {
+            CostMatrix[a.Motion.SequenceMatrixID, b.Motion.SequenceMatrixID] = Task.CostManager.ComputeCost(a.Motion, b.Motion).FinalCost;
+            RoundedCostMatrix[a.Motion.SequenceMatrixID, b.Motion.SequenceMatrixID] = Convert.ToInt32(CostMatrix[a.Motion.SequenceMatrixID, b.Motion.SequenceMatrixID] * CostMultiplier);
         }
 
         private long[][] ToInitialRoute()

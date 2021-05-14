@@ -198,7 +198,10 @@ namespace SequencePlanner.Task
                     }
 
                     if (findSecond && findFirst && first > second)
+                    {
+                        SeqLogger.Critical(solution.ToIDListString());
                         throw new SeqException("Result violates position precedence: " + prec);
+                    }
 
                     //Check last result item, if not equal with the start depot
                     if (solution[0].GlobalID != solution[^1].GlobalID)
