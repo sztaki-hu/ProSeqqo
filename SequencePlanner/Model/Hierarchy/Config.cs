@@ -8,6 +8,11 @@ namespace SequencePlanner.Model.Hierarchy
         public List<double> Configuration { get; set; }
         public Resource Resource { get; set; }
 
+        public Config()
+        {
+            Configuration = new List<double>();
+            Resource = new Resource() { ID = -1 };
+        }
 
         public Config(int id, List<double> configuration) : base(id, id + "-Config")
         {

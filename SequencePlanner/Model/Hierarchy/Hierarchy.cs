@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SequencePlanner.Helper;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SequencePlanner.Model.Hierarchy
@@ -21,6 +23,65 @@ namespace SequencePlanner.Model.Hierarchy
         public void Build()
         {
             GenerateBidirectionals();
+            HierarchyRecords.Sort(new HierarchySorter());
+            SetFirstLast();
+            foreach (var item in HierarchyRecords)
+            {
+                var s = item.ToString();
+                if (item.FirstTaskOfAlternative)
+                    s += "First!";
+                if (item.LastTaskOfAlternative)
+                    s += "Last!";
+            }
+        }
+
+        private void SetFirstLast()
+        {
+            int aktProcess = -1;
+            int aktAlternative = -1;
+            int minTaskIDInAlternative = int.MaxValue;
+            int maxTaskIDInAlternative = -1;
+            HierarchyRecord r = null;
+            for (int i = 0; i < HierarchyRecords.Count; i++)
+            {
+                r = HierarchyRecords[i];
+                if (aktAlternative != r.Alternative.ID && aktAlternative != -1)
+                {
+                    GoBackAndSetMinMax(i-1, aktProcess, aktAlternative, minTaskIDInAlternative, maxTaskIDInAlternative);
+                    aktAlternative = -1;
+                    maxTaskIDInAlternative = -1;
+                    minTaskIDInAlternative = int.MaxValue;
+                }
+
+                if (aktProcess != r.Process.ID)
+                {
+                    aktProcess = -1;
+                }
+
+                if (aktProcess == -1)
+                    aktProcess = r.Process.ID;
+                if (aktAlternative == -1)
+                    aktAlternative = r.Alternative.ID;
+                if (minTaskIDInAlternative > r.Task.ID)
+                    minTaskIDInAlternative = r.Task.ID;
+                if (maxTaskIDInAlternative < r.Task.ID)
+                    maxTaskIDInAlternative = r.Task.ID;
+            }
+            GoBackAndSetMinMax(HierarchyRecords.Count - 1, aktProcess, aktAlternative, minTaskIDInAlternative, maxTaskIDInAlternative);
+        }
+
+        private void GoBackAndSetMinMax(int index, int aktProcess, int aktAlternative, int minTaskIDInAlternative, int maxTaskIDInAlternative)
+        {
+            for (int i = index; i >= 0; i--)
+            {
+                var r = HierarchyRecords[i];
+                if (r.Process.ID != aktProcess || r.Alternative.ID != aktAlternative)
+                    return;
+                if (r.Task.ID == minTaskIDInAlternative)
+                    r.FirstTaskOfAlternative = true;
+                if (r.Task.ID == maxTaskIDInAlternative)
+                    r.LastTaskOfAlternative = true;
+            }
         }
 
         private void GenerateBidirectionals()

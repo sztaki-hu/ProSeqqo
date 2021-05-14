@@ -73,6 +73,8 @@ namespace SequencePlanner.Model.Hierarchy
             string temp = ID.ToString();
             if (Name is not null && !Name.Equals(""))
                 temp += "-" + Name;
+            //if (FirstConfig is not null && !FirstConfig.Name.Equals(""))
+            //    temp += "-" + FirstConfig.Name;
             return temp;
         }
     }

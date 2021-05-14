@@ -8,6 +8,8 @@ namespace SequencePlanner.Model.Hierarchy
         public Alternative Alternative { get; set; }
         public Task Task { get; set; }
         public Motion Motion { get; set; }
+        public bool FirstTaskOfAlternative { get; set; }
+        public bool LastTaskOfAlternative { get; set; }
 
         public HierarchyRecord Copy()
         {
@@ -16,7 +18,9 @@ namespace SequencePlanner.Model.Hierarchy
                 Process = Process,
                 Alternative = Alternative,
                 Task = Task,
-                Motion = Motion
+                Motion = Motion,
+                FirstTaskOfAlternative = FirstTaskOfAlternative,
+                LastTaskOfAlternative = LastTaskOfAlternative
             };
         }
 

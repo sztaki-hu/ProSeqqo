@@ -1,4 +1,5 @@
 ﻿using SequencePlanner.Helper;
+using SequencePlanner.Model.Hierarchy;
 using SequencePlanner.Task;
 using System;
 using System.Collections.Generic;
@@ -11,34 +12,37 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         public string FullTime { get; set; }
         public string SolverTime { get; set; }
         public string PreSolverTime { get; set; }
-        public List<long> SolutionRaw { get; set; }
-        public List<double> CostsRaw { get; }
+        public List<int> MotionIDs { get; set; }
+        public List<double> MotionCosts { get; }
         public double CostSum { get; set; }
         public int StatusCode { get; set; }
         public string StatusMessage { get; set; }
         public List<string> Log { get; set; }
-        //public List<GTSPNode> PositionResult { get; set; }
+        public List<Motion> MotionResult { get; set; }
+        public List<Config> ConfigResult { get; set; }
 
         public GeneralResultSerializationObject()
         {
-            SolutionRaw = new List<long>();
-            CostsRaw = new List<double>();
+            MotionIDs = new List<int>();
+            MotionCosts = new List<double>();
             Log = new List<string>();
-            //PositionResult = new List<GTSPNode>();
+            MotionResult = new List<Motion>();
+            ConfigResult = new List<Config>();
         }
 
         public GeneralResultSerializationObject(GeneralTaskResult result)
         {
-            //FullTime = result.FullTime.ToString();
-            //SolverTime = result.SolverTime.ToString();
-            //PreSolverTime = result.PreSolverTime.ToString();
-            //SolutionRaw = result.SolutionRaw;
-            //CostsRaw = result.CostsRaw;
-            //CostSum = result.CostSum;
-            //StatusCode = result.StatusCode;
-            //StatusMessage = result.StatusMessage;
+            FullTime = result.FullTime.ToString();
+            SolverTime = result.SolverTime.ToString();
+            PreSolverTime = result.PreSolverTime.ToString();
+            MotionIDs = result.SolutionMotionIDs;
+            MotionCosts = result.MotionCosts;
+            CostSum = result.FullMotionCost;
+            StatusCode = result.StatusCode;
+            StatusMessage = result.StatusMessage;
             //Log = result.Log;
-            //PositionResult = result.PositionResult;
+            MotionResult = result.SolutionMotion;
+            ConfigResult = result.SolutionConfig;
         }
 
         public GeneralResultSerializationObject(List<string> seqString)
@@ -49,23 +53,17 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         public GeneralTaskResult ToGeneralResult()
         {
             var result = new GeneralTaskResult();
-            //result.PositionResult = PositionResult;
-            return result;
-        }
-
-        public GeneralTaskResult ToTaskResult(GeneralTaskResult result)
-        {
-            //if (FullTime is not null)
-            //    result.FullTime = TimeSpan.Parse(FullTime);
-            //if (SolverTime is not null)
-            //    result.SolverTime = TimeSpan.Parse(SolverTime);
-            //if (PreSolverTime is not null)
-            //    result.PreSolverTime = TimeSpan.Parse(PreSolverTime);
-            //result.SolutionRaw = SolutionRaw;
-            //result.CostsRaw = CostsRaw;
-            //result.CostSum = CostSum;
-            //result.StatusCode = StatusCode;
-            //result.StatusMessage = StatusMessage;
+            if (FullTime is not null)
+                result.FullTime = TimeSpan.Parse(FullTime);
+            if (SolverTime is not null)
+                result.SolverTime = TimeSpan.Parse(SolverTime);
+            if (PreSolverTime is not null)
+                result.PreSolverTime = TimeSpan.Parse(PreSolverTime);
+            result.SolutionMotion = MotionResult;
+            result.SolutionConfig = ConfigResult;
+            result.FullMotionCost = CostSum;
+            result.StatusCode = StatusCode;
+            result.StatusMessage = StatusMessage;
             //result.Log = Log;
             return result;
         }
@@ -82,8 +80,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
             seq += nameof(SolverTime) + ": " + SolverTime + newline;
             seq += nameof(PreSolverTime) + ": " + PreSolverTime + newline;
             seq += nameof(CostSum) + ": " + CostSum + newline;
-            seq += nameof(SolutionRaw) + ": " + SolutionRaw.ToListString() + newline;
-            seq += nameof(CostsRaw) + ": " + CostsRaw.ToListString() + newline;
+            seq += nameof(MotionIDs) + ": " + MotionIDs.ToListString() + newline;
+            seq += nameof(MotionCosts) + ": " + MotionCosts.ToListString() + newline;
             //if (StatusCode == 1)
             //{
             //    //seq += nameof(CostsRaw) + ": " + SeqLogger.ToList(CostsRaw) + newline;
