@@ -21,6 +21,8 @@ namespace SequencerConsole
 
         public static void CLI(string[] args)
         {
+            System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.RealTime;
+            System.Diagnostics.Process.GetCurrentProcess().PriorityBoostEnabled = true;
             Console.Title = "RobotSEQ Console";
             try
             {
@@ -37,11 +39,13 @@ namespace SequencerConsole
                         string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\Out";
 
                         //args = new string[] { "-i", example + "\\CelticLaser.seq",                  "-o", outdir + "\\CelticLaser_out.json",                   };
-                        //args = new string[] { "-i", example + "\\CelticLaser_Contour.seq",          "-o", outdir + "\\CelticLaser_Contour_out.json",           };
+                        //args = new string[] { "-i", example + "\\CelticLaser_Contour.seq",            "-o", outdir + "\\CelticLaser_Contour_out.json",           };
                         //args = new string[] { "-i", example + "\\CelticLaser_Fill.seq",             "-o", outdir + "\\CelticLaser_Fill_out.json",              };
+                        args = new string[] { "-i", example + "\\CubeCastle.seq",                   "-o", outdir + "\\CubeCastle_out.json",              };
+                        args = new string[] { "-i", example + "\\CubeCastle[3_3_2].seq",                   "-o", outdir + "\\CubeCastle[3_3_2]_out.json",              };
                         //args = new string[] { "-i", example + "\\CSOPA.seq",                        "-o", outdir + "\\CSOPA_out.json",                        };
-                        //args = new string[] { "-i", example + "\\Etalon.seq",                       "-o", outdir + "\\etalon_o.json",                         };
-                        args = new string[] { "-i", example + "\\EtalonMatrix.seq",                 "-o", outdir + "\\etalonMatrix_o.json",                    };
+                        args = new string[] { "-i", example + "\\Etalon.seq",                       "-o", outdir + "\\etalon_o.json",                         };
+                        //args = new string[] { "-i", example + "\\EtalonMatrix.seq",                 "-o", outdir + "\\etalonMatrix_o.json",                    };
                         //args = new string[] { "-i", example + "\\Frochliche.seq",                   "-o", outdir + "\\Frochliche.json"                        };
                         //args = new string[] { "-i", example + "\\Hybrid_Matrix.seq",                "-o", outdir + "\\Hybrid_Matrix_out.json",                 };
                         //args = new string[] { "-i", example + "\\Hybrid_Original.seq",              "-o", outdir + "\\Hybrid_Original_out.json",               };
@@ -49,11 +53,10 @@ namespace SequencerConsole
                         //args = new string[] { "-i", example + "\\Kocka2.seq",                        "-o", outdir + "\\Kocka_out.json",                        };
                         //args = new string[] { "-i", example + "\\Kubik.seq",                        "-o", outdir + "\\Kubik_out.json",                        };
                         //args = new string[] { "-i", example + "\\MesterEcset.seq",                  "-o", outdir + "\\MesterEcset.json",                       };
-                        //args = new string[] { "-i", example + "\\MesterEcsetOrigin.seq",                  "-o", outdir + "\\MesterEcsetOrigin.json",                       };
                         //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.seq",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          };
                         //args = new string[] { "-i", example + "\\PickAndPlace_Original.seq",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
                         //args = new string[] { "-i", example + "\\Seqtest.seq",                      "-o", outdir + "\\seqtest_o.json",                        };
-                        //args = new string[] { "-i", castle + "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
+                        //args = new string[] { "-i", castle +  "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
 
                         Help(args);
                         Version(args);
@@ -180,6 +183,8 @@ namespace SequencerConsole
         }
         private static void OutGeneral(GeneralTaskResult result)
         {
+            Console.WriteLine(output);
+            Console.WriteLine(outputType);
             if (output != null && outputType != FormatType.Unknown)
             {
                 GeneralResultSerializer ser = new GeneralResultSerializer();
@@ -263,10 +268,6 @@ namespace SequencerConsole
 
         private static string Input(string[] args)
         {
-            foreach (var item in args)
-            {
-                Console.WriteLine(item);
-            }
             for (int i = 0; i < args.Length; i++)
             {
                 if (args[i].Equals("-input") || args[i].Equals("-i") || args.Length==1)
@@ -334,6 +335,17 @@ namespace SequencerConsole
                     }
                     return args[i + 1];
                 }
+            }
+            if (args.Length == 1)
+            {
+                outputType = FormatType.JSON;
+                output = input;
+                output = output.Replace(".json", "_out.json");
+                output = output.Replace(".seq", "_out.json");
+                output = output.Replace(".txt", "_out.json");
+                output = output.Replace(".SEQ", "_out.json");
+                output = output.Replace(".xml", "_out.json");
+                return output;
             }
             //Console.WriteLine("Output file needed!");
             return null;
