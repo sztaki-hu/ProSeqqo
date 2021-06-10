@@ -85,7 +85,6 @@ namespace SequencePlanner.Task.Serialization.Model
                 "Off" => new NoResourceFunction(),
                 "Constant" => new ConstantResourceFunction(ResourceCostConstant, resourceDistanceLinkFunction),
                 "Matrix" => new MatrixResourceFunction(ResourceCostMatrix.ResourceCostMatrix, ResourceCostMatrix.IDHeader, resourceDistanceLinkFunction),
-                "PositionBasedResource" => throw new SeqException("PositionBasedResource not implemented yet!"),
                 _ => throw new SeqException("ResourceFunction unknown!"),
             };
             return resourceFunction;
@@ -106,8 +105,6 @@ namespace SequencePlanner.Task.Serialization.Model
                     ResourceCostMatrix = new ResourceMatrixSerializationObject();
                     ResourceCostMatrix.FillBySEQTokens(tokenizer);
                     break;
-                case "PositionBasedResource":
-                    throw new SeqException("PositionBasedResource not implemented yet!");
                 default:
                     throw new SeqException("ResourceFunction unknown!");
             }

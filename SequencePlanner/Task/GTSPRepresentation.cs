@@ -219,17 +219,17 @@ namespace SequencePlanner.Task
                             {
                                 //Add positions of positions of j. alternative last layer
                                 var tasks = Task.Hierarchy.GetTasksOf(alternatives[j]);
-                                var positions = Task.Hierarchy.GetMotionsOf(tasks[taskNumberOfAlternatives[j] - 1]);
-                                foreach (var position in positions)
-                                    constraint.Elements.Add(position);
+                                var motions = Task.Hierarchy.GetMotionsOf(tasks[taskNumberOfAlternatives[j] - 1]);
+                                foreach (var motion in motions)
+                                    constraint.Elements.Add(motion);
                             }
                             else
                             {
                                 var tasks = Task.Hierarchy.GetTasksOf(alternatives[j]);
-                                var positions = Task.Hierarchy.GetMotionsOf(tasks[i]);
+                                var motions = Task.Hierarchy.GetMotionsOf(tasks[i]);
                                 //Add positions of positions of j. alternative i.layer
-                                foreach (var position in positions)
-                                    constraint.Elements.Add(position);
+                                foreach (var motion in motions)
+                                    constraint.Elements.Add(motion);
                             }
                         }
                         DisjointSets.Add(constraint);

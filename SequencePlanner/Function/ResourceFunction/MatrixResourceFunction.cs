@@ -27,9 +27,9 @@ namespace SequencePlanner.Function.ResourceFunction
             if (A.Virtual || B.Virtual)
                 return LinkingFunction.ComputeResourceDistanceCost(0, distance);
             if (A.Resource.ID == -1)
-                throw new SeqException("Position with UserID: " + A.ID + " has no ResourceID: -1");
+                throw new SeqException("Configuration with ID: " + A.ID + " has no ResourceID: -1");
             if (B.Resource.ID == -1)
-                throw new SeqException("Position with UserID: " + B.ID + " has no ResourceID: -1");
+                throw new SeqException("Configuration with ID: " + B.ID + " has no ResourceID: -1");
             var ida = -1;
             var idb = -1;
             for (int i = 0; i < CostMatrixIDHeader.Count; i++)
@@ -44,9 +44,9 @@ namespace SequencePlanner.Function.ResourceFunction
             return distance;
             
             if (ida == -1)
-                throw new SeqException("Position with ResourceID: " + A.Resource.ID + " not contained by CostMatrixIDHeader");
+                throw new SeqException("Configuration with ResourceID: " + A.Resource.ID + " not contained by CostMatrixIDHeader");
             if (idb == -1)
-                throw new SeqException("Position with ResourceID: " + B.Resource.ID + " not contained by CostMatrixIDHeader");
+                throw new SeqException("Configuration with ResourceID: " + B.Resource.ID + " not contained by CostMatrixIDHeader");
             return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
         }
 
@@ -55,9 +55,9 @@ namespace SequencePlanner.Function.ResourceFunction
             if (A.Virtual || B.Virtual)
                 return 0;
             if (A.Resource.ID == -1)
-                throw new SeqException("Position with UserID: " + A.ID + " has no ResourceID: -1");
+                throw new SeqException("Configuration with ID: " + A.ID + " has no ResourceID: -1");
             if (B.Resource.ID == -1)
-                throw new SeqException("Position with UserID: " + B.ID + " has no ResourceID: -1");
+                throw new SeqException("Configuration with ID: " + B.ID + " has no ResourceID: -1");
             var ida = -1;
             var idb = -1;
 
@@ -72,9 +72,9 @@ namespace SequencePlanner.Function.ResourceFunction
             }
 
             if (ida == -1)
-                throw new SeqException("Position with ResourceID: " + A.Resource.ID + " not contained by CostMatrixIDHeader");
+                throw new SeqException("Configuration with ResourceID: " + A.Resource.ID + " not contained by CostMatrixIDHeader");
             if (idb == -1)
-                throw new SeqException("Position with ResourceID: " + B.Resource.ID + " not contained by CostMatrixIDHeader");
+                throw new SeqException("Configuration with ResourceID: " + B.Resource.ID + " not contained by CostMatrixIDHeader");
             return CostMatrix[ida][idb];
         }
 

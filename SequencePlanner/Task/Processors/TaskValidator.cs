@@ -44,7 +44,7 @@ namespace SequencePlanner.Task.Processors
                                     foreach (var precedence in task.MotionPrecedences)
                                     {
                                         if (precedence.Before.GlobalID == motion.GlobalID || precedence.After.GlobalID == motion.GlobalID)
-                                            throw new SeqException("In case of alternative shortcuts, position precedences available only for the positions of the first and last task of alternatives. Position's userID: " + motion.ID);
+                                            throw new SeqException("In case of alternative shortcuts, precedences available only for the configs of the first and last task of alternatives. Configuration's ID: " + motion.ID);
                                     }
                                 }
                         }
@@ -61,9 +61,9 @@ namespace SequencePlanner.Task.Processors
                     foreach (var precedence in task.ProcessPrecedences)
                     {
                         if (task.StartDepot is not null && (precedence.Before.GlobalID == task.StartDepot.GlobalID || precedence.After.GlobalID != task.StartDepot.GlobalID))
-                            throw new SeqException("Position precedence should not contain StartDepo's position, UserID: " + task.StartDepot.GlobalID);
+                            throw new SeqException("Configuration precedence should not contain StartDepo's configuration, ID: " + task.StartDepot.GlobalID);
                         if (task.FinishDepot is not null && (precedence.Before.GlobalID == task.FinishDepot.GlobalID || precedence.After.GlobalID != task.FinishDepot.GlobalID))
-                            throw new SeqException("Position precedence should not contain FinishDepo's position, UserID: " + task.FinishDepot.GlobalID);
+                            throw new SeqException("Configuration precedence should not contain FinishDepo's configuration, ID: " + task.FinishDepot.GlobalID);
                     }
                 }
             SeqLogger.Debug("MotionPrecedence: " + task.ProcessPrecedences.Count + " precedences", nameof(TaskValidator));
@@ -140,23 +140,23 @@ namespace SequencePlanner.Task.Processors
         private static void CheckStrictEdgeWeights(GeneralTask task)
         {
             if (task.CostManager.OverrideCost is null)
-                throw new SeqException("PositionMatrix.DistanceFunction.StrictUserEdgeWeights are not initialized.");
+                throw new SeqException("ConfigMatrix.DistanceFunction.StrictUserEdgeWeights are not initialized.");
             foreach (var weights in task.CostManager.OverrideCost)
             {
                 var findA = false;
                 var findB = false;
-                foreach (var position in task.Hierarchy.Configs)
+                foreach (var config in task.Hierarchy.Configs)
                 {
-                    if (weights.A.GlobalID == position.GlobalID)
+                    if (weights.A.GlobalID == config.GlobalID)
                         findA = true;
-                    if (weights.B.GlobalID == position.GlobalID)
+                    if (weights.B.GlobalID == config.GlobalID)
                         findB = true;
                 }
                 if (!findA)
-                    throw new SeqException("PositionMatrix.DistanceFunction.StrictUserEdgeWeights contains position with wrong userID: " + weights.A.GlobalID);
+                    throw new SeqException("ConfigMatrix.DistanceFunction.StrictUserEdgeWeights contains configuration with wrong userID: " + weights.A.GlobalID);
 
                 if (!findB)
-                    throw new SeqException("PositionMatrix.DistanceFunction.StrictUserEdgeWeights contains position with wrong userID: " + weights.B.GlobalID);
+                    throw new SeqException("ConfigMatrix.DistanceFunction.StrictUserEdgeWeights contains configuration with wrong userID: " + weights.B.GlobalID);
             }
         }
 
@@ -176,9 +176,9 @@ namespace SequencePlanner.Task.Processors
         private static void CheckConfigList(GeneralTask task)
         {
             if (task.Hierarchy.Configs is null)
-                throw new SeqException("Hierarchy, PositionMatrix is null.", "Please construct it.");
+                throw new SeqException("Hierarchy, ConfigMatrix is null.", "Please construct it.");
             if (task.Hierarchy.Configs.Count < 1)
-                throw new SeqException("PositionMatrix.Positions not contain positions.", "Please add them.");
+                throw new SeqException("ConfigMatrix.Configurations not contain configs.", "Please add them.");
             var posList = task.Hierarchy.Motions;
             for (int i = 0; i < posList.Count; i++)
             {
@@ -187,17 +187,17 @@ namespace SequencePlanner.Task.Processors
                     if (i != j)
                     {
                         if (posList[i].GlobalID == posList[j].GlobalID)
-                            throw new SeqException("PositionMatrix.Positions contains position multiple times with GlobalID: " + posList[i].GlobalID, "Remove duplicated positions.");
+                            throw new SeqException("ConfigMatrix.Configs contains config multiple times with GlobalID: " + posList[i].GlobalID, "Remove duplicated configurations.");
                         if (posList[i].ID == posList[j].ID && !posList[i].Bidirectional && !posList[i].Bidirectional)
-                            throw new SeqException("PositionMatrix.Positions contains position multiple times with ID: " + posList[i].ID, "Remove duplicated positions.");
+                            throw new SeqException("ConfigMatrix.Configs contains config multiple times with ID: " + posList[i].ID, "Remove duplicated configurations.");
                         //if (posList[i].Node.SequencingID == posList[j].Node.SequencingID)
-                        //    throw new SeqException("PositionMatrix.Positions contains position multiple times times with SequencingID: " + posList[i].Node.SequencingID, "Remove duplicated positions.");
+                        //    throw new SeqException("ConfigMatrix.Configs contains config multiple times times with SequencingID: " + posList[i].Node.SequencingID, "Remove duplicated configs.");
                     }
                 }
                 //if (posList[i].In.Vector.Length != task.Dimension)
-                //    throw new SeqException("Position with UserID: " + posList[i].In.UserID + " has dimension mismatch. Dimension != Position.Vector (" + task.Dimension + "!=" + posList[i].In.Vector.Length + ")");
+                //    throw new SeqException("Config with ID: " + posList[i].In.ID + " has dimension mismatch. Dimension != Configuration.Config (" + task.Dimension + "!=" + posList[i].In.Vector.Length + ")");
                 //if (posList[i].In.Vector.Length != posList[i].Out.Vector.Length)
-                //    throw new SeqException("Position with UserID: " + posList[i].In.UserID + " has dimension mismatch. Dimension != Position.Vector (" + task.Dimension + "!=" + posList[i].Out.Vector.Length + ")");
+                //    throw new SeqException("Config with ID: " + posList[i].In.ID + " has dimension mismatch. Dimension != Configuration.Config (" + task.Dimension + "!=" + posList[i].Out.Vector.Length + ")");
             }
             SeqLogger.Debug("ConfigList: " + task.Hierarchy.Configs.Count, nameof(TaskValidator));
         }
@@ -266,25 +266,25 @@ namespace SequencePlanner.Task.Processors
             {
                 if (checkStartDepot && checkFinishDepot)
                     if (task.StartDepot.GlobalID == task.FinishDepot.GlobalID)
-                        throw new SeqException("Start and finish depot can not be the same.", "Select other positions or use cyclic sequence.");
+                        throw new SeqException("Start and finish depot can not be the same.", "Select other configs or use cyclic sequence.");
                 //StartDepot needed
                 if (task.Cyclic && task.StartDepotConfig is null)
                     throw new SeqException("If task is cyclic start depot needed!");
                 //SeqLogger.Debug("StartDepot: " + task.StartDepot.UserID, nameof(PointLikeTaskValidator));
                 var findStart = false;
                 var findFinish = false;
-                //Positions must contain StartDepot
-                foreach (var position in task.Hierarchy.Configs)
+                //Configurations must contain StartDepot
+                foreach (var config in task.Hierarchy.Configs)
                 {
-                    if (checkStartDepot && position.GlobalID == task.StartDepotConfig.GlobalID)
+                    if (checkStartDepot && config.GlobalID == task.StartDepotConfig.GlobalID)
                         findStart = true;
-                    if (checkFinishDepot && position.GlobalID == task.FinishDepotConfig.GlobalID)
+                    if (checkFinishDepot && config.GlobalID == task.FinishDepotConfig.GlobalID)
                         findFinish = true;
                 }
                 if (checkStartDepot && !findStart)
-                    throw new SeqException("Positions should contain StartDepot!");
+                    throw new SeqException("Configs should contain StartDepot!");
                 if (checkFinishDepot && !findFinish)
-                    throw new SeqException("Positions should contain FinishDepot!");
+                    throw new SeqException("Configs should contain FinishDepot!");
             }
         }
 

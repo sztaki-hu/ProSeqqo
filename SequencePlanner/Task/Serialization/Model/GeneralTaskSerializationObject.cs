@@ -144,9 +144,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             }
             //AddLinesToConfigList(task);
             if (StartDepot != -1 && task.StartDepotConfig == null)
-                SeqLogger.Error("StartDepot not exist position!", nameof(GeneralTaskSerializationObject));
+                SeqLogger.Error("StartDepot not exist configuration!", nameof(GeneralTaskSerializationObject));
             if (FinishDepot != -1 && task.FinishDepotConfig == null)
-                SeqLogger.Error("FinishDepot not exist as position!", nameof(GeneralTaskSerializationObject));
+                SeqLogger.Error("FinishDepot not exist as configuration!", nameof(GeneralTaskSerializationObject));
             //task.PositionMatrix.StrictUserEdgeWeights = OverrideCost.ToStrictEdgeWeightSet(task.PositionMatrix.Positions);
             return task;
         }
@@ -186,7 +186,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 {
                     ID = motion.LineID,
                     Name = motion.Name,
-                    Configs = new List<Config>() { task.Hierarchy.GetConfigByID(motion.PositionIDA), task.Hierarchy.GetConfigByID(motion.PositionIDB) },
+                    Configs = new List<Config>() { task.Hierarchy.GetConfigByID(motion.ConfigIDA), task.Hierarchy.GetConfigByID(motion.ConfigIDB) },
                     Bidirectional = motion.Bidirectional
                 };
             }

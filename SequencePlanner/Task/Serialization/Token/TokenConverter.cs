@@ -190,7 +190,7 @@ namespace SequencePlanner.Task.Serialization.Token
         {
             try
             {
-                var positions = new List<ConfigSerializationObject>();
+                var configs = new List<ConfigSerializationObject>();
                 foreach (var token in tokenizer.Tokens)
                 {
                     if (token.Header.ToUpper().Equals(header.ToUpper()))
@@ -220,11 +220,11 @@ namespace SequencePlanner.Task.Serialization.Token
                             {
                                 posObj.ResourceID = Convert.ToInt32(line[i]);
                             }
-                            positions.Add(posObj);
+                            configs.Add(posObj);
                         }
                     }
                 }
-                return positions;
+                return configs;
             }
             catch (Exception e)
             {
@@ -249,8 +249,8 @@ namespace SequencePlanner.Task.Serialization.Token
                             {
                                 LineID = Int32.Parse(line[0]),
                                 ContourID = Int32.Parse(line[1]),
-                                PositionIDA = Int32.Parse(line[2]),
-                                PositionIDB = Int32.Parse(line[3])
+                                ConfigIDA = Int32.Parse(line[2]),
+                                ConfigIDB = Int32.Parse(line[3])
                             };
                             if (line.Length >= 5)
                                 lineObj.Name = line[4];
@@ -290,8 +290,8 @@ namespace SequencePlanner.Task.Serialization.Token
                             HybridLineSerializationObject lineObj = new HybridLineSerializationObject
                             {
                                 LineID = Int32.Parse(line[0]),
-                                PositionIDA = Int32.Parse(line[1]),
-                                PositionIDB = Int32.Parse(line[2])
+                                ConfigIDA = Int32.Parse(line[1]),
+                                ConfigIDB = Int32.Parse(line[2])
                             };
                             if (line.Length >= 4)
                                 lineObj.Name = line[3];

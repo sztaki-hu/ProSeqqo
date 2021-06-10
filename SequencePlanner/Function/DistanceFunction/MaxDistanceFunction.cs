@@ -12,9 +12,9 @@ namespace SequencePlanner.Function.DistanceFunction
         public override double ComputeDistance(Config A, Config B)
         {
             if (A == null || B == null)
-                throw new SeqException("MaxDistanceFunction A/B position null!");
+                throw new SeqException("MaxDistanceFunction A/B configuration null!");
             if (A.Configuration.Count != B.Configuration.Count)
-                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.ID + ", " + B.ID);
+                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of configurations with " + A.ID + ", " + B.ID);
 
             if (A.Configuration.Count == B.Configuration.Count)
             {
@@ -30,7 +30,7 @@ namespace SequencePlanner.Function.DistanceFunction
             }
             else
             {
-                SeqLogger.Error("MaxDistanceFunction find dimension mismatch position userids: " + A.ID + "-" + B.ID);
+                SeqLogger.Error("MaxDistanceFunction find dimension mismatch of configs with ID: " + A.ID + ", " + B.ID);
                 return 0;
             }
         }

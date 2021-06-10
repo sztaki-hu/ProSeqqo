@@ -135,16 +135,16 @@ namespace SequencePlanner.Task.Serialization.Model
             ConfigList = new List<ConfigSerializationObject>();
             for (int i = 0; i < IDHeader.Count; i++)
             {
-                var position = new ConfigSerializationObject
+                var config = new ConfigSerializationObject
                 {
                     ID = IDHeader[i]
                 };
                 if (NameFooter != null && NameFooter.Count != 0)
-                    position.Name = NameFooter[i];
+                    config.Name = NameFooter[i];
                 if (ResourceFooter != null && ResourceFooter.Count != 0)
-                    position.ResourceID = ResourceFooter[i];
-                position.Config = new double[0];
-                ConfigList.Add(position);
+                    config.ResourceID = ResourceFooter[i];
+                config.Config = new double[0];
+                ConfigList.Add(config);
             }
         }
     }

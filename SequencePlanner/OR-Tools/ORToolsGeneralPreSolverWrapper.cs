@@ -209,7 +209,7 @@ namespace SequencePlanner.OR_Tools
                 for (int p = 0; p < parameters.NumberOfNodes; p++)                                           //Trace the selected nodes
                 {
                     if (x[p].SolutionValue() == 1)
-                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Position = " + this.position[p].SolutionValue() + ", Alternative = " + this.alternativeID[p] + ", Process = " + this.processID[p], nameof(OR_Tools.ORToolsGeneralPreSolverWrapper));
+                        SeqLogger.Trace("i: " + p + " X = " + x[p].SolutionValue() + ", Configuration = " + this.position[p].SolutionValue() + ", Alternative = " + this.alternativeID[p] + ", Process = " + this.processID[p], nameof(OR_Tools.ORToolsGeneralPreSolverWrapper));
                 }
 
                 for (int i = 0; i < parameters.NumberOfNodes; i++)

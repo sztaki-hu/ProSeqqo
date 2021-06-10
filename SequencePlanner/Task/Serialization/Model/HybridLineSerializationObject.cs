@@ -5,8 +5,8 @@ namespace SequencePlanner.Task.Serialization.Model
     public class HybridLineSerializationObject
     {
         public int LineID { get; set; }
-        public int PositionIDA { get; set; }
-        public int PositionIDB { get; set; }
+        public int ConfigIDA { get; set; }
+        public int ConfigIDB { get; set; }
         public string Name { get; set; }
         public int ResourceID { get; set; }
         public bool Bidirectional { get; set; }
@@ -21,8 +21,8 @@ namespace SequencePlanner.Task.Serialization.Model
         {
             //LineID = line.UserID;
             //ContourID = line.
-            PositionIDA = line.NodeA.UserID;
-            PositionIDB = line.NodeB.UserID;
+            ConfigIDA = line.NodeA.UserID;
+            ConfigIDB = line.NodeB.UserID;
             //Name = line.Name;
             //ResourceID = line.ResourceID;
             Bidirectional = line.Bidirectional;
@@ -35,8 +35,8 @@ namespace SequencePlanner.Task.Serialization.Model
             string newline = "\n";
             string seq = "";
             seq += LineID + separator;
-            seq += PositionIDA + separator;
-            seq += PositionIDB + separator;
+            seq += ConfigIDA + separator;
+            seq += ConfigIDB + separator;
             seq += Name + separator;
             seq += ResourceID + separator;
             seq += Bidirectional + separator + newline;

@@ -22,9 +22,9 @@ namespace SequencePlanner.Function.DistanceFunction
         public override double ComputeDistance(Config A, Config B)
         {
             if (A == null || B == null)
-                throw new SeqException("MatrixDistanceFunction A/B position null!");
+                throw new SeqException("MatrixDistanceFunction A/B configuration is null!");
             if (A.Configuration.Count != B.Configuration.Count)
-                throw new SeqException("MatrixDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.ID + ", " + B.ID);
+                throw new SeqException("MatrixDistanceFunction found dimendion mismatch!", "Check dimension of configurations with " + A.ID + ", " + B.ID+ "IDs");
 
             var aid = -1;
             var bid = -1;
@@ -37,9 +37,9 @@ namespace SequencePlanner.Function.DistanceFunction
             }
 
             if (aid == -1)
-                throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + A.ID + "] " + A.Name);
+                throw new SeqException("Matrix distance function can not find user configuration ID: " + A.ID + " - " + A.Name);
             if (bid == -1)
-                throw new SeqException("Matrix distance function can not find user position ID. PositionA: [G:" + B.ID + "] " + B.Name);
+                throw new SeqException("Matrix distance function can not find user configuration ID: " + B.ID + " - " + B.Name);
             return CostMatrix[aid][bid];
         }
 

@@ -51,9 +51,9 @@ namespace SequencePlanner.Function.DistanceFunction
         protected double TrapezoidTimeCalculation(Config A, Config B, bool withTieBreaker)
         {
             if (A == null || B == null)
-                throw new SeqException("TrapezoidTimeDistanceFunction A/B position null!");
+                throw new SeqException("TrapezoidTimeDistanceFunction A/B configuration null!");
             if (A.Configuration.Count != B.Configuration.Count)
-                throw new SeqException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of Positions with UserID:" + A.ID + ", " + B.ID);
+                throw new SeqException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of configurations with ID:" + A.ID + ", " + B.ID);
             int Dimension = A.Configuration.Count;
             if (B.Configuration.Count == Dimension && MaxAcceleration.Length == Dimension && MaxSpeed.Length == Dimension)
             {

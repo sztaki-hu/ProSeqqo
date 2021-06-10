@@ -136,6 +136,7 @@ namespace SequencePlanner.Task
 
             taskResult = DepotMapper.ResolveSolution(taskResult);
             taskResult = ShortcutMapper.ResolveSolution(taskResult);
+            taskResult.CalculateSum();
             return taskResult;
         }
 
@@ -163,21 +164,21 @@ namespace SequencePlanner.Task
         }
 
         //VALIDATE RESULT
-        public void CheckSolution(List<MotionDisjointSet> disjointConstraints, List<MotionPrecedence> positionPrecedence, List<ProcessPrecedence> processPrecedences, List<Motion> solution)
+        public void CheckSolution(List<MotionDisjointSet> disjointConstraints, List<MotionPrecedence> motionPrecedence, List<ProcessPrecedence> processPrecedences, List<Motion> solution)
         {
             ValidateDisjoint(disjointConstraints, solution);
-            ValidatePositionPrec(positionPrecedence, solution);
+            ValidateMotionPrec(motionPrecedence, solution);
             //ValidateProcessPrec(processPrecedences, solution);
         }
-        private void ValidatePositionPrec(List<MotionPrecedence> positionPrecedence, List<Motion> solution)
+        private void ValidateMotionPrec(List<MotionPrecedence> motionPrecedences, List<Motion> solution)
         {
-            if (positionPrecedence is not null && solution.Count > 0 && positionPrecedence.Count > 0)
+            if (motionPrecedences is not null && solution.Count > 0 && motionPrecedences.Count > 0)
             {
                 var findFirst = false;
                 var first = -1;
                 var findSecond = false;
                 var second = -1;
-                foreach (var prec in positionPrecedence)
+                foreach (var prec in motionPrecedences)
                 {
                     findFirst = false;
                     first = -1;
@@ -200,7 +201,7 @@ namespace SequencePlanner.Task
                     if (findSecond && findFirst && first > second)
                     {
                         SeqLogger.Critical(solution.ToIDListString());
-                        throw new SeqException("Result violates position precedence: " + prec);
+                        throw new SeqException("Result violates motion precedence: " + prec);
                     }
 
                     //Check last result item, if not equal with the start depot
@@ -223,7 +224,7 @@ namespace SequencePlanner.Task
                     }
 
                     if (findSecond && findFirst && first > second)
-                        throw new SeqException("Result violates position precedence: " + prec);
+                        throw new SeqException("Result violates motion precedence: " + prec);
                 }
             }
         }
@@ -270,7 +271,7 @@ namespace SequencePlanner.Task
                     }
                 }
                 if (findSecond && findFirst && first > second)
-                    throw new SeqException("Result violates position precedence: " + prec);
+                    throw new SeqException("Result violates motion precedence: " + prec);
             }
         }
     }
