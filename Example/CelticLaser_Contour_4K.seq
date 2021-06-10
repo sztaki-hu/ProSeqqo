@@ -1,13 +1,14 @@
 Task: General
 Validate: True
 Cyclic: False
-StartDepot: 5
+#StartDepot: 5
 #FinishDepot: 3
 
 DistanceFunction: Euclidian
 ResourceChangeover: Off
-BidirectionMotionDefault: False
-TimeLimit: 2000
+BidirectionMotionDefault: True
+TimeLimit: 1800000
+LocalSearchStrategy: GuidedLocalSearch
 
 #Hierarchy-----------------------------
 ConfigList:
