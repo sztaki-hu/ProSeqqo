@@ -25,8 +25,10 @@ namespace SequencePlanner.Task
         public double FullConfigCost { get; set; }
         public List<DetailedMotionCost> CostsBetweenMotions { get; set; }
         public List<DetailedConfigCost> CostsBetweenConfigs { get; set; }
+        public DetailedConfigCost DetailedConfigCost { get; set; }
+        public DetailedMotionCost DetailedMotionCost { get; set; }
 
-        public GeneralTaskResult()
+    public GeneralTaskResult()
         {
             StatusCode = -1;
             StatusMessage = "Result initalized.";
@@ -43,6 +45,8 @@ namespace SequencePlanner.Task
             ConfigCosts = new List<double>();
             CostsBetweenConfigs = new List<DetailedConfigCost>();
             CostsBetweenMotions = new List<DetailedMotionCost>();
+            DetailedConfigCost = new DetailedConfigCost();
+            DetailedMotionCost = new DetailedMotionCost();
         }
 
         public void ToLog(LogLevel logLevel)
@@ -78,6 +82,8 @@ namespace SequencePlanner.Task
             {
                 SeqLogger.WriteLog(logLevel, "\t" + c.ToString());
             }
+            SeqLogger.WriteLog(logLevel, "Full cost of motions with details: " + DetailedMotionCost.ToString());
+            SeqLogger.WriteLog(logLevel, "Full cost of configs with details: " + DetailedConfigCost.ToString());
             SeqLogger.Indent--;
         }
 
@@ -90,7 +96,11 @@ namespace SequencePlanner.Task
             + "FullTime" + sep
             + "SolverTime" + sep
             + "PreSolverTime" + sep
-            + "FullMotionCost" + sep
+            + "SumMotionCost" + sep
+            + "SumComutedMotionCost" + sep
+            + "SumOverrideMotionCost" + sep
+            + "SumPenaltyCost" + sep
+            + "SumInMotionCost" + sep
             + "SolutionMotionIDs" + sep
             + "SolutionConfigIDs";
         }
@@ -105,8 +115,37 @@ namespace SequencePlanner.Task
             + SolverTime + sep
             + PreSolverTime + sep
             + FullMotionCost + sep
+            + DetailedMotionCost.DistanceFunctionCost + sep
+            + DetailedMotionCost.OverrideCost + sep
+            + DetailedMotionCost.Penalty + sep
+            + DetailedMotionCost.InMotion + sep
             + SolutionMotionIDs.ToListString() + sep
             + SolutionConfigIDs.ToListString();
+        }
+
+        public void CalculateSum()
+        {
+
+            DetailedConfigCost = new DetailedConfigCost();
+            DetailedMotionCost = new DetailedMotionCost();
+            foreach (var motionCost in CostsBetweenMotions)
+            {
+                DetailedMotionCost.DistanceFunctionCost += motionCost.DistanceFunctionCost;
+                DetailedMotionCost.OverrideCost += motionCost.OverrideCost;
+                DetailedMotionCost.Penalty += motionCost.Penalty;
+                DetailedMotionCost.FinalCost += motionCost.FinalCost;
+                DetailedMotionCost.ResourceChangeoverCost += motionCost.ResourceChangeoverCost;
+                DetailedMotionCost.InMotion += motionCost.PreviousMotionCost;
+            }
+
+            foreach (var configCost in CostsBetweenConfigs)
+            {
+                DetailedConfigCost.DistanceFunctionCost += configCost.DistanceFunctionCost;
+                DetailedConfigCost.OverrideCost += configCost.OverrideCost;
+                DetailedConfigCost.Penalty += configCost.Penalty;
+                DetailedConfigCost.FinalCost += configCost.FinalCost;
+                DetailedConfigCost.ResourceChangeoverCost += configCost.ResourceChangeoverCost;
+            }
         }
     }
 }

@@ -83,16 +83,18 @@ namespace SequencePlanner.Task
                         weight = DistanceFunction.ComputeDistance(From, To);
                     cost.DistanceFunctionCost = weight;
                 }
-                if (weight > 0)
-                {
-                    weight += GetPenaltyCost(weight);
-                    cost.Penalty = GetPenaltyCost(weight);
-                }
-                if (AddInMotionChangeoverToCost)
-                {
+                //In motion No Penalty
+                //if (weight > 0)
+                //{
+                //    weight += GetPenaltyCost(weight);
+                //    cost.Penalty = GetPenaltyCost(weight);
+                //}
+                //Always add resource cost in motion
+                //if (AddInMotionChangeoverToCost)
+                //{
                     weight = ResourceFunction.ComputeResourceCost(From, To, weight);
                     cost.ResourceChangeoverCost = ResourceFunction.GetResourceCost(From, To);
-                }
+                //}
                 cost.FinalCost = weight;
             }
             return cost;
