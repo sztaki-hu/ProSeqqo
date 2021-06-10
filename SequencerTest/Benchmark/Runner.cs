@@ -24,7 +24,7 @@ namespace SequencerTest.Benchmark
             RunBenchmark();
         }
 
-        public void InitWithTasks(List<BenchmarkTask> benchmarks = null)
+        public void InitWithTasks(string name, List<BenchmarkTask> benchmarks = null)
         {
             if (benchmarks is null)
                 throw new SeqException("No benchmars!");
@@ -32,7 +32,7 @@ namespace SequencerTest.Benchmark
                 benchmarkTasks = benchmarks;
             var t = DateTime.Now;
             var d = "_";
-            generationDir = "Benchmark_" + t.Year + d + t.Month + d + t.Day + d + t.Hour + d + t.Minute + d + t.Second;
+            generationDir = "Benchmark_"+name+ t.Year + d + t.Month + d + t.Day + d + t.Hour + d + t.Minute + d + t.Second;
             GenerateInstances();
         }
 

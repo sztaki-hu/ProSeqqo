@@ -1,4 +1,5 @@
 ﻿using SequencerTest.Benchmark;
+using System;
 using System.Collections.Generic;
 
 namespace SequencerBenchmarkTest
@@ -7,8 +8,13 @@ namespace SequencerBenchmarkTest
     {
         static void Main()
         {
+            System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.RealTime;
+            System.Diagnostics.Process.GetCurrentProcess().PriorityBoostEnabled = true;
+            Console.Title = "ProSeqqo Benchmark Console";
+            System.Console.Write("Please write a name for the benchmark: ");
+            var name = System.Console.ReadLine();
             Runner runner = new Runner();
-            runner.InitWithTasks(GetBenchmarkTasks());
+            runner.InitWithTasks(name, GetBenchmarkTasks());
             //runner.Init();
             runner.RunBenchmark();
         }
@@ -29,17 +35,48 @@ namespace SequencerBenchmarkTest
                 //}
                 //},
 
-                //new BenchmarkTask()
-                //{
-                //    TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
-                //    Dir = "Resources/Benchmark/PickAndPlace",
-                //    Parameters = new List<Dictionary<string, string>>() {
-                //    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
-                //    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
-                //    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "True", },
-                //    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "True", }
-                //}
-                //},
+                new BenchmarkTask()
+                {
+                    TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
+                    Dir = "Resources/Benchmark/PickAndPlace",
+                    Parameters = new List<Dictionary<string, string>>() {
+                    ////new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+                    ////new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+                    ////new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "True", },
+                    ////new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "True", }
+
+                    //new Dictionary<string, string>() { ["Time"] = "0", ["Strategy"] = "Automatic",           ["MIP"] = "True" },
+                    //new Dictionary<string, string>() { ["Time"] = "0", ["Strategy"] = "GreedyDescent",       ["MIP"] = "True" },
+
+                    //new Dictionary<string, string>() { ["Time"] = "100",  ["Strategy"] = "Automatic",           ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "100",  ["Strategy"] = "GreedyDescent",       ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "100",  ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "100",  ["Strategy"] = "TabuSearch",          ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "100",  ["Strategy"] = "ObjectiveTabuSearch", ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "100",  ["Strategy"] = "SimulatedAnnealing",  ["MIP"] = "False" },
+
+                    //new Dictionary<string, string>() { ["Time"] = "1000",  ["Strategy"] = "Automatic",           ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "1000",  ["Strategy"] = "GreedyDescent",       ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "1000",  ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "1000",  ["Strategy"] = "TabuSearch",          ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "1000",  ["Strategy"] = "ObjectiveTabuSearch", ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "1000",  ["Strategy"] = "SimulatedAnnealing",  ["MIP"] = "False" },
+                                                                                                                            
+                    ////new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "Automatic",           ["MIP"] = "False" },
+                    ////new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "GreedyDescent",       ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "TabuSearch",          ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "ObjectiveTabuSearch", ["MIP"] = "False" },
+                    //new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "SimulatedAnnealing",  ["MIP"] = "False" },
+                                
+                //    new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "Automatic",           ["MIP"] = "False" },
+                //    new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "GreedyDescent",       ["MIP"] = "False" },
+                    new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False" },
+                //    new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "TabuSearch",          ["MIP"] = "False" },
+                //    new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "ObjectiveTabuSearch", ["MIP"] = "False" },
+                //    new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "SimulatedAnnealing",  ["MIP"] = "False" },
+                }
+                },
 
                 //new BenchmarkTask()
                 //{
@@ -47,17 +84,72 @@ namespace SequencerBenchmarkTest
                 //    Dir = "Resources/Benchmark/CSOPA",
                 //    Parameters = new List<Dictionary<string, string>>()
                 //    {
+                //        //new Dictionary<string, string>() { ["Time"] = "0", ["Strategy"] = "Automatic",           ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "0", ["Strategy"] = "GreedyDescent",       ["BID"] = "True" },
+
+                //        //new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "Automatic",           ["BID"] = "True" },
+                //        //new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "GreedyDescent",       ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "GuidedLocalSearch",   ["BID"] = "True" },
+                //        //new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "TabuSearch",          ["BID"] = "True" },
+                //        //new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "SimulatedAnnealing",  ["BID"] = "True" },
+
+                //        //new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "Automatic",           ["BID"] = "True" },
+                //        //new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "GreedyDescent",       ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "GuidedLocalSearch",   ["BID"] = "True" },
+                //        //new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "TabuSearch",          ["BID"] = "True" },
+                //        //new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "SimulatedAnnealing",  ["BID"] = "True" },
+
+                //        new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "GuidedLocalSearch",   ["BID"] = "True" },
+                //       // new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "TabuSearch",          ["BID"] = "True" },
+                //       // new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "SimulatedAnnealing",  ["BID"] = "True" },
+
+                //        new Dictionary<string, string>() { ["Time"] = "600000", ["Strategy"] = "GuidedLocalSearch",   ["BID"] = "True" },
+                ////      new Dictionary<string, string>() { ["Time"] = "600000", ["Strategy"] = "TabuSearch",          ["BID"] = "True" },
+                ////      new Dictionary<string, string>() { ["Time"] = "600000", ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "600000", ["Strategy"] = "SimulatedAnnealing",  ["BID"] = "True" },
                 //    }
                 //},
 
-                //new BenchmarkTask()
-                //{
-                //    TemplateDir = "Resources/Benchmark/Celta/Templates",
-                //    Dir = "Resources/Benchmark/Celta",
-                //    Parameters = new List<Dictionary<string, string>>()
-                //    {
-                //    }
-                //},
+                new BenchmarkTask()
+                {
+                    TemplateDir = "Resources/Benchmark/Celta/Templates",
+                    Dir = "Resources/Benchmark/Celta",
+                    Parameters = new List<Dictionary<string, string>>()
+                    {
+                //        new Dictionary<string, string>() { ["Time"] = "0", ["Strategy"] = "Automatic",           ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "0", ["Strategy"] = "GreedyDescent",       ["BID"] = "True" },
+
+                //        new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "Automatic",           ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "GreedyDescent",       ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "GuidedLocalSearch",   ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "TabuSearch",          ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "1000", ["Strategy"] = "SimulatedAnnealing",  ["BID"] = "True" },
+
+                //        new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "Automatic",           ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "GreedyDescent",       ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "GuidedLocalSearch",   ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "TabuSearch",          ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "10000", ["Strategy"] = "SimulatedAnnealing",  ["BID"] = "True" },
+
+                //        new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "GuidedLocalSearch",   ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "TabuSearch",          ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "60000", ["Strategy"] = "SimulatedAnnealing",  ["BID"] = "True" },
+
+                //        new Dictionary<string, string>() { ["Time"] = "600000", ["Strategy"] = "GuidedLocalSearch",   ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "600000", ["Strategy"] = "TabuSearch",          ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "600000", ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "600000", ["Strategy"] = "SimulatedAnnealing",  ["BID"] = "True" },
+
+                //           new Dictionary<string, string>() { ["Time"] = "1800000", ["Strategy"] = "GuidedLocalSearch",   ["BID"] = "True" },
+                //        new Dictionary<string, string>() { ["Time"] = "600000", ["Strategy"] = "TabuSearch",          ["BID"] = "True" },
+                    }
+                },
 
                 //new BenchmarkTask()
                 //{
@@ -69,29 +161,36 @@ namespace SequencerBenchmarkTest
                 //},
 
                 //MESTERECSET CIKK
-                new BenchmarkTask()
-                {
-                    TemplateDir = "Resources/Benchmark/MesterEcset/Templates",
-                    Dir = "Resources/Benchmark/MesterEcset",
-                    Parameters = new List<Dictionary<string, string>>()
-                    {
-                        new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "False", ["Strategy"] = "Automatic", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "0", ["MIP"] = "True", ["Strategy"] = "Automatic", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "0", ["MIP"] = "True", ["Strategy"] = "GreedyDescent", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "2500", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "5000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "20000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "60000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "120000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "1000", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "2500", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "5000", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "True",  ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
-                        new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "True",  ["Strategy"] = "SimulatedAnnealing", ["BID"] = "True" },
-                    }
-                },
+               // new BenchmarkTask()
+                //{
+                    //TemplateDir = "Resources/Benchmark/MesterEcset/Templates",
+                    //Dir = "Resources/Benchmark/MesterEcset",
+                    //Parameters = new List<Dictionary<string, string>>()
+                    //{
+                        //new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "False", ["Strategy"] = "Automatic", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "0", ["MIP"] = "True", ["Strategy"] = "Automatic", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "0", ["MIP"] = "True", ["Strategy"] = "GreedyDescent", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "2500", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "5000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "20000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "60000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "120000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "600000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
+
+                        //new Dictionary<string, string>() { ["Time"] = "1800000", ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "1000", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "2500", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "5000", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "60000", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "600000", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
+ 
+                        //new Dictionary<string, string>() { ["Time"] = "1800000", ["MIP"] = "True",  ["Strategy"] = "TabuSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "True",  ["Strategy"] = "ObjectiveTabuSearch", ["BID"] = "True" },
+                        //new Dictionary<string, string>() { ["Time"] = "10000", ["MIP"] = "True",  ["Strategy"] = "SimulatedAnnealing", ["BID"] = "True" },
+                //    }
+                //},
 
                 //new BenchmarkTask()
                 //{
