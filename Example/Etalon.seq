@@ -1,7 +1,7 @@
 Task: General
 Validate: True
-Cyclic: True
-StartDepot: 0
+Cyclic: False
+#StartDepot: 0
 
 DistanceFunction: TrapezoidTime
 TrapezoidSpeed: [0.266667;0.266667;0.266667;0.266667;0.266667;0.266667]

@@ -1,13 +1,15 @@
 Task: General
 DistanceFunction: Euclidian
-TimeLimit: 60000
 Cyclic: False
 #StartDepot: 1
 #FinishDepot: 218
-IdlePenalty: 100
+IdlePenalty: 10
+
+TimeLimit: 1000
+AddMotionLengthToCost: True
 BidirectionMotionDefault: True
 ResourceChangeover: Off
-#LocalSearchStrategie: GuidedLocalSearch
+LocalSearchStrategy: GuidedLocalSearch
 
 
 #Hierarchy-----------------------------

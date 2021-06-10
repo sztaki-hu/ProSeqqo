@@ -7,14 +7,14 @@ Cyclic: False
 #Cost----------------------------------
 DistanceFunction: Matrix
 #IdlePenalty: 0
-BidirectionMotionDefault: False
-AddMotionLengthToCost: True
+BidirectionMotionDefault: True
+AddMotionLengthToCost: False
 AddInMotionChangeoverToCost: False
 
 #Solver-------------------------------
-#LocalSearchStrategy: GuidedLocalSearch
-LocalSearchStrategy: Automatic
-TimeLimit: 0
+LocalSearchStrategy: GuidedLocalSearch
+#LocalSearchStrategy: Automatic
+TimeLimit: 1800000
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: False
 
