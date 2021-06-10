@@ -10,7 +10,8 @@ BidirectionLineDefault: True
 
 ConfigList:
 #+-------+---------------------+------------------+
-#|   ID  |      Position       |  Name[optional]  |
+#|   ID  |      
+|  Name[optional]  |
 #+-------+---------------------+------------------+
 #| <int> | <double[Dimension]> |     <string>     |
 #+-------+---------------------+------------------+
