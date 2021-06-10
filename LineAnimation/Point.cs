@@ -21,8 +21,8 @@ namespace LineAnimation
                 point.X = config.Configuration[0];
             if (config.Configuration.Count > 1)
                 point.Y = config.Configuration[1];
-            if (config.Configuration.Count > 2)
-                point.Z = config.Configuration[2];
+            //if (config.Configuration.Count > 2)
+            //    point.Z = config.Configuration[2];
             Config = point;
             Tag = config.ToString(); 
         }
