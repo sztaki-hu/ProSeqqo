@@ -1,18 +1,18 @@
 Task: General
 Validate: True
 Cyclic: False
-StartDepot: 1
-#FinishDepot: 218
 
 DistanceFunction: Euclidian
-IdlePenalty: 1
+IdlePenalty: 10
 BidirectionMotionDefault: True
 ResourceChangeover: Constant
 ResourceChangeoverFunction: Add
 ChangeoverConstant: 1
 
-TimeLimit: 4000
-UseMIPprecedenceSolver: True
+TimeLimit: 9000
+UseMIPprecedenceSolver: False
+LocalSearchStrategy: GuidedLocalSearch #Automatic/GreedyDescent
+AddMotionLengthToCost: True
 
 #Hierarchy-----------------------------
 ConfigList:
