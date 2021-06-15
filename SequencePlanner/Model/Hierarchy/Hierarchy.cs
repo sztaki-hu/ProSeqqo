@@ -32,6 +32,7 @@ namespace SequencePlanner.Model.Hierarchy
                     s += "First!";
                 if (item.LastTaskOfAlternative)
                     s += "Last!";
+                Console.WriteLine(s);
             }
         }
 
@@ -45,7 +46,7 @@ namespace SequencePlanner.Model.Hierarchy
             for (int i = 0; i < HierarchyRecords.Count; i++)
             {
                 r = HierarchyRecords[i];
-                if (aktAlternative != r.Alternative.ID && aktAlternative != -1)
+                if (aktAlternative != r.Alternative.GlobalID && aktAlternative != -1)
                 {
                     GoBackAndSetMinMax(i-1, aktProcess, aktAlternative, minTaskIDInAlternative, maxTaskIDInAlternative);
                     aktAlternative = -1;
@@ -61,7 +62,7 @@ namespace SequencePlanner.Model.Hierarchy
                 if (aktProcess == -1)
                     aktProcess = r.Process.ID;
                 if (aktAlternative == -1)
-                    aktAlternative = r.Alternative.ID;
+                    aktAlternative = r.Alternative.GlobalID;
                 if (minTaskIDInAlternative > r.Task.ID)
                     minTaskIDInAlternative = r.Task.ID;
                 if (maxTaskIDInAlternative < r.Task.ID)
@@ -75,7 +76,7 @@ namespace SequencePlanner.Model.Hierarchy
             for (int i = index; i >= 0; i--)
             {
                 var r = HierarchyRecords[i];
-                if (r.Process.ID != aktProcess || r.Alternative.ID != aktAlternative)
+                if (r.Process.ID != aktProcess || r.Alternative.GlobalID != aktAlternative)
                     return;
                 if (r.Task.ID == minTaskIDInAlternative)
                     r.FirstTaskOfAlternative = true;

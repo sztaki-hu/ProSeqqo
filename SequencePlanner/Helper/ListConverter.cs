@@ -96,9 +96,11 @@ namespace SequencePlanner.Helper
             {
                 for (int i = 0; i < list.Count - 1; i++)
                 {
-                    tmp += list[i].ID + ", ";
+                    if(list[i] is not null)
+                        tmp += list[i].ID + ", ";
                 }
-                tmp += list[^1].ID;
+                if (list[^1] is not null)
+                    tmp += list[^1].ID;
 
             }
             return tmp;
