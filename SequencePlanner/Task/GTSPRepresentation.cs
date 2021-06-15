@@ -275,7 +275,10 @@ namespace SequencePlanner.Task
                     {
                         var a = Task.Hierarchy.HierarchyRecords[i];
                         var b = Task.Hierarchy.HierarchyRecords[j];
-                        if (a.FirstTaskOfAlternative && b.LastTaskOfAlternative)
+                        //if (a.FirstTaskOfAlternative && b.LastTaskOfAlternative)
+                        //    ConnectRecords(a, b);                
+                        
+                        if (a.LastTaskOfAlternative && b.FirstTaskOfAlternative)
                             ConnectRecords(a, b);
                     }
                 }
