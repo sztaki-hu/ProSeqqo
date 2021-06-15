@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.OrTools" Version="8.2.8710" />
+    <PackageReference Include="Google.OrTools" Version="9.0.9048" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
