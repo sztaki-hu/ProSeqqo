@@ -14,7 +14,8 @@ namespace SequencerBenchmarkTest
             System.Console.Write("Please write a name for the benchmark: ");
             var name = System.Console.ReadLine();
             Runner runner = new Runner();
-            runner.InitWithTasks(name, GetBenchmarkTasks());
+            //runner.InitWithTasks(name, GetBenchmarkTasks());
+            runner.InitWithTasks(name, ArticleBenchmarkSets.GetArticleTest());
             //runner.Init();
             runner.RunBenchmark();
         }

@@ -59,8 +59,11 @@ namespace SequencerConsole
                         //args = new string[] { "-i", example + "\\MesterEcset.seq",                  "-o", outdir + "\\MesterEcset.json",                       };
                         //args = new string[] { "-i", example + "\\PickAndPlace_Matrix.seq",          "-o", outdir + "\\PickAndPlace_Matrix_out.json",          };
                         //args = new string[] { "-i", example + "\\PickAndPlace_Original.seq",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
+                        //args = new string[] { "-i", example + "\\test1_debug.seq",                    "-o", outdir + "\\test1_debug_out.json" };
                         //args = new string[] { "-i", example + "\\Seqtest.seq",                      "-o", outdir + "\\seqtest_o.json",                        };
                         //args = new string[] { "-i", castle +  "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
+                        args = new string[] { "-i", example + "\\CubeCastl444.seq",             "-o", outdir + "\\CubeCastl444_o.json",                        };
+                        args = new string[] { "-i", example + "\\CubeCastl333.seq",             "-o", outdir + "\\CubeCastl333_o.json",                        };
 
                         Help(args);
                         Version(args);

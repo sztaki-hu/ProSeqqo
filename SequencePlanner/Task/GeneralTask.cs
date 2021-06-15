@@ -3,7 +3,6 @@ using SequencePlanner.Model;
 using SequencePlanner.Model.Hierarchy;
 using SequencePlanner.OR_Tools;
 using SequencePlanner.Task.Processors;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
