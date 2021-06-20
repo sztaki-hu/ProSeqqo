@@ -103,18 +103,29 @@ namespace SequencePlanner.Task
         public DetailedMotionCost ComputeCost(Motion From, Motion To)
         {
             var betweenMotions = ComputeCostBetweenMotionConfigs(From.LastConfig, To.FirstConfig);
-            var inMotion = ComputeCost(From);
             DetailedMotionCost detailedMotionCost = new DetailedMotionCost()
             {
                 A = From,
                 B = To,
-                FinalCost = betweenMotions.FinalCost + inMotion.FinalCost,
+                FinalCost = betweenMotions.FinalCost,
                 DistanceFunctionCost = betweenMotions.DistanceFunctionCost,
                 OverrideCost = betweenMotions.OverrideCost,
                 Penalty = betweenMotions.Penalty,
-                ResourceChangeoverCost = betweenMotions.ResourceChangeoverCost,
-                PreviousMotionDetails = inMotion
+                ResourceChangeoverCost = betweenMotions.ResourceChangeoverCost
             };
+
+            if (!To.isShortcut)
+            {
+                var inMotion = ComputeCost(From);
+                detailedMotionCost.FinalCost += inMotion.FinalCost;
+                detailedMotionCost.PreviousMotionDetails = inMotion;
+                //System.Console.WriteLine(From + "-" + To+": "+ betweenMotions.FinalCost);
+                return detailedMotionCost;
+            }
+            else
+            {
+                detailedMotionCost.FinalCost += To.ShortcutCost;
+            }
             return detailedMotionCost;
 
             //if (From.Virtual || From.Virtual)

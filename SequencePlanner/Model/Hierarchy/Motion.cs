@@ -15,11 +15,15 @@ namespace SequencePlanner.Model.Hierarchy
         public Config LastConfig { get { if (Configs.Count > 0) return Configs[^1]; else return null; } }
         public OverrideCost OverrideCostIn { get; set; }
         public OverrideCost OverrideCostOut { get; set; }
+        public double ShortcutCost { get; set; }
+        public bool isShortcut { get; set; }
 
 
         public Motion() : base()
         {
             DetailedCost = new DetailedConfigCost();
+            OverrideCostIn = new OverrideCost();
+            OverrideCostOut = new OverrideCost();
             Configs = new List<Config>();
         }
 

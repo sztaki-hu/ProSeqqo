@@ -53,8 +53,8 @@ namespace SequencePlanner.Task
             Timer.Restart();
             ValidateTask();
             DepotMapper.Change();
-            ShortcutMapper.Change();
             Hierarchy.Build();
+            ShortcutMapper.Change();
             GTSPRepresentation.Build();
             GTSPRepresentation.ORToolsFixFinishDepot();
             InitialSolver.CreateInitialSolution();
@@ -104,39 +104,52 @@ namespace SequencePlanner.Task
 
             if (result.StatusCode == 1)
             {
-                foreach (var item in result.Solution)
-                {
-                    var motion = Hierarchy.GetMotionBySeqID(item);
-                    if (motion != null)
-                    {
-                        taskResult.SolutionHierarchy.Add(Hierarchy.GetRecordByMotion(motion));
-                        taskResult.SolutionMotionIDs.Add(motion.ID);
-                        taskResult.SolutionMotion.Add(motion);
-                        foreach (var config in motion.Configs)
-                        {
-                            taskResult.SolutionConfig.Add(config);
-                            taskResult.SolutionConfigIDs.Add(config.ID);
-                        }
-                    }
-                    else
-                    {
-                        throw new SeqException("OR-Tools solution seqID can not be resolved: " + item);
-                    }
-                }
+                ResolveSolutionMotions(taskResult, result);
+                taskResult = ShortcutMapper.ResolveSolution(taskResult);
+                ShortcutMapper.ChangeBack();
+                ResolveSolution(taskResult, result);
+                ResolveCosts(taskResult);
+                taskResult.CalculateSum();
+            }
+            return taskResult;
+        }
 
-                if (taskResult.SolutionMotion.Count > 0)
-                    AddConfigCostsOfMotion(taskResult, taskResult.SolutionMotion[0]);
-                for (int i = 1; i < taskResult.SolutionMotion.Count; i++)
+        private void ResolveCosts(GeneralTaskResult taskResult)
+        {
+            if (taskResult.SolutionMotion.Count > 0)
+                AddConfigCostsOfMotion(taskResult, taskResult.SolutionMotion[0]);
+            for (int i = 1; i < taskResult.SolutionMotion.Count; i++)
+            {
+                AddConfigCostsBetweenMotions(taskResult, taskResult.SolutionMotion[i - 1], taskResult.SolutionMotion[i]);
+                AddConfigCostsOfMotion(taskResult, taskResult.SolutionMotion[i]);
+            }
+            taskResult = DepotMapper.ResolveSolution(taskResult);
+        }
+
+        public void ResolveSolutionMotions(GeneralTaskResult taskResult, ORToolsResult result)
+        {
+            foreach (var item in result.Solution)
+            {
+                var motion = Hierarchy.GetMotionBySeqID(item);
+                if (motion != null)
+                    taskResult.SolutionMotion.Add(motion);
+                else
+                    throw new SeqException("OR-Tools solution seqID can not be resolved: " + item);
+            }
+        }
+
+        public void ResolveSolution(GeneralTaskResult taskResult, ORToolsResult result)
+        {
+            foreach (var motion in taskResult.SolutionMotion)
+            {
+                taskResult.SolutionHierarchy.Add(Hierarchy.GetRecordByMotion(motion));
+                taskResult.SolutionMotionIDs.Add(motion.ID);
+                foreach (var config in motion.Configs)
                 {
-                    AddConfigCostsBetweenMotions(taskResult, taskResult.SolutionMotion[i-1], taskResult.SolutionMotion[i]);
-                    AddConfigCostsOfMotion(taskResult, taskResult.SolutionMotion[i]);
+                    taskResult.SolutionConfig.Add(config);
+                    taskResult.SolutionConfigIDs.Add(config.ID);
                 }
             }
-
-            taskResult = DepotMapper.ResolveSolution(taskResult);
-            taskResult = ShortcutMapper.ResolveSolution(taskResult);
-            taskResult.CalculateSum();
-            return taskResult;
         }
 
         private void AddConfigCostsOfMotion(GeneralTaskResult result, Motion motion)
@@ -239,7 +252,7 @@ namespace SequencePlanner.Task
                     {
                         if (d == solution[i].ID)
                             if (findOne == true)
-                                throw new SeqException("Result contains more than one element of disjoint set.");
+                                throw new SeqException("Result contains more than one element of disjoint set. ID: "+solution[i].ID);
                             else
                                 findOne = true;
                     }
