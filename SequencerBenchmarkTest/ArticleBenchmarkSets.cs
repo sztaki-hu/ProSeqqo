@@ -24,11 +24,15 @@ namespace SequencerBenchmarkTest
                     TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
                     Dir = "Resources/Benchmark/PickAndPlace",
                     Parameters = new List<Dictionary<string, string>>() {
-                        new Dictionary<string, string>() { ["Time"] = "0",       ["Strategy"] = "GreedyDescent",       ["MIP"] = "False" },
+                        //new Dictionary<string, string>() { ["Time"] = "0",       ["Strategy"] = "GreedyDescent",       ["MIP"] = "False" },
+                        new Dictionary<string, string>() { ["Time"] = "0",       ["Strategy"] = "GreedyDescent",       ["MIP"] = "False",  ["USA"]="True" },
 
-                        //new Dictionary<string, string>() { ["Time"] = "100",     ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False" },
-                        //new Dictionary<string, string>() { ["Time"] = "1 000",   ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False" },
-                        //new Dictionary<string, string>() { ["Time"] = "10 000",  ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False" },
+                        new Dictionary<string, string>() { ["Time"] = "100",     ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False",  ["USA"]="True"},
+                        //new Dictionary<string, string>() { ["Time"] = "100",     ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False",  ["USA"]="False"},
+                        new Dictionary<string, string>() { ["Time"] = "1 000",   ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False",  ["USA"]="True"},
+                        //new Dictionary<string, string>() { ["Time"] = "1 000",   ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False",  ["USA"]="False"},
+                        new Dictionary<string, string>() { ["Time"] = "10 000",  ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False",   ["USA"]="True"},
+                        //new Dictionary<string, string>() { ["Time"] = "10 000",  ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False"   ["USA"]="False"},
                         //new Dictionary<string, string>() { ["Time"] = "60 000",  ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False" },
                         //new Dictionary<string, string>() { ["Time"] = "600 000", ["Strategy"] = "GuidedLocalSearch",   ["MIP"] = "False" },
 

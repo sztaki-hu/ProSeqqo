@@ -8,7 +8,7 @@ ResourceChangeover: Off
 TrapezoidSpeed: [2,269;2,269;2,269;3,316;3,316;3,316]
 TrapezoidAcceleration: [10,472;10,472;10,472;10,472;10,472;10,472]
 LocalSearchStrategy: <*Strategy*>
-UseShortcutInAlternatives: False
+UseShortcutInAlternatives: <*USA*>
 UseMIPprecedenceSolver: <*MIP*>
 
 ConfigList: 

@@ -8,7 +8,7 @@ ResourceChangeover: Off
 TrapezoidSpeed: [2,269;2,269;2,269;3,316;3,316;3,316]
 TrapezoidAcceleration: [10,472;10,472;10,472;10,472;10,472;10,472]
 LocalSearchStrategy: <*Strategy*>
-UseShortcutInAlternatives: False
+UseShortcutInAlternatives: <*USA*>
 UseMIPprecedenceSolver: <*MIP*>
 ConfigList: 
 1;[-1,86855;-1,44418;1,69802;-1,99163;-1,51983;-0,293486];Camera
