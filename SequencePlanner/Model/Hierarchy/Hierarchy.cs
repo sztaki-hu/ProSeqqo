@@ -25,15 +25,15 @@ namespace SequencePlanner.Model.Hierarchy
             GenerateBidirectionals();
             HierarchyRecords.Sort(new HierarchySorter());
             SetFirstLast();
-            foreach (var item in HierarchyRecords)
-            {
-                var s = item.ToString();
-                if (item.FirstTaskOfAlternative)
-                    s += "First!";
-                if (item.LastTaskOfAlternative)
-                    s += "Last!";
-                Console.WriteLine(s);
-            }
+            //foreach (var item in HierarchyRecords)
+            //{
+            //    var s = item.ToString();
+            //    if (item.FirstTaskOfAlternative)
+            //        s += "First!";
+            //    if (item.LastTaskOfAlternative)
+            //        s += "Last!";
+            //    Console.WriteLine(s);
+            //}
         }
 
         private void SetFirstLast()

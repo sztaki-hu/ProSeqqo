@@ -11,9 +11,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
     {
         public void ExportSEQ(GeneralTaskResult result, string path)
         {
-            SeqLogger.Debug("Output task type: PointLike", nameof(GeneralResultSerializer));
+            SeqLogger.Debug("Output task type: General", nameof(GeneralResultSerializer));
             SeqLogger.Info("Output file: " + path, nameof(GeneralResultSerializer));
-            SeqLogger.Debug("Output type: SEQ", nameof(GeneralResultSerializer));
+            SeqLogger.Info("Output type: SEQ", nameof(GeneralResultSerializer));
             var ser = new GeneralResultSerializationObject(result);
             var seqString = ser.ToSEQ();
             File.WriteAllText(path, seqString);
@@ -22,9 +22,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public GeneralTaskResult ImportSEQ(string path)
         {
-            SeqLogger.Debug("Input task type: PointLike", nameof(GeneralResultSerializer));
+            SeqLogger.Debug("Input task type: General", nameof(GeneralResultSerializer));
             SeqLogger.Info("Input file: " + path, nameof(GeneralResultSerializer));
-            SeqLogger.Debug("Input type: SEQ", nameof(GeneralResultSerializer));
+            SeqLogger.Info("Input type: SEQ", nameof(GeneralResultSerializer));
             var seqString = File.ReadAllLines(path).ToList();
             var seqObject = new GeneralResultSerializationObject(seqString);
             SeqLogger.Debug("Input readed!", nameof(GeneralResultSerializer));
@@ -33,8 +33,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public void ExportJSON(GeneralTaskResult result, string path)
         {
-            SeqLogger.Debug("Output task type: PointLike", nameof(GeneralResultSerializer));
-            SeqLogger.Debug("Output file: " + path, nameof(GeneralResultSerializer));
+            SeqLogger.Debug("Output task type: General", nameof(GeneralResultSerializer));
+            SeqLogger.Info("Output file: " + path, nameof(GeneralResultSerializer));
             SeqLogger.Info("Output type: JSON", nameof(GeneralResultSerializer));
             var seqObject = new GeneralResultSerializationObject(result);
             var jsonString = JsonConvert.SerializeObject(seqObject);
@@ -44,9 +44,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public GeneralTaskResult ImportJSON(string path)
         {
-            SeqLogger.Debug("Input task type: PointLike", nameof(GeneralResultSerializer));
+            SeqLogger.Debug("Input task type: General", nameof(GeneralResultSerializer));
             SeqLogger.Info("Input file: " + path, nameof(GeneralResultSerializer));
-            SeqLogger.Debug("Input type: JSON", nameof(GeneralResultSerializer));
+            SeqLogger.Info("Input type: JSON", nameof(GeneralResultSerializer));
             var jsonString = File.ReadAllText(path);
             var seqObject = JsonConvert.DeserializeObject<GeneralResultSerializationObject>(jsonString);
             SeqLogger.Debug("Input readed!", nameof(GeneralResultSerializer));
@@ -55,9 +55,9 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
 
         public void ExportXML(GeneralTaskResult result, string path)
         {
-            SeqLogger.Debug("Output task type: PointLike", nameof(GeneralResultSerializer));
+            SeqLogger.Debug("Output task type: General", nameof(GeneralResultSerializer));
             SeqLogger.Info("Output file: " + path, nameof(GeneralResultSerializer));
-            SeqLogger.Debug("Output type: XML", nameof(GeneralResultSerializer));
+            SeqLogger.Info("Output type: XML", nameof(GeneralResultSerializer));
             var seqObject = new GeneralResultSerializationObject(result);
             XmlSerializer x = new XmlSerializer(typeof(GeneralResultSerializationObject));
             TextWriter writer = new StreamWriter(path);
@@ -70,7 +70,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Result
         {
             SeqLogger.Debug("Input task type: PointLike", nameof(GeneralResultSerializer));
             SeqLogger.Info("Input file: " + path, nameof(GeneralResultSerializer));
-            SeqLogger.Debug("Input type: XML", nameof(GeneralResultSerializer));
+            SeqLogger.Info("Input type: XML", nameof(GeneralResultSerializer));
             XmlSerializer x = new XmlSerializer(typeof(GeneralResultSerializationObject));
             TextReader reader = new StreamReader(path);
             var seqObject = (GeneralResultSerializationObject)x.Deserialize(reader);
