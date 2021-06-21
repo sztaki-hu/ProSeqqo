@@ -2,6 +2,7 @@ Task: General
 Cyclic: False
 StartDepot: 1
 #FinishDepot: 5
+UseShortcutInAlternatives: True
 
 #Cost----------------------------------
 DistanceFunction: TrapezoidTime
