@@ -221,13 +221,76 @@
     <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[3_3_3]_C24_O320.seq">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\Offline\CubeCastle[3_3_3]_C25_O328.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\Offline\CubeCastle[3_3_3]_C50_O728.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[3_3_9]_C75_O1128.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\Offline\CubeCastle[3_4_2]_C25_O312.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[3_4_2]_C50_O720.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[3_4_7]_C75_O1112.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\Offline\CubeCastle[3_5_1]_C25_O208.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[3_5_4]_C50_O704.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[3_5_6]_C75_O1120.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\Offline\CubeCastle[4_4_2]_C25_O296.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[4_4_2]_C50_O696.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[4_4_4]_C48_O672.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[4_4_6]_C75_O1096.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[4_4_8]_C100_O1496.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\Offline\CubeCastle[5_5_1]_C25_O232.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[5_5_2]_C50_O592.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[5_5_4]_C75_O1056.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[5_5_5]_C100_O1424.seq">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[5_5_5]_C100_O1464.seq">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[5_5_5]_C83_O1180.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[6_6_4]_C100_O1380.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[6_6_6]_C150_O2204.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[7_7_3]_C100_O1296.seq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Benchmark\Kubik2\Templates\CubeCastle[8_8_2]_C100_O1160.seq">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Benchmark\Kubik\Kubik[10_10_10].seq">
