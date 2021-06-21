@@ -1,13 +1,18 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+﻿using SequencePlanner.Model.Hierarchy;
 
 namespace SequencePlanner.Model
 {
     public class DetailedConfigCost : DetailedCost<Config>
     {
+        
+        public string ToStringShort()
+        {
+            return A?.ToString() + " - " + B?.ToString() + " Cost: " + FinalCost.ToString("0.##");
+        }
+
         public override string ToString()
         {
-            return (A?.ToString() + " - " + B?.ToString() + " Cost: " + FinalCost).FitFor(50) + " (Details: Distance: " + DistanceFunctionCost + " ResourceChangCost: " + ResourceChangeoverCost + " OverrideCost: " + OverrideCost + " Penalty: " + Penalty + ")";
+            return A?.ToString() + " - " + B?.ToString() + " Cost: " + FinalCost.ToString("0.##") + " (Details: Distance: " + DistanceFunctionCost.ToString("0.##") + " ResourceChangCost: " + ResourceChangeoverCost.ToString("0.##") + " OverrideCost: " + OverrideCost.ToString("0.##") + " Penalty: " + Penalty.ToString("0.##") + ")";
         }
 
         public DetailedConfigCost Add(DetailedConfigCost config)

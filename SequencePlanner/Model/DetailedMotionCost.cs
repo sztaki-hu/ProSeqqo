@@ -15,9 +15,14 @@ namespace SequencePlanner.Model
         }
 
 
+        public string ToStringShort()
+        {
+            return A?.ToString() + " - " + B?.ToString() + " Cost: " + FinalCost.ToString("N2");
+        }
+
         public override string ToString()
         {
-            return (A?.ToString() + " - " + B?.ToString() + " Cost: " + FinalCost).FitFor(50) + " (Details: Distance: " + DistanceFunctionCost + " ResourceChangCost: " + ResourceChangeoverCost + " OverrideCost: " + OverrideCost + " Penalty: " + Penalty + " PreviousMotionCost: " + PreviousMotionCost + " InMotion: " + InMotion + ")";
+            return A?.ToString() + " - " + B?.ToString() + " Cost: " + FinalCost.ToString("N2") + " (Details: Distance: " + DistanceFunctionCost.ToString("N2") + " ResourceChangCost: " + ResourceChangeoverCost.ToString("N2") + " OverrideCost: " + OverrideCost.ToString("N2") + " Penalty: " + Penalty.ToString("N2") + " PreviousMotionCost: " + PreviousMotionCost.ToString("N2") + " InMotion: " + InMotion.ToString("N2") + ")";
         }
     }
 }

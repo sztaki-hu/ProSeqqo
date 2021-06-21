@@ -51,39 +51,38 @@ namespace SequencePlanner.Task
 
         public void ToLog(LogLevel logLevel)
         {
-            SeqLogger.WriteLog(logLevel, "Status code: " + StatusCode);
-            SeqLogger.WriteLog(logLevel, "Status message: " + StatusMessage);
-            SeqLogger.WriteLog(logLevel, "Error message: " + ErrorMessage);
-            SeqLogger.WriteLog(logLevel, "Full Time:" + FullTime);
-            SeqLogger.WriteLog(logLevel, "Solver Time: " + SolverTime);
-            SeqLogger.WriteLog(logLevel, "MIP Solver Time: " + PreSolverTime);
-            SeqLogger.WriteLog(logLevel, "Full Cost: " + FullMotionCost);
-            SeqLogger.WriteLog(logLevel, "Solution MotionIDs:" + SolutionMotionIDs.ToListString());
-            SeqLogger.WriteLog(logLevel, "Solution ConfigIDs:" + SolutionConfigIDs.ToListString());
-            SeqLogger.WriteLog(logLevel, "Motion Cost: " + MotionCosts.ToListString());
-            SeqLogger.WriteLog(logLevel, "Config Cost: " + ConfigCosts.ToListString());
-            SeqLogger.WriteLog(logLevel, "Motion Costs: ");
+            SeqLogger.WriteLog(logLevel, "Status code:\t" + StatusCode);
+            SeqLogger.WriteLog(logLevel, "Status message:\t" + StatusMessage);
+            SeqLogger.WriteLog(logLevel, "Error message:\t" + ErrorMessage);
+            SeqLogger.WriteLog(logLevel, "Total time:\t" + FullTime);
+            SeqLogger.WriteLog(logLevel, "Solver time:\t" + SolverTime);
+            SeqLogger.WriteLog(logLevel, "Pre-solver time:\t" + PreSolverTime);
+            SeqLogger.WriteLog(logLevel, "Full cost:\t" + FullMotionCost);
+            SeqLogger.WriteLog(logLevel, "Solution motionIDs:\t" + SolutionMotionIDs.ToListString());
+            SeqLogger.WriteLog(logLevel, "Solution configIDs:\t" + SolutionConfigIDs.ToListString());
+            SeqLogger.WriteLog(logLevel, "Motion cost:\t" + MotionCosts.ToListString());
+            SeqLogger.WriteLog(logLevel, "Config cost:\t" + ConfigCosts.ToListString());
+            SeqLogger.WriteLog(logLevel, "Motions costs with details: " + DetailedMotionCost.ToString());
+            SeqLogger.WriteLog(logLevel, "Configs costs with details: " + DetailedConfigCost.ToString());
             SeqLogger.Indent++;
             foreach (var c in CostsBetweenMotions)
             {
-                SeqLogger.WriteLog(logLevel, "\t" + c.ToString());
+                SeqLogger.WriteLog(logLevel, "\t" + c.ToStringShort());
             }
             SeqLogger.Indent--;
-            SeqLogger.WriteLog(logLevel, "Config Costs: ");
+            SeqLogger.WriteLog(logLevel, "Config costs: ");
             SeqLogger.Indent++;
             foreach (var c in CostsBetweenConfigs)
             {
-                SeqLogger.WriteLog(logLevel, "\t" + c.ToString());
+                SeqLogger.WriteLog(logLevel, "\t" + c.ToStringShort());
             }
             SeqLogger.Indent--;
-            SeqLogger.WriteLog(logLevel, "Solution Hierarchy: ");
+            SeqLogger.WriteLog(logLevel, "Solution hierarchy: ");
             SeqLogger.Indent++;
             foreach (var c in SolutionHierarchy)
             {
                 SeqLogger.WriteLog(logLevel, "\t" + c.ToString());
             }
-            SeqLogger.WriteLog(logLevel, "Full cost of motions with details: " + DetailedMotionCost.ToString());
-            SeqLogger.WriteLog(logLevel, "Full cost of configs with details: " + DetailedConfigCost.ToString());
             SeqLogger.Indent--;
         }
 

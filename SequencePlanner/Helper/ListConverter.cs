@@ -31,7 +31,7 @@ namespace SequencePlanner.Helper
                 {
                     tmp += list[i].ToString("0.##") + "; ";
                 }
-                tmp += list[^1];
+                tmp += list[^1].ToString("0.##");
             }
             return tmp;
         }
