@@ -1,10 +1,11 @@
 Task: General
 Cyclic: True
 StartDepot: 1200
-TimeLimit: 0
+TimeLimit:  <*T*>
 DistanceFunction: Euclidian
 ResourceChangeover: Off
 UseMIPprecedenceSolver: True
+LocalSearchStrategy: <*LSS*>
 
 ConfigList:
 #+----------+---------------------+------------------+----------------------+

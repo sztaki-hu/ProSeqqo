@@ -1,0 +1,468 @@
+Task: General
+Cyclic: True
+StartDepot: 100
+TimeLimit:  <*T*>
+DistanceFunction: Euclidian
+ResourceChangeover: Off
+UseMIPprecedenceSolver: True
+LocalSearchStrategy: <*LSS*>
+
+ConfigList:
+#+----------+---------------------+------------------+----------------------+
+#| ConfigID |       Config        |  Name[optional]  | ResourceID[optional] |
+#+----------+---------------------+------------------+----------------------+
+#|  <int>   | <double[Dimension]> |     <string>     |         <int>        |
+#+----------+---------------------+------------------+----------------------+
+100;[50;0;0];Init
+#Put down X
+0;[10;20;0];BB_Tower_2_L0_Putdown_x
+1;[10;20;10];BB_Tower_2_L1_Putdown_x
+2;[10;20;20];BB_Tower_2_L2_Putdown_x
+3;[10;20;30];BB_Tower_2_L3_Putdown_x
+4;[10;20;40];BB_Tower_2_L4_Putdown_x
+5;[10;20;50];BB_Tower_2_L5_Putdown_x
+6;[10;20;60];BB_Tower_2_L6_Putdown_x
+7;[10;20;70];BB_Tower_2_L7_Putdown_x
+8;[10;20;80];BB_Tower_2_L8_Putdown_x
+9;[10;20;90];BB_Tower_2_L9_Putdown_x
+10;[10;20;100];BB_Tower_2_L10_Putdown_x
+11;[20;20;0];BB_Wall_B2_L0_Putdown_x
+12;[10;20;110];BB_Tower_2_L11_Putdown_x
+13;[0;20;0];BB_Wall_A2_L0_Putdown_x
+14;[0;0;0];BB_Wall_C0_L0_Putdown_x
+15;[20;40;0];BB_Wall_D2_L0_Putdown_x
+16;[20;30;0];BB_Wall_B3_L0_Putdown_x
+17;[20;10;0];BB_Wall_B1_L0_Putdown_x
+18;[20;0;0];BB_Wall_C2_L0_Putdown_x
+19;[10;40;0];BB_Wall_D1_L0_Putdown_x
+20;[10;20;120];BB_Tower_2_L12_Putdown_x
+21;[10;0;0];BB_Wall_C1_L0_Putdown_x
+22;[0;40;0];BB_Wall_D0_L0_Putdown_x
+23;[0;30;0];BB_Wall_A3_L0_Putdown_x
+24;[0;10;0];BB_Wall_A1_L0_Putdown_x
+#Put down Y
+25;[10;20;0];BB_Tower_2_L0_Putdown_y
+26;[10;20;10];BB_Tower_2_L1_Putdown_y
+27;[10;20;20];BB_Tower_2_L2_Putdown_y
+28;[10;20;30];BB_Tower_2_L3_Putdown_y
+29;[10;20;40];BB_Tower_2_L4_Putdown_y
+30;[10;20;50];BB_Tower_2_L5_Putdown_y
+31;[10;20;60];BB_Tower_2_L6_Putdown_y
+32;[10;20;70];BB_Tower_2_L7_Putdown_y
+33;[10;20;80];BB_Tower_2_L8_Putdown_y
+34;[10;20;90];BB_Tower_2_L9_Putdown_y
+35;[10;20;100];BB_Tower_2_L10_Putdown_y
+36;[20;20;0];BB_Wall_B2_L0_Putdown_y
+37;[10;20;110];BB_Tower_2_L11_Putdown_y
+38;[0;20;0];BB_Wall_A2_L0_Putdown_y
+39;[0;0;0];BB_Wall_C0_L0_Putdown_y
+40;[20;40;0];BB_Wall_D2_L0_Putdown_y
+41;[20;30;0];BB_Wall_B3_L0_Putdown_y
+42;[20;10;0];BB_Wall_B1_L0_Putdown_y
+43;[20;0;0];BB_Wall_C2_L0_Putdown_y
+44;[10;40;0];BB_Wall_D1_L0_Putdown_y
+45;[10;20;120];BB_Tower_2_L12_Putdown_y
+46;[10;0;0];BB_Wall_C1_L0_Putdown_y
+47;[0;40;0];BB_Wall_D0_L0_Putdown_y
+48;[0;30;0];BB_Wall_A3_L0_Putdown_y
+49;[0;10;0];BB_Wall_A1_L0_Putdown_y
+#Pick up X
+50;[100;10;0];BW_Wall_A1_L0_Pickup_X
+51;[100;30;0];BW_Wall_A3_L0_Pickup_X
+52;[100;40;0];BW_Wall_D0_L0_Pickup_X
+53;[110;0;0];BW_Wall_C1_L0_Pickup_X
+54;[110;20;120];BW_Tower_0_L12_Pickup_X
+55;[110;40;0];BW_Wall_D1_L0_Pickup_X
+56;[120;0;0];BW_Wall_C2_L0_Pickup_X
+57;[120;10;0];BW_Wall_B1_L0_Pickup_X
+58;[120;30;0];BW_Wall_B3_L0_Pickup_X
+59;[120;40;0];BW_Wall_D2_L0_Pickup_X
+60;[100;0;0];BW_Wall_C0_L0_Pickup_X
+61;[100;20;0];BW_Wall_A2_L0_Pickup_X
+62;[110;20;110];BW_Tower_0_L11_Pickup_X
+63;[120;20;0];BW_Wall_B2_L0_Pickup_X
+64;[110;20;100];BW_Tower_0_L10_Pickup_X
+65;[110;20;90];BW_Tower_0_L9_Pickup_X
+66;[110;20;80];BW_Tower_0_L8_Pickup_X
+67;[110;20;70];BW_Tower_0_L7_Pickup_X
+68;[110;20;60];BW_Tower_0_L6_Pickup_X
+69;[110;20;50];BW_Tower_0_L5_Pickup_X
+70;[110;20;40];BW_Tower_0_L4_Pickup_X
+71;[110;20;30];BW_Tower_0_L3_Pickup_X
+72;[110;20;20];BW_Tower_0_L2_Pickup_X
+73;[110;20;10];BW_Tower_0_L1_Pickup_X
+74;[110;20;0];BW_Tower_0_L0_Pickup_X
+#Pick up Y
+75;[100;10;0];BW_Wall_A1_L0_Pickup_Y
+76;[100;30;0];BW_Wall_A3_L0_Pickup_Y
+77;[100;40;0];BW_Wall_D0_L0_Pickup_Y
+78;[110;0;0];BW_Wall_C1_L0_Pickup_Y
+79;[110;20;120];BW_Tower_0_L12_Pickup_Y
+80;[110;40;0];BW_Wall_D1_L0_Pickup_Y
+81;[120;0;0];BW_Wall_C2_L0_Pickup_Y
+82;[120;10;0];BW_Wall_B1_L0_Pickup_Y
+83;[120;30;0];BW_Wall_B3_L0_Pickup_Y
+84;[120;40;0];BW_Wall_D2_L0_Pickup_Y
+85;[100;0;0];BW_Wall_C0_L0_Pickup_Y
+86;[100;20;0];BW_Wall_A2_L0_Pickup_Y
+87;[110;20;110];BW_Tower_0_L11_Pickup_Y
+88;[120;20;0];BW_Wall_B2_L0_Pickup_Y
+89;[110;20;100];BW_Tower_0_L10_Pickup_Y
+90;[110;20;90];BW_Tower_0_L9_Pickup_Y
+91;[110;20;80];BW_Tower_0_L8_Pickup_Y
+92;[110;20;70];BW_Tower_0_L7_Pickup_Y
+93;[110;20;60];BW_Tower_0_L6_Pickup_Y
+94;[110;20;50];BW_Tower_0_L5_Pickup_Y
+95;[110;20;40];BW_Tower_0_L4_Pickup_Y
+96;[110;20;30];BW_Tower_0_L3_Pickup_Y
+97;[110;20;20];BW_Tower_0_L2_Pickup_Y
+98;[110;20;10];BW_Tower_0_L1_Pickup_Y
+99;[110;20;0];BW_Tower_0_L0_Pickup_Y
+
+ProcessHierarchy:
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+# ProcessID | AlternativeID  |  TaskID |       MotionID      |    ConfigID      |Bidirectional [optional]|    MotionName[optional]   |
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+#   <int>   |      <int>     |  <int>  |         <int>       |      int[]       |       True/False       |         True/False        |
+#-----------+----------------+---------+---------------------+------------------+------------------------+---------------------------+
+100 ;	0 ;	0 ;	100 ;	[100]	#Init
+#Cube: BW_Wall_A1_L0 --> BB_Tower_2_L0
+0 ;	0 ;	0 ;	50 ;	[50]	#BW_Wall_A1_L0_Pickup_X
+0 ;	0 ;	0 ;	75 ;	[75]	#BW_Wall_A1_L0_Pickup_Y
+0 ;	0 ;	1 ;	0 ;	[0]	#BB_Tower_2_L0_Putdown_X
+0 ;	0 ;	1 ;	25 ;	[25]	#BB_Tower_2_L0_Putdown_Y
+#Cube: BW_Wall_A3_L0 --> BB_Tower_2_L1
+1 ;	0 ;	0 ;	51 ;	[51]	#BW_Wall_A3_L0_Pickup_X
+1 ;	0 ;	0 ;	76 ;	[76]	#BW_Wall_A3_L0_Pickup_Y
+1 ;	0 ;	1 ;	1 ;	[1]	#BB_Tower_2_L1_Putdown_X
+1 ;	0 ;	1 ;	26 ;	[26]	#BB_Tower_2_L1_Putdown_Y
+#Cube: BW_Wall_D0_L0 --> BB_Tower_2_L2
+2 ;	0 ;	0 ;	52 ;	[52]	#BW_Wall_D0_L0_Pickup_X
+2 ;	0 ;	0 ;	77 ;	[77]	#BW_Wall_D0_L0_Pickup_Y
+2 ;	0 ;	1 ;	2 ;	[2]	#BB_Tower_2_L2_Putdown_X
+2 ;	0 ;	1 ;	27 ;	[27]	#BB_Tower_2_L2_Putdown_Y
+#Cube: BW_Wall_C1_L0 --> BB_Tower_2_L3
+3 ;	0 ;	0 ;	53 ;	[53]	#BW_Wall_C1_L0_Pickup_X
+3 ;	0 ;	0 ;	78 ;	[78]	#BW_Wall_C1_L0_Pickup_Y
+3 ;	0 ;	1 ;	3 ;	[3]	#BB_Tower_2_L3_Putdown_X
+3 ;	0 ;	1 ;	28 ;	[28]	#BB_Tower_2_L3_Putdown_Y
+#Cube: BW_Tower_0_L12 --> BB_Tower_2_L4
+4 ;	0 ;	0 ;	54 ;	[54]	#BW_Tower_0_L12_Pickup_X
+4 ;	0 ;	0 ;	79 ;	[79]	#BW_Tower_0_L12_Pickup_Y
+4 ;	0 ;	1 ;	4 ;	[4]	#BB_Tower_2_L4_Putdown_X
+4 ;	0 ;	1 ;	29 ;	[29]	#BB_Tower_2_L4_Putdown_Y
+#Cube: BW_Wall_D1_L0 --> BB_Tower_2_L5
+5 ;	0 ;	0 ;	55 ;	[55]	#BW_Wall_D1_L0_Pickup_X
+5 ;	0 ;	0 ;	80 ;	[80]	#BW_Wall_D1_L0_Pickup_Y
+5 ;	0 ;	1 ;	5 ;	[5]	#BB_Tower_2_L5_Putdown_X
+5 ;	0 ;	1 ;	30 ;	[30]	#BB_Tower_2_L5_Putdown_Y
+#Cube: BW_Wall_C2_L0 --> BB_Tower_2_L6
+6 ;	0 ;	0 ;	56 ;	[56]	#BW_Wall_C2_L0_Pickup_X
+6 ;	0 ;	0 ;	81 ;	[81]	#BW_Wall_C2_L0_Pickup_Y
+6 ;	0 ;	1 ;	6 ;	[6]	#BB_Tower_2_L6_Putdown_X
+6 ;	0 ;	1 ;	31 ;	[31]	#BB_Tower_2_L6_Putdown_Y
+#Cube: BW_Wall_B1_L0 --> BB_Tower_2_L7
+7 ;	0 ;	0 ;	57 ;	[57]	#BW_Wall_B1_L0_Pickup_X
+7 ;	0 ;	0 ;	82 ;	[82]	#BW_Wall_B1_L0_Pickup_Y
+7 ;	0 ;	1 ;	7 ;	[7]	#BB_Tower_2_L7_Putdown_X
+7 ;	0 ;	1 ;	32 ;	[32]	#BB_Tower_2_L7_Putdown_Y
+#Cube: BW_Wall_B3_L0 --> BB_Tower_2_L8
+8 ;	0 ;	0 ;	58 ;	[58]	#BW_Wall_B3_L0_Pickup_X
+8 ;	0 ;	0 ;	83 ;	[83]	#BW_Wall_B3_L0_Pickup_Y
+8 ;	0 ;	1 ;	8 ;	[8]	#BB_Tower_2_L8_Putdown_X
+8 ;	0 ;	1 ;	33 ;	[33]	#BB_Tower_2_L8_Putdown_Y
+#Cube: BW_Wall_D2_L0 --> BB_Tower_2_L9
+9 ;	0 ;	0 ;	59 ;	[59]	#BW_Wall_D2_L0_Pickup_X
+9 ;	0 ;	0 ;	84 ;	[84]	#BW_Wall_D2_L0_Pickup_Y
+9 ;	0 ;	1 ;	9 ;	[9]	#BB_Tower_2_L9_Putdown_X
+9 ;	0 ;	1 ;	34 ;	[34]	#BB_Tower_2_L9_Putdown_Y
+#Cube: BW_Wall_C0_L0 --> BB_Tower_2_L10
+10 ;	0 ;	0 ;	60 ;	[60]	#BW_Wall_C0_L0_Pickup_X
+10 ;	0 ;	0 ;	85 ;	[85]	#BW_Wall_C0_L0_Pickup_Y
+10 ;	0 ;	1 ;	10 ;	[10]	#BB_Tower_2_L10_Putdown_X
+10 ;	0 ;	1 ;	35 ;	[35]	#BB_Tower_2_L10_Putdown_Y
+#Cube: BW_Wall_A2_L0 --> BB_Wall_B2_L0
+11 ;	0 ;	0 ;	61 ;	[61]	#BW_Wall_A2_L0_Pickup_X
+11 ;	0 ;	0 ;	86 ;	[86]	#BW_Wall_A2_L0_Pickup_Y
+11 ;	0 ;	1 ;	11 ;	[11]	#BB_Wall_B2_L0_Putdown_X
+11 ;	0 ;	1 ;	36 ;	[36]	#BB_Wall_B2_L0_Putdown_Y
+#Cube: BW_Tower_0_L11 --> BB_Tower_2_L11
+12 ;	0 ;	0 ;	62 ;	[62]	#BW_Tower_0_L11_Pickup_X
+12 ;	0 ;	0 ;	87 ;	[87]	#BW_Tower_0_L11_Pickup_Y
+12 ;	0 ;	1 ;	12 ;	[12]	#BB_Tower_2_L11_Putdown_X
+12 ;	0 ;	1 ;	37 ;	[37]	#BB_Tower_2_L11_Putdown_Y
+#Cube: BW_Wall_B2_L0 --> BB_Wall_A2_L0
+13 ;	0 ;	0 ;	63 ;	[63]	#BW_Wall_B2_L0_Pickup_X
+13 ;	0 ;	0 ;	88 ;	[88]	#BW_Wall_B2_L0_Pickup_Y
+13 ;	0 ;	1 ;	13 ;	[13]	#BB_Wall_A2_L0_Putdown_X
+13 ;	0 ;	1 ;	38 ;	[38]	#BB_Wall_A2_L0_Putdown_Y
+#Cube: BW_Tower_0_L10 --> BB_Wall_C0_L0
+14 ;	0 ;	0 ;	64 ;	[64]	#BW_Tower_0_L10_Pickup_X
+14 ;	0 ;	0 ;	89 ;	[89]	#BW_Tower_0_L10_Pickup_Y
+14 ;	0 ;	1 ;	14 ;	[14]	#BB_Wall_C0_L0_Putdown_X
+14 ;	0 ;	1 ;	39 ;	[39]	#BB_Wall_C0_L0_Putdown_Y
+#Cube: BW_Tower_0_L9 --> BB_Wall_D2_L0
+15 ;	0 ;	0 ;	65 ;	[65]	#BW_Tower_0_L9_Pickup_X
+15 ;	0 ;	0 ;	90 ;	[90]	#BW_Tower_0_L9_Pickup_Y
+15 ;	0 ;	1 ;	15 ;	[15]	#BB_Wall_D2_L0_Putdown_X
+15 ;	0 ;	1 ;	40 ;	[40]	#BB_Wall_D2_L0_Putdown_Y
+#Cube: BW_Tower_0_L8 --> BB_Wall_B3_L0
+16 ;	0 ;	0 ;	66 ;	[66]	#BW_Tower_0_L8_Pickup_X
+16 ;	0 ;	0 ;	91 ;	[91]	#BW_Tower_0_L8_Pickup_Y
+16 ;	0 ;	1 ;	16 ;	[16]	#BB_Wall_B3_L0_Putdown_X
+16 ;	0 ;	1 ;	41 ;	[41]	#BB_Wall_B3_L0_Putdown_Y
+#Cube: BW_Tower_0_L7 --> BB_Wall_B1_L0
+17 ;	0 ;	0 ;	67 ;	[67]	#BW_Tower_0_L7_Pickup_X
+17 ;	0 ;	0 ;	92 ;	[92]	#BW_Tower_0_L7_Pickup_Y
+17 ;	0 ;	1 ;	17 ;	[17]	#BB_Wall_B1_L0_Putdown_X
+17 ;	0 ;	1 ;	42 ;	[42]	#BB_Wall_B1_L0_Putdown_Y
+#Cube: BW_Tower_0_L6 --> BB_Wall_C2_L0
+18 ;	0 ;	0 ;	68 ;	[68]	#BW_Tower_0_L6_Pickup_X
+18 ;	0 ;	0 ;	93 ;	[93]	#BW_Tower_0_L6_Pickup_Y
+18 ;	0 ;	1 ;	18 ;	[18]	#BB_Wall_C2_L0_Putdown_X
+18 ;	0 ;	1 ;	43 ;	[43]	#BB_Wall_C2_L0_Putdown_Y
+#Cube: BW_Tower_0_L5 --> BB_Wall_D1_L0
+19 ;	0 ;	0 ;	69 ;	[69]	#BW_Tower_0_L5_Pickup_X
+19 ;	0 ;	0 ;	94 ;	[94]	#BW_Tower_0_L5_Pickup_Y
+19 ;	0 ;	1 ;	19 ;	[19]	#BB_Wall_D1_L0_Putdown_X
+19 ;	0 ;	1 ;	44 ;	[44]	#BB_Wall_D1_L0_Putdown_Y
+#Cube: BW_Tower_0_L4 --> BB_Tower_2_L12
+20 ;	0 ;	0 ;	70 ;	[70]	#BW_Tower_0_L4_Pickup_X
+20 ;	0 ;	0 ;	95 ;	[95]	#BW_Tower_0_L4_Pickup_Y
+20 ;	0 ;	1 ;	20 ;	[20]	#BB_Tower_2_L12_Putdown_X
+20 ;	0 ;	1 ;	45 ;	[45]	#BB_Tower_2_L12_Putdown_Y
+#Cube: BW_Tower_0_L3 --> BB_Wall_C1_L0
+21 ;	0 ;	0 ;	71 ;	[71]	#BW_Tower_0_L3_Pickup_X
+21 ;	0 ;	0 ;	96 ;	[96]	#BW_Tower_0_L3_Pickup_Y
+21 ;	0 ;	1 ;	21 ;	[21]	#BB_Wall_C1_L0_Putdown_X
+21 ;	0 ;	1 ;	46 ;	[46]	#BB_Wall_C1_L0_Putdown_Y
+#Cube: BW_Tower_0_L2 --> BB_Wall_D0_L0
+22 ;	0 ;	0 ;	72 ;	[72]	#BW_Tower_0_L2_Pickup_X
+22 ;	0 ;	0 ;	97 ;	[97]	#BW_Tower_0_L2_Pickup_Y
+22 ;	0 ;	1 ;	22 ;	[22]	#BB_Wall_D0_L0_Putdown_X
+22 ;	0 ;	1 ;	47 ;	[47]	#BB_Wall_D0_L0_Putdown_Y
+#Cube: BW_Tower_0_L1 --> BB_Wall_A3_L0
+23 ;	0 ;	0 ;	73 ;	[73]	#BW_Tower_0_L1_Pickup_X
+23 ;	0 ;	0 ;	98 ;	[98]	#BW_Tower_0_L1_Pickup_Y
+23 ;	0 ;	1 ;	23 ;	[23]	#BB_Wall_A3_L0_Putdown_X
+23 ;	0 ;	1 ;	48 ;	[48]	#BB_Wall_A3_L0_Putdown_Y
+#Cube: BW_Tower_0_L0 --> BB_Wall_A1_L0
+24 ;	0 ;	0 ;	74 ;	[74]	#BW_Tower_0_L0_Pickup_X
+24 ;	0 ;	0 ;	99 ;	[99]	#BW_Tower_0_L0_Pickup_Y
+24 ;	0 ;	1 ;	24 ;	[24]	#BB_Wall_A1_L0_Putdown_X
+24 ;	0 ;	1 ;	49 ;	[49]	#BB_Wall_A1_L0_Putdown_Y
+
+MotionPrecedence:
+#+-----------------------+----------------------+
+#| Predecessor(MotionID) | Successor (MotionID) |
+#+-----------------------+----------------------+
+#|         <int>         |       <int>          |
+#+-----------------------+----------------------+
+85 ;	78	#BW_Wall_C0_L0 Yaxis ---Ahed---> BW_Wall_C1_L0 Yaxis
+60 ;	78	#BW_Wall_C0_L0 Xaxis ---Ahed---> BW_Wall_C1_L0 Yaxis
+60 ;	50	#BW_Wall_C0_L0 Xaxis ---Right---> BW_Wall_A1_L0 Xaxis
+85 ;	50	#BW_Wall_C0_L0 Yaxis ---Right---> BW_Wall_A1_L0 Xaxis
+50 ;	60	#BW_Wall_A1_L0 Xaxis ---Left---> BW_Wall_C0_L0 Xaxis
+75 ;	60	#BW_Wall_A1_L0 Yaxis ---Left---> BW_Wall_C0_L0 Xaxis
+50 ;	61	#BW_Wall_A1_L0 Xaxis ---Right---> BW_Wall_A2_L0 Xaxis
+75 ;	61	#BW_Wall_A1_L0 Yaxis ---Right---> BW_Wall_A2_L0 Xaxis
+86 ;	99	#BW_Wall_A2_L0 Yaxis ---Ahed---> BW_Tower_0_L0 Yaxis
+61 ;	99	#BW_Wall_A2_L0 Xaxis ---Ahed---> BW_Tower_0_L0 Yaxis
+61 ;	50	#BW_Wall_A2_L0 Xaxis ---Left---> BW_Wall_A1_L0 Xaxis
+86 ;	50	#BW_Wall_A2_L0 Yaxis ---Left---> BW_Wall_A1_L0 Xaxis
+61 ;	51	#BW_Wall_A2_L0 Xaxis ---Right---> BW_Wall_A3_L0 Xaxis
+86 ;	51	#BW_Wall_A2_L0 Yaxis ---Right---> BW_Wall_A3_L0 Xaxis
+51 ;	61	#BW_Wall_A3_L0 Xaxis ---Left---> BW_Wall_A2_L0 Xaxis
+76 ;	61	#BW_Wall_A3_L0 Yaxis ---Left---> BW_Wall_A2_L0 Xaxis
+51 ;	52	#BW_Wall_A3_L0 Xaxis ---Right---> BW_Wall_D0_L0 Xaxis
+76 ;	52	#BW_Wall_A3_L0 Yaxis ---Right---> BW_Wall_D0_L0 Xaxis
+77 ;	80	#BW_Wall_D0_L0 Yaxis ---Ahed---> BW_Wall_D1_L0 Yaxis
+52 ;	80	#BW_Wall_D0_L0 Xaxis ---Ahed---> BW_Wall_D1_L0 Yaxis
+52 ;	51	#BW_Wall_D0_L0 Xaxis ---Left---> BW_Wall_A3_L0 Xaxis
+77 ;	51	#BW_Wall_D0_L0 Yaxis ---Left---> BW_Wall_A3_L0 Xaxis
+78 ;	81	#BW_Wall_C1_L0 Yaxis ---Ahed---> BW_Wall_C2_L0 Yaxis
+53 ;	81	#BW_Wall_C1_L0 Xaxis ---Ahed---> BW_Wall_C2_L0 Yaxis
+78 ;	85	#BW_Wall_C1_L0 Yaxis ---Back---> BW_Wall_C0_L0 Yaxis
+53 ;	85	#BW_Wall_C1_L0 Xaxis ---Back---> BW_Wall_C0_L0 Yaxis
+99 ;	88	#BW_Tower_0_L0 Yaxis ---Ahed---> BW_Wall_B2_L0 Yaxis
+74 ;	88	#BW_Tower_0_L0 Xaxis ---Ahed---> BW_Wall_B2_L0 Yaxis
+99 ;	86	#BW_Tower_0_L0 Yaxis ---Back---> BW_Wall_A2_L0 Yaxis
+74 ;	86	#BW_Tower_0_L0 Xaxis ---Back---> BW_Wall_A2_L0 Yaxis
+73 ;	74	#BW_Tower_0_L1 Xaxis ---Down---> BW_Tower_0_L0 Xaxis
+73 ;	99	#BW_Tower_0_L1 Xaxis ---Down---> BW_Tower_0_L0 Yaxis
+98 ;	74	#BW_Tower_0_L1 Yaxis ---Down---> BW_Tower_0_L0 Xaxis
+98 ;	99	#BW_Tower_0_L1 Yaxis ---Down---> BW_Tower_0_L0 Yaxis
+72 ;	73	#BW_Tower_0_L2 Xaxis ---Down---> BW_Tower_0_L1 Xaxis
+72 ;	98	#BW_Tower_0_L2 Xaxis ---Down---> BW_Tower_0_L1 Yaxis
+97 ;	73	#BW_Tower_0_L2 Yaxis ---Down---> BW_Tower_0_L1 Xaxis
+97 ;	98	#BW_Tower_0_L2 Yaxis ---Down---> BW_Tower_0_L1 Yaxis
+71 ;	72	#BW_Tower_0_L3 Xaxis ---Down---> BW_Tower_0_L2 Xaxis
+71 ;	97	#BW_Tower_0_L3 Xaxis ---Down---> BW_Tower_0_L2 Yaxis
+96 ;	72	#BW_Tower_0_L3 Yaxis ---Down---> BW_Tower_0_L2 Xaxis
+96 ;	97	#BW_Tower_0_L3 Yaxis ---Down---> BW_Tower_0_L2 Yaxis
+70 ;	71	#BW_Tower_0_L4 Xaxis ---Down---> BW_Tower_0_L3 Xaxis
+70 ;	96	#BW_Tower_0_L4 Xaxis ---Down---> BW_Tower_0_L3 Yaxis
+95 ;	71	#BW_Tower_0_L4 Yaxis ---Down---> BW_Tower_0_L3 Xaxis
+95 ;	96	#BW_Tower_0_L4 Yaxis ---Down---> BW_Tower_0_L3 Yaxis
+69 ;	70	#BW_Tower_0_L5 Xaxis ---Down---> BW_Tower_0_L4 Xaxis
+69 ;	95	#BW_Tower_0_L5 Xaxis ---Down---> BW_Tower_0_L4 Yaxis
+94 ;	70	#BW_Tower_0_L5 Yaxis ---Down---> BW_Tower_0_L4 Xaxis
+94 ;	95	#BW_Tower_0_L5 Yaxis ---Down---> BW_Tower_0_L4 Yaxis
+68 ;	69	#BW_Tower_0_L6 Xaxis ---Down---> BW_Tower_0_L5 Xaxis
+68 ;	94	#BW_Tower_0_L6 Xaxis ---Down---> BW_Tower_0_L5 Yaxis
+93 ;	69	#BW_Tower_0_L6 Yaxis ---Down---> BW_Tower_0_L5 Xaxis
+93 ;	94	#BW_Tower_0_L6 Yaxis ---Down---> BW_Tower_0_L5 Yaxis
+67 ;	68	#BW_Tower_0_L7 Xaxis ---Down---> BW_Tower_0_L6 Xaxis
+67 ;	93	#BW_Tower_0_L7 Xaxis ---Down---> BW_Tower_0_L6 Yaxis
+92 ;	68	#BW_Tower_0_L7 Yaxis ---Down---> BW_Tower_0_L6 Xaxis
+92 ;	93	#BW_Tower_0_L7 Yaxis ---Down---> BW_Tower_0_L6 Yaxis
+66 ;	67	#BW_Tower_0_L8 Xaxis ---Down---> BW_Tower_0_L7 Xaxis
+66 ;	92	#BW_Tower_0_L8 Xaxis ---Down---> BW_Tower_0_L7 Yaxis
+91 ;	67	#BW_Tower_0_L8 Yaxis ---Down---> BW_Tower_0_L7 Xaxis
+91 ;	92	#BW_Tower_0_L8 Yaxis ---Down---> BW_Tower_0_L7 Yaxis
+65 ;	66	#BW_Tower_0_L9 Xaxis ---Down---> BW_Tower_0_L8 Xaxis
+65 ;	91	#BW_Tower_0_L9 Xaxis ---Down---> BW_Tower_0_L8 Yaxis
+90 ;	66	#BW_Tower_0_L9 Yaxis ---Down---> BW_Tower_0_L8 Xaxis
+90 ;	91	#BW_Tower_0_L9 Yaxis ---Down---> BW_Tower_0_L8 Yaxis
+64 ;	65	#BW_Tower_0_L10 Xaxis ---Down---> BW_Tower_0_L9 Xaxis
+64 ;	90	#BW_Tower_0_L10 Xaxis ---Down---> BW_Tower_0_L9 Yaxis
+89 ;	65	#BW_Tower_0_L10 Yaxis ---Down---> BW_Tower_0_L9 Xaxis
+89 ;	90	#BW_Tower_0_L10 Yaxis ---Down---> BW_Tower_0_L9 Yaxis
+62 ;	64	#BW_Tower_0_L11 Xaxis ---Down---> BW_Tower_0_L10 Xaxis
+62 ;	89	#BW_Tower_0_L11 Xaxis ---Down---> BW_Tower_0_L10 Yaxis
+87 ;	64	#BW_Tower_0_L11 Yaxis ---Down---> BW_Tower_0_L10 Xaxis
+87 ;	89	#BW_Tower_0_L11 Yaxis ---Down---> BW_Tower_0_L10 Yaxis
+54 ;	62	#BW_Tower_0_L12 Xaxis ---Down---> BW_Tower_0_L11 Xaxis
+54 ;	87	#BW_Tower_0_L12 Xaxis ---Down---> BW_Tower_0_L11 Yaxis
+79 ;	62	#BW_Tower_0_L12 Yaxis ---Down---> BW_Tower_0_L11 Xaxis
+79 ;	87	#BW_Tower_0_L12 Yaxis ---Down---> BW_Tower_0_L11 Yaxis
+80 ;	84	#BW_Wall_D1_L0 Yaxis ---Ahed---> BW_Wall_D2_L0 Yaxis
+55 ;	84	#BW_Wall_D1_L0 Xaxis ---Ahed---> BW_Wall_D2_L0 Yaxis
+80 ;	77	#BW_Wall_D1_L0 Yaxis ---Back---> BW_Wall_D0_L0 Yaxis
+55 ;	77	#BW_Wall_D1_L0 Xaxis ---Back---> BW_Wall_D0_L0 Yaxis
+81 ;	78	#BW_Wall_C2_L0 Yaxis ---Back---> BW_Wall_C1_L0 Yaxis
+56 ;	78	#BW_Wall_C2_L0 Xaxis ---Back---> BW_Wall_C1_L0 Yaxis
+56 ;	57	#BW_Wall_C2_L0 Xaxis ---Right---> BW_Wall_B1_L0 Xaxis
+81 ;	57	#BW_Wall_C2_L0 Yaxis ---Right---> BW_Wall_B1_L0 Xaxis
+57 ;	56	#BW_Wall_B1_L0 Xaxis ---Left---> BW_Wall_C2_L0 Xaxis
+82 ;	56	#BW_Wall_B1_L0 Yaxis ---Left---> BW_Wall_C2_L0 Xaxis
+57 ;	63	#BW_Wall_B1_L0 Xaxis ---Right---> BW_Wall_B2_L0 Xaxis
+82 ;	63	#BW_Wall_B1_L0 Yaxis ---Right---> BW_Wall_B2_L0 Xaxis
+88 ;	99	#BW_Wall_B2_L0 Yaxis ---Back---> BW_Tower_0_L0 Yaxis
+63 ;	99	#BW_Wall_B2_L0 Xaxis ---Back---> BW_Tower_0_L0 Yaxis
+63 ;	57	#BW_Wall_B2_L0 Xaxis ---Left---> BW_Wall_B1_L0 Xaxis
+88 ;	57	#BW_Wall_B2_L0 Yaxis ---Left---> BW_Wall_B1_L0 Xaxis
+63 ;	58	#BW_Wall_B2_L0 Xaxis ---Right---> BW_Wall_B3_L0 Xaxis
+88 ;	58	#BW_Wall_B2_L0 Yaxis ---Right---> BW_Wall_B3_L0 Xaxis
+58 ;	63	#BW_Wall_B3_L0 Xaxis ---Left---> BW_Wall_B2_L0 Xaxis
+83 ;	63	#BW_Wall_B3_L0 Yaxis ---Left---> BW_Wall_B2_L0 Xaxis
+58 ;	59	#BW_Wall_B3_L0 Xaxis ---Right---> BW_Wall_D2_L0 Xaxis
+83 ;	59	#BW_Wall_B3_L0 Yaxis ---Right---> BW_Wall_D2_L0 Xaxis
+84 ;	80	#BW_Wall_D2_L0 Yaxis ---Back---> BW_Wall_D1_L0 Yaxis
+59 ;	80	#BW_Wall_D2_L0 Xaxis ---Back---> BW_Wall_D1_L0 Yaxis
+59 ;	58	#BW_Wall_D2_L0 Xaxis ---Left---> BW_Wall_B3_L0 Xaxis
+84 ;	58	#BW_Wall_D2_L0 Yaxis ---Left---> BW_Wall_B3_L0 Xaxis
+21 ;	39	#BB_Wall_C1_L0 Xaxis ---Ahed---> BB_Wall_C0_L0 Yaxis
+46 ;	39	#BB_Wall_C1_L0 Yaxis ---Ahed---> BB_Wall_C0_L0 Yaxis
+24 ;	14	#BB_Wall_A1_L0 Xaxis ---Right---> BB_Wall_C0_L0 Xaxis
+49 ;	14	#BB_Wall_A1_L0 Yaxis ---Right---> BB_Wall_C0_L0 Xaxis
+14 ;	24	#BB_Wall_C0_L0 Xaxis ---Left---> BB_Wall_A1_L0 Xaxis
+39 ;	24	#BB_Wall_C0_L0 Yaxis ---Left---> BB_Wall_A1_L0 Xaxis
+13 ;	24	#BB_Wall_A2_L0 Xaxis ---Right---> BB_Wall_A1_L0 Xaxis
+38 ;	24	#BB_Wall_A2_L0 Yaxis ---Right---> BB_Wall_A1_L0 Xaxis
+0 ;	38	#BB_Tower_2_L0 Xaxis ---Ahed---> BB_Wall_A2_L0 Yaxis
+25 ;	38	#BB_Tower_2_L0 Yaxis ---Ahed---> BB_Wall_A2_L0 Yaxis
+24 ;	13	#BB_Wall_A1_L0 Xaxis ---Left---> BB_Wall_A2_L0 Xaxis
+49 ;	13	#BB_Wall_A1_L0 Yaxis ---Left---> BB_Wall_A2_L0 Xaxis
+23 ;	13	#BB_Wall_A3_L0 Xaxis ---Right---> BB_Wall_A2_L0 Xaxis
+48 ;	13	#BB_Wall_A3_L0 Yaxis ---Right---> BB_Wall_A2_L0 Xaxis
+13 ;	23	#BB_Wall_A2_L0 Xaxis ---Left---> BB_Wall_A3_L0 Xaxis
+38 ;	23	#BB_Wall_A2_L0 Yaxis ---Left---> BB_Wall_A3_L0 Xaxis
+22 ;	23	#BB_Wall_D0_L0 Xaxis ---Right---> BB_Wall_A3_L0 Xaxis
+47 ;	23	#BB_Wall_D0_L0 Yaxis ---Right---> BB_Wall_A3_L0 Xaxis
+19 ;	47	#BB_Wall_D1_L0 Xaxis ---Ahed---> BB_Wall_D0_L0 Yaxis
+44 ;	47	#BB_Wall_D1_L0 Yaxis ---Ahed---> BB_Wall_D0_L0 Yaxis
+23 ;	22	#BB_Wall_A3_L0 Xaxis ---Left---> BB_Wall_D0_L0 Xaxis
+48 ;	22	#BB_Wall_A3_L0 Yaxis ---Left---> BB_Wall_D0_L0 Xaxis
+18 ;	46	#BB_Wall_C2_L0 Xaxis ---Ahed---> BB_Wall_C1_L0 Yaxis
+43 ;	46	#BB_Wall_C2_L0 Yaxis ---Ahed---> BB_Wall_C1_L0 Yaxis
+14 ;	46	#BB_Wall_C0_L0 Xaxis ---Back---> BB_Wall_C1_L0 Yaxis
+39 ;	46	#BB_Wall_C0_L0 Yaxis ---Back---> BB_Wall_C1_L0 Yaxis
+11 ;	25	#BB_Wall_B2_L0 Xaxis ---Ahed---> BB_Tower_2_L0 Yaxis
+36 ;	25	#BB_Wall_B2_L0 Yaxis ---Ahed---> BB_Tower_2_L0 Yaxis
+13 ;	25	#BB_Wall_A2_L0 Xaxis ---Back---> BB_Tower_2_L0 Yaxis
+38 ;	25	#BB_Wall_A2_L0 Yaxis ---Back---> BB_Tower_2_L0 Yaxis
+0 ;	1	#BB_Tower_2_L0 Xaxis ---Up---> BB_Tower_2_L1 Xaxis
+0 ;	26	#BB_Tower_2_L0 Xaxis ---Up---> BB_Tower_2_L1 Yaxis
+25 ;	1	#BB_Tower_2_L0 Yaxis ---Up---> BB_Tower_2_L1 Xaxis
+25 ;	26	#BB_Tower_2_L0 Yaxis ---Up---> BB_Tower_2_L1 Yaxis
+1 ;	2	#BB_Tower_2_L1 Xaxis ---Up---> BB_Tower_2_L2 Xaxis
+1 ;	27	#BB_Tower_2_L1 Xaxis ---Up---> BB_Tower_2_L2 Yaxis
+26 ;	2	#BB_Tower_2_L1 Yaxis ---Up---> BB_Tower_2_L2 Xaxis
+26 ;	27	#BB_Tower_2_L1 Yaxis ---Up---> BB_Tower_2_L2 Yaxis
+2 ;	3	#BB_Tower_2_L2 Xaxis ---Up---> BB_Tower_2_L3 Xaxis
+2 ;	28	#BB_Tower_2_L2 Xaxis ---Up---> BB_Tower_2_L3 Yaxis
+27 ;	3	#BB_Tower_2_L2 Yaxis ---Up---> BB_Tower_2_L3 Xaxis
+27 ;	28	#BB_Tower_2_L2 Yaxis ---Up---> BB_Tower_2_L3 Yaxis
+3 ;	4	#BB_Tower_2_L3 Xaxis ---Up---> BB_Tower_2_L4 Xaxis
+3 ;	29	#BB_Tower_2_L3 Xaxis ---Up---> BB_Tower_2_L4 Yaxis
+28 ;	4	#BB_Tower_2_L3 Yaxis ---Up---> BB_Tower_2_L4 Xaxis
+28 ;	29	#BB_Tower_2_L3 Yaxis ---Up---> BB_Tower_2_L4 Yaxis
+4 ;	5	#BB_Tower_2_L4 Xaxis ---Up---> BB_Tower_2_L5 Xaxis
+4 ;	30	#BB_Tower_2_L4 Xaxis ---Up---> BB_Tower_2_L5 Yaxis
+29 ;	5	#BB_Tower_2_L4 Yaxis ---Up---> BB_Tower_2_L5 Xaxis
+29 ;	30	#BB_Tower_2_L4 Yaxis ---Up---> BB_Tower_2_L5 Yaxis
+5 ;	6	#BB_Tower_2_L5 Xaxis ---Up---> BB_Tower_2_L6 Xaxis
+5 ;	31	#BB_Tower_2_L5 Xaxis ---Up---> BB_Tower_2_L6 Yaxis
+30 ;	6	#BB_Tower_2_L5 Yaxis ---Up---> BB_Tower_2_L6 Xaxis
+30 ;	31	#BB_Tower_2_L5 Yaxis ---Up---> BB_Tower_2_L6 Yaxis
+6 ;	7	#BB_Tower_2_L6 Xaxis ---Up---> BB_Tower_2_L7 Xaxis
+6 ;	32	#BB_Tower_2_L6 Xaxis ---Up---> BB_Tower_2_L7 Yaxis
+31 ;	7	#BB_Tower_2_L6 Yaxis ---Up---> BB_Tower_2_L7 Xaxis
+31 ;	32	#BB_Tower_2_L6 Yaxis ---Up---> BB_Tower_2_L7 Yaxis
+7 ;	8	#BB_Tower_2_L7 Xaxis ---Up---> BB_Tower_2_L8 Xaxis
+7 ;	33	#BB_Tower_2_L7 Xaxis ---Up---> BB_Tower_2_L8 Yaxis
+32 ;	8	#BB_Tower_2_L7 Yaxis ---Up---> BB_Tower_2_L8 Xaxis
+32 ;	33	#BB_Tower_2_L7 Yaxis ---Up---> BB_Tower_2_L8 Yaxis
+8 ;	9	#BB_Tower_2_L8 Xaxis ---Up---> BB_Tower_2_L9 Xaxis
+8 ;	34	#BB_Tower_2_L8 Xaxis ---Up---> BB_Tower_2_L9 Yaxis
+33 ;	9	#BB_Tower_2_L8 Yaxis ---Up---> BB_Tower_2_L9 Xaxis
+33 ;	34	#BB_Tower_2_L8 Yaxis ---Up---> BB_Tower_2_L9 Yaxis
+9 ;	10	#BB_Tower_2_L9 Xaxis ---Up---> BB_Tower_2_L10 Xaxis
+9 ;	35	#BB_Tower_2_L9 Xaxis ---Up---> BB_Tower_2_L10 Yaxis
+34 ;	10	#BB_Tower_2_L9 Yaxis ---Up---> BB_Tower_2_L10 Xaxis
+34 ;	35	#BB_Tower_2_L9 Yaxis ---Up---> BB_Tower_2_L10 Yaxis
+10 ;	12	#BB_Tower_2_L10 Xaxis ---Up---> BB_Tower_2_L11 Xaxis
+10 ;	37	#BB_Tower_2_L10 Xaxis ---Up---> BB_Tower_2_L11 Yaxis
+35 ;	12	#BB_Tower_2_L10 Yaxis ---Up---> BB_Tower_2_L11 Xaxis
+35 ;	37	#BB_Tower_2_L10 Yaxis ---Up---> BB_Tower_2_L11 Yaxis
+12 ;	20	#BB_Tower_2_L11 Xaxis ---Up---> BB_Tower_2_L12 Xaxis
+12 ;	45	#BB_Tower_2_L11 Xaxis ---Up---> BB_Tower_2_L12 Yaxis
+37 ;	20	#BB_Tower_2_L11 Yaxis ---Up---> BB_Tower_2_L12 Xaxis
+37 ;	45	#BB_Tower_2_L11 Yaxis ---Up---> BB_Tower_2_L12 Yaxis
+15 ;	44	#BB_Wall_D2_L0 Xaxis ---Ahed---> BB_Wall_D1_L0 Yaxis
+40 ;	44	#BB_Wall_D2_L0 Yaxis ---Ahed---> BB_Wall_D1_L0 Yaxis
+22 ;	44	#BB_Wall_D0_L0 Xaxis ---Back---> BB_Wall_D1_L0 Yaxis
+47 ;	44	#BB_Wall_D0_L0 Yaxis ---Back---> BB_Wall_D1_L0 Yaxis
+21 ;	43	#BB_Wall_C1_L0 Xaxis ---Back---> BB_Wall_C2_L0 Yaxis
+46 ;	43	#BB_Wall_C1_L0 Yaxis ---Back---> BB_Wall_C2_L0 Yaxis
+17 ;	18	#BB_Wall_B1_L0 Xaxis ---Right---> BB_Wall_C2_L0 Xaxis
+42 ;	18	#BB_Wall_B1_L0 Yaxis ---Right---> BB_Wall_C2_L0 Xaxis
+18 ;	17	#BB_Wall_C2_L0 Xaxis ---Left---> BB_Wall_B1_L0 Xaxis
+43 ;	17	#BB_Wall_C2_L0 Yaxis ---Left---> BB_Wall_B1_L0 Xaxis
+11 ;	17	#BB_Wall_B2_L0 Xaxis ---Right---> BB_Wall_B1_L0 Xaxis
+36 ;	17	#BB_Wall_B2_L0 Yaxis ---Right---> BB_Wall_B1_L0 Xaxis
+0 ;	36	#BB_Tower_2_L0 Xaxis ---Back---> BB_Wall_B2_L0 Yaxis
+25 ;	36	#BB_Tower_2_L0 Yaxis ---Back---> BB_Wall_B2_L0 Yaxis
+17 ;	11	#BB_Wall_B1_L0 Xaxis ---Left---> BB_Wall_B2_L0 Xaxis
+42 ;	11	#BB_Wall_B1_L0 Yaxis ---Left---> BB_Wall_B2_L0 Xaxis
+16 ;	11	#BB_Wall_B3_L0 Xaxis ---Right---> BB_Wall_B2_L0 Xaxis
+41 ;	11	#BB_Wall_B3_L0 Yaxis ---Right---> BB_Wall_B2_L0 Xaxis
+11 ;	16	#BB_Wall_B2_L0 Xaxis ---Left---> BB_Wall_B3_L0 Xaxis
+36 ;	16	#BB_Wall_B2_L0 Yaxis ---Left---> BB_Wall_B3_L0 Xaxis
+15 ;	16	#BB_Wall_D2_L0 Xaxis ---Right---> BB_Wall_B3_L0 Xaxis
+40 ;	16	#BB_Wall_D2_L0 Yaxis ---Right---> BB_Wall_B3_L0 Xaxis
+19 ;	40	#BB_Wall_D1_L0 Xaxis ---Back---> BB_Wall_D2_L0 Yaxis
+44 ;	40	#BB_Wall_D1_L0 Yaxis ---Back---> BB_Wall_D2_L0 Yaxis
+16 ;	15	#BB_Wall_B3_L0 Xaxis ---Left---> BB_Wall_D2_L0 Xaxis
+41 ;	15	#BB_Wall_B3_L0 Yaxis ---Left---> BB_Wall_D2_L0 Xaxis

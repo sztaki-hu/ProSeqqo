@@ -106,9 +106,9 @@ namespace SequencerBenchmarkTest
                     TemplateDir = "Resources/Benchmark/Kubik2/Templates",
                     Dir = "Resources/Benchmark/Kubik2",
                     Parameters = new List<Dictionary<string, string>>() {
-                        new Dictionary<string, string>() { ["T"] = "0",         ["LSS"] = "GreedyDescent" },
-                        new Dictionary<string, string>() { ["T"] = "30 000",    ["LSS"] = "GuidedLocalSearch" },
-                        new Dictionary<string, string>() { ["T"] = "60 000",    ["LSS"] = "GuidedLocalSearch" },
+                          new Dictionary<string, string>() { ["T"] = "0",         ["LSS"] = "GreedyDescent" },
+                          new Dictionary<string, string>() { ["T"] = "30 000",    ["LSS"] = "GuidedLocalSearch" },
+                          new Dictionary<string, string>() { ["T"] = "60 000",    ["LSS"] = "GuidedLocalSearch" },
                         //new Dictionary<string, string>() { ["T"] = "300 000",   ["LSS"] = "GuidedLocalSearch" },
                         //new Dictionary<string, string>() { ["T"] = "600 000",   ["LSS"] = "GuidedLocalSearch" },
                     }

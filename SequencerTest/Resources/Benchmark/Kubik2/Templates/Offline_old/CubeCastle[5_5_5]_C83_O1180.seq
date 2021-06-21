@@ -6,6 +6,7 @@ DistanceFunction: Euclidian
 ResourceChangeover: Off
 UseMIPprecedenceSolver: True
 LocalSearchStrategy: <*LSS*>
+LocalSearchStrategy: <*LSS*>
 
 ConfigList:
 #+----------+---------------------+------------------+----------------------+
