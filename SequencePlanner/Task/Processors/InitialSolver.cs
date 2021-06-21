@@ -25,7 +25,7 @@ namespace SequencePlanner.Task.Processors
             if (Task.SolverSettings.UseMIPprecedenceSolver)
             {
                 Timer.Restart();
-                Timer.Stop();
+                Timer.Start();
                 var task = new ORToolsGeneralPreSolverTask()
                 {
                     NumberOfNodes = Task.Hierarchy.Motions.Count,
@@ -45,6 +45,7 @@ namespace SequencePlanner.Task.Processors
                 var solver = new ORToolsGeneralPreSolverWrapper(task);
                 var result = solver.Solve();
                 Task.GTSPRepresentation.InitialSolution = PhraseSolution(result);
+                Timer.Stop();
                 Time = Timer.Elapsed;
             }
         }

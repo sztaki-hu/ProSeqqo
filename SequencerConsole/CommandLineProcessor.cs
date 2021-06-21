@@ -33,7 +33,7 @@ namespace SequencerConsole
     #else
                     {
                         //Debug in VS
-                        SeqLogger.LogLevel = LogLevel.Trace;
+                        SeqLogger.LogLevel = LogLevel.Info;
                         string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example";
                         string castle = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\CubeCastle";
                         string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\Out";
@@ -44,12 +44,12 @@ namespace SequencerConsole
                         //args = new string[] { "-i", example + "\\CelticLaser_Fill.seq",             "-o", outdir + "\\CelticLaser_Fill_out.json",              };
                         //args = new string[] { "-i", example + "\\CubeCastle.seq",                   "-o", outdir + "\\CubeCastle_out.json",              };
                         //args = new string[] { "-i", example + "\\CubeCastle[3_3_2].seq",                   "-o", outdir + "\\CubeCastle[3_3_2]_out.json",              };
-                        args = new string[] { "-i", example + "\\CSOPA.seq",                        "-o", outdir + "\\CSOPA_DEBUG_out.json",                        };
-                        args = new string[] { "-i", example + "\\CSOPA1.seq",                        "-o", outdir + "\\CSOPA1_DEBUG_out.json",                        };
+                        //args = new string[] { "-i", example + "\\CSOPA.seq",                        "-o", outdir + "\\CSOPA_DEBUG_out.json",                        };
+                        //args = new string[] { "-i", example + "\\CSOPA1.seq",                        "-o", outdir + "\\CSOPA1_DEBUG_out.json",                        };
                         //args = new string[] { "-i", example + "\\CSOPA2.seq",                        "-o", outdir + "\\CSOPA2_DEBUG_out.json",                        };
                         //args = new string[] { "-i", example + "\\CSOPA3.seq",                        "-o", outdir + "\\CSOPA3_DEBUG_out.json",                        };
                         //args = new string[] { "-i", example + "\\Etalon.seq",                       "-o", outdir + "\\etalon_o.json",                         };
-                        //args = new string[] { "-i", example + "\\EtalonMatrix.seq",                 "-o", outdir + "\\etalonMatrix_o.json",                    };
+                        args = new string[] { "-i", example + "\\EtalonMatrix.seq",                 "-o", outdir + "\\etalonMatrix_o.json",                    };
                         //args = new string[] { "-i", example + "\\Frochliche.seq",                   "-o", outdir + "\\Frochliche.json"                        };
                         //args = new string[] { "-i", example + "\\Hybrid_Matrix.seq",                "-o", outdir + "\\Hybrid_Matrix_out.json",                 };
                         //args = new string[] { "-i", example + "\\Hybrid_Original.seq",              "-o", outdir + "\\Hybrid_Original_out.json",               };
@@ -61,15 +61,16 @@ namespace SequencerConsole
                         //args = new string[] { "-i", example + "\\PickAndPlace_Original.seq",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
                         //args = new string[] { "-i", example + "\\test1_debug.seq",                    "-o", outdir + "\\test1_debug_out.json" };
                         //args = new string[] { "-i", example + "\\Seqtest.seq",                      "-o", outdir + "\\seqtest_o.json",                        };
+                        args = new string[] { "-i", example + "\\CubeCastle[3_4_2]_C50_O720.seq",                      "-o", outdir + "\\CubeCastle[3_4_2]_C50_O720.json",                        };
                         //args = new string[] { "-i", castle +  "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
-                        args = new string[] { "-i", example + "\\CubeCastl444.seq",             "-o", outdir + "\\CubeCastl444_o.json",                        };
-                        args = new string[] { "-i", example + "\\CubeCastl333.seq",             "-o", outdir + "\\CubeCastl333_o.json",                        };
+                        //args = new string[] { "-i", castle +  "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
+
 
                         Help(args);
                         Version(args);
                         input = Input(args);
                         output = Output(args);
-                        log = LogLevel.Trace;
+                        log = LogLevel.Info;
                         SeqLogger.UseIndent = true;
                         Run();
                     }
@@ -190,8 +191,6 @@ namespace SequencerConsole
         }
         private static void OutGeneral(GeneralTaskResult result)
         {
-            Console.WriteLine(output);
-            Console.WriteLine(outputType);
             if (output != null && outputType != FormatType.Unknown)
             {
                 GeneralResultSerializer ser = new GeneralResultSerializer();
@@ -354,7 +353,6 @@ namespace SequencerConsole
                 output = output.Replace(".xml", "_out.json");
                 return output;
             }
-            //Console.WriteLine("Output file needed!");
             return null;
         }
         private static LogLevel Log(string[] args)
@@ -400,24 +398,6 @@ namespace SequencerConsole
                     return TaskType.General;
             }
             return TaskType.Unknown;
-        }
-
-        public static void WaitForSolution(string text, CancellationToken token)
-        {
-            var counter = 0;
-            while (token.IsCancellationRequested)
-            {
-                switch (counter % 4)
-                {
-                    case 0: Console.Write("/" + text); break;
-                    case 1: Console.Write("-" + text); break;
-                    case 2: Console.Write("\\" + text); break;
-                    case 3: Console.Write("|" + text); break;
-                }
-                Console.SetCursorPosition(Console.CursorLeft - (1 + text.Length), Console.CursorTop);
-                counter++;
-                Thread.Sleep(100);
-            }
         }
     }
 

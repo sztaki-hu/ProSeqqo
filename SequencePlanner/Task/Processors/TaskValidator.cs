@@ -177,8 +177,8 @@ namespace SequencePlanner.Task.Processors
         {
             if (task.Hierarchy.Configs is null)
                 throw new SeqException("Hierarchy, ConfigMatrix is null.", "Please construct it.");
-            if (task.Hierarchy.Configs.Count < 1)
-                throw new SeqException("ConfigMatrix.Configurations not contain configs.", "Please add them.");
+            //if (task.Hierarchy.Configs.Count < 1)
+            //    throw new SeqException("ConfigMatrix.Configurations not contain configs.", "Please add them.");
             var posList = task.Hierarchy.Motions;
             for (int i = 0; i < posList.Count; i++)
             {
@@ -324,12 +324,12 @@ namespace SequencePlanner.Task.Processors
                 throw new SeqException("Hierarchy is null.", "Please construct it.");
             if (task.Hierarchy.Configs is null)
                 throw new SeqException("Hierarchy, Configs is null.", "Please construct it.");
-            if (task.Hierarchy.Configs.Count==0)
-                throw new SeqException("No configs given.", "Please add them.");
+            //if (task.Hierarchy.Configs.Count==0)
+            //    throw new SeqException("No configs given.", "Please add them.");
             if (task.Hierarchy.Motions is null)
                 throw new SeqException("Hierarchy, Motions is null.", "Please construct it.");
-            if (task.Hierarchy.Motions.Count==0)
-                throw new SeqException("No motions given.", "Please add them.");
+            //if (task.Hierarchy.Motions.Count==0)
+            //    throw new SeqException("No motions given.", "Please add them.");
             if (task.Hierarchy.HierarchyRecords is null)
                 throw new SeqException("Hierarchy, HierarchyRecords is null.", "Please construct it.");
             if (task.Hierarchy.HierarchyRecords.Count==0)

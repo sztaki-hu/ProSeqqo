@@ -22,6 +22,7 @@ namespace SequencePlanner.Model.Hierarchy
 
         public void Build()
         {
+            FillConfigsMotions();
             GenerateBidirectionals();
             HierarchyRecords.Sort(new HierarchySorter());
             SetFirstLast();
@@ -97,6 +98,17 @@ namespace SequencePlanner.Model.Hierarchy
                     record.Motion = bid;
                     HierarchyRecords.Add(record);
                 }
+            }
+        }
+
+        private void FillConfigsMotions()
+        {
+            Motions = new List<Motion>();
+            Configs = new List<Config>();
+            foreach (var r in HierarchyRecords)
+            {
+                Motions.Add(r.Motion);
+                Configs.AddRange(r.Motion.Configs);
             }
         }
 

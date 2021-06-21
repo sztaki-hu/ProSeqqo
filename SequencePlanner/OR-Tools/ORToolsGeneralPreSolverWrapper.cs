@@ -257,7 +257,7 @@ namespace SequencePlanner.OR_Tools
                 Solution = solution,
                 StatusCode = DecodeStatusCodeInt(resultStatus),
                 StatusMessage = DecodeStatusCode(resultStatus),
-                Time = timer.Elapsed
+                Time = RunTime
             };
             return result;
         }
