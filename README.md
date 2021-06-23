@@ -1,7 +1,3 @@
-[![pipeline status](https://git.sztaki.hu/zahoranl/sequenceplanner/badges/master/pipeline.svg)](https://git.sztaki.hu/zahoranl/sequenceplanner/-/commits/master)
-[![coverage report](https://git.sztaki.hu/zahoranl/sequenceplanner/badges/master/coverage.svg)](https://git.sztaki.hu/zahoranl/sequenceplanner/-/commits/master)
-
-
 :earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
 :clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets)<br>
 :file_folder: [CLI](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)<br>
@@ -83,7 +79,7 @@ Use:
 
 Contributing:
 ------
-If you find any bugs, please report them! I am also happy to accept pull requests from anyone.<br>
-You can use the [GitLab issue tracker](https://git.sztaki.hu/zahoranl/pathplanner/issues) to report bugs, ask questions, suggest new features or personally:<br>
+If you find any bugs, please report them.<br>
+You can use the to report bugs, ask questions, suggest new features or personally:<br>
 Kovács András - kovacs.andras@sztaki.hu<br>
 Zahorán László - zahoran.laszlo@sztaki.hu
