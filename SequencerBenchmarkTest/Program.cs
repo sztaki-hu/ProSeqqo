@@ -1,4 +1,5 @@
-﻿using SequencerTest.Benchmark;
+﻿using SequencePlanner.Helper;
+using SequencerTest.Benchmark;
 using System;
 using System.Collections.Generic;
 
@@ -8,6 +9,12 @@ namespace SequencerBenchmarkTest
     {
         static void Main(string[] args)
         {
+            SeqLogger.LogLevel = LogLevel.Critical;
+            System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.RealTime;
+            System.Diagnostics.Process.GetCurrentProcess().PriorityBoostEnabled = true;
+            Console.Title = "ProSeqqo Benchmark Console";
+            System.Console.Write("Please write a name for the benchmark: ");
+            var name = System.Console.ReadLine();
             Runner runner = new Runner();
             runner.InitWithTasks(GetBenchmarkTasks());
             //runner.Init();
