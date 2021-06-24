@@ -1,15 +1,13 @@
 ﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using System.Collections.Generic;
+using SequencePlanner.Model.Hierarchy;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
     public interface IDistanceFunction
     {
         public string FunctionName { get; }
-        public StrictEdgeWeightSet StrictUserEdgeWeights {get;set;}
-        public StrictEdgeWeightSet StrictSystemEdgeWeights {get;set;}
-        public double ComputeDistance(Position A, Position B);
+
+        public double ComputeDistance(Config A, Config B);
         public void Validate();
         public void ToLog(LogLevel level);
     }

@@ -1,0 +1,64 @@
+0;Init;[0,0000; 0,0000]
+0,3462615485438717
+1101;redcube_11_Start_g1;[0,3425; 0,0509]
+0,2688379809476332
+501;redcube_5_End_g1;[0,0780; 0,0990]
+0,08385475538095619
+1001;bluecylin_10_Start_g1;[0,1311; 0,0341]
+0,06686718178598527
+401;bluecylin_4_End_g1;[0,1150; 0,0990]
+0,07933202379871572
+1501;redcylin_15_Start_g1;[0,1656; 0,1601]
+0,06282014008261999
+301;redcylin_3_End_g1;[0,1510; 0,0990]
+0,13580809990571255
+1201;greencylin_12_Start_g1;[0,2738; 0,0410]
+0,10522756292911092
+201;greencylin_2_End_g1;[0,1860; 0,0990]
+0,023596821819897706
+701;bluecube_7_Start_g1;[0,1955; 0,0774]
+0,11850489441369079
+600;bluecube_6_End_g0;[0,0780; 0,0620]
+
+#Solution params: 
+#Length: 1,2911
+#Number of items: 11
+#RunTime: 00:00:00.41
+
+#Task params: 
+#TaskType: Point_Like
+#Dimension: 2
+#DistanceFunction: Euclidian_Distance
+#CyclicSequence: False
+#StartDepot: 0
+#FinishDepot: 
+#WeightMultiplier: Auto
+#TimeLimit: 20
+#PositionPrecedences: 
+#601;500
+#601;501
+#501;600
+#501;601
+#500;400
+#500;401
+#400;500
+#400;501
+#400;300
+#400;301
+#300;400
+#300;401
+#300;200
+#300;201
+#200;300
+#200;301
+#DisjointSets: 
+#9;10;
+#11;12;
+#5;6;
+#13;14;
+#7;8;
+#15;16;
+#1;2;
+#17;18;
+#3;4;
+#19;20;

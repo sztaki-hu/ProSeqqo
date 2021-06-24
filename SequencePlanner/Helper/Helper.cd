@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SequencePlanner.Helper.DoubleMatrixConverter">
+    <Position X="10.75" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Helper\DoubleMatrixConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Helper.ListConverter">
+    <Position X="10.75" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helper\ListConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Helper.SeqException">
+    <Position X="10.75" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helper\SeqException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Helper.SeqLogger">
+    <Position X="9" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKAAAAAAAEAYAABEAAABAAAAAAABIAAAAAAEAECAA=</HashCode>
+      <FileName>Helper\SeqLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="SequencePlanner.Helper.DepotChangeType">
+    <Position X="2.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAABgAAAAAAAAAUAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helper\DepotChangeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SequencePlanner.Helper.FormatType">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAEAAAAAAACCAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Helper\FormatTypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SequencePlanner.Helper.LogLevel">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAIAAAAAAAYAAAAAAABAAAAAAABAAAAAAAEAAAAA=</HashCode>
+      <FileName>Helper\LogLevel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SequencePlanner.Helper.TaskType">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Helper\TaskTypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SequencePlanner.Helper.Metaheuristics">
+    <Position X="6.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAEAAAAAAEIAAAAQAAAAQAAAAA=</HashCode>
+      <FileName>Helper\Metaheuristic.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

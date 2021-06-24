@@ -9,7 +9,7 @@ namespace SequencerTest.Benchmark
     [TestClass]
     public class Runner
     {
-        List<Template> templates = new List<Template>();
+        readonly List<Template> templates = new List<Template>();
         List<BenchmarkTask> benchmarkTasks = new List<BenchmarkTask>();
         string generationDir;
         int firstNTemplate = -1;
@@ -24,7 +24,7 @@ namespace SequencerTest.Benchmark
             RunBenchmark();
         }
 
-        public void InitWithTasks(List<BenchmarkTask> benchmarks = null)
+        public void InitWithTasks(string name, List<BenchmarkTask> benchmarks = null)
         {
             if (benchmarks is null)
                 throw new SeqException("No benchmars!");
@@ -32,7 +32,7 @@ namespace SequencerTest.Benchmark
                 benchmarkTasks = benchmarks;
             var t = DateTime.Now;
             var d = "_";
-            generationDir = "Benchmark_" + t.Year + d + t.Month + d + t.Day + d + t.Hour + d + t.Minute + d + t.Second;
+            generationDir = "Benchmark_"+name+ t.Year + d + t.Month + d + t.Day + d + t.Hour + d + t.Minute + d + t.Second;
             GenerateInstances();
         }
 
@@ -73,6 +73,7 @@ namespace SequencerTest.Benchmark
                 }
                 catch (Exception e)
                 {
+                    Assert.Fail("Benchmark failed at " + templates[i].FileName);
                     Console.WriteLine(e.ToString());
                 }
                 SeqLogger.Indent--;
@@ -80,7 +81,7 @@ namespace SequencerTest.Benchmark
 
             using (StreamWriter file = File.CreateText("Resources/Benchmark/" + generationDir + ".csv"))
             {
-                file.WriteLine(Template.ToCSVHeader());
+                file.WriteLine(templates[0].ToCSVHeader());
                 for (int i = 0; i < firstNTemplate; i++)
                 {
                     file.WriteLine(templates[i].ToCSV());
@@ -93,18 +94,20 @@ namespace SequencerTest.Benchmark
         public void RunCubePickAndPlace()
         {
             //KOCKAPAKOLAS
-            benchmarkTasks = new List<BenchmarkTask>();
-            benchmarkTasks.Add(new BenchmarkTask()
+            benchmarkTasks = new List<BenchmarkTask>
             {
-                TemplateDir = "Resources/Benchmark/Kockapakolas/Templates",
-                Dir = "Resources/Benchmark/Kockapakolas",
-                Parameters = new List<Dictionary<string, string>>() {
-                    new Dictionary<string, string>() { ["T"] = "1000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "False", },
-                    //new Dictionary<string, string>() { ["T"] = "0", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "False", },
-                    new Dictionary<string, string>() { ["T"] = "5000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "False", },
-                    //new Dictionary<string, string>() { ["T"] = "1000", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "True", },
+                new BenchmarkTask()
+                {
+                    TemplateDir = "Resources/Benchmark/Kockapakolas/Templates",
+                    Dir = "Resources/Benchmark/Kockapakolas",
+                    Parameters = new List<Dictionary<string, string>>() {
+                        new Dictionary<string, string>() { ["T"] = "1000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "False", },
+                        //new Dictionary<string, string>() { ["T"] = "0", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "False", },
+                        new Dictionary<string, string>() { ["T"] = "5000", ["MIP"] = "True", ["LSS"] = "Automatic", ["USIA"] = "False", },
+                        //new Dictionary<string, string>() { ["T"] = "1000", ["MIP"] = "False", ["LSS"] = "Automatic", ["USIA"] = "True", },
+                    }
                 }
-            });
+            };
             Run();
         }
 
@@ -112,18 +115,20 @@ namespace SequencerTest.Benchmark
         public void RunPickAndPlace()
         {
             //PickAndPlace
-            benchmarkTasks = new List<BenchmarkTask>();
-            benchmarkTasks.Add(new BenchmarkTask()
+            benchmarkTasks = new List<BenchmarkTask>
             {
-                TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
-                Dir = "Resources/Benchmark/PickAndPlace",
-                Parameters = new List<Dictionary<string, string>>() {
-                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
-                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
-                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "True", },
-                    new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "True", }
+                new BenchmarkTask()
+                {
+                    TemplateDir = "Resources/Benchmark/PickAndPlace/Templates",
+                    Dir = "Resources/Benchmark/PickAndPlace",
+                    Parameters = new List<Dictionary<string, string>>() {
+                        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+                        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "False", },
+                        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "True",  ["LSS"] = "GreedyDescent", ["USIA"] = "True", },
+                        new Dictionary<string, string>() { ["T"] = "1000",["MIP"] = "False", ["LSS"] = "GreedyDescent", ["USIA"] = "True", }
+                    }
                 }
-            });
+            };
 
             Run();
         }
@@ -132,16 +137,15 @@ namespace SequencerTest.Benchmark
         public void RunCSOPA()
         {
             //CSOPA
-            benchmarkTasks = new List<BenchmarkTask>();
-            benchmarkTasks.Add(new BenchmarkTask()
+            benchmarkTasks = new List<BenchmarkTask>
             {
-                TemplateDir = "Resources/Benchmark/CSOPA/Templates",
-                Dir = "Resources/Benchmark/CSOPA",
-                Parameters = new List<Dictionary<string, string>>()
+                new BenchmarkTask()
                 {
+                    TemplateDir = "Resources/Benchmark/CSOPA/Templates",
+                    Dir = "Resources/Benchmark/CSOPA",
+                    Parameters = new List<Dictionary<string, string>>(){}
                 }
-            });
-
+            };
             Run();
         }
 
@@ -149,15 +153,15 @@ namespace SequencerTest.Benchmark
         public void RunCelta()
         {
             //CELTA
-            benchmarkTasks = new List<BenchmarkTask>();
-            benchmarkTasks.Add(new BenchmarkTask()
+            benchmarkTasks = new List<BenchmarkTask>
             {
-                TemplateDir = "Resources/Benchmark/Celta/Templates",
-                Dir = "Resources/Benchmark/Celta",
-                Parameters = new List<Dictionary<string, string>>()
+                new BenchmarkTask()
                 {
+                    TemplateDir = "Resources/Benchmark/Celta/Templates",
+                    Dir = "Resources/Benchmark/Celta",
+                    Parameters = new List<Dictionary<string, string>>() { }
                 }
-            });
+            };
 
             Run();
         }
@@ -166,16 +170,7 @@ namespace SequencerTest.Benchmark
         public void RunKubik()
         {
             //KUBIK
-            benchmarkTasks = new List<BenchmarkTask>();
-            benchmarkTasks.Add(new BenchmarkTask()
-            {
-                TemplateDir = "Resources/Benchmark/Kubik/Templates",
-                Dir = "Resources/Benchmark/Kubik",
-                Parameters = new List<Dictionary<string, string>>()
-                {
-                }
-            });
-
+            benchmarkTasks = new List<BenchmarkTask> { new BenchmarkTask() { TemplateDir = "Resources/Benchmark/Kubik/Templates", Dir = "Resources/Benchmark/Kubik", Parameters = new List<Dictionary<string, string>>() { } } };
             Run();
         }
 
@@ -183,32 +178,51 @@ namespace SequencerTest.Benchmark
         public void RunSeqTest()
         {
             //SEQTEST
-            benchmarkTasks = new List<BenchmarkTask>();
-            benchmarkTasks.Add(new BenchmarkTask()
+            benchmarkTasks = new List<BenchmarkTask>
             {
-                TemplateDir = "Resources/Benchmark/SeqTest/Templates",
-                Dir = "Resources/Benchmark/SeqTest",
-                Parameters = new List<Dictionary<string, string>>()
+                new BenchmarkTask()
                 {
-                    //new Dictionary<string, string>() { ["T"] = "1200000", ["MIP"] = "False", ["Strategy"] = "Automatic" },
-                    //new Dictionary<string, string>() { ["T"] = "0",       ["MIP"] = "True",  ["Strategy"] = "Automatic" },
-                    new Dictionary<string, string>() { ["T"] = "1000",    ["MIP"] = "True",  ["Strategy"] = "Automatic" },
-                    new Dictionary<string, string>() { ["T"] = "5000",    ["MIP"] = "True",  ["Strategy"] = "Automatic" },
-                    //new Dictionary<string, string>() { ["T"] = "1200000", ["MIP"] = "False", ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "10",    ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "20",    ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "50",   ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "100",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "150",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "200",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "300",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "400",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "500",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
-                    new Dictionary<string, string>() { ["T"] = "750",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                    TemplateDir = "Resources/Benchmark/SeqTest/Templates",
+                    Dir = "Resources/Benchmark/SeqTest",
+                    Parameters = new List<Dictionary<string, string>>()
+                    {
+                        //new Dictionary<string, string>() { ["T"] = "1200000", ["MIP"] = "False", ["Strategy"] = "Automatic" },
+                        //new Dictionary<string, string>() { ["T"] = "0",       ["MIP"] = "True",  ["Strategy"] = "Automatic" },
+                        new Dictionary<string, string>() { ["T"] = "1000",    ["MIP"] = "True",  ["Strategy"] = "Automatic" },
+                        new Dictionary<string, string>() { ["T"] = "5000",    ["MIP"] = "True",  ["Strategy"] = "Automatic" },
+                        //new Dictionary<string, string>() { ["T"] = "1200000", ["MIP"] = "False", ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "10",    ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "20",    ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "50",   ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "100",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "150",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "200",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "300",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "400",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "500",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                        new Dictionary<string, string>() { ["T"] = "750",  ["MIP"] = "True",  ["Strategy"] = "GuidedLocalSearch" },
+                    }
                 }
-            });
-
+            };
             Run();
+        }
+
+        [TestMethod]
+        public void RunExamplesTest()
+        {
+            ////EXAMPLES
+            //benchmarkTasks = new List<BenchmarkTask>();
+            //benchmarkTasks.Add(new BenchmarkTask()
+            //{
+            //    TemplateDir = "Resources/Example/",
+            //    Dir = "Resources/Example/",
+            //    Parameters = new List<Dictionary<string, string>>()
+            //    {
+            //        new Dictionary<string, string>() { },
+            //    }
+            //});
+
+            //Run();
         }
     }
 }
