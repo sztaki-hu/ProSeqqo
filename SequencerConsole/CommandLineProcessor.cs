@@ -1,9 +1,7 @@
-﻿using SequencePlanner.GTSPTask.Result;
-using SequencePlanner.GTSPTask.Serialization.Result;
+﻿using SequencePlanner.GTSPTask.Serialization.Result;
 using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.GTSPTask.Task.LineLike;
-using SequencePlanner.GTSPTask.Task.PointLike;
 using SequencePlanner.Helper;
+using SequencePlanner.Task;
 using System;
 using System.IO;
 using System.Reflection;
@@ -13,35 +11,32 @@ namespace SequencerConsole
 {
     public class CommandLineProcessor
     {
-        private static readonly LogLevel LOG_LEVEL = LogLevel.Info;
-
         private static string input;
         private static FormatType inputType = FormatType.Unknown;
         private static string output;
         private static FormatType outputType = FormatType.Unknown;
         private static TaskType taskType = TaskType.Unknown;
-        private static bool debug;
         private static bool convert;
-        private static bool validate;
         private static LogLevel log = LogLevel.Info;
 
         public static void CLI(string[] args)
         {
-            if (args.Length == 0)
+            System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.RealTime;
+            System.Diagnostics.Process.GetCurrentProcess().PriorityBoostEnabled = true;
+            Console.Title = "ProSeqqo Console";
+            try
             {
-#if !DEBUG
-                    Help(new string[] { "-h" });
-#else
+                if (args.Length == 0)
                 {
-                    //Debug in VS
-                    SeqLogger.LogLevel = LogLevel.Trace;
-                    string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example";
-                    string local = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests";
-                    string localOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests\\Out";
-                    string kocka = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests\\Kockapakolas";
-                    string kockaOut = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\LocalTests\\Kockapakolas\\Out";
-                    string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\out";
-                    string graph = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\graph";
+    #if !DEBUG
+                        Help(new string[] { "-h" });
+    #else
+                    {
+                        //Debug in VS
+                        SeqLogger.LogLevel = LogLevel.Info;
+                        string example = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example";
+                        string castle = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\CubeCastle";
+                        string outdir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\Example\\Out";
 
                         //args = new string[] { "-i", example + "\\CelticLaser.seq",                  "-o", outdir + "\\CelticLaser_out.json",                   };
                         //args = new string[] { "-i", example + "\\CelticLaser_Contour.seq",            "-o", outdir + "\\CelticLaser_Contour_out.json",           };
@@ -70,30 +65,36 @@ namespace SequencerConsole
                         //args = new string[] { "-i", castle +  "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
                         //args = new string[] { "-i", castle +  "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
 
+
+                        Help(args);
+                        Version(args);
+                        input = Input(args);
+                        output = Output(args);
+                        log = LogLevel.Info;
+                        SeqLogger.UseIndent = true;
+                        Run();
+                    }
+    #endif
+                }
+                else
+                {
                     Help(args);
                     Version(args);
                     input = Input(args);
                     output = Output(args);
-                    debug = Debug(args);
-                    validate = Validate(args);
-                    log = LogLevel.Trace;
-                    Run();
+                    convert = Convert(args);
+                    log = Log(args);
+                    if (convert)
+                        Convert();
+                    else
+                        Run();
                 }
-#endif
-            }
-            else
+                Console.WriteLine("Press any key to exit.");
+                Console.ReadKey();
+            } catch(Exception e)
             {
-                Help(args);
-                Version(args);
-                input = Input(args);
-                output = Output(args);
-                validate = Validate(args);
-                convert = Convert(args);
-                log = Log(args);
-                if (convert)
-                    Convert();
-                else
-                    Run();
+                Console.WriteLine(e);
+                Console.ReadKey();
             }
         }
 
@@ -105,12 +106,8 @@ namespace SequencerConsole
                 SeqLogger.LogLevel = log;
                 if (taskType != TaskType.Unknown)
                 {
-                    if (taskType == TaskType.LineLike)
-                        ConvertLineLike();
-
-                    if (taskType == TaskType.PoitnLike)
-                        ConvertPointLike();
-
+                    if (taskType == TaskType.General)
+                        ConvertGeneral();
                 }
             }
             catch (Exception e)
@@ -119,27 +116,18 @@ namespace SequencerConsole
             }
         }
 
-        private static void ConvertPointLike()
+        private static void ConvertGeneral()
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                PointLikeTaskSerializer ser = new PointLikeTaskSerializer();
-                PointLikeTask task;
-                switch (inputType)
+                GeneralTaskSerializer ser = new GeneralTaskSerializer();
+                GeneralTask task = inputType switch
                 {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        task = ser.ImportSEQ(input);
-                        break;
-                    case FormatType.JSON:
-                        task = ser.ImportJSON(input);
-                        break;
-                    case FormatType.XML:
-                        task = ser.ImportXML(input);
-                        break;
-                    default:
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                }
+                    FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
+                    FormatType.JSON => ser.ImportJSON(input),
+                    FormatType.XML => ser.ImportXML(input),
+                    _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
+                };
                 switch (outputType)
                 {
                     case FormatType.SEQ:
@@ -158,44 +146,6 @@ namespace SequencerConsole
             }
         }
 
-        private static void ConvertLineLike()
-        {
-            if (inputType != FormatType.Unknown && input != null)
-            {
-                LineLikeTaskSerializer ser = new LineLikeTaskSerializer();
-                LineLikeTask task;
-                switch (inputType)
-                {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        task = ser.ImportSEQ(input);
-                        break;
-                    case FormatType.JSON:
-                        task = ser.ImportJSON(input);
-                        break;
-                    case FormatType.XML:
-                        task = ser.ImportXML(input);
-                        break;
-                    default:
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                }
-                switch (outputType)
-                {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        ser.ExportSEQ(task, output);
-                        break;
-                    case FormatType.JSON:
-                        ser.ExportJSON(task, output);
-                        break;
-                    case FormatType.XML:
-                        ser.ExportXML(task, output);
-                        break;
-                    default:
-                        throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml!");
-                }
-            }
-        }
 
         private static void Run()
         {
@@ -204,108 +154,46 @@ namespace SequencerConsole
                 SeqLogger.LogLevel = log;
                 if (taskType != TaskType.Unknown)
                 {
-                    if (taskType == TaskType.LineLike)
+                    if (taskType == TaskType.General)
                     {
-                        var result = RunLineLike();
-                        OutLineLike(result);
-                    }
-                    if (taskType == TaskType.PoitnLike)
-                    {
-                        var result = RunPointLike();
-                        //result.ToLog(LogLevel.Info);
-                        OutPointLine(result);
+                        var result = RunTask();
+                        result.ToLog(LogLevel.Info);
+                        OutGeneral(result);
                     }
                 }
                 else
-                    throw new SeqException("Unknown task type!", "It should be TaskType: LineLike or PointLike");
+                    throw new SeqException("Unknown task type!", "It should be Task: General");
             }
             catch (Exception e)
             {
                 SeqLogger.Critical(e.ToString());
+                Console.ReadKey();
             }
         }
 
-        private static LineTaskResult RunLineLike()
+        private static GeneralTaskResult RunTask()
         {
             if (inputType != FormatType.Unknown && input != null)
             {
-                LineLikeTaskSerializer ser = new LineLikeTaskSerializer();
-                LineLikeTask task;
-                switch (inputType)
+                GeneralTaskSerializer ser = new GeneralTaskSerializer();
+                GeneralTask task = inputType switch
                 {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        task = ser.ImportSEQ(input);
-                        break;
-                    case FormatType.JSON:
-                        task = ser.ImportJSON(input);
-                        break;
-                    case FormatType.XML:
-                        task = ser.ImportXML(input);
-                        break;
-                    default:
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                }
-                return task.RunModel();
-            }
-            return null;
-        }
-
-        private static PointTaskResult RunPointLike()
-        {
-            if (inputType != FormatType.Unknown && input != null)
-            {
-                PointLikeTaskSerializer ser = new PointLikeTaskSerializer();
-                PointLikeTask task;
-                switch (inputType)
-                {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        task = ser.ImportSEQ(input);
-                        break;
-                    case FormatType.JSON:
-                        task = ser.ImportJSON(input);
-                        break;
-                    case FormatType.XML:
-                        task = ser.ImportXML(input);
-                        break;
-                    default:
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!");
-                }
-                return task.RunModel();
+                    FormatType.SEQ or FormatType.TXT => ser.ImportSEQ(input),
+                    FormatType.JSON => ser.ImportJSON(input),
+                    FormatType.XML => ser.ImportXML(input),
+                    _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
+                };
+                return task.Run();
                 //var ct = new CancellationToken();
                 //WaitForSolution("Solver running!", ct);
             }
             return null;
         }
-        private static void OutPointLine(PointTaskResult result)
+        private static void OutGeneral(GeneralTaskResult result)
         {
             if (output != null && outputType != FormatType.Unknown)
             {
-                PointLikeResultSerializer ser = new PointLikeResultSerializer();
-                switch (outputType)
-                {
-                    case FormatType.SEQ:
-                    case FormatType.TXT:
-                        ser.ExportSEQ(result, output);
-                        break;
-                    case FormatType.JSON:
-                        ser.ExportJSON(result, output);
-                        break;
-                    case FormatType.XML:
-                        ser.ExportXML(result, output);
-                        break;
-                    default:
-                        throw new TypeLoadException("Output file should be .txt/.seq/.json/.xml!");
-                }
-                //System.Diagnostics.Process.Start(@output);
-            }
-        }
-        private static void OutLineLike(LineTaskResult result)
-        {
-            if (output != null && outputType != FormatType.Unknown)
-            {
-                LineLikeResultSerializer ser = new LineLikeResultSerializer();
+                GeneralResultSerializer ser = new GeneralResultSerializer();
                 switch (outputType)
                 {
                     case FormatType.SEQ:
@@ -388,9 +276,13 @@ namespace SequencerConsole
         {
             for (int i = 0; i < args.Length; i++)
             {
-                if (args[i].Equals("-input") || args[i].Equals("-i"))
+                if (args[i].Equals("-input") || args[i].Equals("-i") || args.Length==1)
                 {
-                    var filename = args[i + 1].Split(".");
+                    string[] filename = null;
+                    if (args.Length==1)
+                        filename = args[0].Split(".");
+                    else
+                        filename = args[i + 1].Split(".");
                     if (filename != null && filename.Length > 1)
                     {
                         if (filename[1].ToUpper() == "SEQ")
@@ -402,14 +294,22 @@ namespace SequencerConsole
                         if (filename[1].ToUpper() == "XML")
                             inputType = FormatType.XML;
                         if (inputType == FormatType.Unknown)
-                            throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml:" + args[i + 1]);
+                            throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml");
                     }
                     else
                     {
-                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml:" + args[i + 1]);
+                        throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml.");
                     }
-                    taskType = CheckTaskType(args[i + 1]);
-                    return args[i + 1];
+                    if(args.Length == 1)
+                    {
+                        taskType = CheckTaskType(args[0]);
+                        return args[0];
+                    }
+                    else
+                    {
+                        taskType = CheckTaskType(args[i + 1]);
+                        return args[i + 1];
+                    }
                 }
             }
             Console.WriteLine("Input file needed! Use -h/-help command for details!");
@@ -442,7 +342,17 @@ namespace SequencerConsole
                     return args[i + 1];
                 }
             }
-            //Console.WriteLine("Output file needed!");
+            if (args.Length == 1)
+            {
+                outputType = FormatType.JSON;
+                output = input;
+                output = output.Replace(".json", "_out.json");
+                output = output.Replace(".seq", "_out.json");
+                output = output.Replace(".txt", "_out.json");
+                output = output.Replace(".SEQ", "_out.json");
+                output = output.Replace(".xml", "_out.json");
+                return output;
+            }
             return null;
         }
         private static LogLevel Log(string[] args)
@@ -478,59 +388,16 @@ namespace SequencerConsole
             return false;
         }
 
-        private static bool Debug(string[] args)
-        {
-            for (int i = 0; i < args.Length; i++)
-            {
-                if (args[i].Equals("-debug") || args[i].Equals("-d"))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private static bool Validate(string[] args)
-        {
-            for (int i = 0; i < args.Length; i++)
-            {
-                if (args[i].Equals("-notvalidate") || args[i].Equals("-nv"))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public static TaskType CheckTaskType(string input)
         {
             if (!File.Exists(input))
                 SeqLogger.Critical("File not exists: " + input);
             foreach (var line in File.ReadAllLines(input))
             {
-                if (line.Contains("LineLike"))
-                    return TaskType.LineLike;
-                if (line.Contains("PointLike"))
-                    return TaskType.PoitnLike;
+                if (line.ToUpper().Contains("General".ToUpper()))
+                    return TaskType.General;
             }
             return TaskType.Unknown;
-        }
-        public static void WaitForSolution(string text, CancellationToken token)
-        {
-            var counter = 0;
-            while (token.IsCancellationRequested)
-            {
-                switch (counter % 4)
-                {
-                    case 0: Console.Write("/" + text); break;
-                    case 1: Console.Write("-" + text); break;
-                    case 2: Console.Write("\\" + text); break;
-                    case 3: Console.Write("|" + text); break;
-                }
-                Console.SetCursorPosition(Console.CursorLeft - (1 + text.Length), Console.CursorTop);
-                counter++;
-                Thread.Sleep(100);
-            }
         }
     }
 
@@ -544,8 +411,8 @@ namespace SequencerConsole
     }
     public enum TaskType
     {
-        LineLike,
-        PoitnLike,
+        Line,
+        General,
         Unknown
     }
 }

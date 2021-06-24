@@ -1,41 +1,17 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
+﻿using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
+using SequencePlanner.Helper;
+using SequencePlanner.Model.Hierarchy;
 using System.Collections.Generic;
 
 namespace SequencePlanner.Function.ResourceFunction
 {
     public class MatrixResourceFunction : IResourceFunction
     {
-        public string FunctionName { get { return "MatrixResource"; } }
-        //Header of the cost matrix with the ResourceIDs
+        public string FunctionName { get { return "ResourceMatrix"; } }
         public List<int> CostMatrixIDHeader { get; set; }
-        public List<List<double>> CostMatrix { get;}
+        public List<List<double>> CostMatrix { get; }
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
 
-        public double ComputeResourceCost(Position A, Position B, double distance)
-        {
-            if (A.ResourceID == -1)
-                throw new SeqException("Position with UserID: " + A.UserID + " has no ResourceID: -1");
-            if (B.ResourceID == -1)
-                throw new SeqException("Position with UserID: " + B.UserID + " has no ResourceID: -1");
-            var ida = -1;
-            var idb = -1;
-            for (int i = 0; i < CostMatrixIDHeader.Count; i++)
-            {
-                if (CostMatrixIDHeader[i] == A.ResourceID)
-                    ida = i;
-                if (CostMatrixIDHeader[i] == B.ResourceID)
-                    idb = i;
-                if(ida!=-1 && idb!=-1)
-                    return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
-            }
-            if (ida == -1)
-                throw new SeqException("Position with ResourceID: "+ A.ResourceID + " not contained by CostMatrixIDHeader");
-            if (idb == -1)
-                throw new SeqException("Position with ResourceID: "+ B.ResourceID + " not contained by CostMatrixIDHeader");
-            return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
-        }
 
         public MatrixResourceFunction(List<List<double>> costMatrix, List<int> resourceIDList, IResourceDistanceLinkFunction link)
         {
@@ -45,9 +21,66 @@ namespace SequencePlanner.Function.ResourceFunction
             Validate();
         }
 
+
+        public double ComputeResourceCost(Config A, Config B, double distance)
+        {
+            if (A.Virtual || B.Virtual)
+                return LinkingFunction.ComputeResourceDistanceCost(0, distance);
+            if (A.Resource.ID == -1)
+                throw new SeqException("Configuration with ID: " + A.ID + " has no ResourceID: -1");
+            if (B.Resource.ID == -1)
+                throw new SeqException("Configuration with ID: " + B.ID + " has no ResourceID: -1");
+            var ida = -1;
+            var idb = -1;
+            for (int i = 0; i < CostMatrixIDHeader.Count; i++)
+            {
+                if (CostMatrixIDHeader[i] == A.Resource.ID)
+                    ida = i;
+                if (CostMatrixIDHeader[i] == B.Resource.ID)
+                    idb = i;
+                if (ida != -1 && idb != -1)
+                    return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
+            }
+            return distance;
+            
+            if (ida == -1)
+                throw new SeqException("Configuration with ResourceID: " + A.Resource.ID + " not contained by CostMatrixIDHeader");
+            if (idb == -1)
+                throw new SeqException("Configuration with ResourceID: " + B.Resource.ID + " not contained by CostMatrixIDHeader");
+            return LinkingFunction.ComputeResourceDistanceCost(CostMatrix[ida][idb], distance);
+        }
+
+        public double GetResourceCost(Config A, Config B)
+        {
+            if (A.Virtual || B.Virtual)
+                return 0;
+            if (A.Resource.ID == -1)
+                throw new SeqException("Configuration with ID: " + A.ID + " has no ResourceID: -1");
+            if (B.Resource.ID == -1)
+                throw new SeqException("Configuration with ID: " + B.ID + " has no ResourceID: -1");
+            var ida = -1;
+            var idb = -1;
+
+            for (int i = 0; i < CostMatrixIDHeader.Count; i++)
+            {
+                if (CostMatrixIDHeader[i] == A.Resource.ID)
+                    ida = i;
+                if (CostMatrixIDHeader[i] == B.Resource.ID)
+                    idb = i;
+                if (ida != -1 && idb != -1)
+                    return CostMatrix[ida][idb];
+            }
+
+            if (ida == -1)
+                throw new SeqException("Configuration with ResourceID: " + A.Resource.ID + " not contained by CostMatrixIDHeader");
+            if (idb == -1)
+                throw new SeqException("Configuration with ResourceID: " + B.Resource.ID + " not contained by CostMatrixIDHeader");
+            return CostMatrix[ida][idb];
+        }
+
         public void Validate()
         {
-            if(CostMatrixIDHeader.Count != CostMatrix.Count)
+            if (CostMatrixIDHeader.Count != CostMatrix.Count)
                 throw new SeqException("Resource cost matrix size not equal with the header.");
 
             foreach (var mx1 in CostMatrix)
@@ -63,9 +96,9 @@ namespace SequencePlanner.Function.ResourceFunction
             {
                 throw new SeqException("ConstantResourceFunction.LinkingFunction not initalized.");
             }
-            SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(MatrixResourceFunction));
-            SeqLogger.Info("MatrixResource: " + CostMatrix.Count+"x"+CostMatrix.Count, nameof(MatrixResourceFunction));
-            SeqLogger.Info("LinkingFunction: " + LinkingFunction.FunctionName, nameof(MatrixResourceFunction));
+            SeqLogger.Debug("ResourceFunction: " + FunctionName, nameof(MatrixResourceFunction));
+            SeqLogger.Debug("ChangeoverMatrix: " + CostMatrix.Count + "x" + CostMatrix.Count, nameof(MatrixResourceFunction));
+            SeqLogger.Debug("LinkingFunction: " + LinkingFunction.FunctionName, nameof(MatrixResourceFunction));
         }
         public void ToLog(LogLevel level)
         {

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LineAnimation", "LineAnimat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequencerBenchmarkTest", "SequencerBenchmarkTest\SequencerBenchmarkTest.csproj", "{07774BE8-FF55-4B06-A73E-3C7B6C0D3B48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YourApplication", "YourApplication\YourApplication.csproj", "{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +62,14 @@ Global
 		{07774BE8-FF55-4B06-A73E-3C7B6C0D3B48}.Release|Any CPU.Build.0 = Release|Any CPU
 		{07774BE8-FF55-4B06-A73E-3C7B6C0D3B48}.Release|x64.ActiveCfg = Release|Any CPU
 		{07774BE8-FF55-4B06-A73E-3C7B6C0D3B48}.Release|x64.Build.0 = Release|Any CPU
+		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Debug|x64.Build.0 = Debug|Any CPU
+		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Release|x64.ActiveCfg = Release|Any CPU
+		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,72 @@
+TaskType: General
+Dimension: 2
+Cyclic: True
+StartDepot: 0
+TimeLimit: 20
+DistanceFunction: Euclidian
+ResourceChangeoverFunction: Add
+ResourceChangeover: Constant
+ChangeoverConstant: 0
+UseMIPprecedenceSolver: True
+
+ConfigList:
+#+-------+---------------------+------------------+
+#|   ID  |      Position       |  Name[optional]  |
+#+-------+---------------------+------------------+
+0;	[0;0];	Init
+1;	[1;6];	Cube1_PutDown
+2;	[2;6];  Cube2_PutDown
+3;	[3;6];  Cube3_PutDown
+4;	[4;6];  Cube4_PutDown
+5;	[5;6];  Cube5_PutDown
+
+7;	[2;2];  Cube1_A
+8;	[2;2];  Cube1_B
+9;	[3;2];	Cube2_A
+10;	[3;2];	Cube2_B
+11;	[3;3];	Cube3_A
+12;	[3;3];	Cube3_B
+13;	[4;3];	Cube4_A
+14;	[4;3];  Cube4_B
+15;	[4;3];	Cube5_A
+16;	[4;3];  Cube5_B
+
+
+ProcessHierarchy:
+#+-------------+---------+----------------+------------+
+#| Position ID | Task ID | Alternative ID | Process ID |
+#+-------------+---------+----------------+------------+
+	#Init
+		0;			0;			0;			  0;	
+	#Cube1
+		7;			1;			1;			  1;		
+		8;			1;		    1;			  1;		
+		1;			2;			1;			  1;
+	#Cube2
+		9;			3;			2;			  2;		
+		10;			3;		    2;			  2;		
+		2;			4;			2;			  2;
+	#Cube3
+		11;			5;			3;			  3;		
+		12;			5;		    3;			  3;		
+		3;			6;			3;			  3;
+	#Cube4
+		13;			7;			4;			  4;		
+		14;			7;		    4;			  4;		
+		4;			8;			4;			  4;
+	#Cube5
+		15;			9;			5;			  5;		
+		16;			9;		    5;			  5;		
+		5;			10;			5;			  5;
+
+
+ProcessPrecedence:
+#+----------------------+--------------------+------------------+
+#| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
+#+----------------------+--------------------+------------------+
+
+
+MotionPrecedence:
+#+----------------------+--------------------+------------------+
+#| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
+#+----------------------+--------------------+------------------+

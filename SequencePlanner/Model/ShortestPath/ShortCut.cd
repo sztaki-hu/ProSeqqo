@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SequencePlanner.Model.ShortestPath.ShortAlernative">
+    <Position X="3.5" Y="0.75" Width="1.5" />
+    <AssociationLine Name="Graph" Type="SequencePlanner.Model.ShortestPath.Graph" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="1.152" />
+        <Point X="6.25" Y="1.152" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Alternative" Type="SequencePlanner.Model.Hierarchy.Alternative" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="2.666" />
+        <Point X="5.375" Y="2.666" />
+        <Point X="5.375" Y="4" />
+        <Point X="6.25" Y="4" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IAAAAAABAAAAAAAACAAAAAAAAAAAAAkAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ShortestPath\ShortAlernative.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Graph" />
+      <Property Name="Alternative" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SequencePlanner.Model.ShortestPath.Node">
+    <Position X="8.75" Y="3" Width="1.5" />
+    <AssociationLine Name="Motion" Type="SequencePlanner.Model.Hierarchy.Motion" FixedFromPoint="true">
+      <Path>
+        <Point X="10.25" Y="3.25" />
+        <Point X="11.75" Y="3.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ShortestPath\Node.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Motion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SequencePlanner.Model.ShortestPath.MotionPath">
+    <Position X="8.75" Y="0.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Start" Type="SequencePlanner.Model.Hierarchy.Motion" FixedFromPoint="true">
+      <Path>
+        <Point X="10.5" Y="1.5" />
+        <Point X="11.75" Y="1.5" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Path" Type="SequencePlanner.Model.Hierarchy.Motion" FixedFromPoint="true">
+      <Path>
+        <Point X="10.5" Y="2.375" />
+        <Point X="11.75" Y="2.375" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ProxyMotion" Type="SequencePlanner.Model.Hierarchy.Motion" FixedFromPoint="true">
+      <Path>
+        <Point X="10.5" Y="2" />
+        <Point X="11.75" Y="2" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAACACAAAAIEAAACABAAAAAAAAAAAAAAGAAAAAg=</HashCode>
+      <FileName>Model\ShortestPath\MotionPath.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Start" />
+      <Property Name="Finish" />
+      <Property Name="ProxyMotion" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Path" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SequencePlanner.Model.ShortestPath.Graph">
+    <Position X="6.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IBAgAAAAACAAQAAAAAACAAAAgAAAAgAAEAAAAAAAEAA=</HashCode>
+      <FileName>Model\ShortestPath\Graph.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="MotionPaths" />
+      <Property Name="Nodes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SequencePlanner.Model.ShortestPath.Dijkstra">
+    <Position X="14.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAQgAAACAAAAIAAAAAAAAAAAAQAAACAAI=</HashCode>
+      <FileName>Model\ShortestPath\Dijkstra.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Model.Hierarchy.HierarchyRecord">
+    <Position X="11.75" Y="5.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAACAAAAECgAAAAAAAgBAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\HierarchyRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Model.Hierarchy.Motion">
+    <Position X="11.75" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAEAAAQAEQEAAABgCAAIAAAAAQQAAAAAIAAA=</HashCode>
+      <FileName>Model\Hierarchy\Motion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Model.Hierarchy.Alternative">
+    <Position X="6.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\Alternative.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Task.Processors.ShortcutMapper">
+    <Position X="3.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAARAAAAVAAAAAAAEAAAACAAAAgAAEAEAAAAIAAAA=</HashCode>
+      <FileName>Task\Processors\ShortcutMapper.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Task" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ShortAlternatives" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SequencePlanner.Task.GeneralTask">
+    <Position X="0.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEAAIAgkAAKEIACgAAAIACECEAAAgAEAAhAgAAQFAAI=</HashCode>
+      <FileName>Task\GeneralTask.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ShortcutMapper" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

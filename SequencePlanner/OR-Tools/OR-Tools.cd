@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SequencePlanner.OR_Tools.ORToolsGeneralPreSolverTask">
+    <Position X="0.5" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAIEAAAAIAAAAACAAAAAAAAhAAAAAAAAAAA=</HashCode>
+      <FileName>OR-Tools\ORToolsGeneralPreSolverTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.OR_Tools.ORToolsGeneralPreSolverWrapper">
+    <Position X="3.25" Y="4.75" Width="3" />
+    <NestedTypes>
+      <Class Name="SequencePlanner.OR_Tools.ORToolsGeneralPreSolverWrapper.Process" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>OR-Tools\ORToolsGeneralPreSolverWrapper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAACEAAAQAAAAAABAsAgYQAAAAAASAIBQAECQAAI=</HashCode>
+      <FileName>OR-Tools\ORToolsGeneralPreSolverWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.OR_Tools.ORToolsResult">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAIAAAQA=</HashCode>
+      <FileName>OR-Tools\ORToolsResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.OR_Tools.ORToolsSequencerWrapper">
+    <Position X="3.25" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAACAAAAAAAAgAAMAAAAoAACAAAAAAAEABA=</HashCode>
+      <FileName>OR-Tools\ORToolsSequencerWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.OR_Tools.ORToolsTask">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>OR-Tools\ORToolsTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
