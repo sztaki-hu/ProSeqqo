@@ -39,7 +39,7 @@ The result of the execution is a list of Positions corresponds to the following:
 - By visiting every **Configuration** of **one** possible **Motion** of the given task.
 
 The given task translated to a general travelling salesman (GTSP) graph as an input of the Google-OR-Tools VRP solver.  
-Parameters and description language available [here](../Documentation/TaskDefinition.md) and result description is [here](../Documentation/ResultDefinition.md). 
+Parameters and description language available [here](../Documentation/TaskDefinition.md) and result description is [here](../Documentation/ResultDefinition.md).  
 <img src="../Documentation/Images/Representation.png" alt="Problem representation of ProSeqqo" width="350"/>
 
 #### Side constraints:

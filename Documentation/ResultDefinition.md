@@ -1,7 +1,7 @@
-## General
-The executed tasks are also ([task serialization](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Task-definition-file)) available in different formats, JSON, XML, SEQ, TXT. 
+# ![ProSeqqo Logo](../Documentation/Images/ProSeqqoLogo.png) [ProSeqqo](../Documentation/Readme.md) 
+# Result format
+The executed tasks ([definition](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Task-definition-file)) are also available in different formats, JSON, XML, SEQ, TXT. 
 ## Parameters
-Global result parameters:
 | Parameter     | Comment                                                     |
 | --------------| ----------------------------------------------------------- |
 | Created       | Date and time of generation.                                |
@@ -15,22 +15,9 @@ Global result parameters:
 | StatusMessage | Final status message of OR-Tools VRP.                       |
 | Log           | Log messages of the solver, detailed as the given log level.|
 
-### LineLikeResult
-The global parameters extended by the followings in case of LL task:
-| Parameter     | Comment                 |
-| --------------| ----------------------- |
-| LineResult    | The solution of the task as a list of lines. (Line UserID; PositionA UserID; PositionB UserID; Name of the line; ResourceID.) |
-| PositionResult| The solution of the task as a list of positions. (Position userID; position vector; Name of the position; ResourceID.)|
 
-Example [LL task](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/LineLike_Original.txt) and its [JSON](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/LineLike_Original.json), [XML](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/LineLike_Original.xml), [SEQ ](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/LineLike_Original.seq) result. 
+Example [.SEQ](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/LineLike_Original.txt) and its [JSON](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/LineLike_Original.json), [XML](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/LineLike_Original.xml), [SEQ ](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/LineLike_Original.seq) result. 
 
-### PointLike Result
-The global parameters extended by the followings in case of PL task:
-| Parameter     | Comment                 |
-| --------------| ----------------------- |
-| PositionResult| The solution of the task as a list of positions. (Position userID; position vector; Position name; ResourceID.) |
-
-Example [PL task](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/PointLike_PosProcPrecedences.txt) and its [JSON](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/PointLike_PosProcPrecedences.json), [XML](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/PointLike_PosProcPrecedences.xml), [SEQ](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/PointLike_PosProcPrecedences.seq) result. 
 
 ## Use
 ### Command Line Interface
