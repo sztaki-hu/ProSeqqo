@@ -1,4 +1,5 @@
-﻿using SequencePlanner.Model.Hierarchy;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Model.Hierarchy;
 using SequencePlanner.OR_Tools;
 using System;
 using System.Collections.Generic;
@@ -9,44 +10,84 @@ namespace SequencePlanner.Task.Processors
     public class InitialSolver
     {
         public TimeSpan Time { get; set; }
-
         private Stopwatch Timer;
         private GeneralTask Task;
+
+        public List<Motion> InitialSolution { get; set; }
+        public List<int> InitialSolutionIDs { get; set; }
 
         public InitialSolver(GeneralTask newGeneralTask)
         {
             Task = newGeneralTask;
             Timer = new Stopwatch();
             Time = new TimeSpan();
+            InitialSolution = new List<Motion>();
+            InitialSolutionIDs = new List<int>();
         }
 
         public void CreateInitialSolution()
         {
-            if (Task.SolverSettings.UseMIPprecedenceSolver)
+            if (InitialSolutionIDs is not null && InitialSolutionIDs.Count > 0)
+                FillByIDs();
+
+            if (InitialSolution is not null && InitialSolution.Count > 0) 
             {
-                Timer.Restart();
-                Timer.Start();
-                var task = new ORToolsGeneralPreSolverTask()
+                SeqLogger.Info("Initial solution given by the user.");
+                if (Task.StartDepot is not null)
                 {
-                    NumberOfNodes = Task.Hierarchy.Motions.Count,
-                    DisjointConstraints = Task.GTSPRepresentation.DisjointSets,
-                    StrictOrderPrecedenceHierarchy = Task.GTSPRepresentation.CreatePrecedenceHierarchiesForInitialSolution(),
-                    OrderPrecedenceConstraints = Task.GTSPRepresentation.MotionPrecedences,
-                    Hierarchy = Task.Hierarchy
-                };
-                if (Task.GTSPRepresentation.StartDepot is not null)
-                    task.StartDepot = Task.GTSPRepresentation.StartDepot.SequenceMatrixID;
+                    if (Task.StartDepot.ID == InitialSolution[0].ID)
+                        SeqLogger.Error("Start depot not needed in initial solution.");
+                    //else
+                        //InitialSolution.Insert(0, Task.StartDepot);
+                }
+                if (Task.FinishDepot is not null)
+                {
+                    if (Task.FinishDepot.ID == InitialSolution[^1].ID)
+                        SeqLogger.Error("Finish depot not needed in initial solution.");
+                    //else
+                        //InitialSolution.Add(Task.FinishDepot);
+                }
+            }
+            else
+            {
+                if (Task.SolverSettings.UseMIPprecedenceSolver)
+                {
+                    Timer.Restart();
+                    Timer.Start();
+                    var task = new ORToolsGeneralPreSolverTask()
+                    {
+                        NumberOfNodes = Task.Hierarchy.Motions.Count,
+                        DisjointConstraints = Task.GTSPRepresentation.DisjointSets,
+                        StrictOrderPrecedenceHierarchy = Task.GTSPRepresentation.CreatePrecedenceHierarchiesForInitialSolution(),
+                        OrderPrecedenceConstraints = Task.GTSPRepresentation.MotionPrecedences,
+                        Hierarchy = Task.Hierarchy
+                    };
+                    if (Task.GTSPRepresentation.StartDepot is not null)
+                        task.StartDepot = Task.GTSPRepresentation.StartDepot.SequenceMatrixID;
+                    else
+                        task.StartDepot = -1;
+                    if (Task.GTSPRepresentation.FinishDepot is not null)
+                        task.FinishDepot = Task.GTSPRepresentation.FinishDepot.SequenceMatrixID;
+                    else
+                        task.FinishDepot = -1;
+                    var solver = new ORToolsGeneralPreSolverWrapper(task);
+                    var result = solver.Solve();
+                    InitialSolution = PhraseSolution(result);
+                    Timer.Stop();
+                    Time = Timer.Elapsed;
+                }
+            }
+        }
+
+        private void FillByIDs()
+        {
+            foreach (var item in InitialSolutionIDs)
+            {
+                var result = Task.Hierarchy.GetMotionByID(item);
+                if (result is not null)
+                    InitialSolution.Add(result);
                 else
-                    task.StartDepot = -1;
-                if (Task.GTSPRepresentation.FinishDepot is not null)
-                    task.FinishDepot = Task.GTSPRepresentation.FinishDepot.SequenceMatrixID;
-                else
-                    task.FinishDepot = -1;
-                var solver = new ORToolsGeneralPreSolverWrapper(task);
-                var result = solver.Solve();
-                Task.GTSPRepresentation.InitialSolution = PhraseSolution(result);
-                Timer.Stop();
-                Time = Timer.Elapsed;
+                    SeqLogger.Error("Initial solution ID not found.");
             }
         }
 

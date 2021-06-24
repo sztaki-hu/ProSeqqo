@@ -28,6 +28,7 @@ namespace SequencePlanner.Task
         private InitialSolver InitialSolver { get; set; }
         private Stopwatch Timer { get; set; }
 
+
         public GeneralTask()
         {
             Validate = true;
@@ -57,15 +58,24 @@ namespace SequencePlanner.Task
             ShortcutMapper.Change();
             GTSPRepresentation.Build();
             GTSPRepresentation.ORToolsFixFinishDepot();
+            //DEBUG
+            ADDinitialSOLUTION();
             InitialSolver.CreateInitialSolution();
             CheckSolution(GTSPRepresentation.DisjointSets, GTSPRepresentation.MotionPrecedences, ProcessPrecedences, GTSPRepresentation.InitialSolution);
+            GTSPRepresentation.InitialSolution = InitialSolver.InitialSolution;
             var result = RunTask();
+            SeqLogger.Critical("GTSP Nodes: "+GTSPRepresentation.CostMatrix.GetLength(0));
             DepotMapper.ChangeBack();
             ShortcutMapper.ChangeBack();
             Timer.Stop();
             result.FullTime = Timer.Elapsed;
             result.PreSolverTime = InitialSolver.Time;
             return result;
+        }
+
+        private void ADDinitialSOLUTION()
+        {
+            //InitialSolver.InitialSolutionIDs = new List<int>() {1,2,3,6,7,9,10,12,14,16,17,19,20,22,23,25,26,28,30,32,33,35};
         }
 
         private void ValidateTask()
