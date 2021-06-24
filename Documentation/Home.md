@@ -1,11 +1,18 @@
+# ![ProSeqqo Logo](../Documentation/Images/ProSeqqoLogo.png) ProSeqqo 
+[Installation](../Documentation/Install.md)  
+[Hello World!](../Documentation/HelloWorld.md)  
+[Task definition](../Documentation/TaskDefinition.md)  
+[Examples](../Example)  
+[Papers](../Documentation/Papers)  
+
 ## About
 Generic task sequencer that captures typical sequencing problems encountered in robot applications.
 * Easily integrated into complex solution workflows
-* Standalone exe with file interface, DLL function calls, Docker contained REST
+* Standalone exe with file interface (.seq, .json, .xml), .dll function calls, ~~Docker contained REST~~
 * Provides close-to-optimal (but not necessarily optimal) solutions quickly
 * Compact solver based on an open-source VRP solver engine - Google-OR-Tools
 * Arbitrary dimension - 2D, 3D or robotic joint space planning
-* Build in cost functions - Euclidean, Max, Manhattan, Trapezoid Time, Matrix
+* Build in cost functions - Euclidian, Max, Manhattan, Trapezoid Time, Matrix
 * General description language to describe sequencing problems
 * Order constraints
 * Resource handling
@@ -17,9 +24,11 @@ Visual Studio 2019 Solution:
 *  LineAnimation   - .NET 5.0 WPF Application
 *  Example
 *  Example/Skeletons
-*  ~~SequencePlannerService - ASP.NET 5.0 REST Web Service with Docker support~~
+*  ~~SequencePlannerService - ASP.NET 5.0 REST Web Service~~
 
-## Task
+<img src="../Documentation/Images/Process.png" alt="Problem representation of ProSeqqo" width="1000"/>
+
+## Representation
 Configurations defined in task space or robot configuration space, in arbitrary dimensions.
 These configurations filled into a hierarchy, every configuration take place in a `Motion`, `Task`, `Alternative` and `Process`.
 The distance between the configurations can be defined by a matrix or calculated automatically with the selected function.
@@ -29,7 +38,9 @@ The result of the execution is a list of Positions corresponds to the following:
 - And executing **every Task** of the alternative…
 - By visiting every **Configuration** of **one** possible **Motion** of the given task.
 
-The given task translated to a general travelling salesman (GTSP) graph as an input of the Google-OR-Tools VRP solver.
+The given task translated to a general travelling salesman (GTSP) graph as an input of the Google-OR-Tools VRP solver.  
+Parameters and description language documentation [here](../Documentation/TaskDefinition.md).  
+<img src="../Documentation/Images/Representation.png" alt="Problem representation of ProSeqqo" width="350"/>
 
 #### Side constraints:
 -  Precedence constraints between Motions
@@ -37,6 +48,13 @@ The given task translated to a general travelling salesman (GTSP) graph as an in
 -  Only one motion used in a task (Disjunctive constraint, generated automatically)
 -  Only one alternative used in a process (Disjunctive constraint, generated automatically)
 
+#### Features:
+-  Cyclic and uncyclic sequences with optional start and finish configuration. 
+-  Automatic cost computation - Euclidian, Max, Manhattan, Trapezoid time
+-  Arbitary costs by matrix
+-  Penalty for tool path or motion interruption.
+-  Resource and resource changeover cost handling.
+-  Metaheuristic configuration and time limit for VRP solver by OR-Tools.
 
 ## Install:
 - Standalone executable
@@ -44,33 +62,25 @@ The given task translated to a general travelling salesman (GTSP) graph as an in
 - Visual Studio 2019 Solution
 - <del>Docker Container - REST API</del>
 
-[More detailed instructions about installation.](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Installation)
+Installation details are available [here](../Documentation/Install.md).
 
-## Hello World:
+## Examples:
+- Camera based pick and place
+- Cube pick and place with multiple grasp configuration and many order costraints
+- Robotic drawing
+- Laser engraving
+- Three step grinding of furniture parts  
 
-
+Hello World! available [here](../Documentation/HelloWorld.md).  
+Examples and description available [here](../Example).  
+Code and file skeletons [here](../Example/Skeletons).
 
 ## Documentation:
-
-
+This is the documentation.
 
 ## Contributing:
 If you find any bugs, please report them! I am also happy to accept pull requests from anyone.<br>
 You can use the issue tracker to report bugs, ask questions, suggest new features or personally:<br>
 Kovács András - kovacs.andras@sztaki.hu<br>
-Zahorán László - zahoran.laszlo@sztaki.hu
-
-## License:
->    Copyright 2021 SZTAKI EMI
-> 
->    Licensed under the Apache License, Version 2.0 (the "License");
->    you may not use this file except in compliance with the License.
->    You may obtain a copy of the License at
-> 
->      http://www.apache.org/licenses/LICENSE-2.0
-> 
->    Unless required by applicable law or agreed to in writing, software
->    distributed under the License is distributed on an "AS IS" BASIS,
->    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
->    See the License for the specific language governing permissions and
->    limitations under the License.
+Zahorán László - zahoran.laszlo@sztaki.hu  
+[License](../LICENSE)
