@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SequencePlanner.GeneralModels.Alternative">
+    <Position X="8.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\Alternative.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Model.BaseNode">
+    <Position X="15" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAQAAAAAAAAAEgIAAAC0AAAAAAIAAAAAAEAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\BaseNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Config">
+    <Position X="1.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\Config.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Hierarchy">
+    <Position X="0.5" Y="7" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QCBQAABIQVQAACAASBIAREAggBARASgwCQAAAAAgIgA=</HashCode>
+      <FileName>Model\Hierarchy\Hierarchy.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="HierarchyRecords" />
+      <Property Name="Configs" />
+      <Property Name="Motions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.HierarchyRecord">
+    <Position X="4.25" Y="8.75" Width="1.5" />
+    <AssociationLine Name="Alternative" Type="SequencePlanner.GeneralModels.Alternative" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="9.375" />
+        <Point X="9" Y="9.375" />
+        <Point X="9" Y="4.997" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Motion" Type="SequencePlanner.GeneralModels.Motion" FixedFromPoint="true">
+      <Path>
+        <Point X="5.375" Y="8.75" />
+        <Point X="5.375" Y="7.415" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Process" Type="SequencePlanner.GeneralModels.Process" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="9.562" />
+        <Point X="10.219" Y="9.562" />
+        <Point X="10.219" Y="4.997" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Task" Type="SequencePlanner.GeneralModels.Task" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="9.188" />
+        <Point X="7.25" Y="9.188" />
+        <Point X="7.25" Y="4.997" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAEAgAAAAAAAABAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\HierarchyRecord.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Alternative" />
+      <Property Name="Motion" />
+      <Property Name="Process" />
+      <Property Name="Task" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SequencePlanner.Model.Line">
+    <Position X="16.5" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQACACAAAAEgAAAAAhAQgAAAIAAIAAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\Line.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.MatirxConfig">
+    <Position X="3" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\MatrixConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Motion">
+    <Position X="4.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAEAAAQAEAEAAABAAAAIAAAAAQQAAAAAIAAA=</HashCode>
+      <FileName>Model\Hierarchy\Motion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Node">
+    <Position X="1.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAgAAAAAAAACQAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.Model.Position">
+    <Position X="14.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAEgAAAAAAAAAAAQIAAAEAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\Position.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Process">
+    <Position X="10" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\Process.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Resource">
+    <Position X="11.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\Resource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Task">
+    <Position X="6.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Hierarchy\Task.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.DetailedConfigCost">
+    <Position X="14.25" Y="14.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\DetailedConfigCost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.DetailedCost&lt;Base&gt;">
+    <Position X="13" Y="10.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAAAQAEABAAAAEAAAAAAIAAAAAAAAAAAAAIAUIAAA=</HashCode>
+      <FileName>Model\DetailedCost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.DetailedMotionCost">
+    <Position X="12" Y="14.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEBAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Model\DetailedMotionCost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.DisjointSet&lt;Base&gt;">
+    <Position X="9.75" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAQAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\DisjointSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.MotionDisjointSet">
+    <Position X="9.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\MotionDisjointSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.MotionPrecedence">
+    <Position X="5.5" Y="13.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\MotionPrecedence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.MotionPrecedenceList">
+    <Position X="7.5" Y="13.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\MotionPrecedenceList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Precedence&lt;Base&gt;">
+    <Position X="5.5" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAEAAAAAAAAAAAAAAAAAAAAAAQAQAA=</HashCode>
+      <FileName>Model\Precedence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.ProcessPrecedence">
+    <Position X="3.5" Y="13.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Model\ProcessPrecedence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

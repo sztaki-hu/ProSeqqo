@@ -1,7 +1,8 @@
 ﻿using Microsoft.Win32;
-using SequencePlanner.GTSPTask.Result;
 using SequencePlanner.GTSPTask.Serialization.Result;
 using SequencePlanner.Helper;
+using SequencePlanner.Model.Hierarchy;
+using SequencePlanner.Task;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -113,8 +114,6 @@ namespace LineAnimation
         }
         private List<Line> GTSPLines { get; set; }
         private List<Point> GTSPoints { get; set; }
-        private Point Start { get; set; }
-        private Point Finish { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -134,29 +133,57 @@ namespace LineAnimation
             CompositionTarget.Rendering += this.OnCompositionTargetRendering;
         }
 
+        private int prevStep = 0;
         public void Amination()
         {
+            //AnimationStepOne(numberOfPoints);
+            if (prevStep + 1 == numberOfPoints)
+                StepOne();
+            else
+                TakeAllStep();
+            prevStep = numberOfPoints;
+        }
 
-            AnimationStepOne(numberOfPoints);
+        private void StepOne()
+        {
+            var i = numberOfPoints;
+            if (i >= GTSPLines.Count)
+                return;
+            GTSPLines[i].Visibility = true;
+            if (ShowInvisibleLines)
+            {
+                if (GTSPLines[i].DrawType == DrawType.Work)
+                {
+                    invisibleLines.Add(GTSPLines[i].A.Config);
+                    invisibleLines.Add(GTSPLines[i].B.Config);
+                }
+            }
 
+            if (GTSPLines[i].Visibility == true)
+            {
+                if (GTSPLines[i].DrawType == DrawType.Work && ShowWorkLines)
+                {
+                    workLines.Add(GTSPLines[i].A.Config);
+                    workLines.Add(GTSPLines[i].B.Config);
+                }
+                if (GTSPLines[i].DrawType == DrawType.Work && ShowPoints)
+                {
+                    Points.Add(GTSPLines[i].A.Config);
+                    Points.Add(GTSPLines[i].B.Config);
+                }
+                if (GTSPLines[i].DrawType == DrawType.Travel && ShowTravelLines)
+                {
+                    travelLines.Add(GTSPLines[i].A.Config);
+                    travelLines.Add(GTSPLines[i].B.Config);
+                }
+            }
+            TravelLines = travelLines;
+            WorkLines = workLines;
+            InvisibleLines = invisibleLines;
+        }
 
-            //if (!ShowTravelLines)
-            //{
-            //    travelLines.Clear();
-            //}
-            //if (!ShowWorkLines)
-            //{
-            //    workLines.Clear();
-            //}
-            //if (!ShowInvisibleLines)
-            //{
-            //    invisibleLines.Clear();
-            //}
-            //if (!ShowPoints)
-            //{
-            //    points.Clear();
-            //}
-
+        private void TakeAllStep()
+        {
             travelLines.Clear();
             workLines.Clear();
             invisibleLines.Clear();
@@ -176,7 +203,7 @@ namespace LineAnimation
 
                 if (ShowInvisibleLines)
                 {
-                    if (GTSPLines[i].DrawType != DrawType.Travel)
+                    if (GTSPLines[i].DrawType == DrawType.Work)
                     {
                         invisibleLines.Add(GTSPLines[i].A.Config);
                         invisibleLines.Add(GTSPLines[i].B.Config);
@@ -244,14 +271,13 @@ namespace LineAnimation
                 WorkLines = workLines;
                 InvisibleLines = invisibleLines;
             }
-
         }
 
         public void OpenFile(string file)
         {
-            LineLikeResultSerializer serializer = new LineLikeResultSerializer();
-            LineTaskResult result = null;
-            if(file.Contains(".json"))
+            GeneralResultSerializer serializer = new GeneralResultSerializer();
+            GeneralTaskResult result = null;
+            if (file.Contains(".json"))
                 result = serializer.ImportJSON(file);
             if (file.Contains(".xml"))
                 result = serializer.ImportXML(file);
@@ -261,47 +287,31 @@ namespace LineAnimation
                 throw new SeqException("File format not supported.");
             GTSPLines.Clear();
             GTSPoints.Clear();
-            for (int i = 1; i < result.PositionResult.Count; i++)
+         
+            for (int i = 0; i < result.SolutionMotion.Count-1; i++)
             {
-                Point3D point = new Point3D();
-                if (result.PositionResult[i].Vector.Length > 0)
-                    point.X = result.PositionResult[i].Vector[0];
-                if (result.PositionResult[i].Vector.Length > 1)
-                    point.Y = result.PositionResult[i].Vector[1];
-                if (result.PositionResult[i].Vector.Length > 2)
-                    point.Z = result.PositionResult[i].Vector[2];
-                GTSPoints.Add(new Point(result.PositionResult[i].UserID.ToString(), result.PositionResult[i].Name, result.PositionResult[i].ToString()) { Config = point});
+                var motion = result.SolutionMotion[i];
+                if(!motion.Virtual)
+                    GTSPLines.Add(new Line(motion));
+                var nextMotion = result.SolutionMotion[i + 1];
+                if(!motion.Virtual && !nextMotion.Virtual)
+                    if(!isContinious(motion, nextMotion))
+                        GTSPLines.Add(new Line(motion, nextMotion));
             }
-
-            for (int i = 1; i < GTSPoints.Count-1; i+=2)
-            {
-                Line l = new Line()
-                {
-                    ID = 0,
-                    ContourID = 0,
-                    Name = "",
-                    Length = 10,
-                    DrawType = DrawType.Travel,
-                    A = GTSPoints[i-1],
-                    B = GTSPoints[i]
-                };
-                GTSPLines.Add(l);
-
-                l = new Line()
-                {
-                    ID = 0,
-                    ContourID = 0,
-                    Name = "",
-                    Length = 10,
-                    DrawType = DrawType.Work,
-                    A = GTSPoints[i],
-                    B = GTSPoints[i+1]
-                };
-                GTSPLines.Add(l);
-            }
-
             MaxNumberOfLines = GTSPLines.Count;
             NumberOfPoints = 0;
+        }
+
+        private bool isContinious(Motion motion, Motion nextMotion)
+        {
+            if (motion.LastConfig.Configuration.Count != nextMotion.FirstConfig.Configuration.Count)
+                return false;
+            for (int i = 0; i < motion.LastConfig.Configuration.Count; i++)
+            {
+                if (motion.LastConfig.Configuration[i] != nextMotion.FirstConfig.Configuration[i])
+                    return false;
+            }
+            return true;
         }
 
         protected void RaisePropertyChanged(string propertyName)
@@ -336,7 +346,7 @@ namespace LineAnimation
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
                 OpenFile(openFileDialog.FileName);
-              //PhraseFile(openFileDialog.FileName);
+            //PhraseFile(openFileDialog.FileName);
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
@@ -345,4 +355,3 @@ namespace LineAnimation
         }
     }
 }
-

@@ -1,11 +1,12 @@
-﻿using SequencePlanner.GTSPTask.Task.Base;
+﻿using SequencePlanner.Helper;
+using SequencePlanner.Task;
 
 namespace SequencePlanner.OR_Tools
 {
     public class ORToolsTask
     {
         public int TimeLimit { get; set; }
-        public IGTSPRepresentation GTSPRepresentation { get; set; }
-        public LocalSearchStrategyEnum.Metaheuristics LocalSearchStrategy { get; set; }
+        public GTSPRepresentation GTSPRepresentation { get; set; }
+        public Metaheuristics LocalSearchStrategy { get; set; }
     }
 }

@@ -42,11 +42,11 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         </DockPanel>
         <h:HelixViewport3D x:Name="ViewPort3D" InfiniteSpin="True" ShowFrameRate="True">
             <h:DefaultLights />
-            <h:GridLinesVisual3D Width="100" Length="100" MinorDistance="1" MajorDistance="1" Thickness="0.01"/>
-            <h:LinesVisual3D Points="{Binding InvisibleLines}" Color="Gray" Thickness="1"/>
+            <!--<h:GridLinesVisual3D Width="100" Length="100" MinorDistance="1" MajorDistance="1" Thickness="0.01"/>-->
+            <h:LinesVisual3D Points="{Binding InvisibleLines}" Color="Gray" Thickness="10"/>
             <h:LinesVisual3D Points="{Binding TravelLines}" Color="Red" Thickness="4"/>
-            <h:LinesVisual3D Points="{Binding WorkLines}" Color="Blue" Thickness="4"/>
-            <h:PointsVisual3D Points="{Binding Points}" Color="Red" Size="6" />
+            <h:LinesVisual3D Points="{Binding WorkLines}" Color="Blue" Thickness="25"/>
+            <h:PointsVisual3D Points="{Binding Points}" Color="Red" Size="20" />
         </h:HelixViewport3D>
     </DockPanel>
 </Window>
