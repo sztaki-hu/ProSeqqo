@@ -1,37 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SequencePlanner.Model.Hierarchy;
 using System.Windows.Media.Media3D;
 
 namespace LineAnimation
 {
     public class Point
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
+        public string Tag { get; set; }        
         public Point3D Config { get; set; }
-        public string Tag { get; set; }
 
-        public Point(string id, string name, string config)
+        public Point(Point3D point, string tag = "")
         {
-            ID = int.Parse(id);
-            Name = name;
-            //Config = config;
+            Tag = tag;
+            Config = point;
         }
 
-        private Point3D PraseConfig(string config)
+        public Point(Config config)
         {
-            List<double> conf = new List<double>();
-            string[] c = config.Split(';');
-            foreach (var item in c)
-            {
-                conf.Add(double.Parse(item));
-            }
-            if (conf.Count == 2)
-                conf.Add(0);
-            return new Point3D(conf[0], conf[1], conf[2]);
+            Point3D point = new Point3D();
+            if (config.Configuration.Count > 0)
+                point.X = config.Configuration[0];
+            if (config.Configuration.Count > 1)
+                point.Y = config.Configuration[1];
+            if (config.Configuration.Count > 2)
+                point.Z = config.Configuration[2];
+            Config = point;
+            Tag = config.ToString(); 
         }
     }
 }

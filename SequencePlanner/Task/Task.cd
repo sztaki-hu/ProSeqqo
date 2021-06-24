@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SequencePlanner.GeneralModels.GeneraDepotMapper">
+    <Position X="10.75" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAgAAUBwJEABgBgNEgAASEU0AAgAACEFAAAAAABAA=</HashCode>
+      <FileName>Task\Processors\GeneraDepotMapper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.GeneralShortcutMapper">
+    <Position X="13.5" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAEAAAAAAAAAgAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Task\Processors\GeneralShortcutMapper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.GeneralTaskValidator">
+    <Position X="4.75" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Task\Processors\GeneralTaskValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.InitialSolver">
+    <Position X="5" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAEAAAAAEAQA=</HashCode>
+      <FileName>Task\Processors\InitialSolver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.CostManager">
+    <Position X="0.5" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ABAEAAAAAAJAAAAAAQAAAAACAgAAAQAAAAAAEAAAAAA=</HashCode>
+      <FileName>Task\CostManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.GeneralTask">
+    <Position X="0.5" Y="0.75" Width="2" />
+    <AssociationLine Name="CostManager" Type="SequencePlanner.GeneralModels.CostManager" FixedFromPoint="true">
+      <Path>
+        <Point X="1.625" Y="4.805" />
+        <Point X="1.625" Y="5.195" />
+        <Point X="2.312" Y="5.195" />
+        <Point X="2.312" Y="5.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="InitialSolver" Type="SequencePlanner.GeneralModels.InitialSolver" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.625" Y="4.805" />
+        <Point X="1.625" Y="5.195" />
+        <Point X="6.25" Y="5.195" />
+        <Point X="6.25" Y="5.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="SolverSettings" Type="SequencePlanner.GeneralModels.SolverSettings" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.625" Y="4.805" />
+        <Point X="1.625" Y="5.195" />
+        <Point X="4" Y="5.195" />
+        <Point X="4" Y="5.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="PCGTSPRepresentation" Type="SequencePlanner.GeneralModels.PCGTSPRepresentation" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.625" Y="4.805" />
+        <Point X="1.625" Y="5.195" />
+        <Point X="9" Y="5.195" />
+        <Point X="9" Y="5.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="DepotMapper" Type="SequencePlanner.GeneralModels.GeneraDepotMapper" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.625" Y="4.805" />
+        <Point X="1.625" Y="5.195" />
+        <Point X="12.312" Y="5.195" />
+        <Point X="12.312" Y="5.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.086" Y="0.395" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ShortcutMapper" Type="SequencePlanner.GeneralModels.GeneralShortcutMapper" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.625" Y="4.805" />
+        <Point X="1.625" Y="5.159" />
+        <Point X="14.5" Y="5.159" />
+        <Point X="14.5" Y="5.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.069" Y="0.473" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACIAgkAAKEIAAgAAAAAAEAEAAAgAEAABAgAAAFAAI=</HashCode>
+      <FileName>Task\GeneralTask.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CostManager" />
+      <Property Name="InitialSolver" />
+      <Property Name="SolverSettings" />
+      <Property Name="PCGTSPRepresentation" />
+      <Property Name="DepotMapper" />
+      <Property Name="ShortcutMapper" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.Result.GeneralTaskResult">
+    <Position X="15.75" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AQAEQAAAAAgAACAAIaAAAAIAAACAAAAAoAAAgIAECEA=</HashCode>
+      <FileName>Task\GeneralTaskResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.PCGTSPRepresentation">
+    <Position X="7.75" Y="5.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAIoIBAAIEAQIAAoAABAQAAAAAgBABAEAAEAAAAAA=</HashCode>
+      <FileName>Task\PCGTSPRepresentation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SequencePlanner.GeneralModels.SolverSettings">
+    <Position X="3.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAgAAAAAIAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Task\SolverSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="SequencePlanner.GeneralModels.ITaskProcessor">
+    <Position X="10.75" Y="3.25" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAEAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Task\Processors\ITaskProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

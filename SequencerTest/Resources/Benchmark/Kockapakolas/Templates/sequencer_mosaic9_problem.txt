@@ -1,15 +1,15 @@
-TaskType: PointLike
+TaskType: General
 Dimension: 2
-CyclicSequence: False
+Cyclic: False
 StartDepot: 0
-DistanceFunction: EuclidianDistance
-ResourceSource: NoResource
+DistanceFunction: Euclidian
+ResourceSource: Off
 TimeLimit: <*T*>
 UseMIPprecedenceSolver: <*MIP*>
 LocalSearchStrategy: <*LSS*>
 UseShortcutInAlternatives: <*USIA*>
 
-PositionList:
+ConfigList:
 #+-------+---------------------+------------------+
 #|   ID  |      Position       |  Name[optional]  |
 #+-------+---------------------+------------------+
@@ -75,7 +75,7 @@ ProcessPrecedence:
 #| PredecessorProcessID | SuccessorProcessID |  Name[optional]  |
 #+----------------------+--------------------+------------------+
 
-PositionPrecedence:
+MotionPrecedence:
 #+-----------------------+---------------------+------------------+
 #| PredecessorPositionID | SuccessorPositionID |  Name[optional]  |
 #+-----------------------+---------------------+------------------+

@@ -1,17 +1,19 @@
-﻿using SequencePlanner.Model;
-using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
+﻿using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
 using SequencePlanner.Helper;
+using SequencePlanner.Model.Hierarchy;
 
 namespace SequencePlanner.Function.ResourceFunction
 {
     public class NoResourceFunction : IResourceFunction
     {
-        public string FunctionName { get { return "NoResource"; } }
+        public string FunctionName { get { return "Off"; } }
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
 
-        public double ComputeResourceCost(Position A, Position B, double distance) => distance;
-        public void Validate(){
-            SeqLogger.Info("ResourceFunction: " + FunctionName);
+        public double ComputeResourceCost(Config A, Config B, double distance) => distance;
+        public double GetResourceCost(Config A, Config B) => 0;
+        public void Validate()
+        {
+            SeqLogger.Debug("ResourceFunction: " + FunctionName);
         }
         public void ToLog(LogLevel level)
         {

@@ -1,34 +1,30 @@
 ﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
+using SequencePlanner.Model.Hierarchy;
 using System;
-using System.Collections.Generic;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
     public class TrapezoidTimeDistanceFunction : DistanceFunction
     {
-        public double[] MaxAcceleration;
-        public double[] MaxSpeed;
+        public override string FunctionName { get { return "TrapezoidTime"; } }
+        public double[] MaxAcceleration { get; set; }
+        public double[] MaxSpeed { get; set; }
         protected double[] JointThresholdTime;
         protected double[] JointThresholdDist;
 
 
         public TrapezoidTimeDistanceFunction(double[] maxAcceleration, double[] maxSpeed) : base()
         {
-            FunctionName = "TrapezoidTime";
             MaxAcceleration = maxAcceleration;
             MaxSpeed = maxSpeed;
             InitParameters();
             Validate();
         }
 
-        public override double ComputeDistance(Position A, Position B)
+
+        public override double ComputeDistance(Config A, Config B)
         {
-            var givenDistance = GetStrictEdgeWeight(A, B);
-            if (givenDistance != null)
-                return givenDistance.Weight;
-            else
-                return TrapezoidTimeCalculation(A, B, false);
+            return TrapezoidTimeCalculation(A, B, false);
         }
 
         public override void Validate()
@@ -41,32 +37,32 @@ namespace SequencePlanner.Function.DistanceFunction
                 throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/JointThresholdTime.");
             for (int i = 0; i < MaxSpeed.Length; i++)
             {
-                if(MaxAcceleration[i]<=0)
+                if (MaxAcceleration[i] <= 0)
                     throw new SeqException("MaxAcceleration contains >=0 !");
-                if(MaxSpeed[i]<=0)
+                if (MaxSpeed[i] <= 0)
                     throw new SeqException("MaxSpeed contains >=0 !");
-                if(JointThresholdTime[i]<=0)
+                if (JointThresholdTime[i] <= 0)
                     throw new SeqException("JointThresholdTime contains >=0 !");
-                if(JointThresholdDist[i]<=0)
+                if (JointThresholdDist[i] <= 0)
                     throw new SeqException("JointThresholdDist contains >=0 !");
             }
         }
 
-        protected double TrapezoidTimeCalculation(Position A, Position B, bool withTieBreaker)
+        protected double TrapezoidTimeCalculation(Config A, Config B, bool withTieBreaker)
         {
             if (A == null || B == null)
-                throw new SeqException("TrapezoidTimeDistanceFunction A/B position null!");
-            if (A.Dimension != B.Dimension)
-                throw new SeqException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of Positions with UserID:" + A.UserID + ", " + B.UserID);
-            int Dimension = A.Dimension;
-            if (B.Dimension == Dimension && MaxAcceleration.Length == Dimension && MaxSpeed.Length == Dimension)
+                throw new SeqException("TrapezoidTimeDistanceFunction A/B configuration null!");
+            if (A.Configuration.Count != B.Configuration.Count)
+                throw new SeqException("TrapezoidTimeDistanceFunction found dimendion mismatch!", "Check dimension of configurations with ID:" + A.ID + ", " + B.ID);
+            int Dimension = A.Configuration.Count;
+            if (B.Configuration.Count == Dimension && MaxAcceleration.Length == Dimension && MaxSpeed.Length == Dimension)
             {
                 double maxTime = 0;
                 double sumTime = 0;
                 // Max of joint travel times
                 for (int i = 0; i < Dimension; i++)
                 {
-                    double angleDiff = Math.Abs(A.Vector[i] - B.Vector[i]);
+                    double angleDiff = Math.Abs(A.Configuration[i] - B.Configuration[i]);
                     // This version is for the 2*PI simmetry
                     //double angleDiff = min(abs(c1.x[i] - c2.x[i]), min(abs(c1.x[i] - c2.x[i] + TWOPI), abs(c1.x[i] - c2.x[i] - TWOPI)));
                     double time;
@@ -87,16 +83,19 @@ namespace SequencePlanner.Function.DistanceFunction
             }
             else
             {
-                Console.WriteLine("EdgeWeightFunctions:Trapezoid_Time dimension mismatch!");
+                SeqLogger.Warning("EdgeWeightFunctions:Trapezoid_Time dimension mismatch!");
                 return 0.0;
             }
         }
 
-
         private void InitParameters()
         {
-            if(MaxAcceleration.Length != MaxSpeed.Length)
-                throw new SeqException("MaxDistanceFunction found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
+            if (MaxAcceleration is null || MaxAcceleration.Length == 0)
+                throw new SeqException("TrapezoidTime MaxAcceleration in null or empty!", "Check dimension of MaxAcceleration.");
+            if (MaxSpeed is null || MaxSpeed.Length == 0)
+                throw new SeqException("TrapezoidTime found dimendion mismatch!", "Check dimension of MaxAcceleration/Speed.");
+            if (MaxAcceleration.Length != MaxSpeed.Length)
+                throw new SeqException("TrapezoidTime MaxSpeed is null or empty!", "Check dimension of Speed.");
             int Dimension = MaxSpeed.Length;
             JointThresholdTime = new double[Dimension];
             JointThresholdDist = new double[Dimension];
@@ -107,7 +106,7 @@ namespace SequencePlanner.Function.DistanceFunction
                 {
                     if (MaxAcceleration[i] == 0.0)
                     {
-                        throw new DivideByZeroException("Trapezoid_Time Error: Acceleration is zero!");
+                        throw new DivideByZeroException("TrapezoidTime Error: Acceleration is zero!");
                     }
                     else
                     {

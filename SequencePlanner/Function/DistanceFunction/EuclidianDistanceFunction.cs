@@ -1,41 +1,27 @@
 ﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
+using SequencePlanner.Model.Hierarchy;
 using System;
-using System.Collections.Generic;
 
 namespace SequencePlanner.Function.DistanceFunction
 {
     public class EuclidianDistanceFunction : DistanceFunction
     {
-        public EuclidianDistanceFunction(): base()
-        {
-            FunctionName = "EuclidianDistance";
-        }
+        public override string FunctionName { get { return "Euclidian"; } }
 
-        public override double ComputeDistance(Position A, Position B)
+
+        public override double ComputeDistance(Config A, Config B)
         {
             if (A == null || B == null)
-                throw new SeqException("EuclidianDistanceFunction A/B position null!");
-            if (A.Dimension != B.Dimension)
-                throw new SeqException("EuclidianDistanceFunction found dimendion mismatch!", "Check dimension of Positions with " + A.UserID+", "+ B.UserID);
+                throw new SeqException("EuclidianDistanceFunction A/B configuration null! A ID: "+A.ID+" B ID: "+B.ID);
+            if (A.Configuration.Count != B.Configuration.Count)
+                throw new SeqException("EuclidianDistanceFunction found dimendion mismatch!", "Check dimension of configurations with ID:" + A.ID + ", " + B.ID);
 
-            var givenDistance = GetStrictEdgeWeight(A, B);
-            if (givenDistance != null)
-                return givenDistance.Weight;
-            else
+            double tmp = 0;
+            for (int i = 0; i < A.Configuration.Count; i++)
             {
-                double tmp = 0;
-                for (int i = 0; i < A.Vector.Length; i++)
-                {
-                    tmp += (A.Vector[i] - B.Vector[i]) * (A.Vector[i] - B.Vector[i]);
-                }
-                return Math.Sqrt(tmp);
+                tmp += (A.Configuration[i] - B.Configuration[i]) * (A.Configuration[i] - B.Configuration[i]);
             }
-        }
-
-        public override void Validate()
-        {
-            //Nothing to validate
+            return Math.Sqrt(tmp);
         }
     }
 }

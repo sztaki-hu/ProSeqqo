@@ -1,12 +1,12 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
+﻿using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
+using SequencePlanner.Helper;
+using SequencePlanner.Model.Hierarchy;
 
 namespace SequencePlanner.Function.ResourceFunction
 {
     public class ConstantResourceFunction : IResourceFunction
     {
-        public string FunctionName { get { return "ConstantResource"; } }
+        public string FunctionName { get { return "Constant"; } }
         public double Cost { get; }
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
 
@@ -18,16 +18,31 @@ namespace SequencePlanner.Function.ResourceFunction
             Validate();
         }
 
-        public double ComputeResourceCost(Position A, Position B, double distance)
+        public double ComputeResourceCost(Config A, Config B, double distance)
         {
-            return LinkingFunction.ComputeResourceDistanceCost(Cost, distance);
+            if (A.Virtual || B.Virtual)
+                return LinkingFunction.ComputeResourceDistanceCost(0, distance);
+            if (A.Resource.ID != B.Resource.ID)
+                return LinkingFunction.ComputeResourceDistanceCost(Cost, distance);
+            else
+                return distance;
+        }
+
+        public double GetResourceCost(Config A, Config B)
+        {
+            if (A.Virtual || B.Virtual)
+                return 0;
+            if (A.Resource.ID != B.Resource.ID)
+                return Cost;
+            else
+                return 0;
         }
 
         public void Validate()
         {
             SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(ConstantResourceFunction));
-            SeqLogger.Info("ResourceCostConstant: " + Cost, nameof(ConstantResourceFunction));
-            if(LinkingFunction == null)
+            SeqLogger.Info("ChangeoverConstant: " + Cost, nameof(ConstantResourceFunction));
+            if (LinkingFunction == null)
             {
                 throw new SeqException("ConstantResourceFunction.LinkingFunction not given.");
             }
