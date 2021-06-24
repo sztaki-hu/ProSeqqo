@@ -1,5 +1,6 @@
-# General task description
-The given parameters able to write down the universal form of sequencing problems. The sequencer able to phrase .xml, .json task definitions and .seq / .txt well-readable text format. The [result of the tasks](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Result-serialization) also available in these formats. [Example/Skeletons](https://git.sztaki.hu/zahoranl/sequenceplanner/-/tree/master/Example/Skeletons) directory of the repository contains the complete list of parameters.
+# ![ProSeqqo Logo](../Documentation/Images/ProSeqqoLogo.png) [ProSeqqo](../Documentation/Readme.md) 
+# Task definition language
+The given parameters able to write down the universal form of sequencing problems. The library able to phrase .xml, .json task definitions and .seq / .txt well-readable text format. The [result of the tasks](../Documentation/ResultDefinition.md) also available in these formats. [Example](../Example) and [Skeletons](../Example/Skeletons) directory of the repository contains the complete list of parameters.
 
 
 The following sections define the own .seq format parameters, these are also used in the standard formats (JSON, XML) with their own specificity. The input file interpreted line by line, within the lines separated by `:` and `;` characters. Floating-point number separators: `.` and `,`. Full line comment: `#`. The order of parameters is commutable, not sensitive for whitespace and not case sensitive.
@@ -58,7 +59,6 @@ Notations: ~ Optional, ! Default, * Needed
 
 
 # Details
-# Task parameters
 
 #### *Task
 
