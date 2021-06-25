@@ -71,7 +71,7 @@ Installation details are available [here](../Documentation/Install.md).
 - Laser engraving
 - Three step grinding of furniture parts  
 
-Hello World! available [here](../Documentation/HelloWorld.md).  
+Hello World! available [here](../Examples/HelloWorld).  
 Examples and description available [here](../Example).  
 Code and file skeletons [here](../Example/Skeletons).
 
