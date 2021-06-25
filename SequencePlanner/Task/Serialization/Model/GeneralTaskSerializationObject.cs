@@ -6,6 +6,7 @@ using SequencePlanner.Task.Serialization.Model;
 using SequencePlanner.Task.Serialization.Token;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SequencePlanner.GTSPTask.Serialization.Task
 {
@@ -90,7 +91,8 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                     ProcessID = record.Process.ID,
                     AlternativeID = record.Alternative.ID,
                     TaskID = record.Task.ID,
-                    MotionID = record.Motion.ID
+                    MotionID = record.Motion.ID,
+                    ConfigIDs = record.Motion.Configs.Select(c => c.ID).ToList()
                 });
             }
 

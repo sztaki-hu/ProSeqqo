@@ -61,6 +61,9 @@ namespace SequencerConsole
                         //args = new string[] { "-i", example + "\\PickAndPlace_Original.seq",        "-o", outdir + "\\PickAndPlace_Original_out.json"         };
                         //args = new string[] { "-i", example + "\\test1_debug.seq",                    "-o", outdir + "\\test1_debug_out.json" };
                         args = new string[] { "-i", example + "\\Seqtest.seq",                      "-o", outdir + "\\seqtest_o.json",                        };
+                        args = new string[] { "-i", example + "\\Hello.seq",                      "-o", outdir + "\\hello_o.txt",                        };
+                        args = new string[] { "-i", example + "\\Hello.xml",                      "-o", outdir + "\\hello_o.txt",                        };
+                        args = new string[] { "-i", example + "\\Hello.json",                      "-o", outdir + "\\hello_o.txt",                        };
                         //args = new string[] { "-i", example + "\\CubeCastle[3_4_2]_C50_O720.seq",                      "-o", outdir + "\\CubeCastle[3_4_2]_C50_O720.json",                        };
                         //args = new string[] { "-i", castle +  "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
                         //args = new string[] { "-i", castle +  "\\CubeCastle[3_3_1].seq",             "-o", outdir + "\\seqtest_o.json",                        };
@@ -182,7 +185,11 @@ namespace SequencerConsole
                     FormatType.JSON => ser.ImportJSON(input),
                     FormatType.XML => ser.ImportXML(input),
                     _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
-                };
+                //};
+                //GeneralTaskSerializer s = new GeneralTaskSerializer();
+                //s.ExportJSON(task, output.Replace(".txt", "_export.json"));
+                //s.ExportXML(task, output.Replace(".txt", "_export.xml"));
+                //s.ExportSEQ(task, output.Replace(".txt", "_export.seq"));
                 return task.Run();
                 //var ct = new CancellationToken();
                 //WaitForSolution("Solver running!", ct);
@@ -191,6 +198,7 @@ namespace SequencerConsole
         }
         private static void OutGeneral(GeneralTaskResult result)
         {
+            
             if (output != null && outputType != FormatType.Unknown)
             {
                 GeneralResultSerializer ser = new GeneralResultSerializer();

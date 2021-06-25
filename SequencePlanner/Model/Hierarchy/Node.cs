@@ -4,7 +4,7 @@
     {
         private static int NextMaxGlobalID = 0;
         public int ID { get; set; }
-        public int GlobalID { get; private set; }
+        public int GlobalID { get; set; }
         public string Name { get; set; }
         public bool Virtual { get; set; }
 
