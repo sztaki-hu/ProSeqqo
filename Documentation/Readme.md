@@ -1,8 +1,10 @@
 # ![ProSeqqo Logo](../Documentation/Images/ProSeqqoLogo.png) ProSeqqo 
 [Installation](../Documentation/Install.md)  
-[Hello World!](../Documentation/HelloWorld.md)  
+[Hello World!](../Example/HelloWorld)  
 [Task definition](../Documentation/TaskDefinition.md)  
+[Result description](../Documentation/ResultDefinition.md)  
 [Examples](../Example)  
+[Skeletons](../Example/Skeletons)  
 [Papers](../Documentation/Papers)  
 
 ## About
@@ -40,7 +42,7 @@ The result of the execution is a list of Positions corresponds to the following:
 
 The given task translated to a general travelling salesman (GTSP) graph as an input of the Google-OR-Tools VRP solver.  
 Parameters and description language available [here](../Documentation/TaskDefinition.md) and result description is [here](../Documentation/ResultDefinition.md).  
-<img src="../Documentation/Images/Representation.png" alt="Problem representation of ProSeqqo" width="350"/>
+<img src="../Documentation/Images/Representation.png" alt="Problem representation of ProSeqqo" width="450"/>
 
 #### Side constraints:
 -  Precedence constraints between Motions
@@ -71,12 +73,12 @@ Installation details are available [here](../Documentation/Install.md).
 - Laser engraving
 - Three step grinding of furniture parts  
 
-Hello World! available [here](../Examples/HelloWorld).  
+Hello World! available [here](../Example/HelloWorld).   
 Examples and description available [here](../Example).  
-Code and file skeletons [here](../Example/Skeletons).
+Code and file skeletons [here](../Example/Skeletons).  
 
 ## Documentation:
-This is the documentation.
+Documentation is [here](../Documentation).
 
 ## Contributing:
 If you find any bugs, please report them! I am also happy to accept pull requests from anyone.<br>
