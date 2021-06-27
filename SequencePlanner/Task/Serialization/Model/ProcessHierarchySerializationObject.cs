@@ -12,6 +12,10 @@ namespace SequencePlanner.Task.Serialization.Model
         public bool? Bidirectional { get; set; }
         public string Name { get; set; }
 
+        public ProcessHierarchySerializationObject()
+        {
+            ConfigIDs = new List<int>();
+        }
 
         public override string ToString()
         {

@@ -40,13 +40,13 @@ namespace SequencePlanner.Function.ResourceFunction
 
         public void Validate()
         {
-            SeqLogger.Info("ResourceFunction: " + FunctionName, nameof(ConstantResourceFunction));
-            SeqLogger.Info("ChangeoverConstant: " + Cost, nameof(ConstantResourceFunction));
+            SeqLogger.Debug("ResourceFunction: " + FunctionName, nameof(ConstantResourceFunction));
+            SeqLogger.Debug("ChangeoverConstant: " + Cost, nameof(ConstantResourceFunction));
             if (LinkingFunction == null)
             {
                 throw new SeqException("ConstantResourceFunction.LinkingFunction not given.");
             }
-            SeqLogger.Info("LinkingFunction: " + LinkingFunction.FunctionName, nameof(ConstantResourceFunction));
+            SeqLogger.Debug("LinkingFunction: " + LinkingFunction.FunctionName, nameof(ConstantResourceFunction));
         }
 
         public void ToLog(LogLevel level)
