@@ -4,12 +4,12 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Version>0.3.2</Version>
+    <Version>1.0.0</Version>
     <Authors>Andras Kovacs, Laszlo Zahoran</Authors>
     <Company>SZTAKI</Company>
     <Copyright>SZTAKI</Copyright>
-    <PackageProjectUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</PackageProjectUrl>
-    <RepositoryUrl>https://git.sztaki.hu/zahoranl/sequenceplanner/</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/sztaki-hu/ProSeqqo</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/sztaki-hu/ProSeqqo</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon></PackageIcon>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
