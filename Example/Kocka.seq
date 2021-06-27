@@ -4,7 +4,7 @@ StartDepot: 0
 TimeLimit: 20000
 DistanceFunction: Euclidian
 
-ResourceChangeover: Off
+ResourceChangeover: None
 UseMIPprecedenceSolver: True
 
 #Hierarchy-----------------------------

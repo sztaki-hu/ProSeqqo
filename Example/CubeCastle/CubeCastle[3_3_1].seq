@@ -4,7 +4,7 @@ Cyclic: True
 StartDepot: 32
 TimeLimit: 0
 DistanceFunction: Euclidian
-ResourceChangeover: Off
+ResourceChangeover: None
 UseMIPprecedenceSolver: True
 
 ConfigList:

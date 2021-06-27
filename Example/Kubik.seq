@@ -5,7 +5,7 @@ Cyclic: False
 #StartDepot: 96
 TimeLimit: 10000
 DistanceFunction: Euclidian
-ResourceChangeover: Off
+ResourceChangeover: None
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: False
 

@@ -4,7 +4,7 @@ Cyclic: True
 StartDepot: 1
 TimeLimit: <*Time*>
 DistanceFunction: TrapezoidTime
-ResourceChangeover: Off
+ResourceChangeover: None
 TrapezoidSpeed: [2,269;2,269;2,269;3,316;3,316;3,316]
 TrapezoidAcceleration: [10,472;10,472;10,472;10,472;10,472;10,472]
 LocalSearchStrategy: <*Strategy*>

@@ -8,7 +8,7 @@ IdlePenalty: 10
 TimeLimit: 1000
 AddMotionLengthToCost: True
 BidirectionMotionDefault: True
-ResourceChangeover: Off
+ResourceChangeover: None
 LocalSearchStrategy: GuidedLocalSearch
 
 

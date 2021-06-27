@@ -10,7 +10,7 @@ TrapezoidSpeed: [0.266667;0.266667;0.266667;0.266667;0.266667;0.266667]
 TrapezoidAcceleration: [0.666667;0.666667;0.666667;0.666667;0.666667;0.666667]
 
 #Resource------------------------------
-ResourceChangeover: Off
+ResourceChangeover: None
 
 #Solver--------------------------------
 LocalSearchStrategy: GuidedLocalSearch

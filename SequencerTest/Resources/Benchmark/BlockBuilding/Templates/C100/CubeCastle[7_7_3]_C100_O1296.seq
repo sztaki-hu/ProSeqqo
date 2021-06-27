@@ -3,7 +3,7 @@ Cyclic: False
 StartDepot: 400
 TimeLimit: <*T*>
 DistanceFunction: Euclidian
-ResourceChangeover: Off
+ResourceChangeover: None
 LocalSearchStrategy: <*LSS*>
 UseMIPprecedenceSolver: True
 

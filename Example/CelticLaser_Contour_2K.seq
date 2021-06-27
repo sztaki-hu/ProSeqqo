@@ -5,7 +5,7 @@ Cyclic: False
 #FinishDepot: 3
 
 DistanceFunction: Euclidian
-ResourceChangeover: Off
+ResourceChangeover: None
 AddMotionLengthToCost: True
 BidirectionMotionDefault: True
 TimeLimit: 1800000

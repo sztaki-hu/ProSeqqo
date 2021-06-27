@@ -20,7 +20,7 @@ UseMIPprecedenceSolver: True/False
 UseShortcutInAlternatives: True/False
 
 #Resource------------------------------
-ResourceChangeover: Off/Constant/Matrix
+ResourceChangeover: None/Constant/Matrix
 ResourceChangeoverFunction: Add/Max
 ChangeoverConstant: <double>
 ChangeoverMatrix:

@@ -6,7 +6,7 @@ StartDepot: 5
 #FinishDepot: 3
 IdlePenalty: 0
 BidirectionMotionDefault: True
-ResourceChangeover: Off
+ResourceChangeover: None
 UseMIPprecedenceSolver: True
 
 PositionList:

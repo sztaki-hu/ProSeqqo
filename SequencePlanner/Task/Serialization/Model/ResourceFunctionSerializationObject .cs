@@ -20,7 +20,7 @@ namespace SequencePlanner.Task.Serialization.Model
                 ResourceDistanceFunction = resFunc.LinkingFunction.FunctionName;
             ResourceSource = resFunc.FunctionName;
 
-            if (ResourceSource == "Off")
+            if (ResourceSource == "None")
             {
 
             }
@@ -47,7 +47,7 @@ namespace SequencePlanner.Task.Serialization.Model
             string newline = "\n";
             string seq = "";
             seq += "ResourceChangeover: " + ResourceDistanceFunction + newline;
-            if (ResourceSource != "Off")
+            if (ResourceSource != "None")
                 seq += "ResourceSource: " + ResourceSource + newline;
             if (ResourceSource == "Constant")
                 seq += "ResourceCostConstant: " + ResourceCostConstant + newline;
@@ -82,7 +82,7 @@ namespace SequencePlanner.Task.Serialization.Model
             };
             IResourceFunction resourceFunction = ResourceSource switch
             {
-                "Off" => new NoResourceFunction(),
+                "None" => new NoResourceFunction(),
                 "Constant" => new ConstantResourceFunction(ResourceCostConstant, resourceDistanceLinkFunction),
                 "Matrix" => new MatrixResourceFunction(ResourceCostMatrix.ResourceCostMatrix, ResourceCostMatrix.IDHeader, resourceDistanceLinkFunction),
                 _ => throw new SeqException("ResourceFunction unknown!"),
@@ -96,7 +96,7 @@ namespace SequencePlanner.Task.Serialization.Model
             ResourceSource = tokenizer.GetStringByHeader("ResourceChangeover");
             switch (ResourceSource)
             {
-                case "Off":
+                case "None":
                     break;
                 case "Constant":
                     ResourceCostConstant = tokenizer.GetDoubleByHeader("ChangeoverConstant");

@@ -594,7 +594,7 @@ OverrideCosts: [
 
 ```
 //SEQ
-ResourceChangeover: Off
+ResourceChangeover: None
 ResourceChangeover: Constant
 ResourceChangeover: Matrix
 

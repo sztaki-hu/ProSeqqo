@@ -6,7 +6,7 @@ namespace SequencePlanner.Function.ResourceFunction
 {
     public class NoResourceFunction : IResourceFunction
     {
-        public string FunctionName { get { return "Off"; } }
+        public string FunctionName { get { return "None"; } }
         public IResourceDistanceLinkFunction LinkingFunction { get; set; }
 
         public double ComputeResourceCost(Config A, Config B, double distance) => distance;

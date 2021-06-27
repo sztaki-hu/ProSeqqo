@@ -5,7 +5,7 @@ Cyclic: False
 #FinishDepot: 3
 
 DistanceFunction: Euclidian
-ResourceChangeover: Off
+ResourceChangeover: None
 BidirectionMotionDefault: True
 IdlePenalty: 2
 TimeLimit: 100000

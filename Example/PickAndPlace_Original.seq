@@ -10,7 +10,7 @@ TrapezoidSpeed: [2.269; 2.269; 2.269; 3.316; 3.316;3.316]
 TrapezoidAcceleration: [10.472;10.472;10.472;10.472;10.472;10.472]
 
 #Resource------------------------------
-ResourceChangeover: Off
+ResourceChangeover: None
 
 #Solver--------------------------------
 TimeLimit: 20000

@@ -3,7 +3,7 @@ Task: General
 Cyclic: False
 StartDepot: 0
 DistanceFunction: Euclidian
-ResourceChangeover: Off
+ResourceChangeover: None
 TimeLimit: 0
 UseMIPprecedenceSolver: True
 LocalSearchStrategy: Automatic

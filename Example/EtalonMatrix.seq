@@ -5,7 +5,7 @@ StartDepot: 0
 
 DistanceFunction: Matrix
 TimeLimit: 10000
-ResourceChangeover: Off
+ResourceChangeover: None
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: True
 
