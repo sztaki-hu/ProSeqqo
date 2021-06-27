@@ -185,7 +185,7 @@ namespace SequencerConsole
                     FormatType.JSON => ser.ImportJSON(input),
                     FormatType.XML => ser.ImportXML(input),
                     _ => throw new TypeLoadException("Input file should be .txt/.seq/.json/.xml!"),
-                //};
+                };
                 //GeneralTaskSerializer s = new GeneralTaskSerializer();
                 //s.ExportJSON(task, output.Replace(".txt", "_export.json"));
                 //s.ExportXML(task, output.Replace(".txt", "_export.xml"));
