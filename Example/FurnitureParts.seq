@@ -1,8 +1,8 @@
 Task: General
 Validate: True
 Cyclic: False
-#StartDepot: 0
-#FinishDepot: <ConfigID>
+#StartDepot:  #Start anywhere
+#FinishDepot: #Finish anywhere
 
 #Cost----------------------------------
 DistanceFunction: Matrix
@@ -13,8 +13,7 @@ AddInMotionChangeoverToCost: False
 
 #Solver-------------------------------
 LocalSearchStrategy: GuidedLocalSearch
-#LocalSearchStrategy: Automatic
-TimeLimit: 1800000
+TimeLimit: 30000
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: False
 

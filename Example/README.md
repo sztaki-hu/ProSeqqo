@@ -204,6 +204,7 @@ ConfigList:
 300;[100;10;90];BW_Wall_A1_L9_Pickup_Y
 ```
 
+The pick and place of one cube represented by a process, only one alternative and two following task. Each X, Y orientations are transible, so these are different point-like movements.
 ```
 ProcessHierarchy:
 #Cube: BW_Wall_A1_L9 --> BB_Wall_C0_L0
@@ -218,17 +219,98 @@ ProcessHierarchy:
 1 ;	0 ;	1 ;	101 ;	[101]	#BB_Wall_D3_L0_Putdown_Y
 ```
 
+The challenge of the problem is the order costraints, each cube accessible for (pick and place, too) by Y pose, if Ahead and Back cube moved or not exist. Pose X available, if Left and Right side free. In case of build Down cube have to be placed, and in case of wreck Up cube have to be picked, before the selected cube become available. These complex constraints resolveable only with MIP presolver.
+```
+MotionPrecedence:
+...
+100 ;	108	#BB_Wall_C0_L0 Yaxis ---Ahed---> BB_Wall_C1_L0 Yaxis
+100 ;	8	#BB_Wall_C0_L0 Yaxis ---Ahed---> BB_Wall_C1_L0 Xaxis
+0 ;		111	#BB_Wall_C0_L0 Xaxis ---Right---> BB_Wall_A1_L0 Yaxis
+0 ;		11	#BB_Wall_C0_L0 Xaxis ---Right---> BB_Wall_A1_L0 Xaxis
+...
+200 ;	208	#BW_Wall_A1_L9 Xaxis ---Up---> BW_Wall_A1_L8 Xaxis
+200 ;	308	#BW_Wall_A1_L9 Xaxis ---Up---> BW_Wall_A1_L8 Yaxis
+300 ;	208	#BW_Wall_A1_L9 Yaxis ---Up---> BW_Wall_A1_L8 Xaxis
+300 ;	308	#BW_Wall_A1_L9 Yaxis ---Up---> BW_Wall_A1_L8 Yaxis
+...
+```
 
 
 The building (right) and wreck (left) of build at halftime, solved with more than 1200 order constraints.
 As 3D solution, LineAnimation able to show the created order by the result .json file.
-<img src="../../Documentation/Images/LineVizBuild.png" alt="Visualisation of buildings" width="250"/>
+<img src="../../Documentation/Images/LineVizBuild.png" alt="Visualisation of buildings" width="300"/>
 
 
 ## 5. Robotic Grinding and Polishing of Furniture Parts
 The example available in the FurnitureParts.seq.
 
+> In the last application scenario, the goal is the robotic belt grinding andpolishing of cast aluminium furniture parts. The surface ofthe part is decomposed into nine longitudinal stripes, and each stripe mustundergo up to three surface finishing tasks: rough grinding, fine grinding, andpolishing. Five stripes need all the three tasks, whereas four stripes need only polishing, resulting in 19 tasks altogether. For technological reasons, all roughgrinding tasks must precede all fine grinding tasks, which in turn must precedeall polishing tasks.Each task corresponds to a robot motion specified in the 6D joint config-uration space of the robot, which guides the part along a contact trajectorybetween the given stripe of the part surface and the tool. The direction of themotion can be reversed. Idle motions between the effective tasks can be rathercomplicated due to the difficult part geometry and the densely populated work-cell. Hence, all possible 38×38 idle motions between the effective path endpoints were pre-computed using the path planning library.
+
+<img src="../../Documentation/Images/Grinding2.png" alt="Robotic drawing and laser engraving struct" height="400"/>
+<img src="../../Documentation/Images/Grinding1.jpg" alt="Robotic drawing and laser engraving struct" height="400"/>
+
+```
+Task: General
+Validate: True
+Cyclic: False
+#StartDepot:  #Start anywhere
+#FinishDepot: #Finish anywhere
+```
+
+```
+DistanceFunction: Matrix
+IdlePenalty: 0
+BidirectionMotionDefault: True
+AddMotionLengthToCost: False
+AddInMotionChangeoverToCost: False
+```
+
+```
+LocalSearchStrategy: GuidedLocalSearch
+TimeLimit: 30000
+UseMIPprecedenceSolver: True
+UseShortcutInAlternatives: False
+ResourceChangeover: None
+```
+
+
+```
+ConfigMatrix:
+0;1;2;...;37
+0;2.4;1.51;...;4.03
+...
+2.24;2.35;0.37;....;0
+```
+
+
+```
+ProcessHierarchy:
+0	;0	;0	;19		;[0;	1 ];;P1A
+1	;1	;1	;1		;[2;	3 ];;P1B
+2	;2	;2	;2		;[4;	5 ];;P1C
+...
+17	;17	;17	;17		;[34;	35];;P8C
+18	;18	;18	;18		;[36;	37];;P9C
+```
+
+```
+MotionPrecedence:
+#A->B
+19;  1
+19;  4
+...
+#B->C
+1  ;2
+1  ;5
+...
+4  ;2
+4  ;5
+...
+```
+
+
 
 [1]: B. Tipary, A. Kovács, G. Erdős, Planning and optimization of robotic pick-and-place operations in highly constrained industrial environments, Assem-bly Automation submitted manuscript (2021).
+
 
 The quote from: ProSeqqo:  A Generic Solver for Process Planning andSequencing in Industrial Robotics (2021).
