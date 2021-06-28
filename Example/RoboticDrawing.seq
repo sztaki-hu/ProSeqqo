@@ -7,7 +7,7 @@ Cyclic: False
 DistanceFunction: Euclidian
 IdlePenalty: 10
 BidirectionMotionDefault: True
-ResourceChangeover: Nonde
+ResourceChangeover: None
 
 LocalSearchStrategy: GuidedLocalSearch
 TimeLimit: 9000
