@@ -1,4 +1,9 @@
 ﻿using SequencePlanner.GTSPTask.Serialization.Task;
+using SequencePlanner.Helper;
+using SequencePlanner.Model.Hierarchy;
+using SequencePlanner.Task;
+using System;
+using System.Collections.Generic;
 
 namespace YourApplication
 {
@@ -9,14 +14,13 @@ namespace YourApplication
             Console.WriteLine("Hello World!");
             //UseFileInterface();
             UseProgramInterface();
-
         }
 
         static void UseFileInterface()
         {
             var ser = new GeneralTaskSerializer();
             var task = ser.ImportSEQ("HelloWorld.seq");
-            task.Run();
+            var result = task.Run();
             
             task = ser.ImportJSON("HelloWorld.json");
             task.Run();
@@ -39,8 +43,6 @@ namespace YourApplication
             t.SolverSettings.UseShortcutInAlternatives = true;
             t.Validate = true;
             t.Hierarchy.HierarchyRecords.AddRange(CreateHierarchy(t));
-            //t.Hierarchy.Configs.Add(t.StartDepotConfig);
-            //t.Hierarchy.Configs.Add(t.FinishDepotConfig);
             var result =  t.Run();
             result.ToLog(SequencePlanner.Helper.LogLevel.Info);
         }
@@ -64,16 +66,10 @@ namespace YourApplication
             var CA = new Config() { ID = 1, Configuration = new List<double>() { 5, 5 },     Name = "Config A" };
             var CB = new Config() { ID = 2, Configuration = new List<double>() { 2, 2 },     Name = "Config B" };
             var CC = new Config() { ID = 3, Configuration = new List<double>() { 7.5, 7.5 }, Name = "Config C" };
-            //t.Hierarchy.Configs.Add(CA);
-            //t.Hierarchy.Configs.Add(CB);
-            //t.Hierarchy.Configs.Add(CC);
 
             var MA = new Motion() { ID = 1, Name = "Motion A", Configs = new List<Config>() { CA } };
             var MB = new Motion() { ID = 2, Name = "Motion B", Configs = new List<Config>() { CB } };
             var MC = new Motion() { ID = 3, Name = "Motion C", Configs = new List<Config>() { CC } };
-            //t.Hierarchy.Motions.Add(MA);
-            //t.Hierarchy.Motions.Add(MB);
-            //t.Hierarchy.Motions.Add(MC);
 
             tmp.Add(new HierarchyRecord()
             {
