@@ -1,9 +1,4 @@
 ﻿using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.Task;
-using System;
-using System.Collections.Generic;
 
 namespace YourApplication
 {
@@ -20,13 +15,13 @@ namespace YourApplication
         static void UseFileInterface()
         {
             var ser = new GeneralTaskSerializer();
-            var task = ser.ImportJSON("input.json");
-            task.Run();
-
-            task = ser.ImportSEQ("input.seq");
+            var task = ser.ImportSEQ("HelloWorld.seq");
             task.Run();
             
-            task = ser.ImportXML("input.xml");
+            task = ser.ImportJSON("HelloWorld.json");
+            task.Run();
+
+            task = ser.ImportXML("HelloWorld.xml");
             task.Run();
         }
 

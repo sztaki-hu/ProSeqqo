@@ -16,6 +16,40 @@ In this case the result will be placed in same path, with _out postfix in .json 
 ![Extend file format .seq](../../Documentation/Images/FileExtension.PNG)
 
 ## 2.B Read file and solve wiht .dll or code reuse.
+Import ProSeqqoLibrary.dll or ProSeqqoLibrary project in Visual Studio.  
+Import namespaces:  
+`SequencePlanner.GTSPTask.Serialization.Task`  
+`SequencePlanner.Task`  
 
+```
+var ser = new GeneralTaskSerializer();
+var task = ser.ImportSEQ("HelloWorld.seq");
+var result = task.Run();
+```
+
+Example in [YourApplication](https://git.sztaki.hu/emi/proseqqo/-/blob/feature-refactor/YourApplication/Program.cs)
 
 ## 2.C Build task in code and run.
+
+Import ProSeqqoLibrary.dll or ProSeqqoLibrary project in Visual Studio.  
+Import namespaces:  
+`SequencePlanner.GTSPTask.Serialization.Task`  
+`SequencePlanner.Task`  
+
+```
+GeneralTask t = new GeneralTask();
+SeqLogger.LogLevel = LogLevel.Info;
+t.Cyclic = false;
+t.Validate = true;
+t.StartDepotConfig  = new Config() { ID = 100, Name = "Start",  Configuration = new List<double>() {0, 0} }; 
+t.FinishDepotConfig = new Config() { ID = 200, Name = "Finish", Configuration = new List<double>() {10, 10} };
+t.SolverSettings.Metaheuristics = SequencePlanner.Helper.Metaheuristics.GuidedLocalSearch;
+t.SolverSettings.TimeLimit = 1000;
+t.SolverSettings.UseMIPprecedenceSolver = true;
+t.SolverSettings.UseShortcutInAlternatives = true;
+t.Validate = true;
+t.Hierarchy.HierarchyRecords.AddRange(CreateHierarchy(t));
+var result =  t.Run();
+```
+
+Example in [YourApplication](https://git.sztaki.hu/emi/proseqqo/-/blob/feature-refactor/YourApplication/Program.cs)
