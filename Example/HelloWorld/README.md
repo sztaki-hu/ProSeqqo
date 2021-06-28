@@ -15,6 +15,26 @@ Couple .seq file extension to ProSeqqoConsole.exe and run by click.
 In this case the result will be placed in same path, with _out postfix in .json format.  
 ![Extend file format .seq](../../Documentation/Images/FileExtension.PNG)
 
+### Console arguments
+ProSeqqoConsole project of the solution builds an executable, with the following parameters easy to run written or serialized tasks.
+
+Command-line arguments:
+
+| Command | Shortcut |   Parameter   |                         Comment                       |
+|:-------:|:--------:|:-------------:|:-----------------------------------------------------:|
+|  -help  |    -h    |               | In case of empty parameter list this command          |
+|   -in   |    -i    |  <input path> |         Input task .seq .txt .json .xml               |
+|   -out  |    -o    | <output path> |         Outpot task .seq .txt .json .XML              |
+|  -conver|    -c    | -i -o         |         Convert task format -i to -o                  |
+|   -log  |    -l    |     Trace     | Loglevel                                              |
+|         |          |     Debug     |                                                       |
+|         |          |      Info     | Default                                               |
+|         |          |    Warning    |                                                       |
+|         |          |     Error     |                                                       |
+|         |          |    Critical   |                                                       |
+|         |          |      Off      |                                                       |
+| -version|    -v    |               | Version info                                          |
+
 ## 2.B Read file and solve wiht .dll or code reuse.
 Import ProSeqqoLibrary.dll or ProSeqqoLibrary project in Visual Studio.  
 Import namespaces:  
