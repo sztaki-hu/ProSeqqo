@@ -90,6 +90,8 @@ Process 0 contains start depot configuration, wrapped automatically. Process 1/2
 
 > While the robotic cartoon drawing application was originally built as a pop-ular science demonstration, the involved process planning and task sequencingproblem illustrates various real industrial problems from the domains of cutting,welding, and painting. In this application, a visitor’s picture is taken, and afterappropriate image processing, it is drawn on a white board by a UR5 robot using a marker pen, see Fig. and the video demonstrations (using a previousversion of the sequence planner) above. Since force feedback is applied when push-ing the pen against the board, lifting up and then re-positioning the pen takesconsiderable time. A special challenge is that the sequencing problem must besolved online, with as little computational time as possible.
 
+The example available in the RoboticDrawing.seq.
+
 <img src="../../Documentation/Images/CartoonDrawing.jpg" alt="Robotic drawing cell" width="700"/>
 
 In this case other validated general task, presented for robotic drawing. The robot able to start and finish anywhere so depots are not given and the problem is acyclic.
@@ -143,7 +145,17 @@ The sturct of three lines, Process S and F are the virtual start and finish depo
 
 <img src="../../Documentation/Images/DrawAndLaserStruct.png" alt="Robotic drawing and laser engraving struct" width="700"/>
 
+After running the example, as 2D task, visualisation available by LineAnimation, The serialized result in .json format can be open.
+<img src="../../Documentation/Images/LineVizDraw.png" alt="Robotic drawing result" width="700"/>
+
+
 ## 3. Robotic Laser Engraving
+
+> Somewhat similarly to the previous application, the goal is to create a 2Dimage from lines on different objects by laser engraving, such as the Celticknot drawing. While the problem model is identical to that of theprevious application, the special challenge is the handling of the large numberof lines (e.g., up to 4000) in the raw input. The problem is relevant both forone-of-a-type products, with as low computation times as possible, and for massproduction, where large computation times can also be allowed.
+
+This example contains 500 lines, CelticLaser.seq, and most of the parameters and structure common with RoboticDrawing.seq.
+
+<img src="../../Documentation/Images/LineVizLaser.png" alt="Line visualisation of celtic laser problem" width="700"/>
 
 ## 4. Robotic Building Blocks
 
@@ -151,6 +163,6 @@ The sturct of three lines, Process S and F are the virtual start and finish depo
 
 
 
-[1]: B. Tipary, A. Kovács, G. Erdős, Planning and optimization of robotic pick-and-place operations in highly constrained industrial environments, Assem-bly Automation submitted manuscript (2021).
+[1]: http://slashdot.org B. Tipary, A. Kovács, G. Erdős, Planning and optimization of robotic pick-and-place operations in highly constrained industrial environments, Assem-bly Automation submitted manuscript (2021).
 
 The quote from: ProSeqqo:  A Generic Solver for Process Planning andSequencing in Industrial Robotics (2021).
