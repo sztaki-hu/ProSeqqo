@@ -29,34 +29,3 @@
 ### Docker
 
 
-## Run in console
-The application is able to run as a stand-alone executable. Build the project or download the latest [release](https://git.sztaki.hu/zahoranl/sequenceplanner/-/releases) (see the [installation details](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Installation)). SequencerConsole project of the solution builds an executable, with the following parameters easy to run written or serialized tasks
-
-
-Command-line arguments:
-
-| Command | Shortcut |   Parameter   |                         Comment                       |
-|:-------:|:--------:|:-------------:|:-----------------------------------------------------:|
-|  -help  |    -h    |               | In case of empty parameter list this command          |
-|   -in   |    -i    |  <input path> |         Input task .seq .txt .json .xml               |
-|   -out  |    -o    | <output path> |         Outpot task .seq .txt .json .XML              |
-|  -conver|    -c    | -i -o         |         Convert task format -i to -o                  |
-|   -log  |    -l    |     Trace     | Loglevel                                              |
-|         |          |     Debug     |                                                       |
-|         |          |      Info     | Default                                               |
-|         |          |    Warning    |                                                       |
-|         |          |     Error     |                                                       |
-|         |          |    Critical   |                                                       |
-|         |          |      Off      |                                                       |
-| -version|    -v    |               | Version info                                          |
-
-
-TODO: 
-* Set SeqLogger.LogLevel = LogLevel.Info/Error/Off
-
-1. Create PointLikeTask/LineLikeTask objects
-2. Fill with parameters, the options mentioned on [definition/serialization](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Task-definition,-serialization#input-file-format) page. 
-3. Run() the created task.
-4. Use the result objects PointTaskResult/LineResult with the [result fields](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Result-serialization#dll-and-code).
-
-# Docker
