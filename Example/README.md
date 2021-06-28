@@ -237,7 +237,7 @@ MotionPrecedence:
 
 
 The building (right) and wreck (left) of build at halftime, solved with more than 1200 order constraints.
-As 3D solution, LineAnimation able to show the created order by the result .json file.
+As 3D solution, LineAnimation able to show the created order by the result .json file.  
 <img src="../../Documentation/Images/LineVizBuild.png" alt="Visualisation of buildings" width="300"/>
 
 
@@ -246,8 +246,9 @@ The example available in the FurnitureParts.seq.
 
 > In the last application scenario, the goal is the robotic belt grinding andpolishing of cast aluminium furniture parts. The surface ofthe part is decomposed into nine longitudinal stripes, and each stripe mustundergo up to three surface finishing tasks: rough grinding, fine grinding, andpolishing. Five stripes need all the three tasks, whereas four stripes need only polishing, resulting in 19 tasks altogether. For technological reasons, all roughgrinding tasks must precede all fine grinding tasks, which in turn must precedeall polishing tasks.Each task corresponds to a robot motion specified in the 6D joint config-uration space of the robot, which guides the part along a contact trajectorybetween the given stripe of the part surface and the tool. The direction of themotion can be reversed. Idle motions between the effective tasks can be rathercomplicated due to the difficult part geometry and the densely populated work-cell. Hence, all possible 38×38 idle motions between the effective path endpoints were pre-computed using the path planning library.
 
-<img src="../../Documentation/Images/Grinding2.png" alt="Robotic drawing and laser engraving struct" height="400"/>
-<img src="../../Documentation/Images/Grinding1.jpg" alt="Robotic drawing and laser engraving struct" height="400"/>
+
+<img src="../../Documentation/Images/Grinding1.JPG" alt="Robotic drawing and laser engraving struct" height="300"/>
+<img src="../../Documentation/Images/Grinding2.png" alt="Robotic drawing and laser engraving struct" height="300"/>
 
 ```
 Task: General
