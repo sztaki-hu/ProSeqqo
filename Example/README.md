@@ -159,9 +159,70 @@ This example contains 500 lines, CelticLaser.seq, and most of the parameters and
 <img src="../../Documentation/Images/LineVizLaser.png" alt="Line visualisation of celtic laser problem" width="250"/>
 
 ## 4. Robotic Building Blocks
-The example available in the CubeCastleBuilding.seq.
+> The building blocks application is a student project, originally focused onthe identification of objects, their poses, and the potential ways of graspingthem using a vision camera. The building blocks must be grasped using a two-finger gripper and taken from their identified source poses to the specified targetposes, without applying an intermediate buffer.  
+The sequencing problem originating from this application has been modelledin the 3D task space, with one process standing for each block, which containsone alternative and two tasks for picking and placing the block. The two grasp-ing modes, NS and EW, are captured by two motions within the task. Notethat the current blocks have a 90◦rotational symmetry, which implies that thetarget configuration is realized correctly independently of the chosen graspingmode.
 
-The example available in the CubeCastleTwoBuilding.seq.
+In the first example available in the CubeCastleBuilding.seq only pick from one position and build the castle wall.
+
+In the second example available in the CubeCastleTwoBuilding.seq one casetle built and have to be wrecked while an other is building from the cubes picked up.
+
+The header parts are common and known from the previous examples:
+```
+Task: General
+Validate: True
+Cyclic: False
+#StartDepot:  #Start anywhere
+#FinishDepot: #Finish anywhere
+
+DistanceFunction: Euclidian
+IdlePenalty: 0
+BidirectionMotionDefault: False
+AddMotionLengthToCost: False
+
+LocalSearchStrategy: GreedyDescent
+TimeLimit: 0
+UseMIPprecedenceSolver: True
+
+ResourceChangeover: None
+```
+
+The cubes of the two side (build, wreck) are in pairs previously. Only the ordering of the movements is the task.
+The configurations of a place in the 0,0,0 position, in build building (BB) C side, Layer 0 with X or Y grab grab.
+The configurations of a pick in the 100,10,90 position, in wreck building (BW) A side, Layer 9 with X or Y grab grab.
+```
+ConfigList:
+#Put down X
+0;[0;0;0];      BB_Wall_C0_L0_Putdown_x
+...
+#Put down Y
+100;[0;0;0];    BB_Wall_C0_L0_Putdown_y
+...
+#Pick up X
+200;[100;10;90];BW_Wall_A1_L9_Pickup_X
+...
+#Pick up Y
+300;[100;10;90];BW_Wall_A1_L9_Pickup_Y
+```
+
+```
+ProcessHierarchy:
+#Cube: BW_Wall_A1_L9 --> BB_Wall_C0_L0
+0 ;	0 ;	0 ;	200 ;	[200]	#BW_Wall_A1_L9_Pickup_X
+0 ;	0 ;	0 ;	300 ;	[300]	#BW_Wall_A1_L9_Pickup_Y
+0 ;	0 ;	1 ;	0 ;		[0]		#BB_Wall_C0_L0_Putdown_X
+0 ;	0 ;	1 ;	100 ;	[100]	#BB_Wall_C0_L0_Putdown_Y
+#Cube: BW_Wall_A2_L9 --> BB_Wall_D3_L0
+1 ;	0 ;	0 ;	201 ;	[201]	#BW_Wall_A2_L9_Pickup_X
+1 ;	0 ;	0 ;	301 ;	[301]	#BW_Wall_A2_L9_Pickup_Y
+1 ;	0 ;	1 ;	1 ;		[1]		#BB_Wall_D3_L0_Putdown_X
+1 ;	0 ;	1 ;	101 ;	[101]	#BB_Wall_D3_L0_Putdown_Y
+```
+
+
+
+The building (right) and wreck (left) of build at halftime, solved with more than 1200 order constraints.
+As 3D solution, LineAnimation able to show the created order by the result .json file.
+<img src="../../Documentation/Images/LineVizBuild.png" alt="Visualisation of buildings" width="250"/>
 
 
 ## 5. Robotic Grinding and Polishing of Furniture Parts
