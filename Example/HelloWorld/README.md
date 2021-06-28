@@ -1,5 +1,6 @@
-# ![ProSeqqo Logo](../../Documentation/Images/ProSeqqoLogo.png) ProSeqqo 
+# ![ProSeqqo Logo](../../Documentation/Images/ProSeqqoLogo.png) [ProSeqqo](../../Documentation/Readme.md) 
 
+## Install guide
 ## 1. Installation
 Installation details are available [here](../../Documentation/Install.md).
 
