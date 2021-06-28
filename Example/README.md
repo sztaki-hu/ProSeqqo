@@ -6,19 +6,20 @@
 [5. Robotic Grinding and Polishing of Furniture Parts](#Robotic Grinding and Polishing of Furniture Parts)  
 
 ## 1. Camera-based robotic pick-and-place
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/9novNg8slN4/1.jpg)](http://www.youtube.com/watch?v=9novNg8slN4)  
-http://www.youtube.com/watch?v=9novNg8slN4
+[![Camera based pick and place cell demo](http://img.youtube.com/vi/9novNg8slN4/1.jpg)](http://www.youtube.com/watch?v=9novNg8slN4)  
 
-A robot must grasp the parts lying in random poses basedon appropriate sensory information. A potential solution to this challenge hasbeen presented in [1], where various parts are first loaded onto a vibrating light-ing table, their precise poses are determined by a camera system, from where they are taken one-by-one by a robot to a part holder of a press machine.
+> A robot must grasp the parts lying in random poses basedon appropriate sensory information. A potential solution to this challenge hasbeen presented in [1], where various parts are first loaded onto a vibrating light-ing table, their precise poses are determined by a camera system, from where they are taken one-by-one by a robot to a part holder of a press machine.
 
-![Camera based pick and place cell](../../Documentation/Images/CameraPickAndPlaceCell.png)
+<img src="../../Documentation/Images/CameraPickAndPlaceCell.png" alt="Camera based pick and place cell" width="500"/>
 
-It is a General, acyclic tast started in camera configuration (1) with validation this time.
+<!-- ![Camera based pick and place cell](../../Documentation/Images/CameraPickAndPlaceCell.png) -->
+
+It is a General, cyclic task started and finished in the camera configuration (1) with validation this time.
 
 ```
 Task: General
 Validate: True
-Cyclic: False
+Cyclic: True
 StartDepot: 1
 ```
 
@@ -60,15 +61,87 @@ ConfigList:
 ...
 ```
 
+The process hierarchy not contains the camera position since it is the starting configuration as depot (on Fig. Process 0). The pick and place of one part in the same process (100), and this is the only alternative (50). The pick and place point-like motions as configurations (e.g. 6;[6], 2;[2]) are in different tasks (30, 31) that strictly follow each other in ID order. This time there are no process and motion precedences, or ovveride costs.
 
+```
+ProcessHierarchy:
+#Camera
+#	  103;	54;	36;	1; 	[1]  #Not needed because StartDepot
+#Grasp1  	      	
+	  100;	50;	30; 6; 	[6]
+	  100;	50;	30;	7; 	[7]
+	  100;	50;	30;	8; 	[8]
+	  100;	50;	30;	9; 	[9]
+	  100;	50;	30;	10;	[10]
+#InterSet	        
+	  100;	50;	31;	2;	[2]
+	  100;	50;	31;	3;	[3]
+	  100;	50;	31;	4;	[4]
+	  100;	50;	31;	5;	[5]
+```
 
+Process 0 contains start depot configuration, wrapped automatically. Process 1/2/3 pick and place operations of three different item that need to be ordered. There are only one alternative, two (pick and place) tasks, and motions with only one configurations.
 
-
-![Pick and Place struct](../../Documentation/Images/PickAndPlaceStruct.png)
+<img src="../../Documentation/Images/PickAndPlaceStruct.png" alt="Pick and Place struct" width="700"/>
+<!-- ![Pick and Place struct](../../Documentation/Images/PickAndPlaceStruct.png) -->
 
 ## 2. Robotic Cartoon Drawings
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/8ULIP_5nEJ0/2.jpg)](http://www.youtube.com/watch?v=8ULIP_5nEJ0)  
-http://www.youtube.com/watch?v=8ULIP_5nEJ0  
+[![Robotic Cartoon Drawings Demo](http://img.youtube.com/vi/8ULIP_5nEJ0/2.jpg)](http://www.youtube.com/watch?v=8ULIP_5nEJ0)  
+
+> While the robotic cartoon drawing application was originally built as a pop-ular science demonstration, the involved process planning and task sequencingproblem illustrates various real industrial problems from the domains of cutting,welding, and painting. In this application, a visitor’s picture is taken, and afterappropriate image processing, it is drawn on a white board by a UR5 robot using a marker pen, see Fig. and the video demonstrations (using a previousversion of the sequence planner) above. Since force feedback is applied when push-ing the pen against the board, lifting up and then re-positioning the pen takesconsiderable time. A special challenge is that the sequencing problem must besolved online, with as little computational time as possible.
+
+<img src="../../Documentation/Images/CartoonDrawing.jpg" alt="Robotic drawing cell" width="700"/>
+
+In this case other validated general task, presented for robotic drawing. The robot able to start and finish anywhere so depots are not given and the problem is acyclic.
+
+```
+Task: General
+Validate: True
+Cyclic: False
+#StartDepot:  #Start anywhere
+#FinishDepot: #Finish anywhere
+```
+
+This application solved in 2D with Euclidian distances. Further idle penalty used to minimize draw interrupts. One line and line section can be drawn in any direction, so the reverse motions generated automatically by BidirectionMotionDefault: True option.
+
+```
+DistanceFunction: Euclidian
+IdlePenalty: 10
+BidirectionMotionDefault: True
+ResourceChangeover: Nonde
+```
+
+The soler settings are the following, GLS with 0.5 sec limit, without precedence solver and insde motion cost use (this could be turned on to manage line length in optimisation).
+```
+LocalSearchStrategy: GuidedLocalSearch
+TimeLimit: 500 #ms
+UseMIPprecedenceSolver: False
+AddMotionLengthToCost: False
+```
+
+The configurations are the 2D points used in the picture.
+```
+ConfigList:
+1; [14.2087;16.6332]	;Point_1
+2; [12.7673;16.5828]	;Point_2
+3; [11.4878;16.5325]	;Point_3
+4; [ 9.9423;16.6011]    ;Point_4
+...
+```
+
+The struct of processes build by the presented points, as lines (eg. 1 - [1;2] - Line_1[P1,P2]) Every line is a precess that needs to be order, with single alternative, task and line. The reverse motion generated automatically (e.g. -1 - [2;1] - Line_1[P2, P1]) since the BidirectionMotionDefault option turned on.
+
+```
+ProcessHierarchy:
+1;1;1;1;[1;2];;Line_1[P1,P2]
+2;2;2;2;[2;3];;Line_2[P2,P3]
+3;3;3;3;[3;4];;Line_3[P3,P4]
+...
+```
+
+The sturct of three lines, Process S and F are the virtual start and finish depots, these motions can be reach from any potential other motion on free cost. The line processes, alternatives, tasks contains the original and reverse motions that descibe the line.
+
+<img src="../../Documentation/Images/DrawAndLaserStruct.png" alt="Robotic drawing and laser engraving struct" width="700"/>
 
 ## 3. Robotic Laser Engraving
 
@@ -79,3 +152,5 @@ http://www.youtube.com/watch?v=8ULIP_5nEJ0
 
 
 [1]: http://slashdot.org B. Tipary, A. Kovács, G. Erdős, Planning and optimization of robotic pick-and-place operations in highly constrained industrial environments, Assem-bly Automation submitted manuscript (2021).
+
+The quote from: ProSeqqo:  A Generic Solver for Process Planning andSequencing in Industrial Robotics (2021).
