@@ -1,3 +1,7 @@
+# ![ProSeqqo Logo](../Documentation/Images/ProSeqqoLogo.png) [ProSeqqo](../Documentation/Readme.md) 
+
+## Install guide
+
 ### Command-line interface
 1. Download the latest [release]( https://git.sztaki.hu/zahoranl/sequenceplanner/-/releases) and unzip.  
 2. Open `cmd` or `PowerShell` and navigate to root directory.  
