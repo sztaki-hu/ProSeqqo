@@ -10,6 +10,8 @@
 
 > A robot must grasp the parts lying in random poses basedon appropriate sensory information. A potential solution to this challenge hasbeen presented in [1], where various parts are first loaded onto a vibrating light-ing table, their precise poses are determined by a camera system, from where they are taken one-by-one by a robot to a part holder of a press machine.
 
+The example available in the CameraPickAndPlace.seq.
+
 <img src="../../Documentation/Images/CameraPickAndPlaceCell.png" alt="Camera based pick and place cell" width="500"/>
 
 <!-- ![Camera based pick and place cell](../../Documentation/Images/CameraPickAndPlaceCell.png) -->
@@ -157,11 +159,15 @@ This example contains 500 lines, CelticLaser.seq, and most of the parameters and
 <img src="../../Documentation/Images/LineVizLaser.png" alt="Line visualisation of celtic laser problem" width="250"/>
 
 ## 4. Robotic Building Blocks
+The example available in the CubeCastleBuilding.seq.
+
+The example available in the CubeCastleTwoBuilding.seq.
+
 
 ## 5. Robotic Grinding and Polishing of Furniture Parts
+The example available in the FurnitureParts.seq.
 
 
-
-[1]: http://slashdot.org B. Tipary, A. Kovács, G. Erdős, Planning and optimization of robotic pick-and-place operations in highly constrained industrial environments, Assem-bly Automation submitted manuscript (2021).
+[1]: B. Tipary, A. Kovács, G. Erdős, Planning and optimization of robotic pick-and-place operations in highly constrained industrial environments, Assem-bly Automation submitted manuscript (2021).
 
 The quote from: ProSeqqo:  A Generic Solver for Process Planning andSequencing in Industrial Robotics (2021).
