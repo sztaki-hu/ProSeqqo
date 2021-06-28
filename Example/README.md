@@ -250,6 +250,7 @@ The example available in the FurnitureParts.seq.
 <img src="../../Documentation/Images/Grinding1.JPG" alt="Robotic drawing and laser engraving struct" height="300"/>
 <img src="../../Documentation/Images/Grinding2.png" alt="Robotic drawing and laser engraving struct" height="300"/>
 
+This case also a general, acyclic task with validation, where the start and the finish can be choosen free.
 ```
 Task: General
 Validate: True
@@ -258,6 +259,7 @@ Cyclic: False
 #FinishDepot: #Finish anywhere
 ```
 
+The distance between the motions written by own computed collision free time values. Idle penalty, and in motion length not neccessary. But bidirectional, the operations can be done from any direction.
 ```
 DistanceFunction: Matrix
 IdlePenalty: 0
