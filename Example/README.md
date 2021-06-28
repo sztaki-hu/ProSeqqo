@@ -145,17 +145,16 @@ The sturct of three lines, Process S and F are the virtual start and finish depo
 
 <img src="../../Documentation/Images/DrawAndLaserStruct.png" alt="Robotic drawing and laser engraving struct" width="700"/>
 
-After running the example, as 2D task, visualisation available by LineAnimation, The serialized result in .json format can be open.
-<img src="../../Documentation/Images/LineVizDraw.png" alt="Robotic drawing result" width="700"/>
+After running the example, as 2D task, visualisation available by LineAnimation, The serialized result in .json format can be open.  
+<img src="../../Documentation/Images/LineVizDraw.png" alt="Robotic drawing result" width="250"/>
 
 
 ## 3. Robotic Laser Engraving
 
 > Somewhat similarly to the previous application, the goal is to create a 2Dimage from lines on different objects by laser engraving, such as the Celticknot drawing. While the problem model is identical to that of theprevious application, the special challenge is the handling of the large numberof lines (e.g., up to 4000) in the raw input. The problem is relevant both forone-of-a-type products, with as low computation times as possible, and for massproduction, where large computation times can also be allowed.
 
-This example contains 500 lines, CelticLaser.seq, and most of the parameters and structure common with RoboticDrawing.seq.
-
-<img src="../../Documentation/Images/LineVizLaser.png" alt="Line visualisation of celtic laser problem" width="700"/>
+This example contains 500 lines, CelticLaser.seq, and most of the parameters and structure common with RoboticDrawing.seq.  
+<img src="../../Documentation/Images/LineVizLaser.png" alt="Line visualisation of celtic laser problem" width="250"/>
 
 ## 4. Robotic Building Blocks
 
