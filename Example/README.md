@@ -1,9 +1,9 @@
 # ![ProSeqqo Logo](../../Documentation/Images/ProSeqqoLogo.png) ProSeqqo 
-[1. Camera-based robotic pick-and-place](#Camera-based robotic pick-and-place)  
-[2. Robotic Cartoon Drawings](#Robotic Cartoon Drawings)  
-[3. Robotic Laser Engraving](#Robotic Laser Engraving)  
-[4. Robotic Building Blocks](#Robotic Building Blocks)  
-[5. Robotic Grinding and Polishing of Furniture Parts](#Robotic Grinding and Polishing of Furniture Parts)  
+[1. Camera-based robotic pick-and-place](#Camera-based-robotic-pick-and-place)  
+[2. Robotic Cartoon Drawings](#Robotic-Cartoon-Drawings)  
+[3. Robotic Laser Engraving](#Robotic-Laser-Engraving)  
+[4. Robotic Building Blocks](#Robotic-Building-Blocks)  
+[5. Robotic Grinding and Polishing of Furniture Parts](#Robotic-Grinding-and-Polishing-of-Furniture-Parts)  
 
 ## 1. Camera-based robotic pick-and-place
 [![Camera based pick and place cell demo](http://img.youtube.com/vi/9novNg8slN4/1.jpg)](http://www.youtube.com/watch?v=9novNg8slN4)  
