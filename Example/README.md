@@ -247,8 +247,8 @@ The example available in the FurnitureParts.seq.
 > In the last application scenario, the goal is the robotic belt grinding andpolishing of cast aluminium furniture parts. The surface ofthe part is decomposed into nine longitudinal stripes, and each stripe mustundergo up to three surface finishing tasks: rough grinding, fine grinding, andpolishing. Five stripes need all the three tasks, whereas four stripes need only polishing, resulting in 19 tasks altogether. For technological reasons, all roughgrinding tasks must precede all fine grinding tasks, which in turn must precedeall polishing tasks.Each task corresponds to a robot motion specified in the 6D joint config-uration space of the robot, which guides the part along a contact trajectorybetween the given stripe of the part surface and the tool. The direction of themotion can be reversed. Idle motions between the effective tasks can be rathercomplicated due to the difficult part geometry and the densely populated work-cell. Hence, all possible 38×38 idle motions between the effective path endpoints were pre-computed using the path planning library.
 
 
-<img src="../../Documentation/Images/Grinding1.JPG" alt="Robotic drawing and laser engraving struct" height="300"/>
-<img src="../../Documentation/Images/Grinding2.png" alt="Robotic drawing and laser engraving struct" height="300"/>
+<img src="../../Documentation/Images/Grinding1.JPG" alt="Robotic drawing and laser engraving struct" height="270"/>
+<img src="../../Documentation/Images/Grinding2.png" alt="Robotic drawing and laser engraving struct" height="270"/>
 
 This case also a general, acyclic task with validation, where the start and the finish can be choosen free.
 ```
@@ -268,6 +268,7 @@ AddMotionLengthToCost: False
 AddInMotionChangeoverToCost: False
 ```
 
+GuidedLocalSearch with 30 sec time limit, MIP needed to resolve motion constraints, without alternaive shortcuts.
 ```
 LocalSearchStrategy: GuidedLocalSearch
 TimeLimit: 30000
@@ -276,42 +277,41 @@ UseShortcutInAlternatives: False
 ResourceChangeover: None
 ```
 
-
+Configurarion IDs and costs between them.
 ```
 ConfigMatrix:
-0;1;2;...;37
-0;2.4;1.51;...;4.03
+0;    1;    2;  ...; 37    #Configuration ID header
+0;    2.4;  1.5;...; 4.03  #Costs
 ...
-2.24;2.35;0.37;....;0
+2.2;  2.3;  0.3;...; 0
 ```
 
-
+Each motion need to be ordered, so each motion has own process, alternaive, task.
 ```
 ProcessHierarchy:
-0	;0	;0	;19		;[0;	1 ];;P1A
-1	;1	;1	;1		;[2;	3 ];;P1B
-2	;2	;2	;2		;[4;	5 ];;P1C
+0; 0; 0; 0; [0; 1]; ; P1A
+1; 1; 1; 1; [2; 3]; ; P1B
+2; 2; 2; 2; [4; 5]; ; P1C
 ...
-17	;17	;17	;17		;[34;	35];;P8C
-18	;18	;18	;18		;[36;	37];;P9C
+17; 17; 17; 17; [34; 35]; ; P8C
+18; 18; 18; 18; [36; 37]; ; P9C
 ```
 
+The three phase of the operation need to be done in A, B, C order of for edge.
 ```
 MotionPrecedence:
 #A->B
-19;  1
-19;  4
+19; 1
+19; 4
 ...
 #B->C
-1  ;2
-1  ;5
+1; 2
+1; 5
 ...
-4  ;2
-4  ;5
+4; 2
+4; 5
 ...
 ```
-
-
 
 [1]: B. Tipary, A. Kovács, G. Erdős, Planning and optimization of robotic pick-and-place operations in highly constrained industrial environments, Assem-bly Automation submitted manuscript (2021).
 
