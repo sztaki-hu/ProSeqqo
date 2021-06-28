@@ -1,11 +1,11 @@
 # ![ProSeqqo Logo](../../Documentation/Images/ProSeqqoLogo.png) ProSeqqo 
-[1. Camera-based robotic pick-and-place](#1.-Camera-based-robotic-pick-and-place)  
+[1. Camera-based robotic pick-and-place](#cc)  
 [2. Robotic Cartoon Drawings](#2.-Robotic-Cartoon-Drawings)  
 [3. Robotic Laser Engraving](#3.-Robotic-Laser-Engraving)  
 [4. Robotic Building Blocks](#4.-Robotic-Building-Blocks)  
 [5. Robotic Grinding and Polishing of Furniture Parts](#Robotic-Grinding-and-Polishing-of-Furniture-Parts)  
 
-## 1. Camera-based robotic pick-and-place
+## 1. Camera-based robotic pick-and-place <a id="cc">
 [![Camera based pick and place cell demo](http://img.youtube.com/vi/9novNg8slN4/1.jpg)](http://www.youtube.com/watch?v=9novNg8slN4)  
 
 > A robot must grasp the parts lying in random poses basedon appropriate sensory information. A potential solution to this challenge hasbeen presented in [1], where various parts are first loaded onto a vibrating light-ing table, their precise poses are determined by a camera system, from where they are taken one-by-one by a robot to a part holder of a press machine.
