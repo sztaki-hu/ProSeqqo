@@ -27,19 +27,20 @@ namespace SequencePlanner.Task.Serialization.Model
             string separator = ";";
             string newline = "\n";
             string seq = "";
-            seq += ProcessID + separator + newline;
+            seq += ProcessID + separator;
             seq += AlternativeID + separator;
             seq += TaskID + separator;
             seq += MotionID + separator;
             seq += "[";
-            foreach (var configID in ConfigIDs)
+            for (int i = 0; i < ConfigIDs.Count-1; i++)
             {
-                seq += configID + separator;
+                seq += ConfigIDs[i] + separator;
             }
+            seq += ConfigIDs[ConfigIDs.Count-1];
             seq += "]" + separator;
             seq += Bidirectional + separator;
             seq += Name + separator;
-
+            seq += newline;
             return seq;
         }
     }

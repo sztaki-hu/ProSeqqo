@@ -46,11 +46,11 @@ namespace SequencePlanner.Task.Serialization.Model
             string separator = ";";
             string newline = "\n";
             string seq = "";
-            seq += "ResourceChangeover: " + ResourceDistanceFunction + newline;
+            seq += "ResourceChangeover: " + ResourceSource + newline;
             if (ResourceSource != "None")
-                seq += "ResourceSource: " + ResourceSource + newline;
+                seq += "ResourceChangeoverFunction: " + ResourceDistanceFunction + newline;
             if (ResourceSource == "Constant")
-                seq += "ResourceCostConstant: " + ResourceCostConstant + newline;
+                seq += "ChangeoverConstant: " + ResourceCostConstant + newline;
             if (ResourceSource == "Matrix")
             {
                 //TODO: Create ResourceCostMatrix2.ToSEQ;
@@ -92,7 +92,6 @@ namespace SequencePlanner.Task.Serialization.Model
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
 
-            ResourceDistanceFunction = tokenizer.GetStringByHeader("ResourceChangeoverFunction");
             ResourceSource = tokenizer.GetStringByHeader("ResourceChangeover");
             switch (ResourceSource)
             {
@@ -100,9 +99,11 @@ namespace SequencePlanner.Task.Serialization.Model
                     break;
                 case "Constant":
                     ResourceCostConstant = tokenizer.GetDoubleByHeader("ChangeoverConstant");
+                    ResourceDistanceFunction = tokenizer.GetStringByHeader("ResourceChangeoverFunction");
                     break;
                 case "Matrix":
                     ResourceCostMatrix = new ResourceMatrixSerializationObject();
+                    ResourceDistanceFunction = tokenizer.GetStringByHeader("ResourceChangeoverFunction");
                     ResourceCostMatrix.FillBySEQTokens(tokenizer);
                     break;
                 default:
