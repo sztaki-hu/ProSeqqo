@@ -53,18 +53,18 @@ namespace SequencerTest.Integration.Convert
         public void FromJSON()
         {
             ConvertHelper convertTest = new ConvertHelper();
-            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.json", "json", "Resources/Out/HelloWorldJSON.seq", "seq");
-            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.json", "json", "Resources/Out/HelloWorldJSON.json", "json");
-            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.json", "json", "Resources/Out/HelloWorldJSON.xml", "seq");
+            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.json", "json", "Resources/HelloWorldJSON.seq", "seq");
+            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.json", "json", "Resources/HelloWorldJSON.json", "json");
+            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.json", "json", "Resources/HelloWorldJSON.xml", "seq");
         }
 
         [TestMethod]
         public void FromXML()
         {
             ConvertHelper convertTest = new ConvertHelper();
-            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.xml", "xml", "Resources/Out/HelloWorldXML.seq", "seq");
-            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.xml", "xml", "Resources/Out/HelloWorldXML.json", "json");
-            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.xml", "xml", "Resources/Out/HelloWorldXML.xml", "seq");
+            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.xml", "xml", "Resources/HelloWorldXML.seq", "seq");
+            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.xml", "xml", "Resources/HelloWorldXML.json", "json");
+            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.xml", "xml", "Resources/HelloWorldXML.xml", "seq");
         }
 
     }
