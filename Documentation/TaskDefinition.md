@@ -75,12 +75,15 @@ For sequencing configurations and motions. One motion/configuration selected for
 ```
 //SEQ
 Task: General
-Task: Line
 
 //JSON
+"TaskType": "General"
+
 //XML
+<TaskType>General</TaskType>
+
 //C#
-}
+GeneralTask t = new GeneralTask();
 ```
 </details>
    
@@ -104,8 +107,17 @@ Validate: True
 Validate: False
 
 //JSON
+    "Validate": true,
+    "Validate": false,
+
 //XML
+  <Validate>true</Validate>
+  <Validate>false</Validate>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.Validate = true;
+    t.Validate = false;
 ```
 </details>
 
@@ -125,12 +137,21 @@ The cyclic sequence has the same start and finishes in the solution. In the case
 
 ```
 //SEQ
-Cyclic: True
-Cyclic: False
+    Cyclic: True
+    Cyclic: False
 
 //JSON
+    "Cyclic": true,
+    "Cyclic": false,
+
 //XML
+    <Cyclic>true</Cyclic>
+    <Cyclic>false</Cyclic>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.Cyclic = true;
+    t.Cyclic = false;
 ```
 </details>
 
@@ -147,11 +168,17 @@ Start depot is the first position of the circles or walks based on `CyclicSequen
 
 ```
 //SEQ
-StartDepot: 8
+    StartDepot: 0
 
 //JSON
+    "StartDepot": 0,
+
 //XML
+    <StartDepot>0</StartDepot>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.StartDepotConfig  = new Config() { ID = 0, Name = "Start",  Configuration = new List<double>() {0, 0} }; 
 ```
 </details>
 
@@ -167,11 +194,17 @@ Finish depot is the last position of the path if `CyclicSequence` = False. It is
 
 ```
 //SEQ
-FinishDepot: 1
+    FinishDepot: 1
 
 //JSON
+    "FinishDepot": 1,
+
 //XML
+    <FinishDepot>1</FinishDepot>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.FinishDepotConfig = new Config() { ID = 1, Name = "Finish", Configuration = new List<double>() {10, 10} };
 ```
 </details>
 
@@ -205,9 +238,149 @@ DistanceFunction: Manhattan
 DistanceFunction: Matrix
 
 //JSON
+"DistanceFunction": {
+    "Function": "Euclidian",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": null,
+    "TrapezoidSpeed": null
+},
+
+"DistanceFunction": {
+    "Function": "Max",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": null,
+    "TrapezoidSpeed": null
+},
+
+"DistanceFunction": {
+    "Function": "Manhattan",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": null,
+    "TrapezoidSpeed": null
+},
+
+"DistanceFunction": {
+    "Function": "Trapezoid",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": [1,1,1],
+    "TrapezoidSpeed": [1,1,1]
+},
+
+"DistanceFunction": {
+    "Function": "TrapezoidTimeWithTieBreaker",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": [1,1,1],
+    "TrapezoidSpeed": [1,1,1]
+},
+
+"DistanceFunction": {
+        "Function": "Matrix",
+        "DistanceMatrix": {
+            "IDHeader": [0,1,2,3,4,5,6,7,8,9,10],
+            "DistanceMatrix": [
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0]
+            ],
+            "NameFooter": ["@","S","Z","T","A","K","I","_","E","M","I"],
+            "ResourceFooter": [0,0,0,0,0,0,0,0,2,2,2],
+            "ConfigList": null
+        },
+        "TrapezoidAcceleration": null,
+        "TrapezoidSpeed": null
+    },
+
 //XML
+<DistanceFunction>
+    <Function>Euclidian</Function>
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>Max</Function>
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>Trapezoid</Function>
+    TODO:
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>TrapezoidTimeWithTieBreaker</Function>
+    TODO:
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>Manhattan</Function>
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>Matrix</Function>
+    <DistanceMatrix>
+      <IDHeader>
+        <int>0</int>
+        ...
+        <int>10</int>
+      </IDHeader>
+      <DistanceMatrix>
+        <ArrayOfDouble>
+          <double>0</double>
+            ...
+          <double>10</double>
+        </ArrayOfDouble>
+        ...
+        <ArrayOfDouble>
+          <double>0</double>
+          ...
+          <double>10</double>
+        </ArrayOfDouble>
+      </DistanceMatrix>
+      <NameFooter>
+        <string>@</string>
+        <string>S</string>
+        <string>Z</string>
+        <string>T</string>
+        <string>A</string>
+        <string>K</string>
+        <string>I</string>
+        <string>_</string>
+        <string>E</string>
+        <string>M</string>
+        <string>I</string>
+      </NameFooter>
+      <ResourceFooter>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>2</int>
+        <int>2</int>
+        <int>2</int>
+      </ResourceFooter>
+    </DistanceMatrix>
+  </DistanceFunction>
+
 //C#
 ```
+    GeneralTask t = new GeneralTask();
+    t.CostManager.DistanceFunction = new EuclidianDistanceFunction();
+    t.CostManager.DistanceFunction = new MaxDistanceFunction();
+    t.CostManager.DistanceFunction = new ManhattanDistanceFunction();
+    t.CostManager.DistanceFunction = new TrapezoidTimeDistanceFunction(new double[] { }, new double[] { });
+    t.CostManager.DistanceFunction = new TrapezoidTimeWithTimeBreakerDistanceFunction(new double[] { }, new double[] { });
+    t.CostManager.DistanceFunction = new MatrixDistanceFunction(new List<List<double>>(), new List<int>());
+
+
 </details>
 
 #### TrapezoidAcceleration
@@ -227,7 +400,22 @@ TrapezoidAcceleration: [9.1;8.7;5.5]
 
 //JSON
 //XML
+<DistanceFunction>
+    <Function>Trapezoid</Function>
+    TODO:
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>TrapezoidTimeWithTieBreaker</Function>
+    TODO:
+</DistanceFunction>
+
+
 //C#
+    GeneralTask t = new GeneralTask();
+            t.CostManager.DistanceFunction = new TrapezoidTimeDistanceFunction(new double[] { }, new double[] { });
+            t.CostManager.DistanceFunction = new TrapezoidTimeWithTimeBreakerDistanceFunction(new double[] { }, new double[] { });
+
 ```
 </details>
 
@@ -247,12 +435,27 @@ Used in case of `DistanceFunction`: Trapezoid / `DistanceFunction`: TrapezoidTim
 TrapezoidSpeed: [9.1;8.7;5.5]
 
 //JSON
+    TODO:
+
 //XML
+<DistanceFunction>
+    <Function>Trapezoid</Function>
+    TODO:
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>TrapezoidTimeWithTieBreaker</Function>
+    TODO:
+</DistanceFunction>
+
 //C#
+    GeneralTask t = new GeneralTask();
+            t.CostManager.DistanceFunction = new TrapezoidTimeDistanceFunction(new double[] { }, new double[] { });
+            t.CostManager.DistanceFunction = new TrapezoidTimeWithTimeBreakerDistanceFunction(new double[] { }, new double[] { });
 ```
 </details>
 
-#### WeightMultiplier
+#### WeightMultiplier (Not used)
 
 Google-OR-Tools using costs as integers, but we would like to use floating-point numbers. A simple round function is not enough in a small task space; this multiplier automatically scales up with the given number or scale.
 
@@ -291,8 +494,14 @@ This value-added to the costs if the following positions/motions are not in cont
 IdlePenalty: 100 
 
 //JSON
+    "IdlePenalty": 100.0,
+
 //XML
+  <IdlePenalty>100</IdlePenalty>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.IdlePenalty = 100;
 ```
 </details>
 
@@ -314,8 +523,15 @@ BidirectionMotionDefault: True
 BidirectionMotionDefault: False
 
 //JSON
+    "BidirectionMotionDefault": false,
+
 //XML
+    <BidirectionMotionDefault>false</BidirectionMotionDefault>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.Hierarchy.BidirectionalMotionDefault = true;
+
 ```
 </details>
 
@@ -337,12 +553,18 @@ AddMotionLengthToCost: True
 AddMotionLengthToCost: False
 
 //JSON
+    "AddMotionLengthToCost": false,
+
 //XML
+    <AddMotionLengthToCost>false</AddMotionLengthToCost>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.AddMotionLengthToCost = true;
 ```
 </details>
 
-#### AddInMotionChangeoverToCost
+#### AddInMotionChangeoverToCost - Not Used
 
 If true: The resource changeover cost (change from the resource of ConfigA to resource of ConfigB) used additionally in cost computation of the motions.
 
@@ -390,8 +612,73 @@ ConfigList:
 3;[1.7;3];C;8
 
 //JSON
+    "ConfigList": [
+        {
+            "ID": 0,
+            "Config": [],
+            "Name": "@",
+            "ResourceID": 0
+        },
+        ...        
+        {
+            "ID": 10,
+            "Config": [],
+            "Name": "I",
+            "ResourceID": 2
+        }
+    ],
+
 //XML
+<ConfigList>
+    <ConfigSerializationObject>
+      <ID>0</ID>
+      <Config />
+      <Name>@</Name>
+      <ResourceID>0</ResourceID>
+    </ConfigSerializationObject>
+   ...
+    <ConfigSerializationObject>
+      <ID>10</ID>
+      <Config />
+      <Name>I</Name>
+      <ResourceID>2</ResourceID>
+    </ConfigSerializationObject>
+  </ConfigList>
+
+
 //C#
+    //Configuration added with the motions to the hierarchy.
+    var CA = new Config() { ID = 1, Configuration = new List<double>() { 5, 5 },     Name = "Config A" };
+    var CB = new Config() { ID = 2, Configuration = new List<double>() { 2, 2 },     Name = "Config B" };
+    var CC = new Config() { ID = 3, Configuration = new List<double>() { 7.5, 7.5 }, Name = "Config C" };
+
+    var MA = new Motion() { ID = 1, Name = "Motion A", Configs = new List<Config>() { CA } };
+    var MB = new Motion() { ID = 2, Name = "Motion B", Configs = new List<Config>() { CB } };
+    var MC = new Motion() { ID = 3, Name = "Motion C", Configs = new List<Config>() { CC } };
+
+    t.Hierarchy.HierarchyRecords.Add(new HierarchyRecord()
+    {
+        Process = PA,
+        Alternative = AA,
+        Task = TA,
+        Motion = MA
+    }));
+
+    t.Hierarchy.HierarchyRecords.Add(new HierarchyRecord()
+    {
+        Process = PB,
+        Alternative = AB,
+        Task = TB,
+        Motion = MB,
+    }));
+
+    t.Hierarchy.HierarchyRecords.Add(new HierarchyRecord()
+    {
+        Process = PC,
+        Alternative = AC,
+        Task = TC,
+        Motion = MC,
+    }));
 }
 ```
 </details>
@@ -421,8 +708,11 @@ A;B;C
 7;7;6
 
 //JSON
+  See Distance Function
 //XML
+  See Distance Function
 //C#
+  See Distance Function
 ```
 </details>
 
@@ -453,13 +743,74 @@ ProcessHierarchy:
 0;1;0;1
 
 //JSON
-ProcessHierarchy:{
-
-}
+"ProcessHierarchy": [
+        {
+            "ProcessID": 1,
+            "AlternativeID": 0,
+            "TaskID": 0,
+            "MotionID": 1,
+            "ConfigIDs": [
+                1
+            ],
+            "Bidirectional": null,
+            "Name": null
+        },
+        ...
+        {
+            "ProcessID": 10,
+            "AlternativeID": 0,
+            "TaskID": 0,
+            "MotionID": 10,
+            "ConfigIDs": [
+                10
+            ],
+            "Bidirectional": null,
+            "Name": null
+        }
+    ],
 
 //XML
 
+<ProcessHierarchy>
+    <ProcessHierarchySerializationObject>
+      <ProcessID>1</ProcessID>
+      <AlternativeID>0</AlternativeID>
+      <TaskID>0</TaskID>
+      <MotionID>1</MotionID>
+      <ConfigIDs>
+        <int>1</int>
+      </ConfigIDs>
+      <Bidirectional xsi:nil="true" />
+    </ProcessHierarchySerializationObject>
+    ...
+    <ProcessHierarchySerializationObject>
+      <ProcessID>10</ProcessID>
+      <AlternativeID>0</AlternativeID>
+      <TaskID>0</TaskID>
+      <MotionID>10</MotionID>
+      <ConfigIDs>
+        <int>10</int>
+      </ConfigIDs>
+      <Bidirectional xsi:nil="true" />
+    </ProcessHierarchySerializationObject>
+  </ProcessHierarchy>
+    
+
 //C#
+    GeneralTask t = new GeneralTask();
+    var PA = new Process() { ID = 1, Name = "Process A" };
+    var AA  = new Alternative() { ID = 1, Name = "Alternative A" };
+    var TA  = new Task() { ID = 1, Name = "Task A" };
+    var CA = new Config() { ID = 1, Configuration = new List<double>() { 5, 5 },     Name = "Config A" };
+    var MA = new Motion() { ID = 1, Name = "Motion A", Configs = new List<Config>() { CA } };
+
+    t.Hierarchy.HierarchyRecords.Add(new HierarchyRecord()
+    {
+        Process = PA,
+        Alternative = AA,
+        Task = TA,
+        Motion = MA
+    }));
 ```
 </details>
 
@@ -494,8 +845,16 @@ ProcessPrecedence:[
 ]
 
 //XML
+    //TODO
+    <ProcessPrecedences />
 
 //C#
+            GeneralTask t = new GeneralTask();
+            var PA = new Process() { ID = 1, Name = "Process A" };
+            var PB = new Process() { ID = 2, Name = "Process B" };
+            t.ProcessPrecedences = new List<ProcessPrecedence>();
+            t.ProcessPrecedences.Add(new ProcessPrecedence(PA, PB));
+
 ```
 </details>
 
@@ -519,20 +878,30 @@ MotionPrecedence:
 2;3
 
 //JSON
-MotionPrecedence:[
-    Precedence: {
-         Predecessor: 1,
-         Successor: 2
-    },
-    Precedence: {
-         Predecessor: 2,
-         Successor: 3
-    }
+    TODO:
+    MotionPrecedence:[
+        Precedence: {
+            Predecessor: 1,
+            Successor: 2
+        },
+        Precedence: {
+            Predecessor: 2,
+            Successor: 3
+        }
 ]
 
 //XML
-
+    TODO:
+    <MotionPrecedence />
 //C#
+    GeneralTask t = new GeneralTask();
+    var CA = new Config() { ID = 1, Configuration = new List<double>() { 5, 5 }, Name = "Config A" };
+    var CB = new Config() { ID = 2, Configuration = new List<double>() { 2, 2 }, Name = "Config B" };
+    var MA = new Motion() { ID = 1, Name = "Motion A", Configs = new List<Config>() { CA } };
+    var MB = new Motion() { ID = 2, Name = "Motion B", Configs = new List<Config>() { CB } };
+    t.MotionPrecedences = new List<MotionPrecedence>();
+    t.MotionPrecedences.Add(new MotionPrecedence(MA, MB));
+
 ```
 </details>
 
@@ -573,9 +942,13 @@ OverrideCosts: [
 }
 
 //XML
+    TODO:
 
 //C#
-
+    GeneralTask t = new GeneralTask();
+    var CA = new Config() { ID = 1, Configuration = new List<double>() { 5, 5 }, Name = "Config A" };
+    var CB = new Config() { ID = 2, Configuration = new List<double>() { 2, 2 }, Name = "Config B" };
+    t.CostManager.OverrideCost.Add(new DetailedConfigCost() { A = CA, B = CB, OverrideCost = 2.0, Bidirectional = true });
 ```
 </details>
 
@@ -594,13 +967,32 @@ OverrideCosts: [
 
 ```
 //SEQ
-ResourceChangeover: None
-ResourceChangeover: Constant
-ResourceChangeover: Matrix
+    ResourceChangeover: None
+    ResourceChangeover: Constant
+    ResourceChangeover: Matrix
 
 //JSON
+    "ResourceFunction": {
+        "ResourceDistanceFunction": "Add",
+        "ResourceSource": "Constant",
+        "ResourceCostConstant": 50.0,
+        "ResourceCostMatrix": null
+    },
+
 //XML
+  <ResourceFunction>
+    <ResourceSource>Constant</ResourceSource>
+    <ResourceDistanceFunction>Add</ResourceDistanceFunction>
+    <ResourceCostConstant>50</ResourceCostConstant>
+  </ResourceFunction>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.ResourceFunction = new NoResourceFunction();
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new MaxResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new MaxResourceDistanceLinkFunction());
 ```
 </details>
 
@@ -622,8 +1014,27 @@ ResourceChangeoverFunction: Add
 ResourceChangeoverFunction: Max
 
 //JSON
+    "ResourceFunction": {
+        "ResourceDistanceFunction": "Add",
+        "ResourceSource": "Constant",
+        "ResourceCostConstant": 50.0,
+        "ResourceCostMatrix": null
+    },
+
 //XML
+  <ResourceFunction>
+    <ResourceSource>Constant</ResourceSource>
+    <ResourceDistanceFunction>Add</ResourceDistanceFunction>
+    <ResourceCostConstant>50</ResourceCostConstant>
+  </ResourceFunction>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.ResourceFunction = new NoResourceFunction();
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new MaxResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new MaxResourceDistanceLinkFunction());
 ```
 </details>
 
@@ -642,9 +1053,27 @@ Constant cost of resource change. The resources are defined in the `ConfigList`/
 //SEQ
 ChangeoverConstant: 10
 
+
 //JSON
+    "ResourceFunction": {
+        "ResourceDistanceFunction": "Add",
+        "ResourceSource": "Constant",
+        "ResourceCostConstant": 50.0,
+        "ResourceCostMatrix": null
+    },
+
 //XML
+  <ResourceFunction>
+    <ResourceSource>Constant</ResourceSource>
+    <ResourceDistanceFunction>Add</ResourceDistanceFunction>
+    <ResourceCostConstant>50</ResourceCostConstant>
+  </ResourceFunction>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.ResourceFunction = new NoResourceFunction();
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new MaxResourceDistanceLinkFunction());
 ```
 </details>
 
@@ -668,19 +1097,24 @@ ChangeoverMatrix:
 9;0;8
 9;8;0
 
-
 //JSON
-Task: "General"
+    "ResourceFunction": {
+        "ResourceDistanceFunction": "Add",
+        "ResourceSource": "Matrix",
+        "ResourceCostMatrix": null TODO
+    },
 
 //XML
-<Task>"General"<Task/>
+  <ResourceFunction>
+    <ResourceSource>Matrix</ResourceSource>
+    TODO:
+  </ResourceFunction>
 
 //C#
-Task task = new Task(){
-  ...
-  Type = TaskType.General;
-  ...
-}
+    GeneralTask t = new GeneralTask();
+    t.CostManager.ResourceFunction = new NoResourceFunction();
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new MaxResourceDistanceLinkFunction());
 ```
 </details>
 
@@ -713,8 +1147,29 @@ LocalSearchStrategy: TabuSearch
 LocalSearchStrategy: ObjectiveTabuSearch
 
 //JSON
+    "LocalSearchStrategy": "Automatic",
+    "LocalSearchStrategy": "GreedyDescent",
+    "LocalSearchStrategy": "GuidedLocalSearch",
+    "LocalSearchStrategy": "SimulatedAnnealing",
+    "LocalSearchStrategy": "TabuSearch",
+    "LocalSearchStrategy": "ObjectiveTabuSearch",
+
 //XML
+  <LocalSearchStrategy>Automatic</LocalSearchStrategy>
+  <LocalSearchStrategy>GreedyDescent</LocalSearchStrategy>
+  <LocalSearchStrategy>GuidedLocalSearch</LocalSearchStrategy>
+  <LocalSearchStrategy>SimulatedAnnealing</LocalSearchStrategy>
+  <LocalSearchStrategy>TabuSearch</LocalSearchStrategy>
+  <LocalSearchStrategy>ObjectiveTabuSearch</LocalSearchStrategy>
+
 //C#
+    t.SolverSettings.Metaheuristics = Metaheuristics.Automatic;
+    t.SolverSettings.Metaheuristics = Metaheuristics.GreedyDescent;
+    t.SolverSettings.Metaheuristics = Metaheuristics.GuidedLocalSearch;
+    t.SolverSettings.Metaheuristics = Metaheuristics.SimulatedAnnealing;
+    t.SolverSettings.Metaheuristics = Metaheuristics.TabuSearch;
+    t.SolverSettings.Metaheuristics = Metaheuristics.ObjectiveTabuSearch;
+                                                            
 ```
 </details>
 
@@ -735,8 +1190,14 @@ TimeLimit: 0
 TimeLimit: 60000
 
 //JSON
+    "TimeLimit": 10000
+
 //XML
+  <TimeLimit>10000</TimeLimit>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.SolverSettings.TimeLimit = 1000;
 ```
 </details>
 
@@ -758,8 +1219,14 @@ UseMIPprecedenceSolver: True
 UseMIPprecedenceSolver: False
 
 //JSON
+    "UseMIPprecedenceSolver": false
+
 //XML
+    <UseMIPprecedenceSolver>false</UseMIPprecedenceSolver>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.SolverSettings.UseMIPprecedenceSolver = 1000;
 ```
 </details>
 
@@ -781,7 +1248,13 @@ UseShortcutInAlternatives: True
 UseShortcutInAlternatives: False
 
 //JSON
+    "UseShortcutInAlternatives": true,
+    
 //XML
+    <UseShortcutInAlternatives>true</UseShortcutInAlternatives>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.SolverSettings.UseShortcutInAlternatives = 1000;
 ```
 </details>
