@@ -10,11 +10,11 @@
 ## About
 Generic task sequencer that captures typical sequencing problems encountered in robot applications.
 * Easily integrated into complex solution workflows
-* Standalone exe with file interface (.seq, .json, .xml), .dll function calls, ~~Docker contained REST~~
+* Standalone executable with file interface (.seq, .json, .xml), .dll function calls, ~~Docker contained REST~~
 * Provides close-to-optimal (but not necessarily optimal) solutions quickly
 * Compact solver based on an open-source VRP solver engine - Google-OR-Tools
 * Arbitrary dimension - 2D, 3D or robotic joint space planning
-* Build in cost functions - Euclidian, Max, Manhattan, Trapezoid Time, Matrix
+* Build-in cost functions - Euclidian, Max, Manhattan, Trapezoid Time, Matrix
 * General description language to describe sequencing problems
 * Order constraints
 * Resource handling
@@ -31,14 +31,14 @@ Visual Studio 2019 Solution:
 <img src="../Documentation/Images/Process.png" alt="Problem representation of ProSeqqo" width="1000"/>
 
 ## Representation
-Configurations defined in task space or robot configuration space, in arbitrary dimensions.
-These configurations filled into a hierarchy, every configuration take place in a `Motion`, `Task`, `Alternative` and `Process`.
+Configurations defined in task space or robot configuration space in arbitrary dimensions.
+These configurations filled into a hierarchy; every configuration take place in a `Motion`, `Task`, `Alternative` and `Process`.
 The distance between the configurations can be defined by a matrix or calculated automatically with the selected function.
 The result of the execution is a list of Positions corresponds to the following: 
 - **Each** of the n **Processes** has to be executed
 - by selecting **one** of the given **Alternatives**…
 - And executing **every Task** of the alternative…
-- By visiting every **Configuration** of **one** possible **Motion** of the given task.
+- By visiting every **Configuration** of **one** possible **Motion** of the given **Task**.
 
 The given task translated to a general travelling salesman (GTSP) graph as an input of the Google-OR-Tools VRP solver.  
 Parameters and description language available [here](../Documentation/TaskDefinition.md) and result description is [here](../Documentation/ResultDefinition.md).  
@@ -51,9 +51,9 @@ Parameters and description language available [here](../Documentation/TaskDefini
 -  Only one alternative used in a process (Disjunctive constraint, generated automatically)
 
 #### Features:
--  Cyclic and uncyclic sequences with optional start and finish configuration. 
+-  Cyclic and acyclic sequences with optional start and finish configuration. 
 -  Automatic cost computation - Euclidian, Max, Manhattan, Trapezoid time
--  Arbitary costs by matrix
+-  Arbitrary costs by matrix
 -  Penalty for tool path or motion interruption.
 -  Resource and resource changeover cost handling.
 -  Metaheuristic configuration and time limit for VRP solver by OR-Tools.
@@ -67,11 +67,11 @@ Parameters and description language available [here](../Documentation/TaskDefini
 Installation details are available [here](../Documentation/Install.md).
 
 ## Examples:
-- Camera based pick and place
-- Cube pick and place with multiple grasp configuration and many order costraints
+- Camera-based pick and place
+- Cube pick and place with multiple grasp configuration and many order constraints
 - Robotic drawing
 - Laser engraving
-- Three step grinding of furniture parts  
+- Three-step grinding of furniture parts  
 
 Hello World! available [here](../Example/HelloWorld).   
 Examples and description available [here](../Example).  
