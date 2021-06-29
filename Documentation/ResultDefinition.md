@@ -15,6 +15,20 @@ The executed tasks ([definition](https://git.sztaki.hu/zahoranl/sequenceplanner/
 | StatusMessage | Final status message of OR-Tools VRP.                       |
 | Log           | Log messages of the solver, detailed as the given log level.|
 
+## Parameters2
+| Parameter     | Comment                                                     |
+| --------------| ----------------------------------------------------------- |
+| Created       | Date and time of generation.                                |
+| FullTime      | Time of task execution.                                     |
+| SolverTime    | Time of OR-Tools VRP execution.                             |
+| PreSolverTime | Time of MIP pre-solver, initial solution creation.          |
+
+| PreSolverTime | Time of MIP pre-solver, initial solution creation.          |
+
+| StatusCode    | Final status code of OR-Tools VRP.                          |
+| StatusMessage | Final status message of OR-Tools VRP.                       |
+| ErrorMessage  | Error message execution.                                    |
+| Log           | Log messages of the solver, detailed as the given log level.|
 
 Example [.SEQ](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/LineLike_Original.txt) and its [JSON](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/LineLike_Original.json), [XML](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/LineLike_Original.xml), [SEQ ](https://git.sztaki.hu/zahoranl/sequenceplanner/-/blob/master/Example/Out/LineLike_Original.seq) result. 
 
