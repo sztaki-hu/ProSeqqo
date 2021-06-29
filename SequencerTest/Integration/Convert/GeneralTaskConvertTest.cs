@@ -20,13 +20,13 @@ namespace SequencerTest.Integration.Convert
         public void FromSEQ()
         {
             ConvertHelper convertTest = new ConvertHelper();
-            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.seq", "seq", "Resources/Out/HelloWorldSEQ.seq", "seq");
-            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.seq", "seq", "Resources/Out/HelloWorldSEQ.json", "json");
-            convertTest.AssertSerialization("Resources/Example/HelloWorld/HelloWorld.seq", "seq", "Resources/Out/HelloWorldSEQ.xml", "xml");
+            convertTest.AssertSerialization(@"Resources/Example/HelloWorld/HelloWorld.seq", "seq", @"Resources/Out/HelloWorldSEQ.seq", "seq");
+            convertTest.AssertSerialization(@"Resources/Example/HelloWorld/HelloWorld.seq", "seq", @"Resources/Out/HelloWorldSEQ.json", "json");
+            convertTest.AssertSerialization(@"Resources/Example/HelloWorld/HelloWorld.seq", "seq", @"Resources/Out/HelloWorldSEQ.xml", "xml");
 
-            convertTest.AssertSerialization("Resources/Example/CameraPickAndPlace.seq", "seq", "Resources/Out/CameraPickAndPlace.seq", "seq");
-            convertTest.AssertSerialization("Resources/Example/CameraPickAndPlace.seq", "seq", "Resources/Out/CameraPickAndPlace.json", "json");
-            convertTest.AssertSerialization("Resources/Example/CameraPickAndPlace.seq", "seq", "Resources/Out/CameraPickAndPlace.xml", "xml");
+            convertTest.AssertSerialization(@"Resources/Example/CameraPickAndPlace.seq", "seq", @"Resources/Out/CameraPickAndPlace.seq", "seq");
+            convertTest.AssertSerialization(@"Resources/Example/CameraPickAndPlace.seq", "seq", @"Resources/Out/CameraPickAndPlace.json", "json");
+            convertTest.AssertSerialization(@"Resources/Example/CameraPickAndPlace.seq", "seq", @"Resources/Out/CameraPickAndPlace.xml", "xml");
 
             convertTest.AssertSerialization("Resources/Example/CelticLaser.seq", "seq", "Resources/Out/CelticLaser.seq", "seq");
             convertTest.AssertSerialization("Resources/Example/CelticLaser.seq", "seq", "Resources/Out/CelticLaser.json", "json");
