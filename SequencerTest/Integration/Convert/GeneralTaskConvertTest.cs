@@ -20,7 +20,7 @@ namespace SequencerTest.Integration.Convert
         public void FromSEQ()
         {
             ConvertHelper convertTest = new ConvertHelper();
-            convertTest.AssertSerialization(@"./Resources/Example/HelloWorld/HelloWorld.seq", "seq", @"./Resources/Out/HelloWorldSEQ.seq", "seq");
+            convertTest.AssertSerialization("./Resources/Example/HelloWorld/HelloWorld.seq", "seq", "./Resources/Out/HelloWorldSEQ.seq", "seq");
             convertTest.AssertSerialization(@"Resources/Example/HelloWorld/HelloWorld.seq", "seq", @"Resources/Out/HelloWorldSEQ.json", "json");
             convertTest.AssertSerialization(@"Resources/Example/HelloWorld/HelloWorld.seq", "seq", @"Resources/Out/HelloWorldSEQ.xml", "xml");
 

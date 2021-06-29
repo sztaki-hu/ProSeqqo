@@ -518,6 +518,9 @@
     <None Update="Resources\Benchmark\SeqTest\Templates\seqtest.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Out\.keep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
