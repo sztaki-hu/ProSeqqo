@@ -55,7 +55,7 @@ Notations: ~ Optional, ! Default, * Needed
 ||`ObjectiveTabuSearch`|Uses tabu search on the objective value of the solution to escape local minima|
 |[`TimeLimit`](#timelimit)|Int|The time limit for the VRP solver in [ms]. It has an effect only for the VRP solver, not the full runtime. Read, phrase, process, initial MIP solver not included. It can stop earlier with a solution or without through timeout.|                                                                                                                                                                                                                                                                                                                                                        ||[`UseMIPprecedenceSolver`](#usemipprecedencesolver)|True / False|Creates an initial solution by CBC-MIP solver, for tasks with complex precedence constraints.|
 |[`UseShortcutInAlternatives`](#useshortcutinalternatives)|True / False| In the case of long sequences of alternatives, find the shortest paths and replace the original alternative with a virtual one can be remuneratory. It contains only one task and a virtual single config representation of shortcuts. After the execution of sequencing, the original hierarchy is restored. Reduce complexity, the number of nodes and constraints at build time.|
-|[`UseMIPpresolver`](#usemippresolver)|True / False| |
+|[`UseMIPprecedenceSolver`](#usemippresolver)|True / False| |
 
 
 # Details
