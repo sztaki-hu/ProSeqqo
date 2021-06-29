@@ -13,5 +13,10 @@ namespace SequencePlanner.Task.Serialization.Token
         {
             Lines = new List<TokenLineDeserializationObject>();
         }
+
+        public override string ToString()
+        {
+            return Header;
+        }
     }
 }

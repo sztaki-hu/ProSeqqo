@@ -73,12 +73,13 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             DistanceFunction = new DistanceFunctionSerializationObject(task);
             ResourceFunction = new ResourceFunctionSerializationObject(task.CostManager.ResourceFunction);
             OverrideCost = new StrictEdgeWeightSetSerializationObject(task.CostManager.OverrideCost);
-            AddInMotionChangeoverToCost = false;
-            AddMotionLengthToCost = false;
+            AddInMotionChangeoverToCost = task.CostManager.AddInMotionChangeoverToCost;
+            AddMotionLengthToCost = task.CostManager.AddMotionLengthToCost;
             LocalSearchStrategy = task.SolverSettings.Metaheuristics.ToString();
             Validate = task.Validate;
-
+            IdlePenalty = task.CostManager.IdlePenalty;
             TaskType = "General";
+            UseMIPprecedenceSolver = task.SolverSettings.UseMIPprecedenceSolver;
             UseShortcutInAlternatives = task.SolverSettings.UseShortcutInAlternatives;
             ProcessHierarchy = new List<ProcessHierarchySerializationObject>();
             MotionPrecedence = new List<OrderConstraintSerializationObject>();
@@ -96,18 +97,18 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 });
             }
 
-            foreach (var posPrec in task.MotionPrecedences)
+            foreach (var motPrec in task.MotionPrecedences)
             {
-                ProcessPrecedences.Add(new OrderConstraintSerializationObject()
+                MotionPrecedence.Add(new OrderConstraintSerializationObject()
                 {
-                    BeforeID = posPrec.Before.ID,
-                    AfterID = posPrec.After.ID
+                    BeforeID = motPrec.Before.ID,
+                    AfterID = motPrec.After.ID
                 });
             }
 
             foreach (var procPrec in task.ProcessPrecedences)
             {
-                MotionPrecedence.Add(new OrderConstraintSerializationObject()
+                ProcessPrecedences.Add(new OrderConstraintSerializationObject()
                 {
                     BeforeID = procPrec.Before.ID,
                     AfterID = procPrec.After.ID
@@ -330,7 +331,7 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
             string newline = "\n";
             //string separator = ";";
             seq += "#Export @ " + DateTime.UtcNow + newline;
-            seq += "TaskType: " + TaskType + newline;
+            seq += "Task: " + TaskType + newline;
             seq += "Validate: " + Validate + newline;
             seq += "Cyclic: " + Cyclic + newline;
             if (StartDepot != -1)
@@ -339,12 +340,13 @@ namespace SequencePlanner.GTSPTask.Serialization.Task
                 seq += "FinishDepot: " + FinishDepot + newline;
             seq += "TimeLimit: " + TimeLimit + newline;
             seq += "LocalSearchStrategy: " + LocalSearchStrategy + newline;
-            seq += "ContourPenalty: " + IdlePenalty + newline;
-            seq += "BidirectionLineDefault: " + BidirectionMotionDefault + newline;
-            seq += "UseResourceInLineLength: " + AddInMotionChangeoverToCost + newline;
-            seq += "UseLineLengthInWeight: " + AddMotionLengthToCost + newline;
+            seq += "IdlePenalty: " + IdlePenalty + newline;
+            seq += "BidirectionMotionDefault: " + BidirectionMotionDefault + newline;
+            seq += "AddInMotionChangeoverToCost: " + AddInMotionChangeoverToCost + newline;
+            seq += "AddMotionLengthToCost: " + AddMotionLengthToCost + newline;
             seq += DistanceFunction.ToSEQShort();
             seq += ResourceFunction.ToSEQ();
+            seq += "UseMIPprecedenceSolver: " + UseMIPprecedenceSolver + newline;
             seq += "UseShortcutInAlternatives: " + UseShortcutInAlternatives + newline;
             seq += DistanceFunction.ToSEQLong();
             if (DistanceFunction.Function != "Matrix")

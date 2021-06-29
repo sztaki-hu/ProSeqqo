@@ -4,7 +4,7 @@ Cyclic: False
 DistanceFunction: Euclidian
 IdlePenalty: 10
 BidirectionMotionDefault: <*BID*>
-ResourceChangeover: Off
+ResourceChangeover: None
 
 TimeLimit: <*Time*>
 UseMIPprecedenceSolver: False

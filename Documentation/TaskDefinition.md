@@ -3,14 +3,14 @@
 The given parameters able to write down the universal form of sequencing problems. The library able to phrase .xml, .json task definitions and .seq / .txt well-readable text format. The [result of the tasks](../Documentation/ResultDefinition.md) also available in these formats. [Example](../Example) and [Skeletons](../Example/Skeletons) directory of the repository contains the complete list of parameters.
 
 
-The following sections define the own .seq format parameters, these are also used in the standard formats (JSON, XML) with their own specificity. The input file interpreted line by line, within the lines separated by `:` and `;` characters. Floating-point number separators: `.` and `,`. Full line comment: `#`. The order of parameters is commutable, not sensitive for whitespace and not case sensitive.
+The following sections define the own .seq format parameters; these are also used in the standard formats (JSON, XML) with their own specificity. The input file interpreted line by line, within the lines separated by `:` and `;` characters. Floating-point number separators: `.` and `,`. Full line comment: `#`. The order of parameters is commutable, not sensitive for whitespace and not case sensitive.
 
 Notations: ~ Optional, ! Default, * Needed
 
 # Summary
 | Option | Values | Description|
 |--------|--------|------------|
-|*[`Task`](#task)|`General`| For sequencing configurations and motions. One motion/configuration selected for execution in a task. The tasks have a strict sequence in an alternative. Finally, one alternative selected in a process, while the processes are ordered. |
+|*[`Task`](#task)|`General`| For sequencing configurations and motions. One motion/configuration selected for execution in a task. The tasks have a strict sequence in an alternative. Finally, one alternative selected in a process while the processes are ordered. |
 |[`Validate`](#validate)|True / False|If true, the task is validated before execution, it can be time-consuming. |
 |*[`Cyclic`](#cyclic)|True / False| The cyclic sequence has the same start and finishes in the solution. In the case of a cyclic task, the `StartDepot` have to be given.|
 |[`StartDepot`](#startdepot)|`ConfigID`/`MotionID`|Start depot is the first position of the circles or walks based on `CyclicSequence`. It is going to ignore all alternatives and task elements of the given element. The StartDepot have to be defined in the `ProcessHierarchy`.|
@@ -33,14 +33,14 @@ Notations: ~ Optional, ! Default, * Needed
 |[`TrapezoidAcceleration`](#trapzoidacceleration)|Double []|In case we choose `TrapezoidTimeWithTieBreaker` or `TrapezoidTime` need to be define maximal acceleration in n dimensions.|
 |[`TrapezoidSpeed`](#trapezoidspeed) | Double [] |In case we choose `TrapezoidTimeWithTieBreaker` or `TrapezoidTime` need to be define maximal speed in n dimensions. |
 | [`WeightMultiplier`](#weightmultiplier) | Int / `Auto` | Google-OR-Tools using costs as integers, but we would like to use floating-point numbers. Simple round function not enough in small task space, this multiplier scales up with the given number or scale it automatically. |
-| [`IdlePenalty`](#idlepenalty) | Double | This value added to the costs if the following positions/motions are not in contact, and the tool path or motion has to be interrupted. |
+| [`IdlePenalty`](#idlepenalty) | Double | This value-added to the costs if the following positions/motions are not in contact, and the tool path or motion has to be interrupted. |
 | [`BidirectionMotionDefault`](#bidirectionmotiondefault) | True / False | If True, extra motion generated and added to the hierarchy with the _Reverse postfix and swapped end configurations in case of movements. If False, only the given direction added. At the end of `MotionList` records can be overwritten one by one. |
 | [`AddMotionLengthToCost`](#addmotionLengthtocost) | True / False | If true: The length of the motion (computed between ConfigA, ConfigB with `DistanceFunction` or `OverrideCost`) need to be used in cost computation. |
 | [`AddInMotionChangeoverToCost`](#addinmotionchangeovertocost) | True / False | If true: The resource changeover cost (change from the resource of ConfigA to resource of ConfigB) used additionally in cost computation of the motions. |
 |**Resources**| | |
 |[`ResourceChangeover`](#resourcechangeover)|! `Off`| Resources not used in the task. |
-||`Constant`| Resources are used and the changeover cost given by a constant (`ChangeoverConstant`). |
-||`Matrix` | Resources are used and the changeover cost given by a matrix (`ChangeoverMatrix`) for every resource pair.|
+||`Constant`| Resources are used, and the changeover cost given by a constant (`ChangeoverConstant`). |
+||`Matrix` | Resources are used, and the changeover cost given by a matrix (`ChangeoverMatrix`) for every resource pair.|
 |[`ResourceChangeoverFunction`](#resourcechangeoverfunction)| !`Add`| Function for handle connection of computed edge weight and resource cost. w = w + r|
 ||`Max`| Function for handle connection of computed edge weight and resource cost. w = Max(w,r) |
 |[`ChangeoverConstant`](#changeoverconstant) | Double | Constant cost of resource change. The resources are defined in the `ConfigList`/`ConfigMatrix` section.|
@@ -54,15 +54,15 @@ Notations: ~ Optional, ! Default, * Needed
 ||`TabuSearch`|Uses tabu search to escape local minima (cf.http://en.wikipedia.org/wiki/Tabu_search).|
 ||`ObjectiveTabuSearch`|Uses tabu search on the objective value of the solution to escape local minima|
 |[`TimeLimit`](#timelimit)|Int|The time limit for the VRP solver in [ms]. It has an effect only for the VRP solver, not the full runtime. Read, phrase, process, initial MIP solver not included. It can stop earlier with a solution or without through timeout.|                                                                                                                                                                                                                                                                                                                                                        ||[`UseMIPprecedenceSolver`](#usemipprecedencesolver)|True / False|Creates an initial solution by CBC-MIP solver, for tasks with complex precedence constraints.|
-|[`UseShortcutInAlternatives`](#useshortcutinalternatives)|True / False| In the case of long sequences of tasks of alternatives, the finding of the shortest paths and replace the original alternative with a virtual one can be remuneratory. It contains only one task and a virtual single config representation of shortcuts. After the execution of sequencing, the original hierarchy is restored. Reduce complexity, the number of nodes and constraints at build time.|
-|[`UseMIPpresolver`](#usemippresolver)|True / False| |
+|[`UseShortcutInAlternatives`](#useshortcutinalternatives)|True / False| In the case of long sequences of alternatives, find the shortest paths and replace the original alternative with a virtual one can be remuneratory. It contains only one task and a virtual single config representation of shortcuts. After the execution of sequencing, the original hierarchy is restored. Reduce complexity, the number of nodes and constraints at build time.|
+|[`UseMIPprecedenceSolver`](#usemippresolver)|True / False| |
 
 
 # Details
 
 #### *Task
 
-For sequencing configurations and motions. One motion/configuration selected for execution in a task. The tasks have a strict sequence in an alternative. Finally, one alternative selected in a process, while the processes are ordered. 
+For sequencing configurations and motions. One motion/configuration selected for execution in a task. The tasks have a strict sequence in an alternative. Finally, one alternative was chosen in a process while the processes are ordered. 
 
 | Value  | Include | Exclude | Optional|
 | ------ | ------  | ------  | ------  |
@@ -75,12 +75,15 @@ For sequencing configurations and motions. One motion/configuration selected for
 ```
 //SEQ
 Task: General
-Task: Line
 
 //JSON
+"TaskType": "General"
+
 //XML
+<TaskType>General</TaskType>
+
 //C#
-}
+GeneralTask t = new GeneralTask();
 ```
 </details>
    
@@ -88,7 +91,7 @@ Task: Line
 
 #### Validate
 
-If true, the task is validated before execution, it can be time-consuming.
+If true, the task is validated before execution; it can be time-consuming.
 
 | Param  | Rule   |
 | ------ | ------ |
@@ -104,8 +107,17 @@ Validate: True
 Validate: False
 
 //JSON
+    "Validate": true,
+    "Validate": false,
+
 //XML
+  <Validate>true</Validate>
+  <Validate>false</Validate>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.Validate = true;
+    t.Validate = false;
 ```
 </details>
 
@@ -125,12 +137,21 @@ The cyclic sequence has the same start and finishes in the solution. In the case
 
 ```
 //SEQ
-Cyclic: True
-Cyclic: False
+    Cyclic: True
+    Cyclic: False
 
 //JSON
+    "Cyclic": true,
+    "Cyclic": false,
+
 //XML
+    <Cyclic>true</Cyclic>
+    <Cyclic>false</Cyclic>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.Cyclic = true;
+    t.Cyclic = false;
 ```
 </details>
 
@@ -140,18 +161,24 @@ Start depot is the first position of the circles or walks based on `CyclicSequen
 
 | Param  | Rule   |
 | ------ | ------ |
-| Int    | Must be part of `ProcessHierarchy` as `ConfigID` / `MotionID`. Must be part of a single alternative process, because fix element of the path and excludes every other alternative in the process.|
+| Int    | Must be part of `ProcessHierarchy` as `ConfigID` / `MotionID`. Must be part of a single alternative process because fix element of the path and excludes every other alternative in the process.|
 
 <details>
 <summary>Usage</summary>
 
 ```
 //SEQ
-StartDepot: 8
+    StartDepot: 0
 
 //JSON
+    "StartDepot": 0,
+
 //XML
+    <StartDepot>0</StartDepot>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.StartDepotConfig  = new Config() { ID = 0, Name = "Start",  Configuration = new List<double>() {0, 0} }; 
 ```
 </details>
 
@@ -160,18 +187,24 @@ Finish depot is the last position of the path if `CyclicSequence` = False. It is
 
 | Param  | Rule   |
 | ------ | ------ |
-| Int    | Must be part of `ProcessHierarchy` as `ConfigID` / `MotionID`. Must be part of a single alternative process, because fix element of the path and excludes every other alternative in the process.|
+| Int    | Must be part of `ProcessHierarchy` as `ConfigID` / `MotionID`. Must be part of a single alternative process because fix element of the path and excludes every other alternative in the process.|
 
 <details>
 <summary>Usage</summary>
 
 ```
 //SEQ
-FinishDepot: 1
+    FinishDepot: 1
 
 //JSON
+    "FinishDepot": 1,
+
 //XML
+    <FinishDepot>1</FinishDepot>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.FinishDepotConfig = new Config() { ID = 1, Name = "Finish", Configuration = new List<double>() {10, 10} };
 ```
 </details>
 
@@ -205,9 +238,149 @@ DistanceFunction: Manhattan
 DistanceFunction: Matrix
 
 //JSON
+"DistanceFunction": {
+    "Function": "Euclidian",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": null,
+    "TrapezoidSpeed": null
+},
+
+"DistanceFunction": {
+    "Function": "Max",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": null,
+    "TrapezoidSpeed": null
+},
+
+"DistanceFunction": {
+    "Function": "Manhattan",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": null,
+    "TrapezoidSpeed": null
+},
+
+"DistanceFunction": {
+    "Function": "Trapezoid",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": [1,1,1],
+    "TrapezoidSpeed": [1,1,1]
+},
+
+"DistanceFunction": {
+    "Function": "TrapezoidTimeWithTieBreaker",
+    "DistanceMatrix": null,
+    "TrapezoidAcceleration": [1,1,1],
+    "TrapezoidSpeed": [1,1,1]
+},
+
+"DistanceFunction": {
+        "Function": "Matrix",
+        "DistanceMatrix": {
+            "IDHeader": [0,1,2,3,4,5,6,7,8,9,10],
+            "DistanceMatrix": [
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],
+                [0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0]
+            ],
+            "NameFooter": ["@","S","Z","T","A","K","I","_","E","M","I"],
+            "ResourceFooter": [0,0,0,0,0,0,0,0,2,2,2],
+            "ConfigList": null
+        },
+        "TrapezoidAcceleration": null,
+        "TrapezoidSpeed": null
+    },
+
 //XML
+<DistanceFunction>
+    <Function>Euclidian</Function>
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>Max</Function>
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>Trapezoid</Function>
+    TODO:
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>TrapezoidTimeWithTieBreaker</Function>
+    TODO:
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>Manhattan</Function>
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>Matrix</Function>
+    <DistanceMatrix>
+      <IDHeader>
+        <int>0</int>
+        ...
+        <int>10</int>
+      </IDHeader>
+      <DistanceMatrix>
+        <ArrayOfDouble>
+          <double>0</double>
+            ...
+          <double>10</double>
+        </ArrayOfDouble>
+        ...
+        <ArrayOfDouble>
+          <double>0</double>
+          ...
+          <double>10</double>
+        </ArrayOfDouble>
+      </DistanceMatrix>
+      <NameFooter>
+        <string>@</string>
+        <string>S</string>
+        <string>Z</string>
+        <string>T</string>
+        <string>A</string>
+        <string>K</string>
+        <string>I</string>
+        <string>_</string>
+        <string>E</string>
+        <string>M</string>
+        <string>I</string>
+      </NameFooter>
+      <ResourceFooter>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>2</int>
+        <int>2</int>
+        <int>2</int>
+      </ResourceFooter>
+    </DistanceMatrix>
+  </DistanceFunction>
+
 //C#
 ```
+    GeneralTask t = new GeneralTask();
+    t.CostManager.DistanceFunction = new EuclidianDistanceFunction();
+    t.CostManager.DistanceFunction = new MaxDistanceFunction();
+    t.CostManager.DistanceFunction = new ManhattanDistanceFunction();
+    t.CostManager.DistanceFunction = new TrapezoidTimeDistanceFunction(new double[] { }, new double[] { });
+    t.CostManager.DistanceFunction = new TrapezoidTimeWithTimeBreakerDistanceFunction(new double[] { }, new double[] { });
+    t.CostManager.DistanceFunction = new MatrixDistanceFunction(new List<List<double>>(), new List<int>());
+
+
 </details>
 
 #### TrapezoidAcceleration
@@ -227,7 +400,22 @@ TrapezoidAcceleration: [9.1;8.7;5.5]
 
 //JSON
 //XML
+<DistanceFunction>
+    <Function>Trapezoid</Function>
+    TODO:
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>TrapezoidTimeWithTieBreaker</Function>
+    TODO:
+</DistanceFunction>
+
+
 //C#
+    GeneralTask t = new GeneralTask();
+            t.CostManager.DistanceFunction = new TrapezoidTimeDistanceFunction(new double[] { }, new double[] { });
+            t.CostManager.DistanceFunction = new TrapezoidTimeWithTimeBreakerDistanceFunction(new double[] { }, new double[] { });
+
 ```
 </details>
 
@@ -247,14 +435,29 @@ Used in case of `DistanceFunction`: Trapezoid / `DistanceFunction`: TrapezoidTim
 TrapezoidSpeed: [9.1;8.7;5.5]
 
 //JSON
+    TODO:
+
 //XML
+<DistanceFunction>
+    <Function>Trapezoid</Function>
+    TODO:
+</DistanceFunction>
+
+<DistanceFunction>
+    <Function>TrapezoidTimeWithTieBreaker</Function>
+    TODO:
+</DistanceFunction>
+
 //C#
+    GeneralTask t = new GeneralTask();
+            t.CostManager.DistanceFunction = new TrapezoidTimeDistanceFunction(new double[] { }, new double[] { });
+            t.CostManager.DistanceFunction = new TrapezoidTimeWithTimeBreakerDistanceFunction(new double[] { }, new double[] { });
 ```
 </details>
 
-#### WeightMultiplier
+#### WeightMultiplier (Not used)
 
-Google-OR-Tools using costs as integers, but we would like to use floating-point numbers. Simple round function not enough in small task space, this multiplier scales up with the given number or scale it automatically.
+Google-OR-Tools using costs as integers, but we would like to use floating-point numbers. A simple round function is not enough in a small task space; this multiplier automatically scales up with the given number or scale.
 
 |   Type    | Rule   |
 | --------- | ------ |
@@ -277,7 +480,7 @@ WeightMultiplier: 1000
 
 #### IdlePenalty
 
-This value added to the costs if the following positions/motions are not in contact, and the tool path or motion has to be interrupted.
+This value-added to the costs if the following positions/motions are not in contact, and the tool path or motion must be interrupted.
 
 |   Type    | Rule   |
 | --------- | ------ |
@@ -291,14 +494,20 @@ This value added to the costs if the following positions/motions are not in cont
 IdlePenalty: 100 
 
 //JSON
+    "IdlePenalty": 100.0,
+
 //XML
+  <IdlePenalty>100</IdlePenalty>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.IdlePenalty = 100;
 ```
 </details>
 
 #### BidirectionMotionDefault
 
-If True, extra motion generated and added to the hierarchy with the _Reverse postfix and swapped end configurations in case of movements. If False, only the given direction added. At the end of `MotionList` records can be overwritten one by one.
+If True, extra motion generated and added to the hierarchy with the _Reverse postfix and swapped end configurations in case of movements. If False, only the given direction added. At the end of `MotionList`, records can be overwritten one by one.
 
 |   Value   | Rule   |
 | --------- | ------ |
@@ -314,8 +523,15 @@ BidirectionMotionDefault: True
 BidirectionMotionDefault: False
 
 //JSON
+    "BidirectionMotionDefault": false,
+
 //XML
+    <BidirectionMotionDefault>false</BidirectionMotionDefault>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.Hierarchy.BidirectionalMotionDefault = true;
+
 ```
 </details>
 
@@ -337,12 +553,18 @@ AddMotionLengthToCost: True
 AddMotionLengthToCost: False
 
 //JSON
+    "AddMotionLengthToCost": false,
+
 //XML
+    <AddMotionLengthToCost>false</AddMotionLengthToCost>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.AddMotionLengthToCost = true;
 ```
 </details>
 
-#### AddInMotionChangeoverToCost
+#### AddInMotionChangeoverToCost - Not Used
 
 If true: The resource changeover cost (change from the resource of ConfigA to resource of ConfigB) used additionally in cost computation of the motions.
 
@@ -369,7 +591,7 @@ AddInMotionChangeoverToCost: False
 
 #### *ConfigList
 
-Used when `DistanceFunction` is not Matrix. List of records, that defines all possible configurations of the task. These configurations can be used for motion definition (`MotionList`) at any times. Also used in the `ProcessHierarchy` section but only once. Order constraints can be defined in the `MotionPrecedence` section. 
+Used when `DistanceFunction` is not matrix. List of records that defines all possible configurations of the task. These configurations can be used for motion definition (`MotionList`) at any times. Also used in the `ProcessHierarchy` section but only once. Order constraints can be defined in the `MotionPrecedence` section. 
 
 | Param                    | Type  | Rule   |
 | ------------------------ | ----- | ------ |
@@ -390,8 +612,73 @@ ConfigList:
 3;[1.7;3];C;8
 
 //JSON
+    "ConfigList": [
+        {
+            "ID": 0,
+            "Config": [],
+            "Name": "@",
+            "ResourceID": 0
+        },
+        ...        
+        {
+            "ID": 10,
+            "Config": [],
+            "Name": "I",
+            "ResourceID": 2
+        }
+    ],
+
 //XML
+<ConfigList>
+    <ConfigSerializationObject>
+      <ID>0</ID>
+      <Config />
+      <Name>@</Name>
+      <ResourceID>0</ResourceID>
+    </ConfigSerializationObject>
+   ...
+    <ConfigSerializationObject>
+      <ID>10</ID>
+      <Config />
+      <Name>I</Name>
+      <ResourceID>2</ResourceID>
+    </ConfigSerializationObject>
+  </ConfigList>
+
+
 //C#
+    //Configuration added with the motions to the hierarchy.
+    var CA = new Config() { ID = 1, Configuration = new List<double>() { 5, 5 },     Name = "Config A" };
+    var CB = new Config() { ID = 2, Configuration = new List<double>() { 2, 2 },     Name = "Config B" };
+    var CC = new Config() { ID = 3, Configuration = new List<double>() { 7.5, 7.5 }, Name = "Config C" };
+
+    var MA = new Motion() { ID = 1, Name = "Motion A", Configs = new List<Config>() { CA } };
+    var MB = new Motion() { ID = 2, Name = "Motion B", Configs = new List<Config>() { CB } };
+    var MC = new Motion() { ID = 3, Name = "Motion C", Configs = new List<Config>() { CC } };
+
+    t.Hierarchy.HierarchyRecords.Add(new HierarchyRecord()
+    {
+        Process = PA,
+        Alternative = AA,
+        Task = TA,
+        Motion = MA
+    }));
+
+    t.Hierarchy.HierarchyRecords.Add(new HierarchyRecord()
+    {
+        Process = PB,
+        Alternative = AB,
+        Task = TB,
+        Motion = MB,
+    }));
+
+    t.Hierarchy.HierarchyRecords.Add(new HierarchyRecord()
+    {
+        Process = PC,
+        Alternative = AC,
+        Task = TC,
+        Motion = MC,
+    }));
 }
 ```
 </details>
@@ -421,8 +708,11 @@ A;B;C
 7;7;6
 
 //JSON
+  See Distance Function
 //XML
+  See Distance Function
 //C#
+  See Distance Function
 ```
 </details>
 
@@ -438,10 +728,10 @@ List   of ProcessID ; AlternativeID ; TaskID ; MotionID ; ConfigID; Bidirectiona
 | `ProcessID` | Int | Every new value indicates a new process.|
 | `AlternativeID` |  Int | Every new value with the same `ProcessID` indicates a new alternative sequence in the process.|
 | `TaskID` | Int | Every new value with the same `AlternativeID` indicates a new task in the alternative. **Tasks have fix order in an alternative order by the given IDs ascendant.** |
-| `MotionID` | Int |Must be part of `ConfigList`/`ConfigMatrix` in case of `Config` or `MotionList` in case of motion. **Every config and motion must be used once** (but configs, can be used multiple times in motions).|
-| `ConfigID` | Int |Must be part of `ConfigList`/`ConfigMatrix` in case of `Config` or `MotionList` in case of motion. **Every config and motion must be used once** (but configs, can be used multiple times in motions).|
-| `Bidirectionl` | Bool |Must be part of `ConfigList`/`ConfigMatrix` in case of `Config` or `MotionList` in case of motion. **Every config and motion must be used once** (but configs, can be used multiple times in motions).|
-| `Name` | String |Must be part of `ConfigList`/`ConfigMatrix` in case of `Config` or `MotionList` in case of motion. **Every config and motion must be used once** (but configs, can be used multiple times in motions).|
+| `MotionID` | Int |Must be part of `ConfigList`/`ConfigMatrix` in case of `Config` or `MotionList` in case of motion. **Every config and motion must be used once** (but configs can be used multiple times in motions).|
+| `ConfigID` | Int |Must be part of `ConfigList`/`ConfigMatrix` in case of `Config` or `MotionList` in case of motion. **Every config and motion must be used once** (but configs can be used multiple times in motions).|
+| `Bidirectionl` | Bool |Must be part of `ConfigList`/`ConfigMatrix` in case of `Config` or `MotionList` in case of motion. **Every config and motion must be used once** (but configs can be used multiple times in motions).|
+| `Name` | String |Must be part of `ConfigList`/`ConfigMatrix` in case of `Config` or `MotionList` in case of motion. **Every config and motion must be used once** (but configs can be used multiple times in motions).|
 
 <details>
 <summary>Usage</summary>
@@ -453,13 +743,74 @@ ProcessHierarchy:
 0;1;0;1
 
 //JSON
-ProcessHierarchy:{
-
-}
+"ProcessHierarchy": [
+        {
+            "ProcessID": 1,
+            "AlternativeID": 0,
+            "TaskID": 0,
+            "MotionID": 1,
+            "ConfigIDs": [
+                1
+            ],
+            "Bidirectional": null,
+            "Name": null
+        },
+        ...
+        {
+            "ProcessID": 10,
+            "AlternativeID": 0,
+            "TaskID": 0,
+            "MotionID": 10,
+            "ConfigIDs": [
+                10
+            ],
+            "Bidirectional": null,
+            "Name": null
+        }
+    ],
 
 //XML
 
+<ProcessHierarchy>
+    <ProcessHierarchySerializationObject>
+      <ProcessID>1</ProcessID>
+      <AlternativeID>0</AlternativeID>
+      <TaskID>0</TaskID>
+      <MotionID>1</MotionID>
+      <ConfigIDs>
+        <int>1</int>
+      </ConfigIDs>
+      <Bidirectional xsi:nil="true" />
+    </ProcessHierarchySerializationObject>
+    ...
+    <ProcessHierarchySerializationObject>
+      <ProcessID>10</ProcessID>
+      <AlternativeID>0</AlternativeID>
+      <TaskID>0</TaskID>
+      <MotionID>10</MotionID>
+      <ConfigIDs>
+        <int>10</int>
+      </ConfigIDs>
+      <Bidirectional xsi:nil="true" />
+    </ProcessHierarchySerializationObject>
+  </ProcessHierarchy>
+    
+
 //C#
+    GeneralTask t = new GeneralTask();
+    var PA = new Process() { ID = 1, Name = "Process A" };
+    var AA  = new Alternative() { ID = 1, Name = "Alternative A" };
+    var TA  = new Task() { ID = 1, Name = "Task A" };
+    var CA = new Config() { ID = 1, Configuration = new List<double>() { 5, 5 },     Name = "Config A" };
+    var MA = new Motion() { ID = 1, Name = "Motion A", Configs = new List<Config>() { CA } };
+
+    t.Hierarchy.HierarchyRecords.Add(new HierarchyRecord()
+    {
+        Process = PA,
+        Alternative = AA,
+        Task = TA,
+        Motion = MA
+    }));
 ```
 </details>
 
@@ -483,19 +834,27 @@ ProcessPrecedence:
 
 //JSON
 ProcessPrecedence:[
-	Precedence: {
-		 Predecessor: 1,
-		 Successor: 2
-	},
-	Precedence: {
-		 Predecessor: 2,
-		 Successor: 3
-	}
+    Precedence: {
+         Predecessor: 1,
+         Successor: 2
+    },
+    Precedence: {
+         Predecessor: 2,
+         Successor: 3
+    }
 ]
 
 //XML
+    //TODO
+    <ProcessPrecedences />
 
 //C#
+            GeneralTask t = new GeneralTask();
+            var PA = new Process() { ID = 1, Name = "Process A" };
+            var PB = new Process() { ID = 2, Name = "Process B" };
+            t.ProcessPrecedences = new List<ProcessPrecedence>();
+            t.ProcessPrecedences.Add(new ProcessPrecedence(PA, PB));
+
 ```
 </details>
 
@@ -519,26 +878,36 @@ MotionPrecedence:
 2;3
 
 //JSON
-MotionPrecedence:[
-	Precedence: {
-		 Predecessor: 1,
-		 Successor: 2
-	},
-	Precedence: {
-		 Predecessor: 2,
-		 Successor: 3
-	}
+    TODO:
+    MotionPrecedence:[
+        Precedence: {
+            Predecessor: 1,
+            Successor: 2
+        },
+        Precedence: {
+            Predecessor: 2,
+            Successor: 3
+        }
 ]
 
 //XML
-
+    TODO:
+    <MotionPrecedence />
 //C#
+    GeneralTask t = new GeneralTask();
+    var CA = new Config() { ID = 1, Configuration = new List<double>() { 5, 5 }, Name = "Config A" };
+    var CB = new Config() { ID = 2, Configuration = new List<double>() { 2, 2 }, Name = "Config B" };
+    var MA = new Motion() { ID = 1, Name = "Motion A", Configs = new List<Config>() { CA } };
+    var MB = new Motion() { ID = 2, Name = "Motion B", Configs = new List<Config>() { CB } };
+    t.MotionPrecedences = new List<MotionPrecedence>();
+    t.MotionPrecedences.Add(new MotionPrecedence(MA, MB));
+
 ```
 </details>
 
 #### OverrideCost
 
-The list of records that directly define the cost of A, B positions, overrides the result of `DistanceFunctions`. Bidirectional is false by default (applied only on A->B), else cost override also used for B->A. Different type of resource methods able to modify this overridden value. 
+The list of records that directly define A, B positions' cost overrides the result of `DistanceFunctions`. Bidirectional is false by default (applied only on A->B), else cost override also used for B->A. Different type of resource methods able to modify this overridden value. 
 
 | Param                    | Type |Rule   |
 | ------------------------ | ---- |------ |
@@ -558,24 +927,28 @@ OverrideCost:
 
 //JSON
 OverrideCosts: [
-	OverrideCost:{
-		From: 1,
-		To:   2,
-		Cost: 99,
-		Bidirection: True
-	},
-	OverrideCost:{
-		From: 1,
-		To:   2,
-		Cost: 99,
-		Bidirection: True
-	]
+    OverrideCost:{
+        From: 1,
+        To:   2,
+        Cost: 99,
+        Bidirection: True
+    },
+    OverrideCost:{
+        From: 1,
+        To:   2,
+        Cost: 99,
+        Bidirection: True
+    ]
 }
 
 //XML
+    TODO:
 
 //C#
-
+    GeneralTask t = new GeneralTask();
+    var CA = new Config() { ID = 1, Configuration = new List<double>() { 5, 5 }, Name = "Config A" };
+    var CB = new Config() { ID = 2, Configuration = new List<double>() { 2, 2 }, Name = "Config B" };
+    t.CostManager.OverrideCost.Add(new DetailedConfigCost() { A = CA, B = CB, OverrideCost = 2.0, Bidirectional = true });
 ```
 </details>
 
@@ -594,13 +967,32 @@ OverrideCosts: [
 
 ```
 //SEQ
-ResourceChangeover: Off
-ResourceChangeover: Constant
-ResourceChangeover: Matrix
+    ResourceChangeover: None
+    ResourceChangeover: Constant
+    ResourceChangeover: Matrix
 
 //JSON
+    "ResourceFunction": {
+        "ResourceDistanceFunction": "Add",
+        "ResourceSource": "Constant",
+        "ResourceCostConstant": 50.0,
+        "ResourceCostMatrix": null
+    },
+
 //XML
+  <ResourceFunction>
+    <ResourceSource>Constant</ResourceSource>
+    <ResourceDistanceFunction>Add</ResourceDistanceFunction>
+    <ResourceCostConstant>50</ResourceCostConstant>
+  </ResourceFunction>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.ResourceFunction = new NoResourceFunction();
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new MaxResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new MaxResourceDistanceLinkFunction());
 ```
 </details>
 
@@ -622,8 +1014,27 @@ ResourceChangeoverFunction: Add
 ResourceChangeoverFunction: Max
 
 //JSON
+    "ResourceFunction": {
+        "ResourceDistanceFunction": "Add",
+        "ResourceSource": "Constant",
+        "ResourceCostConstant": 50.0,
+        "ResourceCostMatrix": null
+    },
+
 //XML
+  <ResourceFunction>
+    <ResourceSource>Constant</ResourceSource>
+    <ResourceDistanceFunction>Add</ResourceDistanceFunction>
+    <ResourceCostConstant>50</ResourceCostConstant>
+  </ResourceFunction>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.ResourceFunction = new NoResourceFunction();
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new MaxResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new MaxResourceDistanceLinkFunction());
 ```
 </details>
 
@@ -642,9 +1053,27 @@ Constant cost of resource change. The resources are defined in the `ConfigList`/
 //SEQ
 ChangeoverConstant: 10
 
+
 //JSON
+    "ResourceFunction": {
+        "ResourceDistanceFunction": "Add",
+        "ResourceSource": "Constant",
+        "ResourceCostConstant": 50.0,
+        "ResourceCostMatrix": null
+    },
+
 //XML
+  <ResourceFunction>
+    <ResourceSource>Constant</ResourceSource>
+    <ResourceDistanceFunction>Add</ResourceDistanceFunction>
+    <ResourceCostConstant>50</ResourceCostConstant>
+  </ResourceFunction>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.CostManager.ResourceFunction = new NoResourceFunction();
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new ConstantResourceFunction(2, new MaxResourceDistanceLinkFunction());
 ```
 </details>
 
@@ -668,19 +1097,24 @@ ChangeoverMatrix:
 9;0;8
 9;8;0
 
-
 //JSON
-Task: "General"
+    "ResourceFunction": {
+        "ResourceDistanceFunction": "Add",
+        "ResourceSource": "Matrix",
+        "ResourceCostMatrix": null TODO
+    },
 
 //XML
-<Task>"General"<Task/>
+  <ResourceFunction>
+    <ResourceSource>Matrix</ResourceSource>
+    TODO:
+  </ResourceFunction>
 
 //C#
-Task task = new Task(){
-  ...
-  Type = TaskType.General;
-  ...
-}
+    GeneralTask t = new GeneralTask();
+    t.CostManager.ResourceFunction = new NoResourceFunction();
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new AddResourceDistanceLinkFunction());
+    t.CostManager.ResourceFunction = new MatrixResourceFunction(resChangeCostMatrix, resourceIDList, new MaxResourceDistanceLinkFunction());
 ```
 </details>
 
@@ -713,8 +1147,29 @@ LocalSearchStrategy: TabuSearch
 LocalSearchStrategy: ObjectiveTabuSearch
 
 //JSON
+    "LocalSearchStrategy": "Automatic",
+    "LocalSearchStrategy": "GreedyDescent",
+    "LocalSearchStrategy": "GuidedLocalSearch",
+    "LocalSearchStrategy": "SimulatedAnnealing",
+    "LocalSearchStrategy": "TabuSearch",
+    "LocalSearchStrategy": "ObjectiveTabuSearch",
+
 //XML
+  <LocalSearchStrategy>Automatic</LocalSearchStrategy>
+  <LocalSearchStrategy>GreedyDescent</LocalSearchStrategy>
+  <LocalSearchStrategy>GuidedLocalSearch</LocalSearchStrategy>
+  <LocalSearchStrategy>SimulatedAnnealing</LocalSearchStrategy>
+  <LocalSearchStrategy>TabuSearch</LocalSearchStrategy>
+  <LocalSearchStrategy>ObjectiveTabuSearch</LocalSearchStrategy>
+
 //C#
+    t.SolverSettings.Metaheuristics = Metaheuristics.Automatic;
+    t.SolverSettings.Metaheuristics = Metaheuristics.GreedyDescent;
+    t.SolverSettings.Metaheuristics = Metaheuristics.GuidedLocalSearch;
+    t.SolverSettings.Metaheuristics = Metaheuristics.SimulatedAnnealing;
+    t.SolverSettings.Metaheuristics = Metaheuristics.TabuSearch;
+    t.SolverSettings.Metaheuristics = Metaheuristics.ObjectiveTabuSearch;
+                                                            
 ```
 </details>
 
@@ -724,7 +1179,7 @@ The time limit for the VRP solver in [ms]. It has an effect only for the VRP sol
 
 | Type  | Rule   |
 | ----- | ------ |
-| Int   | Given in milliseconds and must be `TimeLimit` >=0. If TimeLimit = 0 stop based on VRP solver. If TimeLimit > 0 VRP solver stops after the time limit. |
+| Int   | Given in milliseconds and must be `TimeLimit` >=0. If TimeLimit = 0 stop based on VRP solver. If TimeLimit > 0, VRP solver stops after the time limit. |
 
 <details>
 <summary>Usage</summary>
@@ -735,14 +1190,20 @@ TimeLimit: 0
 TimeLimit: 60000
 
 //JSON
+    "TimeLimit": 10000
+
 //XML
+  <TimeLimit>10000</TimeLimit>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.SolverSettings.TimeLimit = 1000;
 ```
 </details>
 
 #### UseMIPprecedenceSolver
 
-Creates an initial solution by CBC-MIP solver, for tasks with complex precedence constraints.
+Creates an initial solution by CBC-MIP solver for tasks with complex precedence constraints.
 
 | Param                    | Type  |Rule   |
 | ------------------------ | ----- |------ |
@@ -758,14 +1219,20 @@ UseMIPprecedenceSolver: True
 UseMIPprecedenceSolver: False
 
 //JSON
+    "UseMIPprecedenceSolver": false
+
 //XML
+    <UseMIPprecedenceSolver>false</UseMIPprecedenceSolver>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.SolverSettings.UseMIPprecedenceSolver = 1000;
 ```
 </details>
 
 #### UseShortcutInAlternatives
 
-In the case of long sequences of tasks of alternatives, the finding of the shortest paths and replace the original alternative with a virtual one can be remuneratory. It contains only one task and a virtual single config representation of shortcuts. After the execution of sequencing, the original hierarchy is restored. Reduce complexity, the number of nodes and constraints at build time.
+In the case of long sequences of alternatives, finding the shortest paths and replacing the original alternative with a virtual one can be remuneratory. It contains only one task and a virtual single config representation of shortcuts. After the execution of sequencing, the original hierarchy is restored. Thus, reduce complexity, the number of nodes and constraints at build time.
 
 | Param                    | Type  |Rule   |
 | ------------------------ | ----- |------ |
@@ -781,7 +1248,13 @@ UseShortcutInAlternatives: True
 UseShortcutInAlternatives: False
 
 //JSON
+    "UseShortcutInAlternatives": true,
+    
 //XML
+    <UseShortcutInAlternatives>true</UseShortcutInAlternatives>
+
 //C#
+    GeneralTask t = new GeneralTask();
+    t.SolverSettings.UseShortcutInAlternatives = 1000;
 ```
 </details>

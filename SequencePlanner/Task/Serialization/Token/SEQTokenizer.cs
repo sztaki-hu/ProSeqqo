@@ -25,10 +25,24 @@ namespace SequencePlanner.Task.Serialization.Token
             lines = DeleteWhiteSpace(lines);
             lines = ChangeDotToComma(lines);
             lines = SeperateByDoubleDot(lines);
+            lines = DeleteEmptyLines(lines);
             Tokenize(lines);
             SeqLogger.Indent--;
             SeqLogger.Debug("Tokenization finished!", nameof(SEQTokenizer));
         }
+
+        private List<TokenLineDeserializationObject> DeleteEmptyLines(List<TokenLineDeserializationObject> lines)
+        {
+            List<TokenLineDeserializationObject> noEmptyLine = new List<TokenLineDeserializationObject>();
+            foreach (var line in lines)
+            {
+                if (!line.Line.Equals(""))
+                    noEmptyLine.Add(line);
+            }
+            SeqLogger.Trace("Tokenization: Empty lines deleted!", nameof(SEQTokenizer));
+            return noEmptyLine;
+        }
+
         private void Tokenize(List<TokenLineDeserializationObject> lines)
         {
             Token lastToken = new Token();

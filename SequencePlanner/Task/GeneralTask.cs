@@ -64,7 +64,7 @@ namespace SequencePlanner.Task
             CheckSolution(GTSPRepresentation.DisjointSets, GTSPRepresentation.MotionPrecedences, ProcessPrecedences, GTSPRepresentation.InitialSolution);
             GTSPRepresentation.InitialSolution = InitialSolver.InitialSolution;
             var result = RunTask();
-            SeqLogger.Critical("GTSP Nodes: "+GTSPRepresentation.CostMatrix.GetLength(0));
+            SeqLogger.Trace("GTSP Nodes: "+GTSPRepresentation.CostMatrix.GetLength(0));
             DepotMapper.ChangeBack();
             ShortcutMapper.ChangeBack();
             Timer.Stop();

@@ -198,6 +198,7 @@ namespace SequencePlanner.OR_Tools
             List<Process> processes = new List<Process>();
             var solution = new List<int>();
             var solutionString = "Initial solution found: ";
+            SeqLogger.Critical("Solver result status: " + DecodeStatusCode(resultStatus));
 
             for (int i = 0; i < parameters.Hierarchy.GetProcesses().Count; i++)
             {
@@ -245,7 +246,7 @@ namespace SequencePlanner.OR_Tools
             {
                 SeqLogger.Debug("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsGeneralPreSolverWrapper));
                 SeqLogger.Error("Can not find optimal initial solution!", nameof(ORToolsGeneralPreSolverWrapper));
-                throw new SeqException("Can not find optimal initial solution with MIP solver!");
+                throw new SeqException("Can not find initial solution with MIP solver!");
             }
             SeqLogger.Debug("Solver stopped with status code: " + DecodeStatusCode(resultStatus), nameof(ORToolsGeneralPreSolverWrapper));
             SeqLogger.Debug("Problem solved in " + solver.WallTime() + " milliseconds", nameof(ORToolsGeneralPreSolverWrapper));
@@ -259,6 +260,8 @@ namespace SequencePlanner.OR_Tools
                 StatusMessage = DecodeStatusCode(resultStatus),
                 Time = RunTime
             };
+            SeqLogger.Critical("Status Code:"+result.StatusCode);
+            SeqLogger.Critical("Status Message:"+result.StatusMessage);
             return result;
         }
         private static string DecodeStatusCode(Solver.ResultStatus status)

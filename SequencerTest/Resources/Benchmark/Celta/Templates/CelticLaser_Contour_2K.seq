@@ -5,7 +5,7 @@ Cyclic: False
 #FinishDepot: 3
 
 DistanceFunction: Euclidian
-ResourceChangeover: Off
+ResourceChangeover: None
 BidirectionMotionDefault: <*BID*>
 TimeLimit: <*Time*>
 LocalSearchStrategy: <*Strategy*>

@@ -20,7 +20,7 @@ namespace SequencePlanner.Task.Serialization.Model
                 ResourceDistanceFunction = resFunc.LinkingFunction.FunctionName;
             ResourceSource = resFunc.FunctionName;
 
-            if (ResourceSource == "Off")
+            if (ResourceSource == "None")
             {
 
             }
@@ -46,11 +46,11 @@ namespace SequencePlanner.Task.Serialization.Model
             string separator = ";";
             string newline = "\n";
             string seq = "";
-            seq += "ResourceChangeover: " + ResourceDistanceFunction + newline;
-            if (ResourceSource != "Off")
-                seq += "ResourceSource: " + ResourceSource + newline;
+            seq += "ResourceChangeover: " + ResourceSource + newline;
+            if (ResourceSource != "None")
+                seq += "ResourceChangeoverFunction: " + ResourceDistanceFunction + newline;
             if (ResourceSource == "Constant")
-                seq += "ResourceCostConstant: " + ResourceCostConstant + newline;
+                seq += "ChangeoverConstant: " + ResourceCostConstant + newline;
             if (ResourceSource == "Matrix")
             {
                 //TODO: Create ResourceCostMatrix2.ToSEQ;
@@ -82,7 +82,7 @@ namespace SequencePlanner.Task.Serialization.Model
             };
             IResourceFunction resourceFunction = ResourceSource switch
             {
-                "Off" => new NoResourceFunction(),
+                "None" => new NoResourceFunction(),
                 "Constant" => new ConstantResourceFunction(ResourceCostConstant, resourceDistanceLinkFunction),
                 "Matrix" => new MatrixResourceFunction(ResourceCostMatrix.ResourceCostMatrix, ResourceCostMatrix.IDHeader, resourceDistanceLinkFunction),
                 _ => throw new SeqException("ResourceFunction unknown!"),
@@ -92,17 +92,18 @@ namespace SequencePlanner.Task.Serialization.Model
         public void FillBySEQTokens(SEQTokenizer tokenizer)
         {
 
-            ResourceDistanceFunction = tokenizer.GetStringByHeader("ResourceChangeoverFunction");
             ResourceSource = tokenizer.GetStringByHeader("ResourceChangeover");
             switch (ResourceSource)
             {
-                case "Off":
+                case "None":
                     break;
                 case "Constant":
                     ResourceCostConstant = tokenizer.GetDoubleByHeader("ChangeoverConstant");
+                    ResourceDistanceFunction = tokenizer.GetStringByHeader("ResourceChangeoverFunction");
                     break;
                 case "Matrix":
                     ResourceCostMatrix = new ResourceMatrixSerializationObject();
+                    ResourceDistanceFunction = tokenizer.GetStringByHeader("ResourceChangeoverFunction");
                     ResourceCostMatrix.FillBySEQTokens(tokenizer);
                     break;
                 default:

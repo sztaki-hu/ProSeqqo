@@ -7,10 +7,10 @@ namespace SequencerBenchmarkTest
     {
         public static List<BenchmarkTask> GetArticleTest()
         {
-            return GetPickAndPlaceTest();
+            //return GetPickAndPlaceTest();
             //return GetCSOPATest();
             //return GetLaserTest();
-            //return GetCubeTest();
+            return GetCubeTest();
             //return GetMesterEcsetTest();
         }
 
@@ -103,8 +103,8 @@ namespace SequencerBenchmarkTest
             {
                 new BenchmarkTask()
                 {
-                    TemplateDir = "Resources/Benchmark/Kubik2/Templates",
-                    Dir = "Resources/Benchmark/Kubik2",
+                    TemplateDir = "Resources/Benchmark/BlockBuilding/Templates",
+                    Dir = "Resources/Benchmark/BlockBuilding",
                     Parameters = new List<Dictionary<string, string>>() {
                           new Dictionary<string, string>() { ["T"] = "0",         ["LSS"] = "GreedyDescent" },
                           new Dictionary<string, string>() { ["T"] = "30 000",    ["LSS"] = "GuidedLocalSearch" },

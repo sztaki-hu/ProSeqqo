@@ -8,6 +8,7 @@ namespace SequencePlanner.Task
 {
     public class GeneralTaskResult
     {
+        public DateTime Created { get; set; }
         public TimeSpan FullTime { get; set; }
         public TimeSpan SolverTime { get; set; }
         public TimeSpan PreSolverTime { get; set; }
@@ -30,6 +31,7 @@ namespace SequencePlanner.Task
 
     public GeneralTaskResult()
         {
+            Created = DateTime.Now;
             StatusCode = -1;
             StatusMessage = "Result initalized.";
             ErrorMessage = "No Error";
