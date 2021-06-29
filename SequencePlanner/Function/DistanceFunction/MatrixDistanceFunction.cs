@@ -11,10 +11,10 @@ namespace SequencePlanner.Function.DistanceFunction
         public List<List<double>> CostMatrix { get; }
 
 
-        public MatrixDistanceFunction(List<List<double>> costMatrix, List<int> resourceIDList) : base()
+        public MatrixDistanceFunction(List<List<double>> costMatrix, List<int> IDheader) : base()
         {
             CostMatrix = costMatrix;
-            IDHeader = resourceIDList;
+            IDHeader = IDheader;
             Validate();
         }
 
