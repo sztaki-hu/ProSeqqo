@@ -10,7 +10,7 @@ BidirectionMotionDefault: True
 ResourceChangeover: None
 
 LocalSearchStrategy: GuidedLocalSearch
-TimeLimit: 10000
+TimeLimit: 1000
 UseMIPprecedenceSolver: False
 AddMotionLengthToCost: False
 

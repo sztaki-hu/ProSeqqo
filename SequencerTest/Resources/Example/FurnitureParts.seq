@@ -13,7 +13,7 @@ AddInMotionChangeoverToCost: False
 
 #Solver-------------------------------
 LocalSearchStrategy: GuidedLocalSearch
-TimeLimit: 30000
+TimeLimit: 1000
 UseMIPprecedenceSolver: True
 UseShortcutInAlternatives: False
 

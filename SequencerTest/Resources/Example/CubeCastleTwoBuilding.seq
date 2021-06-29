@@ -9,8 +9,8 @@ IdlePenalty: 0
 BidirectionMotionDefault: False
 AddMotionLengthToCost: False
 
-LocalSearchStrategy: GreedyDescent
-TimeLimit: 10 000
+LocalSearchStrategy: GuidedLocalSearch
+TimeLimit: 1000
 UseMIPprecedenceSolver: True
 
 ResourceChangeover: None
