@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSeqqoBenchmark", "ProSeq
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSeqqoTest", "ProSeqqoTest\ProSeqqoTest.csproj", "{8C3F6AE2-0320-4654-ABA4-2D34BEBBFCBF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSeqqoVisualization", "LineAnimation\ProSeqqoVisualization.csproj", "{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSeqqoVisualization", "ProSeqqoVisualization\ProSeqqoVisualization.csproj", "{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
