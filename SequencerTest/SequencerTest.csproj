@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProSeqqoLib\ProSeqqoLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Resources\Benchmark\BlockBuilding\Templates\C100\CubeCastle[4_4_8]_C100_O1480.seq">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

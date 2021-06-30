@@ -17,4 +17,8 @@
     <PackageReference Include="HelixToolkit.Core.Wpf" Version="2.14.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ProSeqqoLib\ProSeqqoLib.csproj" />
+  </ItemGroup>
+
 </Project>
