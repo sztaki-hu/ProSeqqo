@@ -1,11 +1,11 @@
-# ![ProSeqqo Logo](../Documentation/Images/ProSeqqoLogo.png) ProSeqqo 
-[Installation](../Documentation/Install.md)  
-[Hello World!](../Example/HelloWorld)  
-[Task definition](../Documentation/TaskDefinition.md)  
-[Result description](../Documentation/ResultDefinition.md)  
-[Examples](../Example)  
-[Skeletons](../Example/Skeletons)  
-[Papers](../Documentation/Papers)  
+# ![ProSeqqo Logo](Documentation/Images/ProSeqqoLogo.png) ProSeqqo 
+[Installation](Documentation/Install.md)  
+[Hello World!](Example/HelloWorld)  
+[Task definition](Documentation/TaskDefinition.md)  
+[Result description](Documentation/ResultDefinition.md)  
+[Examples](Example)  
+[Skeletons](Example/Skeletons)  
+[Papers](Documentation/Papers)  
 
 ## About
 Generic task sequencer that captures typical sequencing problems encountered in robot applications.
@@ -42,8 +42,8 @@ The result of the execution is a list of Positions corresponds to the following:
 - By visiting every **Configuration** of **one** possible **Motion** of the given **Task**.
 
 The given task translated to a general travelling salesman (GTSP) graph as an input of the Google-OR-Tools VRP solver.  
-Parameters and description language available [here](../Documentation/TaskDefinition.md) and result description is [here](../Documentation/ResultDefinition.md).  
-<img src="../Documentation/Images/Representation.png" alt="Problem representation of ProSeqqo" width="450"/>
+Parameters and description language available [here](Documentation/TaskDefinition.md) and result description is [here](Documentation/ResultDefinition.md).  
+<img src="Documentation/Images/Representation.png" alt="Problem representation of ProSeqqo" width="450"/>
 
 #### Side constraints:
 -  Precedence constraints between Motions
@@ -65,7 +65,7 @@ Parameters and description language available [here](../Documentation/TaskDefini
 - Visual Studio 2019 Solution
 - <del>Docker Container - REST API</del>
 
-Installation details are available [here](../Documentation/Install.md).
+Installation details are available [here](Documentation/Install.md).
 
 ## Examples:
 - Camera-based pick and place
@@ -74,16 +74,16 @@ Installation details are available [here](../Documentation/Install.md).
 - Laser engraving
 - Three-step grinding of furniture parts  
 
-Hello World! available [here](../Example/HelloWorld).   
-Examples and description available [here](../Example).  
-Code and file skeletons [here](../Example/Skeletons).  
+Hello World! available [here](Example/HelloWorld).   
+Examples and description available [here](Example).  
+Code and file skeletons [here](Example/Skeletons).  
 
 ## Documentation:
-Documentation is [here](../Documentation).
+Documentation is [here](Documentation).
 
 ## Contributing:
 If you find any bugs, please report them! I am also happy to accept pull requests from anyone.<br>
 You can use the issue tracker to report bugs, ask questions, suggest new features or personally:<br>
 Kovács András - kovacs.andras@sztaki.hu<br>
 Zahorán László - zahoran.laszlo@sztaki.hu  
-[License](../LICENSE)
+[License](LICENSE)
