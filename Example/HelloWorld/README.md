@@ -5,7 +5,7 @@
 Installation details are available [here](../../Documentation/Install.md).
 
 ## 2.A Run with ProSeqqo Console
-Hello World! files available in [Example/HelloWorld](../Example/HelloWorld) directory.
+Hello World! files available in Example/HelloWorld directory.
 
 Open ProSeqqo console application in 'cmd' or 'PowerShell'  
 `/ProSeqqo> ProSeqqoConsole.exe -i <path>/Example/HelloWorld/HelloWorld.seq`  
