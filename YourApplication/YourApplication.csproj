@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SequencePlanner\SequencePlanner.csproj" />
+    <ProjectReference Include="..\ProSeqqoLib\ProSeqqoLib.csproj" />
   </ItemGroup>
 
 </Project>

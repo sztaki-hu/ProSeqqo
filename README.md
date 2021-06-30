@@ -1,85 +1,89 @@
-:earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home)<br>
-:clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets)<br>
-:file_folder: [CLI](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)<br>
-<!--:paperclip: [Project background]()<br>-->
-<!--:computer: [Use from code](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-code) <br>-->
+# ![ProSeqqo Logo](../Documentation/Images/ProSeqqoLogo.png) ProSeqqo 
+[Installation](../Documentation/Install.md)  
+[Hello World!](../Example/HelloWorld)  
+[Task definition](../Documentation/TaskDefinition.md)  
+[Result description](../Documentation/ResultDefinition.md)  
+[Examples](../Example)  
+[Skeletons](../Example/Skeletons)  
+[Papers](../Documentation/Papers)  
 
 ## About
 Generic task sequencer that captures typical sequencing problems encountered in robot applications.
 * Easily integrated into complex solution workflows
-* Standalone exe with file interface or DLL function calls
-* Provides close-to-optimal (but not necessarily optimal) solutions quickly, e.g., in <1 sec for typical cases
+* Standalone executable with file interface (.seq, .json, .xml), .dll function calls, ~~Docker contained REST~~
+* Provides close-to-optimal (but not necessarily optimal) solutions quickly
 * Compact solver based on an open-source VRP solver engine - Google-OR-Tools
-* Visualize created graph with GraphViz
-
-Two dedicated task type for point-to-point workflow (point-like) and line-like optimization.
+* Arbitrary dimension - 2D, 3D or robotic joint space planning
+* Build-in cost functions - Euclidian, Max, Manhattan, Trapezoid Time, Matrix
+* General description language to describe sequencing problems
+* Order constraints
+* Resource handling
 
 Visual Studio 2019 Solution:
-*  SequencePlanner - .NET 5.0 Class Library
-*  SequenceConsole - .NET 5.0 Console Application
-*  SequencerTest   - .NET 5.0 MSTest Framework Application
-*  LineAnimation  - .NET 5.0 WPF Application with HelixToolkit
+*  ProSeqqoLib - .NET 5.0 Class Library
+*  ProSeqqoConsole - .NET 5.0 Console Application
+*  ProSeqqoTest   - .NET 5.0 MSTest Framework Application
+*  ProSeqqoVisualization   - .NET 5.0 WPF Application
 *  Example
+*  Example/HelloWorld
 *  Example/Skeletons
-*  ~~SequencePlannerService - ASP.NET 5.0 REST Web Service with Docker support~~
+*  ~~*  ProSeqqoWebService - ASP.NET 5.0 REST Web Service~~
 
+<img src="../Documentation/Images/Process.png" alt="Problem representation of ProSeqqo" width="1000"/>
 
-## Point-like task
-List of `Positions` given with `ID`, `Point` and `Name`. Points defined in task space or robot configuration space, in arbitrary dimensions. These positions filled into a hierarchy, every position take place in a `Task`, `Alternative` and `Process` (Position with the same `Point` used in multiple places have to be duplicated manually). The distance between the point of positions can be defined by a matrix or calculated automatically with the selected function. The result of the execution is a list of Positions corresponds to the following: 
+## Representation
+Configurations defined in task space or robot configuration space in arbitrary dimensions.
+These configurations filled into a hierarchy; every configuration take place in a `Motion`, `Task`, `Alternative` and `Process`.
+The distance between the configurations can be defined by a matrix or calculated automatically with the selected function.
+The result of the execution is a list of Positions corresponds to the following: 
 - **Each** of the n **Processes** has to be executed
 - by selecting **one** of the given **Alternatives**…
 - And executing **every Task** of the alternative…
-- By visiting **one** possible **Position** of the given task.
+- By visiting every **Configuration** of **one** possible **Motion** of the given **Task**.
+
+The given task translated to a general travelling salesman (GTSP) graph as an input of the Google-OR-Tools VRP solver.  
+Parameters and description language available [here](../Documentation/TaskDefinition.md) and result description is [here](../Documentation/ResultDefinition.md).  
+<img src="../Documentation/Images/Representation.png" alt="Problem representation of ProSeqqo" width="450"/>
 
 #### Side constraints:
--  Precedence constraints between Positions
+-  Precedence constraints between Motions
 -  Precedence constraints between Processes
--  Only one position used in a task (Disjunctive constraint, generated automatically)
+-  Only one motion used in a task (Disjunctive constraint, generated automatically)
 -  Only one alternative used in a process (Disjunctive constraint, generated automatically)
 
-#### Abstraction:
-The given task translated to a general travelling salesman (GTSP) graph as an input of the Google-OR-Tools.
+#### Features:
+-  Cyclic and acyclic sequences with optional start and finish configuration. 
+-  Automatic cost computation - Euclidian, Max, Manhattan, Trapezoid time
+-  Arbitrary costs by matrix
+-  Penalty for tool path or motion interruption.
+-  Resource and resource changeover cost handling.
+-  Metaheuristic configuration and time limit for VRP solver by OR-Tools.
 
-**Nodes** → Positions  
-**GTSP Classes** → Set of all positions of a task, union overall alternatives of a process\
-**Edges** → From every position of a task to every position of the next task of the same alternative. From every position of the last task of an alternative to every position of the first task of all other processes \
-**Edge weights** → Implemented common distance functions (e.g., max, Euclidean, trapezoid speed, etc.). Distance matrix (in case of complex paths between positions).
-
-<!--![rawgraph2](uploads/4989da73fea970b68c038c986790a70d/rawgraph2.png)-->
-
-## Line-like task
-List of `Positions` given with `ID`, `Point` (n-dimensional vector) and `Name`. Points defined in task space or robot configuration space, in arbitrary dimensions. These positions filled into a hierarchy,  a `Line` is a position and belongs to a `Countour` (You can use positions in multiple times without duplication). The distance between the start and end position of lines can be defined by a matrix or calculated automatically with the selected function. The result of the execution is a list of Lines corresponds to the following: 
-
-#### Side constraints:
--  Precedence constraints between Lines
--  Precedence constraints between Contours
-
-#### Abstraction:
-The given task translated to a general travelling salesman (GTSP) graph as an input of the Google-OR-Tools.
-
-**Nodes** → Lines (If the bidirectional visit of lines allowed, lines are duplicated.)  
-**Edges** → From every end of a line to every start of others.  
-**Edge weights** → Implemented common distance functions (e.g., max, Euclidean, trapezoid speed, etc.). Distance matrix (in case of complex paths between lines).
-
-<!--![image](uploads/b866c8fe015cb7e57ca40d860d1f82ac/image.png)-->
-
-Use:
-------
+## Install:
 - Standalone executable
 - Dynamic Link Library (DLL)
 - Visual Studio 2019 Solution
 - <del>Docker Container - REST API</del>
 
-[More detailed instructions about installation.](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Installation)
+Installation details are available [here](../Documentation/Install.md).
 
-<!--Documentation:
-------
-:earth_americas: [Wiki](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/home) :clipboard: [Snippets](https://git.sztaki.hu/zahoranl/sequenceplanner/snippets) :computer: [Use from code](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-code) :file_folder: [Use from file](https://git.sztaki.hu/zahoranl/sequenceplanner/-/wikis/Run-from-file)-->
+## Examples:
+- Camera-based pick and place
+- Cube pick and place with multiple grasp configuration and many order constraints
+- Robotic drawing
+- Laser engraving
+- Three-step grinding of furniture parts  
 
+Hello World! available [here](../Example/HelloWorld).   
+Examples and description available [here](../Example).  
+Code and file skeletons [here](../Example/Skeletons).  
 
-Contributing:
-------
-If you find any bugs, please report them.<br>
-You can use the to report bugs, ask questions, suggest new features or personally:<br>
+## Documentation:
+Documentation is [here](../Documentation).
+
+## Contributing:
+If you find any bugs, please report them! I am also happy to accept pull requests from anyone.<br>
+You can use the issue tracker to report bugs, ask questions, suggest new features or personally:<br>
 Kovács András - kovacs.andras@sztaki.hu<br>
-Zahorán László - zahoran.laszlo@sztaki.hu
+Zahorán László - zahoran.laszlo@sztaki.hu  
+[License](../LICENSE)

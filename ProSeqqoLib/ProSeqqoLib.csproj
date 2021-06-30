@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Company>SZTAKI</Company>
+    <Authors>Andras Kovacs, Laszlo Zahoran</Authors>
+    <Copyright>SZTAKI</Copyright>
+    <PackageProjectUrl>https://github.com/sztaki-hu/ProSeqqo</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/sztaki-hu/ProSeqqo</RepositoryUrl>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.OrTools" Version="9.0.9048" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+</Project>
