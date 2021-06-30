@@ -29,7 +29,7 @@ Visual Studio 2019 Solution:
 *  Example/Skeletons
 *  ~~*  ProSeqqoWebService - ASP.NET 5.0 REST Web Service~~
 
-<img src="../Documentation/Images/Process.png" alt="Problem representation of ProSeqqo" width="1000"/>
+<img src="Documentation/Images/Process.png" alt="Problem representation of ProSeqqo" width="1000"/>
 
 ## Representation
 Configurations defined in task space or robot configuration space in arbitrary dimensions.
