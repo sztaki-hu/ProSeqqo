@@ -17,8 +17,4 @@
     <PackageReference Include="HelixToolkit.Core.Wpf" Version="2.14.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SequencePlanner\SequencePlanner.csproj" />
-  </ItemGroup>
-
 </Project>
