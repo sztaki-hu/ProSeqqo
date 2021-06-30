@@ -1,14 +1,14 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.Task;
-using SequencePlanner.Task.Serialization.Model;
-using SequencePlanner.Task.Serialization.Token;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model;
+using ProSeqqoLib.Model.Hierarchy;
+using ProSeqqoLib.Task;
+using ProSeqqoLib.Task.Serialization.Model;
+using ProSeqqoLib.Task.Serialization.Token;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SequencePlanner.GTSPTask.Serialization.Task
+namespace ProSeqqoLib.GTSPTask.Serialization.Task
 {
     public class GeneralTaskSerializationObject
     {

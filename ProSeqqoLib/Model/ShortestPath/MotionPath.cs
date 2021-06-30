@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Model.ShortestPath
+namespace ProSeqqoLib.Model.ShortestPath
 {
     public class MotionPath
     {

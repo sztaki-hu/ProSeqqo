@@ -1,9 +1,9 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Task.Serialization.Model;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Task.Serialization.Model;
 using System;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Task.Serialization.Token
+namespace ProSeqqoLib.Task.Serialization.Token
 {
     public static class TokenConverter
     {

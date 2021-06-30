@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SequencePlanner.Task.Serialization.Model
+namespace ProSeqqoLib.Task.Serialization.Model
 {
     public class ProcessHierarchySerializationObject
     {

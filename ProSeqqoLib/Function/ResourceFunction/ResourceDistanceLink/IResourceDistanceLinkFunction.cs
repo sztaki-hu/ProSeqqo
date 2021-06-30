@@ -1,4 +1,4 @@
-﻿namespace SequencePlanner.Function.ResourceFunction.ResourceDistanceLink
+﻿namespace ProSeqqoLib.Function.ResourceFunction.ResourceDistanceLink
 {
     public interface IResourceDistanceLinkFunction
     {

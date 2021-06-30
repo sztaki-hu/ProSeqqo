@@ -1,9 +1,9 @@
-﻿using SequencePlanner.Helper;
+﻿using ProSeqqoLib.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SequencePlanner.Model.Hierarchy
+namespace ProSeqqoLib.Model.Hierarchy
 {
     public class Hierarchy
     {

@@ -1,6 +1,6 @@
-﻿using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Model.Hierarchy;
 
-namespace SequencePlanner.Model.ShortestPath
+namespace ProSeqqoLib.Model.ShortestPath
 {
     public class Node
     {

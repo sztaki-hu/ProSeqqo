@@ -1,8 +1,8 @@
-﻿using SequencePlanner.Model;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Model;
+using ProSeqqoLib.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.OR_Tools
+namespace ProSeqqoLib.OR_Tools
 {
     public class ORToolsGeneralPreSolverTask
     {

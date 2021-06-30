@@ -1,11 +1,11 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.OR_Tools;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
+using ProSeqqoLib.OR_Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace SequencePlanner.Task.Processors
+namespace ProSeqqoLib.Task.Processors
 {
     public class InitialSolver
     {

@@ -1,9 +1,9 @@
-﻿using SequencePlanner.Helper;
+﻿using ProSeqqoLib.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SequencePlanner.Task.Serialization.Token
+namespace ProSeqqoLib.Task.Serialization.Token
 {
     public class TokenLineDeserializationObject
     {

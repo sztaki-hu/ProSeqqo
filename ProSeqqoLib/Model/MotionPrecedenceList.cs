@@ -1,8 +1,8 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Model
+namespace ProSeqqoLib.Model
 {
     public class MotionPrecedenceList : Precedence<List<Motion>>
     {

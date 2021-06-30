@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Helper;
+﻿using ProSeqqoLib.Helper;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Model.Hierarchy
+namespace ProSeqqoLib.Model.Hierarchy
 {
     public class Config : Node
     {

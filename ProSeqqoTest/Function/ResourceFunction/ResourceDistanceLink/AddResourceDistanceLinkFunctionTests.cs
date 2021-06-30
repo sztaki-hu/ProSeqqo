@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
+using ProSeqqoLib.Function.ResourceFunction.ResourceDistanceLink;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SequencePlanner.Function.ResourceFunction.ResourceDistanceLink.Token
+namespace ProSeqqoLib.Function.ResourceFunction.ResourceDistanceLink.Token
 {
     [TestClass()]
     public class AddResourceDistanceLinkFunctionTests

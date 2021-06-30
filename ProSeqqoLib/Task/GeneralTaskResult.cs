@@ -1,10 +1,10 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model;
+using ProSeqqoLib.Model.Hierarchy;
 using System;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Task
+namespace ProSeqqoLib.Task
 {
     public class GeneralTaskResult
     {

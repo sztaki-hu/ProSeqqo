@@ -1,8 +1,8 @@
-﻿using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Function.ResourceFunction.ResourceDistanceLink;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
 
-namespace SequencePlanner.Function.ResourceFunction
+namespace ProSeqqoLib.Function.ResourceFunction
 {
     public class ConstantResourceFunction : IResourceFunction
     {

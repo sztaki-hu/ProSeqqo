@@ -1,10 +1,10 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.Task;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
+using ProSeqqoLib.Task;
 using System;
 using System.Collections.Generic;
 
-namespace SequencePlanner.GTSPTask.Serialization.Result
+namespace ProSeqqoLib.GTSPTask.Serialization.Result
 {
     public class GeneralResultSerializationObject
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SequencePlanner.Task.Serialization.Token
+namespace ProSeqqoLib.Task.Serialization.Token
 {
     public class Token
     {

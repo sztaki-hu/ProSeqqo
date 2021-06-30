@@ -1,11 +1,11 @@
 ﻿using Google.OrTools.ConstraintSolver;
 using Google.Protobuf.WellKnownTypes;
-using SequencePlanner.Helper;
+using ProSeqqoLib.Helper;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace SequencePlanner.OR_Tools
+namespace ProSeqqoLib.OR_Tools
 {
     public class ORToolsSequencerWrapper
     {

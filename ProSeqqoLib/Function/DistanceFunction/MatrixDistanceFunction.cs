@@ -1,8 +1,8 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Function.DistanceFunction
+namespace ProSeqqoLib.Function.DistanceFunction
 {
     public class MatrixDistanceFunction : DistanceFunction
     {

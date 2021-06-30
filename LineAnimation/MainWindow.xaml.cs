@@ -1,8 +1,8 @@
 ﻿using Microsoft.Win32;
-using SequencePlanner.GTSPTask.Serialization.Result;
-using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.Task;
+using ProSeqqoLib.GTSPTask.Serialization.Result;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
+using ProSeqqoLib.Task;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Task;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Task;
 
-namespace SequencePlanner.OR_Tools
+namespace ProSeqqoLib.OR_Tools
 {
     public class ORToolsTask
     {

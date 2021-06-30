@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Helper
+namespace ProSeqqoLib.Helper
 {
     public static class SeqLogger
     {

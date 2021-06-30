@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Model.Hierarchy;
+using ProSeqqoLib.Model.Hierarchy;
 
 namespace SequencerTest.Units.Model.Hierarchy
 {

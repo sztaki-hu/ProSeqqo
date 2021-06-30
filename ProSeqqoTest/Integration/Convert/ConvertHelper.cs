@@ -1,6 +1,6 @@
-﻿using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.Helper;
-using SequencePlanner.Task;
+﻿using ProSeqqoLib.GTSPTask.Serialization.Task;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Task;
 using SequencerTest.Helper;
 
 namespace SequencerTest.Integration.Convert

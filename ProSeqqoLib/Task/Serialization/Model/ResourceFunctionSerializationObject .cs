@@ -1,9 +1,9 @@
-﻿using SequencePlanner.Function.ResourceFunction;
-using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using SequencePlanner.Helper;
-using SequencePlanner.Task.Serialization.Token;
+﻿using ProSeqqoLib.Function.ResourceFunction;
+using ProSeqqoLib.Function.ResourceFunction.ResourceDistanceLink;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Task.Serialization.Token;
 
-namespace SequencePlanner.Task.Serialization.Model
+namespace ProSeqqoLib.Task.Serialization.Model
 {
     public class ResourceFunctionSerializationObject
     {

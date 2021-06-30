@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+using ProSeqqoLib.Function.DistanceFunction;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SequencePlanner.Function.DistanceFunction.Token
+namespace ProSeqqoLib.Function.DistanceFunction.Token
 {
     [TestClass()]
     public class TrapezoidTimeDistanceFunctionTests

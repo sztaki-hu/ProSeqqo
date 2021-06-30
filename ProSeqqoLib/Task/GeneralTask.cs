@@ -1,12 +1,12 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.OR_Tools;
-using SequencePlanner.Task.Processors;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model;
+using ProSeqqoLib.Model.Hierarchy;
+using ProSeqqoLib.OR_Tools;
+using ProSeqqoLib.Task.Processors;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace SequencePlanner.Task
+namespace ProSeqqoLib.Task
 {
     public class GeneralTask
     {

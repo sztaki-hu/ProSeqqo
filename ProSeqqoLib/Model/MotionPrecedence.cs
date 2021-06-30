@@ -1,6 +1,6 @@
-﻿using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Model.Hierarchy;
 
-namespace SequencePlanner.Model
+namespace ProSeqqoLib.Model
 {
     public class MotionPrecedence : Precedence<Motion>
     {

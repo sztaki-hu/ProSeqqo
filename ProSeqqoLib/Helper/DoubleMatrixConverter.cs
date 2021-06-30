@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json;
 
-namespace SequencePlanner.Helper
+namespace ProSeqqoLib.Helper
 {
     public class DoubleMatrixConverter : System.Text.Json.Serialization.JsonConverter<double[,]>
     {

@@ -1,11 +1,11 @@
-﻿using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Model.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SequencePlanner.Helper
+namespace ProSeqqoLib.Helper
 {
     public class HierarchySorter : IComparer<HierarchyRecord>
     {

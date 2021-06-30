@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SequencePlanner.Model
+namespace ProSeqqoLib.Model
 {
     public class DisjointSet<Base>
     {

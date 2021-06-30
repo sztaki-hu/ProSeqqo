@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SequencePlanner.OR_Tools
+namespace ProSeqqoLib.OR_Tools
 {
     public class ORToolsResult
     {

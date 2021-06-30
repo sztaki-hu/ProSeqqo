@@ -1,6 +1,6 @@
-﻿using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Model.Hierarchy;
 
-namespace SequencePlanner.Function.DistanceFunction
+namespace ProSeqqoLib.Function.DistanceFunction
 {
     public class TrapezoidTimeWithTimeBreakerDistanceFunction : TrapezoidTimeDistanceFunction
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SequencePlanner.Function.ResourceFunction.ResourceDistanceLink
+namespace ProSeqqoLib.Function.ResourceFunction.ResourceDistanceLink
 {
     public class MaxResourceDistanceLinkFunction : IResourceDistanceLinkFunction
     {

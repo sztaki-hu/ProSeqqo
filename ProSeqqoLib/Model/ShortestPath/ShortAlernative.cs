@@ -1,8 +1,8 @@
-﻿using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.Task;
+﻿using ProSeqqoLib.Model.Hierarchy;
+using ProSeqqoLib.Task;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Model.ShortestPath
+namespace ProSeqqoLib.Model.ShortestPath
 {
     public class ShortAlernative: Alternative
     {

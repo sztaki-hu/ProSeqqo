@@ -1,10 +1,10 @@
-﻿using SequencePlanner.Task.Serialization.Token;
+﻿using ProSeqqoLib.Task.Serialization.Token;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
-namespace SequencePlanner.Task.Serialization.Model
+namespace ProSeqqoLib.Task.Serialization.Model
 {
     public class DistanceMatrixSerializationObject
     {

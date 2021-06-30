@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Model.Hierarchy;
+using ProSeqqoLib.Model.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SequencePlanner.Model.Hierarchy.Token
+namespace ProSeqqoLib.Model.Hierarchy.Token
 {
     [TestClass()]
     public class ResourceTests

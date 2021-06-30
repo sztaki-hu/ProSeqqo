@@ -1,4 +1,4 @@
-﻿namespace SequencePlanner.Task.Processors
+﻿namespace ProSeqqoLib.Task.Processors
 {
     public interface ITaskProcessor
     {

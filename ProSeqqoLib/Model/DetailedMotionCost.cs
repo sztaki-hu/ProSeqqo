@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
 
-namespace SequencePlanner.Model
+namespace ProSeqqoLib.Model
 {
     public class DetailedMotionCost : DetailedCost<Motion>
     {

@@ -1,4 +1,4 @@
-﻿namespace SequencePlanner.Model.Hierarchy
+﻿namespace ProSeqqoLib.Model.Hierarchy
 {
     public class OverrideCost
     {

@@ -1,8 +1,8 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
 using System;
 
-namespace SequencePlanner.Function.DistanceFunction
+namespace ProSeqqoLib.Function.DistanceFunction
 {
     public class MaxDistanceFunction : DistanceFunction
     {

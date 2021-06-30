@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Model;
+﻿using ProSeqqoLib.Model;
 using System;
 
-namespace SequencePlanner.Task.Serialization.Model
+namespace ProSeqqoLib.Task.Serialization.Model
 {
     public class StrictEdgeWeightSerializationObject
     {

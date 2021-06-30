@@ -1,6 +1,6 @@
-﻿using SequencePlanner.Helper;
+﻿using ProSeqqoLib.Helper;
 
-namespace SequencePlanner.Task
+namespace ProSeqqoLib.Task
 {
     public class SolverSettings
     {

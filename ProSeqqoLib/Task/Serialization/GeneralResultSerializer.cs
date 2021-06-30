@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
-using SequencePlanner.Helper;
-using SequencePlanner.Task;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Task;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace SequencePlanner.GTSPTask.Serialization.Result
+namespace ProSeqqoLib.GTSPTask.Serialization.Result
 {
     public class GeneralResultSerializer
     {

@@ -1,9 +1,9 @@
-﻿using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Function.ResourceFunction.ResourceDistanceLink;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Function.ResourceFunction
+namespace ProSeqqoLib.Function.ResourceFunction
 {
     public class MatrixResourceFunction : IResourceFunction
     {

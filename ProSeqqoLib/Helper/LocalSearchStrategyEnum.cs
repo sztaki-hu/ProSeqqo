@@ -1,6 +1,6 @@
 ﻿using Google.OrTools.ConstraintSolver;
 
-namespace SequencePlanner.Helper
+namespace ProSeqqoLib.Helper
 {
     public class LocalSearchStrategyEnum
     {

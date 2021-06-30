@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Task.Serialization.Token;
+﻿using ProSeqqoLib.Task.Serialization.Token;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Task.Serialization.Model
+namespace ProSeqqoLib.Task.Serialization.Model
 {
     public class ResourceMatrixSerializationObject
     {

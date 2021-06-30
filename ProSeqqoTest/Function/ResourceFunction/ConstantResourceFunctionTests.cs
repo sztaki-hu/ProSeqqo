@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Function.ResourceFunction;
-using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using SequencePlanner.Model.Hierarchy;
+using ProSeqqoLib.Function.ResourceFunction;
+using ProSeqqoLib.Function.ResourceFunction.ResourceDistanceLink;
+using ProSeqqoLib.Model.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SequencePlanner.Function.ResourceFunction.Token
+namespace ProSeqqoLib.Function.ResourceFunction.Token
 {
     [TestClass()]
     public class ConstantResourceFunctionTests

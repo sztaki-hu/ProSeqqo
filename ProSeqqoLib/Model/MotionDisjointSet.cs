@@ -1,9 +1,9 @@
-﻿using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.Helper;
+﻿using ProSeqqoLib.Model.Hierarchy;
+using ProSeqqoLib.Helper;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SequencePlanner.Model
+namespace ProSeqqoLib.Model
 {
     public class MotionDisjointSet : DisjointSet<Motion>
     {

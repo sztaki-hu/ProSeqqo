@@ -1,8 +1,8 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Task.Processors
+namespace ProSeqqoLib.Task.Processors
 {
     public class DepotMapper : ITaskProcessor
     {

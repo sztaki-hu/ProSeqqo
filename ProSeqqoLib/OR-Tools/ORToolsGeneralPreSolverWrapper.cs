@@ -1,13 +1,13 @@
 ﻿using Google.OrTools.LinearSolver;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.Model.Hierarchy;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model;
+using ProSeqqoLib.Model.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace SequencePlanner.OR_Tools
+namespace ProSeqqoLib.OR_Tools
 {
     public class ORToolsGeneralPreSolverWrapper
     {

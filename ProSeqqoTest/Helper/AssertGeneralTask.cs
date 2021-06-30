@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Task;
+using ProSeqqoLib.Task;
 
 namespace SequencerTest.Helper
 {

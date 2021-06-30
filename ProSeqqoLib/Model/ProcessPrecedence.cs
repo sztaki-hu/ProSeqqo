@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Model
+namespace ProSeqqoLib.Model
 {
     public class ProcessPrecedence : Precedence<Process>
     {

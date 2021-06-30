@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Helper;
+using ProSeqqoLib.Helper;
 using System;
 using System.Collections.Generic;
 using System.IO;

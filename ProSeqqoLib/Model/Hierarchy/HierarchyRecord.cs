@@ -1,6 +1,6 @@
-﻿using SequencePlanner.Helper;
+﻿using ProSeqqoLib.Helper;
 
-namespace SequencePlanner.Model.Hierarchy
+namespace ProSeqqoLib.Model.Hierarchy
 {
     public class HierarchyRecord
     {

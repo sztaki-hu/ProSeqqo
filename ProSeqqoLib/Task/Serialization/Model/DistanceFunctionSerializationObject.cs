@@ -1,8 +1,8 @@
-﻿using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.Helper;
-using SequencePlanner.Task.Serialization.Token;
+﻿using ProSeqqoLib.Function.DistanceFunction;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Task.Serialization.Token;
 
-namespace SequencePlanner.Task.Serialization.Model
+namespace ProSeqqoLib.Task.Serialization.Model
 {
     public class DistanceFunctionSerializationObject
     {

@@ -1,11 +1,11 @@
-﻿using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.Function.ResourceFunction;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Function.DistanceFunction;
+using ProSeqqoLib.Function.ResourceFunction;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model;
+using ProSeqqoLib.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Task
+namespace ProSeqqoLib.Task
 {
     public class CostManager
     {

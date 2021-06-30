@@ -1,4 +1,4 @@
-﻿using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Model.Hierarchy;
 using System.Windows.Media.Media3D;
 
 namespace LineAnimation

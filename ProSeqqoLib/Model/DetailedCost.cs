@@ -1,6 +1,6 @@
-﻿using SequencePlanner.Helper;
+﻿using ProSeqqoLib.Helper;
 
-namespace SequencePlanner.Model
+namespace ProSeqqoLib.Model
 {
     public class DetailedCost<Base>
     {

@@ -1,9 +1,9 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.Model.ShortestPath;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
+using ProSeqqoLib.Model.ShortestPath;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Task.Processors
+namespace ProSeqqoLib.Task.Processors
 {
     public class ShortcutMapper : ITaskProcessor
     {

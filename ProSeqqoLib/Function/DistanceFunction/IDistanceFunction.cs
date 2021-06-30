@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Helper;
-using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model.Hierarchy;
 
-namespace SequencePlanner.Function.DistanceFunction
+namespace ProSeqqoLib.Function.DistanceFunction
 {
     public interface IDistanceFunction
     {

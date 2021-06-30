@@ -1,4 +1,4 @@
-﻿namespace SequencePlanner.Helper
+﻿namespace ProSeqqoLib.Helper
 {
     public enum LogLevel
     {

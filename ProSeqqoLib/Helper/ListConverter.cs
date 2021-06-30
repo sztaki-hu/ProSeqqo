@@ -1,7 +1,7 @@
-﻿using SequencePlanner.Model.Hierarchy;
+﻿using ProSeqqoLib.Model.Hierarchy;
 using System.Collections.Generic;
 
-namespace SequencePlanner.Helper
+namespace ProSeqqoLib.Helper
 {
     public static class ListConverter
     {

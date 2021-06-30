@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SequencePlanner.Helper
+namespace ProSeqqoLib.Helper
 {
     public class SeqException : Exception
     {

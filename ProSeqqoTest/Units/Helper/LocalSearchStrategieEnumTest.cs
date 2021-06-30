@@ -1,6 +1,6 @@
 ﻿using Google.OrTools.ConstraintSolver;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SequencePlanner.Helper;
+using ProSeqqoLib.Helper;
 
 namespace SequencerTest.Units.OR_Tools
 {
