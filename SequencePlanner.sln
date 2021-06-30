@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSeqqoVisualization", "LineAnimation\ProSeqqoVisualization.csproj", "{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YourApplication", "YourApplication\YourApplication.csproj", "{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSeqqoLib", "ProSeqqoLib\ProSeqqoLib.csproj", "{34254A4C-5A1B-466C-B33E-568126087B1D}"
@@ -15,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSeqqoBenchmark", "ProSeq
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSeqqoTest", "ProSeqqoTest\ProSeqqoTest.csproj", "{8C3F6AE2-0320-4654-ABA4-2D34BEBBFCBF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProSeqqoVisualization", "ProSeqqoVisualization\ProSeqqoVisualization.csproj", "{65951646-6F76-47AD-B715-1BF458CFE877}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,13 +23,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Debug|x64.Build.0 = Debug|Any CPU
-		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Release|x64.ActiveCfg = Release|Any CPU
-		{855F5BEB-3F87-4DE1-ABB9-FE13C48BD70F}.Release|x64.Build.0 = Release|Any CPU
 		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C5F0FEF-C041-4D5E-B3ED-7EDA2005D0BF}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -70,6 +63,14 @@ Global
 		{8C3F6AE2-0320-4654-ABA4-2D34BEBBFCBF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8C3F6AE2-0320-4654-ABA4-2D34BEBBFCBF}.Release|x64.ActiveCfg = Release|Any CPU
 		{8C3F6AE2-0320-4654-ABA4-2D34BEBBFCBF}.Release|x64.Build.0 = Release|Any CPU
+		{65951646-6F76-47AD-B715-1BF458CFE877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65951646-6F76-47AD-B715-1BF458CFE877}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65951646-6F76-47AD-B715-1BF458CFE877}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{65951646-6F76-47AD-B715-1BF458CFE877}.Debug|x64.Build.0 = Debug|Any CPU
+		{65951646-6F76-47AD-B715-1BF458CFE877}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65951646-6F76-47AD-B715-1BF458CFE877}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65951646-6F76-47AD-B715-1BF458CFE877}.Release|x64.ActiveCfg = Release|Any CPU
+		{65951646-6F76-47AD-B715-1BF458CFE877}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
