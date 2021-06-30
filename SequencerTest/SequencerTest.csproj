@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SequencePlanner\SequencePlanner.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Resources\Example\" />
   </ItemGroup>
 
