@@ -13,8 +13,8 @@ Notations: ~ Optional, ! Default, * Needed
 |*[`Task`](#task)|`General`| For sequencing configurations and motions. One motion/configuration selected for execution in a task. The tasks have a strict sequence in an alternative. Finally, one alternative selected in a process while the processes are ordered. |
 |[`Validate`](#validate)|True / False|If true, the task is validated before execution, it can be time-consuming. |
 |*[`Cyclic`](#cyclic)|True / False| The cyclic sequence has the same start and finishes in the solution. In the case of a cyclic task, the `StartDepot` have to be given.|
-|[`StartDepot`](#startdepot)|`ConfigID`/`MotionID`|Start depot is the first position of the circles or walks based on `CyclicSequence`. It is going to ignore all alternatives and task elements of the given element. The StartDepot have to be defined in the `ProcessHierarchy`.|
-|[`FinishDepot`](#finishdepot)|`ConfigID`/`MotionID`|Finish depot is the last position of the path if `CyclicSequence` = False. It is going to ignore all alternatives and task elements of the given position. |
+|[`StartDepot`](#startdepot)|`ConfigID`/`MotionID`|Start depot is the first position of the circles or walks based on `Cyclic`. It is going to ignore all alternatives and task elements of the given element. The StartDepot have to be defined in the `ProcessHierarchy`.|
+|[`FinishDepot`](#finishdepot)|`ConfigID`/`MotionID`|Finish depot is the last position of the path if `Cyclic` = False. It is going to ignore all alternatives and task elements of the given position. |
 |**Hierarchy** | | |
 |[`ConfigList`](#configlist) | `ConfigID` ; `Position` ; ~`Name` ; ~`ResourceID` | Used when `DistanceFunction` is not Matrix. List of records, that defines all possible configurations of the task. These configurations can be used for motion definition (`MotionList`) at any times. Also used in the `ProcessHierarchy` section but only once. Order constraints can be defined in the `MotionPrecedence` section. |
 |[`ConfigMatrix`](#configmatrix) |`ConfigID`[ ] <br/> Double[ ][ ] <br/> ~`Name`[ ] <br/>     ~`ResourceID` [ ] | Used in case of `DistanceFunction`: Matrix excludes the use of `ConfigList`. Cost matrix with id header, optional name and resource id footer. The matrix should contain the cost of every pair of positions. These configurations can be used for motion definition (`MotionList`) at any times. Also used in the `ProcessHierarchy` section but only once. Order constraints can be defined in the `MotionPrecedence` section. |
@@ -32,11 +32,9 @@ Notations: ~ Optional, ! Default, * Needed
 ||`Matrix`|Manual distance/cost, given by distance matrix of configurations.|
 |[`TrapezoidAcceleration`](#trapzoidacceleration)|Double []|In case we choose `TrapezoidTimeWithTieBreaker` or `TrapezoidTime` need to be define maximal acceleration in n dimensions.|
 |[`TrapezoidSpeed`](#trapezoidspeed) | Double [] |In case we choose `TrapezoidTimeWithTieBreaker` or `TrapezoidTime` need to be define maximal speed in n dimensions. |
-| [`WeightMultiplier`](#weightmultiplier) | Int / `Auto` | Google-OR-Tools using costs as integers, but we would like to use floating-point numbers. Simple round function not enough in small task space, this multiplier scales up with the given number or scale it automatically. |
 | [`IdlePenalty`](#idlepenalty) | Double | This value-added to the costs if the following positions/motions are not in contact, and the tool path or motion has to be interrupted. |
 | [`BidirectionMotionDefault`](#bidirectionmotiondefault) | True / False | If True, extra motion generated and added to the hierarchy with the _Reverse postfix and swapped end configurations in case of movements. If False, only the given direction added. At the end of `MotionList` records can be overwritten one by one. |
 | [`AddMotionLengthToCost`](#addmotionLengthtocost) | True / False | If true: The length of the motion (computed between ConfigA, ConfigB with `DistanceFunction` or `OverrideCost`) need to be used in cost computation. |
-| [`AddInMotionChangeoverToCost`](#addinmotionchangeovertocost) | True / False | If true: The resource changeover cost (change from the resource of ConfigA to resource of ConfigB) used additionally in cost computation of the motions. |
 |**Resources**| | |
 |[`ResourceChangeover`](#resourcechangeover)|! `Off`| Resources not used in the task. |
 ||`Constant`| Resources are used, and the changeover cost given by a constant (`ChangeoverConstant`). |
@@ -66,7 +64,7 @@ For sequencing configurations and motions. One motion/configuration selected for
 
 | Value  | Include | Exclude | Optional|
 | ------ | ------  | ------  | ------  |
-| `General`| `Cyclic`, `DistanceFunction`, `ProcessHierarchy` |  | `Validate`,`StartDepot`, `FinishDepot`, `LocalSearchStrategy`, `TimeLimit`, `UseShortcutInAlternatives`, `TrapezoidAcceleration`, `TrapezoidSpeed`, `WeightMultiplier`, `IdlePenalty`, `BidirectionMotionDefault`, `AddMotionLengthToCost`, `AddInMotionChangeoverToCost`, `ResourceChangeover`, `ResourceChangeoverFunction`, `ChangeoverConstant`, `ChangeoverMatrix`, `ConfigList`, `ConfigMatrix`, `MotionList`, `ProcessPrecedence`, `MotionPrecedence`, `OverrideCost` |
+| `General`| `Cyclic`, `DistanceFunction`, `ProcessHierarchy` |  | `Validate`,`StartDepot`, `FinishDepot`, `LocalSearchStrategy`, `TimeLimit`, `UseShortcutInAlternatives`, `TrapezoidAcceleration`, `TrapezoidSpeed`, `IdlePenalty`, `BidirectionMotionDefault`, `AddMotionLengthToCost`, `ResourceChangeover`, `ResourceChangeoverFunction`, `ChangeoverConstant`, `ChangeoverMatrix`, `ConfigList`, `ConfigMatrix`, `MotionList`, `ProcessPrecedence`, `MotionPrecedence`, `OverrideCost` |
 | `Line`   |  |  |  |
 
 <details>
@@ -87,16 +85,10 @@ GeneralTask t = new GeneralTask();
 ```
 </details>
    
-    
 
 #### Validate
 
 If true, the task is validated before execution; it can be time-consuming.
-
-| Param  | Rule   |
-| ------ | ------ |
-| !True  |        |
-| False  |        |
 
 <details>
 <summary>Usage</summary>
@@ -120,8 +112,6 @@ Validate: False
     t.Validate = false;
 ```
 </details>
-
-
 
 #### *Cyclic
 
@@ -157,11 +147,11 @@ The cyclic sequence has the same start and finishes in the solution. In the case
 
 #### StartDepot
 
-Start depot is the first position of the circles or walks based on `CyclicSequence`. It is going to ignore all alternatives and task elements of the given element. The StartDepot have to be defined in the `ProcessHierarchy`.
+Start depot is the first configuration of the circles or walks based on `Cyclic`. The selected configuration wrapped automatically in a virtual motion, alternative, process struct with ID: 9999999. The StartDepot have to be defined in the `ConfigList` or `ConfigMatrix`.
 
 | Param  | Rule   |
 | ------ | ------ |
-| Int    | Must be part of `ProcessHierarchy` as `ConfigID` / `MotionID`. Must be part of a single alternative process because fix element of the path and excludes every other alternative in the process.|
+| Int    | Must be part of `ConfigList` or `ConfigMatrix` as `ConfigID`.|
 
 <details>
 <summary>Usage</summary>
@@ -183,11 +173,11 @@ Start depot is the first position of the circles or walks based on `CyclicSequen
 </details>
 
 #### FinishDepot
-Finish depot is the last position of the path if `CyclicSequence` = False. It is going to ignore all alternatives and task elements of the given position.
+Finish depot is the last position of the path if `Cyclic` = False. The selected configuration wrapped automatically in a virtual motion, alternative, process struct with ID: 888888. The FinishDepot have to be defined in the `ConfigList` or `ConfigMatrix`.
 
 | Param  | Rule   |
 | ------ | ------ |
-| Int    | Must be part of `ProcessHierarchy` as `ConfigID` / `MotionID`. Must be part of a single alternative process because fix element of the path and excludes every other alternative in the process.|
+| Int    | Must be part of `ConfigList` or `ConfigMatrix` as `ConfigID`.|
 
 <details>
 <summary>Usage</summary>
@@ -214,7 +204,7 @@ Finish depot is the last position of the path if `CyclicSequence` = False. It is
 
 #### *DistanceFunction
 
-The distance function defines the basic way of cost computation. Assign cost value to configuration pairs, the motions for the VRP matrix. It can be overwritten by `OverrideCost`, `ResourceChangeover` or `IdlePenalty`.
+The distance function defines the basic way of cost computation. Assign cost values to motion pairs (between last configuration $x$ of motion one, and first configuration $y$ of motion two), for the GTSP matrix. It can be overwritten by `OverrideCost`, `ResourceChangeover` or `IdlePenalty`.
 
 | Value     | Include      | Exclude      | 
 | ------    | ------       | ------       |
@@ -224,6 +214,19 @@ The distance function defines the basic way of cost computation. Assign cost val
 | TrapezoidTimeWithTieBreaker| `ConfigList`, `TrapezoidAcceleration`, `TrapezoidSpeed`           |`ConfigMatrix`|
 | Manhattan |   `ConfigList |`TrapezoidAcceleration`, `TrapezoidSpeed`, ConfigMatrix|
 | Matrix    | `ConfigMatrix |`TrapezoidAcceleration`, `TrapezoidSpeed`, `ConfigList`|
+
+$`x = [x_1, x_2, ..., x_n]`$  
+$`y = [y_1, y_2, ..., y_n]`$
+
+|            Function            | Implementation |
+|--------------------------------|--------------|
+|`Euclidian`            | $`\sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}`$             |
+|`Max`                  | $`max(\vert x_1-y_1 \vert, \vert x_2-y_2 \vert,..., \vert x_n-y_n \vert)`$|
+|[`TrapezoidTime`](https://www.linearmotiontips.com/how-to-calculate-velocity/)                | $`max(time( \vert x_1-y_1 \vert), time( \vert x_2-y_2 \vert) ,..., time( \vert x_n-y_n \vert))`$|
+|`TrapezoidTimeWithTieBreaker` | $`TrapezoidTime + 0.01 * (sumTime / n)`$             |
+|                                | $`sumTime = time(x_1-y_1) + time(x_2-y_2) + time(x_n-y_n) `$             |
+|`Manhattan`            |$`\sum_{i=1}^n{\vert a_i-b_i \vert}`$|
+|`Matrix`                   | $`G = \begin{pmatrix} 0 & x \rightarrow y \\ y \rightarrow x & 0 \end{pmatrix}`$  |
 
 <details>
 <summary>Usage</summary>
@@ -385,11 +388,9 @@ DistanceFunction: Matrix
 
 #### TrapezoidAcceleration
 
-Used in case of `DistanceFunction`: Trapezoid / `DistanceFunction`: TrapezoidTimeWithTieBreaker to calculate trapezoid time for motions.
-
 |   Type    | Rule   |
 | --------- | ------ |
-| Double[ ] |        |
+| Double[ ] | `DistanceFunction` must be Trapezoid / TrapezoidTimeWithTieBreaker and the dimension must fit the dimension of configuration vectors.|
 
 <details>
 <summary>Usage</summary>
@@ -421,11 +422,9 @@ TrapezoidAcceleration: [9.1;8.7;5.5]
 
 #### TrapezoidSpeed
 
-Used in case of `DistanceFunction`: Trapezoid / `DistanceFunction`: TrapezoidTimeWithTieBreaker to calculate trapezoid time for motions.
-
 |   Type    | Rule   |
 | --------- | ------ |
-| Double[ ] |        |
+| Double[ ] | `DistanceFunction` must be Trapezoid / TrapezoidTimeWithTieBreaker and the dimension must fit the dimension of configuration vectors.  |
 
 <details>
 <summary>Usage</summary>
@@ -455,32 +454,9 @@ TrapezoidSpeed: [9.1;8.7;5.5]
 ```
 </details>
 
-#### WeightMultiplier (Not used)
-
-Google-OR-Tools using costs as integers, but we would like to use floating-point numbers. A simple round function is not enough in a small task space; this multiplier automatically scales up with the given number or scale.
-
-|   Type    | Rule   |
-| --------- | ------ |
-| Int       |        |
-| !Auto      |        |
-
-<details>
-<summary>Usage</summary>
-
-```
-//SEQ
-WeightMultiplier: Auto
-WeightMultiplier: 1000
-
-//JSON
-//XML
-//C#
-```
-</details>
-
 #### IdlePenalty
 
-This value-added to the costs if the following positions/motions are not in contact, and the tool path or motion must be interrupted.
+This value-added to the costs if the following motions are not in contact, and the tool path or motion must be interrupted.
 
 |   Type    | Rule   |
 | --------- | ------ |
@@ -507,12 +483,12 @@ IdlePenalty: 100
 
 #### BidirectionMotionDefault
 
-If True, extra motion generated and added to the hierarchy with the _Reverse postfix and swapped end configurations in case of movements. If False, only the given direction added. At the end of `MotionList`, records can be overwritten one by one.
+If True, extra motion generated and added to the hierarchy with the _Reverse postfix in name, the new motions's ID is the inverse of the original one, and swapped end configurations in case of movements. If False, only the given direction added. At the end of `MotionList`, records can be overwritten one by one.
 
 |   Value   | Rule   |
 | --------- | ------ |
 | True      |        |
-| !False     |        |
+| False     | Default. |
 
 <details>
 <summary>Usage</summary>
@@ -537,12 +513,12 @@ BidirectionMotionDefault: False
 
 #### AddMotionLengthToCost
 
-If true: The length of the motion (computed between ConfigA, ConfigB with `DistanceFunction` or `OverrideCost`) need to be used in cost computation.
+If true: The inner length of the motion (computed between each configuration in the motion) added to the cost of every input edge of the motion.
 
 |   Value   | Rule   |
 | --------- | ------ |
 | True      |        |
-| !False     |        |
+| False     |  Default|
 
 <details>
 <summary>Usage</summary>
@@ -564,39 +540,16 @@ AddMotionLengthToCost: False
 ```
 </details>
 
-#### AddInMotionChangeoverToCost - Not Used
-
-If true: The resource changeover cost (change from the resource of ConfigA to resource of ConfigB) used additionally in cost computation of the motions.
-
-|   Value   | Rule   |
-| --------- | ------ |
-| True      |        |
-| !False     |        |
-
-<details>
-<summary>Usage</summary>
-
-```
-//SEQ
-AddInMotionChangeoverToCost: True      
-AddInMotionChangeoverToCost: False
-
-//JSON
-//XML
-//C#
-```
-</details>
-
 ## Sequence task definition
 
 #### *ConfigList
 
-Used when `DistanceFunction` is not matrix. List of records that defines all possible configurations of the task. These configurations can be used for motion definition (`MotionList`) at any times. Also used in the `ProcessHierarchy` section but only once. Order constraints can be defined in the `MotionPrecedence` section. 
+Used when `DistanceFunction` is not matrix. List of records that defines all possible configurations of the task. These configurations can be used for hierarchy definition (`ProcessHierarchy`) at any times.
 
 | Param                    | Type  | Rule   |
 | ------------------------ | ----- | ------ |
-| `ConfigID`      | Int | Every new value indicates a new config. Every id must be unique in the scope of `MotionList` and `PositionMatrix`|
-| `Configuration` | Double[n] | The length of vectors should be equal in the configuration list. Used in cost computation as `DistanceFunction` defines. |
+| `ConfigID`      | Int | Every new value indicates a new config. Every id must be unique globally.|
+| `Configuration` | Double[n] | The length of vectors should be equal in the full configuration list. Used in cost computation as `DistanceFunction` defines. |
 | ~` Name`       | String | An optional list of config names. Any value acceptable, only used for identification in the solution or debug. |
 | ~`ResourceID` | Int | Value is required if ResourceChangeover not `Off`. Must be part of `ResourceChangeover` if that is given. Used in cost computation, if resource change needed, more info at `ResourceChangeover`.|
 
@@ -685,7 +638,7 @@ ConfigList:
 
 #### ConfigMatrix
 
-Used in case of `DistanceFunction`: Matrix excludes the use of `ConfigList`. Cost matrix with id header, optional name and resource id footer. The matrix should contain the cost of every pair of positions. These configurations can be used for motion definition (`MotionList`) at any times. Also used in the `ProcessHierarchy` section but only once. Order constraints can be defined in the `MotionPrecedence` section.
+Used in case of `DistanceFunction`: Matrix, excludes the use of `ConfigList`. Cost matrix with id header, optional name and resource id footer. The matrix should contain the cost of every pair of positions, pointless connections must be 0. These configurations can be used for hierarchy definition (`ProcessHierarchy`) at any times.
 
 | Param              | Type  |Rule   |
 | ------------------ | ----- |------ |
