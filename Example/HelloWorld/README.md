@@ -8,9 +8,9 @@ Installation details are available [here](../../Documentation/Install.md).
 Hello World! files available in [Example/HelloWorld](../Example/HelloWorld) directory.
 
 Open ProSeqqo console application in 'cmd' or 'PowerShell'  
-`/ProSeqqoConsole> ProSeqqoConsole.exe -i <path>/Example/HelloWorld/HelloWorld.seq`  
-`/ProSeqqoConsole> ProSeqqoConsole.exe -i <path>/Example/HelloWorld/HelloWorld.json`  
-`/ProSeqqoConsole> ProSeqqoConsole.exe -i <path>/Example/HelloWorld/HelloWorld.xml`  
+`/ProSeqqo> ProSeqqoConsole.exe -i <path>/Example/HelloWorld/HelloWorld.seq`  
+`/ProSeqqo> ProSeqqoConsole.exe -i <path>/Example/HelloWorld/HelloWorld.json`  
+`/ProSeqqo> ProSeqqoConsole.exe -i <path>/Example/HelloWorld/HelloWorld.xml`  
 
 Couple .seq file extension to ProSeqqoConsole.exe and run by click.  
 In this case the result will be placed in same path, with _out postfix in .json format.  
@@ -39,8 +39,8 @@ Command-line arguments:
 ## 2.B Read file and solve wiht .dll or code reuse.
 Import ProSeqqoLibrary.dll or ProSeqqoLibrary project in Visual Studio.  
 Import namespaces:  
-`SequencePlanner.GTSPTask.Serialization.Task`  
-`SequencePlanner.Task`  
+`ProSeqqoLib.GTSPTask.Serialization.Task`  
+`ProSeqqoLib.Task`  
 
 ```
 var ser = new GeneralTaskSerializer();
@@ -52,10 +52,10 @@ Example in [YourApplication](https://git.sztaki.hu/emi/proseqqo/-/blob/feature-r
 
 ## 2.C Build task in code and run.
 
-Import ProSeqqoLibrary.dll or ProSeqqoLibrary project in Visual Studio.  
+Import ProSeqqoLib.dll or ProSeqqoLib project in Visual Studio.  
 Import namespaces:  
-`SequencePlanner.GTSPTask.Serialization.Task`  
-`SequencePlanner.Task`  
+`ProSeqqoLib.GTSPTask.Serialization.Task`  
+`ProSeqqoLib.Task`  
 
 ```
 GeneralTask t = new GeneralTask();
