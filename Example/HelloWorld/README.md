@@ -48,7 +48,7 @@ var task = ser.ImportSEQ("HelloWorld.seq");
 var result = task.Run();
 ```
 
-Example in [YourApplication](https://git.sztaki.hu/emi/proseqqo/-/blob/feature-refactor/YourApplication/Program.cs)
+Example in [YourApplication](../../YourApplication/Program.cs)
 
 ## 2.C Build task in code and run.
 
@@ -57,6 +57,7 @@ Import namespaces:
 `ProSeqqoLib.GTSPTask.Serialization.Task`  
 `ProSeqqoLib.Task`  
 
+The properies, parameter of the code built tasks available at the Details, using section of the [Task definition language](../../Documentation/TaskDefinition.md) page and example is in [YourApplication](../../YourApplication/Program.cs)
 ```
 GeneralTask t = new GeneralTask();
 SeqLogger.LogLevel = LogLevel.Info;
@@ -73,4 +74,3 @@ t.Hierarchy.HierarchyRecords.AddRange(CreateHierarchy(t));
 var result =  t.Run();
 ```
 
-Example in [YourApplication](https://git.sztaki.hu/emi/proseqqo/-/blob/feature-refactor/YourApplication/Program.cs)
