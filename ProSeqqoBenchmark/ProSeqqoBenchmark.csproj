@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SequencerTest\SequencerTest.csproj" />
+    <ProjectReference Include="..\ProSeqqoTest\ProSeqqoTest.csproj" />
   </ItemGroup>
 
 </Project>
