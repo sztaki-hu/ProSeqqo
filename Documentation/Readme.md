@@ -20,13 +20,14 @@ Generic task sequencer that captures typical sequencing problems encountered in 
 * Resource handling
 
 Visual Studio 2019 Solution:
-*  SequencePlanner - .NET 5.0 Class Library
-*  SequenceConsole - .NET 5.0 Console Application
-*  SequencerTest   - .NET 5.0 MSTest Framework Application
-*  LineAnimation   - .NET 5.0 WPF Application
+*  ProSeqqoLib - .NET 5.0 Class Library
+*  ProSeqqoConsole - .NET 5.0 Console Application
+*  ProSeqqoTest   - .NET 5.0 MSTest Framework Application
+*  ProSeqqoVisualization   - .NET 5.0 WPF Application
 *  Example
+*  Example/HelloWorld
 *  Example/Skeletons
-*  ~~SequencePlannerService - ASP.NET 5.0 REST Web Service~~
+*  ~~*  ProSeqqoWebService - ASP.NET 5.0 REST Web Service~~
 
 <img src="../Documentation/Images/Process.png" alt="Problem representation of ProSeqqo" width="1000"/>
 
