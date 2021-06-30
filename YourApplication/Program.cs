@@ -1,11 +1,11 @@
-﻿using SequencePlanner.Function.DistanceFunction;
-using SequencePlanner.Function.ResourceFunction;
-using SequencePlanner.Function.ResourceFunction.ResourceDistanceLink;
-using SequencePlanner.GTSPTask.Serialization.Task;
-using SequencePlanner.Helper;
-using SequencePlanner.Model;
-using SequencePlanner.Model.Hierarchy;
-using SequencePlanner.Task;
+﻿using ProSeqqoLib.Function.DistanceFunction;
+using ProSeqqoLib.Function.ResourceFunction;
+using ProSeqqoLib.Function.ResourceFunction.ResourceDistanceLink;
+using ProSeqqoLib.GTSPTask.Serialization.Task;
+using ProSeqqoLib.Helper;
+using ProSeqqoLib.Model;
+using ProSeqqoLib.Model.Hierarchy;
+using ProSeqqoLib.Task;
 using System;
 using System.Collections.Generic;
 
@@ -116,7 +116,7 @@ namespace YourApplication
             t.CostManager.OverrideCost.Add(new DetailedConfigCost() { A = CA, B = CB, OverrideCost = 2.0, Bidirectional = true });
 
             var result =  t.Run();
-            result.ToLog(SequencePlanner.Helper.LogLevel.Info);
+            result.ToLog(LogLevel.Info);
         }
     }
 }
