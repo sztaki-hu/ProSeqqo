@@ -1,4 +1,4 @@
-# ![ProSeqqo Logo](../../Documentation/Images/ProSeqqoLogo.png) [ProSeqqo](../../Documentation/Readme.md) 
+# ![ProSeqqo Logo](../Documentation/Images/ProSeqqoLogo.png) [ProSeqqo](../Documentation/Readme.md) 
 [1. Camera-based robotic pick-and-place](#cc)  
 [2. Robotic Cartoon Drawings](#2.-Robotic-Cartoon-Drawings)  
 [3. Robotic Laser Engraving](#3.-Robotic-Laser-Engraving)  
@@ -12,9 +12,9 @@
 
 The example is available in the CameraPickAndPlace.seq.
 
-<img src="../../Documentation/Images/CameraPickAndPlaceCell.png" alt="Camera based pick and place cell" width="300"/>
+<img src="../Documentation/Images/CameraPickAndPlaceCell.png" alt="Camera based pick and place cell" width="300"/>
 
-<!-- ![Camera based pick and place cell](../../Documentation/Images/CameraPickAndPlaceCell.png) -->
+<!-- ![Camera based pick and place cell](../Documentation/Images/CameraPickAndPlaceCell.png) -->
 
 It is a General, cyclic task started and finished in the camera configuration (1) with validation this time.
 
@@ -84,8 +84,8 @@ ProcessHierarchy:
 
 Process 0 contains start depot configuration, wrapped automatically. Process 1/2/3 pick and place operations of three different items that need to be ordered. There are only one alternative, two (pick and place) tasks, and motions with only one configuration.
 
-<img src="../../Documentation/Images/PickAndPlaceStruct.png" alt="Pick and Place struct" width="500"/>
-<!-- ![Pick and Place struct](../../Documentation/Images/PickAndPlaceStruct.png) -->
+<img src="../Documentation/Images/PickAndPlaceStruct.png" alt="Pick and Place struct" width="500"/>
+<!-- ![Pick and Place struct](../Documentation/Images/PickAndPlaceStruct.png) -->
 
 ## 2. Robotic Cartoon Drawings
 [![Robotic Cartoon Drawings Demo](http://img.youtube.com/vi/8ULIP_5nEJ0/2.jpg)](http://www.youtube.com/watch?v=8ULIP_5nEJ0)  
@@ -94,7 +94,7 @@ Process 0 contains start depot configuration, wrapped automatically. Process 1/2
 
 The example is available in the RoboticDrawing.seq.
 
-<img src="../../Documentation/Images/CartoonDrawing.jpg" alt="Robotic drawing cell" width="400"/>
+<img src="../Documentation/Images/CartoonDrawing.jpg" alt="Robotic drawing cell" width="400"/>
 
 In this case, other validated general task, presented for robotic drawing. The robot can start and finish anywhere, so depots are not given, and the problem is acyclic.
 
@@ -145,10 +145,10 @@ ProcessHierarchy:
 
 The sturct of three lines, Process S and F, are the virtual start and finish depots; these motions can be reached from any potential other motion at free cost. The line processes, alternatives, tasks contain the original and reverse motions that describe the line.
 
-<img src="../../Documentation/Images/DrawAndLaserStruct.png" alt="Robotic drawing and laser engraving struct" width="400"/>
+<img src="../Documentation/Images/DrawAndLaserStruct.png" alt="Robotic drawing and laser engraving struct" width="400"/>
 
 After running the example, as a 2D task, visualization available by LineAnimation, The serialized result in .json format can be open.  
-<img src="../../Documentation/Images/LineVizDraw.png" alt="Robotic drawing result" width="250"/>
+<img src="../Documentation/Images/LineVizDraw.png" alt="Robotic drawing result" width="250"/>
 
 
 ## 3. Robotic Laser Engraving
@@ -156,7 +156,7 @@ After running the example, as a 2D task, visualization available by LineAnimatio
 > Somewhat similarly to the previous application, the goal is to create a 2Dimage from lines on different objects by laser engraving, such as the Celtic knot drawing. While the problem model is identical to that of the previous application, the special challenge is handling many lines (e.g., up to 4000) in the raw input. Thus, the problem is relevant for one-of-a-type products, with as low computation times as possible, and mass production, where significant computation times can also be allowed.
 
 This example contains 500 lines, CelticLaser.seq, and most of the parameters and structure standard with RoboticDrawing.seq.  
-<img src="../../Documentation/Images/LineVizLaser.png" alt="Line visualisation of celtic laser problem" width="250"/>
+<img src="../Documentation/Images/LineVizLaser.png" alt="Line visualisation of celtic laser problem" width="250"/>
 
 ## 4. Robotic Building Blocks
 > The building blocks application is a student project originally focused on identifying objects, their poses, and the potential ways of grasping them using a vision camera. The building blocks must be grasped using a two-finger gripper and taken from their identified source poses to the specified target poses without applying an intermediate buffer.  
@@ -238,7 +238,7 @@ MotionPrecedence:
 
 The build (right) and wreck (left) of the build at halftime, solved with more than 1200 order constraints.
 As a 3D solution, LineAnimation able to show the created order by the result .json file.  
-<img src="../../Documentation/Images/LineVizBuild.png" alt="Visualisation of buildings" width="300"/>
+<img src="../Documentation/Images/LineVizBuild.png" alt="Visualisation of buildings" width="300"/>
 
 
 ## 5. Robotic Grinding and Polishing of Furniture Parts
@@ -247,8 +247,8 @@ The example is available in the FurnitureParts.seq.
 > In the last application scenario, the robotic belt grinding and polishing of cast aluminium furniture parts are the goal. The surface of the part is decomposed into nine longitudinal stripes, and each stripe must undergo up to three surface finishing tasks: rough grinding, fine grinding, and polishing. Five stripes need all three tasks, whereas four stripes need only polishing, resulting in 19 tasks altogether. For technological reasons, all rough grinding tasks must precede all fine grinding tasks, which in turn must precede all polishing tasks. Each task corresponds to a robot motion specified in the 6D joint configuration space of the robot, which guides the part along with a contact trajectory between the given stripe of the part surface and the tool. The direction of the motion can be reversed. Idle motions between the effective tasks can be rather complicated due to the difficult part geometry and the densely populated work-cell. Hence, all possible 38×38 idle motions between the effective path endpoints were pre-computed using the path planning library.
 
 
-<img src="../../Documentation/Images/Grinding1.JPG" alt="Robotic drawing and laser engraving struct" height="250"/>
-<img src="../../Documentation/Images/Grinding2.png" alt="Robotic drawing and laser engraving struct" height="250"/>
+<img src="../Documentation/Images/Grinding1.JPG" alt="Robotic drawing and laser engraving struct" height="250"/>
+<img src="../Documentation/Images/Grinding2.png" alt="Robotic drawing and laser engraving struct" height="250"/>
 
 This case also a general, acyclic task with validation, where the start and the finish can be chosen free.
 ```
