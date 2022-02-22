@@ -6,6 +6,7 @@
 [Examples](../Example)  
 [Skeletons](../Example/Skeletons)  
 [Papers](../Documentation/Papers)  
+[Presentation](../Documentation/20220218_EPIC_Training_Robotics_ZL_public.pdf)
 
 ## About
 Generic task sequencer that captures typical sequencing problems encountered in robot applications.
